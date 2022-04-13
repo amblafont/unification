@@ -1,0 +1,1346 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Unification with binding
+\end_layout
+
+\begin_layout Section
+Setting
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ be a binding signature.
+ Then, there is a free 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+-monoid monad 
+\begin_inset Formula $T$
+\end_inset
+
+ on 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+ such that 
+\begin_inset Formula $T(X)$
+\end_inset
+
+ is the syntax of 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ extended with an 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation for each 
+\begin_inset Formula $x\in X_{n}$
+\end_inset
+
+.
+ More precisely, 
+\begin_inset Formula $T(X)_{n}$
+\end_inset
+
+ is the set of terms whose free variables are in 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ Then, 
+\begin_inset Formula $T(0)_{n}=\{\text{\ensuremath{\lambda}-term t}|fv(t)\subset\{0,\dots,n-1\}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Now take 
+\begin_inset Formula $X\in Set^{\mathbb{N}}$
+\end_inset
+
+ such that 
+\begin_inset Formula $X_{2}=\{M\}$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{n\neq2}=\emptyset$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $T(X)_{n}=\{\text{\ensuremath{\lambda}-term t with a metavariable \ensuremath{M} of arity \ensuremath{2}}|fv(t)\subset\{0,\dots,n-1\}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Another example: 
+\begin_inset Formula $Y_{2}=\{M,N\}$
+\end_inset
+
+, 
+\begin_inset Formula $Y_{0}=\{C\}$
+\end_inset
+
+ and 
+\begin_inset Formula $Y_{n}=\emptyset$
+\end_inset
+
+ otherwise.
+ Then 
+\begin_inset Formula $T(Y)_{n}=\{\text{\ensuremath{\lambda}-term t with metavariables \ensuremath{M},\ensuremath{N} of arity \ensuremath{2} and a constant metavariable \ensuremath{C}}|fv(t)\subset\{0,\dots,n-1\}\}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thanks to the monoid structure, 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras inherit a relative monad structure along 
+\begin_inset Formula $I\in Set^{\mathbb{N}}$
+\end_inset
+
+, which induce a (finitary) monad structure on sets (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/corr/AltenkirchCU14"
+literal "false"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Notation
+If 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, we designate the 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+ cardinal set 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+ by 
+\begin_inset Formula $n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Notation
+If 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, we designate by 
+\begin_inset Formula $yn$
+\end_inset
+
+ the coyoneda embedding into 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $yn(p)$
+\end_inset
+
+ is empty if 
+\begin_inset Formula $n\neq p$
+\end_inset
+
+ and a singleton set otherwise.
+ Note that morphisms from 
+\begin_inset Formula $yn$
+\end_inset
+
+ to 
+\begin_inset Formula $X$
+\end_inset
+
+ are in one-to-one correspondence with elements of 
+\begin_inset Formula $X_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Notation
+\begin_inset Formula $I\in Set^{\mathbb{N}}$
+\end_inset
+
+ designates the family 
+\begin_inset Formula $I_{n}=n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+A substitution of metavariable is a morphism in the Kleisli category.
+ For example, a Kleisli morphism from 
+\begin_inset Formula $X$
+\end_inset
+
+ to 
+\begin_inset Formula $Y$
+\end_inset
+
+ (as in the previous example) is a morphism 
+\begin_inset Formula $X\rightarrow T(Y)$
+\end_inset
+
+, i.e., for each 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, a map 
+\begin_inset Formula $X_{n}\rightarrow T(Y)_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Problem
+Let 
+\begin_inset Formula $t,u:yn\rightarrow T(V)$
+\end_inset
+
+ for some family 
+\begin_inset Formula $V\in Set^{\mathbb{N}}$
+\end_inset
+
+ (thought as a specification of metavariables).
+ We are looking for a weak coequaliser of 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ in the Kleisli category of 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ That is, we are looking for some 
+\begin_inset Formula $W$
+\end_inset
+
+ together with a morphim 
+\begin_inset Formula $V\rightarrow T(W)$
+\end_inset
+
+ coequalising 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ and factors any other coequalising morphism 
+\begin_inset Formula $V\rightarrow T(Z)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We can even try to look for an authentic coequaliser, meaning the fatorisation
+ is unique.
+ We prove that such a coequaliser exists as long as there exists at least
+ one unifier.
+\end_layout
+
+\begin_layout Definition
+A coequaliser in a category 
+\begin_inset Formula $C$
+\end_inset
+
+ of two morphisms 
+\begin_inset Formula $t,u:c\rightarrow c'$
+\end_inset
+
+ is a morphism 
+\begin_inset Formula $g:c'\rightarrow d$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $g\circ t=g\circ u$
+\end_inset
+
+ such that given any morphism 
+\begin_inset Formula $f:c'\rightarrow e$
+\end_inset
+
+ s.t., 
+\begin_inset Formula $f\circ t=f\circ u$
+\end_inset
+
+, there exists a unique morphism 
+\begin_inset Formula $h:d\rightarrow e$
+\end_inset
+
+ that factors 
+\begin_inset Formula $f$
+\end_inset
+
+ through 
+\begin_inset Formula $g$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+If 
+\begin_inset Formula $V\rightarrow T(W)$
+\end_inset
+
+ is a weak coequaliser, then 
+\begin_inset Formula $V\rightarrow T(W+y1)$
+\end_inset
+
+ also is.
+\end_layout
+
+\begin_layout Remark
+A (weak) coequaliser in Kleisli may not be a (weak) coequaliser in the larger
+ category of 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras.
+ For example, consider the empty signature.
+ Unifying 
+\begin_inset Formula $M(x,y)=M(y,x)$
+\end_inset
+
+ results in the substitution 
+\begin_inset Formula $M(x,y)\mapsto N$
+\end_inset
+
+ where 
+\begin_inset Formula $N$
+\end_inset
+
+ is a constant metavariable.
+ Consider a 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra 
+\begin_inset Formula $A$
+\end_inset
+
+ equipped with a binary commutative operation 
+\begin_inset Formula $op$
+\end_inset
+
+ and no closed terms.
+ Then, there is no factorising morphism for the substitution 
+\begin_inset Formula $M\mapsto op$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Question
+What about the subcategory of 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras that preserves connected limits, as monads on sets? Such monads
+ are equivalent to those equipped with a (cartesian) monad morphism to the
+ list monad, which intuitively simply lists the free variables in the order
+ they appear.
+ They are also equivalent to non-symmetric operads.
+\end_layout
+
+\begin_layout Section
+Unifying 
+\begin_inset Formula $M(\vec{{x}})=M(\vec{y})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Consider the case 
+\begin_inset Formula $M(\vec{{x}})=M(\vec{y}$
+\end_inset
+
+), where 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ (resp.
+ 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+) are distinct variables.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $M$
+\end_inset
+
+ is a metavariable of arity 
+\begin_inset Formula $m$
+\end_inset
+
+, then this situation is modelled by two injective maps 
+\begin_inset Formula $\xymatrix{m\ar@<+.5ex>[r]^{x}\ar@<-.5ex>[r]_{y} & N}
+$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $p\xrightarrow{e}m$
+\end_inset
+
+ denote its equaliser: 
+\begin_inset Formula $p$
+\end_inset
+
+ is the number of indices 
+\begin_inset Formula $i$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{i}=y_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Restriction to the case 
+\begin_inset Formula $V=ym$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Isolating the metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ in 
+\begin_inset Formula $V$
+\end_inset
+
+, we can write 
+\begin_inset Formula $V=V'+ym$
+\end_inset
+
+, and 
+\begin_inset Formula $t,u:yN\rightarrow T(V)$
+\end_inset
+
+ rewrites as 
+\begin_inset Formula $\xymatrix{yN\simeq0+yN\ar@<+.5ex>[r]^{i+t'}\ar@<-.5ex>[r]_{i+u'} & T(V')\oplus T(ym)}
+\simeq T(V'+ym)$
+\end_inset
+
+, where 
+\begin_inset Formula $\oplus$
+\end_inset
+
+ denotes the coproduct in the Kleisli category.
+ Thus, by usual colimit construction, the coequaliser of 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ is the coproduct of 
+\begin_inset Formula $T(V')$
+\end_inset
+
+ with the coequaliser of 
+\begin_inset Formula $t',u':yN\rightarrow T(ym)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Category of coequalising morphisms
+\end_layout
+
+\begin_layout Standard
+We want to construct the coequaliser, that is, the initial object in the
+ category of coequalising morphisms of 
+\begin_inset Formula $t',u'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This category is equivalent to the category whose objects consists of:
+\end_layout
+
+\begin_layout Itemize
+a free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra 
+\begin_inset Formula $O$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+an element 
+\begin_inset Formula $s:1\rightarrow O(m)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+s.t., 
+\begin_inset Formula $s$
+\end_inset
+
+ equalises 
+\begin_inset Formula $\xymatrix{O(m)\ar@<+.5ex>[r]^{O(x)}\ar@<-.5ex>[r]_{O(y)} & O(N)}
+$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:freealg-connected"
+
+\end_inset
+
+Free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras preserves connected limits
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof sketch]
+\end_layout
+
+\end_inset
+
+Monads on sets preserving connected limits are equivalent to (cartesian?)
+ monads equipped with a (cartesian) monad morphism to the list monad (this
+ morphism simply lists the free variables in the order they appear).
+ Clearly, this is the case of free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras (see the description at the beginning).
+\end_layout
+
+\begin_layout Standard
+As a consequence, the category of coequalising morphisms is equivalent to
+ the category of free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras 
+\begin_inset Formula $O$
+\end_inset
+
+ equipped with an element 
+\begin_inset Formula $1\rightarrow O(p)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Coequaliser arrow
+\end_layout
+
+\begin_layout Standard
+Clearly, the initial object is 
+\begin_inset Formula $T(yp)$
+\end_inset
+
+, equipped with its canonical element 
+\begin_inset Formula $1\rightarrow T(yp)(p)$
+\end_inset
+
+ corresponding by yoneda to 
+\begin_inset Formula $yp\rightarrow T(yp)$
+\end_inset
+
+ .
+ In particular, the unification results in a fresh metavariable whose arity
+ is 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Unifying 
+\begin_inset Formula $M_{1}(\vec{{x}})=M_{2}(\vec{y})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Consider the case 
+\begin_inset Formula $M_{1}(\vec{{x}})=M_{2}(\vec{y})$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ (resp.
+ 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+) are distinct variables.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ are metavariables of arities 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $m_{2}$
+\end_inset
+
+, then this situation is modelled by two injective maps
+\begin_inset Formula 
+\[
+\xymatrix{ & m_{1}\ar[d]^{x}\\
+m_{2}\ar[r]_{y} & N
+}
+\]
+
+\end_inset
+
+ Let 
+\begin_inset Formula $m_{1}\xleftarrow{e_{1}}p\xrightarrow{e_{2}}m_{2}$
+\end_inset
+
+ denote its pullback: 
+\begin_inset Formula $p$
+\end_inset
+
+ is the number of common values between 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p=\sum_{i\in m_{1},j\in m_{2}},x_{i}=y_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Restriction to the case 
+\begin_inset Formula $V=ym_{1}+ym_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Isolating the metavariables 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ in 
+\begin_inset Formula $V$
+\end_inset
+
+, we can write 
+\begin_inset Formula $V=V'+ym_{1}+ym_{2}$
+\end_inset
+
+, and 
+\begin_inset Formula $t,u:yN\rightarrow T(V)$
+\end_inset
+
+ rewrites as 
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+xymatrix{yN
+\backslash
+simeq0+yN
+\backslash
+ar@<+.5ex>[r]^-{i+t'}
+\backslash
+ar@<-.5ex>[r]_-{i+u'}   & T(V')
+\backslash
+oplus T(ym_{1})
+\backslash
+oplus T(ym_{2})}
+\backslash
+simeq T(V'+ym_{1}+ym_{2})$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, where 
+\begin_inset Formula $\oplus$
+\end_inset
+
+ denotes the coproduct in the Kleisli category, 
+\begin_inset Formula $t',u':yN\rightarrow T(y_{m_{1}}+y_{m_{2}})$
+\end_inset
+
+ and 
+\begin_inset Formula $i:0\rightarrow T(V')$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Lemma
+The coequaliser of 
+\begin_inset Formula $a+b\xrightarrow[f'+g']{f+g}c+d$
+\end_inset
+
+ is the coproduct of the coequaliser of 
+\begin_inset Formula $f,f':a\rightarrow c$
+\end_inset
+
+ and 
+\begin_inset Formula $g,g':b\rightarrow d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this case, we need to compute the coequaliser of 
+\begin_inset Formula $i,i:0\rightarrow T(V')$
+\end_inset
+
+ which is just 
+\begin_inset Formula $T(V')$
+\end_inset
+
+ and the coequaliser of 
+\begin_inset Formula $t',u':yN\rightarrow T(y_{m_{1}}+y_{m_{2}})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Category of coequalising morphisms
+\end_layout
+
+\begin_layout Standard
+We want to construct the coequalisers (in Kleisli), that is, the initial
+ object in the category of cocones over 
+\begin_inset Formula $yN\xrightarrow[u']{t'}T(ym_{1}+ym_{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This category is equivalent to the category whose objects consists of:
+\end_layout
+
+\begin_layout Itemize
+a free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra 
+\begin_inset Formula $O$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+maps 
+\begin_inset Formula $y_{m_{1}}+y_{m_{2}}\rightarrow O$
+\end_inset
+
+, or equivalently elements 
+\begin_inset Formula $s_{1}:1\rightarrow O(m_{1})$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{2}:1\rightarrow O(m_{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+s.t., 
+\begin_inset Formula 
+\[
+\xymatrix{1\ar[r]^{s_{1}}\ar[d]_{s_{2}} & O(m_{1})\ar[d]^{O(x)}\\
+O(m_{2})\ar[r]_{O(y)} & O(N)
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again, as a consequence of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:freealg-connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, this category is equivalent to the category of free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras 
+\begin_inset Formula $O$
+\end_inset
+
+ equipped with an element 
+\begin_inset Formula $1\rightarrow O(p)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Coequaliser arrow
+\end_layout
+
+\begin_layout Standard
+Clearly, the initial object is 
+\begin_inset Formula $T(yp)$
+\end_inset
+
+, equipped with its canonical element 
+\begin_inset Formula $1\rightarrow T(yp)(p)$
+\end_inset
+
+ corresponding by yoneda to 
+\begin_inset Formula $yp\rightarrow T(yp)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Unifying 
+\begin_inset Formula $M(\vec{x})=u$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Consider the case 
+\begin_inset Formula $M(\vec{{x}})=u$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ are distinct variables and 
+\begin_inset Formula $u$
+\end_inset
+
+ is not a metavariable application.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $M$
+\end_inset
+
+ appears in 
+\begin_inset Formula $u$
+\end_inset
+
+, then there is no unifier.
+ Same if the free variables of 
+\begin_inset Formula $u$
+\end_inset
+
+ are not in 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+.
+ We now assume the contrary.
+ If 
+\begin_inset Formula $M$
+\end_inset
+
+ is a metavariable of arity 
+\begin_inset Formula $m$
+\end_inset
+
+, then this situation is modelled by an injective map 
+\begin_inset Formula $\xymatrix{m\ar[r]^{x} & N}
+$
+\end_inset
+
+ and a morphism 
+\begin_inset Formula $u:ym\rightarrow T(V')$
+\end_inset
+
+, where 
+\begin_inset Formula $V=V'+ym$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Category of coequalising morphisms
+\end_layout
+
+\begin_layout Standard
+The category of coequalising morphisms is equivalent to the category whose
+ objects consists of
+\end_layout
+
+\begin_layout Itemize
+a free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra O
+\end_layout
+
+\begin_layout Itemize
+a morphism 
+\begin_inset Formula $f:V'\rightarrow O$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+an element 
+\begin_inset Formula $s:1\rightarrow O(m)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+such that
+\begin_inset Formula 
+\[
+\xymatrix{1\ar[rr]^{s}\ar[d]_{u'} &  & O(m)\ar[dd]^{O(x)}\\
+T(V')(m)\ar[d]_{f^{*}}\\
+O(m)\ar[rr]_{O(x)} &  & O(N)
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Moreover, since 
+\begin_inset Formula $x$
+\end_inset
+
+ is monomorphic, 
+\begin_inset Formula $O(x)$
+\end_inset
+
+ also is.
+ Indeed,
+\end_layout
+
+\begin_layout Lemma
+Free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebras preserve monomorphisms, as monads on sets.
+\end_layout
+
+\begin_layout Proof
+This is true of any pullback-preserving functor, and thus follows from Lemma
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:freealg-connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thus, the above required commutation amounts to commutation of the following
+ triangle
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\xymatrix{1\ar[rr]^{s}\ar[rd]_{u'} &  & O(m)\\
+ & T(V')(m)\ar[ru]_{f}
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As a consequence, the category of coequalising morphisms is isomorphic to
+ the coslice category under 
+\begin_inset Formula $V'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Unifying 
+\begin_inset Formula $o(\vec{t})=o(\vec{u})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Consider the case 
+\begin_inset Formula $o(\vec{t})=o(\vec{u})$
+\end_inset
+
+, where 
+\begin_inset Formula $o$
+\end_inset
+
+ is an operation of binding arity 
+\begin_inset Formula $(k_{1},\dots,k_{m})\in\mathbb{N}^{m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So, 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ are morphisms 
+\begin_inset Formula $yn\rightarrow T^{(\vec{k})}(V)=T^{(k_{1})}(V)\times\dots\times T^{(k_{m})}(V)\xrightarrow{o}T(V)$
+\end_inset
+
+ where 
+\begin_inset Formula $F^{(k)}(n)=F(n+k)$
+\end_inset
+
+.
+ Coequalising morphisms consists of
+\end_layout
+
+\begin_layout Itemize
+a free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra 
+\begin_inset Formula $O$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+a morphism 
+\begin_inset Formula $f:V\rightarrow O$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+such that the following diagram commute
+\begin_inset Formula 
+\[
+\xymatrix{yn\ar[r]\ar[d] & T^{(\vec{k})}(V)\ar[r]^{o} & T(V)\ar[dd]^{f^{*}}\\
+T^{(\vec{k})}(V)\ar[d]_{o}\\
+T(V)\ar[rr]_{f^{*}} &  & O
+}
+\]
+
+\end_inset
+
+or equivalently (since 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ is a 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra morphism)
+\begin_inset Formula 
+\[
+\xymatrix{yn\ar[r]\ar[d] & T^{(\vec{k})}(V)\ar[r]^{f^{(\vec{k})}} & O^{(\vec{k})}\ar[dd]^{o}\\
+T^{(\vec{k})}(V)\ar[d]_{f^{(\vec{k})}}\\
+O^{(\vec{k})}\ar[rr]_{o} &  & O
+}
+\]
+
+\end_inset
+
+But since 
+\begin_inset Formula $o$
+\end_inset
+
+ is monomorphic, this is again equivalent to making the following diagram
+ commute
+\begin_inset Formula 
+\[
+\xymatrix{yn\ar[r]\ar[d] & T^{(\vec{k})}(V)\ar[d]^{f^{(\vec{k})}}\\
+T^{(\vec{k})}(V)\ar[r]_{f^{(\vec{k})}} & O^{(\vec{k})}
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, morphisms 
+\begin_inset Formula $yn\rightarrow T^{(\vec{k})}(V)$
+\end_inset
+
+ are in one-to-one correspondence with morphisms 
+\begin_inset Formula $y(n+\vec{k})=y(n+k_{1})+\dots+y(n+k_{m})\rightarrow T(V)$
+\end_inset
+
+ and thus it means that 
+\begin_inset Formula $f:V\rightarrow O$
+\end_inset
+
+ coequalises the morphisms 
+\begin_inset Formula $\coprod_{i}y(n+k_{i})\rightrightarrows T(V)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+So, we are looking for a coequaliser for the above morphism.
+ Equivalently we are looking for the colimit over the following diagram
+\begin_inset Formula 
+\[
+\xymatrix{ & T(V)\\
+y(n+k_{1})\ar@<+.5ex>[ru]\ar@<-.5ex>[ru] & \dots & y(n+k_{m})\ar@<+.5ex>[lu]\ar@<-.5ex>[lu]
+}
+\]
+
+\end_inset
+
+We can construct such a colimit (reference?) by performing the subsequent
+ coequalisers in order.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "/home/ouguir/latex/tex-common/bib"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
