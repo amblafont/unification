@@ -2942,97 +2942,41 @@ The functor
 \begin_inset Formula $\mathbf{y}:\mathbb{F}^{o}\rightarrow\Kl T$
 \end_inset
 
- mapping 
-\begin_inset Formula $f:n\rightarrow m$
+ such that 
+\begin_inset Formula $Kl_{T}({\bf y}m,X)\simeq Set_{p}^{\mathbb{F}}(Jm,TX)$
 \end_inset
 
- to
-\begin_inset Formula 
-\[
-ym\rightarrow(Tyn)_{n}\cdot ym\xrightarrow{(Tyn)_{f}}(Tyn)_{m}\cdot ym\rightarrow Tyn
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-There is a family of adjunction 
-\begin_inset Formula $Set(X,R_{m}Y)\simeq\Kl T(L_{m}X,Y)$
-\end_inset
-
- parameterised by 
-\begin_inset Formula $m\in\mathbb{N}$
-\end_inset
-
-, where 
-\begin_inset Formula $L_{m}X=X\cdotp ym$
-\end_inset
-
- and 
-\begin_inset Formula $R_{m}Y=TY_{m}$
+ is natural in 
+\begin_inset Formula $m$
 \end_inset
 
 .
- By , 
-\begin_inset Formula $L_{m}$
-\end_inset
-
- Since 
-\begin_inset Formula $R_{m}$
-\end_inset
-
- is functorial in 
-\begin_inset Formula $m\in\mathbb{F}$
-\end_inset
-
-, by 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Theorem IV.7.3"
-key "MacLane:cwm"
-literal "false"
-
-\end_inset
-
  
-\begin_inset Formula $L_{m}$
-\end_inset
+\end_layout
 
- is functorial in 
-\begin_inset Formula $\mathbb{F}^{o}$
-\end_inset
-
- with action on 
-\begin_inset Formula $f:n\rightarrow m$
-\end_inset
-
- given by
+\begin_layout Proof
+We have the following diagram commuting up to isomorphism
 \begin_inset Formula 
 \[
-L_{m}\rightarrow L_{m}R_{n}L_{n}\xrightarrow{L_{m}R_{f}L_{n}}L_{m}R_{m}L_{n}\rightarrow L_{n}
+\xymatrix{\mathbb{N}\ar[d]\ar[r]^{y} & (Set^{\mathbb{N}})^{o}\ar[rr] &  & \Kl T^{o}\ar[d]^{y}\\
+\mathbb{F}\ar[r]_{y} & (Set^{\mathbb{F}})^{o}\ar[r]_{y} & Set^{Set^{\mathbb{N}}}\ar[r] & Set^{\Kl T}
+}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
-In particular, 
-\begin_inset Formula $L_{m}1\simeq ym$
+where 
+\begin_inset Formula $y$
 \end_inset
 
- is contravariantly functorial in 
-\begin_inset Formula $m\in\mathbb{F}$
+ denotes the yoneda embedding.
+ Since the left vertical morphism is bijective on objects and the right
+ vertical morphism is full and faithful, there is a filling of this square
+ 
+\begin_inset Formula $\mathbf{y}:\mathbb{F}^{o}\rightarrow\Kl T$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Standard
-The rest of this section is devoted to the proof of the following statement.
+ making triangles both commute up to isomorphism (TODO: find references)
 \end_layout
 
 \begin_layout Lemma
@@ -3051,7 +2995,7 @@ name "lem:y-preserves-connected"
 
 \begin_layout Proof
 We have a natural isomorphism 
-\begin_inset Formula $Kl_{T}({\bf y}m,X)\simeq T(X)_{m}\simeq Set_{p}^{\mathbb{F}}(Jm,TX)$
+\begin_inset Formula $Kl_{T}({\bf y}m,X)\simeq Set_{p}^{\mathbb{F}}(Jm,TX)$
 \end_inset
 
 , where 
