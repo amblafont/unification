@@ -100,34 +100,29 @@ Unification with binding
 \end_inset
 
 
+\begin_inset FormulaMacro
+\newcommand{\Eil}[1]{#1\text{-alg}}
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-In this document, we show existence of the most general unifier of a family
- of term pairs involving binding operations and 
+We show correctness of an algorithm computing the most general unifier of
+ a list of term pairs involving binding operations and 
 \begin_inset Formula $n$
 \end_inset
 
 -ary metavariables applied to distinct variables.
- The proof involves some categorical arguments and justifies the algorithm,
- detailed in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
+ We reason in the framework of 
+\begin_inset Formula $\Sigma$
 \end_inset
 
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:algorithm"
-plural "false"
-caps "false"
-noprefix "false"
+-monoids 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "FioreSzamozvancev"
+literal "false"
 
 \end_inset
 
@@ -144,7 +139,11 @@ In a category with coproducts, we denote by
 \end_inset
 
  the coproduct injection.
- Given a monad 
+ 
+\end_layout
+
+\begin_layout Standard
+Given a monad 
 \begin_inset Formula $T$
 \end_inset
 
@@ -194,7 +193,7 @@ In a category with coproducts, we denote by
 \end_inset
 
 .
- We sometimes denote by 
+ We denote by 
 \begin_inset Formula $f^{*}$
 \end_inset
 
@@ -238,14 +237,6 @@ Let
 
  on 
 \begin_inset Formula $Set^{\mathbb{N}}$
-\end_inset
-
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "BHL,FioreSzamozvancev"
-literal "false"
-
 \end_inset
 
  such that 
@@ -524,7 +515,7 @@ We denote by
 \end_layout
 
 \begin_layout Remark
-A substitution of metavariable is a morphism in the Kleisli category.
+A (metavariable) substitution is precisely a morphism in the Kleisli category.
  For example, a Kleisli morphism from 
 \begin_inset Formula $X$
 \end_inset
@@ -533,7 +524,7 @@ A substitution of metavariable is a morphism in the Kleisli category.
 \begin_inset Formula $Y$
 \end_inset
 
- (as in the previous example) is a morphism 
+ is a morphism 
 \begin_inset Formula $X\rightarrow T(Y)$
 \end_inset
 
@@ -580,7 +571,7 @@ finite
 \end_layout
 
 \begin_layout Standard
-Our main result consists in the following
+Our main result consists in the following.
 \end_layout
 
 \begin_layout Theorem
@@ -612,7 +603,8 @@ Let
 \end_layout
 
 \begin_layout Standard
-This theorem allows to compute the most general unifier of two terms.
+We use an explicit construction, detailed in the next section.
+ This theorem allows to compute the most general unifier of two terms.
 \end_layout
 
 \begin_layout Corollary
@@ -728,17 +720,29 @@ Free
 
  is the full subcategory of sets consisting in finite cardinals.
  Action on morphisms is given by renaming.
- Moreover, Kleisli morphisms are compatible with renaming, so that there
- is a functor 
-\begin_inset Formula $\mathcal{U:}\Kl T\rightarrow\mathcal{P},$
+ Moreover, Kleisli morphisms are compatible with renaming.
+\end_layout
+
+\begin_layout Proof
+See Appendix
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
 \end_inset
 
- where 
-\begin_inset Formula $\mathcal{P}$
-\end_inset
 
- is the category of pullback preserving functors 
-\begin_inset Formula $\mathbb{F}\rightarrow Set$
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:free-talg-pullback"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
 .
@@ -749,7 +753,7 @@ If
 \begin_inset Formula $n\in\mathbb{N}$
 \end_inset
 
-, we designate the 
+, we denote the 
 \begin_inset Formula $n^{th}$
 \end_inset
 
@@ -769,7 +773,7 @@ If
 \begin_inset Formula $n\in\mathbb{N}$
 \end_inset
 
-, we designate by 
+, we denote by 
 \begin_inset Formula $yn$
 \end_inset
 
@@ -823,7 +827,7 @@ Note that morphisms from
 \begin_inset Formula $I\in Set^{\mathbb{N}}$
 \end_inset
 
- designates the family 
+ denotes the family 
 \begin_inset Formula $I_{n}=n$
 \end_inset
 
@@ -856,6 +860,22 @@ Clearly, any family
 
  is isomorphic to 
 \begin_inset Formula $\coprod_{n}X_{n}yn\simeq\coprod_{n}\coprod_{x\in X_{n}}yn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Notation
+We represent a finite family 
+\begin_inset Formula $X\in Set^{\mathbb{N}}$
+\end_inset
+
+ as a finite (metavariable) context 
+\begin_inset Formula $x_{1}:n_{1},\dots,x_{p}:n_{p}$
+\end_inset
+
+ where 
+\begin_inset Formula $x_{i}\in X_{n_{i}}$
 \end_inset
 
 .
@@ -1350,8 +1370,7 @@ We can restrict to the case where of a single coequaliser.
 \end_layout
 
 \begin_layout Standard
-Soundness of this rule follows from the following general result categorical
- result.
+Soundness of this rule follows from the following general categorical lemma.
 \end_layout
 
 \begin_layout Lemma
@@ -1507,7 +1526,7 @@ The above rules are sound.
 \end_layout
 
 \begin_layout Proof
-We shall prove that the output substitution is the most general unifier.
+We prove that the output substitution is the most general unifier.
  
 \end_layout
 
@@ -1821,8 +1840,8 @@ vspace{1em}
 \[
 \dfrac{\begin{array}{c}
 o\text{ has binding arity \ensuremath{(n_{1},\dots,n_{p})}\ensuremath{\qquad} \ensuremath{M(\vec{x})=o(\vec{u})}\text{ is not a simple term pair}\ensuremath{\qquad\forall i,u_{i}\neq M(\dots)}}\\
-\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(1,\dots,m+n_{1})=_{q+n_{1}}u_{1}[\Uparrow^{n_{1}}(x_{i}\mapsto i)][M(1,\dots m)\mapsto o(\vec{N})],\dots\Rightarrow\sigma\dashv\Delta
-\end{array}}{\Gamma\vdash M(\vec{x})=_{q}o(\vec{u})\Rightarrow\sigma,M(1,\dots m)\mapsto o(\vec{N})\dashv\Delta}
+\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1}[M(1,\dots m)\mapsto o(\vec{N})],\dots\Rightarrow\sigma\dashv\Delta
+\end{array}}{\Gamma\vdash M(\vec{x})=_{q}o(\vec{u})\Rightarrow\sigma\circ M(1,\dots m)\mapsto o(\vec{N})\dashv\Delta}
 \]
 
 \end_inset
@@ -1882,15 +1901,19 @@ If there is a unifier, then
 \end_inset
 
 .
- Since 
+ 
+\end_layout
+
+\begin_layout Proof
+In case of a simple term (first rule above), 
 \begin_inset Formula $M$
 \end_inset
 
- does not appear in the 
+ does not appear in 
 \begin_inset Formula $o(\vec{u})$
 \end_inset
 
-, it means that the corresponding morphism 
+, the corresponding morphism 
 \begin_inset Formula $yq\rightarrow T(\Gamma)$
 \end_inset
 
@@ -1931,15 +1954,12 @@ with
 \begin_inset Formula $B\leftarrow A\rightarrow C$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
-In case of a simple term, 
+.
+ Moreover, the free variable condition 
 \begin_inset Formula $fv(o(\vec{u}))\subset\vec{x}$
 \end_inset
 
- implies that there exists 
+ ensures that there exists 
 \begin_inset Formula $u'\in T(\Gamma')_{m}$
 \end_inset
 
@@ -2017,9 +2037,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-Let us now tackle the other rule.
+Let us now tackle the other rule, by showing that the category of unifiers
+ for the premise is equivalent to the category of unifiers for the conclusion.
  The morphism 
-\begin_inset Formula $yq\rightarrow T(\Gamma')$
+\begin_inset Formula $yq\rightarrow T(\Gamma)$
 \end_inset
 
  corresponding to 
@@ -2027,11 +2048,11 @@ Let us now tackle the other rule.
 \end_inset
 
  factors through 
-\begin_inset Formula $T(\Gamma')^{(\vec{n})}\xrightarrow{o}T(\Gamma')$
+\begin_inset Formula $T(\Gamma)^{(\vec{n})}\xrightarrow{o}T(\Gamma)$
 \end_inset
 
 , where 
-\begin_inset Formula $T(\Gamma')_{k}^{(\vec{n})}=\prod_{i}T(\Gamma')_{k+n_{i}}$
+\begin_inset Formula $T(\Gamma)_{k}^{(\vec{n})}=\prod_{i}T(\Gamma)_{k+n_{i}}$
 \end_inset
 
 .
@@ -2061,19 +2082,23 @@ Let us now tackle the other rule.
 \end_inset
 
  with morphisms 
-\begin_inset Formula $ym\xrightarrow{g}T(\Delta)^{(\vec{n})}$
+\begin_inset Formula $h:\Gamma'\rightarrow T(\Delta)$
 \end_inset
 
  and 
-\begin_inset Formula $f:\Gamma'\rightarrow T(\Delta)$
+\begin_inset Formula $g:ym\rightarrow T(\Delta)^{(\vec{n})}$
 \end_inset
 
- such that the following diagram commutes.
+ such that the following diagram commutes, where 
+\begin_inset Formula $f=[o\circ g,h]:\Gamma\rightarrow T(\Delta)$
+\end_inset
+
+
 \begin_inset Formula 
 \[
-\xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar[r]^{g^{*}} & T(\Delta)^{(\vec{n})}\ar[dd]^{o}\\
-T(\Gamma')^{\vec{(n)}}\ar[d]_{o}\\
-T(\Gamma')\ar[rr]_{f^{*}} &  & T(\Delta)
+\xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar@{->}[r]^{g^{*}} & T(\Delta)^{(\vec{n})}\ar[dd]^{o}\\
+T(\Gamma)^{\vec{(n)}}\ar[d]_{o}\\
+T(\Gamma)\ar[rr]_{f^{*}} &  & T(\Delta)
 }
 \]
 
@@ -2091,8 +2116,8 @@ Now, since
  commutation of the following one:
 \begin_inset Formula 
 \[
-\xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar[r]^{g^{*}} & T(\Delta)^{(\vec{n})}\ar[dd]^{o}\\
-T(\Gamma')^{\vec{(n)}}\ar[d]_{f^{*^{(\vec{n})}}}\\
+\xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar@{->}[r]^{g^{*}} & T(\Delta)^{(\vec{n})}\ar[dd]^{o}\\
+T(\Gamma)^{\vec{(n)}}\ar[d]_{f^{*^{(\vec{n})}}}\\
 T(\Delta)^{(\vec{n})}\ar[rr]_{o} &  & T(\Delta)
 }
 \]
@@ -2110,8 +2135,8 @@ Since
  is injective, this is equivalent to commutation of the following diagram.
 \begin_inset Formula 
 \[
-\xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar[d]^{g^{*}}\\
-T(\Gamma')^{\vec{(n)}}\ar[r]_{f^{*^{(\vec{n})}}} & T(\Delta)^{(\vec{n})}
+\xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar@{->}[d]^{g^{*}}\\
+T(\Gamma)^{(\vec{n})}\ar[r]_{f^{*^{(\vec{n})}}} & T(\Delta)^{(\vec{n})}
 }
 \]
 
@@ -2138,44 +2163,81 @@ Now, a morphism
 \end_inset
 
 .
+ Note that 
+\begin_inset Formula $u$
+\end_inset
+
+ can be retrieved from 
+\begin_inset Formula $u'$
+\end_inset
+
+ as the composition 
+\begin_inset Formula $yk\xrightarrow{d}y(k+\vec{n})^{\vec{(n)}}\xrightarrow{u'^{(\vec{n})}}Y^{(\vec{n})}$
+\end_inset
+
+.
  Thus, a unifier is given by a family 
 \begin_inset Formula $\Delta$
 \end_inset
 
  together with Kleisli morphisms 
-\begin_inset Formula $g:y(m+\vec{n})\rightarrow T(\Delta)$
+\begin_inset Formula $g':y(m+\vec{n})\rightarrow T(\Delta)$
 \end_inset
 
  and 
-\begin_inset Formula $f:\Gamma'\rightarrow T(\Delta)$
+\begin_inset Formula $h:\Gamma'\rightarrow T(\Delta)$
 \end_inset
 
  such that the following diagram commutes.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+the previous diagram commutes if and only if the following one does.
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
-\xymatrix{y(q+\vec{n})\ar[r]^{M(\vec{x})'}\ar[d]_{u'} & T(y(m+\vec{n}))\ar[d]^{g^{*}}\\
-T(\Gamma')\ar[r]_{f^{*}} & T(\Delta)
+\xymatrix{y(q+\vec{n})\ar[r]^{M(\vec{x})'}\ar[d]_{u'} & T(y(m+\vec{n}))\ar[d]^{g'^{*}}\\
+T(\Gamma)\ar[r]_{[o\circ g'^{(\vec{n})}\circ d,h]^{*}} & T(\Delta)
 }
 \]
 
 \end_inset
 
-Finally, a unifier is equivalently given as a cocone over the coequaliser
- diagram
+Now, let us look at what a unifier is for the premise
 \begin_inset Formula 
 \[
-\xymatrix{ & T(y(m+\vec{n}))\ar@{^{(}->}[dr]\\
-y(q+\vec{n})\ar[ru]^{M(\vec{x})'}\ar[dr]_{u'} &  & T(\Gamma'+y(m+\vec{n}))\\
- & T(\Gamma')\ar@{^{(}->}[ru]
+\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1}[M(1,\dots m)\mapsto o(\vec{N})],\dots\Rightarrow\sigma\dashv\Delta
+\]
+
+\end_inset
+
+It is equivalently given as a cocone over the coequaliser diagram
+\begin_inset Formula 
+\[
+\xymatrix{ & T(y(m+\vec{n}))\ar@{^{(}->}[drr]\\
+y(q+\vec{n})\ar[ru]^{M(\vec{x})'}\ar[dr]_{u'} &  &  & T(\Gamma'+y(m+\vec{n}))\\
+ & T(\Gamma)\ar@{^{(}->}[rru]_{(id_{\Gamma'}+\delta)^{*}}
 }
 \]
 
 \end_inset
 
-This coequaliser is exactly what the premise of the rule is computing, by
- induction hypothesis.
- The equivalence between cocones over this diagram and the original one
- justifies the output substitution.
+where 
+\begin_inset Formula $\delta:ym\rightarrow T(y(m+\vec{n}))$
+\end_inset
+
+ is given by 
+\begin_inset Formula $ym\xrightarrow{d}y(m+\vec{n})^{(\vec{n})}\rightarrow T(y(m+\vec{n}))\xrightarrow{o}T(y(m+\vec{n}))$
+\end_inset
+
+.
+ TODO: check that the category of unifiers are isomorphic.
 \end_layout
 
 \begin_layout Subsection
@@ -2197,6 +2259,35 @@ name "subsec:case-mvar-var"
 \end_layout
 
 \begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\backslash
+vec{n}
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
 \begin_inset Formula 
 \[
 \dfrac{}{\Gamma\vdash M(\vec{x})=_{q}x_{i}:M(1,\dots,m)\mapsto i\dashv\Gamma\backslash\{M\}}
@@ -2263,46 +2354,108 @@ name "sec:free-talg-pullback"
 \end_layout
 
 \begin_layout Standard
-WIP.
-\end_layout
-
-\begin_layout Standard
-More formally, we prove that 
+In this section we show that renaming turn free 
 \begin_inset Formula $T$
 \end_inset
 
- can be lifted to the category 
-\begin_inset Formula $\mathcal{P}$
-\end_inset
-
- of functors 
+-algebras into functors 
 \begin_inset Formula $\mathbb{F}\rightarrow Set$
 \end_inset
 
  preserving pullbacks.
- Then, it remains to show that the functorial action on a free 
+ In fact, we are going to show it for the initial 
 \begin_inset Formula $T$
 \end_inset
 
--algebra is precisely the one considered.
+-algebra, since a free 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra on 
+\begin_inset Formula $X\in Set^{\mathbb{N}}$
+\end_inset
+
+ is equivalently the initial 
+\begin_inset Formula $\Sigma'$
+\end_inset
+
+-monoid, for 
+\begin_inset Formula $\Sigma'$
+\end_inset
+
+ the binding signature extending 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ with first order operations as specified by 
+\begin_inset Formula $X$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Let us first note that a functor from a complete category to a locally small
- category preserves pullbacks if and only if it preserves any finite connected
- limit.
+Let us first explain where renaming comes from.
+ Every binding signature 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ induces an endofunctor on 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+ that we still denote by 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+ For example, in the case of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, 
+\begin_inset Formula $\Sigma(X)_{n}=X_{n}\times X_{n}+X_{n+1}$
+\end_inset
+
+.
+ 
 \end_layout
 
-\begin_layout Definition
-Let 
-\begin_inset Formula $\mathcal{P}$
+\begin_layout Lemma
+Denoting 
+\begin_inset Formula $\Sigma^{*}$
 \end_inset
 
- be the category of functors 
-\begin_inset Formula $\mathbb{F}\rightarrow Set$
+ the free monad 
+\begin_inset Formula $\Sigma^{*}X=\mu Z.X+\Sigma(Z)$
 \end_inset
 
- preserving pullbacks.
+ induced by a binding signature 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, the initial 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+-monoid is 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+See 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 2.15"
+key "BHL"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2313,35 +2466,490 @@ Let
 \end_layout
 
 \begin_layout Lemma
-The forgetful functor 
-\begin_inset Formula $p:\mathcal{P}\rightarrow Set^{\mathbb{F}}$
+Given a binding signature 
+\begin_inset Formula $\Sigma$
 \end_inset
 
- has a right adjoint.
+, the free monad 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+ lifts to the category 
+\begin_inset Formula $Set^{\mathbb{F}}$
+\end_inset
+
+.
+ Denoting 
+\begin_inset Formula $\underline{I}$
+\end_inset
+
+ the canonical embedding 
+\begin_inset Formula $\mathbb{F}\rightarrow Set$
+\end_inset
+
+, renaming on 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+ is given by the renaming structure on 
+\begin_inset Formula $\Sigma^{*}\underline{I}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
-This functor is cocontinuous, and morover 
-\begin_inset Formula ${\cal P}$
+Renaming on 
+\begin_inset Formula $\Sigma^{*}I$
 \end_inset
 
- is accessible since it is a limit sketch.
+ is induced by substitution.
+ Substitution on 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+ induced by a monoid structure on them (for a monoidal structure on 
+\begin_inset Formula $Set^{\mathbb{F}}$
+\end_inset
+
+ or 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+, as in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/corr/AltenkirchCU14"
+literal "false"
+
+\end_inset
+
+) induced by a strength 
+\begin_inset Formula $\Sigma(A)\otimes B\rightarrow\Sigma(A\otimes B)$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Proposition
-\begin_inset Formula $T$
+\begin_layout Proof
+TODO
+\begin_inset Note Note
+status open
+
+\begin_layout Proof
+One crucial feature of 
+\begin_inset Formula $\Sigma$
 \end_inset
 
- lifts to 
-\begin_inset Formula $T':\mathcal{P}\rightarrow\mathcal{P}$
+ to define substitution (and in particular renaming) is that it comes equipped
+ with a strength 
+\begin_inset Formula $\Sigma(A)\otimes B\rightarrow\Sigma(A\otimes B)$
 \end_inset
 
- yielding a natural isomorphism
+, where the monoidal product is given by 
+\begin_inset Formula $Lan_{I}A\circ B$
+\end_inset
+
+, ,.
+ Let us denote by 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+ the monad 
+\begin_inset Formula $-\otimes I$
+\end_inset
+
+, which is the free renaming monad: 
+\begin_inset Formula $\mathbf{p}(X)_{n}=\sum_{p}X_{n}\times p^{n}$
+\end_inset
+
+, so that the category of functors 
+\begin_inset Formula $\mathbb{F}\rightarrow Set$
+\end_inset
+
+ is equivalent to the category of 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+-algebras.
+\end_layout
+
+\begin_layout Proof
+But thanks to the strength, 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ lifts to the category of 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+-algebras, through the natural transformation 
+\begin_inset Formula $\boldsymbol{p}\Sigma\rightarrow\Sigma\boldsymbol{p}$
+\end_inset
+
+.
+ Moreover, 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+ has a right adjoint 
+\begin_inset Formula $\boldsymbol{q}=(Ran_{I}-)\circ I$
+\end_inset
+
+.
+ Then, the lifting induces a monadic distributive law 
+\begin_inset Formula $\boldsymbol{p}\Sigma^{*}\rightarrow\Sigma^{*}\boldsymbol{p}$
+\end_inset
+
+, as the transpose along the adjunction 
+\begin_inset Formula $\mathbf{p}\dashv\boldsymbol{q}$
+\end_inset
+
+ of the universal monad morphism induced by 
+\begin_inset Formula $\Sigma\rightarrow\mathbf{q}\Sigma\boldsymbol{p}\rightarrow\mathbf{q}\Sigma^{*}\boldsymbol{p}$
+\end_inset
+
+.
+ As a consequence, 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+ lifts on the category of 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+-algebras.
+ Now, note that 
+\begin_inset Formula $I$
+\end_inset
+
+ has a canonical renaming structure, so is equipped with a 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+-algebra structure.
+ As a consequence, 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+ inherits a 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+-algebra structure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+One crucial feature of 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ to define substitution (and in particular renaming) is that it comes equipped
+ with a strength 
+\begin_inset Formula $\Sigma(A)\otimes B\rightarrow\Sigma(A\otimes B)$
+\end_inset
+
+, where the monoidal product is given by 
+\begin_inset Formula $Lan_{I}A\circ B$
+\end_inset
+
+, ,.
+ Let us denote by 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+ the monad 
+\begin_inset Formula $-\otimes I$
+\end_inset
+
+, which is the monad that freely adds renamings (
+\begin_inset Formula $\mathbf{p}(X)_{n}=\sum_{p}X_{n}\times p^{n}$
+\end_inset
+
+, so that the category of functors 
+\begin_inset Formula $\mathbb{F}\rightarrow Set$
+\end_inset
+
+ is equivalent to the category of 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+-algebras.
+\end_layout
+
+\begin_layout Plain Layout
+But thanks to the strength, 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ lifts to the category of 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+-algebras, through the natural transformation 
+\begin_inset Formula $\boldsymbol{p}\Sigma\rightarrow\Sigma\boldsymbol{p}$
+\end_inset
+
+.
+ Moreover, 
+\begin_inset Formula $\boldsymbol{p}$
+\end_inset
+
+ has a right adjoint 
+\begin_inset Formula $\boldsymbol{q}=(Ran_{I}-)\circ I$
+\end_inset
+
+.
+ Then, the lifting induces a monadic distributive law 
+\begin_inset Formula $\boldsymbol{p}\Sigma^{*}\rightarrow\Sigma^{*}\boldsymbol{p}$
+\end_inset
+
+, as the transpose along the adjunction 
+\begin_inset Formula $\mathbf{p}\dashv\boldsymbol{q}$
+\end_inset
+
+ of the universal monad morphism induced by 
+\begin_inset Formula $\Sigma\rightarrow\mathbf{q}\Sigma\boldsymbol{p}\rightarrow\mathbf{q}\Sigma^{*}\boldsymbol{p}$
+\end_inset
+
+.
+ As a consequence, 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+ lifts on the category of 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+-algebras.
+ Now, note that 
+\begin_inset Formula $I$
+\end_inset
+
+ has a canonical renaming structure, so is equipped with a 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+-algebra structure.
+ As a consequence, 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+ inherits a 
+\begin_inset Formula $\mathbf{p}$
+\end_inset
+
+-algebra structure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+What remains to show is that this renaming preserves pullbacks.
+ Let us reason on the category 
+\begin_inset Formula $Set^{\mathbb{F}}$
+\end_inset
+
+ on which 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+ lifts, as we just argued.
+ Now, 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+ is computed as the initial algebra of 
+\begin_inset Formula $H:Set^{\mathbb{F}}\rightarrow Set^{\mathbb{F}}$
+\end_inset
+
+ mapping 
+\begin_inset Formula $X$
+\end_inset
+
+ to 
+\begin_inset Formula $I+\Sigma(X)$
+\end_inset
+
+.
+ This means that 
+\begin_inset Formula $\Sigma^{*}I$
+\end_inset
+
+ is the colimit over the initial 
+\begin_inset Formula $\omega$
+\end_inset
+
+-chain
 \begin_inset Formula 
 \[
-\xymatrix{\mathcal{P}\ar[r]^{T'}\ar[d]_{p} & \mathcal{P}\ar[d]^{p}\\
-Set^{\mathbb{N}}\ar[r]_{T} & Set^{\mathbb{N}}
+\emptyset\rightarrow H(\emptyset)\rightarrow\dots\rightarrow H..H(..(\emptyset..))\rightarrow\dots
+\]
+
+\end_inset
+
+Since pullback preserving functors are preserved by filtered colimits (as
+ filtered colimits commute with finite limits), it is enough to show that
+ each functor 
+\begin_inset Formula $H^{\circ n}(\emptyset)$
+\end_inset
+
+ preseves pullbacks, which again amounts to showing that 
+\begin_inset Formula $H$
+\end_inset
+
+ preserves functors preservings pullbacks.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Before that, we introduce a useful characterising lemma for endofunctors
+ induced by a binding signature.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, 
+\begin_inset Formula $K(F)=F_{0}\times F_{0}\coprod F_{1}$
+\end_inset
+
+.
+ Since coproducts commute with connected limits, 
+\begin_inset Formula $K$
+\end_inset
+
+ indeed preserves conneced limits.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+The endofunctor 
+\begin_inset Formula $H:Set^{\mathbb{F}}\rightarrow Set^{\mathbb{F}}$
+\end_inset
+
+ maps functors preserving pullbacks to functors preserving pullbacks.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be a functor 
+\begin_inset Formula $\mathbb{F}\rightarrow Set$
+\end_inset
+
+ preserving pullbacks.
+ Let
+\begin_inset Formula 
+\[
+\xymatrix{A\ar[r]\ar[d] & B\ar[d]\\
+C\ar[r] & D
 }
+\]
+
+\end_inset
+
+be a pullback in 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+.
+ Let us show that the following square is a pullback.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\xymatrix{H(F)_{A}\ar[r]\ar[d] & H(F)_{B}\ar[d]\\
+H(F)_{C}\ar[r] & H(F)_{D}
+}
+\]
+
+\end_inset
+
+Since pullbacks commute with coproducts in 
+\begin_inset Formula $Set$
+\end_inset
+
+, this is enough to show that the following square is a pullback
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\xymatrix{\Sigma(F)_{A}\ar[r]\ar[d] & \Sigma(F)_{B}\ar[d]\\
+\Sigma(F)_{C}\ar[r] & \Sigma(F)_{D}
+}
+\]
+
+\end_inset
+
+This follows from the fact that 
+\begin_inset Formula $\Sigma(F)$
+\end_inset
+
+ is isomorphic to some 
+\begin_inset Formula $\coprod_{i}F^{(\vec{n_{i}})}$
+\end_inset
+
+, and coproducts commute with connected limits.
+\end_layout
+
+\begin_layout Notation
+Let 
+\begin_inset Formula $Set_{p}^{\mathbb{F}}$
+\end_inset
+
+ be the full subcategory of functors preserving pullbacks.
+\end_layout
+
+\begin_layout Lemma
+The functor 
+\begin_inset Formula $\mathbb{N}\xrightarrow{y}Set^{\mathbb{N}}\rightarrow\Kl T$
+\end_inset
+
+ extends to a functor 
+\begin_inset Formula $\mathbf{y}:\mathbb{F}^{o}\rightarrow\Kl T$
+\end_inset
+
+ mapping 
+\begin_inset Formula $f:n\rightarrow m$
+\end_inset
+
+ to
+\begin_inset Formula 
+\[
+ym\rightarrow(Tyn)_{n}\cdot ym\xrightarrow{(Tyn)_{f}}(Tyn)_{m}\cdot ym\rightarrow Tyn
 \]
 
 \end_inset
@@ -2349,180 +2957,82 @@ Set^{\mathbb{N}}\ar[r]_{T} & Set^{\mathbb{N}}
 
 \end_layout
 
-\begin_layout Standard
-TODO: finish the proof.
-\end_layout
-
-\begin_layout Standard
-The rest of this section is devoted to the proof of the following statement.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:mono-epi"
-
+\begin_layout Proof
+There is a family of adjunction 
+\begin_inset Formula $Set(X,R_{m}Y)\simeq\Kl T(L_{m}X,Y)$
 \end_inset
 
-Let 
-\begin_inset Formula $f:p\rightarrow q$
+ parameterised by 
+\begin_inset Formula $m\in\mathbb{N}$
 \end_inset
 
- be an injective map.
- Then, the induced map 
-\begin_inset Formula $yq\rightarrow T(yp)$
+, where 
+\begin_inset Formula $L_{m}X=X\cdotp ym$
 \end_inset
 
- is epimorphic.
-\end_layout
-
-\begin_layout Remark
-Any free 
-\begin_inset Formula $T$
-\end_inset
-
--algebra 
-\begin_inset Formula $T(X)$
-\end_inset
-
- induces a functor 
-\begin_inset Formula $\Kl T({\bf y}-,X):\mathbb{F}\rightarrow Set$
-\end_inset
-
- that we still denote by 
-\begin_inset Formula $T(X)$
-\end_inset
-
-, extending 
-\begin_inset Formula $T(X)\simeq\hom(y-,TX):\mathbb{N}\rightarrow Set$
+ and 
+\begin_inset Formula $R_{m}Y=TY_{m}$
 \end_inset
 
 .
- Given a 
-\begin_inset Formula $f:p\rightarrow q$
+ By , 
+\begin_inset Formula $L_{m}$
 \end_inset
 
-, the map 
-\begin_inset Formula $T(X)_{f}:T(X)_{p}\rightarrow T(X)_{q}$
+ Since 
+\begin_inset Formula $R_{m}$
 \end_inset
 
- is the renaming of free variables.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Let us detail more formally the morphism 
-\begin_inset Formula $-^{m}\rightarrow T(ym)$
+ is functorial in 
+\begin_inset Formula $m\in\mathbb{F}$
 \end_inset
 
-.
- Note that 
-\begin_inset Formula $-^{m}$
-\end_inset
-
- is isomorphic to 
-\begin_inset Formula $ym\otimes I$
-\end_inset
-
-, for the tensor product 
-\begin_inset Formula $A\otimes B=Lan_{I}A\circ B$
-\end_inset
-
-.
- Moreover, 
-\begin_inset Formula $T(y_{m})$
-\end_inset
-
- is the initial algebra 
-\begin_inset Formula $\mu Z.I+ym\otimes Z+\Sigma(Z)$
-\end_inset
-
- (see
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, by 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "BHL,FioreSzamozvancev"
+after "Theorem IV.7.3"
+key "MacLane:cwm"
 literal "false"
 
 \end_inset
 
-).
- Then, 
-\begin_inset Formula $-^{m}\rightarrow T(ym)$
+ 
+\begin_inset Formula $L_{m}$
 \end_inset
 
- is the composition 
-\begin_inset Formula $ym\otimes I\rightarrow ym\otimes T(ym)\rightarrow T(ym)$
+ is functorial in 
+\begin_inset Formula $\mathbb{F}^{o}$
+\end_inset
+
+ with action on 
+\begin_inset Formula $f:n\rightarrow m$
+\end_inset
+
+ given by
+\begin_inset Formula 
+\[
+L_{m}\rightarrow L_{m}R_{n}L_{n}\xrightarrow{L_{m}R_{f}L_{n}}L_{m}R_{m}L_{n}\rightarrow L_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+In particular, 
+\begin_inset Formula $L_{m}1\simeq ym$
+\end_inset
+
+ is contravariantly functorial in 
+\begin_inset Formula $m\in\mathbb{F}$
 \end_inset
 
 .
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Pas clair en fait! Note: un endofoncteur sur Set preserve les limites connexes
- si et seulement si c'est un coproduit de yonedas.
- Un endofoncteur sur Set est finitaire et preserve les limites connexes
- si et seulement si il est muni d'un morphisme cartesien vers List.
- Mais un foncteur 
-\begin_inset Formula $\mathbb{F}\rightarrow Set$
-\end_inset
-
- peut preserver les limites connexes sans que son extension de Kan les preserve!
- Par exemple 
-\begin_inset Formula $-^{\omega}$
-\end_inset
-
- ne s'etend pas en un foncteur preservant les limites connexes comme par
- exemple l'ensembles des entiers coinductifs.
- Le probleme c'est que les endofoncteurs finitaires sur Set preservant les
- limites connexes ne sont pas stables par colimite filtree (en particulier
- les chaines initiales).
- Mon contre example c'etait la colimite 
-\begin_inset Formula $y1\rightarrow y2\rightarrow y3\rightarrow...$
-\end_inset
-
- mais maintenant j'ai un doute.
- Car mon argument c'etait qua la fin on recupere 
-\begin_inset Formula $y\omega$
-\end_inset
-
- qui n'est pas finitaire.
- Pourtant c'est une colimite d'endo finitaires, donc la colimite devrait
- se calculer comme d'hab non?
-\end_layout
-
-\end_inset
-
-
+The rest of this section is devoted to the proof of the following statement.
 \end_layout
 
 \begin_layout Lemma
@@ -2533,24 +3043,15 @@ name "lem:y-preserves-connected"
 \end_inset
 
 
-\begin_inset Formula ${\bf y}:\mathbb{F}^{o}\rightarrow\Kl T$
+\begin_inset Formula ${\bf y}^{o}:\mathbb{F}\rightarrow\Kl T^{o}$
 \end_inset
 
- preserves finite connected limits.
+ preserves pullbacks, hence finite connected limits.
 \end_layout
 
 \begin_layout Proof
-Let us denote by 
-\begin_inset Formula $Con$
-\end_inset
-
- the full subcategory of functors 
-\begin_inset Formula $\mathbb{F}\rightarrow Set$
-\end_inset
-
- preserving finite connected limits.
- We have a natural isomorphism 
-\begin_inset Formula $Kl_{T}({\bf y}m,X)\simeq T(X)_{m}\simeq Con(Jm,TX)$
+We have a natural isomorphism 
+\begin_inset Formula $Kl_{T}({\bf y}m,X)\simeq T(X)_{m}\simeq Set_{p}^{\mathbb{F}}(Jm,TX)$
 \end_inset
 
 , where 
@@ -2579,35 +3080,34 @@ Let us denote by
 \begin_inset Formula $J$
 \end_inset
 
- is the coyoneda embedding, 
+ is the yoneda embedding, 
 \begin_inset Formula $J$
 \end_inset
 
- preserves finite connected colimits, as we restrict to the category of
- presheaves preserving finite connected limits.
- 
+ preserves pullbacks, as we restrict to the category of presheaves preserving
+ pullbacks.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:mono-epi"
+
 \end_inset
 
+Let 
+\begin_inset Formula $f:p\rightarrow q$
+\end_inset
 
+ be an injective map.
+ Then, the induced map 
+\begin_inset Formula $\mathbf{y}f:yq\rightarrow T(yp)$
+\end_inset
+
+ is epimorphic.
 \end_layout
 
 \begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Proof of Lemma~
-\backslash
-ref{lem:mono-epi}]
-\end_layout
-
-\end_inset
-
 The proof follows from Lemma
 \begin_inset ERT
 status open
