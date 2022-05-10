@@ -1690,7 +1690,7 @@ This rule is sound.
 \end_layout
 
 \begin_layout Proof
-The result follows easily from the fact that a substitution unifies 
+The result follows from the fact that a substitution unifies 
 \begin_inset Formula $o(\vec{t})=o(\vec{u})$
 \end_inset
 
@@ -1720,118 +1720,6 @@ name "subsec:case-mvar-op"
 
 \end_inset
 
-We need to make the distinction whether it is a 
-\emph on
-simple
-\emph default
- term pair or not, in order to avoid the algorithm to loop.
-\end_layout
-
-\begin_layout Definition
-A term pair 
-\begin_inset Formula $t=u$
-\end_inset
-
- is called
-\emph on
- simple 
-\emph default
-it is of the shape 
-\begin_inset Formula $M(\vec{x})=o(N_{1}(\vec{y_{1}}),\dots,N_{n}(\vec{y_{n}}))$
-\end_inset
-
-, where
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset Formula $\vec{x}$
-\end_inset
-
-, 
-\begin_inset Formula $\vec{y_{1}}$
-\end_inset
-
-, 
-\begin_inset Formula $\dots$
-\end_inset
-
-, 
-\begin_inset Formula $\vec{y_{n}}$
-\end_inset
-
- are lists of variables and 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
- are distinct;
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\forall i,N_{i}\neq M$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $o$
-\end_inset
-
- is a binding operation of the signature;
-\end_layout
-
-\begin_layout Itemize
-the free variables in 
-\begin_inset Formula $u$
-\end_inset
-
- are included in 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-\text{\ensuremath{o} has binding arity \ensuremath{(n_{1},\dots,n_{p})}}\qquad\ensuremath{M(\vec{x})=o(\vec{N})}\text{ is a simple term pair}\end{array}}{\Gamma\vdash M(\vec{x})=_{q}o(\vec{N})\Rightarrow M(1,\dots,m)\mapsto o(\vec{N})[x_{i}\mapsto i]\dashv\Gamma\backslash\{M\}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
@@ -1839,8 +1727,8 @@ vspace{1em}
 \begin_inset Formula 
 \[
 \dfrac{\begin{array}{c}
-o\text{ has binding arity \ensuremath{(n_{1},\dots,n_{p})}\ensuremath{\qquad} \ensuremath{M(\vec{x})=o(\vec{u})}\text{ is not a simple term pair}\ensuremath{\qquad\forall i,u_{i}\neq M(\dots)}}\\
-\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1}[M(1,\dots m)\mapsto o(\vec{N})],\dots\Rightarrow\sigma\dashv\Delta
+o\text{ has binding arity \ensuremath{(n_{1},\dots,n_{p})}\ensuremath{\qquad} \ensuremath{M}\text{ does not occur in \ensuremath{\vec{u}}}}\\
+\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1},\dots\Rightarrow\sigma\dashv\Delta
 \end{array}}{\Gamma\vdash M(\vec{x})=_{q}o(\vec{u})\Rightarrow\sigma\circ M(1,\dots m)\mapsto o(\vec{N})\dashv\Delta}
 \]
 
@@ -1850,7 +1738,7 @@ o\text{ has binding arity \ensuremath{(n_{1},\dots,n_{p})}\ensuremath{\qquad} \e
 \end_layout
 
 \begin_layout Lemma
-The above rules are sound.
+The above rule are sound.
 \end_layout
 
 \begin_layout Proof
@@ -1862,11 +1750,7 @@ If there is a unifier, then
 \begin_inset Formula $\vec{u}$
 \end_inset
 
-, so the condition 
-\begin_inset Formula $u_{i}\neq M(\dots)$
-\end_inset
-
- is safe in both rules.
+ for size reason.
  Let us write 
 \begin_inset Formula $\Gamma$
 \end_inset
@@ -1901,11 +1785,7 @@ If there is a unifier, then
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Proof
-In case of a simple term (first rule above), 
+ As 
 \begin_inset Formula $M$
 \end_inset
 
@@ -1955,107 +1835,24 @@ with
 \end_inset
 
 .
- Moreover, the free variable condition 
-\begin_inset Formula $fv(o(\vec{u}))\subset\vec{x}$
-\end_inset
-
- ensures that there exists 
-\begin_inset Formula $u'\in T(\Gamma')_{m}$
-\end_inset
-
- such that 
-\begin_inset Formula $u'[\vec{x}]=o(\vec{u})$
-\end_inset
-
-, by choosing 
-\begin_inset Formula $u'=o(\vec{u})[x_{i}\mapsto i]$
-\end_inset
-
-.
- Thus, 
-\begin_inset Formula $o(\vec{u})$
-\end_inset
-
- can be decomposed as the composition 
-\begin_inset Formula $yq\xrightarrow{M(\vec{x})}T(ym)\xrightarrow{u'}T(\Gamma')\hookrightarrow T(\Gamma)$
-\end_inset
-
-, and we want to compute the pushout 
-\begin_inset Formula 
-\[
-\xymatrix{yq\ar[rr]^{M(\vec{x})}\ar[d]_{M(\vec{x})} &  & T(ym)\\
-T(ym)\ar[d]_{u'}\\
-T(\Gamma')
-}
-\]
-
-\end_inset
-
-As we prove in the appendix (Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:mono-epi"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), since 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
- is injective, the induced morphism 
-\begin_inset Formula $yq\xrightarrow{M(\vec{x})}T(ym)$
-\end_inset
-
- is epimorphic and thus we can eliminate it in the diagram, and the above
- pushout is simply given by 
-\begin_inset Formula $T(ym)\xrightarrow{u'}T(\Gamma')\xleftarrow{id}T(\Gamma')$
-\end_inset
-
-, so that the coequaliser, as expected, substitute 
-\begin_inset Formula $M:m$
-\end_inset
-
- with 
-\begin_inset Formula $u'$
-\end_inset
-
- and preserve the other metavariables.
-\end_layout
-
-\begin_layout Proof
-Let us now tackle the other rule, by showing that the category of unifiers
- for the premise is equivalent to the category of unifiers for the conclusion.
  The morphism 
-\begin_inset Formula $yq\rightarrow T(\Gamma)$
+\begin_inset Formula $A\rightarrow C$
 \end_inset
 
  corresponding to 
 \begin_inset Formula $o(\vec{u})$
 \end_inset
 
- factors through 
-\begin_inset Formula $T(\Gamma)^{(\vec{n})}\xrightarrow{o}T(\Gamma)$
-\end_inset
-
-, where 
-\begin_inset Formula $T(\Gamma)_{k}^{(\vec{n})}=\prod_{i}T(\Gamma)_{k+n_{i}}$
+ factors as 
+\begin_inset Formula $yq\xrightarrow{u}T(\Gamma')^{(\vec{n})}\xrightarrow{o}T(\Gamma')$
 \end_inset
 
 .
+ 
+\end_layout
+
+\begin_layout Proof
+Now, let us study the category of unifiers.
  A unifier 
 \begin_inset Formula $ym\rightarrow T(\Delta)\leftarrow\Gamma'$
 \end_inset
@@ -2082,23 +1879,19 @@ Let us now tackle the other rule, by showing that the category of unifiers
 \end_inset
 
  with morphisms 
-\begin_inset Formula $h:\Gamma'\rightarrow T(\Delta)$
+\begin_inset Formula $f:\Gamma'\rightarrow T(\Delta)$
 \end_inset
 
  and 
 \begin_inset Formula $g:ym\rightarrow T(\Delta)^{(\vec{n})}$
 \end_inset
 
- such that the following diagram commutes, where 
-\begin_inset Formula $f=[o\circ g,h]:\Gamma\rightarrow T(\Delta)$
-\end_inset
-
-
+ such that the following diagram commutes:
 \begin_inset Formula 
 \[
 \xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar@{->}[r]^{g^{*}} & T(\Delta)^{(\vec{n})}\ar[dd]^{o}\\
-T(\Gamma)^{\vec{(n)}}\ar[d]_{o}\\
-T(\Gamma)\ar[rr]_{f^{*}} &  & T(\Delta)
+T(\Gamma')^{\vec{(n)}}\ar[d]_{o}\\
+T(\Gamma')\ar[rr]_{f^{*}} &  & T(\Delta)
 }
 \]
 
@@ -2117,7 +1910,7 @@ Now, since
 \begin_inset Formula 
 \[
 \xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar@{->}[r]^{g^{*}} & T(\Delta)^{(\vec{n})}\ar[dd]^{o}\\
-T(\Gamma)^{\vec{(n)}}\ar[d]_{f^{*^{(\vec{n})}}}\\
+T(\Gamma')^{\vec{(n)}}\ar[d]_{f^{*^{(\vec{n})}}}\\
 T(\Delta)^{(\vec{n})}\ar[rr]_{o} &  & T(\Delta)
 }
 \]
@@ -2136,7 +1929,7 @@ Since
 \begin_inset Formula 
 \[
 \xymatrix{yq\ar[r]^{M(\vec{x})}\ar[d]_{u} & T(ym)\ar@{->}[d]^{g^{*}}\\
-T(\Gamma)^{(\vec{n})}\ar[r]_{f^{*^{(\vec{n})}}} & T(\Delta)^{(\vec{n})}
+T(\Gamma')^{(\vec{n})}\ar[r]_{f^{*^{(\vec{n})}}} & T(\Delta)^{(\vec{n})}
 }
 \]
 
@@ -2163,7 +1956,7 @@ Now, a morphism
 \end_inset
 
 .
- Note that 
+ Then 
 \begin_inset Formula $u$
 \end_inset
 
@@ -2203,250 +1996,59 @@ the previous diagram commutes if and only if the following one does.
 \begin_inset Formula 
 \begin{equation}
 \xymatrix{y(q+\vec{n})\ar[r]^{M(\vec{x})'}\ar[d]_{u'} & T(y(m+\vec{n}))\ar[d]^{g'^{*}}\\
-T(\Gamma)\ar[r]_{[o\circ g'^{(\vec{n})}\circ d,h]^{*}} & T(\Delta)
+T(\Gamma')\ar[r]_{f^{*}} & T(\Delta)
 }
 \label{eq:unifier-v1}
 \end{equation}
 
 \end_inset
 
-Now, let us look at what a unifier is for the premise
-\begin_inset Formula 
-\[
-\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1}[M(1,\dots m)\mapsto o(\vec{N})],\dots\Rightarrow\sigma\dashv\Delta
-\]
-
-\end_inset
-
-It is equivalently given as a cocone over the coequaliser diagram
-\begin_inset Formula 
-\[
-\xymatrix{ & T(y(m+\vec{n}))\ar@{^{(}->}[drr]\\
-y(q+\vec{n})\ar[ru]^{M(\vec{x})'}\ar[dr]_{u'} &  &  & T(\Gamma'+y(m+\vec{n}))\\
- & T(\Gamma)\ar@{->}[rru]_{(id_{\Gamma'}+\delta)^{*}}
-}
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\delta:ym\rightarrow T(y(m+\vec{n}))$
-\end_inset
-
- is given by 
-\begin_inset Formula $ym\xrightarrow{d}y(m+\vec{n})^{(\vec{n})}\rightarrow T(y(m+\vec{n}))^{(\vec{n})}\xrightarrow{o}T(y(m+\vec{n}))$
-\end_inset
-
-.
- A unifier for this diagram is a family 
-\begin_inset Formula $\Delta$
-\end_inset
-
- together with Kleisli morphisms 
-\begin_inset Formula $g':y(m+\vec{n})\rightarrow T(\Delta)$
-\end_inset
-
- and 
-\begin_inset Formula $h:\Gamma'\rightarrow T(\Delta)$
-\end_inset
-
- such that the following diagram commutes.
-\begin_inset Formula 
-\begin{equation}
-\xymatrix{y(q+\vec{n})\ar[rr]\ar[d]_{u'} &  & T(y(m+\vec{n}))\ar[d]^{g'^{*}}\\
-T(\Gamma)\ar[rr]_{[g'^{*}\circ\delta,h]^{*}} &  & T(\Delta)
-}
-\label{eq:unifier-v2}
-\end{equation}
-
-\end_inset
-
-We need to prove that this diagram is equivalent to Diagram
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unifier-v1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, which amounts to showing that 
-\begin_inset Formula $g'^{*}\circ\delta=o\circ g'^{(\vec{n})}\circ d$
-\end_inset
-
-.
- And indeed,
+Thus, a unifier is a cocone over the pushout diagram
 \end_layout
 
 \begin_layout Proof
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% unifier-v12.json
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd}
-\end_layout
-
-\begin_layout Plain Layout
-
-	ym && {T(y(m+
-\backslash
-vec{n}))} 
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	{y(m+
-\backslash
-vec{n})^{(
-\backslash
-vec{n})}} & {T(y(m+
-\backslash
-vec{n}))^{(
-\backslash
-vec{n})}} 
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	{T(
-\backslash
-Delta)^{(
-\backslash
-vec{n})}} && {T(
-\backslash
-Delta)}
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["d", from=1-1, to=2-1]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{
-\backslash
-eta^{(
-\backslash
-vec{n})}}", from=2-1, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["o", from=2-2, to=1-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{g'^*}", from=1-3, to=3-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["
-\backslash
-delta", from=1-1, to=1-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["d", from=1-1, to=2-1]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{g'^{(
-\backslash
-vec{n})}}", from=2-1, to=3-1]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["o", from=3-1, to=3-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{g'^{*(
-\backslash
-vec{n})}}", from=2-2, to=3-1]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["o", from=3-1, to=3-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
+\begin_inset Formula 
+\[
+\xymatrix{y(q+\vec{n})\ar[r]^{M(\vec{x})'}\ar[d]_{u'} & T(y(m+\vec{n}))\\
+T(\Gamma')
+}
+\]
 
 \end_inset
 
+The premise is precisely computing this colimit, producing 
+\begin_inset Formula $\sigma:\Gamma'+y(m+\vec{n})\rightarrow T(\Delta)$
+\end_inset
 
-\end_layout
+:
+\begin_inset Formula 
+\[
+\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1},\dots\Rightarrow\sigma\dashv\Delta
+\]
 
 \end_inset
 
+The desired unifier is then the composition of 
+\begin_inset Formula $\sigma$
+\end_inset
 
+ with the coproduct morphism (in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+) 
+\begin_inset Formula $\Gamma'+ym\xrightarrow{id_{\Gamma'}+v}T(\Gamma'+y(m+\vec{n}))$
+\end_inset
+
+, where 
+\begin_inset Formula $v$
+\end_inset
+
+ is the composite 
+\begin_inset Formula $ym\xrightarrow{}T(y(m+\vec{n}))^{(\vec{n})}\xrightarrow{o}T(y(m+\vec{n}))$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -2468,35 +2070,6 @@ name "subsec:case-mvar-var"
 \end_layout
 
 \begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\backslash
-vec{n}
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
 \begin_inset Formula 
 \[
 \dfrac{}{\Gamma\vdash M(\vec{x})=_{q}x_{i}:M(1,\dots,m)\mapsto i\dashv\Gamma\backslash\{M\}}
@@ -2509,10 +2082,6 @@ vec{n}
 
 \begin_layout Standard
 A symmetric rule must be introduced as well.
-\end_layout
-
-\begin_layout Standard
-Soundness is straightforward.
 \end_layout
 
 \begin_layout Subsection
