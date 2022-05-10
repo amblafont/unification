@@ -218,6 +218,23 @@ Given a monad
 \end_inset
 
 .
+ We denote by 
+\begin_inset Formula $I:\mathbb{N}\rightarrow Set$
+\end_inset
+
+ the family of sets mapping 
+\begin_inset Formula $n$
+\end_inset
+
+ to the 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+ cardinal set 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -493,6 +510,44 @@ safe
  
 \end_layout
 
+\begin_layout Remark
+\begin_inset Formula $T'(Y)$
+\end_inset
+
+ is the initial algebra for 
+\begin_inset Formula $Z\mapsto I+Z\boxtimes I+\Sigma(Z)$
+\end_inset
+
+, where 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+we denote by 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ the endofunctor on 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+ corresponding to the binding signature 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $(Z\boxtimes I)_{n}=\coprod_{p}Z_{p}\times Inj(p,I_{n})$
+\end_inset
+
+.
+ Note that this definition is not functorial in the second argument (unless
+ we restrict to monomorphisms).
+\end_layout
+
+\end_deeper
 \begin_layout Notation
 We denote by 
 \begin_inset Formula $\Kl T$
@@ -555,6 +610,41 @@ A (metavariable) substitution is precisely a morphism in the Kleisli category.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Remark
+Consider the 
+\begin_inset Quotes eld
+\end_inset
+
+operadic
+\begin_inset Quotes erd
+\end_inset
+
+ monoidal product 
+\begin_inset Formula $A\boxtimes B_{n}=\coprod_{p}\coprod_{i_{1}+\dots+i_{p}=n}A_{p}\times B_{i_{1}}\times\dots\times B_{i_{p}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+-monoids for this tensor products, with associated monad 
+\begin_inset Formula $T'$
+\end_inset
+
+.
+ In this setting, we think of 
+\begin_inset Formula $T'(X)_{n}$
+\end_inset
+
+ as the set of terms with exactly 
+\begin_inset Formula $n$
+\end_inset
+
+ free variables.
+ Thus, Kleisli morphisms maps metavariables to terms using exactly once
+ each argument.
 \end_layout
 
 \begin_layout Definition
@@ -2311,6 +2401,14 @@ literal "false"
 
 \begin_layout Proof
 TODO
+\end_layout
+
+\begin_layout Lemma
+The previous lemma induces a functor 
+\begin_inset Formula $\mathcal{U}:\Kl T\rightarrow Set^{\mathbb{F}}$
+\end_inset
+
+.
 \begin_inset Note Note
 status open
 
@@ -2729,7 +2827,6 @@ The functor
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Proof
@@ -2737,7 +2834,7 @@ We have the following diagram commuting up to isomorphism
 \begin_inset Formula 
 \[
 \xymatrix{\mathbb{N}\ar[d]\ar[r]^{y} & (Set^{\mathbb{N}})^{o}\ar[rr] &  & \Kl T^{o}\ar[d]^{y}\\
-\mathbb{F}\ar[r]_{y} & (Set^{\mathbb{F}})^{o}\ar[r]_{y} & Set^{Set^{\mathbb{N}}}\ar[r] & Set^{\Kl T}
+\mathbb{F}\ar[r]_{y} & (Set^{\mathbb{F}})^{o}\ar[r]_{y} & Set^{Set^{\mathbb{F}}}\ar[r]_{Set^{\mathcal{U}}} & Set^{\Kl T}
 }
 \]
 
@@ -2755,6 +2852,76 @@ where
 \end_inset
 
  making triangles both commute up to isomorphism (TODO: find references)
+\end_layout
+
+\begin_layout Remark
+Another way to define 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ goes as follows.
+ There is a 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+-monoid monad 
+\begin_inset Formula $T'$
+\end_inset
+
+ on 
+\begin_inset Formula $Set^{\mathbb{F}}$
+\end_inset
+
+ and 
+\begin_inset Formula $T$
+\end_inset
+
+ is actually isomorphic to 
+\begin_inset Formula $RT'L$
+\end_inset
+
+, where 
+\begin_inset Formula $L$
+\end_inset
+
+ is the left Kan extension and 
+\begin_inset Formula $R$
+\end_inset
+
+ its right adjoint (precomposition by 
+\begin_inset Formula $\mathbb{N}\rightarrow\mathbb{F}$
+\end_inset
+
+).
+ As a consequence, there is a fully faithful Kleisli extension 
+\begin_inset Formula 
+\[
+\xymatrix{Set^{\mathbb{N}}\ar[d]\ar[r]^{L} & Set^{\mathbb{F}}\ar[d]\\
+\Kl T\ar[r] & \Kl{T'}
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Then, we can define 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ as filling the square
+\begin_inset Formula 
+\[
+\xymatrix{\mathbb{N}\ar[d]\ar[r] & \Kl T^{o}\ar[d]\\
+\mathbb{F}\ar[r] & \Kl{T'}^{o}
+}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
