@@ -1644,7 +1644,7 @@ Let us consider the first rule.
 \end_inset
 
  corresponds to the composition of 
-\begin_inset Formula $yp\xrightarrow{M(\vec{x})}T(ym)\hookrightarrow$
+\begin_inset Formula $yq\xrightarrow{M(\vec{x})}T(ym)\hookrightarrow$
 \end_inset
 
  
@@ -2187,7 +2187,79 @@ There is no infinite derivation tree of
 \end_layout
 
 \begin_layout Proof
-TODO (Not sure how).
+TODO.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Termination follows from the fact that the premises of each rule either
+ live in a smaller context, either live in a context with the same size
+ and consider a subterm as input.
+ In fact, this is not strictly true of the case 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+ (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-mvar-op"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), since we replace 
+\begin_inset Formula $M$
+\end_inset
+
+ with a list of new metavariables 
+\begin_inset Formula $N_{i}$
+\end_inset
+
+, one for each argument of 
+\begin_inset Formula $o$
+\end_inset
+
+.
+ However, we can easily show that derivations trees of a unification problem
+ are in one-to-one correspondance with deriviation trees of the same unification
+ problem but in a weakened metavariable context.
+ Then, the premise 
+\begin_inset Formula $\begin{array}{c}
+\Gamma\backslash\{M\},\vec{N}:m+\vec{n}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1})=_{q+n_{1}}u_{1},\dots\Rightarrow\sigma\dashv\Delta\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+McBride's argument (recursion on the number of metavariables) does not apply
+ here because he does not recursively unify in the flexRigid case, while
+ we introduce new metavariables there.
+ Otherwise, Cf Dale Miller's Theorem 7.1
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
