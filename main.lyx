@@ -1480,6 +1480,13 @@ Let us mention the missing cases, which can never be unified anyway.
 
 \end_layout
 
+\begin_layout Itemize
+\begin_inset Formula $o(\vec{t})=x$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Empty list
 \end_layout
@@ -1922,17 +1929,6 @@ name "subsec:case-op-op"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dfrac{}{\Gamma\vdash x=_{q}x\Rightarrow id\dashv\Gamma}
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Lemma
 This rule is sound.
 \end_layout
@@ -1951,6 +1947,17 @@ The result follows from the fact that a substitution unifies
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{}{\Gamma\vdash x=_{q}x\Rightarrow id\dashv\Gamma}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
