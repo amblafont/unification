@@ -196,7 +196,20 @@ We denote by
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
- the full subcategory of sets consisting of finite cardinals.
+ the full subcategory of sets consisting of finite cardinals: objects are
+ natural numbers and a morphism between 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ is a function 
+\begin_inset Formula $\{0,\dots,n-1\}\rightarrow\{0,\dots,m-1\}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -289,6 +302,14 @@ Given a monad
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+We denote metavariables by capital letters 
+\begin_inset Formula $M,N$
+\end_inset
+
+,...
 \end_layout
 
 \begin_layout Section
@@ -1646,6 +1667,10 @@ The premise states that
 \begin_inset Formula $\vec{x},\vec{y}:m\rightarrow q$
 \end_inset
 
+ in 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
 .
 \begin_inset Formula 
 \[
@@ -1664,6 +1689,10 @@ The premise states that
 
  is a pullback of 
 \begin_inset Formula $m\xrightarrow{\vec{x}}q\xleftarrow{\vec{y}}n$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathbb{F}$
 \end_inset
 
 .
@@ -1774,7 +1803,49 @@ of
 \end_inset
 
 .
- Thanks to Lemma
+ As we explain in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:free-talg-pullback"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the functor 
+\begin_inset Formula $\mathbb{N}\xrightarrow{y}Set^{\mathbb{N}}\rightarrow\Kl T$
+\end_inset
+
+ extends to a functor 
+\begin_inset Formula $\mathbf{y}:\mathbb{F}\rightarrow\Kl T^{op}$
+\end_inset
+
+ such that the coequaliser is precisely that of 
+\begin_inset Formula ${\bf y}\vec{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{y}\vec{y}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+ preserves equalisers (Lemma
 \begin_inset ERT
 status open
 
@@ -1795,7 +1866,7 @@ noprefix "false"
 
 \end_inset
 
-, the coequaliser is 
+), the coequaliser is 
 \begin_inset Formula $ym\xrightarrow{\mathbf{y}i}T(yp)$
 \end_inset
 
@@ -3284,6 +3355,54 @@ Then, we can define
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Given a morphism 
+\begin_inset Formula $f:m\rightarrow n$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+, the induced morphism 
+\begin_inset Formula $\mathbf{y}f:yn\rightarrow T(ym)$
+\end_inset
+
+ selects the term 
+\begin_inset Formula $t\in T(ym)_{n}$
+\end_inset
+
+ defined as renaming the canonical term 
+\begin_inset Formula $M(0,\dots,m-1)\in T(ym)_{m}$
+\end_inset
+
+, corresponding to the unit 
+\begin_inset Formula $ym\rightarrow T(ym)$
+\end_inset
+
+, along 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ In other words, 
+\begin_inset Formula $\mathbf{y}f$
+\end_inset
+
+ selects the term 
+\begin_inset Formula $M(f_{0},\dots f_{m-1})$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
