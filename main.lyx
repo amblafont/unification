@@ -1715,10 +1715,24 @@ Let us consider the first rule.
 \end_inset
 
  of
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: introduce 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \xymatrix{ & B\ar@{^{(}->}[dr]\\
-A\ar[ru]\ar[dr] &  & B+C\\
+A\ar[ru]^{M(\vec{x})}\ar[dr]_{M(\vec{y})} &  & B+C\\
  & B\ar@{^{(}->}[ru]
 }
 \]
@@ -2337,6 +2351,10 @@ McBride's argument (recursion on the number of metavariables) does not apply
 
 \begin_layout Section
 An alternative terminating algorithm
+\end_layout
+
+\begin_layout Standard
+(This section is WIP)
 \end_layout
 
 \begin_layout Standard
