@@ -3270,7 +3270,11 @@ The functor
 \end_layout
 
 \begin_layout Proof
-We have the following diagram commuting up to isomorphism
+The isomorphism 
+\begin_inset Formula $Kl_{T}(ym,X)\simeq TX_{m}\simeq Set^{\mathbb{F}}(Jm,TX)$
+\end_inset
+
+ means that the following diagram commutes up to isomorphism
 \begin_inset Formula 
 \[
 \xymatrix{\mathbb{N}\ar[d]\ar[r]^{y} & (Set^{\mathbb{N}})^{o}\ar[rr] &  & \Kl T^{o}\ar[d]^{y}\\
