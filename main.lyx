@@ -130,6 +130,47 @@ literal "false"
 \end_inset
 
 , but in the untyped case.
+ In Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:structural-recursive-algo"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we discuss an alternative algorithm whose termination is straightforward,
+ but for which we do not prove correctness (yet?).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, inspired from McBride's implementation in the first-order case 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/jfp/McBride03"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -137,12 +178,25 @@ Notations
 \end_layout
 
 \begin_layout Standard
-In a category with coproducts, we denote by 
+We denote by 
+\begin_inset Formula $C^{o}$
+\end_inset
+
+ the opposite category of 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ In a category with coproducts, we denote by 
 \begin_inset Formula $in:A_{i}\hookrightarrow\coprod_{i}A_{i}$
 \end_inset
 
  the coproduct injection.
- 
+ We denote by 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ the full subcategory of sets consisting of finite cardinals.
 \end_layout
 
 \begin_layout Standard
@@ -1295,7 +1349,11 @@ noprefix "false"
 \begin_inset Formula $o(\vec{t})=o(\vec{u})$
 \end_inset
 
-, in Section
+ and 
+\begin_inset Formula $x=y$
+\end_inset
+
+ in Section
 \begin_inset ERT
 status open
 
@@ -1751,6 +1809,10 @@ Case
 \begin_inset Formula $o(\vec{t})=o(\vec{u})$
 \end_inset
 
+ and 
+\begin_inset Formula $x=y$
+\end_inset
+
 
 \end_layout
 
@@ -1768,6 +1830,17 @@ name "subsec:case-op-op"
 \begin_inset Formula 
 \[
 \dfrac{o\text{ has binding arity \ensuremath{\vec{n}}}\qquad\Gamma\vdash\vec{t}=_{q+\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(\vec{t})=_{q}o(\vec{u})\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{}{\Gamma\vdash x=_{q}x\Rightarrow id\dashv\Gamma}
 \]
 
 \end_inset
@@ -2259,14 +2332,213 @@ McBride's argument (recursion on the number of metavariables) does not apply
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Section
+An alternative terminating algorithm
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:structural-recursive-algo"
+
+\end_inset
+
+Let us ignore the case 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+ at first.
+ Then, we can show that the algorithm produces a context whose size (number
+ of metavariables) is smaller or equal to the input one.
+ A first attempt to prove termination consists in showing that either the
+ number of metavariables decreases in recursive calls, either it remains
+ constant and recursive calls are applied to subterms, but this is not the
+ case for 
+\begin_inset Formula $o(t_{0},\vec{t})=o(u_{0},\vec{u})$
+\end_inset
+
+: there we first unify 
+\begin_inset Formula $t_{0}=u_{0}$
+\end_inset
+
+ producing a unifier 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, and then we unify 
+\begin_inset Formula $\vec{t}[\sigma]=\vec{u}[\sigma]$
+\end_inset
+
+, which are not structurally smaller terms.
+ To fix this issue, we can use McBride's trick 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/jfp/McBride03"
+literal "false"
+
+\end_inset
+
+: we introduce an additional input to the algorithm, a substitution 
+\begin_inset Formula $\delta$
+\end_inset
+
+ from 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to some other context 
+\begin_inset Formula $\Gamma'$
+\end_inset
+
 .
+ Then, what the algorithm unifies is not 
+\begin_inset Formula $\vec{t}=\vec{u}$
+\end_inset
+
+ but 
+\begin_inset Formula $\vec{t}[\delta]=\vec{u}[\delta]$
+\end_inset
+
+.
+ Let us rephrase the rules following this discipline, denoting the input/output
+ by 
+\begin_inset Formula $\Gamma|\delta|\Gamma'\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $\delta$
+\end_inset
+
+ is the identity substitution, we omit it, together with 
+\begin_inset Formula $\Gamma'=\Gamma$
+\end_inset
+
+.
+ Let us start with the stepwise rule.
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t_{0}=_{n_{0}}u_{0}\Rightarrow\sigma_{0}\dashv\Gamma'\qquad\Gamma|\sigma_{0}|\Gamma'\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta\qquad\vec{t}\text{ is not empty}}{\Gamma\vdash t_{0}=_{n_{0}}u_{0},\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\circ\sigma_{0}\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Moreover, in his setting, metavariables are constant and the case 
+\begin_inset Formula $M=o(\vec{u})$
+\end_inset
+
+ directly results in an instantiationThis idea works well except for the
+ rule 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+ which introduces new metavariables in the context.
+ However, we can replace it with the following one.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/jfp/McBride03"
+literal "false"
+
+\end_inset
+
+, McBride implements a structurally recursive algorithm for first-order
+ unification.
+ His idea is to introduce an additional input to the algorithm: a substitution
+ 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ from 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to some other context 
+\begin_inset Formula $\Delta$
+\end_inset
+
+.
+ Then, what the algorithm unifies is not 
+\begin_inset Formula $\vec{t}=\vec{u}$
+\end_inset
+
+ but 
+\begin_inset Formula $\vec{t}[\sigma]=\vec{u}[\sigma]$
+\end_inset
+
+.
+ With this trick, the list case keeps the same inpu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In his setting, metavariables are constant.
+ Moreover, the case 
+\begin_inset Formula $M=o(\vec{u})$
+\end_inset
+
+ directly results in an instantiation, rather than introducing metavariables
+ 
+\begin_inset Formula $\vec{N}$
+\end_inset
+
+ and further unifying 
+\begin_inset Formula $\vec{N}=\vec{u}$
+\end_inset
+
+.
+ We could mimick this process by the following rule
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+o\text{ has binding arity \ensuremath{(n_{1},\dots,n_{p})}\ensuremath{\qquad} \ensuremath{M}\text{ does not occur in \ensuremath{\vec{u}}}}\\
+\forall N:n\in\Gamma,
+\end{array}}{\Gamma\vdash M(\vec{x})=_{q}o(\vec{u})\Rightarrow\circ M(1,\dots m)\mapsto o(\vec{u})\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintCited"
-bibfiles "/home/ouguir/latex/tex-common/bib"
+bibfiles "bib"
 options "plain"
 
 \end_inset
