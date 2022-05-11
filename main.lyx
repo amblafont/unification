@@ -1726,7 +1726,7 @@ A\ar[ru]\ar[dr] &  & B+C\\
 \end_inset
 
 for 
-\begin_inset Formula $A=yp$
+\begin_inset Formula $A=yq$
 \end_inset
 
 , 
@@ -1756,7 +1756,7 @@ of
 
 .
  So we need to compute the coequaliser of 
-\begin_inset Formula $yp\rightrightarrows T(ym)$
+\begin_inset Formula $yq\rightrightarrows T(ym)$
 \end_inset
 
 .
