@@ -192,7 +192,31 @@ We denote by
 \end_inset
 
  the coproduct injection.
- We denote by 
+ If 
+\begin_inset Formula $F$
+\end_inset
+
+ is an endofunctor on a category 
+\begin_inset Formula $C$
+\end_inset
+
+, we denote by 
+\begin_inset Formula $\mu F$
+\end_inset
+
+ or 
+\begin_inset Formula $\mu Z.F(Z)$
+\end_inset
+
+ the initial 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra.
+\end_layout
+
+\begin_layout Standard
+We denote by 
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
