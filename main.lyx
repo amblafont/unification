@@ -2894,11 +2894,8 @@ if
 \begin_inset Formula $\sigma$
 \end_inset
 
- is 
-\emph on
-shallow
-\emph default
-, in the sense that it instantiates metavariables with metavariables.
+ is a renaming, in the sense that it instantiates metavariables with metavariabl
+es.
 \end_layout
 
 \begin_layout Itemize
@@ -2982,7 +2979,7 @@ If
 \begin_inset Formula $\sigma$
 \end_inset
 
- is shallow, then 
+ is a renaming, then 
 \begin_inset Formula $||t[\sigma]||=||t||$
 \end_inset
 
