@@ -130,7 +130,12 @@ literal "false"
 \end_inset
 
 , but in the untyped case.
- In Section
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In Section
 \begin_inset ERT
 status open
 
@@ -166,6 +171,11 @@ literal "false"
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -737,7 +747,7 @@ operadic
 \begin_inset Formula $T'(X)_{n}$
 \end_inset
 
- as the set of terms with exactly 
+ as the set of terms withneed to exactly 
 \begin_inset Formula $n$
 \end_inset
 
@@ -1555,7 +1565,7 @@ name "subsec:stepwise-algo"
 \end_layout
 
 \begin_layout Standard
-We can restrict to the case where of a single coequaliser.
+We can restrict to the case of a single coequaliser.
 \end_layout
 
 \begin_layout Standard
@@ -2367,6 +2377,10 @@ A symmetric rule must be introduced as well.
 Termination
 \end_layout
 
+\begin_layout Standard
+This section is devoted to the proof of the following proposition.
+\end_layout
+
 \begin_layout Proposition
 There is no infinite derivation tree of 
 \begin_inset Formula $\Gamma\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
@@ -2375,13 +2389,12 @@ There is no infinite derivation tree of
 .
 \end_layout
 
-\begin_layout Proof
-TODO.
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Termination follows from the fact that the premises of each rule either
+Termination follows fro(WIP) m the fact that the premises of each rule either
  live in a smaller context, either live in a context with the same size
  and consider a subterm as input.
  In fact, this is not strictly true of the case 
@@ -2451,32 +2464,766 @@ McBride's argument (recursion on the number of metavariables) does not apply
 
 \end_layout
 
+\begin_layout Standard
+The main difficulty to show termination is that the case 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+ involves a recursive call with an extended context, while all the other
+ rules are reducing or keeping the same context size.
+ One way to solve this issue consists in avoiding creating new metavariables.
+ Instead, we could first (potentially) reduce the arities of metavariables
+ appearing in 
+\begin_inset Formula $o(\vec{u})$
+\end_inset
+
+ so that they don't refer to free variables outside 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and then directly instantiate 
+\begin_inset Formula $M$
+\end_inset
+
+ with the resulting term.
+ This seems to be a bit tedious to describe precisely (not to mention to
+ prove correctness).
+\end_layout
+
+\begin_layout Standard
+It turns out that after encountering the case 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+, the algorithm virtually enters a phase where the left handsides will always
+ be distinct metavariables that don't appear in the right handsides.
+ We say that the unification problem is 
+\emph on
+directed
+\emph default
+ if it is of this shape.
+\end_layout
+
+\begin_layout Lemma
+If there is a finite derivation of 
+\begin_inset Formula $\Gamma\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ where 
+\begin_inset Formula $\vec{t}=\vec{u}$
+\end_inset
+
+ is directed, then all the involved nodes are directed..
+\end_layout
+
+\begin_layout Standard
+The difficult case is the stepwise rule.
+ It relies on the following lemma.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dir-unified-subst"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\Gamma\vdash t_{0},\vec{t}=u_{0},\vec{u}$
+\end_inset
+
+ be a directed unification problem, and assume given a finite derivation
+ tree 
+\begin_inset Formula $\Gamma\vdash t_{0}=u_{0}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\vec{t}[\sigma]=\vec{u}[\sigma]$
+\end_inset
+
+ is directed.
+\end_layout
+
+\begin_layout Standard
+This in turn requires the following lemma proved by induction.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:output-preserves-unused"
+
+\end_inset
+
+Assume there is a finite derivation of 
+\begin_inset Formula $\Gamma,\Gamma'\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, such that metavariables in 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+,
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ are in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ Then, there exists 
+\begin_inset Formula $\Delta'$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Delta\simeq\Delta',\Gamma'$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ through this isomorphism, is of the shape 
+\begin_inset Formula $\sigma'+id_{\Gamma'}$
+\end_inset
+
+.
+ In other words, the output substitution preserves any unused metavariable
+ and never use them for instantiation otherwise.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+At least if I don't manage to find a proper proof for the previous lemma
+ (it would be nice, though), the following one can be proved easily, I think.
+\end_layout
+
+\begin_layout Lemma
+Assume there is a finite derivation of 
+\begin_inset Formula $\Gamma,\Gamma'\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, such that metavariables in 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+,
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ are in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ Then, there is a finite derivation of 
+\begin_inset Formula $\Gamma'\vdash\vec{t}=\vec{u}\Rightarrow\sigma'\dashv\Delta'$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Delta\simeq\Delta',\Gamma'$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is 
+\begin_inset Formula $\sigma'+id_{\Gamma'}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of Lemma~
+\backslash
+ref{lem:dir-unified-subst}]
+\end_layout
+
+\end_inset
+
+Note that a directed unification problem 
+\begin_inset Formula $\vec{t}=\vec{u}$
+\end_inset
+
+ corresponds to a diagram in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ of the shape
+\begin_inset Formula 
+\[
+\xymatrix{ & \coprod_{i}B_{i}\ar@{^{(}->}[dr]\\
+\coprod_{i}A_{i}\ar[ru]^{\vec{t}}\ar[dr]_{\vec{u}} &  & C+\coprod_{i}B_{i}\\
+ & C\ar@{^{(}->}[ru]
+}
+\]
+
+\end_inset
+
+In particular, a directed unification problem 
+\begin_inset Formula $t_{0},\vec{t}=u_{0},\vec{u}$
+\end_inset
+
+ has this shape:
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\xymatrix{ & B+\coprod_{i}B_{i}\ar@{^{(}->}[dr]\\
+A+\coprod_{i}A_{i}\ar[ru]^{t_{0}+\vec{t}}\ar[dr]_{[u_{0},\vec{u}]} &  & C+B+\coprod_{i}B_{i}\\
+ & C\ar@{^{(}->}[ru]
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The most general unifier of 
+\begin_inset Formula $t_{o}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ corresponds to the coequaliser of
+\begin_inset Formula 
+\[
+\xymatrix{ & B\ar@{^{(}->}[rdr]\\
+A\ar[ru]^{t_{0}}\ar[dr]_{u_{0}} &  &  & C+B+\coprod_{i}B_{i}\\
+ & C\ar@{^{(}->}[rru]
+}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+which can be computed as first taking the coequaliser
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:output-preserves-unused"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the coequaliser computed by the derivation of 
+\begin_inset Formula $\Gamma\vdash t_{0}=u_{0}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ has the shape 
+\begin_inset Formula 
+\[
+\xymatrix{ & B\ar@{^{(}->}[rdr]\\
+A\ar[ru]^{t_{0}}\ar[dr]_{u_{0}} &  &  & C+B+\coprod_{i}B_{i}\ar[rr]^{\sigma'+\coprod_{i}B_{i}} &  & \Delta'+\coprod_{i}B_{i}\\
+ & C\ar@{^{(}->}[rru]
+}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(oui mais qu'est ce qu'il me prouve que ce coegalisateur est fabrique ainsi?)
+ lemme: si 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ est l'unifier general de 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ et 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ dans un contexte etendu, l'unifier general dans le contexte normal existe.
+ Lemme: le unifier est epi pw sauf en la composante 0.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\xymatrix{ & B\ar@{^{(}->}[rd]\\
+A\ar[ru]^{t_{0}}\ar[dr]_{u_{0}} &  & C+B\ar[r] & D\\
+ & C\ar@{^{(}->}[ru]
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+and then taking the coproduct 
+\begin_inset Formula $C+B+\coprod_{i}B_{i}\rightarrow D+\coprod_{i}B_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, 
+\begin_inset Formula $\vec{t}[\sigma]=\vec{u}[\sigma]$
+\end_inset
+
+ corresponds to the diagram
+\begin_inset Formula 
+\[
+\xymatrix{ & \coprod_{i}B_{i}\ar@{^{(}->}[rrd]\\
+\coprod_{i}A_{i}\ar[ru]^{\vec{t}}\ar[dr]_{\vec{u}} &  &  & \Delta'+\coprod_{i}B_{i}\\
+ & C\ar@{->}[r] & \Delta'\ar@{^{(}->}[ru]
+}
+\]
+
+\end_inset
+
+which is indeed directed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we can prove easily
+\end_layout
+
+\begin_layout Lemma
+If there is a finite derivation tree of 
+\begin_inset Formula $\Gamma\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, then
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $|\Gamma|\geq|\Delta|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $|\Gamma|=|\Delta|$
+\end_inset
+
+, then 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is 
+\emph on
+shallow
+\emph default
+, in the sense that it instantiates metavariables with metavariables.
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $\vec{t}=\vec{u}$
+\end_inset
+
+ is directed, then 
+\begin_inset Formula $|\Gamma|=|\Delta|+|\vec{t}|$
+\end_inset
+
+, where 
+\begin_inset Formula $|\vec{t}|$
+\end_inset
+
+ is the length of 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+, as a list.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Finally, to prove termination, we consider the lexicographic order induced
+ by the context size and the size of the involved terms to each judgement
+ 
+\begin_inset Formula $\Gamma\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+.
+ More precisely, 
+\end_layout
+
+\begin_layout Itemize
+the context size is defined as the length of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ if it is not directed, or as the total number of metavariables involved
+ in the right handsides otherwise.
+ 
+\end_layout
+
+\begin_layout Itemize
+the size of a non empty term list 
+\begin_inset Formula $||\vec{t}||$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $|\vec{t}|-1+\Sigma_{i}||t_{i}||$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the size of a term 
+\begin_inset Formula $||o(\vec{t})||$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $1+||\vec{t}||$
+\end_inset
+
+, and 
+\begin_inset Formula $||M||=||x||=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+It is easy to show that each recursive call is decreasing with respect to
+ this order.
+ The crucial point, in the stepwise rule, is the following lemma.
+\end_layout
+
+\begin_layout Lemma
+If 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is shallow, then 
+\begin_inset Formula $||t[\sigma]||=||t||$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Can we design a structurally recursive program following this termination
+ argument, as in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/jfp/McBride03"
+literal "false"
+
+\end_inset
+
+? Here the additionnal difficulty is that output non-identity substitutions
+ do not always reduce the context size.
+ We could argue that they still do reduce the number of metavariable arguments.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
 \begin_layout Section
 An alternative terminating algorithm
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 (This section is WIP)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:structural-recursive-algo"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Plain Layout
+The main problem to show termination is that the case 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+ involves a recursive call with an extended context, while all the other
+ rules are reducing or keeping the context in constant size.
+ One way to solve this issue is avoid creating new metavariables.
+ Instead, we could first (potentially) reduce the arities of metavariables
+ appearing in 
+\begin_inset Formula $o(\vec{u})$
+\end_inset
+
+ so that they don't refer to free variables outside 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and then directly instantiate 
+\begin_inset Formula $M$
+\end_inset
+
+ with the resulting term.
+\end_layout
+
+\begin_layout Plain Layout
+This seems to be tedious to describe precisely (not to mention to prove
+ correctness).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+It turns out that after encountering the case 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+, the algorithm virtually enters a new phase where the left handsides will
+ always be metavariables that don't appear in the right handsides.
+ We say that the unification problem is 
+\emph on
+directed
+\emph default
+ if it is of this shape.
+ Let us introduce a new judgement for this case:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash\vec{t}:=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ is a distinct list of metavariables (applied to distinct variables) that
+ do not appear in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, and 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ are terms in 
+\begin_inset Formula $T(\Gamma)_{\vec{n}}$
+\end_inset
+
+.
+ There, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a substitution 
+\begin_inset Formula $\Gamma+y\vec{p}\rightarrow T(\Delta)$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ are the arities of the metavariables.
+ This comes with two rules:
+\begin_inset Formula 
+\[
+\frac{}{\Gamma\vdash():=()\Rightarrow id\dashv\Gamma}\qquad\frac{\Gamma,N:|\vec{x}|\vdash N(\vec{x})=u\Rightarrow\sigma\dashv\Delta_{1}\quad\Delta_{1}\vdash\vec{t}:=\vec{u}[\sigma]\Rightarrow\delta\dashv\Delta_{2}}{\Gamma\vdash N(\vec{x}):=u,\vec{t}:=\vec{u}\Rightarrow\delta\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+Then, we replace the rule 
+\begin_inset Formula $M(\vec{x})=o(\vec{u})$
+\end_inset
+
+ with the following one.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+o\text{ has binding arity \ensuremath{(n_{1},\dots,n_{p})}\ensuremath{\qquad} \ensuremath{M}\text{ does not occur in \ensuremath{\vec{u}}}}\\
+\Gamma\backslash\{M\}\vdash N_{1}(0,\dots,n_{1}-1,x_{1}+n_{1},\dots,x_{m}+n_{1}):=_{q+n_{1}}u_{1},\dots\Rightarrow\sigma\dashv\Delta
+\end{array}}{\Gamma\vdash M(\vec{x})=_{q}o(\vec{u})\Rightarrow\sigma\circ M(1,\dots m)\mapsto o(\vec{N})\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Then, we can prove by mutual induction the following lemma.
+\end_layout
+
+\begin_layout Lemma
+If there is a finite derivation tree of 
+\begin_inset Formula $\Gamma\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ (resp.
+ 
+\begin_inset Formula $\Gamma\vdash\vec{t}:=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+), then
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $|\Gamma|\geq|\Delta|$
+\end_inset
+
+ (resp.
+ 
+\begin_inset Formula $|\Gamma|+1\geq|\Delta|$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $|\Gamma|=|\Delta|$
+\end_inset
+
+, then 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is shallow, in the sense that it instantiates metavariables with metavariables.
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+Hmm ca ne marche pas pour le jugement 
+\begin_inset Formula $:=$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Let us ignore the case 
 \begin_inset Formula $M(\vec{x})=o(\vec{u})$
 \end_inset
 
- at first.
+.
  Then, we can show that the algorithm produces a context whose size (number
- of metavariables) is smaller or equal to the input one.
- A first attempt to prove termination consists in showing that either the
- number of metavariables decreases in recursive calls, either it remains
- constant and recursive calls are applied to subterms, but this is not the
- case for 
+ of metavariables) is smaller or equal to the input one, and when they are
+ the same size, it means that the output substitution instantiates each
+ metavariable with another one.
+ Moreover, the output substitution either replaces a metavariable with another
+ one, either instantiate it and eliminate it from the context.
+ Thus, a first attempt to prove termination consists in showing that the
+ number of input metavariables either decreases in recursive calls, either
+ remains constant and recursive calls are applied to subterms.
+ This is not exactly the case for 
 \begin_inset Formula $o(t_{0},\vec{t})=o(u_{0},\vec{u})$
 \end_inset
 
@@ -2488,12 +3235,121 @@ Let us ignore the case
 \begin_inset Formula $\sigma$
 \end_inset
 
+ targeting a context 
+\begin_inset Formula $\Delta$
+\end_inset
+
 , and then we unify 
 \begin_inset Formula $\vec{t}[\sigma]=\vec{u}[\sigma]$
 \end_inset
 
 , which are not structurally smaller terms.
- To fix this issue, we can use McBride's trick 
+ If 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is strictly smaller than the input context, it's fine.
+ Otherwise, it implies that 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ replaces each metavariable with another one and thus the 
+\begin_inset Quotes eld
+\end_inset
+
+structural size
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $\vec{t}[\sigma]=\vec{u}[\sigma]$
+\end_inset
+
+ is the same as the structural size of 
+\begin_inset Formula $\vec{t}=\vec{u}$
+\end_inset
+
+, and thus the decreasing argument still works.
+\end_layout
+
+\begin_layout Plain Layout
+Now the issue is with the rule 
+\begin_inset Formula $M(\vec{x})=o(\vec{t})$
+\end_inset
+
+.
+ But we can prove that when we unify 
+\begin_inset Formula $\vec{N}=\vec{t}$
+\end_inset
+
+ where 
+\begin_inset Formula $\vec{N}$
+\end_inset
+
+ are distinct and each 
+\begin_inset Formula $N_{i}$
+\end_inset
+
+ do not appear in 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+, the output context is smaller (or equal) than the input context without
+ 
+\begin_inset Formula $\vec{N}$
+\end_inset
+
+ (because the 
+\begin_inset Formula $\vec{N}$
+\end_inset
+
+ are going to be eliminated)\SpecialChar endofsentence
+ For the stepwise case, this requires first
+ to show that if 
+\begin_inset Formula $t=_{q}u$
+\end_inset
+
+ does not mention 
+\begin_inset Formula $N$
+\end_inset
+
+, then the output substitution preserves 
+\begin_inset Formula $N$
+\end_inset
+
+, and moreover it does not instantiate any other metavariable with terms
+ involving 
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+the thing is that 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ either eliminates metavariables, either replace them with metavariables,
+ so either the output context is strictly smaller, either the 
+\begin_inset Quotes eld
+\end_inset
+
+structural size
+\begin_inset Quotes erd
+\end_inset
+
+ is smaller, 
+\end_layout
+
+\begin_layout Plain Layout
+To fix this issue, we can use McBride's trick 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DBLP:journals/jfp/McBride03"
@@ -2514,16 +3370,20 @@ literal "false"
 \end_inset
 
 .
- Then, what the algorithm unifies is not 
-\begin_inset Formula $\vec{t}=\vec{u}$
+ Then, what the algorithm computes is the most general unifier from 
+\begin_inset Formula $\Gamma$
 \end_inset
 
- but 
-\begin_inset Formula $\vec{t}[\delta]=\vec{u}[\delta]$
+ to 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ that factors through 
+\begin_inset Formula $\delta$
 \end_inset
 
 .
- Let us rephrase the rules following this discipline, denoting the input/output
+ Let us rephrase the rules following this idea, denoting the input/output
  by 
 \begin_inset Formula $\Gamma|\delta|\Gamma'\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta$
 \end_inset
@@ -2538,11 +3398,32 @@ literal "false"
 \end_inset
 
 .
- Let us start with the stepwise rule.
+\begin_inset Formula 
+\begin{align*}
+\dfrac{\Gamma|\sigma_{0}|\Gamma'\vdash t_{0}=_{n_{0}}u_{0}\Rightarrow\sigma_{1}\dashv\Gamma''\qquad\Gamma|\sigma_{1}|\Gamma''\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta\qquad\vec{t}\text{ is not empty}}{\Gamma\vdash t_{0}=_{n_{0}}u_{0},\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta}\\
+\\
+\dfrac{o\text{ has binding arity \ensuremath{\vec{n}}}\qquad\Gamma|\delta|\Gamma'\vdash\vec{t}=_{q+\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta}{\Gamma|\delta|\Gamma'\vdash o(\vec{t})=_{q}o(\vec{u})\Rightarrow\sigma\dashv\Delta}\\
+\\
+\dfrac{}{\Gamma|\delta|\Gamma'\vdash x=_{q}x\Rightarrow\delta\dashv\Gamma'}
+\end{align*}
+
+\end_inset
+
+The cases 
+\begin_inset Formula $M(\vec{x})=-$
+\end_inset
+
+ remains unchanged: we assume given an identity substitution.
+ We also add a new rule in case no other rule applies:
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\vdash t_{0}=_{n_{0}}u_{0}\Rightarrow\sigma_{0}\dashv\Gamma'\qquad\Gamma|\sigma_{0}|\Gamma'\vdash\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta\qquad\vec{t}\text{ is not empty}}{\Gamma\vdash t_{0}=_{n_{0}}u_{0},\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma\circ\sigma_{0}\dashv\Delta_{2}}
+\frac{\Gamma'\vdash t[\delta]=_{q}u[\delta]\Rightarrow\sigma\dashv\Delta}{\Gamma,M:m|\delta|\Gamma'\vdash t=_{q}u\Rightarrow\sigma\circ\delta\dashv\Delta}
 \]
+
+\end_inset
+
+hmm it does not work.
+\end_layout
 
 \end_inset
 
