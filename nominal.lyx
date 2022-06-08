@@ -1,0 +1,4028 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{tikz-cd}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Pattern unification in second-order abstract syntax
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Kl}[1]{Kl_{#1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Eil}[1]{#1\text{-alg}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\directed}[3]{#1\supset_{#3}#2}
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\newcommand{\C}{\mathcal{C}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Nom}{\mathrm{Nom}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\op}[1]{#1^{op}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We give a correctness proof for pattern unification for second-order abstract
+ languages.
+ Other envisionned applications of our abstract categorical proof are unificatio
+n for linear or polymorphic syntax (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:applications"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ In Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:cat-settings"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we propose a general categorical setting in which pattern unification
+ applies, with the nominal sets in mind.
+ In this case, a second-order syntax with metavariables applied to distinct
+ variables (according to the pattern restriction) corresponds to a free
+ monad applied a coproduct of representable presheaves.
+\end_layout
+
+\begin_layout Standard
+In Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Main-result"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we state our main result that justifies pattern unification algorithms.
+ Then we tackle the proof algorithm, starting with the pruning phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the coequalising phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:coequalising-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the occur-check phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), and finally we justify termination (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Termination"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Notation
+Given a natural number 
+\begin_inset Formula $n$
+\end_inset
+
+ we denote by 
+\begin_inset Formula $\text{\ensuremath{\underline{n}}}$
+\end_inset
+
+ the set 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Categorical setting
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:cat-settings"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we describe our setting, based on the example nominal sets.
+ We explicitly refer to these assumptions in the document when they are
+ used.
+\end_layout
+
+\begin_layout Assumption
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:presentable"
+
+\end_inset
+
+We assume given a locally presentable category 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Presentability ensures (in particular) that 
+\begin_inset Formula $\C$
+\end_inset
+
+ is bicomplete.
+ 
+\end_layout
+
+\begin_layout Remark
+We need cocompleteness so that we can compute free monads of a finitary
+ endofunctor.
+ Completeness ensures that this free monad is algebraically free (TODO check
+ that this is really needed).
+\end_layout
+
+\begin_layout Question
+is bicompleteness enough? 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe we could weaken this assumption and let the algorithm fail if some
+ particular colimits do not exist? 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+and that certain limits commute with certain colimits (e.g., pullbacks commute
+ with coproducts).
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: check, from the definition of reflective subcat of a presheaf cat
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Consider 
+\begin_inset Formula $\Nom$
+\end_inset
+
+ the category of nominal sets, as functors 
+\begin_inset Formula $\mathbb{F}_{m}\rightarrow Set$
+\end_inset
+
+ preserving pullbacks, where 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ is the category of finite cardinals and injections between them.
+ 
+\end_layout
+
+\begin_layout Assumption
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:extensive"
+
+\end_inset
+
+
+\begin_inset Formula $\C$
+\end_inset
+
+ is extensive.
+\end_layout
+
+\begin_layout Standard
+This is useful for coproduct properties (e.g., coproduct injections 
+\begin_inset Formula $A\hookrightarrow A+B\hookleftarrow B$
+\end_inset
+
+ are monomorphic).
+\end_layout
+
+\begin_layout Example
+As a topos, 
+\begin_inset Formula $\Nom$
+\end_inset
+
+ is extensive.
+\end_layout
+
+\begin_layout Assumption
+We assume given a full subcategory embedding 
+\begin_inset Formula $D\xrightarrow{K}\C$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Representable presheaves 
+\begin_inset Formula $\hom_{\mathbb{F}_{m}}(n,-):\mathbb{F}_{m}\rightarrow Set$
+\end_inset
+
+ preserve limits and thus induce nominal sets.
+ Thus, the yoneda embedding 
+\begin_inset Formula $\op{\mathbb{F}_{m}}\rightarrow[\mathbb{F}_{m},Set]$
+\end_inset
+
+ factors as 
+\begin_inset Formula $\op{\mathbb{F}_{m}}\xrightarrow{K}\Nom\hookrightarrow[\mathbb{F}_{m},Set]$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Definition
+We denote by 
+\begin_inset Formula $D^{+}\xrightarrow{K^{+}}\C$
+\end_inset
+
+ the full subcategory of 
+\begin_inset Formula $\C$
+\end_inset
+
+ consisting of finite coproducts of objects of 
+\begin_inset Formula $D$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+We will be interested in coequalisers in 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Assumption
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:finite-connected"
+
+\end_inset
+
+
+\begin_inset Formula $D$
+\end_inset
+
+ has finite connected colimits and 
+\begin_inset Formula $K$
+\end_inset
+
+ preserve them.
+\end_layout
+
+\begin_layout Standard
+This is to deal with the case 
+\begin_inset Formula $M(\vec{x})=N(\vec{y})$
+\end_inset
+
+.
+ Note that this statement is equivalent by replacing finite connected colimits
+ with coequalisers and pushouts.
+ 
+\end_layout
+
+\begin_layout Example
+In the case of nominal sets, the yoneda embedding 
+\begin_inset Formula $K:\op{\mathbb{F}_{m}}\rightarrow Nom$
+\end_inset
+
+ preserves them because nominal sets are functors 
+\begin_inset Formula $\mathbb{F}_{m}\rightarrow Set$
+\end_inset
+
+ preserving finite connected limits.
+\end_layout
+
+\begin_layout Remark
+I think that the algorithm still works without this assumption: it is just
+ that at some point we need to compute a colimit of elements of 
+\begin_inset Formula $D$
+\end_inset
+
+, in particular in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-metavars"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ We already know that such a colimit exists in 
+\begin_inset Formula $\C$
+\end_inset
+
+, but in concrete examples, it is better to know that we can compute them
+ in 
+\begin_inset Formula $D$
+\end_inset
+
+ because this category is simpler 
+\color red
+(TODO: think more about it)
+\color inherit
+.
+\end_layout
+
+\begin_layout Assumption
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:epis"
+
+\end_inset
+
+Morphisms in 
+\begin_inset Formula $D$
+\end_inset
+
+ are epimorphisms.
+\end_layout
+
+\begin_layout Standard
+In the case of nominal sets, this comes from the fact that we restrict to
+ monomorphisms.
+ Note that the image by 
+\begin_inset Formula $K$
+\end_inset
+
+ of an epimorphism is epimorphic by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:finite-connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Assumption
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:tiny"
+
+\end_inset
+
+For each object 
+\begin_inset Formula $d\in D$
+\end_inset
+
+, 
+\begin_inset Formula $\hom_{\C}(Kd,-)$
+\end_inset
+
+ preserves coproducts (i.e., 
+\begin_inset Formula $d$
+\end_inset
+
+ is connected) and filtered colimits (TODO: do we really need the latter?).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+coproducts of filtered cat?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again, this is useful to know to factor 
+\begin_inset Formula $Kd\rightarrow A+B$
+\end_inset
+
+ as 
+\begin_inset Formula $Kd\rightarrow A$
+\end_inset
+
+ or 
+\begin_inset Formula $Kd\rightarrow B$
+\end_inset
+
+.
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Because pullbacks commute with coproducts and filtered colimits in sets,
+ such colimits in 
+\begin_inset Formula $\Nom$
+\end_inset
+
+ are computed pointwise and thus representable presheaves have the required
+ property.
+\end_layout
+
+\begin_layout Assumption
+We assume given a finitary endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ We denote by 
+\begin_inset Formula $T$
+\end_inset
+
+ the generated free monad 
+\begin_inset Formula $F^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "ex:lambda-endo"
+
+\end_inset
+
+Consider the endofunctor on 
+\begin_inset Formula $Nom$
+\end_inset
+
+ corresponding to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus: 
+\begin_inset Formula $F(X)=I+X\times X+X^{I}$
+\end_inset
+
+, where 
+\begin_inset Formula $I$
+\end_inset
+
+ is the representable presheaf 
+\begin_inset Formula $y1$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $X_{n}^{I}=X_{n+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Assumption
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:F-shape"
+
+\end_inset
+
+
+\begin_inset Formula $F(X)$
+\end_inset
+
+ is of the shape 
+\begin_inset Formula $I+\coprod_{i}R_{i}(X)$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $I$
+\end_inset
+
+ is an object of 
+\begin_inset Formula $\C$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R_{i}$
+\end_inset
+
+ is right adjoint to some 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{i}K=\coprod_{j\in J}KL'_{i,j}$
+\end_inset
+
+ for some finite family of endofunctors 
+\begin_inset Formula $(L'_{i,j})_{j}$
+\end_inset
+
+ on 
+\begin_inset Formula $D$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+a finite colimit is too general, we really need coproducts in the pruning
+ phase, see Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-KA-RiTC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Example
+Continuing Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ex:lambda-endo"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $X\mapsto X\times X$
+\end_inset
+
+ is right adjoint to 
+\begin_inset Formula $X\mapsto X+X$
+\end_inset
+
+.
+ Moreover, 
+\begin_inset Formula $X\mapsto X^{I}$
+\end_inset
+
+ is right adjoint to 
+\begin_inset Formula $X\mapsto X\times I$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $X$
+\end_inset
+
+ is a representable presheaf 
+\begin_inset Formula $yn$
+\end_inset
+
+, then 
+\begin_inset Formula $yn\times I=yn\times y1\simeq y(n+1)$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula $L'n=n+1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Assumption
+We assume given a monad 
+\begin_inset Formula $T$
+\end_inset
+
+ relative to the embedding 
+\begin_inset Formula $K^{+}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Typically, this will be a restriction of a term monad.
+\end_layout
+
+\begin_layout Assumption
+We assume given a functor 
+\begin_inset Formula $S:K^{+}\rightarrow Set$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+shall we rather enforce that if 
+\begin_inset Formula $A+B\simeq C+D$
+\end_inset
+
+ then 
+\begin_inset Formula $A\simeq C$
+\end_inset
+
+ or 
+\begin_inset Formula $A\simeq D$
+\end_inset
+
+ or 
+\begin_inset Formula $A\simeq C+D$
+\end_inset
+
+? Cf the notion of atomic
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Typically, this functor computes the 
+\begin_inset Quotes eld
+\end_inset
+
+size
+\begin_inset Quotes erd
+\end_inset
+
+ of a coproduct, added with the size 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+We say that an object 
+\begin_inset Formula $c$
+\end_inset
+
+ of 
+\begin_inset Formula $C$
+\end_inset
+
+ preserves some shape of colimit (e.g., pushouts) if 
+\begin_inset Formula $C(K-,c):C^{op}\rightarrow Set$
+\end_inset
+
+ preserves them.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+If 
+\begin_inset Formula $C$
+\end_inset
+
+ is a presheaf category and 
+\begin_inset Formula $K$
+\end_inset
+
+ is the yoneda embedding, so that we recover the usual meaning.
+\end_layout
+
+\begin_layout Assumption
+We assume that all objects of 
+\begin_inset Formula $C$
+\end_inset
+
+ preserve pushouts.
+\end_layout
+
+\begin_layout Assumption
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We assume given an object 
+\begin_inset Formula $I$
+\end_inset
+
+ of 
+\begin_inset Formula $C$
+\end_inset
+
+ preserving pushouts.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+This is the cas for 
+\begin_inset Formula $C$
+\end_inset
+
+ the category of nominal sets, as presheaves over 
+\begin_inset Formula $\mathbb{F}_{inj}$
+\end_inset
+
+ preserving pullbacks.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Assumption
+\begin_inset Formula $TX=\mu Z.I+F_{X}(Z)$
+\end_inset
+
+ where 
+\begin_inset Formula $F_{X}(Z)=\coprod_{i\in S_{X}}R_{X,i}(Z)$
+\end_inset
+
+ where 
+\begin_inset Formula $R_{X,i}:C\rightarrow C$
+\end_inset
+
+ is right adjoint to 
+\begin_inset Formula $L_{X,i}$
+\end_inset
+
+ and 
+\begin_inset Formula $L_{X,i}K$
+\end_inset
+
+ is isomorphic to a colimit 
+\begin_inset Formula $\int^{j}KL_{X,i,j}'$
+\end_inset
+
+.
+ where 
+\begin_inset Formula $L':D\rightarrow D$
+\end_inset
+
+ preserves pushouts.
+ 
+\begin_inset Formula $T$
+\end_inset
+
+-algebra morphisms preserve 
+\begin_inset Formula $I$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{-}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Take 
+\begin_inset Formula $C$
+\end_inset
+
+ the category of nominal sets, as a reflective subcategory of 
+\begin_inset Formula $Set^{\mathbb{F}_{m}}$
+\end_inset
+
+, and 
+\begin_inset Formula $D$
+\end_inset
+
+ the full subcategory of representable presheaves.
+ Take 
+\begin_inset Formula $I$
+\end_inset
+
+ to be the identity nominal set: 
+\begin_inset Formula $In=\underline{n}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $TX=\mu Z.I+X+Z\times Z+Z\cdot O$
+\end_inset
+
+.
+ Here 
+\begin_inset Formula $T$
+\end_inset
+
+ is a free monad!! This is a monad with pattern variables and a binary operation
+s.
+\end_layout
+
+\begin_layout Example
+Je suggere la notation 
+\begin_inset Formula $A,B,\dots$
+\end_inset
+
+ 
+\begin_inset Formula $\alpha,\beta$
+\end_inset
+
+ pour coproduits pour un tiny, 
+\begin_inset Formula $X,Y,\dots$
+\end_inset
+
+ pour un normal.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Main result
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Main-result"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our main result is that a coequaliser diagram in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ either has no unifier, either can be decomposed further.
+ An additionnal argument is necessary to ensure termination of the decomposition
+, for coequaliser diagrams selecting objects in 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+But first let us rephrase the statement.
+\end_layout
+
+\begin_layout Definition
+Given a category 
+\begin_inset Formula $E$
+\end_inset
+
+, let 
+\begin_inset Formula $E^{*}$
+\end_inset
+
+ be 
+\begin_inset Formula $E$
+\end_inset
+
+ extended freely with a terminal object.
+\end_layout
+
+\begin_layout Remark
+Adding a terminal object results in adding a terminal cocone to all diagrams.
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As a consequence, we have a following lemma.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $J$
+\end_inset
+
+ be a diagram in a category 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ The following are equivalent:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $J$
+\end_inset
+
+ has a colimit has long as its category of cocones is not empty.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $J$
+\end_inset
+
+ has a colimit in 
+\begin_inset Formula $E^{*}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thus, we are going to work in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+ rather than 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The following result is also useful.
+\end_layout
+
+\begin_layout Lemma
+Given a category 
+\begin_inset Formula $E$
+\end_inset
+
+, the canonical functor 
+\begin_inset Formula $E\rightarrow E^{*}$
+\end_inset
+
+ creates colimits.
+\end_layout
+
+\begin_layout Standard
+This has some consequences: 
+\end_layout
+
+\begin_layout Enumerate
+whenever the colimit in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+ is not the terminal object, it is also a colimit in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+existing colimits in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ are also colimits in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+in particular, coproducts in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ (which are computed in 
+\begin_inset Formula $\C$
+\end_inset
+
+) are also coproducts in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Notation
+We denote by 
+\begin_inset Formula $\top$
+\end_inset
+
+ the terminal object and by 
+\begin_inset Formula $!$
+\end_inset
+
+ any terminal morphism.
+\end_layout
+
+\begin_layout Section
+Notations
+\end_layout
+
+\begin_layout Standard
+We denote the identity morphism at an object 
+\begin_inset Formula $x$
+\end_inset
+
+ by 
+\begin_inset Formula $1_{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $(g_{i}:A_{i}\rightarrow B)_{i\in I}$
+\end_inset
+
+ is a family of arrows, we denote by 
+\begin_inset Formula $[g_{i}]:\coprod_{i\in I}A_{i}\rightarrow B$
+\end_inset
+
+ the induced coproduct pairing.
+\end_layout
+
+\begin_layout Standard
+Coproduct injections 
+\begin_inset Formula $A_{i}\rightarrow\coprod_{i\in I}A_{i}$
+\end_inset
+
+ are typically denoted by 
+\begin_inset Formula $in_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Given an adjunction 
+\begin_inset Formula $L\dashv R$
+\end_inset
+
+ and a morphism 
+\begin_inset Formula $f:A\rightarrow RB$
+\end_inset
+
+, we denote by 
+\begin_inset Formula $f^{*}:LA\rightarrow B$
+\end_inset
+
+ its transpose, and similarly, if 
+\begin_inset Formula $g:LA\rightarrow B$
+\end_inset
+
+, then 
+\begin_inset Formula $g^{*}:A\rightarrow RB$
+\end_inset
+
+.
+ In particular, a Kleisli morphism 
+\begin_inset Formula $f:A\rightarrow TB$
+\end_inset
+
+ induces a morphism 
+\begin_inset Formula $f^{*}:TA\rightarrow TB$
+\end_inset
+
+ through the adjunction between 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ and 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We denote the Kleisli composition of 
+\begin_inset Formula $f:A\rightarrow TB$
+\end_inset
+
+ and 
+\begin_inset Formula $g:TB\rightarrow TC$
+\end_inset
+
+ by 
+\begin_inset Formula $f[g]=g^{*}\circ f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Pruning phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:pruning-phase"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we want to compute a pushout diagram in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+, where one branch is a coproduct of free morphisms.
+\begin_inset Formula 
+\[
+\xymatrix{\coprod_{i}KA_{i}\ar[r]^{\coprod_{i}Kf_{i}}\ar[d]_{[g_{i}]} & \coprod_{i}KB_{i}\ar[r]^{\eta} & T\coprod_{i}KB_{i}\ar[d]^{[u_{i}]}\\
+X\ar[rr]_{\sigma} &  & Z
+}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g_{i}:KA_{i}\rightarrow X$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{i}\in\hom_{\Kl T^{*}}(KB_{i},Z)$
+\end_inset
+
+.
+ We denote such a situation by
+\begin_inset Formula 
+\[
+X\vdash f_{1}:=g_{1},f_{2}:=g_{2},\dots\Rightarrow u_{1},u_{2},\dots;\sigma\dashv Z
+\]
+
+\end_inset
+
+ abbreviated as 
+\begin_inset Formula 
+\[
+X\vdash\vec{f}:=\vec{g}\Rightarrow\vec{u};\sigma\dashv Z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+or even
+\begin_inset Formula 
+\[
+X\vdash(f_{i})_{i}:=g\Rightarrow u;\sigma\dashv Z
+\]
+
+\end_inset
+
+ with 
+\begin_inset Formula $g=[g_{i}]$
+\end_inset
+
+ and 
+\begin_inset Formula $u=[u_{i}]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The simplest case is when the coproduct is empty: then, the pushout is 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\dfrac{}{X\vdash\vec{()}:=\vec{()}\Rightarrow\vec{()};1_{X}\dashv X}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Another simple case is when 
+\begin_inset Formula $X=\top$
+\end_inset
+
+.
+ Then, the pushout is the terminal cocone.
+ Thus we have the rule
+\begin_inset Formula 
+\[
+\dfrac{}{\top\vdash\vec{f}:=\vec{g}\Rightarrow\vec{!};!\dashv\top}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The pushout can be decomposed into smaller components.
+\begin_inset Formula 
+\[
+\dfrac{X\vdash\vec{f}:=\vec{g}\Rightarrow\vec{u};\sigma\dashv Z\qquad Z\vdash\vec{f'}:=\vec{g'}[\sigma]\Rightarrow\vec{u'};\sigma'\dashv Z'}{X\vdash\vec{f},\vec{f'}:=\vec{g},\vec{g'}\Rightarrow\vec{u}[\sigma],\vec{u'};\sigma\dashv Z}
+\]
+
+\end_inset
+
+This follows from the following general lemma.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:coeq-stepwise"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f_{1},g_{1}:A_{1}\rightarrow B$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{2},g_{2}:A_{2}\rightarrow B$
+\end_inset
+
+ be morphisms in some category.
+ Then the coequaliser of the induced parallel morphism 
+\begin_inset Formula $A_{1}\coprod A_{2}\rightrightarrows B$
+\end_inset
+
+ is the morphism 
+\begin_inset Formula $B\rightarrow C\rightarrow D$
+\end_inset
+
+ defined as follows (assuming the involved coequalisers exist):
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $B\rightarrow C$
+\end_inset
+
+ is the coequaliser of 
+\begin_inset Formula $A_{1}\rightrightarrows B$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $C\rightarrow D$
+\end_inset
+
+ is the coequaliser of 
+\begin_inset Formula $A_{2}\rightrightarrows B\rightarrow C$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thanks to the previous rule, we can focus on the case where the coproduct
+ is the singleton (since we focus on finite coproducts of elements of 
+\begin_inset Formula $D$
+\end_inset
+
+).
+ Thus, we want to compute the pushout
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[r]^{\eta} & TKB\\
+TC
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $TC\simeq I+C+\coprod_{i}R_{i}TC$
+\end_inset
+
+ (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and 
+\begin_inset Formula $KA$
+\end_inset
+
+ is connected (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:tiny"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), 
+\begin_inset Formula $KA\rightarrow TC$
+\end_inset
+
+ factors through one of the following coproduct injections:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{I}:I\hookrightarrow TC$
+\end_inset
+
+ (variable case)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta:C\hookrightarrow TC$
+\end_inset
+
+ (metavariable case)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{i}:R_{i}TC\hookrightarrow TC$
+\end_inset
+
+ (operation case)
+\end_layout
+
+\begin_layout Standard
+In the next subsections, we discuss the different cases.
+ 
+\end_layout
+
+\begin_layout Subsection
+Case 
+\begin_inset Formula $KA\hookrightarrow I$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A cocone in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ is given by an object 
+\begin_inset Formula $Y$
+\end_inset
+
+ with morphisms 
+\begin_inset Formula $KB\rightarrow TY\leftarrow C$
+\end_inset
+
+ such that the following diagram commutes.
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[d]\\
+I\ar[r] & TY
+}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $KB$
+\end_inset
+
+ is connected (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:tiny"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), by extensivity (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and definition of 
+\begin_inset Formula $T$
+\end_inset
+
+ (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), 
+\begin_inset Formula $KB\rightarrow TY$
+\end_inset
+
+ factors through 
+\begin_inset Formula $I\hookrightarrow TY$
+\end_inset
+
+.
+ Therefore, a unifier is equivalently an object 
+\begin_inset Formula $Y\in D^{+}$
+\end_inset
+
+ with a morphism 
+\begin_inset Formula $KC\rightarrow TY$
+\end_inset
+
+ and a morphism 
+\begin_inset Formula $u:KB\rightarrow I$
+\end_inset
+
+ that makes the following diagram commute.
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[rr]^{Kf}\ar[rd]_{g} &  & KB\ar[ld]^{u}\\
+ & I
+}
+\]
+
+\end_inset
+
+We already know that such a morphism 
+\begin_inset Formula $KB\rightarrow I$
+\end_inset
+
+ is unique, as the top morphism is epimorphic by Assumptions
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:finite-connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:epis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Therefore, we have the following rule in case there exists such a 
+\begin_inset Formula $u$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\dfrac{g=u\circ Kf}{C\vdash f:=in_{I}\circ g\Rightarrow in_{I}\circ u;1_{C}\dashv C}
+\]
+
+\end_inset
+
+and the following rule in case no such morphism exists (this happens concretely
+ for 
+\begin_inset Formula $M(x):=y$
+\end_inset
+
+ when 
+\begin_inset Formula $y\neq x$
+\end_inset
+
+).
+\begin_inset Formula 
+\[
+\dfrac{\forall u:KB\rightarrow I,g\neq u\circ Kf}{C\vdash f:=in_{I}\circ g\Rightarrow!;!\dashv\top}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+If 
+\begin_inset Formula $Kf$
+\end_inset
+
+ is effective (e.g., if 
+\begin_inset Formula $\C$
+\end_inset
+
+ is a topos, as is the case of nominal sets), then the existence of such
+ a 
+\begin_inset Formula $u$
+\end_inset
+
+ is equivalent to 
+\begin_inset Formula $g$
+\end_inset
+
+ coequalising the kernel of 
+\begin_inset Formula $Kf$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Case 
+\begin_inset Formula $KA\hookrightarrow C$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:pruning-metavar"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We want to compute the pushout of free morphisms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[r]^{\eta} & TKB\\
+C\ar[d]_{\eta}\\
+TC
+}
+\]
+
+\end_inset
+
+Since the functor 
+\begin_inset Formula $\C\rightarrow\Kl T$
+\end_inset
+
+ is left adjoint, the pushout can be computed in 
+\begin_inset Formula $\mathcal{C}$
+\end_inset
+
+, and it exists by Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:presentable"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Therefore, we have the rule
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[d]^{u}\\
+C\ar[r]_{\sigma} & D
+}
+\end{array}\text{is a pushout}}{C\vdash f:=\eta\circ g\Rightarrow\eta\circ u;T\sigma\dashv D}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Case 
+\begin_inset Formula $KA\hookrightarrow R_{i}TC$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:case-KA-RiTC"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We want to compute the pushout
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[r]^{\eta} & TKB\\
+R_{i}TC\ar[d]_{in_{i}}\\
+TC
+}
+\]
+
+\end_inset
+
+A cocone in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ is given by an object 
+\begin_inset Formula $Y$
+\end_inset
+
+ with morphisms 
+\begin_inset Formula $KB\rightarrow TY\leftarrow C$
+\end_inset
+
+ such that the following diagram commutes.
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[rr]^{Kf}\ar[d]_{g} &  & KB\ar[d]\\
+R_{i}TC\ar[r] & R_{i}TY\ar[r] & TY
+}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $KB$
+\end_inset
+
+ is connected (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:tiny"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), by extensivity (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and definition of 
+\begin_inset Formula $T$
+\end_inset
+
+ (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), 
+\begin_inset Formula $KB\rightarrow TY$
+\end_inset
+
+ factors through 
+\begin_inset Formula $R_{i}TY\hookrightarrow TY$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $R_{i}TY\rightarrow TY$
+\end_inset
+
+ is monomorphic (as a coproduct injection, again by Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), a cocone in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ is given by an object 
+\begin_inset Formula $Y$
+\end_inset
+
+ with morphisms 
+\begin_inset Formula $C\rightarrow TY$
+\end_inset
+
+ and 
+\begin_inset Formula $KB\rightarrow R_{i}TY$
+\end_inset
+
+ such that the following diagram commutes.
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[d]\\
+R_{i}TC\ar[r] & R_{i}TY
+}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $R_{i}$
+\end_inset
+
+ has a left adjoint 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ such that 
+\begin_inset Formula $L_{i}K=\int^{j}KL'_{i,j}$
+\end_inset
+
+ (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), this is equivalent to making the following diagram commute.
+\begin_inset Formula 
+\[
+\xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{\coprod_{j}KL_{i,j}'f}\ar[d]_{g^{*}} &  & \coprod_{j}KL_{i,j}'B\ar[d]^{u}\\
+TC\ar[rr]_{\sigma} &  & TY
+}
+\]
+
+\end_inset
+
+Thus, this justifies the following rule
+\begin_inset Formula 
+\[
+\dfrac{C\vdash(L'_{i,j}f)_{j}:=g^{*}\Rightarrow u;\sigma\dashv Y}{C\vdash f:=in_{i}\circ g\Rightarrow in_{i}\circ u^{*};\sigma\dashv Y}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Coequalising phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:coequalising-phase"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we want to compute a coequalising diagram in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+, where the domain is in 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\xymatrix{\coprod_{i}KA_{i}\ar@<+.5ex>[r]^{[t_{i}]}\ar@<-.5ex>[r]_{[u_{i}]} & \Gamma\ar[r]^{\sigma} & \Delta}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g_{i}:KA_{i}\rightarrow X$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{i}\in\hom_{\Kl T^{*}}(KB_{i},Z)$
+\end_inset
+
+.
+ We denote such a situation by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma\vdash t_{1}=_{A_{1}}u_{1},\dots t_{p}=_{A_{p}}u_{p}\Rightarrow\sigma\dashv\Delta
+\]
+
+\end_inset
+
+ that we sometimes abbreviate as 
+\begin_inset Formula 
+\[
+\Gamma\vdash\vec{t}=_{\vec{A}}\vec{u}\Rightarrow\sigma\dashv\Delta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The simplest case is when the coproduct is empty: then, the coequaliser
+ is 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{}{\Gamma\vdash()\Rightarrow1_{\Gamma}\dashv\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Another simple case is when 
+\begin_inset Formula $\Gamma=\top$
+\end_inset
+
+.
+ Then, the pushout is the terminal cocone.
+ Thus we have the rule
+\begin_inset Formula 
+\[
+\dfrac{}{\top\vdash\vec{t}=_{\vec{A}}\vec{u}\Rightarrow!\dashv\top}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again, thanks to Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:coeq-stepwise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, such a coequaliser can be decomposed into smaller components.
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t_{0}=_{n_{0}}u_{0}\Rightarrow\sigma_{0}\dashv\Delta_{1}\qquad\Delta_{1}\vdash\vec{t}[\text{\ensuremath{\sigma_{0}]}}=_{\vec{n}}\vec{u}[\text{\ensuremath{\sigma_{0}]}}\Rightarrow\sigma\dashv\Delta_{2}}{\Gamma\vdash t_{0}=_{n_{0}}u_{0},\vec{t}=_{\vec{n}}\vec{u}\Rightarrow\sigma_{0}[\sigma]\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thanks to the previous rules, we can focus on the case where the coproduct
+ is a singleton (since we focus on finite coproducts of elements of 
+\begin_inset Formula $D$
+\end_inset
+
+), and 
+\begin_inset Formula $\Gamma=TC$
+\end_inset
+
+.
+ Thus, we want to compute the coequaliser
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & TC}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $TC\simeq I+C+\coprod_{i}R_{i}TC$
+\end_inset
+
+ (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and 
+\begin_inset Formula $KA$
+\end_inset
+
+ is connected (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:tiny"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), 
+\begin_inset Formula $t,u:KA\rightarrow TC$
+\end_inset
+
+ factor through one of the following coproduct injections:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{I}:I\hookrightarrow TC$
+\end_inset
+
+ (variables)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta:C\hookrightarrow TC$
+\end_inset
+
+ (metavariables)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{i}:R_{i}TC\hookrightarrow TC$
+\end_inset
+
+ (operations)
+\end_layout
+
+\begin_layout Standard
+In the next subsections, we discuss the different cases.
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta=\dots$
+\end_inset
+
+, or 
+\begin_inset Formula $M(\vec{x})=...$
+\end_inset
+
+, in case of a successful occur-check, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta=\eta$
+\end_inset
+
+, or 
+\begin_inset Formula $M(\vec{x})=N(\vec{y})$
+\end_inset
+
+, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-metavars"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which is partly redundant with the  previous case
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{i}=in_{i}$
+\end_inset
+
+, or 
+\begin_inset Formula $o(\vec{t})=o(\vec{u})$
+\end_inset
+
+, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-op-op"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+; 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{I}=in_{I}$
+\end_inset
+
+, or 
+\begin_inset Formula $x=y$
+\end_inset
+
+, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-var-var"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Note Note
+status open
+
+\begin_layout Itemize
+\begin_inset Formula $M(\vec{x})=o(\vec{t})$
+\end_inset
+
+, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-mvar-op"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $M(\vec{x})=x_{i}$
+\end_inset
+
+, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-mvar-var"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us mention schematically some other cases, which can never be unified
+ in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ and thus are solved using 
+\begin_inset Formula $\top$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{i}=in_{i'}$
+\end_inset
+
+ with 
+\begin_inset Formula $i\neq i'$
+\end_inset
+
+ (in the examples, 
+\begin_inset Formula $o(\vec{t})=o'(\vec{u})$
+\end_inset
+
+ when 
+\begin_inset Formula $o\neq o'$
+\end_inset
+
+)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $M(\vec{x})=y$
+\end_inset
+
+ when 
+\begin_inset Formula $y\notin\vec{x}$
+\end_inset
+
+ (thi
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $in_{i}=in_{I}$
+\end_inset
+
+ (in the examples, 
+\begin_inset Formula $o(\vec{t})=x$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta=\dots$
+\end_inset
+
+ , or 
+\begin_inset Formula $M(\vec{x})=u$
+\end_inset
+
+, with failing occur-check (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), i.e., when 
+\begin_inset Formula $M$
+\end_inset
+
+ appears deep in 
+\begin_inset Formula $u$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Successful occur-check
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:occur-check"
+
+\end_inset
+
+WIP
+\end_layout
+
+\begin_layout Standard
+The occur-check phase is described in more details in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Here, we assume that 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $C\simeq KB+C'$
+\end_inset
+
+ for some 
+\begin_inset Formula $B$
+\end_inset
+
+, 
+\begin_inset Formula $C'$
+\end_inset
+
+; 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $t:KA\rightarrow TC$
+\end_inset
+
+ factors as 
+\begin_inset Formula $KA\xrightarrow{f}KB\xhookrightarrow{in_{B}}TC\simeq KB+\dots$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $u:KA\rightarrow TC$
+\end_inset
+
+ factors as 
+\begin_inset Formula $KA\xrightarrow{g}TC'\xhookrightarrow{in_{TC'}}TC$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the examples, the second condition means that 
+\begin_inset Formula $t$
+\end_inset
+
+ is a metavariable, and the last condition means that this metavariable
+ does not occur in 
+\begin_inset Formula $u$
+\end_inset
+
+, i.e., the occur-check is successful.
+\end_layout
+
+\begin_layout Standard
+Thus, the coequaliser
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & TC}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+is a coequaliser (in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+) of the shape
+\begin_inset Formula 
+\[
+\xymatrix{ & Y\ar[rd]\\
+X\ar[ru]\ar[rd] &  & Y+Z\\
+ & Z\ar[ru]
+}
+,
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $X=KA$
+\end_inset
+
+, 
+\begin_inset Formula $Y=TKB$
+\end_inset
+
+ and 
+\begin_inset Formula $Z=TC'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+There is a canonical isomorphism between the category of cocones over such
+ a coequaliser diagram and the category of cocones over the pushout diagram
+ 
+\begin_inset Formula $Y\leftarrow X\rightarrow Z$
+\end_inset
+
+ exists.
+\end_layout
+
+\begin_layout Remark
+Therefore, computing this coequaliser amounts to computing the pushout.
+ We are thus in the situation of the pruning phase, and we can justify the
+ rule
+\begin_inset Formula 
+\[
+\dfrac{C'\vdash f:=g\Rightarrow v;\sigma\dashv Z}{KB+C'\vdash in_{B}\circ f=in_{TC'}\circ g\Rightarrow[v,\sigma]\dashv Z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Case 
+\begin_inset Formula $M(x_{1},\dots,x_{m})=_{q}N(y_{1},\dots,y_{n})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:case-metavars"
+
+\end_inset
+
+Here we are in the situation where 
+\begin_inset Formula $t,u:KA\rightarrow TC$
+\end_inset
+
+ factor as 
+\begin_inset Formula $t',u':KA\rightarrow C$
+\end_inset
+
+ through 
+\begin_inset Formula $\eta:C\rightarrow TC$
+\end_inset
+
+.
+ Note that since postcomposition with 
+\begin_inset Formula $\eta$
+\end_inset
+
+ is precisely the left adjoint (and thus cocontinuous) functor from 
+\begin_inset Formula $\C$
+\end_inset
+
+ to 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+, it is enough to compute the coequaliser in 
+\begin_inset Formula $\C$
+\end_inset
+
+ and then precompose it with 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We assume the following
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C\simeq\coprod_{i\in\{a,b\}}KB_{i}+C'$
+\end_inset
+
+, where 
+\begin_inset Formula $a,b$
+\end_inset
+
+ may not be distinct (in practice 
+\begin_inset Formula $C$
+\end_inset
+
+ is in 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+), 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t',u':KA\rightarrow C$
+\end_inset
+
+ factor respectively as 
+\begin_inset Formula $KB_{a}\rightarrow C$
+\end_inset
+
+ and 
+\begin_inset Formula $KB_{b}\rightarrow C$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that if 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ are distinct, then the case we describe is redundant with some specific
+ case of the pruning phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:pruning-metavar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+We want to compute the coequaliser of the free algebra morphisms.
+\begin_inset Formula 
+\[
+\xymatrix{ & KB_{a}\ar[rd]\\
+KA\ar[ru]^{Kf}\ar[rd]_{Kg} &  & \coprod_{i\in\{a,b\}}KB_{i}+C'\\
+ & KB_{b}\ar[ru]
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+The coequaliser of a diagram of this shape, in any category which has the
+ involved colimits, is 
+\begin_inset Formula $X+C'$
+\end_inset
+
+, where 
+\begin_inset Formula $X$
+\end_inset
+
+ is the coequaliser or 
+\begin_inset Formula $Kf$
+\end_inset
+
+ and 
+\begin_inset Formula $Kg$
+\end_inset
+
+ if 
+\begin_inset Formula $a=b$
+\end_inset
+
+, or the pushout of 
+\begin_inset Formula $Kf$
+\end_inset
+
+ and 
+\begin_inset Formula $Kg$
+\end_inset
+
+, otherwise.
+\end_layout
+
+\begin_layout Standard
+Thanks to Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:finite-connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we know that such a colimit exists.
+\end_layout
+
+\begin_layout Standard
+All the arguments in this section justify the following rule, whose premise
+ can always be satisfied.
+\begin_inset Formula 
+\[
+\dfrac{\xymatrix{ & KB_{a}\ar[rd]\\
+KA\ar[ru]^{Kf}\ar[rd]_{Kg} &  & \coprod_{i\in\{a,b\}}KB_{i}+C'\ar[r]^{\sigma} & X\text{ is a pushout}\\
+ & KB_{b}\ar[ru]
+}
+}{\coprod_{i\in\{a,b\}}KB_{i}+C'\vdash\eta\circ in_{a}\circ Kf=\eta\circ in_{b}\circ Kf\Rightarrow\eta\circ\sigma\dashv X}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Case 
+\begin_inset Formula $o(\vec{t})=o(\vec{u})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:case-op-op"
+
+\end_inset
+
+Here we assume that 
+\begin_inset Formula $t,u:KA\rightarrow TC$
+\end_inset
+
+ factors as 
+\begin_inset Formula $t',u':KA\rightarrow R_{i}TC$
+\end_inset
+
+ through 
+\begin_inset Formula $R_{i}TC\hookrightarrow TC$
+\end_inset
+
+.
+ A cocone in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ is given by an object 
+\begin_inset Formula $Y$
+\end_inset
+
+ with a morphism 
+\begin_inset Formula $C\xrightarrow{\sigma}TY$
+\end_inset
+
+ such that the following diagram commutes.
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{t'}\ar[d]_{u'} & R_{i}TC\ar[r]^{R_{i}\sigma^{*}} & R_{i}TY\ar[d]^{in_{i}}\\
+R_{i}TC\ar[r]_{R_{i}\sigma^{*}} & R_{i}TY\ar[r]_{in_{i}} & TY
+}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $R_{i}TY\rightarrow TY$
+\end_inset
+
+ is monomorphic (as a coproduct injection, by extensivity, Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the above commutation is equivalent to commutation of the following diagram.
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{t'}\ar[d]_{u'} & R_{i}TC\ar[d]^{R_{i}\sigma^{*}}\\
+R_{i}TC\ar[r]_{R_{i}\sigma^{*}} & R_{i}TY
+}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $R_{i}$
+\end_inset
+
+ has a left adjoint 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ such that 
+\begin_inset Formula $L_{i}K=\int^{j}KL'_{i,j}$
+\end_inset
+
+ (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), this is equivalent to making the following diagram commute.
+\begin_inset Formula 
+\[
+\xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{t'^{*}}\ar[d]_{u'^{*}} &  & TC\ar[d]^{\sigma^{*}}\\
+TC\ar[rr]_{\sigma^{*}} &  & TY
+}
+\]
+
+\end_inset
+
+Thus, this justifies the following rule
+\begin_inset Formula 
+\[
+\dfrac{C\vdash t'^{*}=u'^{*}\Rightarrow\sigma\dashv Y}{C\vdash in_{i}\circ t'=in_{i}\circ u'\Rightarrow\sigma\dashv Y}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{o\text{ has binding arity \ensuremath{\vec{n}}}\qquad\Gamma\vdash\vec{t}=_{q+\vec{n}}\vec{u}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(\vec{t})=_{q}o(\vec{u})\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Case 
+\begin_inset Formula $x=y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:case-var-var"
+
+\end_inset
+
+Here we assume that 
+\begin_inset Formula $t,u:KA\rightarrow TC$
+\end_inset
+
+ factors as 
+\begin_inset Formula $t',u':KA\rightarrow I$
+\end_inset
+
+ through 
+\begin_inset Formula $I\hookrightarrow TC$
+\end_inset
+
+.
+ A coequalising cocone in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ is an object 
+\begin_inset Formula $D$
+\end_inset
+
+ such that 
+\begin_inset Formula $I\hookrightarrow TD$
+\end_inset
+
+ coequalises 
+\begin_inset Formula $t'$
+\end_inset
+
+ and 
+\begin_inset Formula $u'$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $I\hookrightarrow TD$
+\end_inset
+
+ is monomorphic (by extensivity, Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), this implies that 
+\begin_inset Formula $t'=u'$
+\end_inset
+
+.
+ In other words, either 
+\begin_inset Formula $t'=u'$
+\end_inset
+
+ and in this case the coequaliser is just 
+\begin_inset Formula $TC$
+\end_inset
+
+, either 
+\begin_inset Formula $t'\neq u'$
+\end_inset
+
+ and in this case there is no unifier in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+.
+ The first case is a particular instance of the following rule
+\begin_inset Formula 
+\[
+\dfrac{}{C\vdash f=f\Rightarrow1_{C}\dashv C}
+\]
+
+\end_inset
+
+The second case can be expressed with the following rule.
+\begin_inset Formula 
+\[
+\dfrac{t'\neq u'}{C\vdash in_{I}\circ t'=in_{I}\circ u'\Rightarrow!\dashv\top}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Occur-check
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:occur-check"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\color red
+WIP 
+\end_layout
+
+\begin_layout Standard
+The occur-check allows to jump from the coequalising phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:coequalising-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) to the pruning phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), whenever the metavariable appearing at the toplevel of the l.h.s does not
+ appear in the r.h.s.
+ On the other hand, if it appears on the r.h.s and is not top-level, then
+ there is no unifier.
+\end_layout
+
+\begin_layout Standard
+The challenge here is to define the algorithm recursively and prove it correct.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $J:\C\rightarrow\hat{D}$
+\end_inset
+
+ mapping 
+\begin_inset Formula $c$
+\end_inset
+
+ to 
+\begin_inset Formula $\hom_{\C}(K-,c)$
+\end_inset
+
+.
+ Moreover, let 
+\begin_inset Formula $G:\hat{D}\rightarrow\hat{D}$
+\end_inset
+
+ mapping 
+\begin_inset Formula $P$
+\end_inset
+
+ to 
+\begin_inset Formula $\coprod_{i}\prod_{j}P_{L_{i,j}-}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $GJ$
+\end_inset
+
+ is isomorphic to 
+\begin_inset Formula $JF$
+\end_inset
+
+, i.e., the following square commutes up to isomorphism.
+\begin_inset Formula 
+\[
+\xymatrix{\C\ar[r]^{F}\ar[d]_{J} & \C\ar[d]^{J}\\
+\hat{D}\ar[r]_{G} & \hat{D}
+}
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $J$
+\end_inset
+
+ has a left adjoint (since it is continuous), but more importantly, it preserves
+ coproducts and filtered colimits colimits by Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:tiny"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ As a consequence, we the following square commutes up to isomorphism.
+\begin_inset Formula 
+\[
+\xymatrix{\C\ar[r]^{T}\ar[d]_{J} & \C\ar[d]^{J}\\
+\hat{D}\ar[r]_{G^{*}} & \hat{D}
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, we can define the size of a morphism as a universal 
+\begin_inset Formula $G$
+\end_inset
+
+-algebra morphism to the constant presheaf 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+, or define the occur-check by induction as a 
+\begin_inset Formula $G$
+\end_inset
+
+-algebra morphism from 
+\begin_inset Formula $\hom_{\C}(K-,T(B+C))$
+\end_inset
+
+ to 
+\begin_inset Formula $\hom_{\C}(K-,TC)+1$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+en exploitant l'existence de 
+\begin_inset Formula $GO\rightarrow OG$
+\end_inset
+
+, avec 
+\begin_inset Formula $OX=X+1$
+\end_inset
+
+? Ou plus simplement, on voit que 
+\begin_inset Formula $G(C+D)\simeq G(C)+\Gamma_{C}(D)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Can we do everything by induction?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Is 
+\begin_inset Formula $G$
+\end_inset
+
+ polynomial? It preserves connected limits at least.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $J$
+\end_inset
+
+ lifts to a functor 
+\begin_inset Formula $J:\Kl T\rightarrow\Kl{G^{*}}$
+\end_inset
+
+ and extends to a functor 
+\begin_inset Formula $\Eil T\rightarrow\Eil G$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+peut ont raisonner dans 
+\begin_inset Formula $\Kl{G^{*}}?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Termination
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Termination"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ask for a strict monoidal functor 
+\begin_inset Formula $D^{+}\rightarrow\mathbb{N}^{\otimes}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Plain Layout
+Maybe we don't need because tiny objects are connected objects and they
+ are special in an extensive cat, cf prop 4.1 nlab on extensive cat.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+TODO The usual termination argument should apply (but we need first to disambigu
+ate the rules above).
+ Indeed, because objects of 
+\begin_inset Formula $D$
+\end_inset
+
+ are connected (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:tiny"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) in an extensive category (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), we can define without ambiguity the 
+\emph on
+size
+\emph default
+ of a 
+\emph on
+context
+\emph default
+ (i.e., an element of 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+) as the length of the coproduct.
+\end_layout
+
+\begin_layout Section
+Applications
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:applications"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Nominal sets (untyped)
+\end_layout
+
+\begin_layout Subsection
+Nominal sets, simply-typed
+\end_layout
+
+\begin_layout Subsection
+Linear syntax
+\end_layout
+
+\begin_layout Standard
+Take 
+\begin_inset Formula $\C=Set^{\mathbb{N}}$
+\end_inset
+
+ and 
+\begin_inset Formula $D$
+\end_inset
+
+ the full subcategory of representable presheaves.
+ Intuitively, given 
+\begin_inset Formula $X\in Set^{\mathbb{N}}$
+\end_inset
+
+, the set 
+\begin_inset Formula $X_{n}$
+\end_inset
+
+ is the set of expressions with exactly 
+\begin_inset Formula $n$
+\end_inset
+
+ (distinct) variables.
+ Then, we can consider the linear lambda-calculus, as an endofunctor on
+ 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+ mapping 
+\begin_inset Formula $X$
+\end_inset
+
+ to 
+\begin_inset Formula $F(X)$
+\end_inset
+
+ where 
+\begin_inset Formula $F(X)_{n}=y1+\coprod_{p+q=n}X_{p}\times X_{q}+(n+1)\times X_{n+1}$
+\end_inset
+
+.
+ Note that we could also specify a non-linear binder by replacing 
+\begin_inset Formula $(n+1)\times X_{n+1}$
+\end_inset
+
+ with 
+\begin_inset Formula $\coprod_{p>n}\left(\begin{array}{c}
+p\\
+n
+\end{array}\right)X_{p}$
+\end_inset
+
+.
+ We could also have a non linear application by replacing 
+\begin_inset Formula $\coprod_{p+q=n}X_{p}\times X_{q}$
+\end_inset
+
+ with 
+\begin_inset Formula $X_{n}\times X_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Then, 
+\begin_inset Formula $F^{*}(0)$
+\end_inset
+
+ is the linear lambda-calculus.
+ 
+\begin_inset Formula $F^{*}(yn)$
+\end_inset
+
+ is the syntax of linear 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus extended with one 
+\begin_inset Formula $n$
+\end_inset
+
+-ary metavariable applied to 
+\begin_inset Formula $n$
+\end_inset
+
+ (distinct) variables.
+\end_layout
+
+\begin_layout Subsection
+Polymorphic syntax
+\end_layout
+
+\begin_layout Standard
+WIP.
+ Let 
+\begin_inset Formula $J^{+}:\mathbb{F}\rightarrow Set$
+\end_inset
+
+ denotes the functor mapping 
+\begin_inset Formula $n$
+\end_inset
+
+ to the 
+\begin_inset Formula $n+1^{th}$
+\end_inset
+
+ cardinal 
+\begin_inset Formula $\{0,\dots,n\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $S$
+\end_inset
+
+ be a monad on 
+\begin_inset Formula $Set$
+\end_inset
+
+ such that 
+\begin_inset Formula $SX$
+\end_inset
+
+ is the set of types taking free type variables in 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We need to consider something like 
+\begin_inset Formula $Set^{J^{+}/SJ}$
+\end_inset
+
+, but restricted to a full subcategory embedding so that the yoneda embedding
+ preserve finite connected limits.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Mais en raisonnant sur 
+\begin_inset Formula $Set^{\mathbb{F}}$
+\end_inset
+
+, je ne epu pas considerer la monade T' (cf main)...
+ Je pourrais travailler sur 
+\begin_inset Formula $Set^{\mathbb{F}_{m}}$
+\end_inset
+
+ ou mieux, sur les ensembles nominaux tiens, comme ca tout le monde preserve
+ les pushouts.
+ Mais est-ce que c'est skew monoidal, bof c'est pas si grave?
+\end_layout
+
+\begin_layout Plain Layout
+Mais est -ce que ca fait bien la moande des termes.
+ Bof on peut la definir a la main.
+ Mais comment on sait que c'est une monade? Ca se voit a la main.
+ Ah mais non c'est une moande libre comme le fait remarquer le gars la Ah
+ mais attend, les coproduits d'ensembles nominaux c'est complique non? Bah
+ non en fait.
+ J'ai quand meme besoin que 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
