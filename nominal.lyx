@@ -749,7 +749,7 @@ name "assu:F-shape"
 \end_inset
 
  is of the shape 
-\begin_inset Formula $I+\coprod_{i}R_{i}(X)$
+\begin_inset Formula $I+\coprod_{i}R_{i}(X)\times S_{i}$
 \end_inset
 
 , where
@@ -775,7 +775,105 @@ name "assu:F-shape"
 \begin_inset Formula $L_{i}$
 \end_inset
 
-;
+; 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is a orthogonal to the class of all morphisms (i.e., given any span 
+\begin_inset Formula $S_{i}\leftarrow A\rightarrow B$
+\end_inset
+
+, there exists a unique 
+\begin_inset Formula $B\rightarrow S_{i}$
+\end_inset
+
+ completing the triangle) 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ou alors on demande que 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ est stable par pushout
+\end_layout
+
+\end_inset
+
+.
+ Intuitively, 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is the output type 
+\begin_inset Quotes eld
+\end_inset
+
+dirac
+\begin_inset Quotes erd
+\end_inset
+
+ (not used for untyped)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ou alors on demande que tout diagramme 
+\begin_inset Formula $B\leftarrow A\rightarrow S_{i}$
+\end_inset
+
+ se complete en un carre avec 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ dans le dernier coin.
+ Ce qui signifie que 
+\begin_inset Formula $\hom(-,S_{i})$
+\end_inset
+
+ a une action covariante.
+ Ou encore que 
+\begin_inset Formula $S_{i}\rightarrow1$
+\end_inset
+
+ est right ortogonal a tout, ou encore que 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ est orthogonal a tous les morphismes (d'apres la def de Adamek), et ptet
+ qu'alors on n'a pas besoin de la sous-terminalite.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\color red
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\color red
+(do we really need a full adjoint or some relative adjoint when the domain
+ is from 
+\begin_inset Formula $D$
+\end_inset
+
+? does this adjoint exists in the linear setting?)
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -886,6 +984,18 @@ noprefix "false"
 
 .
  
+\end_layout
+
+\begin_layout Example
+
+\color red
+This condition is too strong: lambda claculs extended with a constant does
+ not satisfy this constraint (really? Isn't the terminal functor right adjoint
+ to the initial functor? Otherwise, can't we put the constants in 
+\begin_inset Formula $I$
+\end_inset
+
+? ).
 \end_layout
 
 \begin_layout Standard
@@ -1143,6 +1253,167 @@ Je suggere la notation
 \end_inset
 
  pour un normal.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Examples of relevant categorical contexts
+\end_layout
+
+\begin_layout Standard
+All the applications that we provide are instances of the following construction.
+ Let 
+\begin_inset Formula $(C_{i})_{i}$
+\end_inset
+
+ be a family of categories such that each 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+ (except the last one, these properties taken from the paragraph before
+ Section 8 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/acs/Menni03"
+literal "false"
+
+\end_inset
+
+
+\color red
+, the author says he will present more explictly his results in a later
+ paper, but I couldn't find a reference)
+\color inherit
+:
+\end_layout
+
+\begin_layout Itemize
+is boolean (meaning any subobject has a complement), 
+\end_layout
+
+\begin_layout Itemize
+has effective unions (not sure what it means)
+\end_layout
+
+\begin_layout Itemize
+has finite limits
+\end_layout
+
+\begin_layout Itemize
+has finite coproducts
+\end_layout
+
+\begin_layout Itemize
+there is no infinite chain of proper subobjects
+\end_layout
+
+\begin_layout Itemize
+all morphisms are monomorphisms
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Denoting 
+\begin_inset Formula $B_{i}$
+\end_inset
+
+ the core of 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+, the left Kan extension along 
+\begin_inset Formula $B_{i}\rightarrow C_{i}$
+\end_inset
+
+ induces a monad.
+ According to Menni, one can prove that its Kleisli category is a Grothendieck
+ topos.
+ Moreover, by 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 1.7, Lemma 1.8"
+key "reflectivkleisliesubcat"
+literal "false"
+
+\end_inset
+
+, this category is equivalent the full subcategory 
+\begin_inset Formula $\mathcal{P}_{i}$
+\end_inset
+
+ of functors 
+\begin_inset Formula $C_{i}\rightarrow Set$
+\end_inset
+
+ preserving pullbacks.
+\end_layout
+
+\begin_layout Standard
+Thus, 
+\begin_inset Formula $\prod\mathcal{P}_{i}$
+\end_inset
+
+ is also a Grothendieck topos (by Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:product-topos"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and is equivalent to the full subcategory of functors 
+\begin_inset Formula $\coprod_{i}C_{i}\rightarrow Set$
+\end_inset
+
+ preserving pullbacks.
+ Thus, it contains the representables presheaves and we consider for 
+\begin_inset Formula $K$
+\end_inset
+
+ the yoneda embedding.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ou alors utiliser le fait que dans Kleisili on dit que c'est un expoential
+ ideal et donc d'apres la def de Elephant, il suffit de montrer qu'il y
+ a des egalsiateurs? mais ca montre seulement que c'est un topos elementaire,
+ pas de Grothendieck (or on voudrait que les yoneads fussent de la partie
+ comme la sous-cat D).
+ Pour le sous-objet classificateur, il faut prendre 
+\begin_inset Formula $2$
+\end_inset
+
+, et du coup, il faut montrer que la cat de foncteurs preservant les pullbacks
+ est booleenne (sauf qu'a priori, je ne sais pas qu'un mono dans 
+\begin_inset Formula $Nom$
+\end_inset
+
+ c'est un mono dans les prefaisceaux? si par la caracterisation en termes
+ de pullbacks), et ca n'a pas l'air evident.
 \end_layout
 
 \end_inset
@@ -1634,7 +1905,7 @@ TC
 
 \begin_layout Standard
 Since 
-\begin_inset Formula $TC\simeq I+C+\coprod_{i}R_{i}TC$
+\begin_inset Formula $TC\simeq I+C+\coprod_{i}R_{i}TC\times S_{i}$
 \end_inset
 
  (Assumption
@@ -1705,7 +1976,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $in_{i}:R_{i}TC\hookrightarrow TC$
+\begin_inset Formula $in_{i}:R_{i}TC\times S_{i}\hookrightarrow TC$
 \end_inset
 
  (operation case)
@@ -2033,7 +2304,7 @@ C\ar[r]_{\sigma} & D
 
 \begin_layout Subsection
 Case 
-\begin_inset Formula $KA\hookrightarrow R_{i}TC$
+\begin_inset Formula $KA\hookrightarrow R_{i}TC\times S_{i}$
 \end_inset
 
 
@@ -2057,7 +2328,7 @@ We want to compute the pushout
 \begin_inset Formula 
 \[
 \xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[r]^{\eta} & TKB\\
-R_{i}TC\ar[d]_{in_{i}}\\
+R_{i}TC\ar[d]_{in_{i}}\times S_{i}\\
 TC
 }
 \]
@@ -2080,7 +2351,7 @@ A cocone in
 \begin_inset Formula 
 \[
 \xymatrix{KA\ar[rr]^{Kf}\ar[d]_{g} &  & KB\ar[d]\\
-R_{i}TC\ar[r] & R_{i}TY\ar[r] & TY
+R_{i}TC\times S_{i}\ar[r] & R_{i}TY\times S_{i}\ar[r] & TY
 }
 \]
 
@@ -2162,12 +2433,12 @@ noprefix "false"
 \end_inset
 
  factors through 
-\begin_inset Formula $R_{i}TY\hookrightarrow TY$
+\begin_inset Formula $R_{i}TY\times S_{i}\hookrightarrow TY$
 \end_inset
 
 .
  Since 
-\begin_inset Formula $R_{i}TY\rightarrow TY$
+\begin_inset Formula $R_{i}TY\times S_{i}\rightarrow TY$
 \end_inset
 
  is monomorphic (as a coproduct injection, again by Assumption
@@ -2204,20 +2475,63 @@ noprefix "false"
 \end_inset
 
  and 
-\begin_inset Formula $KB\rightarrow R_{i}TY$
+\begin_inset Formula $KB\rightarrow R_{i}TY\times S_{i}$
 \end_inset
 
  such that the following diagram commutes.
 \begin_inset Formula 
 \[
 \xymatrix{KA\ar[r]^{Kf}\ar[d]_{g} & KB\ar[d]\\
+R_{i}TC\ar[r]\times S_{i} & R_{i}TY\times S_{i}
+}
+\]
+
+\end_inset
+
+which is equivalent to the commutation of the two following diagrams
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g_{2}} & KB\ar[d]\\
+\ar[r]_{=}S_{i} & S_{i}
+}
+\quad\xymatrix{KA\ar[r]^{Kf}\ar[d]_{g_{1}} & KB\ar[d]\\
 R_{i}TC\ar[r] & R_{i}TY
 }
 \]
 
 \end_inset
 
-Since 
+Unique existence of 
+\begin_inset Formula $KB\rightarrow S_{i}$
+\end_inset
+
+ making the left diagram commutes is ensured by the fact that 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is orthogonal to all morphisms (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:F-shape"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Since 
 \begin_inset Formula $R_{i}$
 \end_inset
 
@@ -2250,10 +2564,10 @@ noprefix "false"
 
 \end_inset
 
-), this is equivalent to making the following diagram commute.
+), the right diagram is equivalent to making the following diagram commute.
 \begin_inset Formula 
 \[
-\xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{\coprod_{j}KL_{i,j}'f}\ar[d]_{g^{*}} &  & \coprod_{j}KL_{i,j}'B\ar[d]^{u}\\
+\xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{\coprod_{j}KL_{i,j}'f}\ar[d]_{g_{2}^{*}} &  & \coprod_{j}KL_{i,j}'B\ar[d]^{u}\\
 TC\ar[rr]_{\sigma} &  & TY
 }
 \]
@@ -2263,7 +2577,7 @@ TC\ar[rr]_{\sigma} &  & TY
 Thus, this justifies the following rule
 \begin_inset Formula 
 \[
-\dfrac{C\vdash(L'_{i,j}f)_{j}:=g^{*}\Rightarrow u;\sigma\dashv Y}{C\vdash f:=in_{i}\circ g\Rightarrow in_{i}\circ u^{*};\sigma\dashv Y}
+\dfrac{C\vdash(L'_{i,j}f)_{j}:=g_{2}^{*}\Rightarrow u;\sigma\dashv Y}{C\vdash f:=in_{i}\circ g\Rightarrow in_{i}\circ u^{*};\sigma\dashv Y}
 \]
 
 \end_inset
@@ -2499,7 +2813,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $in_{i}:R_{i}TC\hookrightarrow TC$
+\begin_inset Formula $in_{i}:R_{i}TC\times S_{i}\hookrightarrow TC$
 \end_inset
 
  (operations)
@@ -3194,11 +3508,11 @@ Here we assume that
 \end_inset
 
  factors as 
-\begin_inset Formula $t',u':KA\rightarrow R_{i}TC$
+\begin_inset Formula $t',u':KA\rightarrow R_{i}TC\times S_{i}$
 \end_inset
 
  through 
-\begin_inset Formula $R_{i}TC\hookrightarrow TC$
+\begin_inset Formula $R_{i}TC\times S_{i}\hookrightarrow TC$
 \end_inset
 
 .
@@ -3217,15 +3531,15 @@ Here we assume that
  such that the following diagram commutes.
 \begin_inset Formula 
 \[
-\xymatrix{KA\ar[r]^{t'}\ar[d]_{u'} & R_{i}TC\ar[r]^{R_{i}\sigma^{*}} & R_{i}TY\ar[d]^{in_{i}}\\
-R_{i}TC\ar[r]_{R_{i}\sigma^{*}} & R_{i}TY\ar[r]_{in_{i}} & TY
+\xymatrix{KA\ar[r]^{t',!}\ar[d]_{u',!} & R_{i}TC\times S_{i}\ar[r]^{R_{i}\sigma^{*}\times!} & R_{i}TY\times S_{i}\ar[d]^{in_{i}}\\
+R_{i}TC\times S_{i}\ar[r]_{R_{i}\sigma^{*}\times!} & R_{i}TY\times S_{i}\ar[r]_{in_{i}} & TY
 }
 \]
 
 \end_inset
 
 Since 
-\begin_inset Formula $R_{i}TY\rightarrow TY$
+\begin_inset Formula $R_{i}TY\times S_{i}\rightarrow TY$
 \end_inset
 
  is monomorphic (as a coproduct injection, by extensivity, Assumption
@@ -3252,14 +3566,36 @@ noprefix "false"
 ), the above commutation is equivalent to commutation of the following diagram.
 \begin_inset Formula 
 \[
-\xymatrix{KA\ar[r]^{t'}\ar[d]_{u'} & R_{i}TC\ar[d]^{R_{i}\sigma^{*}}\\
+\xymatrix{KA\ar[r]^{t',!}\ar[d]_{u',!} & R_{i}TC\ar[d]^{R_{i}\sigma^{*}\times S_{i}}\times S_{i}\\
+R_{i}TC\times S_{i}\ar[r]_{R_{i}\sigma^{*}\times S_{i}} & R_{i}TY\times S_{i}
+}
+\]
+
+\end_inset
+
+hich is equivalent to the commutation of the two following diagrams
+\begin_inset Formula 
+\[
+\xymatrix{KA\ar[r]^{!}\ar[d]_{!} & S_{i}\ar[d]^{!}\\
+S_{i}\ar[r]_{!} & S_{i}
+}
+\quad\xymatrix{KA\ar[r]^{t'}\ar[d]_{u'} & R_{i}TC\ar[d]^{R_{i}\sigma^{*}}\\
 R_{i}TC\ar[r]_{R_{i}\sigma^{*}} & R_{i}TY
 }
 \]
 
 \end_inset
 
-Since 
+The left one is trivial 
+\color red
+Don't we need subterminality of 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ here? 
+\color inherit
+Maybe not.
+ Since 
 \begin_inset Formula $R_{i}$
 \end_inset
 
@@ -3292,7 +3628,7 @@ noprefix "false"
 
 \end_inset
 
-), this is equivalent to making the following diagram commute.
+), the right one is equivalent to making the following diagram commute.
 \begin_inset Formula 
 \[
 \xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{t'^{*}}\ar[d]_{u'^{*}} &  & TC\ar[d]^{\sigma^{*}}\\
@@ -3305,7 +3641,7 @@ TC\ar[rr]_{\sigma^{*}} &  & TY
 Thus, this justifies the following rule
 \begin_inset Formula 
 \[
-\dfrac{C\vdash t'^{*}=u'^{*}\Rightarrow\sigma\dashv Y}{C\vdash in_{i}\circ t'=in_{i}\circ u'\Rightarrow\sigma\dashv Y}
+\dfrac{C\vdash t'^{*}=u'^{*}\Rightarrow\sigma\dashv Y}{C\vdash in_{i}\circ(t',!)=in_{i}\circ(u',!)\Rightarrow\sigma\dashv Y}
 \]
 
 \end_inset
@@ -3465,7 +3801,7 @@ name "sec:occur-check"
 \begin_layout Standard
 
 \color red
-WIP 
+WIP TODO update with the new definition
 \end_layout
 
 \begin_layout Standard
@@ -3544,10 +3880,15 @@ Let
 \end_inset
 
  to 
-\begin_inset Formula $\coprod_{i}\prod_{j}P_{L_{i,j}-}$
+\begin_inset Formula $\coprod_{i}JS_{i}\times\prod_{j}P_{L_{i,j}-}$
 \end_inset
 
 .
+ Again, 
+\begin_inset Formula $JS_{i}$
+\end_inset
+
+ is subterminal.
  Then, 
 \begin_inset Formula $GJ$
 \end_inset
@@ -3721,6 +4062,1034 @@ peut ont raisonner dans
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+J est-il plein et fidele? C'est precisement la condition de densite de 
+\begin_inset Formula $J$
+\end_inset
+
+ (telle que formulle par Altenkirch&co sur les monades relatives) .
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+La question c'est quel degre de generalite a t on le resultat que dans le
+ pullback
+\begin_inset Formula 
+\[
+\xymatrix{P\ar[r]\ar[d] & ym\ar[d]^{f}\\
+T(ym)\ar[r]_{f^{*}} & T(D)
+}
+\]
+
+\end_inset
+
+le mec de gauche se facotirse par 
+\begin_inset Formula $T(0)+ym$
+\end_inset
+
+ ? Par exepmle, si 
+\begin_inset Formula $T$
+\end_inset
+
+ est cartesien, voire parametric right adjoint?
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What do we want? As a typical example, assume that we want to coequalise
+ 
+\begin_inset Formula $ym\rightarrow yn\xrightarrow{u}Tyn$
+\end_inset
+
+ and 
+\begin_inset Formula $ym\xrightarrow{\vec{t}}FTyn\rightarrow Tyn$
+\end_inset
+
+ which corresponds to a unification problem of the shape 
+\begin_inset Formula $u=o(\vec{t})[u]$
+\end_inset
+
+.
+ There should be no unifier unless 
+\begin_inset Formula $o(\vec{t})$
+\end_inset
+
+ is in fact a closed term.
+ so maybe, what we want is that the pullback of any 
+\begin_inset Formula $yn\xrightarrow{u}TA\leftarrow Tyn\leftarrow FTyn$
+\end_inset
+
+ is the pullback of 
+\begin_inset Formula $yn\xrightarrow{u}TA\leftarrow Tyn\leftarrow FTyn$
+\end_inset
+
+, somehow? in other words, in the following subdiagram where both squares
+ are pullbacks, the top left morphism is an isomorphism
+\begin_inset Formula 
+\[
+\xymatrix{P'\ar[r]^{\simeq}\ar[d] & P\ar[r]\ar[d] & yn\ar[d]\\
+FT0\ar[r] & FTyn\ar[r] & TA
+}
+\]
+
+\end_inset
+
+ce serait mieux si on arrivait a generaliser sur 
+\begin_inset Formula $u$
+\end_inset
+
+, genre l'egalisateur de 
+\begin_inset Formula $TA_{n}\times Tyn_{n}\rightrightarrows TA_{n}$
+\end_inset
+
+ est 
+\begin_inset Formula $T0$
+\end_inset
+
+, dans un format meilleur (au niveau des endofoncteurs).
+ En fait ca pourrait etre 
+\begin_inset Formula $TA_{n}\times FTyn\times yn\rightrightarrows TA$
+\end_inset
+
+, pour les termes et l'eglaisatuer est 
+\begin_inset Formula $T0_{n}\times yn$
+\end_inset
+
+ si 
+\begin_inset Formula $Tyn_{p}$
+\end_inset
+
+ est en fait 
+\begin_inset Formula $FTyn_{p}$
+\end_inset
+
+.
+ Et alors, 
+\begin_inset Formula $A$
+\end_inset
+
+ est en fait 
+\begin_inset Formula $T0$
+\end_inset
+
+? Mais donc, pourrions nous exploiter la propriete d'initialite de 
+\begin_inset Formula $TA$
+\end_inset
+
+ en disant qu'on a deux morphismes 
+\begin_inset Formula $TA\rightrightarrows\hom(FTy-\times y-,TA)$
+\end_inset
+
+, et que l'ealisteur c'est 
+\begin_inset Formula $T0$
+\end_inset
+
+ ? 
+\end_layout
+
+\begin_layout Plain Layout
+Comment ca marche exactement, point a point: puisque 
+\begin_inset Formula $T$
+\end_inset
+
+ est enrichi sur 
+\begin_inset Formula $Set$
+\end_inset
+
+, 
+\begin_inset Formula $T$
+\end_inset
+
+ a une force 
+\begin_inset Formula $X\times TA\rightarrow T(A\times X)$
+\end_inset
+
+ ou 
+\begin_inset Formula $X$
+\end_inset
+
+ est un ensemble.
+ Now, 
+\begin_inset Formula $TA\simeq\hom(y-,TA)$
+\end_inset
+
+ et chacun des morphismes 
+\begin_inset Formula $TA\rightrightarrows\hom(FTy-\times y-,TA)$
+\end_inset
+
+ 
+\color red
+(update 07/2022: ca ressemble a une condition def aisceau !! mais non car
+ c'est un produit au lieu)
+\color inherit
+ se factorise par 
+\begin_inset Formula $\hom(y-,TA)$
+\end_inset
+
+ ou 
+\begin_inset Formula $\hom(FTy-,TA)$
+\end_inset
+
+ bon le premier est trivial.
+ Le second se factoris par 
+\begin_inset Formula $\hom(Ty-,TA)\rightarrow\hom(FTy-,TA)$
+\end_inset
+
+.
+ Donc on veut un mec de 
+\begin_inset Formula $\hom(y-,TA)$
+\end_inset
+
+ dans 
+\begin_inset Formula $\hom(Ty-,TA)$
+\end_inset
+
+, soit un omorhpisme de 
+\begin_inset Formula $\hom(y-,TA)\times Ty-$
+\end_inset
+
+ (mais ce n'est pas contravariant!!) dans 
+\begin_inset Formula $TA$
+\end_inset
+
+ mais la on utilise la force pour aller dans 
+\begin_inset Formula $T(\hom(y-,TA)\times y-)\rightarrow TTA\xrightarrow{\mu}TA$
+\end_inset
+
+.
+ On a donc un morphisme 
+\begin_inset Formula $TA\rightarrow\hom(Ty-,TA)$
+\end_inset
+
+, donne par 
+\begin_inset Formula $\hom(y-,TA)\rightarrow\hom(Ty-,TTA)\rightarrow\hom(Ty-,TA)$
+\end_inset
+
+.
+ Mais est-ce que ce codomaine a une structure de 
+\begin_inset Formula $T$
+\end_inset
+
+-algebre? Je ne pense pas.
+ Si c'etait l'ensemble des morphismes d'algebres 
+\begin_inset Formula $\hom_{\Eil T}$
+\end_inset
+
+ en revanche, oui.
+ Prenant l'exemple d'une monade sur set, avec la monade des arbres binaires.
+ On ne voit pas bien quelle operation binaire mettre sur 
+\begin_inset Formula $TX^{T1}$
+\end_inset
+
+.
+ C'est pas la recurrence sur le bon mec?Mais ca devrait marcher quand meme.
+ Par contre, contre-exemple? e.g., lamdba calcul avec beta qui fait disparaitre
+ des variables? Et mais ca n'a aucun sense de vouloir egaliser ca!!
+\end_layout
+
+\begin_layout Plain Layout
+Bon, en repartant de l'egalisateur suppose 
+\begin_inset Formula $T0_{n}\times yn\rightarrow TA_{n}\times FTyn\times yn\rightrightarrows TA$
+\end_inset
+
+, il semble que ca revient a montrer que pour 
+\begin_inset Formula $u\in T0_{n}$
+\end_inset
+
+, on a le pullback
+\begin_inset Formula 
+\[
+\xymatrix{yn\ar[d]\ar[r] & FTyn\ar[d]\\
+yn\ar[r] & TA
+}
+\]
+
+\end_inset
+
+ ou les deux branches bas et droite utilisent 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ La branche du haut se factorise par 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Mais ca revient, je crois, a montrer qu'on a le pullback
+\begin_inset Formula 
+\[
+\xymatrix{yn\ar[d]\ar[r] & FTyn\ar[d]\\
+yn\ar[r] & T0
+}
+\]
+
+\end_inset
+
+Bon deja, on peut prendre comme exemple l'exemple du 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calcul sur 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+.
+ Ca simplifie pas mal parce c'est discret.
+\end_layout
+
+\begin_layout Plain Layout
+Pour la generalisation aux non yonedas, il faut que pour tout 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $o(t)[\vec{u}]=u_{i}$
+\end_inset
+
+.
+ Ce qui est impossible.
+\end_layout
+
+\begin_layout Plain Layout
+Si la monade a une force cartesienne, on peut exploiter l'exponentielle
+ interne.
+\end_layout
+
+\begin_layout Plain Layout
+On veut montrer qu'on a un egalisateur 
+\begin_inset Formula $T0\rightarrow TB^{A}\times FTA\rightrightarrows TB^{A}$
+\end_inset
+
+ Mais ca je ne suis pas sur de pouvoir le motnrer.
+ Car comment faire la recurrence sur 
+\begin_inset Formula $TB^{A}$
+\end_inset
+
+? Ptet on suppose que 
+\begin_inset Formula $-^{A}$
+\end_inset
+
+ preserve les colimites filtrees? (donc 
+\begin_inset Formula $A$
+\end_inset
+
+ est presentable).
+\end_layout
+
+\begin_layout Plain Layout
+Bah deja c'est faux dans le cadre 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+.
+ En effet, regardons la composante en 
+\begin_inset Formula $n$
+\end_inset
+
+ et supposons que 
+\begin_inset Formula $A_{n}=\emptyset$
+\end_inset
+
+.
+ Alors 
+\begin_inset Formula $X_{n}^{A}=1$
+\end_inset
+
+.
+ En fait, 
+\begin_inset Formula $X_{n}^{A}=X_{n}^{A_{n}}$
+\end_inset
+
+.
+ Note que dans le cadre 
+\begin_inset Formula $Set^{\mathbb{N}}$
+\end_inset
+
+, l'abstraction n'a pas de force cartesienne.
+ Et on dirait que la monade n'en a pas pour le produit....
+ ah si.
+ Bon mais c'est tres bizarre cette syntaxe.
+ Anyway, regardons ce que donne l'egalisateur, pour 
+\begin_inset Formula $F=Id\times Id+1$
+\end_inset
+
+, dans ce cadre.
+ Bon c'est peut etre pas si faux dans ce cadre en fait.
+ Mais c'est quand meme embetant, plus tard, de ne pas savoir faire l'abstraction
+ (cas lineaire)...
+\end_layout
+
+\begin_layout Plain Layout
+Bon, et si au lieu de considerer 
+\begin_inset Formula $t[u]=u$
+\end_inset
+
+ on considere le pb 
+\begin_inset Formula $t[v][u]=u$
+\end_inset
+
+ ou 
+\begin_inset Formula $v$
+\end_inset
+
+ est generique?
+\end_layout
+
+\begin_layout Plain Layout
+Autre pb plus simple, si t generique et 
+\begin_inset Formula $t[u]=u$
+\end_inset
+
+ alors 
+\begin_inset Formula $t=M$
+\end_inset
+
+.
+ Ben j'arrive mem pas a montrer ca.
+ Bon alors le coegalisateur de deux generiques n'existe pas a moins que
+ les deux generiques sont egaux? Encore une fois ca ne semble marcher que
+ parce qu'on parle de yonedas.
+ Mais si on calcule le coeglaisateur dans la sous cat des generiques? non
+ toujours pas.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+Bon on peut essayer plus simple.
+ Que deux morphismes de Kleisli generiques entre deux yonedas ont un coegalisate
+urs ssi ils sont egaux.
+ Non ca marche pas.
+ Mais faisons l'hypothese qu l'un des deux est 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Bon la j'essaie de prouver que 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Preliminar induction lemma
+\end_layout
+
+\begin_layout Standard
+
+\color red
+TODO: adapt to take into account the subterminal object
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We could work in the category of discrete presheaves since 
+\begin_inset Formula $G$
+\end_inset
+
+ can be defined there as well.
+ No.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us denote 
+\begin_inset Formula $G^{*}$
+\end_inset
+
+ by 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ We want to prove by induction that the following square is a pullback for
+ any 
+\begin_inset Formula $u:ya\rightarrow M1$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\xymatrix{ya\times_{T1}ya+ya\ar[r]^{[-,u]}\ar[d] & M(ya+1)\ar[d]^{-[u,*]}\\
+ya\ar[r]_{u} & M1
+}
+\]
+
+\end_inset
+
+^In other words, we show, by induction on 
+\begin_inset Formula $u\in M1_{a}$
+\end_inset
+
+, the following property: for any 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+ and 
+\begin_inset Formula $t\in M(yd+1)_{b}$
+\end_inset
+
+ such that 
+\begin_inset Formula $f\cdot u=t[u]$
+\end_inset
+
+, then
+\end_layout
+
+\begin_layout Itemize
+either 
+\begin_inset Formula $t=\eta(g)$
+\end_inset
+
+ for some 
+\begin_inset Formula $g:a\rightarrow b$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $f\cdotp u=g\cdotp u$
+\end_inset
+
+, 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+et si on supposer 
+\begin_inset Formula $u:ya\rightarrow M1$
+\end_inset
+
+ mono? comme ca 
+\begin_inset Formula $f=g$
+\end_inset
+
+, mais on voit pas pourquoi ce serait mono.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+either 
+\begin_inset Formula $t=wk(f\cdot u)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We do the induction step.
+ Assume 
+\begin_inset Formula $u=o(u_{1},\dots u_{n})$
+\end_inset
+
+ with 
+\begin_inset Formula $u_{i}\in M1_{L_{i}a}$
+\end_inset
+
+ satisfying the property above.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+ and 
+\begin_inset Formula $t\in M(ya+1)_{b}$
+\end_inset
+
+ such that 
+\begin_inset Formula $f\cdot u=t[u]$
+\end_inset
+
+.
+ Then, we may be in the first case.
+ Otherwise, it must be that 
+\begin_inset Formula $t=o(t_{1},\dots t_{n})$
+\end_inset
+
+ with 
+\begin_inset Formula $t_{i}\in M(ya+1)_{L_{i}b}$
+\end_inset
+
+, and such that 
+\begin_inset Formula $L_{i}f\cdot u_{i}=t_{i}[o(u_{1},\dots,u_{n})]\in M1_{L_{i}b}$
+\end_inset
+
+.
+ Let us note that the right hand side is equal to 
+\begin_inset Formula $t_{i}[\delta,*][u_{i},*]$
+\end_inset
+
+, where 
+\begin_inset Formula $u_{i}:yL_{i}a\rightarrow M1$
+\end_inset
+
+ , so that 
+\begin_inset Formula $\delta:ya\rightarrow M(yL_{i}a+1)$
+\end_inset
+
+ is defined (through the yoneda lemma) as the element 
+\begin_inset Formula $o(\dots,u_{i-1},\eta(id),u_{i+1})\in M(yL_{i}a+1)_{a}$
+\end_inset
+
+ with 
+\begin_inset Formula $\eta(id)\in M(yL_{i}a)_{L_{i}a}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $t_{i}'=^{def}t_{i}[\delta,*]\in M(yL_{i}a+1)_{L_{i}b}$
+\end_inset
+
+.
+ We apply the induction hypothesis for 
+\begin_inset Formula $t_{i}'[u_{i}]=L_{i}f\cdot u_{i}$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+either 
+\begin_inset Formula $t_{i}'=\eta(g_{i})$
+\end_inset
+
+ for some 
+\begin_inset Formula $g_{i}:L_{i}a\rightarrow L_{i}b$
+\end_inset
+
+ such that 
+\begin_inset Formula $L_{i}f\cdot u_{i}=g_{i}\cdot u_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+either 
+\begin_inset Formula $t_{i}'=L_{i}f\cdot u_{i}\in M1_{L_{i}b}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+The first case is in fact impossible, for in this case, we have a commuting
+ square
+\begin_inset Formula 
+\[
+\xymatrix{yL_{i}b\ar[d]_{g_{i}}\ar[rr]^{t_{i}} &  & M(ya+1)\ar[d]^{-[\delta,*]}\\
+yL_{i}a\ar[rr] &  & M(yL_{i}a+1)
+}
+\]
+
+\end_inset
+
+which can be rewritten as
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\xymatrix{yL_{i}b\ar[dd]_{g_{i}}\ar[rr]^{t_{i}} &  & ya+1+GM(ya+1)\ar[dd]^{-[\delta,*]}\\
+\\
+yL_{i}a\ar[rr]_{in_{1}} &  & yL_{i}a+1+GM(yL_{i}a+1)
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By extensivity, 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ cannot factor neither through 
+\begin_inset Formula $1\rightarrow ya+1+GM(ya+1)$
+\end_inset
+
+ nor through 
+\begin_inset Formula $GM(ya+1)$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ factors through 
+\begin_inset Formula $ya\rightarrow ya+1+GM(ya+1)$
+\end_inset
+
+.
+ But 
+\begin_inset Formula $ya\xrightarrow{\delta}M(yL_{i}a+1)$
+\end_inset
+
+ factors through 
+\begin_inset Formula $GM(yL_{i}a+1)\rightarrow M(yL_{i}a+1)$
+\end_inset
+
+ so commutation is impossible.
+\end_layout
+
+\begin_layout Proof
+The second case implies that 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ is in fact in 
+\begin_inset Formula $M(A)_{L_{i}d}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Indeed, then we have a commuting square
+\begin_inset Formula 
+\[
+\xymatrix{yL_{i}b\ar[rr]^{t_{i}}\ar[d]_{L_{i}f} &  & M(ya+1)\ar[d]^{\delta}\\
+yL_{i}a\ar[r]_{u_{i}} & M1\ar[r]_{Min_{2}} & M(yL_{i}a+1)
+}
+\]
+
+\end_inset
+
+Let us detail the second square.
+ Since 
+\begin_inset Formula $M$
+\end_inset
+
+ preserves pullbacks, it is enough to prove that the following square is
+ a pullback.
+\begin_inset Formula 
+\[
+\xymatrix{MB'\ar[r]\ar[d]_{=} & A+M(A+B')\ar[d]\\
+MB'\ar[r] & M(A+B')
+}
+\]
+
+\end_inset
+
+But then, it is enough to see that the following squares are pullbacks
+\begin_inset Formula 
+\[
+M\xymatrix{\emptyset\ar[r]\ar[d] & A\ar[d]\\
+\emptyset\ar[r]\ar[d] & MA\cong A+GMA\ar[d]\\
+MB'\ar[r] & M(A+B')
+}
+\]
+
+\end_inset
+
+Then, by Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:pbk-free-mon-ext"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, this squares decomposes as
+\begin_inset Formula 
+\[
+\xymatrix{yL_{i}b\ar[r]\ar[d]_{L_{i}f} & M1\ar[d]_{=}\ar[r]^{Min_{2}} & M(ya+1)\ar[d]^{\delta}\\
+yL_{i}a\ar[r]_{u_{i}} & M1\ar[r]_{Min_{2}} & M(yL_{i}a+1)
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This means that 
+\begin_inset Formula $t_{i}=wk(L_{i}f\cdot u_{i})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Then, can we conclude anything? I think so
+\end_layout
+
+\begin_layout Question
+Is there a better categorical proof? (maybe using that fact that 
+\begin_inset Formula $yd$
+\end_inset
+
+ is tiny)
+\end_layout
+
+\begin_layout Corollary
+Given any 
+\begin_inset Formula $A\xrightarrow{\sigma}M1$
+\end_inset
+
+, and a commuting square 
+\begin_inset Formula 
+\[
+\xymatrix{P\ar[r]\ar[d] & M(yd+A)\ar[d]^{[u,\sigma]^{*}}\\
+yd\ar[r]_{u} & M1
+}
+\]
+
+\end_inset
+
+the top morphism factors either by 
+\begin_inset Formula $yd\rightarrow M(yd+A)$
+\end_inset
+
+ or by 
+\begin_inset Formula $MA\rightarrow M(yd+A)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that by the previous result, this is true if 
+\begin_inset Formula $A=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=\eta_{1}:1\rightarrow M1$
+\end_inset
+
+.
+ Now, the right morphism is equal to 
+\begin_inset Formula $M(yd+A)\rightarrow M(yd+1)\rightarrow M1$
+\end_inset
+
+, so that the previous result, this means that this square decomposes as
+\begin_inset Formula 
+\[
+\xymatrix{P\ar[r]\ar[d] & M(yd+A)\ar[d]\\
+P'\ar[r]\ar[d] & M(yd+1)\ar[d]\\
+yd\ar[r]_{u} & M1
+}
+\]
+
+\end_inset
+
+where the bottom square is a pullback.
+\end_layout
+
+\begin_layout Proof
+If the middle horizontal morphism factors through 
+\begin_inset Formula $yd\rightarrow M(yd+1)$
+\end_inset
+
+ then top one factors through 
+\begin_inset Formula $yd\rightarrow Myd$
+\end_inset
+
+ because the following square is a pullback, by Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:pbk-free-mon-ext"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\xymatrix{yd\ar[d]\ar[r] & M(yd+A)\ar[d]\\
+yd\ar[r] & M(yd+1)
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Otherwise, the middle horizontal factors as 
+\begin_inset Formula $M1\rightarrow M(yd+1)$
+\end_inset
+
+.
+ But then, the top one factors through 
+\begin_inset Formula $MA\rightarrow M(yd+A)$
+\end_inset
+
+ because the following square is a pullback, by Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:pbk-free-mon-ext-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\xymatrix{MA\ar[d]\ar[r] & M(yd+A)\ar[d]\\
+M1\ar[r] & M(yd+1)
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+Given 
+\begin_inset Formula $\sigma:\Gamma\rightarrow T1$
+\end_inset
+
+, 
+\begin_inset Formula $u:Kd\rightarrow T1$
+\end_inset
+
+, 
+\begin_inset Formula $f:Kc\rightarrow Kd$
+\end_inset
+
+, if the following square commutes, then the top morphism factors through
+ either 
+\begin_inset Formula $T\Gamma\rightarrow T(Kd+\Gamma)$
+\end_inset
+
+ or 
+\begin_inset Formula $Kd\rightarrow TKd$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\xymatrix{Kc\ar[d]_{f}\ar[r] & T(Kd+\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
+Kd\ar[r]_{u} & T1
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Apply 
+\begin_inset Formula $J$
+\end_inset
+
+ to this diagram, and you get
+\begin_inset Formula 
+\[
+\xymatrix{yc\ar[d]_{f}\ar[r] & M(yd+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
+yd\ar[r]_{u} & M1
+}
+\]
+
+\end_inset
+
+then apply the previous corollary.
+ Note that we are not working with discrete presheave here
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, but by universal property of the pullback, it should work even if it were
+ discrete presheaves before (TODO: think about this)
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Question
+Can we do the whole algorithm by translating it in the presheaf world?
+\end_layout
+
 \begin_layout Section
 Termination
 \end_layout
@@ -3843,8 +5212,307 @@ Nominal sets (untyped)
 Nominal sets, simply-typed
 \end_layout
 
+\begin_layout Standard
+Let 
+\begin_inset Formula $T$
+\end_inset
+
+ be the set of simple types.
+ Here we consider the category of functors 
+\begin_inset Formula $(Set_{f}^{T}\times T)_{m}\rightarrow Set$
+\end_inset
+
+, where 
+\begin_inset Formula $Set_{f}^{T}$
+\end_inset
+
+ is the category of finite families indexed by 
+\begin_inset Formula $T$
+\end_inset
+
+ (it is equivalent to the comma category 
+\begin_inset Formula $J/T$
+\end_inset
+
+, where 
+\begin_inset Formula $J:\mathbb{F}\rightarrow Set$
+\end_inset
+
+ is the canonical inclusion), and the indice 
+\begin_inset Formula $-_{m}$
+\end_inset
+
+ means that we restrict to monomorphisms.
+ Based on the paragraph before Section 8 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/acs/Menni03"
+literal "false"
+
+\end_inset
+
+ (
+\color red
+the author says he will present more explictly these results later, but
+ I couldn't find a reference)
+\color inherit
+, we can argue that it is a Grothendieck topos based on the following fact:
+ products of Grothendieck topos are topos.
+\end_layout
+
+\begin_layout Itemize
+this category is boolean (meaning any subobject has a complement), 
+\end_layout
+
+\begin_layout Itemize
+has effective unions (not sure what it means)
+\end_layout
+
+\begin_layout Itemize
+has finite limits (it is even complete)
+\end_layout
+
+\begin_layout Itemize
+has finite coproducts (coproducts commute with pullbacks)
+\end_layout
+
+\begin_layout Itemize
+there is no infinite chain of proper subobjects
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Remark
+Meilleure idee: utiliser Menni, mais avec l'idee que les topos de Grothendieck
+ sont stables pare produits.
+\end_layout
+
+\begin_layout Remark
+de condition pour que la preuve de Elephant passe.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+tous les morphismes sont monos
+\end_layout
+
+\begin_layout Itemize
+pushouts et pullbacks.
+\end_layout
+
+\begin_layout Itemize
+les cotenseurs finis non vides existent (coproduits fini non vides avec
+ soi-meme), donc 
+\begin_inset Formula $q+q$
+\end_inset
+
+ existe et si 
+\begin_inset Formula $m+q$
+\end_inset
+
+ existe alors 
+\begin_inset Formula $m+q+q$
+\end_inset
+
+ aussi.
+\end_layout
+
+\begin_layout Itemize
+(dans la lignee boolean) pour tout mono 
+\begin_inset Formula $A\rightarrow X$
+\end_inset
+
+, il existe 
+\begin_inset Formula $B\rightarrow X$
+\end_inset
+
+ tels que 
+\begin_inset Formula $X$
+\end_inset
+
+ est le coproduit 
+\begin_inset Formula $A+B$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+les coproduits sont pullback stable.
+\begin_inset Formula 
+\[
+\xymatrix{X\ar[d]\ar[r] & X+B\ar[d]\\
+Y\ar[r] & Y+B
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Note: si 
+\begin_inset Formula $f:A\rightarrow B$
+\end_inset
+
+ et 
+\begin_inset Formula $A+C$
+\end_inset
+
+ existe, alors on peut definir 
+\begin_inset Formula $B+C$
+\end_inset
+
+ (par un pushout de 
+\begin_inset Formula $X+B$
+\end_inset
+
+ et 
+\begin_inset Formula $Y$
+\end_inset
+
+) si 
+\begin_inset Formula $A+B$
+\end_inset
+
+ et 
+\begin_inset Formula $B+C$
+\end_inset
+
+ existent, alors 
+\begin_inset Formula $A+B+C$
+\end_inset
+
+ aussi (par un pushout).
+ Mais est-ce que 
+\begin_inset Formula $A+C$
+\end_inset
+
+ existe? Ce serait defini comme le complementaire de 
+\begin_inset Formula $B$
+\end_inset
+
+ dans 
+\begin_inset Formula $A+B+C$
+\end_inset
+
+.
+ Oui, en utilisant le fait ques les coproduits sont pullback stable.
+\end_layout
+
+\begin_layout Plain Layout
+Donc 
+\begin_inset Formula $q\cong q+0_{q}$
+\end_inset
+
+ et si 
+\begin_inset Formula $m+q$
+\end_inset
+
+ existe alors 
+\begin_inset Formula $m+0_{q}\cong m$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Par exemple, c'est un coproduit de categories comme il faut, ou l'on a vraiment
+ les coproduits (c'est ptet meme equivalents)
+\end_layout
+
+\begin_layout Plain Layout
+jusque ici on peut faire le premier pas.
+ Je crois que le deuxieme aussi (cf pbk-schanuel.json).
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+TODO: voir si ca marche avec le cas Grothendieck.
+\end_layout
+
+\begin_layout Standard
+Again, we restrict to the full subcategory of functors preserving pullbacks.
+ As in the case presented above, representable presheaves belong to this
+ subcategory, which is stable under limits and coproducts.
+ It is reflective subcategory of the total category of functors (as it is
+ the category of models of some limit-sketches) and thus to show that it
+ is a Grothendieck topos, it is enough to show that the left adjoint preserves
+ finite limits.
+\end_layout
+
+\begin_layout Example
+Consider the functor for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus: 
+\begin_inset Formula 
+\begin{align*}
+F(X)_{\Gamma\vdash\sigma} & =y_{\sigma\vdash\sigma}(\Gamma\vdash\sigma) & \tag{(variables)}\\
+ & +\coprod_{\tau',\sigma'}X(\Gamma,\tau'\vdash\sigma')\times y_{\vdash\tau'\Rightarrow\sigma'}(\Gamma\vdash\sigma) & \tag{(abstraction)}\\
+ & +\coprod_{\tau'}X(\Gamma\vdash\tau'\Rightarrow\sigma)\times X(\Gamma\vdash\tau') & \tag{(application)}
+\end{align*}
+
+\end_inset
+
+.
+ In other words,
+\begin_inset Formula 
+\begin{align*}
+F(X) & =\coprod_{\sigma}y_{\sigma\vdash\sigma}\\
+ & +\coprod_{\tau',\sigma'}X(-,\tau'\vdash\sigma')\times y_{\vdash\tau'\Rightarrow\sigma'}\\
+ & +\coprod_{\tau',\sigma}X(-\vdash\tau'\Rightarrow\sigma)\times X(-\vdash\tau')\times y_{\vdash\sigma}
+\end{align*}
+
+\end_inset
+
+Does it satisfy the conditions? no, because the second line does not preserve
+ the terminal object...
+ More precisely: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $X(-,\tau'\vdash\sigma')\times y_{\vdash\tau'\Rightarrow\sigma'}$
+\end_inset
+
+ is not continuous in 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 Linear syntax
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Should work with the new condition on 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3934,6 +5602,49 @@ Then,
 \end_inset
 
  (distinct) variables.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $F(X)$
+\end_inset
+
+ is of the shape 
+\begin_inset Formula $I+\coprod_{i}X_{p_{i,1}}\times\dots\times X_{p_{i,m_{i}}}\times yn_{i}$
+\end_inset
+
+ and each 
+\begin_inset Formula $X\mapsto X_{p_{i,1}}\times\dots\times X_{p_{i,m_{i}}}\times yn_{i}$
+\end_inset
+
+ is left adjoint to 
+\begin_inset Formula $X\mapsto X_{n_{i}}\times(yp_{i,1}+\dots+yp_{i,m_{i}})$
+\end_inset
+
+.
+ 
+\color red
+No! But almost, i.e., if there exists a morphism 
+\begin_inset Formula $A\rightarrow X_{p}\times y_{n}$
+\end_inset
+
+, then in fact 
+\begin_inset Formula $A=A_{n}yn$
+\end_inset
+
+ and there exists a morphism 
+\begin_inset Formula $A_{n}\times yp\rightarrow X$
+\end_inset
+
+, but the converse is false.
+ 
+\end_layout
+
+\begin_layout Remark
+We could have done the non-linear version in this setting as well, but the
+ abstract syntax is more convoluted (see the binomial coefficient) and metavaria
+bles must still be linear.
 \end_layout
 
 \begin_layout Subsection
@@ -3966,15 +5677,11 @@ Let
 \begin_inset Formula $S$
 \end_inset
 
- be a monad on 
-\begin_inset Formula $Set$
+ be a nominal set with 
+\begin_inset Formula $Sn$
 \end_inset
 
- such that 
-\begin_inset Formula $SX$
-\end_inset
-
- is the set of types taking free type variables in 
+ the set of types taking free type variables in 
 \begin_inset Formula $X$
 \end_inset
 
@@ -3982,12 +5689,179 @@ Let
 \end_layout
 
 \begin_layout Standard
+Now, contexts are of the shape 
+\begin_inset Formula $n;\sigma_{1},\dots,\sigma_{p}\vdash\tau$
+\end_inset
+
+, where 
+\begin_inset Formula $\sigma_{i},\tau\in Sn$
+\end_inset
+
+.
+ Categorically,
+\end_layout
+
+\begin_layout Standard
+We first consider the category of functors 
+\begin_inset Formula $\int^{n\in\mathbb{F}_{m}}Set_{f}^{Sn}\times Tn\rightarrow Set$
+\end_inset
+
+ (this is the oplax colimit), i.e., a morphism between 
+\begin_inset Formula $n,\Gamma\vdash\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $n',\Gamma'\vdash\tau'$
+\end_inset
+
+ is a monomorphism 
+\begin_inset Formula $\sigma:n\rightarrow n'$
+\end_inset
+
+ and renamings 
+\begin_inset Formula $\Gamma[\sigma]\rightarrow\Gamma'$
+\end_inset
+
+ such that 
+\begin_inset Formula $\tau[\sigma]=\tau'$
+\end_inset
+
+.
+ 
+\color red
+This does not seem to fit in the previous framework.
+ Indeed, what are the connected components? Do corpoducts exist in each
+ of these components? 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\color red
+Deja pas clair qu'il y ait un objet initial (ptet que si en fait, car on
+ se retreint aux injections pour 
+\begin_inset Formula $n$
+\end_inset
+
+).
+ Etant donne 
+\begin_inset Formula $n|\Gamma\vdash\tau$
+\end_inset
+
+, l'objet initial est 
+\begin_inset Formula $n_{0}|\vdash\tau_{0}$
+\end_inset
+
+ ou 
+\begin_inset Formula $n_{0}$
+\end_inset
+
+ est minimal tel qu'il existe 
+\begin_inset Formula $\sigma:n_{0}\rightarrow n$
+\end_inset
+
+ avec 
+\begin_inset Formula $\tau=\tau_{0}$
+\end_inset
+
+ (
+\begin_inset Formula $S$
+\end_inset
+
+ preserve les wide pullbacks, donc on prend la facto generique).
+\end_layout
+
+\end_inset
+
+.
+ Are they boolean? 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\color red
+Par le lemme habituel (calcul des colimites danse les opfibrations), les
+ pushouts sont calcules dans les fibres.
+ Il se pourrait bien que ce soit booleen.
+\end_layout
+
+\end_inset
+
+So instead, we could take 
+\begin_inset Formula $\coprod_{n\in\mathbb{F}_{m}}$
+\end_inset
+
+rather than the oplax colimit.
+ But then the metavariables are not so nice.
+ Can we adapt manually the proof that the cat of nominal sets is a topos
+ (in the elephant)?
+\end_layout
+
+\begin_layout Example
+Following 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "HamanaPoly"
+literal "false"
+
+\end_inset
+
+, we specify System 
+\begin_inset Formula $F$
+\end_inset
+
+ with the functor 
+\begin_inset Formula 
+\begin{align*}
+F(X)_{n;\Gamma\vdash\sigma} & =V_{n;\Gamma\vdash\sigma} & \tag{variables}\\
+ & +\coprod_{\tau}X(n+1;\Gamma\vdash\tau)\delta_{\sigma,\forall\tau} & \tag{type abstraction}\\
+ & +\coprod_{\tau'}X(n;\Gamma\vdash\forall\tau')\times(\sigma':Sn)\delta_{\sigma,\tau'[\sigma']} & \tag{type application}\\
+ & +\coprod_{\tau}X(n;\Gamma,\tau\vdash\sigma')\delta_{\sigma,\tau\Rightarrow\sigma'} & \text{\tag{abstraction}}\\
+ & +\coprod_{\tau'}X(n;\Gamma\vdash\tau'\Rightarrow\sigma)\times X(n;\Gamma\vdash\tau') & \tag{application}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Here, 
+\begin_inset Formula $V$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $V(n;\Gamma\vdash\sigma)=\#\{\sigma\in\Gamma\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Conclusion and future work
+\end_layout
+
+\begin_layout Standard
+It would be nice to allow metavariables with mixed linearity constraints.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 We need to consider something like 
 \begin_inset Formula $Set^{J^{+}/SJ}$
 \end_inset
 
 , but restricted to a full subcategory embedding so that the yoneda embedding
  preserve finite connected limits.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4022,6 +5896,186 @@ Mais est -ce que ca fait bien la moande des termes.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "biblio,bib"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\start_of_appendix
+Some lemmas
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:pbk-free-mon-ext"
+
+\end_inset
+
+Let 
+\begin_inset Formula $M$
+\end_inset
+
+ be an algebraically free monad on an extensive category.
+ Then, for any Kleisli morphism 
+\begin_inset Formula $B\rightarrow M(B')$
+\end_inset
+
+, for any object 
+\begin_inset Formula $A$
+\end_inset
+
+, the following square is a pullback (TODO: refine the assumptions)
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula 
+\[
+\xymatrix{A\ar[r]\ar[d] & M(A+B)\ar[d]\\
+A\ar[r] & M(A+B')
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By Lambek's lemma, 
+\begin_inset Formula $M(X)\cong X+GMX$
+\end_inset
+
+ where 
+\begin_inset Formula $M=G^{*}$
+\end_inset
+
+.
+ Through this isomorphism, this square becomes
+\begin_inset Formula 
+\[
+\xymatrix{A\ar[r]\ar[d] & A+B+GM(A+B)\ar[d]\\
+A\ar[r] & A+B'+GM(A+B')
+}
+\]
+
+\end_inset
+
+where horizontal morphisms are left coproduct injections.
+ TODO: conclude by extensivity.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:pbk-free-mon-ext-2"
+
+\end_inset
+
+Let 
+\begin_inset Formula $M$
+\end_inset
+
+ be an algebraically free cartesian monad on an extensive category.
+ Then, for any Kleisli morphism 
+\begin_inset Formula $B\rightarrow MB'$
+\end_inset
+
+, the following square is a pullback (TODO: refine the assumptions)
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula 
+\[
+\xymatrix{MB\ar[r]\ar[d] & M(A+B)\ar[d]\\
+MB'\ar[r] & M(A+B')
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This commuting square expands as
+\begin_inset Formula 
+\[
+\xymatrix{MB\ar[r]^{Min_{2}}\ar[d] & M(A+B)\ar[d]\\
+MMB'\ar[d]_{=}\ar[r] & M(A+M(A+B'))\ar[d]\\
+MMB'\ar[r]^{MMin_{2}}\ar[d]_{\mu} & MM(A+B')\ar[d]^{\mu}\\
+MB'\ar[r]_{Min_{2}} & M(A+B')
+}
+\]
+
+\end_inset
+
+where each square is a pullback square.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:product-topos"
+
+\end_inset
+
+Grothendieck topoi are stable under products.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+citer thm 5.2.2 de Accessible
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $(A_{i})_{i\in I}$
+\end_inset
+
+ be a family of Grothendieck topoi.
+ Then, there exists a family of small categories 
+\begin_inset Formula $(B_{i})_{i\in I}$
+\end_inset
+
+ such that each 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+ is reflective subcategory of 
+\begin_inset Formula $\hat{B_{i}}$
+\end_inset
+
+ and moreover, the reflector is left exact.
+ Then, 
+\begin_inset Formula $\prod_{i}A_{i}\rightarrow\prod_{i}\hat{B_{i}}\cong\widehat{\coprod_{i}B_{i}}$
+\end_inset
+
+ is also coreflective and the reflector is left exact, concluding the proof.
 \end_layout
 
 \end_body
