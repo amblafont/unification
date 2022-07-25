@@ -566,16 +566,11 @@ noprefix "false"
 \begin_inset Formula $\C$
 \end_inset
 
-, but in concrete examples, it is better to know that we can compute them
- in 
+, but in concrete examples, but we need to compute them in 
 \begin_inset Formula $D$
 \end_inset
 
- because this category is simpler 
-\color red
-(TODO: think more about it)
-\color inherit
-.
+ so that we can chain the coequalisers when unifying multiple terms.
 \end_layout
 
 \begin_layout Assumption
@@ -1265,8 +1260,25 @@ Examples of relevant categorical contexts
 \end_layout
 
 \begin_layout Standard
-All the applications that we provide are instances of the following construction.
- Let 
+Typically, we work in a full subcategory of functors 
+\begin_inset Formula $C\rightarrow Set$
+\end_inset
+
+ preserving pullbacks, such that morphisms in 
+\begin_inset Formula $C$
+\end_inset
+
+ are all monomorphisms.
+ With some conditions, this is a topos and hence has a number of good properties.
+ Then, 
+\begin_inset Formula $K$
+\end_inset
+
+ is the coyoneda embedding.
+\end_layout
+
+\begin_layout Standard
+Let 
 \begin_inset Formula $(C_{i})_{i}$
 \end_inset
 
@@ -1274,8 +1286,8 @@ All the applications that we provide are instances of the following construction
 \begin_inset Formula $C_{i}$
 \end_inset
 
- (except the last one, these properties taken from the paragraph before
- Section 8 in 
+ (except the last one, these properties are taken from the paragraph before
+ conclusion in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DBLP:journals/acs/Menni03"
@@ -1605,6 +1617,73 @@ We denote by
  any terminal morphism.
 \end_layout
 
+\begin_layout Standard
+Here is our main result.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $\Kl{D^{+}}^{*}$
+\end_inset
+
+ be the full subcategory of 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+ consisting of objects of 
+\begin_inset Formula $D^{+}\cup\{\top\}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\Kl{D^{+}}^{*}$
+\end_inset
+
+ has coequalisers and the inclusion 
+\begin_inset Formula $\Kl{D^{+}}^{*}\rightarrow\Kl T^{*}$
+\end_inset
+
+ preserves them.
+\end_layout
+
+\begin_layout Standard
+In other words, any coequaliser diagram 
+\begin_inset Formula $A\rightrightarrows TB$
+\end_inset
+
+ in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+ where 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ are in 
+\begin_inset Formula $D^{+}$
+\end_inset
+
+ has a colimit 
+\begin_inset Formula $B\rightarrow TC$
+\end_inset
+
+ where 
+\begin_inset Formula $C\in D^{+}\cup\{\top\}$
+\end_inset
+
+.
+ Rephrasing it without the adjoined terminal object, this means that either
+ such a coequaliser has a colimit which can be computed in 
+\begin_inset Formula $\Kl{D^{+}}^{*}$
+\end_inset
+
+, either there is no cocone at all.
+\end_layout
+
 \begin_layout Section
 Notations
 \end_layout
@@ -1777,6 +1856,10 @@ X\vdash(f_{i})_{i}:=g\Rightarrow u;\sigma\dashv Z
 \end_inset
 
 .
+ 
+\color red
+Could we use Reddy's syntax, to differentiate the input/output? We need
+ to know what his syntax is the internal language of.
 \end_layout
 
 \begin_layout Standard
@@ -1822,60 +1905,30 @@ The pushout can be decomposed into smaller components.
 
 \end_inset
 
-This follows from the following general lemma.
+This follows from the stepwise construction of coequalisers (Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
 \end_layout
 
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:coeq-stepwise"
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:coeq-stepwise"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-Let 
-\begin_inset Formula $f_{1},g_{1}:A_{1}\rightarrow B$
-\end_inset
-
- and 
-\begin_inset Formula $f_{2},g_{2}:A_{2}\rightarrow B$
-\end_inset
-
- be morphisms in some category.
- Then the coequaliser of the induced parallel morphism 
-\begin_inset Formula $A_{1}\coprod A_{2}\rightrightarrows B$
-\end_inset
-
- is the morphism 
-\begin_inset Formula $B\rightarrow C\rightarrow D$
-\end_inset
-
- defined as follows (assuming the involved coequalisers exist):
+).
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $B\rightarrow C$
-\end_inset
-
- is the coequaliser of 
-\begin_inset Formula $A_{1}\rightrightarrows B$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $C\rightarrow D$
-\end_inset
-
- is the coequaliser of 
-\begin_inset Formula $A_{2}\rightrightarrows B\rightarrow C$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2531,6 +2584,15 @@ noprefix "false"
 \end_inset
 
 ).
+ So a cocone on 
+\begin_inset Formula $Y$
+\end_inset
+
+ is essentially given by 
+\begin_inset Formula $g_{1}$
+\end_inset
+
+ making the right diagram commute.
  Since 
 \begin_inset Formula $R_{i}$
 \end_inset
@@ -2567,7 +2629,7 @@ noprefix "false"
 ), the right diagram is equivalent to making the following diagram commute.
 \begin_inset Formula 
 \[
-\xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{\coprod_{j}KL_{i,j}'f}\ar[d]_{g_{2}^{*}} &  & \coprod_{j}KL_{i,j}'B\ar[d]^{u}\\
+\xymatrix{\coprod_{j}KL_{i,j}'A\ar[rr]^{\coprod_{j}KL_{i,j}'f}\ar[d]_{g_{1}^{*}} &  & \coprod_{j}KL_{i,j}'B\ar[d]^{u}\\
 TC\ar[rr]_{\sigma} &  & TY
 }
 \]
@@ -2577,7 +2639,7 @@ TC\ar[rr]_{\sigma} &  & TY
 Thus, this justifies the following rule
 \begin_inset Formula 
 \[
-\dfrac{C\vdash(L'_{i,j}f)_{j}:=g_{2}^{*}\Rightarrow u;\sigma\dashv Y}{C\vdash f:=in_{i}\circ g\Rightarrow in_{i}\circ u^{*};\sigma\dashv Y}
+\dfrac{C\vdash(L'_{i,j}f)_{j}:=g_{1}^{*}\Rightarrow u;\sigma\dashv Y}{C\vdash f:=in_{i}\circ g\Rightarrow in_{i}\circ u^{*};\sigma\dashv Y}
 \]
 
 \end_inset
@@ -2620,11 +2682,7 @@ Here we want to compute a coequalising diagram in
 \end_inset
 
 where 
-\begin_inset Formula $g_{i}:KA_{i}\rightarrow X$
-\end_inset
-
- and 
-\begin_inset Formula $u_{i}\in\hom_{\Kl T^{*}}(KB_{i},Z)$
+\begin_inset Formula $t_{i},u_{i}\in\hom_{\Kl T^{*}}(KB_{i},\Gamma)$
 \end_inset
 
 .
@@ -3023,7 +3081,28 @@ Let us mention schematically some other cases, which can never be unified
 \begin_inset Formula $\Kl T$
 \end_inset
 
- and thus are solved using 
+, in most case by extensivity (Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:extensive"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), and thus are solved using 
 \begin_inset Formula $\top$
 \end_inset
 
@@ -3468,7 +3547,19 @@ noprefix "false"
 
 \end_inset
 
-, we know that such a colimit exists.
+, we know that such a colimit exists 
+\color red
+(but do we need
+\color inherit
+ 
+\color red
+that this limit lives in 
+\begin_inset Formula $D?$
+\end_inset
+
+
+\color inherit
+).
 \end_layout
 
 \begin_layout Standard
@@ -5647,6 +5738,10 @@ We could have done the non-linear version in this setting as well, but the
 bles must still be linear.
 \end_layout
 
+\begin_layout Example
+linear lambda calculus, quantum lambda calculus
+\end_layout
+
 \begin_layout Subsection
 Polymorphic syntax
 \end_layout
@@ -5784,6 +5879,8 @@ status open
 Par le lemme habituel (calcul des colimites danse les opfibrations), les
  pushouts sont calcules dans les fibres.
  Il se pourrait bien que ce soit booleen.
+ Non; car l'intersection avec le candidate complementaire n'est pas l'objet
+ initial,dans certains cas
 \end_layout
 
 \end_inset
@@ -5913,6 +6010,64 @@ options "plain"
 \begin_layout Section
 \start_of_appendix
 Some lemmas
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:coeq-stepwise"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f_{1},g_{1}:A_{1}\rightarrow B$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{2},g_{2}:A_{2}\rightarrow B$
+\end_inset
+
+ be morphisms in some category.
+ Then the coequaliser of the induced parallel morphism 
+\begin_inset Formula $A_{1}\coprod A_{2}\rightrightarrows B$
+\end_inset
+
+ is the morphism 
+\begin_inset Formula $B\rightarrow C\rightarrow D$
+\end_inset
+
+ defined as follows (assuming the involved coequalisers exist):
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $B\rightarrow C$
+\end_inset
+
+ is the coequaliser of 
+\begin_inset Formula $A_{1}\rightrightarrows B$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $C\rightarrow D$
+\end_inset
+
+ is the coequaliser of 
+\begin_inset Formula $A_{2}\rightrightarrows B\rightarrow C$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
