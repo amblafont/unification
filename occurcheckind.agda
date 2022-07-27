@@ -7,8 +7,36 @@ open import Data.Nat.Properties as ℕₚ
 open import Data.Product hiding (map)
 open import Data.Sum hiding (map)
 open import Agda.Builtin.Equality
-open import Relation.Binary.PropositionalEquality using (sym ; cong)
+open import Relation.Binary.PropositionalEquality using (sym ; cong ; trans)
 module occurcheckind where
+ ⊥-elim-d : ∀ {w } {Whatever : ⊥  → Set w} → (witness : ⊥ ) → Whatever witness
+ ⊥-elim-d ()
+
+ le0 : ∀ n p → n + p ≤ p → n ≡ 0
+ le0 = {!!}
+
+ eq-le : ∀ n p → n ≡ p → n ≤ p
+ eq-le = {!!}
+
+ funext : ∀{A}{B : A → Set}(f g : ∀ a → B a) → (∀ a → f a ≡ g a) → f ≡ g
+ funext = {!!}
+ -- I can't figure out how to find lemmas about max in the standard lib, so I define mine
+ max : ℕ → List ℕ → ℕ
+ max _ [] = 0
+ max p (x ∷ l) with ℕₚ.≤-total x (max p l)
+ ... | inj₁ _ = max p l
+ ... | inj₂ _ = x
+
+ maxl : ∀ {n p l q} → p ≥ q → max n (p ∷ l) ≥ q
+ maxl {n} {p}{l}{q} lepq with ℕₚ.≤-total p (max n l)
+ ... | inj₁ x = ≤-trans lepq x
+ ... | inj₂ y = lepq
+
+ maxr : ∀ {n p l q} → max n l ≥ q → max n (p ∷ l) ≥ q
+ maxr {n} {p}{l}{q} lepq with ℕₚ.≤-total p (max n l)
+ ... | inj₁ x = lepq
+ ... | inj₂ y = ≤-trans lepq y
+
  record is-cat (C : Set) : Set where
     field
       hom : C → C → Set
@@ -36,29 +64,13 @@ module occurcheckind where
    -- private module C = Category C
    -- private module D = Category D
    field
-    ∣_∣ : C → D
-    instance is-func : is-functor ∣_∣
+    obF : C → D
+    instance Functor-is-func : is-functor obF
     -- is-func : ∀ {a b : C} → hom a b → hom (∣_∣ a) (∣_∣ b)
 
  open Functor public
 
  module _ (D : Set) {{ Dc : is-cat D}} (I : Set)(L : I → List (Functor D D))(S : I → D → Set){{ SF : ∀ {i} → is-functor (S i)}} where
-  -- I can't figure out how to find lemmas about max in the standard lib, so I define mine
-  max : ℕ → List ℕ → ℕ
-  max _ [] = 0
-  max p (x ∷ l) with ℕₚ.≤-total x (max p l)
-  ... | inj₁ _ = max p l
-  ... | inj₂ _ = x
-
-  maxl : ∀ {n p l q} → p ≥ q → max n (p ∷ l) ≥ q
-  maxl {n} {p}{l}{q} lepq with ℕₚ.≤-total p (max n l)
-  ... | inj₁ x = ≤-trans lepq x
-  ... | inj₂ y = lepq
-
-  maxr : ∀ {n p l q} → max n l ≥ q → max n (p ∷ l) ≥ q
-  maxr {n} {p}{l}{q} lepq with ℕₚ.≤-total p (max n l)
-  ... | inj₁ x = lepq
-  ... | inj₂ y = ≤-trans lepq y
 
   _⇒_ : ∀ (X Y : D → Set) → Set 
   X ⇒ Y = ∀ d → X d → Y d
@@ -74,16 +86,34 @@ module occurcheckind where
   -- on pourrait faire une version avec une liste de paires de foncteur et de M X
   data M X where
     η : ∀ {d} → X d → M X d
-    op : ∀ i {d} → S i d → (M[ X ]^ (map (λ f → ∣ f ∣ d) (L i))) → M X d
+    op : ∀ i {d} → S i d → (M[ X ]^ (map (λ F → obF F d) (L i))) → M X d
 
-  _[_]l : ∀ {X Y : D → Set}{l} → M[ X ]^ l  → (X ⇒ M Y) → M[ Y ]^ l
   _[_] : ∀ {X Y : D → Set}{d} → M X d → (X ⇒ M Y) → M Y d
+  _[_]l : ∀ {X Y : D → Set}{l} → M[ X ]^ l  → (X ⇒ M Y) → M[ Y ]^ l
 
   η x [ σ ] = σ _ x
   op i s x [ σ ] = op i s (x [ σ ]l)
 
   M^[] _ [ σ ]l = M^[] _
   (x M^:: ms) [ σ ]l = (x [ σ ]) M^:: (ms [ σ ]l)
+
+  [][] : ∀ {X Y Z : D → Set}{d} (t : M X d) (u : X ⇒ M Y) (v : Y ⇒ M Z) → (t [ u ]) [ v ] ≡ (t [ (λ d x → u d x [ v ]) ])
+  [][] = {!!}
+
+  record has-weight (C : D → Set) : Set where
+    field
+      o : ∀ {d} → C d → ℕ
+  open has-weight {{ ... }} public
+
+
+  ∣_∣ : ∀ {X}{{oX : has-weight X}}{d} → M X d → ℕ
+  ∣_∣l : ∀ {X}{{oX : has-weight X}}{l} → M[ X ]^ l → List ℕ
+
+  ∣ η x ∣ = o x
+  ∣ op i s x ∣ = suc (max 0 ∣ x ∣l)
+
+  ∣_∣l (M^[] _) = []
+  ∣_∣l (x M^:: ms) = ∣ x ∣ ∷ ∣ ms ∣l
 
   hs : ∀ {X}{l} → M[ X ]^ l → List ℕ
   h : ∀ {X}{d} → M X d → ℕ
@@ -115,35 +145,54 @@ module occurcheckind where
 
 
 
-  h-comp : ∀ {X}{Y}a  → (u : X ⇒ M Y) (m : M X a) → ∀ n (p : ℕ) → is-closed m ≡ inj₂ n →
-      (∀ d x → h (u d x) ≥ p) → h (m [ u ]) ≥ n + p
+  -- define h u as min h (u d)
+  -- then h (m [ u ]) >= h u + || m ||
+  {-
+  Does it allow to show the think we want about the pullback of
+    MA
+     ↓   ?
+A → M0
+  u
 
-  hs-comp : ∀ {X}{Y}l  → (u : X ⇒ M Y) (ms : M[ X ]^ l) → ∀ n (p : ℕ) → are-closed ms ≡ inj₂ n →
-      (∀ d x → h (u d x) ≥ p) → max 0 (hs (ms [ u ]l)) ≥ n + p
-     
+Assume given an element t ∈ MA_d sucht that || t || exists and such that
+u_i = t [ u ]
+Then, | u_i | ≥ | u | + ||t || but if u is flat then |u_i| = |u| and we can conclude
+that || t || = 0
+but flatness does not work for the argument M ↦ M(-+1)
+  -}
+  h-comp : ∀ {X}{Y}{{oY : has-weight Y}}a  → (u : X ⇒ M Y) (m : M X a) → ∀ n (p : ℕ) → is-closed m ≡ inj₂ n →
+      (∀ d x →  ∣ u d x ∣  ≥ p) → ∣ m [ u ] ∣ ≥ n + p
+
+  hs-comp : ∀ {X}{Y}{{oY : has-weight Y}}l  → (u : X ⇒ M Y) (ms : M[ X ]^ l) → ∀ n (p : ℕ) → are-closed ms ≡ inj₂ n →
+      (∀ d x → ∣ u d x ∣   ≥ p) → max 0 ∣ ms [ u ]l ∣l  ≥ n + p
+
   h-comp a u (η x) .0 p refl hp = hp a x
   h-comp a u (op i s ms) n p cm hp with are-closed ms in eq
   h-comp a u (op i s ms) .(1 + n) p refl hp | inj₂ n = s≤s aux
     where
-      aux : (max 0 (hs (ms [ u ]l))) ≥ (n + p)
-      aux = hs-comp (map (λ f → ∣ f ∣ a) (L i)) u ms n p eq hp
+      aux : (max 0 ∣ ms [ u ]l ∣l) ≥ n + p
+      aux =  hs-comp (map (λ F → obF F a) (L i)) u ms n p eq hp 
 
   hs-comp .(_ ∷ _) u (_M^::_ {d = d}{l = l} m ms) n p cm hp with are-closed ms in eqms | is-closed m in eqm
   hs-comp .(_ ∷ _) u (_M^::_ {d = d} {l = l} m ms) .n p refl hp | inj₁ x | inj₂ n = aux
     where
-          tete : h (m [ u ]) ≥ n + p
+          tete : ∣ m [ u ] ∣ ≥ n + p
           tete = h-comp d u m n p eqm hp
 
-          aux : max 0 (h (m [ u ]) ∷ hs (ms [ u ]l)) ≥ n + p
+          aux : max 0 (∣ m [ u ] ∣ ∷ ∣ ms [ u ]l ∣l) ≥ n + p
           aux = maxl tete
 
   hs-comp .(_ ∷ _) u (_M^::_ {d = d} {l} m ms) .n p refl hp | inj₂ n | cm' = aux
     where
-          queue : max 0 (hs (ms [ u ]l)) ≥ n + p
+          queue : max 0 ∣ ms [ u ]l ∣l ≥ n + p
           queue = hs-comp l u ms n p eqms hp
 
-          aux : max 0 (h (m [ u ]) ∷ hs (ms [ u ]l)) ≥ n + p
-          aux = maxr {n = 0}{p = h (m [ u ])} {l = hs (ms [ u ]l)} queue
+          -- aux : max 0 (h (m [ u ]) ∷ hs (ms [ u ]l)) ≥ n + p
+          aux : max 0 (∣ m [ u ] ∣ ∷ ∣ ms [ u ]l ∣l) ≥ n + p
+          aux = maxr {n = 0}{p = ∣ m [ u ] ∣} {l = ∣ ms [ u ]l ∣l} queue
+
+  is-flat : ∀ {X}{Y}{{oY : has-weight Y}} → (X ⇒ M Y) → Set
+  is-flat {X} f = ∀ {d d' : D} (x : X d)(x' : X d') →  ∣ f d x ∣ ≡ ∣ f d' x' ∣
 
   {-
   We want to show that
@@ -170,7 +219,7 @@ module occurcheckind where
   pbk-unique : ∀ {A}{d} → (u : M (λ _ → ⊥) d) → is-closed {X = A}(u [ (λ d₁ → ⊥-elim) ]) ≡ inj₁ u
   pbks-unique : ∀ {A}{l} → (u : M[ (λ _ → ⊥) ]^ l) → are-closed {X = A}(u [ (λ d₁ → ⊥-elim) ]l) ≡ inj₁ u
 
-  pbk-unique {A} {d} (op i s ms) rewrite pbks-unique {A}{map (λ f → ∣ f ∣ d) (L i)} ms = refl
+  pbk-unique {A} {d} (op i s ms) rewrite pbks-unique {A}{map (λ F → obF F d) (L i)} ms = refl
 
 
   pbks-unique {A} {.[]} (M^[] .(λ _ → ⊥)) = refl
@@ -188,6 +237,40 @@ module occurcheckind where
   pbks-exist (x M^:: t) u ct with are-closed t in eqt | is-closed x in eqx
   pbks-exist (x M^:: t) .(x₂ M^:: x₁) refl | inj₁ x₁ | inj₁ x₂ rewrite pbk-exist x x₂ eqx | pbks-exist t x₁ eqt  = refl
 
+
+  instance
+    ⊥-has-weight : has-weight (λ _ → ⊥)
+    o {{ ⊥-has-weight}} = ⊥-elim
+
+
+  
+  -- The main result
+  {-
+  A → M0 flat
+  then the pullback
+      MA
+       ↓
+  A → M0
+  is A + A×M_0 A
+  -}
+  main-result : ∀ {A}(u : A ⇒ M (λ _ → ⊥)) → is-flat u → ∀ d (a : A d) (t : M A d) → u d a ≡ t [ u ] → (Σ (A d) λ a' → t ≡ η a' × u d a ≡ u d a') ⊎ t ≡ u d a [ (λ _ → ⊥-elim) ]
+  main-result {A} u fl d a t eq with is-closed t in eqt
+  ... | inj₁ x rewrite eq | pbk-exist t x eqt rewrite [][] x (λ k → ⊥-elim) u
+      = inj₂ (trans (cong (_[_] x) (funext _ _ λ a₁ → funext _ _ ⊥-elim-d)) (sym ([][] x _ (λ k → ⊥-elim)) ))
+
+  ... | inj₂ n with n-0 (h-comp {A} d u t n ∣ u d a ∣ eqt λ d₁ x → eq-le _ _ (fl a x))
+    where n-0 : ∣ t [ u ] ∣ ≥ n + ∣ u d a ∣ → n ≡ 0
+          n-0 h rewrite eq = le0 _ _ h
+  main-result {A} u fl d a (η x) eq | inj₂ .0 | refl = inj₁ (x , (refl , eq))
+  main-result {A} u fl d a (op i x ms) eq | inj₂ .0 | refl with are-closed ms
+  ... | inj₁ x = ⊥-elim (impossible eqt)
+    where impossible : inj₁ (op i _ x) ≡ inj₂ 0 → ⊥
+          impossible ()
+  ... | inj₂ y = ⊥-elim (impossible eqt)
+    where impossible : inj₂ (suc y) ≡ inj₂ 0 → ⊥
+          impossible ()
+     
+
   -- reste a montrer que le yoneda est de la meme taille que l'element
   -- yoneda lemma
 
@@ -203,24 +286,30 @@ module occurcheckind where
 
   instance
     M-is-functor : ∀ {X} {{ XF : is-functor X}} → is-functor (M X)
-    Ml-is-functor : ∀ {X} {{ XF : is-functor X}} {l} → is-functor (λ d → M[ X ]^ (map (λ F → ∣ F ∣ d) l) )
+    Ml-is-functor : ∀ {X} {{ XF : is-functor X}} {l} → is-functor (λ d → M[ X ]^ (map (λ F → obF F d) l) )
     homF ⦃ M-is-functor {X} ⦃ XF ⦄ ⦄ f (η x) = η (∥ X ∥ f x)
     homF ⦃ M-is-functor {X} ⦃ XF ⦄ ⦄ f (op i s ms) = op i (homF f s) (homF {{ r = Ml-is-functor }} f ms)
     homF ⦃ Ml-is-functor {X} ⦃ XF ⦄ {[]} ⦄ f ms = ms
     homF ⦃ Ml-is-functor {X} ⦃ XF ⦄ {F ∷ l} ⦄ f (m M^:: ms) = homF {{ r = M-is-functor}} (homF f) m   M^:: homF {{ r = Ml-is-functor}} f ms where open Functor F
 
-  size-y : ∀ (X : D → Set) {{XF : is-functor X}} d (u : M X d) → ∀ (a : D) (f : hom d a) → h u ≡ h ((u ʸ) a f)
-  size-ys : ∀ (X : D → Set) {{XF : is-functor X}} d
-                   (l : List (Functor D D))
-                  (ms : M[ X ]^ map (λ F → ∣ F ∣ d) l) →
-                  (a : D)
-                  (f : hom d a) →
-          hs ms ≡ (hs (is-functor.homF Ml-is-functor f ms))
-  size-y X d (η x) a f = refl
-  size-y X d (op i s ms) a f rewrite size-ys X d (L i) ms a f = refl
+  module _ (X : D → Set){{XF : is-functor X}} where
+    instance
+      X-has-weight : has-weight X
+      o {{ X-has-weight }} = λ _ → 0
+    size-y : ∀ d (u : M X d) → ∀ (a : D) (f : hom d a) → ∣ u ∣ ≡ ∣ (u ʸ) a f ∣
+    size-ys : ∀  d (l : List (Functor D D))
+                    (ms : M[ X ]^ map (λ F → obF F d) l) →
+                    (a : D)
+                    (f : hom d a) →
+            ∣ ms ∣l ≡ ∣ (is-functor.homF Ml-is-functor f ms) ∣l 
+    size-y d (η x) a f = refl
+    size-y d (op i s ms) a f rewrite size-ys d (L i) ms a f = refl
 
-  size-ys X d [] ms a f = refl
-  size-ys X d (F ∷ l) (m M^:: ms) a f rewrite size-y X (∣ F ∣ d) m (∣ F ∣ a) (homF {{ r = Functor.is-func F }} f) | size-ys X d l ms a f    = refl 
+    size-ys d [] ms a f = refl
+    size-ys d (F ∷ l) (m M^:: ms) a f rewrite size-y (obF F d) m (obF F a) (homF {{ r = Functor.Functor-is-func F }} f) | size-ys d l ms a f    = refl 
+
+    y-is-flat : ∀ d (u : M X d) → is-flat (u ʸ)
+    y-is-flat d u = λ x x' → trans (sym (size-y d u _ x)) (size-y d u _ x')
 
   -- final : ∀ (X : D → Set) {{ XF : is-functor X}} a b (u : M X a)(f : y a b) (t : M (y b)  ) →
   --             homF f u ≡ ?

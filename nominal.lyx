@@ -4164,19 +4164,59 @@ Preliminary lemma
 \end_layout
 
 \begin_layout Standard
-For each 
-\begin_inset Formula $X:D\rightarrow Set$
+There is a 
+\begin_inset Formula $M$
 \end_inset
 
-, we can define by induction a height morphism 
-\begin_inset Formula $MX\xrightarrow{h}\mathbb{N}$
+-algebra structure 
+\begin_inset Formula $M\mathbb{N}\rightarrow\mathbb{N}$
 \end_inset
 
- which computes the maximal depth.
+ on the constant presheaf 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+ that adds one to the maximum of the arguments.
+ For any 
+\begin_inset Formula $o:X\rightarrow\mathbb{N}$
+\end_inset
+
+, this induces an algebra morphism 
+\begin_inset Formula $MX\xrightarrow{|-|_{o}}\mathbb{N}$
+\end_inset
+
+, which basically computes the maximal depth of an element of 
+\begin_inset Formula $MX$
+\end_inset
+
+, with custom depth for leaves in 
+\begin_inset Formula $X$
+\end_inset
+
+ as specified by 
+\begin_inset Formula $o$
+\end_inset
+
+.
+ In practice we will have 
+\begin_inset Formula $X$
+\end_inset
+
+ as the initial presheaf (then flatness does not depend on 
+\begin_inset Formula $o$
+\end_inset
+
+), or the terminal presheaf.
+ 
 \end_layout
 
 \begin_layout Definition
-A natural transformation 
+Let 
+\begin_inset Formula $o:X\rightarrow\mathbb{N}$
+\end_inset
+
+.
+ A natural transformation 
 \begin_inset Formula $n:A\rightarrow MX$
 \end_inset
 
@@ -4196,13 +4236,30 @@ between families in
 
  is said 
 \emph on
-flat
+
+\begin_inset Formula $o$
+\end_inset
+
+-flat
 \emph default
  if 
-\begin_inset Formula $A\rightarrow MX\xrightarrow{h}\mathbb{N}$
+\begin_inset Formula $A\rightarrow MX\xrightarrow{|-|_{o}}\mathbb{N}$
 \end_inset
 
  is constant.
+ It is said 
+\emph on
+flat
+\emph default
+ if there exists 
+\begin_inset Formula $o$
+\end_inset
+
+ that makes it 
+\begin_inset Formula $o$
+\end_inset
+
+-flat.
 \end_layout
 
 \begin_layout Standard
@@ -4241,7 +4298,11 @@ name "exa:flat-nattrans-yoneda"
 
 \end_inset
 
-Any natural transformation out of a representable presheaf is flat.
+Any natural transformation out of a representable presheaf is 
+\begin_inset Formula $0$
+\end_inset
+
+-flat.
 \begin_inset Note Note
 status open
 
@@ -4407,10 +4468,18 @@ noprefix "false"
 \begin_inset Formula $M'$
 \end_inset
 
- (which the same notion of flatness 
-\color red
-no!
-\color inherit
+ (any 
+\begin_inset Formula $M'$
+\end_inset
+
+-flat morphism becomes 
+\begin_inset Formula $M$
+\end_inset
+
+-flat by assigning the unit weight to the leaf in 
+\begin_inset Formula $1$
+\end_inset
+
 ).
 \end_layout
 
