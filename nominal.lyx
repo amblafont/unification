@@ -4414,6 +4414,14 @@ As an example, if
 .
 \end_layout
 
+\begin_layout Question
+Can we prove this more categorically by simply assuming that 
+\begin_inset Formula $A$
+\end_inset
+
+ is tiny?
+\end_layout
+
 \begin_layout Corollary
 Let 
 \begin_inset Formula $A\xrightarrow{n}M1$
@@ -6092,7 +6100,7 @@ name "sec:proof-prop-pbk-lemma-occur-check"
 \end_layout
 
 \begin_layout Standard
-The results of this section are (almost) formalised in agda.
+The results of this section are formalised in agda (see occurcheck-ind.agda).
  The crucial point that keeps the agda formalisation simple is that we can
  work on 
 \begin_inset Formula $[D_{0},Set]$
@@ -6111,6 +6119,62 @@ The results of this section are (almost) formalised in agda.
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+Now, the basic idea is that we can define by recursion a morphism 
+\begin_inset Formula $MX\rightarrow M0+\mathbb{N}$
+\end_inset
+
+ such that the following is a pullback
+\begin_inset Formula 
+\[
+\xymatrix{M0\ar[d]\ar[r] & MX\ar[d]\\
+M0\ar[r] & M0+\mathbb{N}
+}
+\]
+
+\end_inset
+
+This morphism either returns the closed term is the given input 
+\begin_inset Formula $t\in MX$
+\end_inset
+
+ is a closed term, or it returns the depth of some leaf.
+ Assuming it indeed returns 
+\begin_inset Formula $n$
+\end_inset
+
+, then the height of 
+\begin_inset Formula $t[u]$
+\end_inset
+
+ must be bigger than the height of 
+\begin_inset Formula $u$
+\end_inset
+
+ raised by 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Now, the basic idea for the proof is that if 
+\begin_inset Formula $t[u]=u$
+\end_inset
+
+ then it must be that 
+\begin_inset Formula $n=0$
+\end_inset
+
+, so 
+\begin_inset Formula $t$
+\end_inset
+
+ is a metavariable (otherwise, it is a closed term).
 \end_layout
 
 \begin_layout Standard

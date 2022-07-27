@@ -98,7 +98,13 @@ module occurcheckind where
   (x M^:: ms) [ σ ]l = (x [ σ ]) M^:: (ms [ σ ]l)
 
   [][] : ∀ {X Y Z : D → Set}{d} (t : M X d) (u : X ⇒ M Y) (v : Y ⇒ M Z) → (t [ u ]) [ v ] ≡ (t [ (λ d x → u d x [ v ]) ])
-  [][] = {!!}
+  [][]l : ∀ {X Y Z : D → Set}{l} (t : M[ X ]^ l) (u : X ⇒ M Y) (v : Y ⇒ M Z) → (t [ u ]l) [ v ]l ≡ (t [ (λ d x → u d x [ v ]) ]l)
+
+  [][] (η x) u v = refl
+  [][] (op i x ms) u v = cong (op i x) ([][]l ms u v)
+
+  [][]l (M^[] _) u v = refl
+  [][]l (x M^:: t) u v rewrite [][] x u v = cong (_M^::_ _) ([][]l t u v)
 
   record has-weight (C : D → Set) : Set where
     field
