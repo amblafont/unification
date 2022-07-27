@@ -1,3 +1,4 @@
+{-# OPTIONS --type-in-type #-}
 open import Data.List hiding ([_])
 open import Data.Unit hiding (_≤_)
 open import Data.Empty
@@ -8,8 +9,40 @@ open import Data.Sum hiding (map)
 open import Agda.Builtin.Equality
 open import Relation.Binary.PropositionalEquality using (sym ; cong)
 module occurcheckind where
+ record is-cat (C : Set) : Set where
+    field
+      hom : C → C → Set
+      _·_ : ∀ {a b c : C} → hom a b → hom b c → hom a c
 
- module _ (D : Set) (I : Set)(L : I → List (D → D))(S : I → Set) where
+ open is-cat {{...}} public
+
+ instance
+   SetCat : is-cat Set
+   hom {{ SetCat }} X Y = X → Y
+   _·_ {{ SetCat}} f g = λ x → g (f x)
+
+ record is-functor {C : Set} {D : Set} {{ Cc : is-cat C }} {{ Dc : is-cat D}} (F : C → D) : Set where
+  field
+    homF : ∀ {a b} → hom a b → hom (F a) (F b)
+
+ open is-functor {{ ... }} public
+
+ ∥_∥ : {C D : Set} ⦃ Cc : is-cat C ⦄ ⦃ Dc : is-cat D ⦄ (F : C → D)
+      ⦃ r : is-functor F ⦄ {a b : C} →
+      hom a b → hom (F a) (F b)
+ ∥ F ∥ f = homF f
+
+ record Functor (C : Set) (D : Set){{ Cc : is-cat C}}{{ Dc : is-cat D}} : Set where
+   -- private module C = Category C
+   -- private module D = Category D
+   field
+    ∣_∣ : C → D
+    instance is-func : is-functor ∣_∣
+    -- is-func : ∀ {a b : C} → hom a b → hom (∣_∣ a) (∣_∣ b)
+
+ open Functor public
+
+ module _ (D : Set) {{ Dc : is-cat D}} (I : Set)(L : I → List (Functor D D))(S : I → D → Set){{ SF : ∀ {i} → is-functor (S i)}} where
   -- I can't figure out how to find lemmas about max in the standard lib, so I define mine
   max : ℕ → List ℕ → ℕ
   max _ [] = 0
@@ -41,7 +74,7 @@ module occurcheckind where
   -- on pourrait faire une version avec une liste de paires de foncteur et de M X
   data M X where
     η : ∀ {d} → X d → M X d
-    op : ∀ i {d} → S i → (M[ X ]^ (map (λ f → f d) (L i))) → M X d
+    op : ∀ i {d} → S i d → (M[ X ]^ (map (λ f → ∣ f ∣ d) (L i))) → M X d
 
   _[_]l : ∀ {X Y : D → Set}{l} → M[ X ]^ l  → (X ⇒ M Y) → M[ Y ]^ l
   _[_] : ∀ {X Y : D → Set}{d} → M X d → (X ⇒ M Y) → M Y d
@@ -93,7 +126,7 @@ module occurcheckind where
   h-comp a u (op i s ms) .(1 + n) p refl hp | inj₂ n = s≤s aux
     where
       aux : (max 0 (hs (ms [ u ]l))) ≥ (n + p)
-      aux = hs-comp (map (λ f → f a) (L i)) u ms n p eq hp
+      aux = hs-comp (map (λ f → ∣ f ∣ a) (L i)) u ms n p eq hp
 
   hs-comp .(_ ∷ _) u (_M^::_ {d = d}{l = l} m ms) n p cm hp with are-closed ms in eqms | is-closed m in eqm
   hs-comp .(_ ∷ _) u (_M^::_ {d = d} {l = l} m ms) .n p refl hp | inj₁ x | inj₂ n = aux
@@ -137,7 +170,7 @@ module occurcheckind where
   pbk-unique : ∀ {A}{d} → (u : M (λ _ → ⊥) d) → is-closed {X = A}(u [ (λ d₁ → ⊥-elim) ]) ≡ inj₁ u
   pbks-unique : ∀ {A}{l} → (u : M[ (λ _ → ⊥) ]^ l) → are-closed {X = A}(u [ (λ d₁ → ⊥-elim) ]l) ≡ inj₁ u
 
-  pbk-unique {A} {d} (op i s ms) rewrite pbks-unique {A}{map (λ f → f d) (L i)} ms = refl
+  pbk-unique {A} {d} (op i s ms) rewrite pbks-unique {A}{map (λ f → ∣ f ∣ d) (L i)} ms = refl
 
 
   pbks-unique {A} {.[]} (M^[] .(λ _ → ⊥)) = refl
@@ -156,6 +189,41 @@ module occurcheckind where
   pbks-exist (x M^:: t) .(x₂ M^:: x₁) refl | inj₁ x₁ | inj₁ x₂ rewrite pbk-exist x x₂ eqx | pbks-exist t x₁ eqt  = refl
 
   -- reste a montrer que le yoneda est de la meme taille que l'element
+  -- yoneda lemma
+
+  y = hom {{ Dc}}
+
+  _ʸ : ∀ {X : D → Set}{{XF : is-functor X}}{d} → X d → y d ⇒ X
+  _ʸ {X}{d} x d' f = ∥ X ∥ f x
+
+  instance
+    y-is-functor : ∀ {d} → is-functor (y d)
+    homF {{y-is-functor {d} }} f x = x · f
+
+
+  instance
+    M-is-functor : ∀ {X} {{ XF : is-functor X}} → is-functor (M X)
+    Ml-is-functor : ∀ {X} {{ XF : is-functor X}} {l} → is-functor (λ d → M[ X ]^ (map (λ F → ∣ F ∣ d) l) )
+    homF ⦃ M-is-functor {X} ⦃ XF ⦄ ⦄ f (η x) = η (∥ X ∥ f x)
+    homF ⦃ M-is-functor {X} ⦃ XF ⦄ ⦄ f (op i s ms) = op i (homF f s) (homF {{ r = Ml-is-functor }} f ms)
+    homF ⦃ Ml-is-functor {X} ⦃ XF ⦄ {[]} ⦄ f ms = ms
+    homF ⦃ Ml-is-functor {X} ⦃ XF ⦄ {F ∷ l} ⦄ f (m M^:: ms) = homF {{ r = M-is-functor}} (homF f) m   M^:: homF {{ r = Ml-is-functor}} f ms where open Functor F
+
+  size-y : ∀ (X : D → Set) {{XF : is-functor X}} d (u : M X d) → ∀ (a : D) (f : hom d a) → h u ≡ h ((u ʸ) a f)
+  size-ys : ∀ (X : D → Set) {{XF : is-functor X}} d
+                   (l : List (Functor D D))
+                  (ms : M[ X ]^ map (λ F → ∣ F ∣ d) l) →
+                  (a : D)
+                  (f : hom d a) →
+          hs ms ≡ (hs (is-functor.homF Ml-is-functor f ms))
+  size-y X d (η x) a f = refl
+  size-y X d (op i s ms) a f rewrite size-ys X d (L i) ms a f = refl
+
+  size-ys X d [] ms a f = refl
+  size-ys X d (F ∷ l) (m M^:: ms) a f rewrite size-y X (∣ F ∣ d) m (∣ F ∣ a) (homF {{ r = Functor.is-func F }} f) | size-ys X d l ms a f    = refl 
+
+  -- final : ∀ (X : D → Set) {{ XF : is-functor X}} a b (u : M X a)(f : y a b) (t : M (y b)  ) →
+  --             homF f u ≡ ?
 
 
 
