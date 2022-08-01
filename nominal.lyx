@@ -147,12 +147,22 @@ General Pattern unification
 
  
 \begin_inset FormulaMacro
+\newcommand{\D}{\mathcal{D}}
+\end_inset
+
+
+\begin_inset FormulaMacro
 \newcommand{\C}{\mathcal{C}}
 \end_inset
 
 
 \begin_inset FormulaMacro
 \newcommand{\colim}{\mathrm{colim}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Set}{\mathrm{Set}}
 \end_inset
 
 
@@ -171,8 +181,9 @@ General Pattern unification
 \begin_layout Standard
 We give a general correctness proof for pattern unification in a categorical
  setting.
- Other envisionned applications of our abstract categorical proof are unificatio
-n for linear or polymorphic syntax (Section
+ Beyond simply typed syntax with binders, our categorical proof handles
+ unification for linear or (intrinsic) polymorphic syntax such as system
+ F (Section
 \begin_inset ERT
 status open
 
@@ -216,7 +227,7 @@ noprefix "false"
 \end_inset
 
 , we propose a general categorical setting in which pattern unification
- applies, with the nominal sets in mind.
+ applies.
  In this case, a second-order syntax with metavariables applied to distinct
  variables (according to the pattern restriction) corresponds to a free
  monad applied a coproduct of representable presheaves.
@@ -333,23 +344,262 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Some benefits: we unify the operation and the vairable case.
+Some benefits: we unify the operation and the variable case.
 \end_layout
 
-\begin_layout Notation
-Given a natural number 
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Consider the category of functors 
+\begin_inset Formula $[\mathbb{\mathbb{F}}_{m},\Set]$
+\end_inset
+
+ from 
+\begin_inset Formula $\mathbb{\mathbb{F}}_{m}$
+\end_inset
+
+, the category of finite cardinals and injections between them, to 
+\begin_inset Formula $\Set$
+\end_inset
+
+, the category of sets.
+ A functor 
+\begin_inset Formula $X:\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+ can be thought of as assigning to each cardinal 
 \begin_inset Formula $n$
 \end_inset
 
- we denote by 
-\begin_inset Formula $\text{\ensuremath{\underline{n}}}$
+ a set 
+\begin_inset Formula $X_{n}$
 \end_inset
 
- the set 
-\begin_inset Formula $\{0,\dots,n-1\}$
+ of expressions with 
+\begin_inset Formula $n$
+\end_inset
+
+ free variables.
+ The action on morphisms of 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ means that these expressions come equipped with injective renamings.
+ The 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, for instance, is a functor 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ satisfying the recursive equation 
+\begin_inset Formula $\Lambda_{n}\cong n+\Lambda_{n}\times\Lambda_{n}+\Lambda_{n+1}$
+\end_inset
+
+, where 
+\begin_inset Formula $n$
+\end_inset
+
+ denotes the 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+ cardinal, and 
+\begin_inset Formula $-+-$
+\end_inset
+
+ is disjoint union.
+ 
+\end_layout
+
+\begin_layout Standard
+In pattern unification, we consider extensions with metavariables taking
+ a list of distinct variables as arguments.
+ As an example, let us add a metavariable of arity 
+\begin_inset Formula $p$
 \end_inset
 
 .
+ The extended syntax 
+\begin_inset Formula $\Lambda'$
+\end_inset
+
+ now satisfies the recursive equation 
+\begin_inset Formula $\Lambda'_{n}=n+\Lambda'_{n}\times\Lambda'_{n}+\Lambda_{n+1}+Inj(p,n)$
+\end_inset
+
+, where 
+\begin_inset Formula $Inj(p,n)$
+\end_inset
+
+ is the set of injections between the cardinal sets 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+, corresponding to the list of arguments of the metavariable.
+ In other words, 
+\begin_inset Formula $Inj(p,n)$
+\end_inset
+
+ is just the homset 
+\begin_inset Formula $\mathbb{F}_{m}(p,n)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Obviously, the functors 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ and 
+\begin_inset Formula $\Lambda'$
+\end_inset
+
+ satisfy similar recursive equations.
+ Denoting 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ the endofunctor on 
+\begin_inset Formula $[\mathbb{\mathbb{F}}_{m},\Set]$
+\end_inset
+
+ mapping 
+\begin_inset Formula $F$
+\end_inset
+
+ to 
+\begin_inset Formula $I+F\times F+F(-+1)$
+\end_inset
+
+, where 
+\begin_inset Formula $I$
+\end_inset
+
+ is the functor mapping 
+\begin_inset Formula $n$
+\end_inset
+
+ to the 
+\begin_inset Formula $n^{th}$
+\end_inset
+
+ cardinal set, the functor 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ can be characterised as the initial algebra for 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, thus satisfying the recursive equation 
+\begin_inset Formula $\Lambda\cong\Sigma(\Lambda)$
+\end_inset
+
+, while 
+\begin_inset Formula $\Lambda'$
+\end_inset
+
+ is characterised as the initial algebra for 
+\begin_inset Formula $\Sigma(-)+yp$
+\end_inset
+
+, where 
+\begin_inset Formula $yp$
+\end_inset
+
+ is the representable functor 
+\begin_inset Formula $\mathbb{F}_{m}(p,-):\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+, thus satisfying the recursive equation 
+\begin_inset Formula $\Lambda'\cong\Sigma(\Lambda')+yp$
+\end_inset
+
+.
+ Another way to put it is that 
+\begin_inset Formula $\Lambda'$
+\end_inset
+
+ is the free algebra on 
+\begin_inset Formula $yp$
+\end_inset
+
+.
+ Therefore, denoting 
+\begin_inset Formula $T$
+\end_inset
+
+ the free algebra monad, 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ is just 
+\begin_inset Formula $T(0)$
+\end_inset
+
+ and 
+\begin_inset Formula $\Lambda'$
+\end_inset
+
+ is 
+\begin_inset Formula $T(yp)$
+\end_inset
+
+.
+ Now, if we want to extend the syntax with another metavariable of arity
+ 
+\begin_inset Formula $q$
+\end_inset
+
+, then the syntax is obtained as 
+\begin_inset Formula $T(yp+yq)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the view to abstracting pattern unification, these observations motivate
+ considering functors categories 
+\begin_inset Formula $[\mathcal{A},\Set]$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ is a small category where all morphisms are monomorphic, together with
+ an endofunctor 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ on it.
+ Then, the abstract version of a syntax extended with metavariables is 
+\begin_inset Formula $T$
+\end_inset
+
+ applied to a finite coproduct of representable presheaves.
+\end_layout
+
+\begin_layout Standard
+Now, we address the following question: how do we formulate the unification
+ problem in such an abstract setting? Let us come back to the example of
+ 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ TODO
 \end_layout
 
 \begin_layout Section
@@ -376,7 +626,7 @@ We work in a full subcategory
 \end_inset
 
  of functors 
-\begin_inset Formula $\mathcal{A}\rightarrow Set$
+\begin_inset Formula $\mathcal{A}\rightarrow\Set$
 \end_inset
 
 , namely, those preserving finite connected limits, where 
@@ -471,16 +721,16 @@ noprefix "false"
 
 \begin_layout Standard
 The yoneda embedding 
-\begin_inset Formula $\mathcal{A}^{o}\rightarrow[\mathcal{A},Set]$
+\begin_inset Formula $\mathcal{A}^{o}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
  factors through 
-\begin_inset Formula $\mathcal{C}\rightarrow[\mathcal{A},Set]$
+\begin_inset Formula $\mathcal{C}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
 .
  We denote the fully faithful embedding as 
-\begin_inset Formula $D\xrightarrow{K}\mathcal{C}$
+\begin_inset Formula $\D\xrightarrow{K}\mathcal{C}$
 \end_inset
 
 .
@@ -508,13 +758,13 @@ All we have to check is that limits, coproducts, and filtered colimits of
  The case of limits is clear, since limits commute with limits.
  The case of coproducts follows from connected limits commuting with coproducts
  in 
-\begin_inset Formula $Set$
+\begin_inset Formula $\Set$
 \end_inset
 
 .
  The case of filtered colimits follows from finite limits commuting with
  filtered colimits in 
-\begin_inset Formula $Set$
+\begin_inset Formula $\Set$
 \end_inset
 
 .
@@ -532,7 +782,7 @@ In this rest of this section, we abstract this situation by listing a number
 \end_layout
 
 \begin_layout Property
-\begin_inset Formula $K:D\rightarrow\C$
+\begin_inset Formula $K:\D\rightarrow\C$
 \end_inset
 
  is fully faithful.
@@ -634,7 +884,7 @@ We need cocompleteness so that we can compute free monads of a finitary
 
 \begin_layout Definition
 We denote by 
-\begin_inset Formula $D^{+}\xrightarrow{K^{+}}\C$
+\begin_inset Formula $\D^{+}\xrightarrow{K^{+}}\C$
 \end_inset
 
  the full subcategory of 
@@ -642,7 +892,7 @@ We denote by
 \end_inset
 
  consisting of finite coproducts of objects of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -650,7 +900,7 @@ We denote by
 
 \begin_layout Definition
 We will be interested in coequalisers in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 .
@@ -664,7 +914,7 @@ name "assu:finite-connected"
 \end_inset
 
 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  is closed under finite connected colimits.
@@ -682,7 +932,7 @@ status open
 \begin_layout Remark
 I think that the algorithm still works without this assumption: it is just
  that at some point we need to compute a colimit of elements of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 , in particular in Section
@@ -712,7 +962,7 @@ noprefix "false"
 \end_inset
 
 , but in concrete examples, but we need to compute them in 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  so that we can chain the coequalisers when unifying multiple terms.
@@ -730,7 +980,7 @@ Because
 \end_inset
 
  is fully faithful, an equivalent statement is that 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  is closed under finite connected colimits and 
@@ -745,7 +995,7 @@ Because
  has finite connected limits.
  Let us show that the yoneda embedding preserves them.
  We have a natural isomorphism 
-\begin_inset Formula $[\mathcal{A},Set](ya,JX)\simeq\mathcal{C}(Ka,X)$
+\begin_inset Formula $[\mathcal{A},\Set](ya,JX)\simeq\mathcal{C}(Ka,X)$
 \end_inset
 
 , where 
@@ -753,11 +1003,11 @@ Because
 \end_inset
 
  is the yoneda embedding in 
-\begin_inset Formula $\mathcal{A}^{o}\rightarrow[\mathcal{A},Set]$
+\begin_inset Formula $\mathcal{A}^{o}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
 , and 
-\begin_inset Formula $J:\mathcal{C}\rightarrow[\mathcal{A},Set]$
+\begin_inset Formula $J:\mathcal{C}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
  the canonical embedding.
@@ -773,10 +1023,10 @@ Because
  Then, 
 \begin_inset Formula 
 \begin{align*}
-\mathcal{C}(K\lim F,X) & \cong[\mathcal{A},Set](y\lim F,JX)\\
+\mathcal{C}(K\lim F,X) & \cong[\mathcal{A},\Set](y\lim F,JX)\\
  & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
  & \cong\lim(JX\circ F)\tag{By definition of \ensuremath{\mathcal{C}}}\\
- & \cong\lim([\mathcal{A},Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
+ & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
  & \cong\lim\mathcal{C}(KF-,X)\\
  & \cong\mathcal{C}(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
 \end{align*}
@@ -852,7 +1102,7 @@ Given any morphism
 \end_inset
 
  in 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 , 
@@ -966,7 +1216,7 @@ noprefix "false"
 \end_inset
 
 , because all morphisms in 
-\begin_inset Formula $D={\cal A}^{o}$
+\begin_inset Formula $\D={\cal A}^{o}$
 \end_inset
 
  are epimorphic by assumption.
@@ -1011,7 +1261,7 @@ Given any morphism
 \end_inset
 
  in 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 , the epimorphism 
@@ -1196,7 +1446,7 @@ noprefix "false"
 \end_inset
 
  in 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -1346,7 +1596,7 @@ name "assu:connected"
 \end_inset
 
 For each 
-\begin_inset Formula $d\in D$
+\begin_inset Formula $d\in\D$
 \end_inset
 
 , the object 
@@ -1435,7 +1685,7 @@ name "assu:compact"
 \end_inset
 
 For each 
-\begin_inset Formula $d\in D$
+\begin_inset Formula $d\in\D$
 \end_inset
 
 , the object 
@@ -1950,7 +2200,7 @@ Consider the endofunctor on
 
 \begin_layout Remark
 In applications, we typically provide a finitary endofunctor on 
-\begin_inset Formula $[\mathcal{A},Set]$
+\begin_inset Formula $[\mathcal{A},\Set]$
 \end_inset
 
  that restricts to the category of endofunctors preserving finite connected
@@ -1989,7 +2239,7 @@ reconstruct
 \end_inset
 
  the endofunctor on 
-\begin_inset Formula $[\mathcal{A},Set]=\hat{D}$
+\begin_inset Formula $[\mathcal{A},\Set]=\hat{\D}$
 \end_inset
 
  (see Section
@@ -2161,7 +2411,7 @@ status open
 \color red
 (do we really need a full adjoint or some relative adjoint when the domain
  is from 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 ? does this adjoint exists in the linear setting?)
@@ -2181,7 +2431,7 @@ status open
 \end_inset
 
  on 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -2397,7 +2647,7 @@ Typically, this will be a restriction of a term monad.
 
 \begin_layout Assumption
 We assume given a functor 
-\begin_inset Formula $S:K^{+}\rightarrow Set$
+\begin_inset Formula $S:K^{+}\rightarrow\Set$
 \end_inset
 
 .
@@ -2455,7 +2705,7 @@ We say that an object
 \end_inset
 
  preserves some shape of colimit (e.g., pushouts) if 
-\begin_inset Formula $C(K-,c):C^{op}\rightarrow Set$
+\begin_inset Formula $C(K-,c):C^{op}\rightarrow\Set$
 \end_inset
 
  preserves them.
@@ -2554,7 +2804,7 @@ This is the cas for
 
 .
  where 
-\begin_inset Formula $L':D\rightarrow D$
+\begin_inset Formula $L':\D\rightarrow\D$
 \end_inset
 
  preserves pushouts.
@@ -2579,11 +2829,11 @@ Take
 \end_inset
 
  the category of nominal sets, as a reflective subcategory of 
-\begin_inset Formula $Set^{\mathbb{F}_{m}}$
+\begin_inset Formula $\Set$
 \end_inset
 
 , and 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  the full subcategory of representable presheaves.
@@ -2650,7 +2900,7 @@ Our main result is that a coequaliser diagram in
 \end_inset
 
  selecting objects in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
  either has no unifier, either has colimiting cocone.
@@ -2818,11 +3068,11 @@ Here is our main result.
  
 \color red
 TODO state it for 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  rather than 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
  (easier to understand).
@@ -2831,7 +3081,7 @@ TODO state it for
 
 \begin_layout Theorem
 Let 
-\begin_inset Formula $\Kl{D^{+}}^{*}$
+\begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
  be the full subcategory of 
@@ -2839,16 +3089,16 @@ Let
 \end_inset
 
  consisting of objects of 
-\begin_inset Formula $D^{+}\cup\{\top\}$
+\begin_inset Formula $\D^{+}\cup\{\top\}$
 \end_inset
 
 .
  Then, 
-\begin_inset Formula $\Kl{D^{+}}^{*}$
+\begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
  has coequalisers and the inclusion 
-\begin_inset Formula $\Kl{D^{+}}^{*}\rightarrow\Kl T^{*}$
+\begin_inset Formula $\Kl{\D^{+}}^{*}\rightarrow\Kl T^{*}$
 \end_inset
 
  preserves them.
@@ -2872,7 +3122,7 @@ In other words, any coequaliser diagram
 \end_inset
 
  are in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
  has a colimit 
@@ -2880,13 +3130,13 @@ In other words, any coequaliser diagram
 \end_inset
 
  where 
-\begin_inset Formula $C\in D^{+}\cup\{\top\}$
+\begin_inset Formula $C\in\D^{+}\cup\{\top\}$
 \end_inset
 
 .
  Rephrasing it without the adjoined terminal object, this means that either
  such a coequaliser has a colimit which can be computed in 
-\begin_inset Formula $\Kl{D^{+}}^{*}$
+\begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
 , either there is no cocone at all.
@@ -3156,7 +3406,7 @@ noprefix "false"
 \begin_layout Standard
 Thanks to the previous rule, we can focus on the case where the coproduct
  is the singleton (since we focus on finite coproducts of elements of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 ).
@@ -3297,7 +3547,7 @@ Since the functor
 \end_inset
 
  is in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 .
@@ -3875,7 +4125,7 @@ Here we want to compute a coequalising diagram in
 \end_inset
 
 , where the domain is in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 .
@@ -3987,7 +4237,7 @@ noprefix "false"
 \begin_layout Standard
 Thanks to the previous rules, we can focus on the case where the coproduct
  is a singleton (since we focus on finite coproducts of elements of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 ), and 
@@ -4541,7 +4791,7 @@ We assume the following
 \end_inset
 
  is in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 ), 
@@ -4667,7 +4917,7 @@ noprefix "false"
 \end_inset
 
 , we know that such a colimit exists in 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 .
@@ -4981,7 +5231,7 @@ noprefix "false"
 
 \begin_layout Standard
 We prove hits by working in the category of presheaves on 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -4993,11 +5243,11 @@ status open
 
 \begin_layout Plain Layout
 Let 
-\begin_inset Formula $D_{0}$
+\begin_inset Formula $\D_{0}$
 \end_inset
 
  denote the discrete presheaf category consisting of objects of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -5010,7 +5260,7 @@ Let
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $J:\C\rightarrow\hat{D}$
+\begin_inset Formula $J:\C\rightarrow\hat{\D}$
 \end_inset
 
  mapping 
@@ -5023,7 +5273,7 @@ Let
 
 .
  Moreover, let 
-\begin_inset Formula $G:\hat{D}\rightarrow\hat{D}$
+\begin_inset Formula $G:\hat{\D}\rightarrow\hat{\D}$
 \end_inset
 
  mapping 
@@ -5070,7 +5320,7 @@ noprefix "false"
 \end_inset
 
  is constant on each connected component of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -5090,7 +5340,7 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \xymatrix{\C\ar[r]^{F}\ar[d]_{J} & \C\ar[d]^{J}\\
-\hat{D}\ar[r]_{G} & \hat{D}
+\hat{\D}\ar[r]_{G} & \hat{\D}
 }
 \]
 
@@ -5148,7 +5398,7 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \xymatrix{\C\ar[r]^{T}\ar[d]_{J} & \C\ar[d]^{J}\\
-\hat{D}\ar[r]_{G^{*}} & \hat{D}
+\hat{\D}\ar[r]_{G^{*}} & \hat{\D}
 }
 \]
 
@@ -5249,7 +5499,7 @@ status open
 
 \begin_layout Plain Layout
 between families in 
-\begin_inset Formula $Set^{D_{0}}$
+\begin_inset Formula $\Set$
 \end_inset
 
 
@@ -5291,7 +5541,7 @@ status open
 
 \begin_layout Plain Layout
 Any morphism out of a representable presheaf 
-\begin_inset Formula $yd:D_{0}\rightarrow Set$
+\begin_inset Formula $yd:\D_{0}\rightarrow\Set$
 \end_inset
 
  (which is empty anywhere else than in the 
@@ -5399,7 +5649,7 @@ noprefix "false"
 
 \begin_layout Standard
 As an example, if 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  is discrete, and if 
@@ -5597,7 +5847,7 @@ status open
 
 \begin_layout Plain Layout
 
-% YADE DIAGRAM pbkB-present.json
+% YADE IAGRAM pbkB-present.json
 \end_layout
 
 \end_inset
@@ -5936,7 +6186,7 @@ status open
 
 \begin_layout Plain Layout
 Let 
-\begin_inset Formula $J':\C\rightarrow\hat{D}$
+\begin_inset Formula $J':\C\rightarrow\hat{\D}$
 \end_inset
 
  mapping 
@@ -5957,7 +6207,7 @@ Let
 \end_inset
 
  acting on 
-\begin_inset Formula $\hat{D'}$
+\begin_inset Formula $\hat{\D'}$
 \end_inset
 
  as with the same formula, generating a monad 
@@ -6077,7 +6327,7 @@ status open
 
 \begin_layout Plain Layout
 Ask for a strict monoidal functor 
-\begin_inset Formula $D^{+}\rightarrow\mathbb{N}^{\otimes}$
+\begin_inset Formula $\D^{+}\rightarrow\mathbb{N}^{\otimes}$
 \end_inset
 
 ?
@@ -6096,7 +6346,7 @@ Maybe we don't need because tiny objects are connected objects and they
 \begin_layout Standard
 In this section, we adapt the usual termination argument.
  Indeed, because objects of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  are connected (Property
@@ -6137,7 +6387,7 @@ context
 \end_inset
 
  (i.e., an element of 
-\begin_inset Formula $D^{+}$
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 ) as the length of the coproduct:
@@ -6578,11 +6828,11 @@ Let
 
  be the set of simple types.
  Here we consider the category of functors 
-\begin_inset Formula $(Set_{f}^{T}\times T)_{m}\rightarrow Set$
+\begin_inset Formula $(\Set\times T)_{m}\rightarrow\Set$
 \end_inset
 
 , where 
-\begin_inset Formula $Set_{f}^{T}$
+\begin_inset Formula $\Set$
 \end_inset
 
  is the category of finite families indexed by 
@@ -6594,7 +6844,7 @@ Let
 \end_inset
 
 , where 
-\begin_inset Formula $J:\mathbb{F}\rightarrow Set$
+\begin_inset Formula $J:\mathbb{F}\rightarrow\Set$
 \end_inset
 
  is the canonical inclusion), and the indice 
@@ -6662,16 +6912,16 @@ Should work with the new condition on
 
 \begin_layout Standard
 Take 
-\begin_inset Formula $\C=Set^{\mathbb{N}}$
+\begin_inset Formula $\C=\Set$
 \end_inset
 
  and 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
  the full subcategory of representable presheaves.
  Intuitively, given 
-\begin_inset Formula $X\in Set^{\mathbb{N}}$
+\begin_inset Formula $X\in\Set$
 \end_inset
 
 , the set 
@@ -6685,7 +6935,7 @@ Take
  (distinct) variables.
  Then, we can consider the linear lambda-calculus, as an endofunctor on
  
-\begin_inset Formula $Set^{\mathbb{N}}$
+\begin_inset Formula $\Set$
 \end_inset
 
  mapping 
@@ -6803,7 +7053,7 @@ Polymorphic syntax
 \begin_layout Standard
 WIP.
  Let 
-\begin_inset Formula $J^{+}:\mathbb{F}\rightarrow Set$
+\begin_inset Formula $J^{+}:\mathbb{F}\rightarrow\Set$
 \end_inset
 
  denotes the functor mapping 
@@ -6852,7 +7102,7 @@ Now, contexts are of the shape
 
 \begin_layout Standard
 We first consider the category of functors 
-\begin_inset Formula $\int^{n\in\mathbb{F}_{m}}Set_{f}^{Sn}\times Tn\rightarrow Set$
+\begin_inset Formula $\int^{n\in\mathbb{F}_{m}}\Set\times Tn\rightarrow\Set$
 \end_inset
 
  (this is the oplax colimit), i.e., a morphism between 
@@ -6945,7 +7195,7 @@ status open
 
 \begin_layout Plain Layout
 We need to consider something like 
-\begin_inset Formula $Set^{J^{+}/SJ}$
+\begin_inset Formula $\Set$
 \end_inset
 
 , but restricted to a full subcategory embedding so that the yoneda embedding
@@ -6963,12 +7213,12 @@ status open
 
 \begin_layout Plain Layout
 Mais en raisonnant sur 
-\begin_inset Formula $Set^{\mathbb{F}}$
+\begin_inset Formula $\Set$
 \end_inset
 
 , je ne epu pas considerer la monade T' (cf main)...
  Je pourrais travailler sur 
-\begin_inset Formula $Set^{\mathbb{F}_{m}}$
+\begin_inset Formula $\Set$
 \end_inset
 
  ou mieux, sur les ensembles nominaux tiens, comme ca tout le monde preserve
@@ -7409,19 +7659,19 @@ name "sec:proof-prop-pbk-lemma-occur-check"
 The results of this section are formalised in agda (see occurcheck-ind.agda).
  The crucial point that keeps the agda formalisation simple is that we can
  work on 
-\begin_inset Formula $[D_{0},Set]$
+\begin_inset Formula $[\D_{0},\Set]$
 \end_inset
 
  rather than in 
-\begin_inset Formula $[D,Set]$
+\begin_inset Formula $[\D,\Set]$
 \end_inset
 
 , where 
-\begin_inset Formula $D_{0}$
+\begin_inset Formula $\D_{0}$
 \end_inset
 
  is the discrete category consisting of objects of 
-\begin_inset Formula $D$
+\begin_inset Formula $\D$
 \end_inset
 
 .
@@ -7493,7 +7743,7 @@ Let
 \end_inset
 
  be an endofunctor on a category 
-\begin_inset Formula $[D,Set]$
+\begin_inset Formula $[D,\Set]$
 \end_inset
 
  (with 
@@ -7505,7 +7755,7 @@ Let
 \end_inset
 
  where 
-\begin_inset Formula $S_{i}:D\rightarrow Set$
+\begin_inset Formula $S_{i}:D\rightarrow\Set$
 \end_inset
 
 , 
@@ -7527,7 +7777,7 @@ Let
 
 .
  Note that these functors can be defined on 
-\begin_inset Formula $[D_{0},Set]$
+\begin_inset Formula $[D_{0},\Set]$
 \end_inset
 
 , where 
@@ -7548,7 +7798,7 @@ Let
 \end_inset
 
  acting on 
-\begin_inset Formula $[D_{0},Set]$
+\begin_inset Formula $[D_{0},\Set]$
 \end_inset
 
  with the same formula as 
@@ -7558,8 +7808,8 @@ Let
  making the following diagram commute.
 \begin_inset Formula 
 \[
-\xymatrix{[D,Set]\ar[r]^{G}\ar[d]_{-\circ\delta} & [D,Set]\ar[d]^{-\circ\delta}\\{}
-[D_{0},Set]\ar[r]_{G_{0}} & [D_{0},Set]
+\xymatrix{[D,\Set]\ar[r]^{G}\ar[d]_{-\circ\delta} & [D,\Set]\ar[d]^{-\circ\delta}\\{}
+[D_{0},\Set]\ar[r]_{G_{0}} & [D_{0},\Set]
 }
 \]
 
@@ -7580,8 +7830,8 @@ As a consequence, the free monad
  makes the following diagram commutes
 \begin_inset Formula 
 \[
-\xymatrix{[D,Set]\ar[r]^{M}\ar[d]_{-\circ\delta} & [D,Set]\ar[d]^{-\circ\delta}\\{}
-[D_{0},Set]\ar[r]_{M} & [D_{0},Set]
+\xymatrix{[D,\Set]\ar[r]^{M}\ar[d]_{-\circ\delta} & [D,\Set]\ar[d]^{-\circ\delta}\\{}
+[D_{0},\Set]\ar[r]_{M} & [D_{0},\Set]
 }
 \]
 
