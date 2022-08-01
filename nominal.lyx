@@ -407,7 +407,7 @@ Consider the category of functors
 \begin_inset Formula $n^{th}$
 \end_inset
 
- cardinal, and 
+ cardinal (for the free variables), and 
 \begin_inset Formula $-+-$
 \end_inset
 
@@ -592,14 +592,114 @@ In the view to abstracting pattern unification, these observations motivate
 \end_layout
 
 \begin_layout Standard
-Now, we address the following question: how do we formulate the unification
- problem in such an abstract setting? Let us come back to the example of
- 
+Now, we state the unification problem in this abstract setting.
+ To this end, let us look at Kleisli morphisms for the monad 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ A morphism 
+\begin_inset Formula $\sigma:yp\rightarrow T(yn)$
+\end_inset
+
+ is equivalently given (by the Yoneda Lemma) by an element of 
+\begin_inset Formula $T(yn)_{p}$
+\end_inset
+
+, that is, in the case of 
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus.
- TODO
+-calculus, a 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-term 
+\begin_inset Formula $t$
+\end_inset
+
+ potentially involving a metavariable of arity 
+\begin_inset Formula $n$
+\end_inset
+
+, with 
+\begin_inset Formula $p$
+\end_inset
+
+ free variables.
+ Note that this is the necessary data to substitute a metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $p$
+\end_inset
+
+: then, 
+\begin_inset Formula $M(x_{1},\dots,x_{p})$
+\end_inset
+
+ gets replaced with 
+\begin_inset Formula $t[i\mapsto x_{i}]$
+\end_inset
+
+.
+ Thus, Kleisli morphisms account for metavariable substitution and for term
+ selection.
+ Considering a pair of composable Kleisli morphism 
+\begin_inset Formula $yp\rightarrow T(yn)$
+\end_inset
+
+ and 
+\begin_inset Formula $yn\rightarrow T(ym)$
+\end_inset
+
+, if we interpret the first one as a term 
+\begin_inset Formula $t\in T(yn)_{p}$
+\end_inset
+
+ and the second one as a metavariable substitution 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, then, the composition corresponds to the substituted term 
+\begin_inset Formula $t[\sigma]$
+\end_inset
+
+.
+ Now, a unification problem can be stated as pair of parallel Kleisli morphisms
+\begin_inset Formula 
+\[
+\xymatrix{yp\ar@<+0.5ex>[r]\ar@<-.5ex>[r] & T(yq_{1}+\dots+yq_{n})}
+\]
+
+\end_inset
+
+corresponding to selecting a pair of terms with 
+\begin_inset Formula $p$
+\end_inset
+
+ free variables and involving metavariables of arity 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\dots$
+\end_inset
+
+, 
+\begin_inset Formula $q_{n}$
+\end_inset
+
+.
+ A unifier is nothing but a Kleisli morphism coequalising this pair.
+ The most general unifier, if it exists, is the coequaliser of this pair.
+\end_layout
+
+\begin_layout Standard
+The main purpose of the pattern unification algorithm consists in constructing
+ this coequaliser, if it exists, which is the case as long as there exists
+ a unifier.
 \end_layout
 
 \begin_layout Section
