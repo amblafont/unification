@@ -352,6 +352,157 @@ Introduction
 \end_layout
 
 \begin_layout Standard
+We first provide a short introduction to pattern unification in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:intro-pattern"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, and then give some intuition for the categorical generalisation we propose,
+ in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:intro-generalise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+A short introduction to pattern unification
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:intro-pattern"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In a unification, we are interested in finding the most general unifier
+ of two terms involving metavariables.
+ To be more explicit, a unifier is a substitution that replaces metavariables
+ with terms, potentially involving metavariables, such that the two substituted
+ terms are equal.
+ The most general unifier is the one that factors uniquely any other unifier.
+\end_layout
+
+\begin_layout Standard
+Pattern unification consists in restricting the arguments of a metavariable
+ to be distinct variables.
+ In that case, we can design an algorithm that either fails in case there
+ is no unifier, either computes the most general unifier.
+ Roughly, the algorithm recursively inspect the structure of the given pair
+ of terms, until reaching a metavariable 
+\begin_inset Formula $M(x_{1},\dots,x_{n})$
+\end_inset
+
+ at the top level.
+ It then enters a so-called 
+\emph on
+occur
+\emph default
+-
+\emph on
+check
+\emph default
+ phase where it checks whether this metavariable occurs in the other handside
+ 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ If not, it enters a so-called 
+\emph on
+pruning phase 
+\emph default
+where it tries to recursively remove all occurences of variables in 
+\begin_inset Formula $u$
+\end_inset
+
+ that are not among 
+\begin_inset Formula $x_{1},\dots,x_{n}$
+\end_inset
+
+, by restricting the arity of the occuring metavariables.
+ If the occur-check is negative, meaning that 
+\begin_inset Formula $M$
+\end_inset
+
+ appears in 
+\begin_inset Formula $u$
+\end_inset
+
+, then there is no unifier unless 
+\begin_inset Formula $M$
+\end_inset
+
+ appears at top-level, because the size of substituted terms can never match.
+ If 
+\begin_inset Formula $M$
+\end_inset
+
+ indeed appears at the top level in 
+\begin_inset Formula $u$
+\end_inset
+
+, then the most general unifier replaces 
+\begin_inset Formula $M$
+\end_inset
+
+ with a new metavariable whose arity is the number of common variables positions
+ in both handsides.
+\end_layout
+
+\begin_layout Subsection
+Generalising pattern unification
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:intro-generalise"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Consider the category of functors 
 \begin_inset Formula $[\mathbb{\mathbb{F}}_{m},\Set]$
 \end_inset
@@ -453,6 +604,7 @@ In pattern unification, we consider extensions with metavariables taking
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
@@ -693,13 +845,255 @@ corresponding to selecting a pair of terms with
 
 .
  A unifier is nothing but a Kleisli morphism coequalising this pair.
- The most general unifier, if it exists, is the coequaliser of this pair.
+ The most general unifier, if it exists, is the coequaliser, in the full
+ subcategory spanned by coproducts of representable presheaves.
+ The main purpose of the pattern unification algorithm consists in constructing
+ this coequaliser, if it exists, which is the case as long as there exists
+ a unifier.
+ 
 \end_layout
 
 \begin_layout Standard
-The main purpose of the pattern unification algorithm consists in constructing
- this coequaliser, if it exists, which is the case as long as there exists
- a unifier.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In fact, we need to restrict to functors preserving finite connected limits
+ to rule out exotic unifiers.
+ For instance, when unifying 
+\begin_inset Formula $M(x,y)=M(y,x)$
+\end_inset
+
+, the coequaliser in the full Kleisli category is not the substitution of
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ with an 
+\begin_inset Formula $0$
+\end_inset
+
+-ary metavariable, but the substitution that replaces 
+\begin_inset Formula $M$
+\end_inset
+
+ with a binary commutative metavariable.
+ 
+\end_layout
+
+\end_inset
+
+
+\color red
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\color red
+This restriction also helps understanding how useful it is that the pullback
+ preservation of the variable functor is crucial.
+ Indeed, consider instead the functor ensures that morphisms between representab
+le prehseaves are epimorphic, which should be useful when unifying a metavariabl
+e application to a variable.
+ (TODO: understand better).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+where 
+\begin_inset Formula $Q$
+\end_inset
+
+ is the squash functor, that coincides with 
+\begin_inset Formula $y0$
+\end_inset
+
+ except on 
+\begin_inset Formula $0$
+\end_inset
+
+ where it is the empty set.
+ Similarly, the coequaliser of 
+\begin_inset Formula $M(x,y)=M(y,x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+, where a unifier exists, but the coequaliser does not.
+ For a simple example, consider the unification problem 
+\begin_inset Formula $y2\rightrightarrows Ty1$
+\end_inset
+
+ of the same metavariable but applied to a different variable on both handsides.
+ Consider indeed the squash functor 
+\begin_inset Formula $S$
+\end_inset
+
+ that maps 
+\begin_inset Formula $0$
+\end_inset
+
+ to the empty set and every other finite cardinal to a singleton set.
+ Clearly, the morphism 
+\begin_inset Formula $y1\rightarrow S\rightarrow T(S)$
+\end_inset
+
+ is a unifier.
+ Because 
+\begin_inset Formula $S_{0}$
+\end_inset
+
+ is empty, if 
+\begin_inset Formula $y1\rightarrow TC$
+\end_inset
+
+ is the coequaliser, then 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ must be empty as well.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Related work
+\end_layout
+
+\begin_layout Standard
+First-order unification was categorically described in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Goguen89whatis"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/logcom/Miller91"
+literal "false"
+
+\end_inset
+
+ introduces pattern unification, a particular case of higher-order unification
+ for the simply-typed lambda-calculus, where metavariables are applied to
+ distinct variables.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Hence, it has strong similarities with the problem we are studying.
+ In particular, one can see our setting as a restricted case of theirs,
+ since, in particular, we focus on second-order syntax.
+ However, we can translate pattern unification problems in our setting extended
+ to the simply-typed case, see Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:higher-order-unification"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, following ideas from
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cheney2005relating"
+literal "false"
+
+\end_inset
+
+.
+ Moreover we prove a stronger property of the most general unifier, namely
+ that it is also the most general one among substitutions that are not pattern
+ like.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+except that no binding is involved.
+ Let us already note that binding did not bring any particular difficulty
+ in our work.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vezzosi2014categorical"
+literal "false"
+
+\end_inset
+
+ provides a categorical understanding of pattern unification in this setting,
+ and gives some hints on how to generalise their account.
+ In this work, we follow this path and provide an explicit realisation of
+ this generalisation.
 \end_layout
 
 \begin_layout Section
@@ -743,6 +1137,97 @@ For the category of nominal sets, take
 \end_inset
 
  the category of finite cardinals and injections.
+\end_layout
+
+\begin_layout Remark
+The restriction to functors preserving finite connected limits will justify
+ that the case where we unify two metavariables: the result is then a new
+ metavariable, whose arity is computed in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
+ 
+\color red
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+can be replaced by a direct proof that 
+\begin_inset Formula ${\cal A}^{o}\rightarrow\C\rightarrow\Kl{T|{\cal A}^{+}}$
+\end_inset
+
+ preserve finite connected colimits, where 
+\begin_inset Formula $T$
+\end_inset
+
+ is the monad for the syntax, and 
+\begin_inset Formula $\Kl{T|{\cal A}^{+}}$
+\end_inset
+
+ is its Kleisli category restricted to coproducts of representable presheaves.
+ This property is helpful when unifying two metavariables.
+ Enforcing this restriction allows us to state more elementary properties
+ when we abstract the situation below (requiring that 
+\begin_inset Formula ${\cal A}^{o}\rightarrow\Kl{T|{\cal A}^{+}}$
+\end_inset
+
+ preserves finite colimits feels more ad-hoc than requiring that of the
+ embedding 
+\begin_inset Formula ${\cal A}^{o}\rightarrow\C$
+\end_inset
+
+).
+ 
+\color red
+TODO: think over the pros and cons.
+ I think we can prove it in the abstract setting.
+\end_layout
+
+\end_inset
+
+
+\color inherit
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This is to ensure correctness of the unification of two metavariables.
+ For instance, the most general unifier of 
+\begin_inset Formula $M(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $M(y)$
+\end_inset
+
+ is computed as the metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ with a 
+\begin_inset Formula $0$
+\end_inset
+
+-ary metavariable 
+\begin_inset Formula $N$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -872,13 +1357,32 @@ All we have to check is that limits, coproducts, and filtered colimits of
 
 \begin_layout Standard
 In this rest of this section, we abstract this situation by listing a number
- of properties that we will use in the following to describe the unification
- algorithm.
- We will never unfold the definition of 
+ of properties that we will use in the following to describe the coequalising
+ phase.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We will never unfold the definition of 
 \begin_inset Formula $\mathcal{C}$
 \end_inset
 
  afterwards.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Property
@@ -906,7 +1410,7 @@ name "assu:presentable"
 \begin_inset Formula $\C$
 \end_inset
 
- is bicomplete
+ is complete, has coproducts and filtered colimits
 \begin_inset Note Note
 status open
 
@@ -982,7 +1486,7 @@ We need cocompleteness so that we can compute free monads of a finitary
  if it is helpful).
 \end_layout
 
-\begin_layout Definition
+\begin_layout Notation
 We denote by 
 \begin_inset Formula $\D^{+}\xrightarrow{K^{+}}\C$
 \end_inset
@@ -999,7 +1503,8 @@ We denote by
 \end_layout
 
 \begin_layout Definition
-We will be interested in coequalisers in 
+We will be interested in coequalisers in the Kleisli category restricted
+ to 
 \begin_inset Formula $\D^{+}$
 \end_inset
 
@@ -1138,56 +1643,6 @@ Thus,
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Proof
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-That is, 
-\begin_inset Formula $K$
-\end_inset
-
- is 
-\begin_inset Formula $y$
-\end_inset
-
--left adjoint to 
-\begin_inset Formula $J$
-\end_inset
-
-, so that 
-\begin_inset Formula $K=Lift_{J}y$
-\end_inset
-
- and for any functor 
-\begin_inset Formula $F$
-\end_inset
-
-, 
-\begin_inset Formula $Lift_{J}y\circ F=Lift_{J}(y\circ F)$
-\end_inset
-
-.
- Now, given a functor 
-\begin_inset Formula $d:B\rightarrow\mathcal{A}^{o}$
-\end_inset
-
-, we have 
-\begin_inset Formula $K\circ Lan_{!}d=Lift_{J}y\circ Lan_{!}d=Lift_{J}(y\circ Lan_{!}d)=Lift_{J}(Lan_{!}(y\circ d))=Lan_{!}(Lift_{J}(y\circ d))=\dots=Lan_{!}(Lift_{J}y\circ d)=Lan_{!}(K\circ d)$
-\end_inset
-
- the crucial point here is that 
-\begin_inset Formula $y\circ Lan_{!}d=Lan_{!}(y\circ d)$
-\end_inset
-
-, which is not obvious.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Property
@@ -2242,25 +2697,78 @@ noprefix "false"
 The endofunctor for syntax
 \end_layout
 
-\begin_layout Assumption
-We assume given a finitary endofunctor 
+\begin_layout Standard
+We assume given an endofunctor 
 \begin_inset Formula $F$
 \end_inset
 
  on 
-\begin_inset Formula $\C$
+\begin_inset Formula $[\mathcal{A},\Set]$
+\end_inset
+
+ such that 
+\begin_inset Formula $F(X)$
+\end_inset
+
+ is of the shape 
+\begin_inset Formula $\coprod_{i}\prod_{j\in J_{i}}X\circ L_{i,j}\times S_{i}$
+\end_inset
+
+, where
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is a functor preserving finite connected limits.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $J_{i}$
+\end_inset
+
+ is a finite set
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{i,j}$
+\end_inset
+
+ is an endofunctor on 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
 .
- We denote by 
-\begin_inset Formula $T$
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+for some finite family of endofunctors 
+\begin_inset Formula $(L'_{i,j})_{j}$
 \end_inset
 
- the generated free monad 
-\begin_inset Formula $F^{*}$
+ on 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
 .
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is, for instance, the variable object.
+ The fact that it preserves pullbacks ensures that when unifying a metavariable
+ with a variable, either there is no unifier, either there is a coequaliser.
 \end_layout
 
 \begin_layout Example
@@ -2279,7 +2787,7 @@ Consider the endofunctor on
 \end_inset
 
 -calculus: 
-\begin_inset Formula $F(X)=I+X\times X+X^{I}$
+\begin_inset Formula $F(X)=(1\times)I+X\times X+X\circ(-+1)$
 \end_inset
 
 , where 
@@ -2291,21 +2799,75 @@ Consider the endofunctor on
 \end_inset
 
 .
- Note that 
-\begin_inset Formula $X_{n}^{I}=X_{n+1}$
-\end_inset
-
-.
 \end_layout
 
-\begin_layout Remark
-In applications, we typically provide a finitary endofunctor on 
-\begin_inset Formula $[\mathcal{A},\Set]$
+\begin_layout Example
+We will rely on the following result.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:finitary-restriction"
+
 \end_inset
 
- that restricts to the category of endofunctors preserving finite connected
- limits.
- By
+
+\begin_inset Formula $F$
+\end_inset
+
+ is finitary and restricts as an endofunctor on the subcategory 
+\begin_inset Formula $\C$
+\end_inset
+
+ of functors preserving finite connected limits.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $F$
+\end_inset
+
+ is finitary because filtered colimits commute with finite limits and colimits.
+ It restricts as stated because finite connected limits commute with coproducts
+ and limits.
+\end_layout
+
+\begin_layout Standard
+Now, let us abstract this situation by stating the properties that we will
+ need.
+\end_layout
+
+\begin_layout Property
+The endofunctor 
+\begin_inset Formula $F:\C\rightarrow\C$
+\end_inset
+
+ is finitary.
+\end_layout
+
+\begin_layout Proof
+This is a straightforward consequence of Lemmas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:finitary-restriction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and
 \begin_inset ERT
 status open
 
@@ -2326,11 +2888,142 @@ noprefix "false"
 
 \end_inset
 
-, this restriction is then also finitary.
+.
 \end_layout
 
-\begin_layout Remark
-Conversely, using the assumptions below, we can also 
+\begin_layout Proof
+Together with bicompleteness of 
+\begin_inset Formula $\C$
+\end_inset
+
+ (Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:presentable"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), this ensures the existence of the (algebraically) free monad generated
+ by 
+\begin_inset Formula $F$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Notation
+We denote the free monad 
+\begin_inset Formula $F^{*}$
+\end_inset
+
+ on 
+\begin_inset Formula $F$
+\end_inset
+
+ by 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Property
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:F-shape"
+
+\end_inset
+
+
+\begin_inset Formula $F(X)$
+\end_inset
+
+ is of the shape 
+\begin_inset Formula $\coprod_{i}R_{i}X\times S_{i}$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is an object of 
+\begin_inset Formula $\C$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R_{i}$
+\end_inset
+
+ is a right adjoint functor
+\end_layout
+
+\begin_layout Itemize
+its left adjoint 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ is such that 
+\begin_inset Formula $L_{i}K=\coprod_{j}KL'_{i,j}$
+\end_inset
+
+ where 
+\begin_inset Formula $L_{i,j}'$
+\end_inset
+
+ is an endofunctor on 
+\begin_inset Formula $\D$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+for some finite family of endofunctors 
+\begin_inset Formula $(L'_{i,j})_{j}$
+\end_inset
+
+ on 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In fact, using the above property, we can also 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2366,176 +3059,12 @@ noprefix "false"
 ).
 \end_layout
 
-\begin_layout Assumption
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:F-shape"
-
-\end_inset
-
-
-\begin_inset Formula $F(X)$
-\end_inset
-
- is of the shape 
-\begin_inset Formula $\coprod_{i}R_{i}(X)\times S_{i}$
-\end_inset
-
-, where
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula $I$
-\end_inset
-
- is an object of 
-\begin_inset Formula $\C$
-\end_inset
-
-;
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $R_{i}$
-\end_inset
-
- is right adjoint to some 
-\begin_inset Formula $L_{i}$
-\end_inset
-
-; 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $S_{i}$
-\end_inset
-
- is an object of 
-\begin_inset Formula $\C$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-orthogonal to the class of all morphisms (i.e., given any span 
-\begin_inset Formula $S_{i}\leftarrow A\rightarrow B$
-\end_inset
-
-, there exists a unique 
-\begin_inset Formula $B\rightarrow S_{i}$
-\end_inset
-
- completing the triangle) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ou alors on demande que 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- est stable par pushout
-\end_layout
-
-\end_inset
-
-.
- Intuitively, 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- is the output type 
-\begin_inset Quotes eld
-\end_inset
-
-dirac
-\begin_inset Quotes erd
-\end_inset
-
- (not used for untyped)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-ou alors on demande que tout diagramme 
-\begin_inset Formula $B\leftarrow A\rightarrow S_{i}$
-\end_inset
-
- se complete en un carre avec 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- dans le dernier coin.
- Ce qui signifie que 
-\begin_inset Formula $\hom(-,S_{i})$
-\end_inset
-
- a une action covariante.
- Ou encore que 
-\begin_inset Formula $S_{i}\rightarrow1$
-\end_inset
-
- est right ortogonal a tout, ou encore que 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- est orthogonal a tous les morphismes (d'apres la def de Adamek), et ptet
- qu'alors on n'a pas besoin de la sous-terminalite.
- 
-\end_layout
-
-\end_inset
-
-
-\color red
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-
-\color red
-(do we really need a full adjoint or some relative adjoint when the domain
- is from 
-\begin_inset Formula $\D$
-\end_inset
-
-? does this adjoint exists in the linear setting?)
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $L_{i}K=\coprod_{j\in J}KL'_{i,j}$
-\end_inset
-
- for some finite family of endofunctors 
-\begin_inset Formula $(L'_{i,j})_{j}$
-\end_inset
-
- on 
-\begin_inset Formula $\D$
-\end_inset
-
-.
- 
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -2570,7 +3099,6 @@ noprefix "false"
 
 \end_layout
 
-\end_deeper
 \begin_layout Corollary
 \begin_inset CommandInset label
 LatexCommand label
@@ -2616,50 +3144,48 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Remark
-Typically, we want the endofunctor on syntax mapping 
-\begin_inset Formula $X$
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Notation
+Let 
+\begin_inset Formula $\Kl{\D^{+}}$
 \end_inset
 
- to 
-\begin_inset Formula $I+F'(X)$
+ denote the full subcategory of 
+\begin_inset Formula $\Kl T$
 \end_inset
 
-, where 
-\begin_inset Formula $I$
-\end_inset
-
- accounts for variables and 
-\begin_inset Formula $F'$
-\end_inset
-
- for recursive operations.
- Since 
-\begin_inset Formula $I\cong1\times I$
-\end_inset
-
-, this first component fits into the assumed scheme by taking 
-\begin_inset Formula $S_{i}=I$
-\end_inset
-
- and 
-\begin_inset Formula $R_{i}(X)=1$
+ spanned by coproducts of objects in 
+\begin_inset Formula ${\cal D}$
 \end_inset
 
 .
- Indeed then, the left adjoint to 
-\begin_inset Formula $R_{i}$
+ We denote by 
+\begin_inset Formula $K:\D\rightarrow\Kl{\D^{+}}$
 \end_inset
 
- is the 
-\begin_inset Formula $L_{i}:X\mapsto0$
-\end_inset
-
-.
+ the obvious embedding.
 \end_layout
 
-\begin_layout Example
-Continuing Example
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:D-kleisli-finite-connected-colims"
+
+\end_inset
+
+
+\begin_inset Formula $K$
+\end_inset
+
+ preserves finite connected colimits.
+ 
+\end_layout
+
+\begin_layout Proof
+See Section
 \begin_inset ERT
 status open
 
@@ -2673,49 +3199,19 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "ex:lambda-endo"
+reference "sec:proof-kleisli-finite"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-, 
-\begin_inset Formula $X\mapsto X\times X$
-\end_inset
-
- is right adjoint to 
-\begin_inset Formula $X\mapsto X+X$
-\end_inset
-
 .
- Moreover, 
-\begin_inset Formula $X\mapsto X^{I}$
+\end_layout
+
 \end_inset
 
- is right adjoint to 
-\begin_inset Formula $X\mapsto X\times I$
-\end_inset
 
-.
- If 
-\begin_inset Formula $X$
-\end_inset
-
- is a representable presheaf 
-\begin_inset Formula $yn$
-\end_inset
-
-, then 
-\begin_inset Formula $yn\times I=yn\times y1\simeq y(n+1)$
-\end_inset
-
-.
- Therefore, 
-\begin_inset Formula $L'n=n+1$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -2727,7 +3223,7 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Assumption
 We assume given a monad 
@@ -3165,18 +3661,6 @@ We denote by
 
 \begin_layout Standard
 Here is our main result.
- 
-\color red
-TODO state it for 
-\begin_inset Formula $\D$
-\end_inset
-
- rather than 
-\begin_inset Formula $\D^{+}$
-\end_inset
-
- (easier to understand).
- 
 \end_layout
 
 \begin_layout Theorem
@@ -3197,11 +3681,28 @@ Let
 \begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
- has coequalisers and the inclusion 
+ has coequalisers.
+ Moreover, the inclusion 
 \begin_inset Formula $\Kl{\D^{+}}^{*}\rightarrow\Kl T^{*}$
 \end_inset
 
  preserves them.
+ 
+\color red
+We need to say somewhere that this Kleisli category is the same as the Kleisli
+ category of the monad on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+, restricted to 
+\begin_inset Formula $\C$
+\end_inset
+
+ or 
+\begin_inset Formula $\D^{+}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -3424,7 +3925,9 @@ X\vdash(f_{i})_{i}:=g\Rightarrow u;\sigma\dashv Z
 
 .
  
-\color red
+\end_layout
+
+\begin_layout Question
 Could we use Reddy's syntax, to differentiate the input/output? We need
  to know what his syntax is the internal language of.
 \end_layout
@@ -4031,7 +4534,7 @@ Uniqueness of
 \begin_inset Formula $Kf$
 \end_inset
 
- is epimorphic (Assumption
+ is epimorphic (Property
 \begin_inset ERT
 status open
 
@@ -4160,10 +4663,10 @@ Since
 \end_inset
 
  such that 
-\begin_inset Formula $L_{i}K=\int^{j}KL'_{i,j}$
+\begin_inset Formula $L_{i}K=\coprod_{j}KL'_{i,j}$
 \end_inset
 
- (Assumption
+ (Property
 \begin_inset ERT
 status open
 
@@ -4361,7 +4864,7 @@ Since
 \begin_inset Formula $TC\simeq I+C+\coprod_{i}R_{i}TC$
 \end_inset
 
- (Assumption
+ (Corollary
 \begin_inset ERT
 status open
 
@@ -4375,7 +4878,7 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "assu:F-shape"
+reference "cor:lambek-lemma"
 plural "false"
 caps "false"
 noprefix "false"
@@ -4483,7 +4986,7 @@ noprefix "false"
 \end_inset
 
 , or 
-\begin_inset Formula $M(\vec{x})=N(\vec{y})$
+\begin_inset Formula $M(\vec{x})=M(\vec{y})$
 \end_inset
 
 , in Section
@@ -4507,7 +5010,7 @@ noprefix "false"
 
 \end_inset
 
-, which is partly redundant with the  previous case
+;
 \end_layout
 
 \begin_layout Itemize
@@ -4825,7 +5328,7 @@ Therefore, computing this coequaliser amounts to computing the pushout.
 
 \begin_layout Subsection
 Case 
-\begin_inset Formula $M(x_{1},\dots,x_{m})=_{q}N(y_{1},\dots,y_{n})$
+\begin_inset Formula $M(x_{1},\dots,x_{m})=_{q}M(y_{1},\dots,y_{m})$
 \end_inset
 
 
@@ -4879,14 +5382,10 @@ We assume the following
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $C\simeq\coprod_{i\in\{a,b\}}KB_{i}+C'$
+\begin_inset Formula $C\simeq KB+C'$
 \end_inset
 
-, where 
-\begin_inset Formula $a,b$
-\end_inset
-
- may not be distinct (in practice 
+ (in practice 
 \begin_inset Formula $C$
 \end_inset
 
@@ -4901,58 +5400,20 @@ We assume the following
 \begin_inset Formula $t',u':KA\rightarrow C$
 \end_inset
 
- factor respectively as 
-\begin_inset Formula $KB_{a}\rightarrow C$
-\end_inset
-
- and 
-\begin_inset Formula $KB_{b}\rightarrow C$
+ both factor through 
+\begin_inset Formula $KB\hookrightarrow C$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Note that if 
-\begin_inset Formula $a$
-\end_inset
-
- and 
-\begin_inset Formula $b$
-\end_inset
-
- are distinct, then the case we describe is redundant with some specific
- case of the pruning phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:pruning-metavar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
 We want to compute the coequaliser of the free algebra morphisms.
 \begin_inset Formula 
 \[
-\xymatrix{ & KB_{a}\ar[rd]\\
-KA\ar[ru]^{Kf}\ar[rd]_{Kg} &  & \coprod_{i\in\{a,b\}}KB_{i}+C'\\
- & KB_{b}\ar[ru]
+\xymatrix{ & KB\ar[rd]\\
+KA\ar[ru]^{Kf}\ar[rd]_{Kg} &  & KB+C'\\
+ & KB\ar[ru]
 }
 \]
 
@@ -4979,19 +5440,7 @@ The coequaliser of a diagram of this shape, in any category which has the
 \begin_inset Formula $Kg$
 \end_inset
 
- if 
-\begin_inset Formula $a=b$
-\end_inset
-
-, or the pushout of 
-\begin_inset Formula $Kf$
-\end_inset
-
- and 
-\begin_inset Formula $Kg$
-\end_inset
-
-, otherwise.
+.
 \end_layout
 
 \begin_layout Standard
@@ -5028,11 +5477,11 @@ All the arguments in this section justify the following rule, whose premise
  can always be satisfied.
 \begin_inset Formula 
 \[
-\dfrac{\xymatrix{ & KB_{a}\ar[rd]\\
-KA\ar[ru]^{Kf}\ar[rd]_{Kg} &  & \coprod_{i\in\{a,b\}}KB_{i}+C'\ar[r]^{\sigma} & X\text{ is a coequaliser}\\
- & KB_{b}\ar[ru]
+\dfrac{\xymatrix{ & KB\ar[rd]\\
+KA\ar[ru]^{Kf}\ar[rd]_{Kg} &  & KB+C'\ar[r]^{\sigma} & X\text{ is a coequaliser}\\
+ & KB\ar[ru]
 }
-}{\coprod_{i\in\{a,b\}}KB_{i}+C'\vdash\eta\circ in_{a}\circ Kf=\eta\circ in_{b}\circ Kf\Rightarrow\eta\circ\sigma\dashv X}
+}{KB+C'\vdash\eta\circ in_{B}\circ Kf=\eta\circ in_{B}\circ Kf\Rightarrow\eta\circ\sigma\dashv X}
 \]
 
 \end_inset
@@ -5169,10 +5618,10 @@ Clearly, if
 \end_inset
 
  such that 
-\begin_inset Formula $L_{i}K=\int^{j}KL'_{i,j}$
+\begin_inset Formula $L_{i}K=\coprod_{j}KL'_{i,j}$
 \end_inset
 
- (Assumption
+ (Property
 \begin_inset ERT
 status open
 
@@ -5385,49 +5834,6 @@ Let
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Since 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- is orthogonal to any morphism (Assumption
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "assu:F-shape"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), 
-\begin_inset Formula $JS_{i}$
-\end_inset
-
- is constant on each connected component of 
-\begin_inset Formula $\D$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
  Then, 
 \begin_inset Formula $GJ$
 \end_inset
@@ -5947,7 +6353,7 @@ status open
 
 \begin_layout Plain Layout
 
-% YADE IAGRAM pbkB-present.json
+% YADE DIAGRAM pbkB-present.json
 \end_layout
 
 \end_inset
@@ -6997,6 +7403,47 @@ F(X) & =\coprod_{\sigma}y_{\sigma\vdash\sigma}\\
 \end_layout
 
 \begin_layout Subsection
+Meta-arities as sets
+\end_layout
+
+\begin_layout Standard
+Consider 
+\begin_inset Formula $\mathbb{S}$
+\end_inset
+
+ the category where objects are natural numbers and a morphism 
+\begin_inset Formula $n\rightarrow p$
+\end_inset
+
+ is a subset of 
+\begin_inset Formula $\{0,\dots,p-1\}$
+\end_inset
+
+ of cardinal 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ For instance, 
+\begin_inset Formula $\mathbb{S}$
+\end_inset
+
+ can be taken as subcategory of 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ consisting of strictly increasing injections, or as the subcategory of
+ the augmented simplex category consisting of injective functions.
+ Again, we can define the endofunctor for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculs as before.
+ Then, a metavariable takes as argument a set of available variables, rather
+ than a list of distinct variables.
+\end_layout
+
+\begin_layout Subsection
 Linear syntax
 \end_layout
 
@@ -7353,14 +7800,240 @@ options "plain"
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Standard
 \start_of_appendix
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\start_of_appendix
+sda
+\end_layout
+
+\begin_layout Section
+Proof of Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:D-kleisli-finite-connected-colims"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:proof-kleisli-finite"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+We exploit here the observations and notations of Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+An object 
+\begin_inset Formula $X$
+\end_inset
+
+ of 
+\begin_inset Formula $\C$
+\end_inset
+
+ is said to preserve finite connected colimits if 
+\begin_inset Formula $JX:\op{\D}\rightarrow\Set$
+\end_inset
+
+ does.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:D+-fc"
+
+\end_inset
+
+Any coproduct 
+\begin_inset Formula $\coprod_{i}Kd_{i}$
+\end_inset
+
+ preserve finite connected colimits.
+\end_layout
+
+\begin_layout Proof
+Recall that 
+\begin_inset Formula $J(\coprod_{i}Kd_{i})=\coprod_{i}yd_{i}$
+\end_inset
+
+.
+ Now, representable presheaves are tiny, and coproducts commute with finite
+ connected colimits in 
+\begin_inset Formula $\Set$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+We will prove the following stronger result.
+\end_layout
+
+\begin_layout Proposition
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:Kl-fc"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\Kl{fc}$
+\end_inset
+
+ be the full subcategory of 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+ spanned by objects preserving finite connected colimits.
+ Then, 
+\begin_inset Formula $\D\rightarrow\Kl{fc}$
+\end_inset
+
+ preserves finite connected colimits.
+\end_layout
+
+\begin_layout Plain Layout
+By Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:D+-fc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $\Kl{\D^{+}}$
+\end_inset
+
+ is a full subcategory of 
+\begin_inset Formula $\Kl{fc}$
+\end_inset
+
+, so we this proposition entails the desired fact that 
+\begin_inset Formula ${\cal D}\rightarrow\Kl{\D^{+}}$
+\end_inset
+
+ preserves finite connected colimits.
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of Proposition~
+\backslash
+ref{prop:Kl-fc}]
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $P:{\cal B}\rightarrow\D$
+\end_inset
+
+ be a finite connected diagram in 
+\begin_inset Formula $\D$
+\end_inset
+
+, and 
+\begin_inset Formula $X$
+\end_inset
+
+ be an object of 
+\begin_inset Formula $\C$
+\end_inset
+
+ preserving finite connected colimits.
+ TODO
+\begin_inset Formula 
+\begin{align*}
+\Kl{fc}(K\colim P,X) & =\C(K\colim P,TX)\\
+ & \cong JTX(K\colim P)\\
+ & \cong MJX(K\colim P)\\
+ & \cong\lim\C(KP-,X)\tag{because \ensuremath{X} preserves finite connected colimits}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Some lemmas
 \end_layout
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Lemma
 \begin_inset CommandInset label
@@ -7404,7 +8077,7 @@ Let
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Corollary
 \begin_inset CommandInset label
