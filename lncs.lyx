@@ -1793,7 +1793,7 @@ An object of
 \end_inset
 
  takes as argument a choice of distinct variables 
-\begin_inset Formula $x_{1},\dots,x_{n}\in\{0,m-1\}$
+\begin_inset Formula $x_{1},\dots,x_{n}\in\{0,\dots,m-1\}$
 \end_inset
 
 .
@@ -3502,32 +3502,45 @@ We assume given an endofunctor
 \begin_inset Formula $[\mathcal{A},\Set]$
 \end_inset
 
- such that 
-\begin_inset Formula $F(X)$
+ defined by 
+\begin_inset Formula 
+\[
+F(X)=\coprod_{o\in O}\prod_{j\in J_{o}}X\circ L_{o,j}\times S_{o},
+\]
+
 \end_inset
 
- is of the shape 
-\begin_inset Formula $\coprod_{o\in O}\prod_{j\in J_{o}}X\circ L_{o,j}\times S_{o}$
+ for some set 
+\begin_inset Formula $O$
 \end_inset
 
-, where
+, where, for each 
+\begin_inset Formula $o\in O$
+\end_inset
+
+,
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $S_{o}$
+\begin_inset Formula $S_{o}\in\C$
 \end_inset
 
- is a functor preserving finite connected limits.
+;
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $J_{o}$
 \end_inset
 
- is a finite set
+ is a finite set;
 \end_layout
 
 \begin_layout Itemize
+for each 
+\begin_inset Formula $j\in J_{o}$
+\end_inset
+
+, 
 \begin_inset Formula $L_{o,j}$
 \end_inset
 
@@ -3566,10 +3579,20 @@ for some finite family of endofunctors
 \begin_inset Formula $J_{o}$
 \end_inset
 
- is empty).
- The fact that it preserves pullbacks is crucial when unifying a metavariable
+ is empty) or a type flag (in the simply-typed case).
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The fact that it preserves pullbacks is crucial when unifying a metavariable
  with a variable, to show that either there is no unifier, either there
  is a coequaliser.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Example
@@ -3588,7 +3611,7 @@ Consider the endofunctor on
 \end_inset
 
 -calculus: 
-\begin_inset Formula $F(X)=(1\times)I+X\times X+X\circ(-+1)$
+\begin_inset Formula $F(X)=I+X\times X+X\circ(-+1)$
 \end_inset
 
 , where 
@@ -3617,11 +3640,11 @@ name "lem:finitary-restriction"
 \begin_inset Formula $F$
 \end_inset
 
- is finitary and restricts as an endofunctor on the subcategory 
+ is finitary and restricts as an endofunctor on 
 \begin_inset Formula $\C$
 \end_inset
 
- of functors preserving finite connected limits.
+.
 \end_layout
 
 \begin_layout Long Proof
@@ -3631,6 +3654,46 @@ name "lem:finitary-restriction"
  is finitary because filtered colimits commute with finite limits and colimits.
  It restricts as stated because finite connected limits commute with coproducts
  and limits.
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Formula $F$
+\end_inset
+
+ generates a free monad 
+\begin_inset Formula $T$
+\end_inset
+
+ that restricts to a monad on 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ Moreover, 
+\begin_inset Formula $TX$
+\end_inset
+
+ is the initial algebra of 
+\begin_inset Formula $Z\mapsto X+FZ$
+\end_inset
+
+, as an endofunctor on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ (or on 
+\begin_inset Formula $\C$
+\end_inset
+
+, if 
+\begin_inset Formula $X$
+\end_inset
+
+ is in 
+\begin_inset Formula $\C$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -3656,7 +3719,7 @@ Given an index
 
 .
  Given 
-\begin_inset Formula $Kf:Ka\rightarrow Kb$
+\begin_inset Formula $f:a\rightarrow b$
 \end_inset
 
 , we denote the induced morphism 
@@ -3702,6 +3765,10 @@ A morphism
 
 
 \end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
 \begin_layout Property
 The endofunctor 
@@ -3757,7 +3824,16 @@ noprefix "false"
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Together with cocompleteness properties of 
 \begin_inset Formula $\C$
 \end_inset
@@ -3805,6 +3881,11 @@ We denote the free monad
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4270,7 +4351,7 @@ Let
 
 \begin_layout Lemma
 Moreover, for any 
-\begin_inset Formula $u:Kb\rightarrow Ka$
+\begin_inset Formula $u:b\rightarrow a$
 \end_inset
 
 , 
@@ -4415,11 +4496,8 @@ The main point of pattern unification is that a coequaliser diagram in
 \end_inset
 
  either has no unifier, either has a colimiting cocone.
-\end_layout
-
-\begin_layout Standard
-Because working this logical disjunction is slightly inconvenient, we rephrase
- it as a true coequaliser by freely adding a terminal object.
+ Working this logical disjunction is slightly inconvenient; we rephrase
+ it in terms of a true coequaliser by freely adding a terminal object.
 \end_layout
 
 \begin_layout Definition
@@ -4461,7 +4539,7 @@ Let
 \begin_inset Formula $J$
 \end_inset
 
- has a colimit has long as its category of cocones is not empty.
+ has a colimit as long as there exists a cocone;
 \end_layout
 
 \begin_layout Enumerate
@@ -4484,19 +4562,12 @@ Let
 \end_layout
 
 \begin_layout Standard
-Thus, we are going to work in 
+This lemma allows us to work with true coequalisers in 
 \begin_inset Formula $\Kl T^{*}$
 \end_inset
 
- rather than 
-\begin_inset Formula $\Kl T$
-\end_inset
-
 .
-\end_layout
-
-\begin_layout Standard
-The following result is also useful.
+ The following result is also useful.
 \end_layout
 
 \begin_layout Lemma
@@ -4504,7 +4575,7 @@ Given a category
 \begin_inset Formula $\mathscr{B}$
 \end_inset
 
-, the canonical functor 
+, the canonical embedding functor 
 \begin_inset Formula $\mathscr{B}\rightarrow\mathscr{B}^{*}$
 \end_inset
 
@@ -4589,13 +4660,19 @@ Let
 \begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
- has coequalisers.
- Moreover, the inclusion 
+ has coequalisers and the inclusion 
 \begin_inset Formula $\Kl{\D^{+}}^{*}\rightarrow\Kl T^{*}$
 \end_inset
 
  preserves them.
  
+\color red
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
 \color red
 We need to say somewhere that this Kleisli category is the same as the Kleisli
  category of the monad on 
@@ -4613,8 +4690,13 @@ We need to say somewhere that this Kleisli category is the same as the Kleisli
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-In other words, any coequaliser diagram 
+In other words, for any coequaliser diagram 
 \begin_inset Formula $A\rightrightarrows TB$
 \end_inset
 
@@ -4634,19 +4716,15 @@ In other words, any coequaliser diagram
 \begin_inset Formula $\D^{+}$
 \end_inset
 
- has a colimit 
-\begin_inset Formula $B\rightarrow T\Gamma$
+, either there is no cocone, either there is a coequaliser 
+\begin_inset Formula $B\rightarrow TC$
 \end_inset
 
- where 
-\begin_inset Formula $C\in\D^{+}\cup\{\top\}$
+, with 
+\begin_inset Formula $C\in\D^{+}$
 \end_inset
 
-: either such a coequaliser has a colimit (which can be computed in 
-\begin_inset Formula $\Kl{\D^{+}}$
-\end_inset
-
-), either there is no cocone at all.
+.
 \end_layout
 
 \begin_layout Section
@@ -5238,7 +5316,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Therefore, we get the following error rules
+Therefore, we get the following failing rules
 \begin_inset Formula 
 \[
 \unificationrigrigneqo\qquad\unificationrigrigneqs
@@ -5276,7 +5354,25 @@ We now assume
 \end_inset
 
 .
- Therefore, we get the following rule
+ This induces an isomorphism between the category of unifiers (i.e., cocones)
+ for 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ and the category of unifiers for 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ We therefore get the successful rule
 \end_layout
 
 \begin_layout Standard
@@ -5638,11 +5734,30 @@ where
 \end_inset
 
 .
+ We exploit the following lemma.
+\end_layout
+
+\begin_layout Lemma
+In any category, if the below left diagram is a coequaliser, then so is
+ the below right diagram.
+\begin_inset Formula 
+\[
+\xymatrix{A\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & B\ar@{..>}[r]^{h} & C}
+\qquad\begin{array}{c}
+\xymatrix{ & B\ar[rd]^{in_{B}}\\
+A\ar[ru]^{f}\ar[rd]_{g} &  & B+D\ar@{..>}[r]^{h+1_{D}} & C+D\\
+ & B\ar[ru]_{in_{B}}
+}
+\end{array}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Therefore, the category of cocones is isomorphic to the category of cocones
- coequalising 
+Therefore, it is enough to compute the coequaliser of 
 \begin_inset Formula $\mathcal{L}Kf$
 \end_inset
 
@@ -5680,20 +5795,7 @@ noprefix "false"
 
 \end_inset
 
-), the initial of 
-\begin_inset Formula $f$
-\end_inset
-
- and 
-\begin_inset Formula $g$
-\end_inset
-
- in 
-\begin_inset Formula $\mathcal{D}$
-\end_inset
-
-.
- Therefore, we get the rule
+), we finally get the rule
 \begin_inset Formula 
 \[
 \unificationflexflex
@@ -5801,24 +5903,20 @@ Ka\ar[ru]^{\mathcal{L}f}\ar[rd]_{g} &  & \Gamma',M:b\\
 \end_layout
 
 \begin_layout Lemma
-Consider un pushout diagram in a category
+In any category, if the below left diagram is a pushout, then the below
+ right diagram is a coequaliser.
 \begin_inset Formula 
 \[
-\xymatrix{A\ar[r]\ar[d] & B\ar[d]^{u}\\
-C\ar[r]_{v} & D
+\begin{array}{c}
+\xymatrix{A\ar[r]\ar[d] & B\ar@{..>}[d]^{u}\\
+C\ar@{..>}[r]_{v} & D
 }
-\]
-
-\end_inset
-
-Then, the following diagram is a coequaliser
-\begin_inset Formula 
-\[
+\end{array}\qquad\begin{array}{c}
 \xymatrix{ & B\ar[rd]^{in_{1}}\\
-A\ar[ru]\ar[rd] &  & B+C\ar[r]_{[u,v]} & D\\
+A\ar[ru]\ar[rd] &  & B+C\ar@{..>}[r]_{[u,v]} & D\\
  & C\ar[ru]_{in_{2}}
 }
-,
+\end{array}.
 \]
 
 \end_inset
