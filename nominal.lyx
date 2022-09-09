@@ -1010,76 +1010,6 @@ literal "false"
  for the simply-typed lambda-calculus, where metavariables are applied to
  distinct variables.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Hence, it has strong similarities with the problem we are studying.
- In particular, one can see our setting as a restricted case of theirs,
- since, in particular, we focus on second-order syntax.
- However, we can translate pattern unification problems in our setting extended
- to the simply-typed case, see Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:higher-order-unification"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, following ideas from
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "cheney2005relating"
-literal "false"
-
-\end_inset
-
-.
- Moreover we prove a stronger property of the most general unifier, namely
- that it is also the most general one among substitutions that are not pattern
- like.
- 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-except that no binding is involved.
- Let us already note that binding did not bring any particular difficulty
- in our work.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2739,7 +2669,7 @@ We assume given an endofunctor
 \begin_inset Formula ${\cal A}$
 \end_inset
 
-.
+ preserving finite connected limits.
  
 \begin_inset Note Note
 status open
@@ -2766,9 +2696,13 @@ for some finite family of endofunctors
 \begin_inset Formula $S_{i}$
 \end_inset
 
- is, for instance, the variable object.
- The fact that it preserves pullbacks ensures that when unifying a metavariable
- with a variable, either there is no unifier, either there is a coequaliser.
+ is, for instance, the variable presheaf (in this case, 
+\begin_inset Formula $J_{i}$
+\end_inset
+
+ is empty).
+ The fact that it preserves pullbacks is crucial for when unifying a metavariabl
+e with a variable, either there is no unifier, either there is a coequaliser.
 \end_layout
 
 \begin_layout Example

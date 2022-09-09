@@ -239,6 +239,95 @@ setboolean{fullpaper}{false}
 \end_inset
 
 
+\begin_inset FormulaMacro
+\newcommand{\unificationtop}{\dfrac{}{\top\vdash t=u\Rightarrow\bang\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationempty}{\dfrac{}{\Gamma\vdash()=()\Rightarrow1_{\Gamma}\dashv\Gamma}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unificationstepwise}{\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\text{\ensuremath{\sigma_{1}]}}=u_{2}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1},t_{2}=u_{1},u_{2}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationrigrig}{\dfrac{\Gamma\vdash f=g\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(f;s)=o(g;s)\Rightarrow\sigma\dashv\Delta}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationrigrigneqo}{\dfrac{o\neq o'}{\Gamma\vdash o(f;s)=o'(f';s')\Rightarrow\ \bang\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationrigrigneqs}{\dfrac{s\neq s'}{\Gamma\vdash o(f;s)=o(f';s')\Rightarrow\ \bang\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationfailingoccurcheck}{\dfrac{T\Gamma'\xrightarrow{Tin_{\Gamma'}}T\Gamma\text{ does not factor }g:a^{o}\rightarrow T\Gamma}{\Gamma',M:b\vdash M(f)=o(g;s)\Rightarrow\bang\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationflexflex}{\dfrac{\xymatrix{a\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & b\ar@{..>}[r]^{h} & c}
+\text{ is a coequaliser in \ensuremath{\D=\op{{\cal A}}}}}{\Gamma,M:b\vdash M(f)=M(g)\Rightarrow M\mapsto M'(h)\dashv\Gamma,M':c}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\vdash\prune gf{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(f)=g\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\pruningempty}{\dfrac{}{\Gamma\vdash\prune{()}{()}{1_{\Gamma}}{()}\dashv\Gamma}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningtop}{\dfrac{}{\top\vdash\prune{\bang}f{\bang}{\bang}\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningflex}{\dfrac{\begin{array}{c}
+\xymatrix{a\ar[r]^{f}\ar[d]_{g} & b\ar@{..>}[d]^{g'}\\
+c\ar@{..>}[r]_{f'} & d
+}
+\end{array}\text{ is a pushout in \ensuremath{\D=\op{{\cal A}}}}}{\Gamma,M:c\vdash\prune{M(g)}f{M\mapsto M'(f')}{M'(g')}\dashv\Gamma,M':d}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningrigfail}{\dfrac{Kf:Ka\rightarrow Kb\text{ does not factor }s:Ka\rightarrow S_{o}}{\Gamma\vdash\prune{o(g;s)}f{\bang}{\bang}\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningrig}{\dfrac{\Gamma\vdash\prune g{f^{o}}{\sigma}u\dashv\Delta\qquad s=s'\circ Kf}{\Gamma\vdash\prune{o(g;s)}f{\sigma}{o(u;s')}\dashv\Delta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\pruningstepwise}{\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}u\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}}
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -1021,7 +1110,7 @@ noprefix "false"
 \end_inset
 
 , we state our main result that justifies pattern unification algorithms.
- Then we tackle the proof algorithm, starting with the pruning phase (Section
+ Then we tackle the proof algorithm summarised in Figure
 \begin_inset ERT
 status open
 
@@ -1035,14 +1124,14 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:pruning-phase"
+reference "fig:algo-summary"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-), the unification phase (Section
+, starting with the the unification phase (Section
 \begin_inset ERT
 status open
 
@@ -1063,7 +1152,28 @@ noprefix "false"
 
 \end_inset
 
-), the occur-check (Section
+), the pruning phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), , the occur-check (Section
 \begin_inset ERT
 status open
 
@@ -1162,6 +1272,212 @@ status open
 
 \begin_layout Plain Layout
 Some benefits: we unify the operation and the variable case.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Summary of the rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Judgments 
+\series default
+(colimits in 
+\begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow\quad\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{..>}[r]^{\sigma} & \Delta}
+\text{ is a coequaliser}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash\prune gf{\sigma}u\dashv\Delta\quad\Longleftrightarrow\begin{array}{c}
+\xymatrix{\coprod_{i}Ka_{i}\ar[r]^{{\cal L}f}\ar[d]_{g} & \coprod_{i}Kb_{i}\ar@{..>}[d]^{u}\\
+\Gamma\ar@{..>}[r]_{\sigma} & \Delta
+}
+\end{array}\text{ is a pushout}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Unification phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules 
+\begin_inset Formula 
+\[
+\unificationempty\quad\unificationtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationstepwise
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid-rigid
+\begin_inset Formula 
+\[
+\unificationrigrig
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationrigrigneqo\quad\unificationrigrigneqs
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-*
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\unificationoccurcheck\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationfailingoccurcheck\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationflexflex
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Pruning phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Formula 
+\[
+\pruningempty\quad\pruningtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}u\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\pruningrigfail\quad\pruningrig
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex
+\begin_inset Formula 
+\[
+\pruningflex
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:algo-summary"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1432,6 +1748,7 @@ regular
 \end_inset
 
  monomorphisms and has finite connected limits.
+ 
 \end_layout
 
 \begin_layout Example
@@ -1440,6 +1757,53 @@ For the category of nominal sets, take
 \end_inset
 
  the category of finite cardinals and injections.
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:ar-A"
+
+\end_inset
+
+An object of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ is intuitively a metavariable arity, or a ground context.
+ The argument of a metavariable 
+\begin_inset Formula $M:a$
+\end_inset
+
+ living in a ground context 
+\begin_inset Formula $a'$
+\end_inset
+
+ is a morphism 
+\begin_inset Formula $a\rightarrow a'$
+\end_inset
+
+.
+ In the previous example, a metavariable 
+\begin_inset Formula $M:n$
+\end_inset
+
+ living in a context 
+\begin_inset Formula $m\in\mathbb{N}$
+\end_inset
+
+ takes as argument a choice of distinct variables 
+\begin_inset Formula $x_{1},\dots,x_{n}\in\{0,m-1\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -1819,6 +2183,63 @@ We denote by
 
  consisting of finite coproducts of objects of 
 \begin_inset Formula $\D$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:D-finite-family"
+
+\end_inset
+
+
+\begin_inset Formula $\D^{+}$
+\end_inset
+
+ is equivalent to the category of finite families of objects of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
+ Since objects of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ are intuitvely metavariable arities (Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:ar-A"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), 
+\begin_inset Formula $\D^{+}$
+\end_inset
+
+ can be thought of as the category of metavariable contexts.
+\end_layout
+
+\begin_layout Standard
+In the spirit of this remark, we introduce the usual context notation for
+ objects of 
+\begin_inset Formula $\D^{+}$
 \end_inset
 
 .
@@ -4311,7 +4732,7 @@ when
  Then, the pushout is the terminal cocone:
 \begin_inset Formula 
 \[
-\dfrac{}{\top\vdash t=u\Rightarrow\ \bang\dashv\top};
+\unificationtop;
 \]
 
 \end_inset
@@ -4327,7 +4748,7 @@ when the coproduct is empty, the coequaliser is just
 :
 \begin_inset Formula 
 \[
-\dfrac{}{\Gamma\vdash()=()\Rightarrow1_{\Gamma}\dashv\Gamma}.
+\unificationempty.
 \]
 
 \end_inset
@@ -4340,7 +4761,7 @@ Furthermore, when the coproduct is neither empty nor a singleton, the coequalise
 r can be decomposed thanks to the following rule:
 \begin_inset Formula 
 \begin{equation}
-\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\text{\ensuremath{\sigma_{1}]}}=u_{2}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1},t_{2}=u_{1},u_{2}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}\label{eq:unify-stepwise}
+\unificationstepwise\label{eq:unify-stepwise}
 \end{equation}
 
 \end_inset
@@ -4820,7 +5241,7 @@ noprefix "false"
 Therefore, we get the following error rules
 \begin_inset Formula 
 \[
-\dfrac{o\neq o'}{\Gamma\vdash o(f;s)=o'(f';s')\Rightarrow\ \bang\dashv\top}\qquad\dfrac{s\neq s'}{\Gamma\vdash o(f;s)=o(f';s')\Rightarrow\ \bang\dashv\top}
+\unificationrigrigneqo\qquad\unificationrigrigneqs
 \]
 
 \end_inset
@@ -4861,7 +5282,7 @@ We now assume
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\dfrac{\Gamma\vdash f=g\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(f;s)=o(g;s)\Rightarrow\sigma\dashv\Delta}\label{eq:unifying-rec}
+\unificationrigrig\label{eq:unifying-rec}
 \end{equation}
 
 \end_inset
@@ -5005,7 +5426,7 @@ TODO: exploit regularity of monomorphisms
  justifying the rule
 \begin_inset Formula 
 \[
-\dfrac{T\Gamma'\xrightarrow{Tin_{\Gamma'}}T\Gamma\text{ does not factor }g:a^{o}\rightarrow T\Gamma}{\Gamma',M:b\vdash\prune{o(g;s)}f{\bang}{\bang}\dashv\top}
+\unificationfailingoccurcheck
 \]
 
 \end_inset
@@ -5275,8 +5696,7 @@ noprefix "false"
  Therefore, we get the rule
 \begin_inset Formula 
 \[
-\dfrac{\xymatrix{Ka\ar@<+.5ex>[r]^{Kf}\ar@<-.5ex>[r]_{Kg} & Kb\ar@{..>}[r]^{Kh} & Kc}
-\text{ is a coequaliser}}{\Gamma,M:b\vdash M(f)=M(g)\Rightarrow M\mapsto M'(h)\dashv\Gamma,M':c}
+\unificationflexflex
 \]
 
 \end_inset
@@ -5476,7 +5896,7 @@ noprefix "false"
  Therefore, we have the rule
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\vdash\prune gf{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(f)=g\Rightarrow\sigma,M\mapsto v\dashv\Delta}
+\unificationoccurcheck
 \]
 
 \end_inset
@@ -5680,7 +6100,7 @@ The simplest case is when the coproduct is empty: then, the pushout is
 .
 \begin_inset Formula 
 \[
-\dfrac{}{\Gamma\vdash\prune{()}{()}{1_{\Gamma}}{()}\dashv\Gamma}
+\pruningempty
 \]
 
 \end_inset
@@ -5698,7 +6118,7 @@ Another simple case is when
  Thus we have the rule
 \begin_inset Formula 
 \[
-\dfrac{}{\top\vdash\prune{\bang}f{\bang}{\bang}\dashv\top}
+\pruningtop
 \]
 
 \end_inset
@@ -5969,7 +6389,7 @@ end{tikzcd}
 Thus we have the following rule.
 \begin_inset Formula 
 \begin{equation}
-\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}u\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}\label{eq:pruning-stepwise}
+\pruningstepwise\label{eq:pruning-stepwise}
 \end{equation}
 
 \end_inset
@@ -6373,11 +6793,7 @@ noprefix "false"
  Therefore, we get the rule
 \begin_inset Formula 
 \[
-\dfrac{\begin{array}{c}
-\xymatrix{Ka\ar[r]^{Kf}\ar[d]_{Kg} & Kb\ar@{..>}[d]^{Kg'}\\
-Kc\ar@{..>}[r]_{Kf'} & Kd
-}
-\end{array}\text{ is a pushout}}{\Gamma,M:c\vdash\prune{M(g)}f{M\mapsto M'(f')}{M'(g')}\dashv\Gamma,M':d}
+\pruningflex
 \]
 
 \end_inset
@@ -6547,7 +6963,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\dfrac{Kf:Ka\rightarrow Kb\text{ does not factor }s:Ka\rightarrow S_{o}}{\Gamma\vdash\prune{o(g;s)}f{\bang}{\bang}\dashv\top}\label{eq:pruning-facto-wo-regular}
+\pruningrigfail\label{eq:pruning-facto-wo-regular}
 \end{equation}
 
 \end_inset
@@ -6604,9 +7020,13 @@ dirac
 \end_layout
 
 \begin_layout Standard
+Otherwise we get the following rule
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\dfrac{\Gamma\vdash\prune g{f^{o}}{\sigma}u\dashv\Delta\qquad s=s'\circ Kf}{\Gamma\vdash\prune{o(g;s)}f{\sigma}{o(u;s')}\dashv\Delta}\label{eq:pruning-rec}
+\pruningrig\label{eq:pruning-rec}
 \end{equation}
 
 \end_inset
@@ -7972,8 +8392,39 @@ The usual termination argument for pattern unification applies.
 \begin_inset Formula $\D^{+}$
 \end_inset
 
-), which can be defined without ambiguity as the size of the coproducts,
- thanks to the following lemma, because objects of 
+), which can be defined without ambiguity as its size as a finite family
+ of elements of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ (see Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:D-finite-family"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+thanks to the following lemma, because objects of 
 \begin_inset Formula $\D$
 \end_inset
 
@@ -8000,6 +8451,15 @@ noprefix "false"
 
 ).
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
 \begin_layout Lemma
 Let 
@@ -8075,6 +8535,11 @@ Assume an isomorphism
 
 .
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
