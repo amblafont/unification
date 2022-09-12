@@ -13,6 +13,20 @@
 \newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\commentaire}[1]{}
 \usepackage{cmll}
+
+% To be removed when submitting?
+% it is to add bookmarks
+% https://tex.stackexchange.com/questions/47383/no-pdf-bookmarks-when-using-llncs-class
+\usepackage{etoolbox}
+\makeatletter
+\let\llncs@addcontentsline\addcontentsline
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\setcounter{tocdepth}{2}
+\makeatother
+\usepackage{hyperref}
+\usepackage{bookmark}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -278,7 +292,7 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationflexflex}{\dfrac{\xymatrix{a\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & b\ar@{..>}[r]^{h} & c}
+\newcommand{\unificationflexflex}{\dfrac{\xymatrix{a\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & b\ar@{-->}[r]^{h} & c}
 \text{ is a coequaliser in \ensuremath{\D=\op{{\cal A}}}}}{\Gamma,M:b\vdash M(f)=M(g)\Rightarrow M\mapsto M'(h)\dashv\Gamma,M':c}}
 \end_inset
 
@@ -303,8 +317,8 @@ setboolean{fullpaper}{false}
 
 \begin_inset FormulaMacro
 \newcommand{\pruningflex}{\dfrac{\begin{array}{c}
-\xymatrix{a\ar[r]^{f}\ar[d]_{g} & b\ar@{..>}[d]^{g'}\\
-c\ar@{..>}[r]_{f'} & d
+\xymatrix{a\ar[r]^{f}\ar[d]_{g} & b\ar@{-->}[d]^{g'}\\
+c\ar@{-->}[r]_{f'} & d
 }
 \end{array}\text{ is a pushout in \ensuremath{\D=\op{{\cal A}}}}}{\Gamma,M:c\vdash\prune{M(g)}f{M\mapsto M'(f')}{M'(g')}\dashv\Gamma,M':d}}
 \end_inset
@@ -324,7 +338,7 @@ c\ar@{..>}[r]_{f'} & d
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\pruningstepwise}{\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}u\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}}
+\newcommand{\pruningstepwise}{\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}}
 \end_inset
 
 
@@ -1215,6 +1229,27 @@ noprefix "false"
 
 \end_inset
 
+) and discuss effectivity of the described construction (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:effectivity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
 ).
  
 \begin_inset ERT
@@ -1290,24 +1325,12 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Summary of the rules
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \series bold
 Judgments 
 \series default
 (colimits in 
-\begin_inset Formula $\Kl T^{*}$
+\begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
 )
@@ -1316,7 +1339,7 @@ Judgments
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow\quad\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{..>}[r]^{\sigma} & \Delta}
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow\quad\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{-->}[r]^{\sigma} & \Delta}
 \text{ is a coequaliser}
 \]
 
@@ -1329,8 +1352,8 @@ Judgments
 \begin_inset Formula 
 \[
 \Gamma\vdash\prune gf{\sigma}u\dashv\Delta\quad\Longleftrightarrow\begin{array}{c}
-\xymatrix{\coprod_{i}Ka_{i}\ar[r]^{{\cal L}f}\ar[d]_{g} & \coprod_{i}Kb_{i}\ar@{..>}[d]^{u}\\
-\Gamma\ar@{..>}[r]_{\sigma} & \Delta
+\xymatrix{\coprod_{i}Ka_{i}\ar[r]^{{\cal L}f}\ar[d]_{g} & \coprod_{i}Kb_{i}\ar@{-->}[d]^{u}\\
+\Gamma\ar@{-->}[r]_{\sigma} & \Delta
 }
 \end{array}\text{ is a pushout}
 \]
@@ -1474,6 +1497,18 @@ Flex
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:algo-summary"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Summary of the rules
+\end_layout
 
 \end_inset
 
@@ -1642,7 +1677,49 @@ Given an adjunction
 \end_inset
 
 .
- In particular, a Kleisli morphism 
+ 
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $T$
+\end_inset
+
+ be a monad on a category 
+\begin_inset Formula $\B$
+\end_inset
+
+.
+ We denote its unit by 
+\begin_inset Formula $\eta$
+\end_inset
+
+, and its Kleisli category by 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+: the objects are the same as those of 
+\begin_inset Formula $\B$
+\end_inset
+
+, and a Kleisli morphism from 
+\begin_inset Formula $A$
+\end_inset
+
+ to 
+\begin_inset Formula $B$
+\end_inset
+
+ is a morphism 
+\begin_inset Formula $A\rightarrow TB$
+\end_inset
+
+ in 
+\begin_inset Formula $\B$
+\end_inset
+
+.
+ Any Kleisli morphism 
 \begin_inset Formula $f:A\rightarrow TB$
 \end_inset
 
@@ -1650,19 +1727,8 @@ Given an adjunction
 \begin_inset Formula $f^{*}:TA\rightarrow TB$
 \end_inset
 
- through the adjunction between the category of 
-\begin_inset Formula $T$
-\end_inset
-
--algebras and 
-\begin_inset Formula $\C$
-\end_inset
-
 .
-\end_layout
-
-\begin_layout Standard
-We denote the Kleisli composition of 
+ We denote the Kleisli composition of 
 \begin_inset Formula $f:A\rightarrow TB$
 \end_inset
 
@@ -1675,35 +1741,24 @@ We denote the Kleisli composition of
 \end_inset
 
 .
- The unit of the monad 
-\begin_inset Formula $T$
+ We denote by 
+\begin_inset Formula ${\cal L}$
 \end_inset
 
- is denoted by 
-\begin_inset Formula $\eta$
+ the left adjoint 
+\begin_inset Formula $\mathcal{L}:\B\rightarrow\Kl T$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Standard
-The left adjoint 
-\begin_inset Formula $\mathcal{L}$
-\end_inset
-
- to the Kleisli category of 
-\begin_inset Formula $T$
-\end_inset
-
- postcomposes any morphism 
+ which is the identity on objects and postcomposes any morphism 
 \begin_inset Formula $A\rightarrow B$
 \end_inset
 
  by 
-\begin_inset Formula $\eta$
+\begin_inset Formula $\eta_{B}:B\rightarrow TB$
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Section
@@ -3494,6 +3549,16 @@ The endofunctor for syntax
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "ssec:endo-syntax"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 We assume given an endofunctor 
 \begin_inset Formula $F$
 \end_inset
@@ -4758,7 +4823,7 @@ In this section, we describe the main unification phase, which relies on
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{..>}[r]^{\sigma} & \Delta}
+\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{-->}[r]^{\sigma} & \Delta}
 \]
 
 \end_inset
@@ -4858,19 +4923,8 @@ name "lem:coeq-stepwise"
 
 \end_inset
 
-Let 
-\begin_inset Formula $f_{1},g_{1}:A_{1}\rightarrow B$
-\end_inset
-
- and 
-\begin_inset Formula $f_{2},g_{2}:A_{2}\rightarrow B$
-\end_inset
-
- be morphisms in some category.
-\end_layout
-
-\begin_layout Lemma
-If the following two diagrams as coequalisers
+In any category, if the first two diagrams below are coequalisers, then
+ the last one as well
 \end_layout
 
 \begin_layout Lemma
@@ -4951,7 +5005,7 @@ arrow["{f_1'}"', curve={height=6pt}, from=2-1, to=2-2]
 
 	
 \backslash
-arrow["u", from=2-2, to=2-3]
+arrow["u", dashed, from=2-2, to=2-3]
 \end_layout
 
 \begin_layout Plain Layout
@@ -4986,7 +5040,7 @@ arrow["u"', from=3-5, to=2-6]
 
 	
 \backslash
-arrow["v", from=2-6, to=2-7]
+arrow["v", dashed, from=2-6, to=2-7]
 \end_layout
 
 \begin_layout Plain Layout
@@ -5006,10 +5060,6 @@ end{tikzcd}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Lemma
-Then this one as well:
 \end_layout
 
 \begin_layout Lemma
@@ -5040,7 +5090,7 @@ arrow["{f_1',f_2'}"', curve={height=12pt}, from=1-1, to=1-2]
 \backslash
 arrow["{v
 \backslash
-circ u}", from=1-2, to=1-3] 
+circ u}", from=1-2, to=1-3, dashed] 
 \backslash
 end{tikzcd}
 \backslash
@@ -5705,6 +5755,10 @@ end{tikzcd}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Note that this is coqualiser diagram of the shape (in 
 \begin_inset Formula $\Kl T^{*}$
 \end_inset
@@ -5734,7 +5788,24 @@ where
 \end_inset
 
 .
- We exploit the following lemma.
+ 
+\end_layout
+
+\end_inset
+
+We exploit the following lemma in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+, with 
+\begin_inset Formula $u={\cal L}Kf$
+\end_inset
+
+ and 
+\begin_inset Formula $v={\cal L}Kg$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -5742,10 +5813,10 @@ In any category, if the below left diagram is a coequaliser, then so is
  the below right diagram.
 \begin_inset Formula 
 \[
-\xymatrix{A\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & B\ar@{..>}[r]^{h} & C}
+\xymatrix{A\ar@<+.5ex>[r]^{u}\ar@<-.5ex>[r]_{v} & B\ar@{-->}[r]^{h} & C}
 \qquad\begin{array}{c}
 \xymatrix{ & B\ar[rd]^{in_{B}}\\
-A\ar[ru]^{f}\ar[rd]_{g} &  & B+D\ar@{..>}[r]^{h+1_{D}} & C+D\\
+A\ar[ru]^{u}\ar[rd]_{v} &  & B+D\ar@{-->}[r]^{h+1_{D}} & C+D\\
  & B\ar[ru]_{in_{B}}
 }
 \end{array}
@@ -5803,11 +5874,7 @@ noprefix "false"
 
 \end_inset
 
-And since 
-\begin_inset Formula $\D$
-\end_inset
-
- has finite connected colimits (Property
+Note that such a coequaliser always exists by Property
 \begin_inset ERT
 status open
 
@@ -5828,7 +5895,23 @@ noprefix "false"
 
 \end_inset
 
-), given any input, there is always an output such that the rule applies.
+.
+\end_layout
+
+\begin_layout Remark
+If we use the same notation for coequalisers in 
+\begin_inset Formula $\D$
+\end_inset
+
+, then this rule becomes
+\begin_inset Formula 
+\[
+\dfrac{b\vdash f=g\Rightarrow h\dashv c}{\Gamma,M:b\vdash M(f)=M(g)\Rightarrow M\mapsto M'(h)\dashv\Gamma,M':c}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -5871,6 +5954,22 @@ $
 \end_layout
 
 \begin_layout Standard
+We exploit the following general lemma with 
+\begin_inset Formula $x={\cal L}Kf$
+\end_inset
+
+ and 
+\begin_inset Formula $y=g$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Thus, the coequaliser
 \begin_inset Formula 
 \[
@@ -5882,7 +5981,7 @@ Thus, the coequaliser
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 is a coequaliser (in 
 \begin_inset Formula $\Kl T^{*}$
 \end_inset
@@ -5890,12 +5989,17 @@ is a coequaliser (in
 ) of the shape
 \begin_inset Formula 
 \begin{equation}
-\xymatrix{ & Kb\ar[rd]\\
+\xymatrix{ & Kb\ar@{^{(}->}[rd]^{in_{M}}\\
 Ka\ar[ru]^{\mathcal{L}f}\ar[rd]_{g} &  & \Gamma',M:b\\
- & \Gamma'\ar[ru]
+ & \Gamma'\ar@{_{(}->}[ru]_{in_{\Gamma'}}
 }
 ,\label{eq:coeq-flex-rigid}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -5908,12 +6012,12 @@ In any category, if the below left diagram is a pushout, then the below
 \begin_inset Formula 
 \[
 \begin{array}{c}
-\xymatrix{A\ar[r]\ar[d] & B\ar@{..>}[d]^{u}\\
-C\ar@{..>}[r]_{v} & D
+\xymatrix{A\ar[r]^{x}\ar[d]_{y} & B\ar@{-->}[d]^{u}\\
+C\ar@{-->}[r]_{v} & D
 }
 \end{array}\qquad\begin{array}{c}
 \xymatrix{ & B\ar[rd]^{in_{1}}\\
-A\ar[ru]\ar[rd] &  & B+C\ar@{..>}[r]_{[u,v]} & D\\
+A\ar[ru]^{x}\ar[rd]_{y} &  & B+C\ar@{-->}[r]_{u,v} & D\\
  & C\ar[ru]_{in_{2}}
 }
 \end{array}.
@@ -5925,36 +6029,11 @@ A\ar[ru]\ar[rd] &  & B+C\ar@{..>}[r]_{[u,v]} & D\\
 \end_layout
 
 \begin_layout Standard
-Therefore, computing the coequaliser of
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:coeq-flex-rigid"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- amounts to computing a pushout in 
-\begin_inset Formula $\Kl{\D^{+}}^{*}$
-\end_inset
-
-.
+Therefore, it is enough to compute the pushout
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[d]_{g}\ar[r]^{\mathcal{L}f} & Kb\ar@{..>}[d]^{v}\\
-\Gamma\ar@{..>}[r]_{\sigma} & \Delta
+\xymatrix{Ka\ar[d]_{g}\ar[r]^{\mathcal{L}Kf} & Kb\ar@{-->}[d]^{v}\\
+\Gamma\ar@{-->}[r]_{\sigma} & \Delta
 }
 ,
 \]
@@ -6041,8 +6120,8 @@ Consider a pushout in
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\xymatrix{\coprod_{i}Ka_{i}\ar[rrr]^{\coprod_{i}{\cal L}Kf_{i}={\cal L}\coprod_{i}KF_{i}}\ar[d]_{g} &  &  & \coprod_{i}Kb_{i}\ar@{..>}[d]^{u}\\
-\Gamma\ar@{..>}[rrr]_{\sigma} &  &  & \pullbackcorner[ul]\Delta
+\xymatrix{\coprod_{i}Ka_{i}\ar[rrr]^{\coprod_{i}{\cal L}Kf_{i}={\cal L}\coprod_{i}KF_{i}}\ar[d]_{g} &  &  & \coprod_{i}Kb_{i}\ar@{-->}[d]^{u}\\
+\Gamma\ar@{-->}[rrr]_{\sigma} &  &  & \Delta
 }
 \]
 
@@ -6243,7 +6322,8 @@ status open
 \end_layout
 
 \begin_layout Lemma
-In any category, if the following two diagrams are pushouts,
+In any category, if the first two diagrams below are coequalisers, then
+ the last one as well
 \end_layout
 
 \begin_layout Lemma
@@ -6300,44 +6380,14 @@ begin{tikzcd}
 
 	
 \backslash
-arrow["g"', from=1-1, to=2-1]
+arrow["g_1"', from=1-1, to=2-1]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["f", from=1-1, to=1-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["
-\backslash
-sigma"', dashed, from=2-1, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["u", dashed, from=1-2, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{g'}"', from=1-3, to=2-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{f'}", from=1-3, to=1-4]
+arrow["f_1", from=1-1, to=1-2]
 \end_layout
 
 \begin_layout Plain Layout
@@ -6346,14 +6396,44 @@ arrow["{f'}", from=1-3, to=1-4]
 \backslash
 arrow["
 \backslash
-sigma"', from=2-3, to=3-3]
+sigma_1"', dashed, from=2-1, to=2-2]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["{u'}", dashed, from=1-4, to=3-4]
+arrow["u_1", dashed, from=1-2, to=2-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{g_2}"', from=1-3, to=2-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{f_2}", from=1-3, to=1-4]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["
+\backslash
+sigma_1"', from=2-3, to=3-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{u_2}", dashed, from=1-4, to=3-4]
 \end_layout
 
 \begin_layout Plain Layout
@@ -6362,7 +6442,7 @@ arrow["{u'}", dashed, from=1-4, to=3-4]
 \backslash
 arrow["{
 \backslash
-sigma'}"', dashed, from=3-3, to=3-4]
+sigma_2}"', dashed, from=3-3, to=3-4]
 \end_layout
 
 \begin_layout Plain Layout
@@ -6370,30 +6450,14 @@ sigma'}"', dashed, from=3-3, to=3-4]
 
 \backslash
 end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-]
+quad
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-then this one as well:
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
 
 \begin_layout Plain Layout
 
@@ -6406,8 +6470,6 @@ yB1LCB1J10iLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbMSwzLCJcXHNpZ
 \begin_layout Plain Layout
 
 
-\backslash
-[
 \backslash
 begin{tikzcd}
 \end_layout
@@ -6430,14 +6492,14 @@ begin{tikzcd}
 
 	
 \backslash
-arrow["{[g,g']}"', from=1-1, to=2-1]
+arrow["{[g_1,g_2]}"', from=1-1, to=2-1]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["{f+f'}", from=1-1, to=1-3]
+arrow["{f_1+f_2}", from=1-1, to=1-3]
 \end_layout
 
 \begin_layout Plain Layout
@@ -6446,9 +6508,9 @@ arrow["{f+f'}", from=1-1, to=1-3]
 \backslash
 arrow["{[
 \backslash
-sigma'
+sigma_2
 \backslash
-circ u, u']}", dashed, from=1-3, to=2-3]
+circ u_1, u_2]}", dashed, from=1-3, to=2-3]
 \end_layout
 
 \begin_layout Plain Layout
@@ -6457,11 +6519,11 @@ circ u, u']}", dashed, from=1-3, to=2-3]
 \backslash
 arrow["{
 \backslash
-sigma'
+sigma_2
 \backslash
 circ 
 \backslash
-sigma}"', dashed, from=2-1, to=2-3]
+sigma_1}"', dashed, from=2-1, to=2-3]
 \end_layout
 
 \begin_layout Plain Layout
@@ -6469,6 +6531,11 @@ sigma}"', dashed, from=2-1, to=2-3]
 
 \backslash
 end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
 ]
 \end_layout
@@ -6509,11 +6576,11 @@ Thanks to the previous rule, we can focus on the case where the coproduct
 \end_inset
 
 ).
- Thus, we want to compute the pushout
+ Thus, we want to compute a pushout
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[r]^{Kf}\ar[d]_{u} & Kb\ar[r]^{\eta} & TKb\\
-T\Gamma
+\xymatrix{Ka\ar[r]^{{\cal L}Kf}\ar[d] & Kb\\
+\Gamma
 }
 \]
 
@@ -6545,10 +6612,11 @@ noprefix "false"
 \end_inset
 
 , the left vertical morphism 
-\begin_inset Formula $u:Ka\rightarrow T\Gamma$
+\begin_inset Formula $Ka\rightarrow T\Gamma$
 \end_inset
 
- is one of the two following possibilites:
+ is one of the two following possibilites, investigated separately in the
+ following subsections:s
 \end_layout
 
 \begin_layout Itemize
@@ -6648,7 +6716,8 @@ status open
 \end_layout
 
 \begin_layout Lemma
-In any category, if the following diagram is a pushout
+In any category, if the diagram below left is a pushout, then so is the
+ right one.
 \end_layout
 
 \begin_layout Lemma
@@ -6724,45 +6793,18 @@ arrow["u", dashed, from=1-2, to=2-2]
 
 \backslash
 end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-then this one as well:
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% https://q.uiver.app/?q=WzAsNixbMCwwLCJBIl0sWzAsMSwiWCJdLFsxLDAsIkIiXSxbMSwyLCJaK
-1kiXSxbMCwyLCJYK1kiXSxbMSwxLCJaIl0sWzAsMSwiZyIsMl0sWzAsMiwiZiJdLFsxLDQsImluXzEiL
-DJdLFs0LDMsIlxcc2lnbWErWSIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dL
-FsyLDUsInUiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbNSwzLCJpbl8xI
-iwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-[
+qquad
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
 begin{tikzcd}
 \end_layout
@@ -6839,6 +6881,11 @@ arrow["{in_1}", dashed, from=2-2, to=3-2]
 
 \backslash
 end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
 ]
 \end_layout
@@ -6920,9 +6967,8 @@ We want to compute the pushout
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[r]^{Kf}\ar[d]_{o(g;s)} & Kb\ar[r]^{\eta} & TKb\\
-T\Gamma\\
-\\
+\xymatrix{Ka\ar[r]^{{\cal L}Kf}\ar[d]_{o(g;s)} & Kb\\
+\Gamma
 }
 \]
 
@@ -7232,27 +7278,6 @@ We prove it by working in the category
 \begin_inset Formula $[\mathcal{A},\Set]$
 \end_inset
 
- of presheaves over 
-\begin_inset Formula $\D$
-\end_inset
-
-.
- We denote by 
-\begin_inset Formula $M$
-\end_inset
-
- the monad on 
-\begin_inset Formula $[\mathcal{A},\Set]$
-\end_inset
-
- that restricts to the monad 
-\begin_inset Formula $T$
-\end_inset
-
- on 
-\begin_inset Formula $\C$
-\end_inset
-
 .
 \end_layout
 
@@ -7277,20 +7302,24 @@ Let
 
 \end_layout
 
-\begin_layout Subsection
-Preliminary lemma
-\end_layout
-
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 There is a 
-\begin_inset Formula $M$
+\begin_inset Formula $T$
 \end_inset
 
 -algebra structure 
-\begin_inset Formula $M\mathbb{N}\rightarrow\mathbb{N}$
+\begin_inset Formula $T\mathbb{N}\rightarrow\mathbb{N}$
 \end_inset
 
- on the constant presheaf mapping any object to the set 
+ on the constant functor 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+ mapping any object to the set 
 \begin_inset Formula $\mathbb{N}$
 \end_inset
 
@@ -7300,11 +7329,11 @@ There is a
 \end_inset
 
 , this induces an algebra morphism 
-\begin_inset Formula $MX\xrightarrow{|-|_{s}}\mathbb{N}$
+\begin_inset Formula $TX\xrightarrow{|-|_{s}}\mathbb{N}$
 \end_inset
 
 , which basically computes the maximal depth of an element of 
-\begin_inset Formula $MX$
+\begin_inset Formula $TX$
 \end_inset
 
 , with custom depth for leaves in 
@@ -7325,7 +7354,7 @@ Let
 
 .
  A natural transformation 
-\begin_inset Formula $n:A\rightarrow MX$
+\begin_inset Formula $n:A\rightarrow TX$
 \end_inset
 
  
@@ -7351,7 +7380,7 @@ between families in
 -flat
 \emph default
  if 
-\begin_inset Formula $A\rightarrow MX\xrightarrow{|-|_{s}}\mathbb{N}$
+\begin_inset Formula $A\rightarrow TX\xrightarrow{|-|_{s}}\mathbb{N}$
 \end_inset
 
  is constant.
@@ -7370,13 +7399,18 @@ flat
 -flat.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In practice we will have 
 \begin_inset Formula $X$
 \end_inset
 
  as the initial presheaf, or the terminal presheaf.
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -7408,6 +7442,10 @@ Any morphism out of a representable presheaf
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
 \begin_layout Example
 \begin_inset CommandInset label
 LatexCommand label
@@ -7425,7 +7463,7 @@ status open
 
 \begin_layout Plain Layout
 Intuitively, the height of an element in 
-\begin_inset Formula $MX$
+\begin_inset Formula $TX$
 \end_inset
 
  is the smallest index where it appears in the initial chain.
@@ -7441,6 +7479,11 @@ Intuitively, the height of an element in
 The crucial lemma is the following.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proposition
 \begin_inset CommandInset label
 LatexCommand label
@@ -7449,15 +7492,53 @@ name "prop:pbk-lemma-occur-check"
 \end_inset
 
 Let 
-\begin_inset Formula $A\xrightarrow{n}M\emptyset$
+\begin_inset Formula $R$
 \end_inset
 
- be a flat morphism.
+ be any free monad on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ generated by an endofunctor 
+\begin_inset Formula $G$
+\end_inset
+
+ of the shape as described in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ssec:endo-syntax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $A\xrightarrow{n}R\emptyset$
+\end_inset
+
+ be a natural transformation morphism, where 
+\begin_inset Formula $A$
+\end_inset
+
+ is representable.
  Then, the following diagram is a pullback
 \begin_inset Formula 
 \[
-\xymatrix{A+A\times_{M\emptyset}A\ar[r]\ar[d] & MA\ar[d]^{n^{*}}\\
-A\ar[r]_{n} & M\emptyset
+\xymatrix{A+A\times_{R\emptyset}A\ar[r]\ar[d] & RA\ar[d]^{n^{*}}\\
+A\ar[r]_{n} & R\emptyset
 }
 \]
 
@@ -7491,41 +7572,62 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Standard
-As an example, if 
-\begin_inset Formula $\D$
+\begin_layout Example
+Taking 
+\begin_inset Formula $G=F$
 \end_inset
 
- is discrete, and if 
-\begin_inset Formula $n$
+, 
+\begin_inset Formula $R=T$
 \end_inset
 
- is 
-\begin_inset Formula $yd\rightarrow M\emptyset$
+, and 
+\begin_inset Formula $A=(M:a)$
 \end_inset
 
-, choosing an element 
-\begin_inset Formula $u\in M\emptyset_{d}$
+, the pullback property means that given 
+\begin_inset Formula $f\in\hom_{\D}(a',a)$
 \end_inset
 
-, then what it says is that given any element 
-\begin_inset Formula $t\in MA_{d}$
+, and 
+\begin_inset Formula $t:Ka'\rightarrow TKa$
 \end_inset
 
  such that 
-\begin_inset Formula $t[u]=u$
+\begin_inset Formula $t[n]=n\circ Kf$
 \end_inset
 
 , either 
-\begin_inset Formula $t=\eta(id_{d})$
+\begin_inset Formula $t=M(g)$
 \end_inset
 
-, i.e., 
-\begin_inset Formula $t$
+ for some 
+\begin_inset Formula $g$
 \end_inset
 
- is a metavariable, either 
-\begin_inset Formula $t=u$
+, either 
+\begin_inset Formula $t=n\circ Kf$
+\end_inset
+
+.
+ In particular, if 
+\begin_inset Formula $f=1_{a}$
+\end_inset
+
+, then 
+\begin_inset Formula $t[n]=n$
+\end_inset
+
+ implies that 
+\begin_inset Formula $t=M(g)$
+\end_inset
+
+ for some 
+\begin_inset Formula $g$
+\end_inset
+
+ or 
+\begin_inset Formula $t=n$
 \end_inset
 
 .
@@ -7600,15 +7702,19 @@ begin{full}
 
 \begin_layout Corollary
 Let 
-\begin_inset Formula $A\xrightarrow{n}M1$
+\begin_inset Formula $A\xrightarrow{n}T1$
 \end_inset
 
- be a flat morphism.
+ be a morphism such that 
+\begin_inset Formula $A$
+\end_inset
+
+ is representable.
  Then, the following diagram is a pullback
 \begin_inset Formula 
 \[
-\xymatrix{A+A\times_{M1}A\ar[r]\ar[d] & M(A+1)\ar[d]^{n^{*}}\\
-A\ar[r]_{n} & M1
+\xymatrix{A+A\times_{T1}A\ar[r]\ar[d] & T(A+1)\ar[d]^{n^{*}}\\
+A\ar[r]_{n} & T1
 }
 \]
 
@@ -7624,7 +7730,7 @@ Consider the functor
 
 .
  By universal property, it precisely generates the monad 
-\begin_inset Formula $M'=M(1+-)$
+\begin_inset Formula $T'=T(1+-)$
 \end_inset
 
 , so we apply Proposition
@@ -7649,15 +7755,15 @@ noprefix "false"
 \end_inset
 
  for 
-\begin_inset Formula $M'$
+\begin_inset Formula $T'$
 \end_inset
 
  (any 
-\begin_inset Formula $M'$
+\begin_inset Formula $T'$
 \end_inset
 
 -flat morphism becomes 
-\begin_inset Formula $M$
+\begin_inset Formula $T$
 \end_inset
 
 -flat by assigning the unit weight to the leaf in 
@@ -7676,19 +7782,19 @@ noprefix "false"
 
 \begin_layout Corollary
 Let 
-\begin_inset Formula $A\xrightarrow{n}M1$
+\begin_inset Formula $A\xrightarrow{n}T1$
 \end_inset
 
  be a flat morphism and 
-\begin_inset Formula $\sigma:b\rightarrow M1$
+\begin_inset Formula $\sigma:b\rightarrow T1$
 \end_inset
 
  be another one.
  Then, the following diagram is a pullback 
 \begin_inset Formula 
 \[
-\xymatrix{A\times_{M1}MB+A\times_{M1}A\ar[r]\ar[d] & M(A+B)\ar[d]^{[u,\sigma]^{*}}\\
-A\ar[r]_{u} & M1
+\xymatrix{A\times_{T1}TB+A\times_{T1}A\ar[r]\ar[d] & T(A+B)\ar[d]^{[u,\sigma]^{*}}\\
+A\ar[r]_{u} & T1
 }
 \]
 
@@ -7772,11 +7878,11 @@ end{tikzcd}
 
 where we inserted the known pullback at the bottom.
  Since coproducts are pullback stable, it is enough to show that 
-\begin_inset Formula $(A\times_{M1}A)\times_{M(A+1)}M(A+B)=A\times_{M1}A$
+\begin_inset Formula $(A\times_{T1}A)\times_{T(A+1)}T(A+B)=A\times_{T1}A$
 \end_inset
 
  and 
-\begin_inset Formula $A\times_{M1}MB=A\times_{M(A+1)}M(A+B)$
+\begin_inset Formula $A\times_{T1}TB=A\times_{T(A+1)}T(A+B)$
 \end_inset
 
 , which we do in the following diagrams (all squares are pullbacks).
@@ -8087,11 +8193,11 @@ Let
 \end_inset
 
  as with the same formula, generating a monad 
-\begin_inset Formula $M'$
+\begin_inset Formula $T'$
 \end_inset
 
  such that 
-\begin_inset Formula $M'(-)\circ\delta=M(-\circ\delta)$
+\begin_inset Formula $T'(-)\circ\delta=T(-\circ\delta)$
 \end_inset
 
 .
@@ -8107,8 +8213,8 @@ Applying
  to the above diagram, we get
 \begin_inset Formula 
 \[
-\xymatrix{yc\ar[d]_{f}\ar[r] & M(yd+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
-yd\ar[r]_{u} & M1
+\xymatrix{yc\ar[d]_{f}\ar[r] & T(yd+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
+yd\ar[r]_{u} & T1
 }
 \]
 
@@ -8126,8 +8232,8 @@ Then we postprecompose by
 .
 \begin_inset Formula 
 \[
-\xymatrix{yc\circ\delta\ar[d]_{f}\ar[r] & M(yd\circ\delta+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
-yd\circ\delta\ar[r]_{u} & M1
+\xymatrix{yc\circ\delta\ar[d]_{f}\ar[r] & T(yd\circ\delta+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
+yd\circ\delta\ar[r]_{u} & T1
 }
 \]
 
@@ -8172,7 +8278,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Long Proof
-\begin_inset Formula $yd\times_{M1}M(J\Gamma)+yd\times_{M1}yd\rightarrow M(yd+\Gamma)$
+\begin_inset Formula $yd\times_{T1}T(J\Gamma)+yd\times_{T1}yd\rightarrow T(yd+\Gamma)$
 \end_inset
 
 .
@@ -8213,9 +8319,176 @@ name "sec:completeness"
 \begin_layout Standard
 Each inductive rule presented so far provides an elementary step for the
  construction of coequalisers.
- Since the rules were already justified to be sound, the following two propertie
-s are sufficient to ensure that applying rules eagerly eventually leads
- to a coequaliser:
+ We need to ensure that this set of rules allows to construct a coequaliser
+ in a finite number of steps.
+ To make the argument more straightforward, we slightly alter the stepwise
+ rules
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unify-stepwise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-stepwise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by enforcing that the coproduct 
+\begin_inset Formula $A_{1}+\dots+A_{n}$
+\end_inset
+
+ of objects of 
+\begin_inset Formula $\D$
+\end_inset
+
+ is split into 
+\begin_inset Formula $A_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $A_{2}+\dots+A_{n}$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To this end, we consider in this section some alternative rules to make
+ the argument more straightforward: we simply remove the stepwise rules
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unify-stepwise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-stepwise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and replace the recursive rules
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unifying-rec"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-rec"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by the following ones:
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash f_{1}=g_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}}{\Gamma\vdash o(f;s)=o(g;s)\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following two properties are then sufficient to ensure that applying
+ rules eagerly eventually leads to a coequaliser:
 \end_layout
 
 \begin_layout Itemize
@@ -8268,54 +8541,6 @@ noprefix "false"
 ).
 \end_layout
 
-\begin_layout Standard
-Before delving into the details, we first need to add a side condition to
- the stepwise rules 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unify-stepwise"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-stepwise"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, so that termination is not obviously wrong: we enforce that the coproduct
- is split in two non-empty components.
-\end_layout
-
 \begin_layout Subsection
 Progress
 \end_layout
@@ -8333,13 +8558,12 @@ name "subsec:progress"
 \begin_layout Standard
 Progress for the main unification phase means that given a coequalising
  diagram 
-\begin_inset Formula $\xymatrix{\coprod_{i}Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma}
+\begin_inset Formula $\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma}
 $
 \end_inset
 
-, there is always a step that we can perform, i.e., there is always one rule
- that applies, in some sense that can be made precise for each rule, roughly
- meaning 
+, there is always one rule that applies, in some sense that can be made
+ precise for each rule, roughly meaning that 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -8394,6 +8618,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Note that if we do not add the above mentioned side conditions to the stepwise
  rules
 \begin_inset ERT
@@ -8440,24 +8668,34 @@ noprefix "false"
 , they always apply.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proposition
 Given an input 
-\begin_inset Formula $\xymatrix{\coprod_{i}Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma}
+\begin_inset Formula $\xymatrix{\coprod_{i\in I}Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma}
 $
 \end_inset
 
-, there is always a rule of the main unification phase that applies.
+, there is one rule of the main unification phase that applies.
  Given an input 
 \begin_inset Formula 
 \[
-\xymatrix{\coprod_{i}Ka_{i}\ar[r]^{\coprod_{i}Kf_{i}}\ar[d]_{g} & \coprod_{i}Kb_{i}\ar[r]^{\eta} & T\coprod_{i}Kb_{i}\\
+\xymatrix{\coprod_{i\in I}Ka_{i}\ar[r]^{\coprod_{i}{\cal L}Kf_{i}}\ar[d]_{g} & \coprod_{i\in I}Kb_{i}\\
 X
 }
 \]
 
 \end_inset
 
-there is always one rule in the pruning phase that applies.
+there is one rule in the pruning phase that applies.
+\end_layout
+
+\begin_layout Remark
+Essentially, there is exactly one rule that applies, if we ignore the possible
+ reordering of the coproduct in the stepwise rules.
 \end_layout
 
 \begin_layout Subsection
@@ -8517,135 +8755,7 @@ noprefix "false"
 \end_inset
 
 ).
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-thanks to the following lemma, because objects of 
-\begin_inset Formula $\D$
-\end_inset
-
- are connected (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "assu:connected"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Lemma
-Let 
-\begin_inset Formula $\coprod_{i\in I}A_{i}$
-\end_inset
-
- and 
-\begin_inset Formula $\coprod_{j\in J}B_{j}$
-\end_inset
-
- be isomorphic coproducts of connected objects.
- Then, 
-\begin_inset Formula $I$
-\end_inset
-
- and 
-\begin_inset Formula $J$
-\end_inset
-
- are isomorphic sets.
-\end_layout
-
-\begin_layout Long Proof
-Assume an isomorphism 
-\begin_inset Formula $\coprod_{i\in I}A_{i}\cong\coprod_{j\in J}B_{j}$
-\end_inset
-
-.
- By connectedness, each 
-\begin_inset Formula $A_{k}\rightarrow\coprod_{j\in J}B_{j}$
-\end_inset
-
- factors (uniquely) through a coproduct injection 
-\begin_inset Formula $B_{\alpha(k)}\rightarrow\coprod_{j\in J}B_{j}$
-\end_inset
-
-.
- This induces a map 
-\begin_inset Formula $\alpha:I\rightarrow J$
-\end_inset
-
-.
- Conversely, we get a map 
-\begin_inset Formula $\beta:J\rightarrow I$
-\end_inset
-
-.
- Now, the composition 
-\begin_inset Formula $A_{k}\rightarrow\coprod_{j\in J}B_{j}\cong\coprod_{i\in I}A_{i}$
-\end_inset
-
- which equals 
-\begin_inset Formula $A_{k}\rightarrow B_{\alpha(k)}\rightarrow A_{\beta(\alpha(k))}\rightarrow\coprod_{i\in I}A_{i}$
-\end_inset
-
- must be the coproduct injection 
-\begin_inset Formula $A_{k}\rightarrow\coprod_{i\in I}A_{i}$
-\end_inset
-
-.
- By connectedness, it follows that 
-\begin_inset Formula $\beta(\alpha(k))=k$
-\end_inset
-
-.
- Therefore, 
-\begin_inset Formula $\beta\circ\alpha=id$
-\end_inset
-
-, and by a symmetrical argument, 
-\begin_inset Formula $\alpha\circ\beta=id$
-\end_inset
-
-.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We extend the definition of 
-\begin_inset Formula $|\Gamma|$
-\end_inset
-
- to the case where 
+ We extend this definition to the case where 
 \begin_inset Formula $\Gamma=\top$
 \end_inset
 
@@ -8657,7 +8767,29 @@ We extend the definition of
 \end_layout
 
 \begin_layout Standard
-We also need to define the size 
+We also need to define the size
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This definition can be made formal by providing an adequate 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra structure on the constant functor mapping any object of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ 
 \begin_inset Formula $||t||$
 \end_inset
 
@@ -8666,35 +8798,29 @@ We also need to define the size
 term
 \emph default
  
-\begin_inset Formula $t:Kd\rightarrow\Delta$
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
 \end_inset
 
- as 
-\begin_inset Formula $|t|_{0}$
-\end_inset
-
-, as defined in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
+ recursively as follows:
 \end_layout
 
+\begin_layout Itemize
+\begin_inset Formula $||M(f)||=1$
 \end_inset
 
 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:occur-check"
-plural "false"
-caps "false"
-noprefix "false"
+\end_layout
 
+\begin_layout Itemize
+\begin_inset Formula $||o(f;s)||=1+||f||$
 \end_inset
 
-.
+
+\end_layout
+
+\begin_layout Standard
+where the size of a list of terms is just the sum of the size of each term
+ of the list.
 \end_layout
 
 \begin_layout Standard
@@ -8738,49 +8864,8 @@ One way to solve this issue consists in avoiding creating new metavariables.
 
 \end_inset
 
-First, we sketch termination of the pruning phase
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:pruning-phase"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, and then termination of the main unification phase
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:coequalising-phase"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
+First, we sketch the termination argument for the pruning phase, and then
+ for the main unification phase.
 \end_layout
 
 \begin_layout Subsubsection
@@ -8788,39 +8873,18 @@ Pruning phase
 \end_layout
 
 \begin_layout Standard
-There are two recursives rules: 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-stepwise"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-rec"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-In fact, they can be straightforwardly recast so that the input 
-\begin_inset Formula $f$
-\end_inset
-
- is structurally decreasing in 
+We define the size of a judgement 
 \begin_inset Formula $\Gamma\vdash\prune fg{\sigma}u\dashv\Delta$
 \end_inset
 
+ to be 
+\begin_inset Formula $||f||$
+\end_inset
+
 .
+ It is straightforward to check that the sizes of the premises are strictly
+ smaller than the size of the conclusion, for each recursive rule of the
+ pruning phase.
 \end_layout
 
 \begin_layout Personal Question
@@ -8828,10 +8892,29 @@ Can we define it truly recursively?
 \end_layout
 
 \begin_layout Subsubsection
-Main unification phase
+Unification phase
 \end_layout
 
 \begin_layout Standard
+We define the size of a judgement 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ to be the pair 
+\begin_inset Formula $(|\Gamma|,||t||+||u||)$
+\end_inset
+
+.
+ The following lemma ensures that for each recursive rule of the unification
+ phase, the sizes of the premises are strictly smaller (for the lexicographic
+ order) than the size of the conclusion.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 There are two recursives rules: 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -8857,6 +8940,46 @@ noprefix "false"
  since a substitution is applied to the argument.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+For any 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
+\end_inset
+
+, if 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a renaming, i.e, if 
+\begin_inset Formula $\sigma={\cal L}\sigma'$
+\end_inset
+
+ for some 
+\begin_inset Formula $\sigma'$
+\end_inset
+
+, then 
+\begin_inset Formula $||t[\sigma]||=||t||$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Lemma
 If there is a finite derivation tree of 
 \begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
@@ -8878,18 +9001,20 @@ if
 \begin_inset Formula $|\Gamma|=|\Delta|$
 \end_inset
 
+ and 
+\begin_inset Formula $\Delta\neq\top$
+\end_inset
+
 , then 
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a renaming, in the sense that it instantiates metavariables with metavariabl
-es.
+ is a renaming.
 \end_layout
 
 \end_deeper
 \begin_layout Standard
-This relies on the following lemma about the pruning phase, easily proved
- by induction.
+The proof of the latter lemma relies on the following result.
 \end_layout
 
 \begin_layout Standard
@@ -8929,7 +9054,7 @@ status open
 
 \end_inset
 
-, then 
+ then 
 \begin_inset Formula $|\Gamma|=|\Delta|$
 \end_inset
 
@@ -8941,34 +9066,70 @@ status open
 \emph on
 renaming
 \emph default
-, i.e., a free morphism: it factors through 
-\begin_inset Formula $\Delta\rightarrow T\Delta$
-\end_inset
-
 .
 \end_layout
 
 \begin_layout Standard
-Next, the crucial point, in the stepwise rule 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unify-stepwise"
-plural "false"
-caps "false"
-noprefix "false"
-
+\begin_inset Separator plain
 \end_inset
 
-, is the following lemma.
+
 \end_layout
 
-\begin_layout Lemma
-If 
-\begin_inset Formula $\sigma$
+\begin_layout Section
+Effectivity
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:effectivity"
+
 \end_inset
 
- is a renaming, then 
-\begin_inset Formula $||t[\sigma]||=||t||$
+
+\end_layout
+
+\begin_layout Standard
+If we were to turn this categorical construction into an algorithm, which
+ basic primitives do we need? 
+\end_layout
+
+\begin_layout Itemize
+Computing pullbacks and equalisers in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+Determining whether some morphisms factors through another.
+\end_layout
+
+\begin_layout Standard
+The second primitive is used in particular for the rules
+\end_layout
+
+\begin_layout Standard
+TODO
+\end_layout
+
+\begin_layout Standard
+Example: occur-check.
+\end_layout
+
+\begin_layout Standard
+We can define by induction a morphism 
+\begin_inset Formula $T(\Gamma,M:a)\rightarrow T\Gamma+1$
+\end_inset
+
+ such that 
+\begin_inset Formula $T\Gamma\rightarrow T(\Gamma,M:a)$
+\end_inset
+
+ is the equaliser of 
+\begin_inset Formula $T(\Gamma,M:a)\rightrightarrows1+1$
 \end_inset
 
 .
