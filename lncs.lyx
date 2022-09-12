@@ -14,6 +14,9 @@
 \newcommand{\commentaire}[1]{}
 \usepackage{cmll}
 
+\newcommand{\haut}{^}
+\newcommand{\hautr}[1]{\ar[r]^-{#1}}
+
 % To be removed when submitting?
 % it is to add bookmarks
 % https://tex.stackexchange.com/questions/47383/no-pdf-bookmarks-when-using-llncs-class
@@ -292,13 +295,32 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationflexflex}{\dfrac{\xymatrix{a\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & b\ar@{-->}[r]^{h} & c}
+\newcommand{\unificationfailingoccurcheckeffective}[1]{\dfrac{\xymatrix{a\ar[d]\hautr{u} & T(#1,M:b)\ar[d]^{m_{#1;b}}\\
+1\ar[r]_{in_{2}} & T#1+1 & u=o(g;s)
+}
+}{#1,M:b\vdash M(f)=u\Rightarrow\bang\dashv\top}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationflexflex}{\dfrac{\xymatrix{Ka\ar@<+.5ex>[r]^{f}\ar@<-.5ex>[r]_{g} & b\ar@{-->}[r]^{h} & c}
 \text{ is a coequaliser in \ensuremath{\D=\op{{\cal A}}}}}{\Gamma,M:b\vdash M(f)=M(g)\Rightarrow M\mapsto M'(h)\dashv\Gamma,M':c}}
 \end_inset
 
 
 \begin_inset FormulaMacro
 \newcommand{\unificationoccurcheck}{\dfrac{\Gamma\vdash\prune gf{\sigma}v\dashv\Delta\qquad u=Tin_{\Gamma}\circ g}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unificationoccurcheckeffective}{\dfrac{\xymatrix{Ka\ar[d]_{g}\hautr u & T(\Gamma,M:b)\ar[d]^{m_{\Gamma;b}}\\
+T\Gamma\ar[r]_{in_{1}} & T\Gamma+1 & \Gamma\vdash\prune gf{\sigma}v\dashv\Delta
+}
+}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
 \end_inset
 
 
@@ -1229,27 +1251,6 @@ noprefix "false"
 
 \end_inset
 
-) and discuss effectivity of the described construction (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:effectivity"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
 ).
  Applications are presented in Section
 \begin_inset ERT
@@ -1295,8 +1296,8 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
 
@@ -1331,6 +1332,11 @@ Judgments
 }
 \end{array}\text{ is a pushout}
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -1385,7 +1391,27 @@ Rigid-rigid
 
 \begin_layout Itemize
 Flex-*
+\begin_inset Formula 
+\[
+\unificationoccurcheckeffective\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationfailingoccurcheckeffective{\Gamma}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
 \begin_inset Formula 
@@ -1400,6 +1426,11 @@ Flex-*
 \[
 \unificationfailingoccurcheck{\Gamma}\quad\text{+ symmetric rule}
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -5555,7 +5586,90 @@ TODO: exploit regularity of monomorphisms
 \end_layout
 
 \begin_layout Standard
-We investigate the other cases below.
+We investigate the other cases in the subsections below, but first, let
+ us make this rule more effective.
+ 
+\end_layout
+
+\begin_layout Lemma
+There is a morphism 
+\begin_inset Formula $m_{\Gamma;b}:T(\Gamma,M:b)\rightarrow T\Gamma+1$
+\end_inset
+
+ such that the following square commutes and is a pullback.
+\begin_inset Formula 
+\[
+\xymatrix{T\Gamma\ar@{=}[d]\ar[rr]^{Tin_{\Gamma}} &  & T(\Gamma,M:b)\ar[d]^{m_{\Gamma;b}}\\
+T\Gamma\ar[rr]_{in_{1}} &  & T\Gamma+1
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The proof consists in equipping 
+\begin_inset Formula $T\Gamma+1$
+\end_inset
+
+ with an adequate 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra considering the embedding 
+\begin_inset Formula $\Gamma,M:b\xrightarrow{\eta+!}T\Gamma+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:factor-occur-check"
+
+\end_inset
+
+A morphism 
+\begin_inset Formula $u:Ka\rightarrow T(\Gamma,M:b)$
+\end_inset
+
+ factors through 
+\begin_inset Formula $T\Gamma\hookrightarrow T(\Gamma,M:b)$
+\end_inset
+
+ if and only if it factors through 
+\begin_inset Formula $in_{1}:T\Gamma\rightarrow T\Gamma+1$
+\end_inset
+
+ by postcomposing it with 
+\begin_inset Formula $m_{\Gamma;b}$
+\end_inset
+
+.
+ Otherwise, 
+\begin_inset Formula $u$
+\end_inset
+
+ factors through 
+\begin_inset Formula $in_{2}:1\rightarrow T\Gamma+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Therefore, we rephrase the above rule as follows.
+\begin_inset Formula 
+\[
+\unificationfailingoccurcheckeffective{\Gamma'}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6048,6 +6162,35 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \unificationoccurcheck
+\]
+
+\end_inset
+
+which we rephrase using Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "cor:factor-occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\unificationoccurcheckeffective
 \]
 
 \end_inset
@@ -9050,6 +9193,22 @@ renaming
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Effectivity
 \end_layout
@@ -9209,10 +9368,7 @@ Therefore, we can replace the first two rules of the case Flex-* in the
  unification phase by
 \begin_inset Formula 
 \[
-\dfrac{\xymatrix{a^{o}\ar[d]\ar[rr]^{g} &  & T(\Gamma,M:b)\ar[d]^{m}\\
-1\ar[rr]_{in_{2}} &  & T\Gamma+1
-}
-}{\Gamma,M:b\vdash M(f)=o(g;s)\Rightarrow\bang\dashv\top}
+\unificationfailingoccurcheckeffective{\Gamma}
 \]
 
 \end_inset
@@ -9220,10 +9376,7 @@ Therefore, we can replace the first two rules of the case Flex-* in the
 
 \begin_inset Formula 
 \[
-\dfrac{\xymatrix{a\ar[d]_{g}\ar[rr]^{u} &  & T(\Gamma,M:b)\ar[d]^{m}\\
-T\Gamma\ar[rr]_{in_{1}} &  & T\Gamma+1 & \Gamma\vdash\prune gf{\sigma}v\dashv\Delta
-}
-}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}
+\unificationoccurcheckeffective
 \]
 
 \end_inset
@@ -9327,6 +9480,22 @@ As an example, take
 \begin_layout Plain Layout
 We can't do much more.
  
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
 \end_layout
 
 \end_inset
@@ -9915,10 +10084,6 @@ noprefix "false"
 
  specifies the number of type arguments, the list of input types, and the
  output type.
-\end_layout
-
-\begin_layout Section*
-
 \end_layout
 
 \begin_layout Standard
