@@ -267,7 +267,7 @@ setboolean{fullpaper}{false}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\unificationstepwise}{\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\text{\ensuremath{\sigma_{1}]}}=u_{2}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1},t_{2}=u_{1},u_{2}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}}
+\newcommand{\unificationstepwise}{\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\text{\ensuremath{\sigma_{1}]}}=u_{2}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1},t_{2}=u_{1},u_{2}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}\textsc{U-Split}}
 \end_inset
 
 
@@ -287,7 +287,7 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationfailingoccurcheck}{\dfrac{T\Gamma'\xrightarrow{Tin_{\Gamma'}}T\Gamma\text{ does not factor }g:a^{o}\rightarrow T\Gamma}{\Gamma',M:b\vdash M(f)=o(g;s)\Rightarrow\bang\dashv\top}}
+\newcommand{\unificationfailingoccurcheck}[1]{\dfrac{T#1\xrightarrow{Tin_{#1}}T(#1,M:b)\text{ does not factor }g:a^{o}\rightarrow T(#1,M:b)}{#1,M:b\vdash M(f)=o(g;s)\Rightarrow\bang\dashv\top}}
 \end_inset
 
 
@@ -298,7 +298,7 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\vdash\prune gf{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(f)=g\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\vdash\prune gf{\sigma}v\dashv\Delta\qquad u=Tin_{\Gamma}\circ g}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
 \end_inset
 
 
@@ -338,7 +338,7 @@ c\ar@{-->}[r]_{f'} & d
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\pruningstepwise}{\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}}
+\newcommand{\pruningstepwise}{\dfrac{\Gamma\vdash\prune{g_{1}}{f_{1}}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\vdash g_{2}:>f_{2}[\sigma_{1}]\Rightarrow u_{2};\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}\textsc{P-Split}}
 \end_inset
 
 
@@ -1424,7 +1424,7 @@ Flex-*
 
 \begin_inset Formula 
 \[
-\unificationfailingoccurcheck\quad\text{+ symmetric rule}
+\unificationfailingoccurcheck{\Gamma}\quad\text{+ symmetric rule}
 \]
 
 \end_inset
@@ -5572,7 +5572,7 @@ TODO: exploit regularity of monomorphisms
  justifying the rule
 \begin_inset Formula 
 \[
-\unificationfailingoccurcheck
+\unificationfailingoccurcheck{\Gamma'}
 \]
 
 \end_inset
@@ -8321,7 +8321,7 @@ Each inductive rule presented so far provides an elementary step for the
  construction of coequalisers.
  We need to ensure that this set of rules allows to construct a coequaliser
  in a finite number of steps.
- To make the argument more straightforward, we slightly alter the stepwise
+ To make the argument more straightforward, we slightly alter the splitting
  rules
 \begin_inset ERT
 status open
@@ -8695,7 +8695,7 @@ there is one rule in the pruning phase that applies.
 
 \begin_layout Remark
 Essentially, there is exactly one rule that applies, if we ignore the possible
- reordering of the coproduct in the stepwise rules.
+ reordering of the coproduct in the splitting rules.
 \end_layout
 
 \begin_layout Subsection
@@ -9096,6 +9096,14 @@ If we were to turn this categorical construction into an algorithm, which
 \end_layout
 
 \begin_layout Itemize
+Exploiting connectedness of elements of 
+\begin_inset Formula $\D$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
 Computing pullbacks and equalisers in 
 \begin_inset Formula ${\cal A}$
 \end_inset
@@ -9108,31 +9116,199 @@ Determining whether some morphisms factors through another.
 \end_layout
 
 \begin_layout Standard
-The second primitive is used in particular for the rules
-\end_layout
-
-\begin_layout Standard
-TODO
-\end_layout
-
-\begin_layout Standard
-Example: occur-check.
-\end_layout
-
-\begin_layout Standard
-We can define by induction a morphism 
-\begin_inset Formula $T(\Gamma,M:a)\rightarrow T\Gamma+1$
+The second primitive is used in the unification phase when performing the
+ occur-check (when one of the term is a metavariable 
+\begin_inset Formula $M$
 \end_inset
 
- such that 
-\begin_inset Formula $T\Gamma\rightarrow T(\Gamma,M:a)$
+), and in the pruning phase, in the rigid case.
+ We investigate those cases in separate subsections.
+\end_layout
+
+\begin_layout Subsection
+Effective occur-check
+\end_layout
+
+\begin_layout Standard
+Given a context 
+\begin_inset Formula $\Gamma,M:a$
 \end_inset
 
- is the equaliser of 
-\begin_inset Formula $T(\Gamma,M:a)\rightrightarrows1+1$
+, we can define a universal morphism 
+\begin_inset Formula $m:T(\Gamma,M:a)\rightarrow T\Gamma+1$
+\end_inset
+
+, by providing a 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra morphism to the codomain and considering the embedding 
+\begin_inset Formula $\Gamma,M:a\xrightarrow{\eta+!}T\Gamma+1$
+\end_inset
+
+, such that the following square is a pullback.
+\begin_inset Formula 
+\[
+\xymatrix{T\Gamma\ar@{=}[d]\ar[rr]^{Tin_{\Gamma}} &  & T(\Gamma,M:a)\ar[d]^{m}\\
+T\Gamma\ar[rr]_{in_{1}} &  & T\Gamma+1
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This provides an effective way to determine whether 
+\begin_inset Formula $t:Kb\rightarrow T(\Gamma,M:a)$
+\end_inset
+
+ factors through 
+\begin_inset Formula $Tin_{\Gamma}$
+\end_inset
+
+, by postcomposing it by 
+\begin_inset Formula $m$
 \end_inset
 
 .
+ Indeed, since 
+\begin_inset Formula $Kb$
+\end_inset
+
+ is connected, the resulting morphism factors either through 
+\begin_inset Formula $T\Gamma\hookrightarrow T\Gamma+1$
+\end_inset
+
+ or 
+\begin_inset Formula $1\hookrightarrow T\Gamma$
+\end_inset
+
+.
+ The first case applies exactly when 
+\begin_inset Formula $t$
+\end_inset
+
+ can be factored by 
+\begin_inset Formula $T\Gamma\rightarrow T(\Gamma,M:a)$
+\end_inset
+
+, and moreover provides the factorisation.
+\end_layout
+
+\begin_layout Standard
+Therefore, we can replace the first two rules of the case Flex-* in the
+ unification phase by
+\begin_inset Formula 
+\[
+\dfrac{\xymatrix{a^{o}\ar[d]\ar[rr]^{g} &  & T(\Gamma,M:b)\ar[d]^{m}\\
+1\ar[rr]_{in_{2}} &  & T\Gamma+1
+}
+}{\Gamma,M:b\vdash M(f)=o(g;s)\Rightarrow\bang\dashv\top}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\xymatrix{a\ar[d]_{g}\ar[rr]^{u} &  & T(\Gamma,M:b)\ar[d]^{m}\\
+T\Gamma\ar[rr]_{in_{1}} &  & T\Gamma+1 & \Gamma\vdash\prune gf{\sigma}v\dashv\Delta
+}
+}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Effective rigid pruning
+\end_layout
+
+\begin_layout Standard
+The two rules adressing the rigid case in the pruning phase handle two different
+ situations, whether 
+\begin_inset Formula $Kf:Ka\rightarrow Kb$
+\end_inset
+
+ factors 
+\begin_inset Formula $s:Ka\rightarrow S_{o}$
+\end_inset
+
+ for some 
+\begin_inset Formula $o\in O$
+\end_inset
+
+.
+ As an example, take 
+\begin_inset Formula ${\cal A}=\mathbb{F}_{m}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{o}=I$
+\end_inset
+
+ the variable functor.
+ A morphism 
+\begin_inset Formula $s:Ka\rightarrow S_{o}$
+\end_inset
+
+ corresponds to a variable 
+\begin_inset Formula $n\in\{0,\dots,a-1\}$
+\end_inset
+
+, and 
+\begin_inset Formula $f$
+\end_inset
+
+ is an injection from 
+\begin_inset Formula $\{0,\dots,b-1\}$
+\end_inset
+
+ into 
+\begin_inset Formula $\{0,\dots,a-1\}$
+\end_inset
+
+.
+ The question is whether 
+\begin_inset Formula $n$
+\end_inset
+
+ is in the image of 
+\begin_inset Formula $f$
+\end_inset
+
+ or not.
+\end_layout
+
+\begin_layout Standard
+We can't do much more.
+ But if 
+\begin_inset Formula $f$
+\end_inset
+
+ is the coequaliser of 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+, then the non-factorisation property can be checked by comparing 
+\begin_inset Formula $s\circ Ku$
+\end_inset
+
+ and 
+\begin_inset Formula $s\circ Kv$
+\end_inset
+
+.
+ However, to get the factored morphism, I don't know if there is a general
+ way.
 \end_layout
 
 \begin_layout Standard
