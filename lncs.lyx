@@ -1115,12 +1115,18 @@ status open
 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Goguen89whatis"
+after "Chapter 9"
+key "DBLP:books/daglib/0068768"
 literal "false"
 
 \end_inset
 
-.
+, which basically corresponds to replacing 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ in the introduction by the terminal category, so that we are working in
+ the category of sets.
  Pattern unification was introduced in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -5244,6 +5250,19 @@ This is justified by a general stepwise construction of coequalisers:
 \end_layout
 
 \begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Theorem 9, 
+\backslash
+cite{DBLP:books/daglib/0068768}]
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:coeq-stepwise"
@@ -7779,164 +7798,65 @@ noprefix "false"
 \end_inset
 
 ).
-\end_layout
-
-\begin_layout Standard
-The crucial lemma is the following.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Let 
-\begin_inset Formula $\D_{0}$
+ The basic intuition is that 
+\begin_inset Formula $t=u[M\mapsto t]$
 \end_inset
 
- denote the discrete presheaf category consisting of objects of 
-\begin_inset Formula $\D$
+ is impossible if 
+\begin_inset Formula $M$
 \end_inset
 
-.
-\end_layout
-
+ appears deep in 
+\begin_inset Formula $u$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-There is a 
-\begin_inset Formula $T$
-\end_inset
-
--algebra structure 
-\begin_inset Formula $T\mathbb{N}\rightarrow\mathbb{N}$
-\end_inset
-
- on the constant functor 
-\begin_inset Formula $\mathbb{N}$
-\end_inset
-
- mapping any object to the set 
-\begin_inset Formula $\mathbb{N}$
-\end_inset
-
- of natural numbers that adds one to the maximum of the arguments.
- For any 
-\begin_inset Formula $s:X\rightarrow\mathbb{N}$
-\end_inset
-
-, this induces an algebra morphism 
-\begin_inset Formula $TX\xrightarrow{|-|_{s}}\mathbb{N}$
-\end_inset
-
-, which basically computes the maximal depth of an element of 
+ because the sizes of both hand sides can never match.
+ To make this statement precise, we need some recursive definitions and
+ properties of size, that can be categorically justified by exploiting the
+ universal property of 
 \begin_inset Formula $TX$
 \end_inset
 
-, with custom depth for leaves in 
-\begin_inset Formula $X$
+ as the free 
+\begin_inset Formula $F$
 \end_inset
 
- as specified by 
-\begin_inset Formula $s$
+-algebra on 
+\begin_inset Formula $X$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Definition
-Let 
-\begin_inset Formula $s:X\rightarrow\mathbb{N}$
+The size 
+\begin_inset Formula $|t|\in\mathbb{N}$
+\end_inset
+
+ of a morphism 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
+\end_inset
+
+ is recursively defined as follows
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+|M(f)|=0\qquad|o(g;s)|=1+|g|
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $|g|=\sum_{i}g_{i}$
+\end_inset
+
+, any 
+\begin_inset Formula $g:\coprod_{i}Ka_{i}\rightarrow T\Gamma$
 \end_inset
 
 .
- A natural transformation 
-\begin_inset Formula $n:A\rightarrow TX$
-\end_inset
-
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-between families in 
-\begin_inset Formula $\Set$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- is said 
-\emph on
-
-\begin_inset Formula $s$
-\end_inset
-
--flat
-\emph default
- if 
-\begin_inset Formula $A\rightarrow TX\xrightarrow{|-|_{s}}\mathbb{N}$
-\end_inset
-
- is constant.
- It is said 
-\emph on
-flat
-\emph default
- if there exists 
-\begin_inset Formula $s$
-\end_inset
-
- that makes it 
-\begin_inset Formula $s$
-\end_inset
-
--flat.
-\end_layout
-
-\begin_layout Plain Layout
-In practice we will have 
-\begin_inset Formula $X$
-\end_inset
-
- as the initial presheaf, or the terminal presheaf.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Any morphism out of a representable presheaf 
-\begin_inset Formula $yd:\D_{0}\rightarrow\Set$
-\end_inset
-
- (which is empty anywhere else than in the 
-\begin_inset Formula $d$
-\end_inset
-
--component where it is a singleton set) is flat.
- 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -7946,41 +7866,61 @@ Any morphism out of a representable presheaf
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
+\begin_layout Definition
+For each morphism 
+\begin_inset Formula $t:Ka\rightarrow T(\Gamma,M:b)$
+\end_inset
 
-\begin_layout Example
+ we define 
+\begin_inset Formula $|t|_{M}$
+\end_inset
+
+ recursively as follows
+\begin_inset Formula 
+\[
+|N(f)|_{M}=0\text{ if \ensuremath{N\neq M}}\qquad|M(f)|_{M}=1\qquad|o(g;s)|_{M}=|g|_{M}
+\]
+
+\end_inset
+
+with a similar convention as above for 
+\begin_inset Formula $|g|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "exa:flat-nattrans-yoneda"
+name "lem:sizeM-factor"
 
 \end_inset
 
-Any natural transformation out of a representable presheaf is 
-\begin_inset Formula $0$
+For any 
+\begin_inset Formula $t:Ka\rightarrow T(\Gamma,M:b)$
 \end_inset
 
--flat.
+, if 
+\begin_inset Formula $|t|_{M}=0$
+\end_inset
+
+, then 
+\begin_inset Formula $T\Gamma\hookrightarrow T(\Gamma,M:b)$
+\end_inset
+
+ factors 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ In other words, the following diagram is an equaliser.
+ 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Intuitively, the height of an element in 
-\begin_inset Formula $TX$
-\end_inset
-
- is the smallest index where it appears in the initial chain.
- Flatness follows from representable presheaves being tiny.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-The crucial lemma is the following.
+% YADE DIAGRAM diagrams/sizeM-equaliser.json
 \end_layout
 
 \end_inset
@@ -7989,216 +7929,90 @@ The crucial lemma is the following.
 \end_layout
 
 \begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:pbk-lemma-occur-check"
+\begin_inset Preview
 
-\end_inset
-
-Let 
-\begin_inset Formula $R$
-\end_inset
-
- be any free monad on 
-\begin_inset Formula $[{\cal A},\Set]$
-\end_inset
-
- generated by an endofunctor 
-\begin_inset Formula $G$
-\end_inset
-
- of the shape as described in Section
+\begin_layout Standard
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-~
+% https://q.uiver.app/?q=WzAsNCxbMCwxLCJUXFxHYW1tYSJdLFsxLDEsIlQoXFxHYW1tYSxNOmIpI
+l0sWzIsMCwiMSJdLFszLDEsIlxcbWF0aGJie059Il0sWzAsMSwiIiwwLHsic3R5bGUiOnsidGFpbCI6e
+yJuYW1lIjoiaG9vayIsInNpZGUiOiJ0b3AifSwiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV0sWzEsM
+iwiIiwwLHsiY3VydmUiOi0yfV0sWzIsMywiMCIsMCx7ImN1cnZlIjotNH1dLFsxLDMsInwtfF9NIiwyL
+HsiY3VydmUiOjJ9XV0=
 \end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "ssec:endo-syntax"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Let 
-\begin_inset Formula $A\xrightarrow{n}R\emptyset$
-\end_inset
-
- be a natural transformation morphism, where 
-\begin_inset Formula $A$
-\end_inset
-
- is representable.
- Then, the following diagram is a pullback
-\begin_inset Formula 
-\[
-\xymatrix{A+A\times_{R\emptyset}A\ar[r]\ar[d] & RA\ar[d]^{n^{*}}\\
-A\ar[r]_{n} & R\emptyset
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-See Section
-\begin_inset ERT
-status open
 
 \begin_layout Plain Layout
 
-~
+
+\backslash
+[
+\backslash
+begin{tikzcd}
 \end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:proof-prop-pbk-lemma-occur-check"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Example
-Taking 
-\begin_inset Formula $G=F$
-\end_inset
-
-, 
-\begin_inset Formula $R=T$
-\end_inset
-
-, and 
-\begin_inset Formula $A=(M:a)$
-\end_inset
-
-, the pullback property means in particular given any 
-\begin_inset Formula $t:Ka\rightarrow TKa$
-\end_inset
-
-
-\begin_inset Note Note
-status open
 
 \begin_layout Plain Layout
-that given 
-\begin_inset Formula $f\in\hom_{\D}(a',a)$
-\end_inset
 
-, and 
-\begin_inset Formula $t:Ka'\rightarrow TKa$
-\end_inset
+ && 1 
+\backslash
 
- such that 
-\begin_inset Formula $t[n]=n\circ Kf$
-\end_inset
+\backslash
 
-, either 
-\begin_inset Formula $t=M(g)$
-\end_inset
-
- for some 
-\begin_inset Formula $g$
-\end_inset
-
-, either 
-\begin_inset Formula $t=n\circ Kf$
-\end_inset
-
-.
- In particular, if 
-\begin_inset Formula $f=1_{a}$
-\end_inset
-
-, then
 \end_layout
-
-\end_inset
-
- such that 
-\begin_inset Formula $t[n]=n$
-\end_inset
-
-, either 
-\begin_inset Formula $t=M(g)$
-\end_inset
-
- for some 
-\begin_inset Formula $g$
-\end_inset
-
-, either 
-\begin_inset Formula $t=Ri\circ n$
-\end_inset
-
-, where 
-\begin_inset Formula $i:\emptyset\rightarrow A$
-\end_inset
-
- is the initial morphism.
-\end_layout
-
-\begin_layout Personal Question
-Can we prove this more categorically by simply assuming that 
-\begin_inset Formula $A$
-\end_inset
-
- is tiny?
-\begin_inset Note Note
-status open
 
 \begin_layout Plain Layout
-J'ai l'impression que c'est stable par domaine, enfin d'apres la preuve
- que j'ai faite, si on arrive a donner une mesure 
-\begin_inset Formula $|-|$
+
+ T
+\backslash
+Gamma & {T(
+\backslash
+Gamma,M:b)} && {
+\backslash
+mathbb{N}}
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow[dashed, hook, from=2-1, to=2-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow[curve={height=-12pt}, from=2-2, to=1-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["0", curve={height=-24pt}, from=1-3, to=2-4]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["{|-|_M}"', curve={height=12pt}, from=2-2, to=2-4]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\backslash
+]
+\end_layout
+
 \end_inset
 
- telle que 
-\begin_inset Formula $|t[u]|\geq||t||+|u|$
-\end_inset
 
- ou 
-\begin_inset Formula $||t||$
-\end_inset
-
- vaut 0 si c'est 
-\begin_inset Formula $\eta$
-\end_inset
-
-, 
-\begin_inset Formula $-\infty$
-\end_inset
-
- si c'est clos, et 
-\begin_inset Formula $1$
-\end_inset
-
- sinon.
- On peut tout simplement relever cette mesure au domaine (a condition que
- le morphisme de monades preserve 
-\begin_inset Formula $||-||$
-\end_inset
-
-).
- En tout cas on a l'impression qu'on pourrait donner une telle mesure pour
- n'importe quel monade libre generee par un endo pra.
 \end_layout
 
 \end_inset
@@ -8207,92 +8021,31 @@ J'ai l'impression que c'est stable par domaine, enfin d'apres la preuve
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
+The crucial lemma is the following.
 \end_layout
 
+\begin_layout Lemma
+For any 
+\begin_inset Formula $\Gamma=(M_{1}:a_{1},\dots,M_{n}:a_{n})$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Corollary
-Let 
-\begin_inset Formula $A\xrightarrow{n}T1$
+, 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
 \end_inset
 
- be a morphism such that 
-\begin_inset Formula $A$
+, and 
+\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
 \end_inset
 
- is representable.
- Then, the following diagram is a pullback
+,
 \begin_inset Formula 
 \[
-\xymatrix{A+A\times_{T1}A\ar[r]\ar[d] & T(A+1)\ar[d]^{n^{*}}\\
-A\ar[r]_{n} & T1
-}
+|t[\sigma]|=|t|+\sum_{i}|t|_{M_{i}}\times|\sigma_{i}|
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Proof
-Consider the functor 
-\begin_inset Formula $G'=G+1$
-\end_inset
-
-.
- By universal property, it precisely generates the monad 
-\begin_inset Formula $T'=T(1+-)$
-\end_inset
-
-, so we apply Proposition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:pbk-lemma-occur-check"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- for 
-\begin_inset Formula $T'$
-\end_inset
-
- (any 
-\begin_inset Formula $T'$
-\end_inset
-
--flat morphism becomes 
-\begin_inset Formula $T$
-\end_inset
-
--flat by assigning the unit weight to the leaf in 
-\begin_inset Formula $1$
-\end_inset
-
-).
 \end_layout
 
 \begin_layout Standard
@@ -8303,309 +8056,34 @@ noprefix "false"
 \end_layout
 
 \begin_layout Corollary
-Let 
-\begin_inset Formula $A\xrightarrow{n}T1$
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:size-consequences"
+
 \end_inset
 
- be a flat morphism and 
-\begin_inset Formula $\sigma:b\rightarrow T1$
+For any 
+\begin_inset Formula $t:Ka\rightarrow T(\Gamma,M:b)$
 \end_inset
 
- be another one.
- Then, the following diagram is a pullback 
+, 
+\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
+\end_inset
+
+, 
+\begin_inset Formula $f\in\hom_{\D}(a,b)$
+\end_inset
+
+, 
+\begin_inset Formula $u:Kb\rightarrow T\Delta$
+\end_inset
+
+,
 \begin_inset Formula 
-\[
-\xymatrix{A\times_{T1}TB+A\times_{T1}A\ar[r]\ar[d] & T(A+B)\ar[d]^{[u,\sigma]^{*}}\\
-A\ar[r]_{u} & T1
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-Note that the right morphism decomposes as
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% YADE DIAGRAM pbkB-present.json
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	&& {M(A+B)} 
-\backslash
-
-\backslash
- 	&& {MM(A+1)} 
-\backslash
-
-\backslash
- 	{A+A
-\backslash
-times_{M1}A} && {M(A+1)} 
-\backslash
-
-\backslash
- 	A && M1 	
-\backslash
-arrow[from=3-3, to=4-3] 	
-\backslash
-arrow[from=3-1, to=3-3] 	
-\backslash
-arrow[from=3-1, to=4-1] 	
-\backslash
-arrow["u"', from=4-1, to=4-3] 	
-\backslash
-arrow[from=1-3, to=2-3] 	
-\backslash
-arrow["
-\backslash
-mu", from=2-3, to=3-3] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-where we inserted the known pullback at the bottom.
- Since coproducts are pullback stable, it is enough to show that 
-\begin_inset Formula $(A\times_{T1}A)\times_{T(A+1)}T(A+B)=A\times_{T1}A$
-\end_inset
-
- and 
-\begin_inset Formula $A\times_{T1}TB=A\times_{T(A+1)}T(A+B)$
-\end_inset
-
-, which we do in the following diagrams (all squares are pullbacks).
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% %YADE DIAGRAM FILE: pbkBsimp.json
-\end_layout
-
-\begin_layout Plain Layout
-
- 
-\backslash
-[
-\backslash
-begin{tikzcd} 	{A
-\backslash
-times_{M1} A} & A && {M(A+B)} 
-\backslash
-
-\backslash
- 	& A && {MM(A+1)} 
-\backslash
-
-\backslash
- 	{A
-\backslash
-times_{M1} A} & A & {A+1+GM(A+1)} & {M(A+1)} 
-\backslash
-
-\backslash
- 	A &&& M1 	
-\backslash
-arrow[from=3-4, to=4-4] 	
-\backslash
-arrow[from=3-1, to=3-2] 	
-\backslash
-arrow[from=3-1, to=4-1] 	
-\backslash
-arrow["u"', from=4-1, to=4-4] 	
-\backslash
-arrow[from=1-4, to=2-4] 	
-\backslash
-arrow["
-\backslash
-mu", from=2-4, to=3-4] 	
-\backslash
-arrow["{in_1}"', from=3-2, to=3-3] 	
-\backslash
-arrow["
-\backslash
-cong"', from=3-3, to=3-4] 	
-\backslash
-arrow[Rightarrow, no head, from=2-2, to=3-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-2, to=2-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-1, to=3-1] 	
-\backslash
-arrow[from=1-1, to=1-2] 	
-\backslash
-arrow[from=1-2, to=1-4] 	
-\backslash
-arrow[from=2-2, to=2-4] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% %YADE DIAGRAM FILE: pbkBsimp2.json
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	{A
-\backslash
-times_{M1} MB} & MB & {M(A+B)} & {0+B} & {(A+B)} & B & B 
-\backslash
-
-\backslash
- 	& MM1 & {MM(A+1)} & M1 & {M(A+1)} & M1 & M1 
-\backslash
-
-\backslash
- 	A & M1 & {M(A+1)} & 0 & A & M1 & {M(A+1)} 
-\backslash
-
-\backslash
- 	A && M1 & M1 & {M(A+1)} 	
-\backslash
-arrow[from=3-3, to=4-3] 	
-\backslash
-arrow["u"', from=3-1, to=3-2] 	
-\backslash
-arrow[from=3-1, to=4-1] 	
-\backslash
-arrow["u"', from=4-1, to=4-3] 	
-\backslash
-arrow[from=1-3, to=2-3] 	
-\backslash
-arrow["
-\backslash
-mu", from=2-3, to=3-3] 	
-\backslash
-arrow["
-\backslash
-mu"', from=2-2, to=3-2] 	
-\backslash
-arrow[from=1-2, to=2-2] 	
-\backslash
-arrow[from=1-1, to=3-1] 	
-\backslash
-arrow[from=1-1, to=1-2] 	
-\backslash
-arrow[from=1-2, to=1-3] 	
-\backslash
-arrow["{MMin_2}", from=2-2, to=2-3] 	
-\backslash
-arrow["{Min_2}"', from=3-2, to=3-3] 	
-\backslash
-arrow[from=1-5, to=2-5] 	
-\backslash
-arrow[from=1-4, to=2-4] 	
-\backslash
-arrow[from=1-4, to=1-5] 	
-\backslash
-arrow["{Min_2}", from=2-4, to=2-5] 	
-\backslash
-arrow[curve={height=-12pt}, dashed, from=1-2, to=1-4] 	
-\backslash
-arrow[from=3-5, to=4-5] 	
-\backslash
-arrow[from=3-4, to=4-4] 	
-\backslash
-arrow[from=3-4, to=3-5] 	
-\backslash
-arrow["{Min_2}", from=4-4, to=4-5] 	
-\backslash
-arrow[curve={height=24pt}, dashed, from=1-4, to=3-4] 	
-\backslash
-arrow[from=1-6, to=1-7] 	
-\backslash
-arrow["{Min_2}"', from=3-6, to=3-7] 	
-\backslash
-arrow[curve={height=-12pt}, dashed, from=1-4, to=1-6] 	
-\backslash
-arrow[from=1-7, to=2-7] 	
-\backslash
-arrow["{Min_2}", from=2-7, to=3-7] 	
-\backslash
-arrow[from=1-6, to=2-6] 	
-\backslash
-arrow[Rightarrow, no head, from=2-6, to=3-6] 	
-\backslash
-arrow[Rightarrow, no head, from=2-6, to=2-7] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
+\begin{align*}
+|t[\sigma,u]| & \geq|t|+|u|\times|t|_{M}\\
+|{\cal L}f[u]| & =|u|
+\end{align*}
 
 \end_inset
 
@@ -8613,16 +8091,7 @@ end{tikzcd}
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
+\begin_inset Separator plain
 \end_inset
 
 
@@ -8635,146 +8104,54 @@ name "cor:occurcheck-final"
 
 \end_inset
 
-Given 
-\begin_inset Formula $\sigma:\Gamma\rightarrow T1$
+Given a commuting square in 
+\begin_inset Formula $\Kl{\D^{+}}$
 \end_inset
 
-, 
-\begin_inset Formula $u:Kd\rightarrow T1$
+
+\begin_inset Formula 
+\[
+\xymatrix{Ka\ar[d]_{{\cal L}f}\hautr{t} & \Gamma,M:b\ar[d]^{\sigma,u}\\
+Kb\ar[r]_{u} & \Delta
+}
+\]
+
 \end_inset
 
-, 
-\begin_inset Formula $f:Kc\rightarrow Kd$
+
+\end_layout
+
+\begin_layout Corollary
+then 
+\begin_inset Formula $t=M(g)$
 \end_inset
 
-, if the following square commutes, then the top morphism factors through
- either 
-\begin_inset Formula $T\Gamma\rightarrow T(Kd+\Gamma)$
+ for some 
+\begin_inset Formula $g$
 \end_inset
 
  or 
-\begin_inset Formula $Kd\rightarrow TKd$
+\begin_inset Formula $T\Gamma\hookrightarrow T(\Gamma,M:b)$
 \end_inset
 
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-du coup on pourrait decrire un algo qui prend un tel carre et qui renvoie
- un morphisme 
-\begin_inset Formula $Kc\rightarrow T\Gamma+Kd$
-\end_inset
-
- qui factorise ce truc?
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula 
-\[
-\xymatrix{Kc\ar[d]_{f}\ar[r] & T(Kd+\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
-Kd\ar[r]_{u} & T1
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Let 
-\begin_inset Formula $J':\C\rightarrow\hat{\D}$
-\end_inset
-
- mapping 
-\begin_inset Formula $c$
-\end_inset
-
- to 
-\begin_inset Formula $\hom_{\C}(K-,c)$
-\end_inset
-
-, so that 
-\begin_inset Formula $J=J'-\circ\delta$
+ factors 
+\begin_inset Formula $t$
 \end_inset
 
 .
- Then, we can define 
-\begin_inset Formula $G'$
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $t[\sigma,u]={\cal L}f[u]$
 \end_inset
 
- acting on 
-\begin_inset Formula $\hat{\D'}$
-\end_inset
-
- as with the same formula, generating a monad 
-\begin_inset Formula $T'$
-\end_inset
-
- such that 
-\begin_inset Formula $T'(-)\circ\delta=T(-\circ\delta)$
+, we have 
+\begin_inset Formula $|t[\sigma,u]|=|{\cal L}f[u]|$
 \end_inset
 
 .
- 
-\end_layout
-
-\end_inset
-
-Applying 
-\begin_inset Formula $J$
-\end_inset
-
- to the above diagram, we get
-\begin_inset Formula 
-\[
-\xymatrix{yc\ar[d]_{f}\ar[r] & T(yd+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
-yd\ar[r]_{u} & T1
-}
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Then we postprecompose by 
-\begin_inset Formula $\delta$
-\end_inset
-
-.
-\begin_inset Formula 
-\[
-\xymatrix{yc\circ\delta\ar[d]_{f}\ar[r] & T(yd\circ\delta+J\Gamma)\ar[d]^{[u,\sigma]^{*}}\\
-yd\circ\delta\ar[r]_{u} & T1
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-Now, 
-\begin_inset Formula $u$
-\end_inset
-
- is flat (Example
+ Corollary
 \begin_inset ERT
 status open
 
@@ -8788,37 +8165,61 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "exa:flat-nattrans-yoneda"
+reference "cor:size-consequences"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-), so we by the previous corollary, the top morphism factors through the
- pullback
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset Formula $yd\times_{T1}T(J\Gamma)+yd\times_{T1}yd\rightarrow T(yd+\Gamma)$
+ implies 
+\begin_inset Formula $|u|\geq|t|+|u|\times|t|_{M}$
 \end_inset
 
 .
- The conclusion easily follows.
-\end_layout
-
-\begin_layout Personal Question
-Can we do the whole algorithm by translating it in the presheaf world?
-\end_layout
-
-\begin_layout Standard
-This concludes the argument, since any unifier induces a unifier targeting
- 
-\begin_inset Formula $T1$
+ Therefore, either 
+\begin_inset Formula $|t|_{M}=0$
 \end_inset
 
-, by postcomposing with 
-\begin_inset Formula $T!$
+ and we conclude by Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:sizeM-factor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, either 
+\begin_inset Formula $|t|_{M}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $|t|=0$
+\end_inset
+
+ and so 
+\begin_inset Formula $t$
+\end_inset
+
+ is 
+\begin_inset Formula $M(g)$
+\end_inset
+
+ for some 
+\begin_inset Formula $g$
 \end_inset
 
 .
@@ -9288,19 +8689,29 @@ We also need to define the size
 status open
 
 \begin_layout Plain Layout
-This definition can be made formal by providing an adequate 
-\begin_inset Formula $F$
+The difference with the size definition in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
 \end_inset
 
--algebra structure on the constant functor mapping any object of 
-\begin_inset Formula ${\cal A}$
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- to 
-\begin_inset Formula $\mathbb{N}$
-\end_inset
-
-.
+ is that metavariables are not of empty size.
+ This property ensures that no term is of empty size.
 \end_layout
 
 \end_inset
