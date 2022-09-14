@@ -356,7 +356,7 @@ setboolean{fullpaper}{false}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\unificationoccurcheckeffective}{\dfrac{u_{|\Gamma}=\underline{u'}\qquad\Gamma\prune{u'}f{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\newcommand{\unificationoccurcheckeffective}{\dfrac{u_{|\Gamma}=\underline{u'}\qquad\Gamma\prune{u'}{M(f)}{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
 \end_inset
 
 
@@ -374,17 +374,17 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\pruningflex}{\dfrac{c\prunecat gf{f'\dashv d}{g'}{\D}}{\Gamma,M:c\prune{M(g)}{{\cal L}Kf}{M\mapsto M'(f')}{M'(g')}\dashv\Gamma,M':d}}
+\newcommand{\pruningflex}{\dfrac{c\prunecat gf{f'\dashv d}{g'}{\D}}{\Gamma,M:c\prune{M(g)}{N(f)}{M\mapsto M'(f')}{M'(g')}\dashv\Gamma,M':d}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\pruningrigfail}{\dfrac{s_{|f}\Rightarrow\bang}{\Gamma\prune{o(g;s)}f{\bang}{\bang}\dashv\bot}}
+\newcommand{\pruningrigfail}{\dfrac{s_{|f}\Rightarrow\bang}{\Gamma\prune{o(g;s)}{N(f)}{\bang}{\bang}\dashv\bot}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\pruningrig}{\dfrac{\Gamma\prune g{f^{o}}{\sigma}u\dashv\Delta\qquad s_{|f}\Rightarrow\underline{s'}}{\Gamma\prune{o(g;s)}f{\sigma}{o(u;s')}\dashv\Delta}}
+\newcommand{\pruningrig}{\dfrac{\Gamma\prune g{{\cal L}f^{o}}{\sigma}u\dashv\Delta\qquad s_{|f}\Rightarrow\underline{s'}}{\Gamma\prune{o(g;s)}{N(f)}{\sigma}{o(u;s')}\dashv\Delta}}
 \end_inset
 
 
@@ -7100,7 +7100,7 @@ For the intuition behind the notation and the relation to the so-called
 
 -calculus, as in the introduction.
  A span 
-\begin_inset Formula $\Gamma\xleftarrow{g}Kn\xrightarrow{{\cal L}f}Km$
+\begin_inset Formula $\Gamma\xleftarrow{g}Kn\xrightarrow{{\cal L}Kf}Km$
 \end_inset
 
  corresponds to a term in 
@@ -7513,7 +7513,7 @@ We can focus on the case where the coproduct is the singleton (since we
  Thus, we want to compute a pushout
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[r]^{{\cal L}Kf}\ar[d] & TKb\\
+\xymatrix{Ka\hautr{N(f)}\ar[d] & T(N:b)\\
 T\Gamma
 }
 \]
@@ -7608,7 +7608,7 @@ We want to compute the pushout
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[r]^{{\cal L}Kf}\ar[d]_{o(g;s)} & Kb\\
+\xymatrix{Ka\hautr{N(f)}\ar[d]_{o(g;s)} & N:b\\
 \Gamma
 }
 \]
@@ -7975,8 +7975,7 @@ Here, we are in the situation where we want to compute the pushout of free
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[r]^{\mathcal{L}Kf}\ar[d]_{\mathcal{L}Kg} & Kb\\
-Kc\ar[d]_{in_{M}}\\
+\xymatrix{Ka\ar[r]^{N(f)}\ar[d]_{M(g)} & N:b\\
 \Gamma,M:c
 }
 \]
@@ -7987,7 +7986,24 @@ Kc\ar[d]_{in_{M}}\\
 \end_layout
 
 \begin_layout Standard
-Thanks to the following lemma, it is enough to compute the pushout of 
+Note that 
+\begin_inset Formula $N(f)={\cal L}Kf$
+\end_inset
+
+ while the left vertical morphism 
+\begin_inset Formula $M(g)$
+\end_inset
+
+ is equal to the composition (in 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+) 
+\begin_inset Formula $Ka\xrightarrow{{\cal L}Kg}M:c\xhookrightarrow{in_{M}}(\Gamma,M:c)$
+\end_inset
+
+.
+ Thanks to the following lemma, it is enough to compute the pushout of 
 \begin_inset Formula ${\cal L}Kf$
 \end_inset
 
@@ -8619,7 +8635,7 @@ For any
 \begin_inset Formula 
 \begin{align*}
 |t[\sigma,u]| & \geq|t|+|u|\times|t|_{M}\\
-|{\cal L}f[u]| & =|u|
+|{\cal L}Kf[u]| & =|u|
 \end{align*}
 
 \end_inset
@@ -8641,14 +8657,14 @@ name "cor:occurcheck-final"
 
 \end_inset
 
-Given a commuting square in 
+If there is a commuting square in 
 \begin_inset Formula $\Kl{\D^{+}}$
 \end_inset
 
 
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[d]_{{\cal L}f}\hautr{t} & \Gamma,M:b\ar[d]^{\sigma,u}\\
+\xymatrix{Ka\ar[d]_{{\cal L}Kf}\hautr{t} & \Gamma,M:b\ar[d]^{\sigma,u}\\
 Kb\ar[r]_{u} & \Delta
 }
 \]
@@ -8680,11 +8696,11 @@ then
 
 \begin_layout Proof
 Since 
-\begin_inset Formula $t[\sigma,u]={\cal L}f[u]$
+\begin_inset Formula $t[\sigma,u]={\cal L}Kf[u]$
 \end_inset
 
 , we have 
-\begin_inset Formula $|t[\sigma,u]|=|{\cal L}f[u]|$
+\begin_inset Formula $|t[\sigma,u]|=|{\cal L}Kf[u]|$
 \end_inset
 
 .
