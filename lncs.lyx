@@ -18,6 +18,7 @@
 \newcommand{\coeqr}[2]{\ar@<+.5ex>[r]^-{#1}\ar@<-.5ex>[r]_-{#2}}
 \makeatletter
 \newcommand{\hautr}[1]{\ar[r]^-{#1}}
+\newcommand{\hautl}[1]{\ar[l]_-{#1}}
 
 % To be removed when submitting?
 % it is to add bookmarks
@@ -174,6 +175,32 @@ status open
 
 \backslash
 orcidID{0000-0002-9299-641X}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Neel Krishnaswami
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+orcidID{0000-0003-2838-5865}
 \end_layout
 
 \end_inset
@@ -348,7 +375,7 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\prune{u'}f{\sigma}v\dashv\Delta\qquad u=Tin_{\Gamma}\circ u'}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\prune{u'}{M(f)}{\sigma}v\dashv\Delta\qquad u=Tin_{\Gamma}\circ u'}{\Gamma,M:b\vdash M(f)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
 \end_inset
 
 
@@ -392,7 +419,7 @@ setboolean{fullpaper}{false}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\pruningstepwise}{\dfrac{\Gamma\prune{g_{1}}{f_{1}}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\prune{g_{2}}{f_{2}[\sigma_{1}]}{\sigma_{2}\dashv\Delta_{2}}{u_{2}}}{\Gamma\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}\textsc{P-Split}}
+\newcommand{\pruningstepwise}{\dfrac{\Gamma\prune{g_{1}}{f_{1}}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\prune{g_{2}[\sigma_{1}]}{f_{2}}{\sigma_{2}\dashv\Delta_{2}}{u_{2}}}{\Gamma\prune{g_{1},g_{2}}{f_{1}+f_{2}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],u_{2}}\dashv\Delta_{2}}\textsc{P-Split}}
 \end_inset
 
 
@@ -499,50 +526,700 @@ name "subsec:intro-pattern"
 \begin_layout Standard
 Unification consists in finding the most general unifier of two terms involving
  metavariables.
- To be more explicit, a unifier is a substitution that replaces metavariables
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To be more explicit, a unifier is a substitution that replaces metavariables
  with terms, potentially involving metavariables, such that the two substituted
  terms are equal.
- The most general unifier is the one that uniquely factors any other unifier.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The most general unifier is the one that uniquely factors any other unifier.
+ 
+\end_layout
+
+\end_inset
+
+ In pattern unification
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/logcom/Miller91"
+literal "false"
+
+\end_inset
+
+, the arguments of a metavariable are restricted to be distinct variables.
+ In that case, we can design an algorithm that either fails in case there
+ is no unifier, either computes the most general unifier.
+ 
 \end_layout
 
 \begin_layout Standard
-In pattern unification, the arguments of a metavariable are restricted to
- be distinct variables.
- In that case, we can design an algorithm that either fails in case there
- is no unifier, either computes the most general unifier.
- Roughly, the algorithm recursively inspect the structure of the given pair
- of terms, until reaching a metavariable application 
+In Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:example-lambda"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below, we first present pattern unification in the case of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ Then, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:intro-generalise"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we provide some intuitions about the categorical generalisation that we
+ set up.
+\end_layout
+
+\begin_layout Subsection
+An example: pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:example-lambda"
+
+\end_inset
+
+Consider the De Bruijn encoded syntax of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus extended with metavariables satisfying the pattern restriction,
+ defined by the following inductive rule, where 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is a metavariable context 
+\begin_inset Formula $M_{1}:n_{1},\dots,M_{m}:n_{m}$
+\end_inset
+
+ specifying a metavariable symbol 
+\begin_inset Formula $M_{i}$
+\end_inset
+
+ together with its number of arguments 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+, and 
+\begin_inset Formula $C\in\mathbb{N}$
+\end_inset
+
+ is a ground context.
+\begin_inset Formula 
+\[
+\dfrac{x<C}{\Gamma;C\vdash x}\qquad\dfrac{\Gamma;C\vdash t\quad\Gamma;C\vdash u}{\Gamma;C\vdash t\ u}\qquad\dfrac{\Gamma;C+1\vdash t}{\Gamma;C\vdash\lambda t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{M:n\in\Gamma\quad x_{1},\dots,x_{n}<C\quad x_{1},\dots x_{n}\text{ distinct}}{\Gamma;C\vdash M(x_{1},\dots,x_{n})}
+\]
+
+\end_inset
+
+We choose the convention that the variable bound by 
+\begin_inset Formula $\lambda t$
+\end_inset
+
+ (in the context 
+\begin_inset Formula $C$
+\end_inset
+
+) is denoted by 
+\begin_inset Formula $C$
+\end_inset
+
+, rather than by 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ The benefit is that there is no need to shift free variables under a 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, making substitution simpler.
+ However, determining whether a variable is bound requires to know the context.
+ 
+\end_layout
+
+\begin_layout Standard
+A 
+\emph on
+metavariable substitution
+\emph default
+ 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Gamma'$
+\end_inset
+
+ assigns to each declaration 
+\begin_inset Formula $M:n$
+\end_inset
+
+ in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ a term 
+\begin_inset Formula $\Gamma';n\vdash\sigma_{M}$
+\end_inset
+
+.
+ This assignation can be extended (through a recursive definition) to any
+ term 
+\begin_inset Formula $\Gamma;C\vdash t$
+\end_inset
+
+, yielding a term 
+\begin_inset Formula $\Gamma';C\vdash t[\sigma]$
+\end_inset
+
+.
+ The basic case is 
+\begin_inset Formula $M(x_{1},\dots,x_{n})[\sigma]=\sigma_{M}[i\mapsto x_{i}]$
+\end_inset
+
+, where 
+\begin_inset Formula $-[i\mapsto x_{i+1}]$
+\end_inset
+
+ is variable renaming.
+ Composition of substitutions 
+\begin_inset Formula $\sigma:\Gamma_{1}\rightarrow\Gamma_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma':\Gamma_{2}\rightarrow\Gamma_{3}$
+\end_inset
+
+ can then be defined by 
+\begin_inset Formula $(\sigma[\sigma'])_{M}=\sigma_{M}[\sigma']$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+A 
+\emph on
+unifier
+\emph default
+ of two terms 
+\begin_inset Formula $\Gamma;C\vdash t,u$
+\end_inset
+
+ is a substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Gamma'$
+\end_inset
+
+ such that 
+\begin_inset Formula $t[\sigma]=u[\sigma]$
+\end_inset
+
+.
+ A 
+\emph on
+most general unifier
+\emph default
+ of 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ is a unifier 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Gamma'$
+\end_inset
+
+ that uniquely factors any other unifier 
+\begin_inset Formula $\delta:\Gamma\rightarrow\Delta$
+\end_inset
+
+, in the sense that there exists a unique 
+\begin_inset Formula $\delta':\Gamma'\rightarrow\Delta$
+\end_inset
+
+ such that 
+\begin_inset Formula $\delta=\sigma[\delta']$
+\end_inset
+
+.
+ We denote this situation by 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Gamma'$
+\end_inset
+
+.
+ The motivation behind this notation is that the symbol 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ separates the input and the output of the algorithm.
+ 
+\end_layout
+
+\begin_layout Standard
+Let us now describe the pattern unification algorithm using inductive rules.
+ In the process, we introduce explicit notations to make it closer to the
+ generic categorical algorithm summarised in Figure
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:algo-summary"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ To handle the failing case (when no unifier exists), we add
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This trick will be justified from a categorical point of view in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Main-result"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ a formal error metavariable context 
+\begin_inset Formula $\bot$
+\end_inset
+
+ in which the only term is a formal error term 
+\begin_inset Formula $!$
+\end_inset
+
+, inducing a substitution 
+\begin_inset Formula $!:\Gamma\rightarrow\bot$
+\end_inset
+
+, satisfying 
+\begin_inset Formula $t[!]=\bang$
+\end_inset
+
+ for any term 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The main unification phase consists in inspecting the structure of the given
+ pair of terms, until reaching a metavariable application 
 \begin_inset Formula $M(x_{1},\dots,x_{n})$
 \end_inset
 
  at top level.
- It then performs an 
-\emph on
-occur
-\emph default
--
-\emph on
-check
-\emph default
-, testing whether this metavariable 
+ For the sake of brevity, we skip the error cases and the variable cases.
+\end_layout
+
+\begin_layout Standard
+The congruence case for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction is straightforward.
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash\lambda x.t=\lambda x.u\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+For the congruence case for application 
+\begin_inset Formula $t_{1}\ t_{2}=u_{1}\ u_{2}$
+\end_inset
+
+, we need to unify both 
+\begin_inset Formula $(t_{1},u_{1})$
+\end_inset
+
+ and 
+\begin_inset Formula $(t_{2},u_{2})$
+\end_inset
+
+.
+ Let us introduce the notation 
+\begin_inset Formula $\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, meaning that 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ unifies both 
+\begin_inset Formula $(t_{1},u_{1})$
+\end_inset
+
+ and 
+\begin_inset Formula $(t_{2},u_{2})$
+\end_inset
+
+, and is the most general unifier, in the sense that it uniquely factors
+ any other unifier of both term pairs.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computing the most general unifier of a list of term pairs can be done sequentia
+lly.
+ In the example above, we first compute the most general unifier 
+\begin_inset Formula $\sigma_{1}$
+\end_inset
+
+ of 
+\begin_inset Formula $(t_{1},u_{1})$
+\end_inset
+
+, apply the substitution to 
+\begin_inset Formula $(t_{2},u_{2})$
+\end_inset
+
+ and compute the most general unifier of the resulting term pair:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\sigma_{1}]=u_{2}[\sigma_{1}]\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Once we reach a metavariable 
 \begin_inset Formula $M$
 \end_inset
 
- occurs in the other handside 
+ on either hand side of 
+\begin_inset Formula $\Gamma,M:n\vdash t=u$
+\end_inset
+
+, for example 
+\begin_inset Formula $t=M(x_{1},\dots,x_{n})$
+\end_inset
+
+, three mutually exclusive situations must be analysed:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M$
+\end_inset
+
+ does not appear in 
+\begin_inset Formula $u$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M$
+\end_inset
+
+ appears in 
+\begin_inset Formula $u$
+\end_inset
+
+ at the top level, i.e., 
+\begin_inset Formula $u=M(y_{1},\dots,y_{n})$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $M$
+\end_inset
+
+ appears deeply in 
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the third case, there is no unifier because the size of both hand sides
+ can never match after substitution.
+ This justifies the rule
+\begin_inset Formula 
+\[
+\dfrac{u\neq M(\dots)\qquad u_{|\Gamma}=\bang}{\Gamma,M:n\vdash M(\vec{x})=u\Rightarrow\bang\dashv\bot}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $u_{|\Gamma}=\bang$
+\end_inset
+
+ means that 
+\begin_inset Formula $u$
+\end_inset
+
+ does not live in the smaller metavariable context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, and thus that 
+\begin_inset Formula $M$
+\end_inset
+
+ does appear in 
 \begin_inset Formula $u$
 \end_inset
 
 .
- If not, it enters a 
+\end_layout
+
+\begin_layout Standard
+In the second case, we only keep the argument positions that are the same
+ in 
+\begin_inset Formula $x_{1},\dots,x_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{1},\dots,y_{n}$
+\end_inset
+
+: the most general unifier consists in substituting 
+\begin_inset Formula $M$
+\end_inset
+
+ with 
+\begin_inset Formula $M'(z_{1},\dots,z_{p})$
+\end_inset
+
+, where 
+\begin_inset Formula $z_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\dots$
+\end_inset
+
+, 
+\begin_inset Formula $z_{p}$
+\end_inset
+
+ is the family of common positions 
+\begin_inset Formula $i$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{i}=y_{i}$
+\end_inset
+
+.
+ We denote such a situation by 
+\begin_inset Formula $n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p$
+\end_inset
+
+.
+ The similarity with the above introduced notation will be categorically
+ justified in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:coequalising-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+: both are (co)equalisers.
+ We therefore get the rule
+\begin_inset Formula 
+\[
+\dfrac{n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p}{\Gamma,M:n\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(\vec{z})\dashv\Gamma,M':p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, the first case happens when we want to unify 
+\begin_inset Formula $M(\vec{x})$
+\end_inset
+
+ and some 
+\begin_inset Formula $u$
+\end_inset
+
+ such that 
+\begin_inset Formula $M$
+\end_inset
+
+ does not appear in 
+\begin_inset Formula $u$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $u$
+\end_inset
+
+ restricts to the smaller metavariable context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ We state this statement explicitely by 
+\begin_inset Formula $u_{|\Gamma}=\underline{u'}$
+\end_inset
+
+, where 
+\begin_inset Formula $u'$
+\end_inset
+
+ is essentially 
+\begin_inset Formula $u$
+\end_inset
+
+ but considered in the smaller metavariable context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ In this situation, the algorithm, enters a 
 \emph on
 pruning phase
 \emph default
-, and tries to remove all 
+: it tries to remove all 
 \emph on
 outbound 
 \emph default
 variables in 
-\begin_inset Formula $u$
+\begin_inset Formula $u'$
 \end_inset
 
 , i.e., variables that are not among 
@@ -556,24 +1233,204 @@ variables in
 \end_inset
 
 .
+ Let us introduce a specific notation for this phase: 
+\begin_inset Formula $\Gamma\prune u{M(\vec{x})}{\sigma\dashv\Delta}v$
+\end_inset
+
+ means that 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is the output pruning substitution, and 
+\begin_inset Formula $v$
+\end_inset
+
+ is essentially 
+\begin_inset Formula $u[\sigma][x_{i}\mapsto i]$
+\end_inset
+
+, where 
+\begin_inset Formula $-[x_{i}\mapsto i]$
+\end_inset
+
+ is renaming of free variables.
+ By convention, 
+\begin_inset Formula $M$
+\end_inset
+
+ is a metavariable symbol that is not declared in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ in this notation.
+ The third case is thus accounted by the rule
+\begin_inset Formula 
+\[
+\dfrac{u_{|\Gamma}=\underline{u'}\qquad\Gamma\prune{u'}{M(\vec{x})}{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The other possible outcome of the occur-check is that 
-\begin_inset Formula $M$
+The pruning phase consists in deconstructing the input term until reaching
+ a metavariable.
+ The variable case is straightforward.
+\begin_inset Formula 
+\begin{equation}
+\dfrac{y\in\vec{x}}{\Gamma\prune y{M(\vec{x})}{1_{\Gamma}}y\dashv\Gamma}\qquad\dfrac{y\notin\vec{x}}{\Gamma\prune y{M(\vec{x})}{\bang}{\bang}\dashv\bot}\label{eq:pruning-var-lc}
+\end{equation}
+
 \end_inset
 
- appears in 
-\begin_inset Formula $u$
+
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, the bound variable 
+\begin_inset Formula $C$
+\end_inset
+
+ must be allowed in the argument.
+\begin_inset Formula 
+\begin{equation}
+\dfrac{\Gamma\prune t{M(C,\vec{x})}{\sigma}v\dashv\Delta}{\Gamma\prune{\lambda t}{M(\vec{x})}{\sigma}v\dashv\Delta}\label{eq:pruning-lambda-lc}
+\end{equation}
+
+\end_inset
+
+Application requires to prune two terms, thus the premise with custom notation
+ in the following rule.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\dfrac{\Gamma\prune{t,u}{M(\vec{x})+M(\vec{x})}{\sigma}v\dashv\Delta}{\Gamma\prune{t\ u}{M(\vec{x})}{\sigma}v\dashv\Delta}\label{eq:pruning-app-lc}
+\end{equation}
+
+\end_inset
+
+This is done sequentially as follows
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\prune{u_{1}}{M(\vec{x})}{\sigma_{1}}{v_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\prune{u_{2}[\sigma_{1}]}{M(\vec{x})}{\sigma_{2}\dashv\Delta_{2}}{v_{2}}}{\Gamma\prune{u_{1},u_{2}}{M(\vec{x})+M(\vec{x})}{\sigma_{1}[\sigma_{2}]}{v_{1}[\sigma_{2}],v_{2}}\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+The remaining case consists in pruning a metavariable 
+\begin_inset Formula $N(\vec{y})$
 \end_inset
 
 .
- In this case, there is no unifier unless 
-\begin_inset Formula $M$
+ In this situation, we need to consider the family 
+\begin_inset Formula $z_{1},\dots,z_{p}$
 \end_inset
 
- appears at top-level, because the size of substituted terms can never match.
- 
+ of common values in 
+\begin_inset Formula $x_{1},\dots,x_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{1},\dots,y_{m}$
+\end_inset
+
+, so that 
+\begin_inset Formula $z_{i}=x_{l_{i}}=y_{r_{i}}$
+\end_inset
+
+ for some injections 
+\begin_inset Formula $l:\underline{p}\rightarrow\underline{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $r:\underline{p}\rightarrow\underline{m}$
+\end_inset
+
+, where 
+\begin_inset Formula $\underline{q}$
+\end_inset
+
+ denotes the set 
+\begin_inset Formula $\{0,\dots,q-1\}$
+\end_inset
+
+.
+ We denote such a situation by 
+\begin_inset Formula $m\prunecat{\vec{y}}{\vec{x}}{\vec{l}\dashv p}{\vec{r}}{}$
+\end_inset
+
+.
+ Again, the similarity with the pruning notation will be categorically justified
+ in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+: both are (co)pushouts.
+ In this situation, the metavariable 
+\begin_inset Formula $N$
+\end_inset
+
+ must be substituted with 
+\begin_inset Formula $N'(\vec{r})$
+\end_inset
+
+ for some new metavariable 
+\begin_inset Formula $N'$
+\end_inset
+
+ of arity 
+\begin_inset Formula $p$
+\end_inset
+
+, while the term 
+\begin_inset Formula $N(\vec{y})$
+\end_inset
+
+ becomes 
+\begin_inset Formula $N'(\vec{l})$
+\end_inset
+
+ in the ground context 
+\begin_inset Formula $n$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\dfrac{m\prunecat{\vec{y}}{\vec{x}}{\vec{l}\dashv p}{\vec{r}}{}}{\Gamma,N:m\prune{N(\vec{y})}{M(\vec{x})}{N\mapsto N'(\vec{r})}{N'(\vec{l})}\dashv\Gamma,N':p}\label{eq:pruning-mvar-lc}
+\end{equation}
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -599,7 +1456,7 @@ Assume
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsection
 Categorification
 \end_layout
 
@@ -614,14 +1471,12 @@ name "subsec:intro-generalise"
 \end_layout
 
 \begin_layout Standard
-In this section, we consider more formally pattern unification for the syntax
- of pure 
+In this section, we define the syntax of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus.
- This case study allows us to motivate our categorical account of pattern
- unification.
+-calculus and state unification from a categorical point of view in order
+ to motivate our general account of pattern unification.
 \end_layout
 
 \begin_layout Standard
@@ -661,11 +1516,16 @@ Consider the category of functors
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus is such a functor 
+-calculus defines such a functor 
 \begin_inset Formula $\Lambda$
 \end_inset
 
- satisfying the recursive equation 
+ by 
+\begin_inset Formula $\Lambda_{n}=\{t\ |\ \cdot;n\vdash t\}$
+\end_inset
+
+.
+ It satisfies the recursive equation 
 \begin_inset Formula $\Lambda_{n}\cong\underline{n}+\Lambda_{n}\times\Lambda_{n}+\Lambda_{n+1}$
 \end_inset
 
@@ -689,8 +1549,12 @@ In pattern unification, we consider extensions of this syntax with metavariables
 \begin_inset Formula $\Lambda'$
 \end_inset
 
+ defined by 
+\begin_inset Formula $\Lambda'_{n}=\{t\ |\ M:p;n\vdash t\}$
+\end_inset
+
  now satisfies the recursive equation 
-\begin_inset Formula $\Lambda'_{n}=n+\Lambda'_{n}\times\Lambda'_{n}+\Lambda_{n+1}+Inj(p,n)$
+\begin_inset Formula $\Lambda'_{n}=\underline{n}+\Lambda'_{n}\times\Lambda'_{n}+\Lambda_{n+1}'+Inj(p,n)$
 \end_inset
 
 , where 
@@ -706,7 +1570,7 @@ In pattern unification, we consider extensions of this syntax with metavariables
 \end_inset
 
 , corresponding a choice of arguments for the metavariable.
- In other words, 
+ Note that 
 \begin_inset Formula $Inj(p,n)$
 \end_inset
 
@@ -792,7 +1656,7 @@ Obviously, the functors
 \begin_inset Formula $yp$
 \end_inset
 
- is the representable functor 
+ is the (representable) functor 
 \begin_inset Formula $\mathbb{F}_{m}(p,-):\mathbb{F}_{m}\rightarrow\Set$
 \end_inset
 
@@ -887,12 +1751,7 @@ To understand how a unification problem is stated in this general setting,
 \end_inset
 
 -calculus.
- Consider Kleisli morphisms for the monad 
-\begin_inset Formula $T$
-\end_inset
-
-.
- A morphism 
+ A Kleisli morphism 
 \begin_inset Formula $\sigma:yp\rightarrow T(yn)$
 \end_inset
 
@@ -957,16 +1816,17 @@ To understand how a unification problem is stated in this general setting,
 \end_inset
 
 .
- Now, a unification problem can be stated as a pair of parallel Kleisli
- morphisms
-\begin_inset Formula 
-\[
-\xymatrix{yp\ar@<+0.5ex>[r]\ar@<-.5ex>[r] & T(yq_{1}+\dots+yq_{n})}
-\]
+ 
+\end_layout
 
+\begin_layout Standard
+A unification problem can be stated as a pair of parallel Kleisli morphisms
+ 
+\begin_inset Formula $\xymatrix{yp\ar@<+0.5ex>[r]\ar@<-.5ex>[r] & T(yq_{1}+\dots+yq_{n})}
+$
 \end_inset
 
-corresponding to selecting a pair of terms with 
+ corresponding to selecting a pair of terms with 
 \begin_inset Formula $p$
 \end_inset
 
@@ -984,12 +1844,1025 @@ corresponding to selecting a pair of terms with
 
 .
  A unifier is nothing but a Kleisli morphism coequalising this pair.
- The most general unifier, if it exists, is the coequaliser, in the full
- subcategory spanned by coproducts of representable presheaves.
- The main purpose of the pattern unification algorithm consists in constructing
- this coequaliser, if it exists, which is the case as long as there exists
- a unifier.
+ The property required by the most general unifier menas that it is the
+ coequaliser, in the full subcategory spanned by coproducts of representable
+ presheaves.
+ The main purpose of the pattern unification algorithm consists thus in
+ constructing this coequaliser, if it exists, which is the case as long
+ as there exists a unifier.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Judgments 
+\series default
+(colimits in 
+\begin_inset Formula $\Kl{\D^{+}}^{*}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow\quad\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{-->}[r]^{\sigma} & \Delta}
+\text{ is a coequaliser}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\prune gf{\sigma}u\dashv\Delta\quad\Longleftrightarrow\begin{array}{c}
+\xymatrix{\coprod_{i}Ka_{i}\ar[r]^{{\cal L}f}\ar[d]_{g} & \coprod_{i}Kb_{i}\ar@{-->}[d]^{u}\\
+\Gamma\ar@{-->}[r]_{\sigma} & \Delta
+}
+\end{array}\text{ is a pushout}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Unification phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:coequalising-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+\unificationempty\quad\unificationtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationstepwise
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid-rigid (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:rig-rig"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+\unificationrigrig
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationrigrigneqo\quad\unificationrigrigneqs
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-*, no cycle (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:flex-star-nocycle"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:flex-star-nocycle"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationoccurcheckeffective\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-Flex, same (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:flex-flex-same-metavar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:flex-flex-same-metavar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\unificationflexflex
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-Rigid, cyclic (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:flex-rig-cyclic"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:flex-rig-cyclic"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationfailingoccurcheckeffective{\Gamma}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Pruning phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+\pruningempty\quad\pruningtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pruningstepwise
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:case-KA-RiTC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\pruningrig\quad\pruningrigfail
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:pruning-metavar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset Formula 
+\[
+\pruningflex
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:algo-summary"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Summary of the rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now sketch the generic unification algorithm as summarised in Figure
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:algo-summary"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, specialised to the pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, starting with the unification phase for a list of term pairs.
+ The first structural rule handles the case of an empty list of term pairs:
+ in this case there is nothing to unify.
+ The second rule merely propagates the error.
+ The third structural rule performs sequential unification of a non empty
+ list of term pairs, as described earlier.
+ 
+\end_layout
+
+\begin_layout Standard
+The rigid-rigid rules handle all the cases where no metavariable is involved
+ at top level.
+ In the case of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, the term 
+\begin_inset Formula $\Gamma;C\vdash o(f;s)$
+\end_inset
+
+ denotes a variable, an application, or a 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction depending on the label 
+\begin_inset Formula $o$
+\end_inset
+
+ in 
+\begin_inset Formula $\{v,a,l\}$
+\end_inset
+
+.
+ Indeed, 
+\begin_inset Formula $f$
+\end_inset
+
+ is a list of terms whose nature depends on 
+\begin_inset Formula $o$
+\end_inset
+
+, and 
+\begin_inset Formula $s$
+\end_inset
+
+ is an element of 
+\begin_inset Formula $S_{o,C}$
+\end_inset
+
+ for some functor 
+\begin_inset Formula $S_{o}:\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+ depending on 
+\begin_inset Formula $o$
+\end_inset
+
+.
+ We summarise the different situations in the following table, where 
+\begin_inset Formula $1$
+\end_inset
+
+ denotes either a singleton set, either the constant functor 
+\begin_inset Formula $\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+ mapping anything to a singleton set.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $o=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s\in\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variable
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Empty list
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\underline{C}=I_{C}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Application
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Gamma;C\vdash f_{1},f_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1=1_{C}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Abstraction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $l$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Gamma;C+1\vdash f$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1=1_{C}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The other rules of the unification phase follow the scheme described in
+ the previous section.
+ We now comment the pruning phase.
+ The structural rules perform a job similar to those of the unification
+ phase.
+ The metavariable pruning case (Flex) is textually similar to the rule
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-mvar-lc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ As we will see in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the categorical meaning of the premise is a pushout in 
+\begin_inset Formula $\D=\op{\mathbb{F}_{m}}$
+\end_inset
+
+, that is a pullback in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+.
+ And indeed, the premise of the rule
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-mvar-lc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ precisely means that the following square is a pullback
+\begin_inset Formula 
+\[
+\xymatrix{p\ar[r]^{l}\ar[d]_{r} & n\ar[d]^{x}\\
+m\ar[r]_{y} & C
+}
+\]
+
+\end_inset
+
+Finally, let us comment the two rigid rules.
+ In those situations, 
+\begin_inset Formula $f=(x_{1},\dots,x_{n})$
+\end_inset
+
+ is a list of distinct variables chosen in a ground context 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ Equivalently, 
+\begin_inset Formula $f$
+\end_inset
+
+ is a morphism 
+\begin_inset Formula $n\rightarrow C$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+.
+ In 
+\begin_inset Formula $\Gamma;C\vdash o(g;s)$
+\end_inset
+
+, as explained above, 
+\begin_inset Formula $s$
+\end_inset
+
+ is then an object of 
+\begin_inset Formula $S_{o,C}$
+\end_inset
+
+.
+ The two rules examines two different cases: the first is when there is
+ 
+\begin_inset Formula $s'\in S_{o,n}$
+\end_inset
+
+ such that 
+\begin_inset Formula $s$
+\end_inset
+
+ is the image by the renaming 
+\begin_inset Formula $f$
+\end_inset
+
+ of 
+\begin_inset Formula $s'$
+\end_inset
+
+, which we denote by 
+\begin_inset Formula $s_{|f}\Rightarrow\underline{s'}$
+\end_inset
+
+, and the second is when there is no such 
+\begin_inset Formula $s'$
+\end_inset
+
+, a situation which we denote by 
+\begin_inset Formula $s_{|f}\Rightarrow\bang$
+\end_inset
+
+.
+ In the variable case, this distinction corresponds to the two rules
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-var-lc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In the case of an application or an abstraction, the second rule never
+ applies, and the first rule accounts for the rules
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-lambda-lc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-app-lc"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Indeed, the notation 
+\begin_inset Formula ${\cal L}f^{o}$
+\end_inset
+
+ unfolds to 
+\begin_inset Formula $M(\vec{x})+M(\vec{x})$
+\end_inset
+
+ in the application case, and to 
+\begin_inset Formula $M(C,\vec{x})$
+\end_inset
+
+ in the abstraction case.
 \end_layout
 
 \begin_layout Standard
@@ -1139,8 +3012,7 @@ literal "false"
 \begin_inset Formula $\mathbb{F}_{m}$
 \end_inset
 
- in the introduction by the terminal category, so that we are working in
- the category of sets.
+ in the introduction by the terminal category.
  Pattern unification was introduced in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1166,6 +3038,20 @@ literal "false"
 generalisation
 \lang english
 .
+\end_layout
+
+\begin_layout Personal Question
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 9"
+key "DBLP:books/daglib/0068768"
+literal "false"
+
+\end_inset
+
+ propose une generalisation interessante, avec le lemme sur les epis.
+ (Theorem 10).
+ Est-ce qu'on pourrait encore generaliser encore notre business?
 \end_layout
 
 \begin_layout Subsection*
@@ -1354,511 +3240,6 @@ status open
 
 \begin_layout Plain Layout
 Some benefits: we unify the operation and the variable case.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-
-\series bold
-Judgments 
-\series default
-(colimits in 
-\begin_inset Formula $\Kl{\D^{+}}^{*}$
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow\quad\xymatrix{\coprod_{i}Ka_{i}\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma\ar@{-->}[r]^{\sigma} & \Delta}
-\text{ is a coequaliser}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\Gamma\prune gf{\sigma}u\dashv\Delta\quad\Longleftrightarrow\begin{array}{c}
-\xymatrix{\coprod_{i}Ka_{i}\ar[r]^{{\cal L}f}\ar[d]_{g} & \coprod_{i}Kb_{i}\ar@{-->}[d]^{u}\\
-\Gamma\ar@{-->}[r]_{\sigma} & \Delta
-}
-\end{array}\text{ is a pushout}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-\series bold
-Unification phase
-\end_layout
-
-\begin_layout Itemize
-Structural rules (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:coequalising-phase"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset Formula 
-\[
-\unificationempty\quad\unificationtop
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationstepwise
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Rigid-rigid (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:rig-rig"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset Formula 
-\[
-\unificationrigrig
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationrigrigneqo\quad\unificationrigrigneqs
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex-*, no cycle (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-star-nocycle"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-star-nocycle"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationoccurcheckeffective\quad\text{+ symmetric rule}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex-Rigid, cyclic (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-rig-cyclic"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-rig-cyclic"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationfailingoccurcheckeffective{\Gamma}\quad\text{+ symmetric rule}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex-Flex, same (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-flex-same-metavar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-flex-same-metavar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\unificationoccurcheck\quad\text{+ symmetric rule}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationfailingoccurcheck{\Gamma}\quad\text{+ symmetric rule}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationflexflex
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\series bold
-Pruning phase
-\end_layout
-
-\begin_layout Itemize
-Structural rules (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:pruning-phase"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset Formula 
-\[
-\pruningempty\quad\pruningtop
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\pruningstepwise
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Rigid (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:case-KA-RiTC"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\pruningrigfail\quad\pruningrig
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:pruning-metavar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset Formula 
-\[
-\pruningflex
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:algo-summary"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Summary of the rules
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -2172,34 +3553,49 @@ name "rem:ar-A"
 
 \end_inset
 
-An object of 
+The category 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- is intuitively a metavariable arity, or a ground context.
+ is intuitively the category of ground contexts and 
+\emph on
+renamings
+\emph default
+.
+ A ground context can also be thought of as a metavariable arity, in the
+ sense that it specifies the necessary substitution data, that is, a term
+ in the given ground context.
  The argument of a metavariable 
 \begin_inset Formula $M:a$
 \end_inset
 
- living in a ground context 
+ living in a (larger) ground context 
 \begin_inset Formula $a'$
 \end_inset
 
- is a morphism 
+ is given by a renaming 
 \begin_inset Formula $a\rightarrow a'$
 \end_inset
 
 .
- In the previous example, a metavariable 
+ In the example of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus described in the introduction, a metavariable 
 \begin_inset Formula $M:n$
 \end_inset
 
- living in a context 
+ in a context 
 \begin_inset Formula $m\in\mathbb{N}$
 \end_inset
 
  takes as argument a choice of distinct variables 
 \begin_inset Formula $x_{1},\dots,x_{n}\in\{0,\dots,m-1\}$
+\end_inset
+
+, i.e., a morphism 
+\begin_inset Formula $\hom_{\mathbb{F}_{m}}(n,m)$
 \end_inset
 
 .
@@ -2234,7 +3630,25 @@ The restriction of the monad
 \end_inset
 
 -calculus, as in the introduction.
- We can design a functor 
+ We can design
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Define 
+\begin_inset Formula $P_{n}$
+\end_inset
+
+ as the set of two-elements sets of 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ a functor 
 \begin_inset Formula $P$
 \end_inset
 
@@ -2242,12 +3656,8 @@ The restriction of the monad
 \begin_inset Formula $T(P)$
 \end_inset
 
- is the syntax extended with a binary operation 
+ is the syntax extended with a binary commutative metavariable 
 \begin_inset Formula $M'(-,-)$
-\end_inset
-
- such that 
-\begin_inset Formula $M'(x,y)=M'(y,x)$
 \end_inset
 
 .
@@ -2265,7 +3675,7 @@ The restriction of the monad
  
 \color inherit
 with 
-\begin_inset Formula $M'$
+\begin_inset Formula $P$
 \end_inset
 
 , while it replaces 
@@ -4036,33 +5446,19 @@ F(X)=\coprod_{o\in O}\prod_{j\in J_{o}}X\circ L_{o,j}\times S_{o},
 \begin_inset Formula $O$
 \end_inset
 
-, where, for each 
+, where for each 
 \begin_inset Formula $o\in O$
 \end_inset
 
-,
-\end_layout
-
-\begin_layout Itemize
+, 
 \begin_inset Formula $S_{o}\in\C$
 \end_inset
 
-;
-\end_layout
-
-\begin_layout Itemize
+, 
 \begin_inset Formula $J_{o}$
 \end_inset
 
- is a finite set;
-\end_layout
-
-\begin_layout Itemize
-for each 
-\begin_inset Formula $j\in J_{o}$
-\end_inset
-
-, 
+ is a finite set, and 
 \begin_inset Formula $L_{o,j}$
 \end_inset
 
@@ -4070,7 +5466,11 @@ for each
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- preserving finite connected limits.
+ preserving finite connected limits for each 
+\begin_inset Formula $j\in J_{o}$
+\end_inset
+
+.
  
 \begin_inset Note Note
 status open
@@ -4097,12 +5497,23 @@ for some finite family of endofunctors
 \begin_inset Formula $S_{o}$
 \end_inset
 
- is, for instance, the variable presheaf (in this case, 
+ typically accounts for variables (in this case, 
 \begin_inset Formula $J_{o}$
 \end_inset
 
- is empty) or a type flag (in the simply-typed case).
+ is empty) or can be used to specify the output type of an operation, in
+ a simply-typed setting.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -4117,7 +5528,11 @@ The fact that it preserves pullbacks is crucial when unifying a metavariable
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
 name "ex:lambda-endo"
@@ -4145,6 +5560,11 @@ In the example of the introduction, the endofunctor on
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -4265,7 +5685,7 @@ We now abstract this situation by stating the properties that we will need.
 \end_layout
 
 \begin_layout Notation
-Given an index 
+Given 
 \begin_inset Formula $o\in O$
 \end_inset
 
@@ -4308,7 +5728,7 @@ A morphism
 \begin_inset Formula $Ka\rightarrow FX$
 \end_inset
 
- is equivalently given by an index 
+ is equivalently given by 
 \begin_inset Formula $o\in O$
 \end_inset
 
@@ -4685,7 +6105,7 @@ name "nota:op"
 
 \end_inset
 
-Given an index 
+Given 
 \begin_inset Formula $o\in O$
 \end_inset
 
@@ -4698,14 +6118,10 @@ Given an index
 \end_inset
 
 , we denote the induced morphism 
-\begin_inset Formula 
-\[
-Ka\rightarrow FTX\hookrightarrow TX
-\]
-
+\begin_inset Formula $Ka\rightarrow FTX\hookrightarrow TX$
 \end_inset
 
-by 
+ by 
 \begin_inset Formula $o(f;s)$
 \end_inset
 
@@ -4740,48 +6156,24 @@ noprefix "false"
 
 \begin_layout Notation
 Let 
-\begin_inset Formula $\Gamma=M_{1}:a_{1},\dots,M_{n}:a_{n}\in\D^{+}$
+\begin_inset Formula $\Gamma\in\D^{+}$
 \end_inset
 
-, following Notation
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "nota:context"
-plural "false"
-caps "false"
-noprefix "false"
-
+ and 
+\begin_inset Formula $b\in\D$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Notation
-Given 
+ Given 
 \begin_inset Formula $f\in\hom_{{\cal \D}}(a,a_{i})$
 \end_inset
 
 , we denote the morphism 
-\begin_inset Formula 
-\[
-Ka\rightarrow Ka_{i}\hookrightarrow\Gamma\xrightarrow{\eta}T(\Gamma)
-\]
-
+\begin_inset Formula $Ka\xrightarrow{{\cal L}Kf}Ka_{i}\xrightarrow{in_{M}}\Gamma,M:b$
 \end_inset
 
-by 
-\begin_inset Formula $M_{i}(f)$
+ by 
+\begin_inset Formula $M_{i}(f)\in\hom_{\Kl T}(Ka,(\Gamma,M:b))=\hom_{\C}(Ka,T(\Gamma,M:b))$
 \end_inset
 
 .
@@ -5335,37 +6727,52 @@ $
 \end_inset
 
 .
+ When 
+\begin_inset Formula $\B=\Kl T^{*}$
+\end_inset
+
+, we moreover implicitly assume 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+by the notation 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+ that 
+\begin_inset Formula $A\in\D^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $B,C\in\D^{+}\cup\{\bot\}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 The intuition behind this notation is that the symbol 
 \begin_inset Formula $\Rightarrow$
 \end_inset
 
  separates the input and the output of the algorithm, that we are going
  to describe with inductive rules.
- In fact, we will mainly consider coequalisers 
-\begin_inset Formula $\xymatrix{\coprod_{i}Ka_{i}\coeqr{t}{u} & \Gamma\ar@{-->}[r]^{\sigma} & \Delta}
-$
+ 
+\end_layout
+
 \end_inset
 
- (denoted by 
-\begin_inset Formula $\Gamma\vdash t=_{\Kl T}u\Rightarrow\sigma\dashv\Delta$
-\end_inset
 
-) where 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- and 
-\begin_inset Formula $\Delta$
-\end_inset
-
- are in 
-\begin_inset Formula $\D^{+}\cup\{\bot\}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -5387,11 +6794,8 @@ that we sometimes abbreviate as
 \end_layout
 
 \begin_layout Standard
-Let us start with simple cases:
-\end_layout
-
-\begin_layout Itemize
-when 
+Let us start with simple cases.
+ When 
 \begin_inset Formula $\Gamma=\bot$
 \end_inset
 
@@ -5399,11 +6803,8 @@ when
 \begin_inset Formula $\unificationtopconcl$
 \end_inset
 
- holds;
-\end_layout
-
-\begin_layout Itemize
-when the coproduct is empty, the coequaliser is just 
+ holds.
+ When the coproduct is empty, the coequaliser is just 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -5416,19 +6817,7 @@ when the coproduct is empty, the coequaliser is just
 
 \begin_layout Standard
 Furthermore, when the coproduct is neither empty nor a singleton, the coequalise
-r can be decomposed thanks to the following rule:
-\begin_inset Formula 
-\begin{equation}
-\unificationstepwise\label{eq:unify-stepwise}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This is justified by a general stepwise construction of coequalisers:
+r can be computed sequentially thanks to the following general lemma.
 \end_layout
 
 \begin_layout Lemma
@@ -5451,8 +6840,41 @@ name "lem:coeq-stepwise"
 
 \end_inset
 
-In any category, if the first two diagrams below are coequalisers, then
- the last one as well
+In any category, denoting morphism  composition 
+\begin_inset Formula $f\circ g$
+\end_inset
+
+ by 
+\begin_inset Formula $g[f]$
+\end_inset
+
+, the following rule applies.
+\begin_inset Formula 
+\begin{equation}
+\unificationstepwise\label{eq:unify-stepwise}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+In other words, if the first two diagrams below are coequalisers, then the
+ last one as well
 \end_layout
 
 \begin_layout Lemma
@@ -5635,6 +7057,22 @@ end{tikzcd}
 
 \end_layout
 
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 What remains to be addressed is the case where the coproduct is a singleton
  and 
@@ -5739,7 +7177,19 @@ noprefix "false"
 
  are either rigid or flexible.
  In the next subsections, we discuss all the different mutually exclusive
- situations (up to symmetry): rigid-rigid (Section
+ situations (up to symmetry): 
+\end_layout
+
+\begin_layout Itemize
+both 
+\begin_inset Formula $t$
+\end_inset
+
+ or 
+\begin_inset Formula $u$
+\end_inset
+
+ are rigid (Section
 \begin_inset ERT
 status open
 
@@ -5761,10 +7211,21 @@ noprefix "false"
 \end_inset
 
 ), 
-\emph on
-cyclic
-\emph default
- flexible-rigid (Section
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t=M(\dots)$
+\end_inset
+
+ and 
+\begin_inset Formula $M$
+\end_inset
+
+ does not occur in 
+\begin_inset Formula $u$
+\end_inset
+
+ (Section
 \begin_inset ERT
 status open
 
@@ -5778,14 +7239,28 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:flex-rig-cyclic"
+reference "subsec:flex-star-nocycle"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-), in the involved metavariable occurs in the other hand side, cyclic flex-flex
+), 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ are 
+\begin_inset Formula $M(\dots)$
+\end_inset
+
  (Section
 \begin_inset ERT
 status open
@@ -5807,7 +7282,22 @@ noprefix "false"
 
 \end_inset
 
-), and finally, non-cyclic flex-* (Section
+), 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $t=M(\dots)$
+\end_inset
+
+ and 
+\begin_inset Formula $M$
+\end_inset
+
+ occurs deeply in 
+\begin_inset Formula $u$
+\end_inset
+
+ (Section
 \begin_inset ERT
 status open
 
@@ -5821,7 +7311,7 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:flex-star-nocycle"
+reference "subsec:flex-rig-cyclic"
 plural "false"
 caps "false"
 noprefix "false"
@@ -5979,11 +7469,7 @@ name "subsec:rig-rig"
 
 \end_inset
 
-Here we are in the situation where the parallel morphisms 
-\begin_inset Formula $t,u:Ka\rightarrow T\Gamma$
-\end_inset
-
- are 
+Here we want to unify 
 \begin_inset Formula $o(f;s)$
 \end_inset
 
@@ -6045,7 +7531,7 @@ noprefix "false"
 
 \end_inset
 
-, this means that 
+, this entails 
 \begin_inset Formula $o(f[\sigma];s)=o'(f'[\sigma];s')$
 \end_inset
 
@@ -6125,8 +7611,7 @@ We now assume
 \end_inset
 
 .
- This induces an isomorphism between the category of unifiers (i.e., cocones)
- for 
+ This induces an isomorphism between the category of unifiers for 
 \begin_inset Formula $t$
 \end_inset
 
@@ -6307,13 +7792,255 @@ cycle
 \end_layout
 
 \begin_layout Subsection
-Flex-rigid, cyclic
+Flex-*, no cycle
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:flex-rig-cyclic"
+name "subsec:flex-star-nocycle"
+
+\end_inset
+
+Here we want to unify 
+\begin_inset Formula $M(f)={\cal L}Kf[in_{M}]$
+\end_inset
+
+ for some 
+\begin_inset Formula $f\in\hom_{\D}(a,b)$
+\end_inset
+
+ and 
+\begin_inset Formula $u:Ka\rightarrow T(\Gamma,M:b)$
+\end_inset
+
+, such that 
+\begin_inset Formula $M$
+\end_inset
+
+ does not occur in 
+\begin_inset Formula $u$
+\end_inset
+
+, in the sense that there exists 
+\begin_inset Formula $u':Ka\rightarrow T\Gamma$
+\end_inset
+
+ such that 
+\begin_inset Formula $u=u'[in_{\Gamma}]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We exploit the following general lemma with 
+\begin_inset Formula $x={\cal L}Kf$
+\end_inset
+
+ and 
+\begin_inset Formula $y=u'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[
+\backslash
+cite{BorceuxI}, Exercise 2.17.1]
+\end_layout
+
+\end_inset
+
+In any category, if the below left diagram is a pushout, then the below
+ right diagram is a coequaliser.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+% YADE DIAGRAM diagrams/pushout-coeq.json
+\end_layout
+
+\end_inset
+
+
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{array}{c}
+
+\backslash
+xymatrix{A
+\backslash
+ar[r]^{x}
+\backslash
+ar[d]_{y} & B
+\backslash
+ar@{-->}[d]^{v}
+\backslash
+
+\backslash
+
+C
+\backslash
+ar@{-->}[r]_{
+\backslash
+sigma} & D
+}
+
+\backslash
+end{array}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+qquad
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+% pushout-coeq.json
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}[row sep=-4pt]
+\end_layout
+
+\begin_layout Plain Layout
+
+ & B 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ A && {B+C} & D 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+ & C
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["x"above, curve={height=-6pt}, from=2-1, to=1-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["y"below, curve={height=6pt}, from=2-1, to=3-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["{in_2}"below, curve={height=6pt}, from=3-2, to=2-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["{in_1}"above, curve={height=-6pt}, from=1-2, to=2-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+arrow["{v,
+\backslash
+sigma}", dashed, from=2-3, to=2-4]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\begin{array}{c}
+\xymatrix{A\ar[r]^{x}\ar[d]_{y} & B\ar@{-->}[d]^{u}\\
+C\ar@{-->}[r]_{v} & D
+}
+\end{array}\qquad\begin{array}{c}
+\xymatrix{ & B\ar[rd]^{in_{1}}\\
+A\ar[ru]^{x}\ar[rd]_{y} &  & B+C\ar@{-->}[r]_{u,v} & D\\
+ & C\ar[ru]_{in_{2}}
+}
+\end{array}.
+\]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -6321,7 +8048,36 @@ name "subsec:flex-rig-cyclic"
 \end_layout
 
 \begin_layout Standard
-In Section
+Therefore, it is enough to compute the above left pushout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\xymatrix{Ka\ar[d]_{u'}\ar[r]^{M(f)} & M:b\ar@{-->}[d]^{v}\\
+\Gamma\ar@{-->}[r]_{\sigma} & \Delta
+}
+,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, with 
+\begin_inset Formula $x={\cal L}Kf$
+\end_inset
+
+ and 
+\begin_inset Formula $y=u'$
+\end_inset
+
+.
+ Anticipating the pruning phase described in Section
 \begin_inset ERT
 status open
 
@@ -6335,36 +8091,48 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:occur-check"
+reference "sec:pruning-phase"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-, we show that in this situation, there is no unifier, 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-TODO: exploit regularity of monomorphisms 
-\begin_inset Formula $TA\rightarrow T(A+B)$
+, this is expressed by the statement 
+\begin_inset Formula $\Gamma\prune{u'}{M(f)}{\sigma}v\dashv\Delta$
 \end_inset
 
 .
-\end_layout
-
-\end_inset
-
- justifying the rule
+ Therefore, we have the rule
 \begin_inset Formula 
 \begin{equation}
-\unificationfailingoccurcheck{\Gamma}\label{eq:flex-rig-cyclic-factor}
+\unificationoccurcheck\label{eq:flex-no-cycle-facto}
 \end{equation}
 
 \end_inset
 
-Let us make this rule more effective.
+Let us make the factorisation assumption about 
+\begin_inset Formula $u$
+\end_inset
+
+ more effective.
+ Indeed, we can define by recursion a partial morphism from 
+\begin_inset Formula $T(\Gamma,M:b)$
+\end_inset
+
+ to 
+\begin_inset Formula $T\Gamma$
+\end_inset
+
+ that intuitively tries to compute 
+\begin_inset Formula $u'$
+\end_inset
+
+ from an input data 
+\begin_inset Formula $u$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -6484,7 +8252,7 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:flex-rig-cyclic-factor"
+reference "eq:flex-no-cycle-facto"
 plural "false"
 caps "false"
 noprefix "false"
@@ -6494,21 +8262,8 @@ noprefix "false"
  as follows.
 \begin_inset Formula 
 \[
-\unificationfailingoccurcheckeffective{\Gamma}
+\unificationoccurcheckeffective
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-% YADE DIAGRAM diagrams/coeq-flex1.json
-\end_layout
 
 \end_inset
 
@@ -6527,25 +8282,31 @@ name "subsec:flex-flex-same-metavar"
 \end_inset
 
 Here we want to unify 
-\begin_inset Formula $M(f)$
+\begin_inset Formula $M(f)={\cal L}Kf[in_{M}]$
 \end_inset
 
  and 
-\begin_inset Formula $M(g)$
+\begin_inset Formula $M(g)={\cal L}Kg[in_{M}]$
 \end_inset
 
 , with 
 \begin_inset Formula $f,g\in\hom_{\D}(a,b)$
 \end_inset
 
-, that is, we want to coequalise, in 
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In other words, we want to coequalise, in 
 \begin_inset Formula $\Kl T^{*}$
 \end_inset
 
 , the following morphisms
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Note Note
 status open
 
@@ -6558,7 +8319,7 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Preview
 
 \begin_layout Standard
@@ -6672,6 +8433,11 @@ end{tikzcd}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -6727,8 +8493,38 @@ We exploit the following lemma in
 \end_layout
 
 \begin_layout Lemma
-In any category, if the below left diagram is a coequaliser, then so is
- the below right diagram.
+In any category, denoting morphism composition 
+\begin_inset Formula $g\circ f$
+\end_inset
+
+ by 
+\begin_inset Formula $f[g]$
+\end_inset
+
+, the following rule applies:
+\begin_inset Formula 
+\[
+\dfrac{B\vdash u=v\Rightarrow h\dashv C}{B+D\dashv u[in_{B}]=v[in_{B}]\Rightarrow h+1_{D}\dashv C+D}
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+In other words, if the below left diagram is a coequaliser, then so is the
+ below right diagram.
+ 
 \begin_inset Formula 
 \[
 \xymatrix{A\ar@<+.5ex>[r]^{u}\ar@<-.5ex>[r]_{v} & B\ar@{-->}[r]^{h} & C}
@@ -6739,6 +8535,22 @@ A\ar[ru]^{u}\ar[rd]_{v} &  & B+D\ar@{-->}[r]^{h+1_{D}} & C+D\\
 }
 \end{array}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
 
 \end_inset
 
@@ -6817,132 +8629,50 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Flex-*, no cycle
+Flex-rigid, cyclic
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:flex-star-nocycle"
+name "subsec:flex-rig-cyclic"
 
 \end_inset
 
-In this section, we consider a coequaliser diagram 
-\begin_inset Formula $\xymatrix{Ka\coeqr{t}{u} & T(\Gamma,M:b)}
-$
-\end_inset
-
- such that 
-\begin_inset Formula $t=M(f)$
+Here, we want to unify 
+\begin_inset Formula $M(f)$
 \end_inset
 
  for some 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
-
-, and 
-\begin_inset Formula $u$
-\end_inset
-
- factors as 
-\begin_inset Formula $Ka\xrightarrow{u'}T\Gamma\hookrightarrow T(\Gamma,M:b)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-We exploit the following general lemma with 
-\begin_inset Formula $x={\cal L}Kf$
+\begin_inset Formula $f\in\hom_{\D}(a,b)$
 \end_inset
 
  and 
-\begin_inset Formula $y=u'$
+\begin_inset Formula $u:Ka\rightarrow\Gamma,M:b$
+\end_inset
+
+, such that 
+\begin_inset Formula $u$
+\end_inset
+
+ is rigid, and 
+\begin_inset Formula $M$
+\end_inset
+
+ appears in 
+\begin_inset Formula $u$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\Gamma\rightarrow\Gamma,M:b$
+\end_inset
+
+ does not factor 
+\begin_inset Formula $u$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Thus, the coequaliser
-\begin_inset Formula 
-\[
-\xymatrix{Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & T\Gamma}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-is a coequaliser (in 
-\begin_inset Formula $\Kl T^{*}$
-\end_inset
-
-) of the shape
-\begin_inset Formula 
-\begin{equation}
-\xymatrix{ & Kb\ar@{^{(}->}[rd]^{in_{M}}\\
-Ka\ar[ru]^{\mathcal{L}f}\ar[rd]_{g} &  & \Gamma',M:b\\
- & \Gamma'\ar@{_{(}->}[ru]_{in_{\Gamma'}}
-}
-,\label{eq:coeq-flex-rigid}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-In any category, if the below left diagram is a pushout, then the below
- right diagram is a coequaliser.
-\begin_inset Formula 
-\[
-\begin{array}{c}
-\xymatrix{A\ar[r]^{x}\ar[d]_{y} & B\ar@{-->}[d]^{u}\\
-C\ar@{-->}[r]_{v} & D
-}
-\end{array}\qquad\begin{array}{c}
-\xymatrix{ & B\ar[rd]^{in_{1}}\\
-A\ar[ru]^{x}\ar[rd]_{y} &  & B+C\ar@{-->}[r]_{u,v} & D\\
- & C\ar[ru]_{in_{2}}
-}
-\end{array}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Therefore, it is enough to compute the pushout
-\begin_inset Formula 
-\[
-\xymatrix{Ka\ar[d]_{u'}\ar[r]^{\mathcal{L}Kf} & Kb\ar@{-->}[d]^{v}\\
-\Gamma\ar@{-->}[r]_{\sigma} & \Delta
-}
-,
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-As we will see in Section
+ In Section
 \begin_inset ERT
 status open
 
@@ -6956,27 +8686,45 @@ status open
 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:pruning-phase"
+reference "sec:occur-check"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-, this is expressed by the statement 
-\begin_inset Formula $\Gamma\prune{u'}f{\sigma}v\dashv\Delta$
+, we show that in this situation, there is no unifier.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: exploit regularity of monomorphisms 
+\begin_inset Formula $TA\rightarrow T(A+B)$
 \end_inset
 
 .
- Therefore, we have the rule
+\end_layout
+
+\end_inset
+
+ justifying the rule
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\unificationoccurcheck
+\unificationfailingoccurcheck{\Gamma}
 \]
 
 \end_inset
 
-which we rephrase using Corollary
+
+\end_layout
+
+\end_inset
+
+Using Corollary
 \begin_inset ERT
 status open
 
@@ -6997,11 +8745,27 @@ noprefix "false"
 
 \end_inset
 
- as
+, we thus have the rule
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-\unificationoccurcheckeffective
+\unificationfailingoccurcheckeffective{\Gamma}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+% YADE DIAGRAM diagrams/coeq-flex1.json
+\end_layout
 
 \end_inset
 
@@ -7032,14 +8796,12 @@ The pruning phase corresponds to computing a pushout diagram in
 \end_layout
 
 \begin_layout Notation
-We denote a pushout
-\begin_inset Formula 
-\[
+We denote a pushout 
+\begin_inset Formula $\begin{array}{c}
 \xymatrix{A\ar[r]^{f}\ar[d]_{g} & B\ar@{-->}[d]^{u}\\
 C\ar@{-->}[r]_{\sigma} & D
 }
-\]
-
+\end{array}$
 \end_inset
 
  in a category 
@@ -7055,33 +8817,24 @@ C\ar@{-->}[r]_{\sigma} & D
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-In fact, we will mainly consider pushouts
-\begin_inset Formula 
-\[
-\xymatrix{\coprod_{i}Ka_{i}\ar[rrr]^{\coprod_{i}{\cal L}Kf_{i}={\cal L}\coprod_{i}KF_{i}}\ar[d]_{g} &  &  & \coprod_{i}Kb_{i}\ar@{-->}[d]^{u}\\
-\Gamma\ar@{-->}[rrr]_{\sigma} &  &  & \Delta
-}
-\]
-
+ When 
+\begin_inset Formula $\B=\Kl T^{*}$
 \end_inset
 
-denoted by 
-\begin_inset Formula $\Gamma\prunecat g{\coprod_{i}{\cal L}Kf_{i}}{\sigma}u{\Kl T^{*}}$
-\end_inset
-
- where 
-\begin_inset Formula $\Gamma$
+ we moreover implicitly assume that 
+\begin_inset Formula $C,D\in\D^{+}\cup\{\bot\}$
 \end_inset
 
  and 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $f=\coprod_{i\in I}{\cal L}Kf'_{i}:\coprod_{i}Ka_{i}\rightarrow\coprod_{i}Kb_{i}$
 \end_inset
 
- are in 
-\begin_inset Formula $\D^{+}\cup\{\bot\}$
+ for some finite set 
+\begin_inset Formula $I$
+\end_inset
+
+ and morphisms 
+\begin_inset Formula $f'_{i}:a_{i}\rightarrow b_{i}$
 \end_inset
 
 .
@@ -7252,8 +9005,44 @@ status open
 \end_layout
 
 \begin_layout Lemma
-In any category, if the first two diagrams below are pushouts, then the
- last one as well
+In any category, denoting morphism composition 
+\begin_inset Formula $f\circ g$
+\end_inset
+
+ by 
+\begin_inset Formula $g[f]$
+\end_inset
+
+, the following rule applies.
+\begin_inset Formula 
+\begin{equation}
+\pruningstepwise\label{eq:pruning-stepwise}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+In other words, if the first two diagrams below are pushouts, then the last
+ one as well
 \end_layout
 
 \begin_layout Lemma
@@ -7480,12 +9269,16 @@ end{tikzcd}
 
 \end_layout
 
-\begin_layout Standard
-Thus we have the following rule.
-\begin_inset Formula 
-\begin{equation}
-\pruningstepwise\label{eq:pruning-stepwise}
-\end{equation}
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
 
 \end_inset
 
@@ -7510,21 +9303,17 @@ We can focus on the case where the coproduct is the singleton (since we
 \end_inset
 
 .
- Thus, we want to compute a pushout
-\begin_inset Formula 
-\[
-\xymatrix{Ka\hautr{N(f)}\ar[d] & T(N:b)\\
-T\Gamma
-}
-\]
-
+ Thus, we want to compute the pushout of 
+\begin_inset Formula $\xymatrix{T\Gamma & Ka\hautr{N(f)}\ar[l] & T(N:b)}
+$
 \end_inset
 
+ in 
+\begin_inset Formula $\Kl T$
+\end_inset
 
-\end_layout
-
-\begin_layout Standard
-By Lemma
+.
+ By Lemma
 \begin_inset ERT
 status open
 
@@ -7545,46 +9334,12 @@ noprefix "false"
 
 \end_inset
 
-, the left vertical morphism 
+, the left morphism 
 \begin_inset Formula $Ka\rightarrow T\Gamma$
 \end_inset
 
- is one of the two following possibilities, investigated separately in the
- following subsections:
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $M(g)$
-\end_inset
-
- for some 
-\begin_inset Formula $g:a\rightarrow c$
-\end_inset
-
-, where 
-\begin_inset Formula $\Gamma=\dots,M:c$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $o(g;s)$
-\end_inset
-
- for some 
-\begin_inset Formula $o\in O$
-\end_inset
-
-, 
-\begin_inset Formula $g:a^{o}\rightarrow T\Gamma$
-\end_inset
-
-, and 
-\begin_inset Formula $s:Ka\rightarrow S_{o}$
-\end_inset
-
-.
+ is either flexible or rigid.
+ Each case is handled seperately in the following subsections.
 \end_layout
 
 \begin_layout Subsection
@@ -7602,20 +9357,12 @@ name "subsec:case-KA-RiTC"
 \end_layout
 
 \begin_layout Standard
-We want to compute the pushout
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\xymatrix{Ka\hautr{N(f)}\ar[d]_{o(g;s)} & N:b\\
-\Gamma
-}
-\]
-
+Here, we want to compute the pushout of 
+\begin_inset Formula $\xymatrix{\Gamma & Ka\hautr{N(f)}\ar[l]_{o(g;s)} & N:b}
+$
 \end_inset
 
-where 
+ where 
 \begin_inset Formula $g:a^{o}\rightarrow T\Gamma$
 \end_inset
 
@@ -7624,10 +9371,7 @@ where
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-By Remark
+ By Remark
 \begin_inset ERT
 status open
 
@@ -7796,16 +9540,63 @@ noprefix "false"
 \end_inset
 
 .
- Note that such a 
+ 
+\end_layout
+
+\begin_layout Remark
+Note that if there are at least two possible 
 \begin_inset Formula $s'$
 \end_inset
 
- is unique because 
+, then a most general unifier cannot exist.
+ But such a 
+\begin_inset Formula $s'$
+\end_inset
+
+, if it exists, is unique because 
 \begin_inset Formula $Kf$
 \end_inset
 
- is epimorphic.
- 
+ is epimorphic by Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "assu:epis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ In fact, this is the only place where we need that this epimorphicity.
+ As a consequence, we could weaken the condition that morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ are all monomorphic and require instead that for any morphism 
+\begin_inset Formula $f$
+\end_inset
+
+ in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, the map 
+\begin_inset Formula $S_{o}f$
+\end_inset
+
+ is monomorphic.
 \end_layout
 
 \begin_layout Standard
@@ -7964,42 +9755,22 @@ name "subsec:pruning-metavar"
 \end_layout
 
 \begin_layout Standard
-Here, we are in the situation where we want to compute the pushout of free
- morphisms in 
-\begin_inset Formula $\Kl T$
+Here, we want to compute the pushout of 
+\begin_inset Formula $\xymatrix{\Gamma,M:c & Ka\hautr{N(f)}\hautl{M(g)} & N:b}
+$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\xymatrix{Ka\ar[r]^{N(f)}\ar[d]_{M(g)} & N:b\\
-\Gamma,M:c
-}
-\]
-
+ where 
+\begin_inset Formula $g:a\rightarrow c$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Note that 
+.
+ Note that 
 \begin_inset Formula $N(f)={\cal L}Kf$
 \end_inset
 
- while the left vertical morphism 
-\begin_inset Formula $M(g)$
-\end_inset
-
- is equal to the composition (in 
-\begin_inset Formula $\Kl T$
-\end_inset
-
-) 
-\begin_inset Formula $Ka\xrightarrow{{\cal L}Kg}M:c\xhookrightarrow{in_{M}}(\Gamma,M:c)$
+ while 
+\begin_inset Formula $M(g)={\cal L}Kg[in_{M}]$
 \end_inset
 
 .
@@ -8028,8 +9799,36 @@ status open
 \end_layout
 
 \begin_layout Lemma
-In any category, if the diagram below left is a pushout, then so is the
- right one.
+In any category, denoting morphism composition by 
+\begin_inset Formula $f\circ g=g[f]$
+\end_inset
+
+, the following rule applies
+\begin_inset Formula 
+\[
+\dfrac{X\prune gf{\sigma}u\dashv Z}{X+Y\prune{g[in_{1}]}f{\sigma+Y}{u[in_{1}]}\dashv Z+Y}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+In other words, if the diagram below left is a pushout, then so is the right
+ one.
 \end_layout
 
 \begin_layout Lemma
@@ -8212,12 +10011,28 @@ end{tikzcd}
 
 \end_layout
 
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Since 
 \begin_inset Formula $\mathcal{L}$
 \end_inset
 
- is left adjoint (and thus preserves coequalisers) and 
+ is left adjoint (and thus preserves pushouts) and 
 \begin_inset Formula $K$
 \end_inset
 
@@ -8246,7 +10061,28 @@ noprefix "false"
 \begin_inset Formula $\D$
 \end_inset
 
-.
+ (it exists by Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:finite-connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  Therefore, we get the rule
 \begin_inset Formula 
 \[
@@ -8467,6 +10303,19 @@ For any
 \end_inset
 
 .
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
  In other words, the following diagram is an equaliser.
  
 \begin_inset Note Note
@@ -8573,6 +10422,22 @@ end{tikzcd}
 
 \end_layout
 
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 The crucial lemma is the following.
 \end_layout
@@ -8590,15 +10455,11 @@ For any
 \begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
 \end_inset
 
-,
-\begin_inset Formula 
-\[
-|t[\sigma]|=|t|+\sum_{i}|t|_{M_{i}}\times|\sigma_{i}|
-\]
-
+, we have 
+\begin_inset Formula $|t[\sigma]|=|t|+\sum_{i}|t|_{M_{i}}\times|\sigma_{i}|$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -8631,16 +10492,15 @@ For any
 \begin_inset Formula $u:Kb\rightarrow T\Delta$
 \end_inset
 
-,
-\begin_inset Formula 
-\begin{align*}
-|t[\sigma,u]| & \geq|t|+|u|\times|t|_{M}\\
-|{\cal L}Kf[u]| & =|u|
-\end{align*}
-
+, we have 
+\begin_inset Formula $|t[\sigma,u]|\geq|t|+|u|\times|t|_{M}$
 \end_inset
 
+ and 
+\begin_inset Formula $|{\cal L}Kf[u]|=|u|$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Standard
@@ -9150,13 +11010,13 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proposition
-Given an input 
-\begin_inset Formula $\xymatrix{\coprod_{i\in I}Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & \Gamma}
-$
-\end_inset
-
-, there is one rule of the unification phase that applies.
+Given an input data for the unification phase, there is one rule of the
+ unification phase that applies.
  Given an input 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \xymatrix{\coprod_{i\in I}Ka_{i}\ar[r]^{\coprod_{i}{\cal L}Kf_{i}}\ar[d]_{g} & \coprod_{i\in I}Kb_{i}\\
@@ -9166,7 +11026,12 @@ X
 
 \end_inset
 
-there is one rule in the pruning phase that applies.
+
+\end_layout
+
+\end_inset
+
+ for the pruning phase there is one rule in the pruning phase that applies.
 \end_layout
 
 \begin_layout Subsection
@@ -9234,10 +11099,7 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-We also need to define the size
+ We also define the size
 \begin_inset Foot
 status open
 
@@ -9264,7 +11126,7 @@ noprefix "false"
 \end_inset
 
  is that metavariables are not of empty size.
- This property ensures that no term is of empty size.
+ As a consequence, no term is of empty size.
 \end_layout
 
 \end_inset
@@ -9334,20 +11196,27 @@ One way to solve this issue consists in avoiding creating new metavariables.
 
 \end_inset
 
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 First, we sketch the termination argument for the pruning phase, and then
  for the main unification phase.
 \end_layout
 
-\begin_layout Subsubsection
-Pruning phase
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-We define the size of a judgment 
+Let us prove first termination of the pruning phase.
+ We define the size of a judgment 
 \begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
 \end_inset
 
- to be 
+ as 
 \begin_inset Formula $||f||$
 \end_inset
 
@@ -9361,12 +11230,9 @@ We define the size of a judgment
 Can we define it truly recursively?
 \end_layout
 
-\begin_layout Subsubsection
-Unification phase
-\end_layout
-
 \begin_layout Standard
-We define the size of a judgment 
+Now, we tackle termination for the unification phase.
+ We define the size of a judgment 
 \begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
 \end_inset
 
@@ -9375,7 +11241,7 @@ We define the size of a judgment
 \end_inset
 
 .
- The following lemma ensures that for each recursive rule of the unification
+ The following lemmas ensures that for each recursive rule of the unification
  phase, the sizes of the premises are strictly smaller (for the lexicographic
  order) than the size of the conclusion.
 \end_layout
@@ -9416,28 +11282,32 @@ noprefix "false"
 \end_layout
 
 \begin_layout Lemma
-For any 
-\begin_inset Formula $t:Ka\rightarrow T\Gamma$
+If there is a finite derivation tree of 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, then 
+\begin_inset Formula $|\Gamma|\geq|\Delta|$
+\end_inset
+
+, and moreover if 
+\begin_inset Formula $|\Gamma|=|\Delta|$
 \end_inset
 
  and 
-\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
+\begin_inset Formula $\Delta\neq\bot$
 \end_inset
 
-, if 
+, then 
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a renaming, i.e, if 
-\begin_inset Formula $\sigma={\cal L}\sigma'$
+ is a renaming, i.e., it is 
+\begin_inset Formula ${\cal L}\sigma'$
 \end_inset
 
  for some 
 \begin_inset Formula $\sigma'$
-\end_inset
-
-, then 
-\begin_inset Formula $||t[\sigma]||=||t||$
 \end_inset
 
 .
@@ -9451,40 +11321,23 @@ For any
 \end_layout
 
 \begin_layout Lemma
-If there is a finite derivation tree of 
-\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
-\end_inset
-
-, then
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset Formula $|\Gamma|\geq|\Delta|$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-if 
-\begin_inset Formula $|\Gamma|=|\Delta|$
+For any 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
 \end_inset
 
  and 
-\begin_inset Formula $\Delta\neq\bot$
+\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
 \end_inset
 
-, then 
+, if 
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a renaming.
-\end_layout
+ is a renaming, then 
+\begin_inset Formula $||t[\sigma]||=||t||$
+\end_inset
 
-\end_deeper
-\begin_layout Standard
-The proof of the latter lemma relies on the following result.
+.
 \end_layout
 
 \begin_layout Standard
@@ -9494,7 +11347,24 @@ The proof of the latter lemma relies on the following result.
 
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Standard
+The proof of the first lemma relies on the fact that when the pruning phase
+ does not fail, it produces a renaming targetting a metavariable context
+ of the same size as the input one.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 If there is a finite derivation tree of 
 \begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
 \end_inset
@@ -9533,6 +11403,11 @@ status open
 renaming
 \emph default
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
