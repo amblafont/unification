@@ -33,8 +33,18 @@
 \makeatother
 \usepackage{hyperref}
 \usepackage{bookmark}
+
+\newref{rem}{refcmd={Remark~\ref{#1}}}
+\newref{assu}{refcmd={Property~\ref{#1}}}
+\newref{cor}{refcmd={Corollary~\ref{#1}}}
+\newref{lem}{refcmd={Lemma~\ref{#1}}}
+\newref{subsec}{refcmd={Section~\S\ref{#1}}}
 \end_preamble
+\options envcountsame,envcountsect
 \use_default_options true
+\begin_modules
+enumitem
+\end_modules
 \maintain_unincluded_children false
 \begin_local_layout
 #\DeclareLyXModule{Other}
@@ -342,7 +352,7 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationrigrig}{\dfrac{\Gamma\vdash f=g\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(f;s)=o(g;s)\Rightarrow\sigma\dashv\Delta}}
+\newcommand{\unificationrigrig}{\dfrac{\Gamma\vdash f=g\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(f;s)=o(g;s)\Rightarrow\sigma\dashv\Delta}\textsc{U-RigRig}}
 \end_inset
 
 
@@ -421,7 +431,7 @@ setboolean{fullpaper}{false}
 
 
 \begin_inset FormulaMacro
-\newcommand{\pruningrig}{\dfrac{\Gamma\prune g{{\cal L}f^{o}}{\sigma}u\dashv\Delta\qquad s_{|f}\Rightarrow\underline{s'}}{\Gamma\prune{o(g;s)}{N(f)}{\sigma}{o(u;s')}\dashv\Delta}}
+\newcommand{\pruningrig}{\dfrac{\Gamma\prune g{{\cal L}f^{o}}{\sigma}u\dashv\Delta\qquad s_{|f}\Rightarrow\underline{s'}}{\Gamma\prune{o(g;s)}{N(f)}{\sigma}{o(u;s')}\dashv\Delta}\textsc{P-Rig}}
 \end_inset
 
 
@@ -466,71 +476,6 @@ and Category theory.}
 
 \begin_layout Section
 Introduction
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-We first provide a short introduction to pattern unification in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:intro-pattern"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, and then give some intuition for our categorical generalisation, in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:intro-generalise"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:intro-pattern"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -582,23 +527,12 @@ literal "false"
  they must be distinct variables.
  In that case, we can design an algorithm that either fails in case there
  is no unifier, either computes the most general unifier, which we sketch
- below in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ below in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:example-lambda"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -608,23 +542,12 @@ noprefix "false"
 \end_inset
 
 -calculus.
- In Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ In 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:intro-generalise"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -705,153 +628,76 @@ Plan of the paper
 \end_layout
 
 \begin_layout Standard
-In Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+In 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:cat-settings"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 , we present our categorical setting.
- In Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ In 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:Main-result"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 , we state the main result that motivates the pattern unification algorithm.
  Then we describe the construction of the most general unifier, as summarised
- in Figure
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "fig:algo-summary"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
-, starting with the unification phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, starting with the unification phase (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:coequalising-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
-), the pruning phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+), the pruning phase (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:pruning-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
-), the occur-check (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+), the occur-check (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 ).
- We finally justify completeness in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ We finally justify completeness in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:completeness"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -862,23 +708,12 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-Applications are presented in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Applications are presented in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:applications"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -1093,23 +928,12 @@ most general unifier
 \begin_layout Standard
 Let us now describe the pattern unification algorithm using inductive rules.
  In the process, we introduce explicit notations to make it closer to the
- generic categorical algorithm summarised in Figure
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ generic categorical algorithm summarised in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "fig:algo-summary"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -1120,23 +944,12 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-This trick will be justified from a categorical point of view in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+This trick will be justified from a categorical point of view in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:Main-result"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -1399,23 +1212,12 @@ In the second case, we only keep the argument positions that are the same
 
 .
  The similarity with the above introduced notation will be categorically
- justified in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ justified in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:coequalising-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -1634,23 +1436,12 @@ The remaining case consists in pruning a metavariable
 
 .
  Again, the similarity with the pruning notation will be categorically justified
- in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:pruning-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2179,23 +1970,12 @@ Unification phase
 \end_layout
 
 \begin_layout Itemize
-Structural rules (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Structural rules (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:coequalising-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2220,23 +2000,12 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Rigid-rigid (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Rigid-rigid (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:rig-rig"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2261,59 +2030,17 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Flex-*, no cycle (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Flex-*, no cycle (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-star-nocycle"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 ) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-star-nocycle"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \unificationoccurcheckeffective\quad\text{+ symmetric rule}
@@ -2325,59 +2052,17 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Flex-Flex, same (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Flex-Flex, same (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-flex-same-metavar"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 ) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-flex-same-metavar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Plain Layout
@@ -2392,59 +2077,17 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Flex-Rigid, cyclic (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Flex-Rigid, cyclic (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-rig-cyclic"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 ) 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:flex-rig-cyclic"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \unificationfailingoccurcheckeffective{\Gamma}\quad\text{+ symmetric rule}
@@ -2462,23 +2105,12 @@ Pruning phase
 \end_layout
 
 \begin_layout Itemize
-Structural rules (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Structural rules (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:pruning-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2503,23 +2135,12 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Rigid (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Rigid (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:case-KA-RiTC"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2539,23 +2160,12 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Flex (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Flex (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:pruning-metavar"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2565,16 +2175,6 @@ noprefix "false"
 \[
 \pruningflex
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:algo-summary"
 
 \end_inset
 
@@ -2593,29 +2193,28 @@ Summary of the rules
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:algo-summary"
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-We now sketch the generic unification algorithm as summarised in Figure
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+We now sketch the generic unification algorithm as summarised in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "fig:algo-summary"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2916,29 +2515,18 @@ status open
 LatexCommand eqref
 reference "eq:pruning-mvar-lc"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 .
- As we will see in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ As we will see in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:pruning-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -2968,7 +2556,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-mvar-lc"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3065,7 +2653,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-var-lc"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3088,7 +2676,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-lambda-lc"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3109,7 +2697,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-app-lc"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3526,66 +3114,33 @@ In our setting, syntax is specified as an endofunctor
 \end_inset
 
 .
- We introduce conditions for the latter in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ We introduce conditions for the latter in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:base-cat"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
- and for the former in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ and for the former in 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "ssec:endo-syntax"
+LatexCommand formatted
+reference "subsec:endo-syntax"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 .
- Finally, in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Finally, in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:examples-settings"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3892,23 +3447,12 @@ Regularity of monomorphisms (i.e., the fact that monomorphisms are equalisers)
  implies their effectivity (i.e., they are the equalisers of their cokernel
  pairs) because the category has pullbacks.
  In fact, this condition is not strictly needed, but it will allow us (by
- Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:effective-epi"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3945,7 +3489,7 @@ status open
 LatexCommand ref
 reference "eq:pruning-facto-wo-regular"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4042,20 +3586,44 @@ status open
 \end_layout
 
 \begin_layout Property
+The following hold.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+label=(
+\backslash
+roman{enumi}), ref=
+\backslash
+thetheorem.(
+\backslash
+roman{enumi})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula $K:\D\rightarrow\C$
 \end_inset
 
  is fully faithful.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Property
+\begin_layout Enumerate
 \begin_inset CommandInset label
 LatexCommand label
 name "assu:presentable"
@@ -4067,18 +3635,9 @@ name "assu:presentable"
 \end_inset
 
  is cocomplete.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-locally presentable
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
+\end_deeper
 \begin_layout Long Proof
 \begin_inset Formula $\C$
 \end_inset
@@ -4220,23 +3779,12 @@ name "rem:D-finite-family"
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- as metavariable arities (Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ as metavariable arities (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "rem:ar-A"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4245,19 +3793,8 @@ noprefix "false"
 \begin_inset Formula $\D^{+}$
 \end_inset
 
- can be thought of as the category of metavariable contexts and 
-\emph on
-renamings
-\emph default
-.
-\end_layout
-
-\begin_layout Standard
-We now introduce a notation for metavariable contexts, as objects of 
-\begin_inset Formula $\D^{+}$
-\end_inset
-
-.
+ can be thought of as the category of metavariable contexts, motivating
+ the following notation.
 \end_layout
 
 \begin_layout Standard
@@ -4274,7 +3811,41 @@ name "nota:context"
 
 \end_inset
 
-The 
+We denote an object 
+\begin_inset Formula $\coprod_{i\in\{M,N,\dots\}}Ka_{i}$
+\end_inset
+
+ of 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\D^{+}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ by the 
 \emph on
 context
 \emph default
@@ -4282,12 +3853,7 @@ context
 \begin_inset Formula $M:a_{M},N:a_{N},\dots$
 \end_inset
 
- denotes the object 
-\begin_inset Formula $\coprod_{i\in\{M,N,\dots\}}Ka_{i}\in\D^{+}$
-\end_inset
 
-.
- 
 \end_layout
 
 \begin_layout Standard
@@ -4300,13 +3866,44 @@ We will be interested in coequalisers in the Kleisli category restricted
 \end_layout
 
 \begin_layout Property
+The following properties hold.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+label=(
+\backslash
+roman{enumi}), ref=
+\backslash
+thetheorem.(
+\backslash
+roman{enumi})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "assu:finite-connected"
 
 \end_inset
 
-
+ 
 \begin_inset Formula $\D$
 \end_inset
 
@@ -4317,6 +3914,73 @@ name "assu:finite-connected"
  preserves them.
 \end_layout
 
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:epis"
+
+\end_inset
+
+Given any morphism 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+ in 
+\begin_inset Formula $\D$
+\end_inset
+
+, the morphism 
+\begin_inset Formula $Kf$
+\end_inset
+
+ is epimorphic.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:inj-are-mono"
+
+\end_inset
+
+Coproduct injections 
+\begin_inset Formula $A_{i}\rightarrow\coprod_{j}A_{j}$
+\end_inset
+
+ in 
+\begin_inset Formula $\C$
+\end_inset
+
+ are monomorphisms.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:connected"
+
+\end_inset
+
+For each 
+\begin_inset Formula $d\in\D$
+\end_inset
+
+, the object 
+\begin_inset Formula $Kd$
+\end_inset
+
+ is connected, i.e., any morphism 
+\begin_inset Formula $Kd\rightarrow\coprod_{i}A_{i}$
+\end_inset
+
+ factors through exactly one coproduct injection 
+\begin_inset Formula $A_{j}\rightarrow\coprod_{i}A_{i}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -4341,23 +4005,12 @@ I think that the algorithm still works without this assumption: it is just
 \begin_inset Formula $\D$
 \end_inset
 
-, in particular in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, in particular in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-flex-same-metavar"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4430,9 +4083,9 @@ Because
 \begin_inset Formula 
 \begin{align*}
 \mathcal{C}(K\lim F,X) & \cong[\mathcal{A},\Set](y\lim F,JX)\\
- & \cong JX(\lim F)\tag{By the \Delta oneda Lemma.}\\
+ & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
  & \cong\lim(JX\circ F)\tag{By definition of \ensuremath{\mathcal{C}}}\\
- & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the \Delta oneda Lemma}\\
+ & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
  & \cong\lim\mathcal{C}(KF-,X)\\
  & \cong\mathcal{C}(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
 \end{align*}
@@ -4446,26 +4099,11 @@ Thus,
 .
 \end_layout
 
-\begin_layout Property
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:epis"
-
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
-Given any morphism 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
 
- in 
-\begin_inset Formula $\D$
-\end_inset
-
-, the morphism 
-\begin_inset Formula $Kf$
-\end_inset
-
- is epimorphic.
 \end_layout
 
 \begin_layout Long Proof
@@ -4550,23 +4188,12 @@ end{tikzcd}
 \end_layout
 
 \begin_layout Standard
-We conclude by Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+We conclude by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:finite-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4598,10 +4225,10 @@ status open
 
 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "rem:regular-mono"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4763,23 +4390,12 @@ Since
 \begin_inset Formula $\C$
 \end_inset
 
- has pullbacks (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ has pullbacks (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:presentable"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4806,23 +4422,12 @@ noprefix "false"
 \end_inset
 
 .
- We conclude by Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ We conclude by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:finite-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4835,42 +4440,13 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Property
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:inj-are-mono"
-
-\end_inset
-
-Coproduct injections 
-\begin_inset Formula $A_{i}\rightarrow\coprod_{j}A_{j}$
-\end_inset
-
- in 
-\begin_inset Formula $\C$
-\end_inset
-
- are monomorphisms.
-\end_layout
-
 \begin_layout Long Proof
-This follows from Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+This follows from 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:lims-coprod-pw"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4929,23 +4505,12 @@ end{tikzcd}
 status open
 
 \begin_layout Plain Layout
-The following two properties are direct consequences of Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+The following two properties are direct consequences of 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:lims-coprod-pw"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -4958,31 +4523,7 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Property
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:connected"
-
-\end_inset
-
-For each 
-\begin_inset Formula $d\in\D$
-\end_inset
-
-, the object 
-\begin_inset Formula $Kd$
-\end_inset
-
- is connected, i.e., any morphism 
-\begin_inset Formula $Kd\rightarrow\coprod_{i}A_{i}$
-\end_inset
-
- factors through exactly one coproduct injection 
-\begin_inset Formula $A_{j}\rightarrow\coprod_{i}A_{i}$
-\end_inset
-
-.
- 
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -5337,23 +4878,12 @@ literal "false"
 
 \end_inset
 
-, this is a direct consequence of Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, this is a direct consequence of 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:lims-coprod-pw"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5404,23 +4934,12 @@ literal "false"
 \begin_inset Formula $\C$
 \end_inset
 
- is complete (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ is complete (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:presentable"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5463,23 +4982,12 @@ This is useful to show inexistence of unifier.
 \end_layout
 
 \begin_layout Proof
-By Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "cor:connected-no-commuting"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5488,23 +4996,12 @@ noprefix "false"
 \begin_inset Formula $Kd$
 \end_inset
 
- is connected (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ is connected (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5524,7 +5021,7 @@ The endofunctor for syntax
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "ssec:endo-syntax"
+name "subsec:endo-syntax"
 
 \end_inset
 
@@ -5754,23 +5251,12 @@ status open
 \end_layout
 
 \begin_layout Remark
-As anticipated in Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+As anticipated in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "rem:res-monad"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5885,7 +5371,7 @@ status open
 LatexCommand ref
 reference "lem:finitary-restriction"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5906,7 +5392,7 @@ status open
 LatexCommand ref
 reference "lem:lims-coprod-pw"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -5928,23 +5414,12 @@ Together with cocompleteness properties of
 \begin_inset Formula $\C$
 \end_inset
 
- (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:presentable"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -6076,23 +5551,12 @@ reconstruct
 \begin_inset Formula $[\mathcal{A},\Set]=\hat{\D}$
 \end_inset
 
- (see Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (see 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -6111,23 +5575,12 @@ status open
 
 \begin_layout Plain Layout
 a finite colimit is too general, we really need coproducts in the pruning
- phase, see Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ phase, see 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:case-KA-RiTC"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -6235,23 +5688,12 @@ Given
 \begin_inset Formula $Ka\rightarrow FTX$
 \end_inset
 
- is induced by Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ is induced by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:mor-FX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -6468,23 +5910,12 @@ name "lem:D-kleisli-finite-connected-colims"
 \end_layout
 
 \begin_layout Proof
-See Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+See 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:proof-kleisli-finite"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -6551,23 +5982,12 @@ The following table sketches some examples, detailed in the supplemental
 \begin_inset Formula ${\cal A}$
 \end_inset
 
-, as hinted by Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, as hinted by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "rem:ar-A"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7246,9 +6666,9 @@ In any category, denoting morphism  composition
 
 , the following rule applies.
 \begin_inset Formula 
-\begin{equation}
-\unificationstepwise\label{eq:unify-stepwise}
-\end{equation}
+\[
+\unificationstepwise
+\]
 
 \end_inset
 
@@ -7495,23 +6915,12 @@ Since
 \begin_inset Formula $T\Gamma\cong I+C+\coprod_{o}R_{o}T\Gamma$
 \end_inset
 
- (Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "cor:lambek-lemma"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7520,23 +6929,12 @@ noprefix "false"
 \begin_inset Formula $Ka$
 \end_inset
 
- is connected (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ is connected (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7546,23 +6944,12 @@ noprefix "false"
 
 \end_inset
 
-By Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:facto-TX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7585,23 +6972,12 @@ both
 \begin_inset Formula $u$
 \end_inset
 
- are rigid (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ are rigid (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:rig-rig"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7621,23 +6997,12 @@ noprefix "false"
 \begin_inset Formula $u$
 \end_inset
 
- (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-star-nocycle"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7657,23 +7022,12 @@ noprefix "false"
 \begin_inset Formula $M(\dots)$
 \end_inset
 
- (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-flex-same-metavar"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7693,23 +7047,12 @@ noprefix "false"
 \begin_inset Formula $u$
 \end_inset
 
- (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "subsec:flex-rig-cyclic"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7906,23 +7249,12 @@ Assume given a unifier, i.e., a Kleisli morphism
 \end_inset
 
 .
- By Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:op-subst"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -7932,23 +7264,12 @@ noprefix "false"
 \end_inset
 
 .
- By Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:facto-TX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -8025,13 +7346,10 @@ We now assume
 
 .
  We therefore get the rule
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-\unificationrigrig\label{eq:unifying-rec}
-\end{equation}
+\[
+\unificationrigrig
+\]
 
 \end_inset
 
@@ -8469,23 +7787,12 @@ status open
 \end_inset
 
 .
- Anticipating the pruning phase described in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Anticipating the pruning phase described in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:pruning-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -8646,7 +7953,7 @@ status open
 LatexCommand ref
 reference "eq:flex-no-cycle-facto"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -8967,23 +8274,12 @@ Therefore, it is enough to compute the coequaliser of
 \begin_inset Formula $K$
 \end_inset
 
- preserves coequalisers (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ preserves coequalisers (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:finite-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -8996,23 +8292,12 @@ noprefix "false"
 
 \end_inset
 
-Note that such a coequaliser always exists by Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+Note that such a coequaliser always exists by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:finite-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9064,23 +8349,12 @@ Here, we want to unify
 \end_inset
 
 .
- In Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ In 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9099,7 +8373,17 @@ TODO: exploit regularity of monomorphisms
 
 \end_inset
 
- justifying the rule
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+justifying the rule
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -9116,23 +8400,12 @@ status open
 
 \end_inset
 
-Using Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Using 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "cor:factor-occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9408,9 +8681,9 @@ In any category, denoting morphism composition
 
 , the following rule applies.
 \begin_inset Formula 
-\begin{equation}
-\pruningstepwise\label{eq:pruning-stepwise}
-\end{equation}
+\[
+\pruningstepwise
+\]
 
 \end_inset
 
@@ -9706,23 +8979,12 @@ $
 \end_inset
 
 .
- By Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:facto-TX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9764,23 +9026,12 @@ $
 \end_inset
 
 .
- By Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "rem:cocone-pruning"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9801,23 +9052,12 @@ noprefix "false"
 \begin_inset Formula $o(g;s)[\sigma]=u\circ Kf.$
 \end_inset
 
- By Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ By 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:op-subst"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9827,23 +9067,12 @@ noprefix "false"
 \end_inset
 
 .
- Now, by Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Now, by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:facto-TX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9877,45 +9106,23 @@ noprefix "false"
 \begin_inset Formula $o(g[\sigma];s)$
 \end_inset
 
-, by Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:facto-TX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
 .
- So we are in the second case, and again by Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ So we are in the second case, and again by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:facto-TX"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -9950,23 +9157,12 @@ Note that if there are at least two possible
 \begin_inset Formula $Kf$
 \end_inset
 
- is epimorphic by Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ is epimorphic by 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand formatted
 reference "assu:epis"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -10032,21 +9228,10 @@ Given
 
 \begin_layout Standard
 Therefore we get the rules
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-\pruningrigfail\label{eq:pruning-facto-wo-regular}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\pruningrig\label{eq:pruning-rec}
-\end{equation}
+\[
+\pruningrig\quad\pruningrigfail
+\]
 
 \end_inset
 
@@ -10429,23 +9614,12 @@ Since
 \begin_inset Formula $K$
 \end_inset
 
- preserves pushouts (Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ preserves pushouts (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:finite-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -10454,23 +9628,12 @@ noprefix "false"
 \begin_inset Formula $\D$
 \end_inset
 
- (it exists by Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (it exists by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "assu:finite-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -10512,44 +9675,22 @@ plus de discussion: cf occurcheck.lyx
 \end_layout
 
 \begin_layout Standard
-The occur-check allows to jump from the main unification phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+The occur-check allows to jump from the main unification phase (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:coequalising-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
-) to the pruning phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+) to the pruning phase (
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:pruning-phase"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -10558,23 +9699,12 @@ noprefix "false"
  not appear in the r.h.s.
  This section is devoted to the proof that if there is a unifier, then the
  metavariable does not appear on the r.h.s, either it appears at top-level
- (see Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (see 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "cor:occurcheck-final"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -10619,10 +9749,7 @@ The size
 \begin_inset Formula $t:Ka\rightarrow T\Gamma$
 \end_inset
 
- is recursively defined by
-\end_layout
-
-\begin_layout Definition
+ is recursively defined by 
 \begin_inset Formula $|M(f)|=0$
 \end_inset
 
@@ -10657,7 +9784,53 @@ For each morphism
 \begin_inset Formula $|t|_{M}$
 \end_inset
 
- recursively as follows
+ recursively by 
+\begin_inset Formula $|M(f)|_{M}=1$
+\end_inset
+
+, 
+\begin_inset Formula $|N(f)|_{M}=0$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ if 
+\begin_inset Formula $N\neq M$
+\end_inset
+
+, and
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $|o(g;s)|_{M}=|g|_{M}$
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 |N(f)|_{M}=0\text{ if \ensuremath{N\neq M}}\qquad|M(f)|_{M}=1\qquad|o(g;s)|_{M}=|g|_{M}
@@ -10665,7 +9838,12 @@ For each morphism
 
 \end_inset
 
-with a similar convention as above for 
+
+\end_layout
+
+\end_inset
+
+with the sum convention as above for 
 \begin_inset Formula $|g|$
 \end_inset
 
@@ -10953,23 +10131,12 @@ Since
 \end_inset
 
 .
- Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "cor:size-consequences"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -10983,23 +10150,12 @@ noprefix "false"
 \begin_inset Formula $|t|_{M}=0$
 \end_inset
 
- and we conclude by Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ and we conclude by 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:sizeM-factor"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11047,49 +10203,25 @@ Each inductive rule presented so far provides an elementary step for the
  We need to ensure that this set of rules allows to construct a coequaliser
  in a finite number of steps.
  To make the argument more straightforward, we slightly alter the splitting
- rules
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ rules 
+\shape smallcaps
+U-Split
+\shape default
+ et 
+\shape smallcaps
+P-Split
+\shape default
+ (see 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unify-stepwise"
+LatexCommand formatted
+reference "fig:algo-summary"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-stepwise"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- by enforcing that the coproduct 
+) by enforcing that the domain coproduct 
 \begin_inset Formula $A_{1}+\dots+A_{n}$
 \end_inset
 
@@ -11105,7 +10237,7 @@ noprefix "false"
 \begin_inset Formula $A_{2}+\dots+A_{n}$
 \end_inset
 
-.
+ in the premises.
 \begin_inset Note Note
 status open
 
@@ -11127,7 +10259,7 @@ status open
 LatexCommand eqref
 reference "eq:unify-stepwise"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11148,7 +10280,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-stepwise"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11169,7 +10301,7 @@ status open
 LatexCommand eqref
 reference "eq:unifying-rec"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11190,7 +10322,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-rec"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11208,62 +10340,124 @@ noprefix "false"
 
 \end_inset
 
+ The following two properties are then sufficient to ensure that applying
+ rules eagerly eventually leads to a coequaliser: progress, i.e., there is
+ always one rule that applies given son input data
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+iffull{
+\end_layout
+
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:progress"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+, and termination, i.e., there is no infinite sequence of rule applications
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+iffull{
+\end_layout
+
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:termination"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{short}
+\end_layout
+
+\end_inset
+
+In this section, we sketch the proof of the latter termination property,
+ following the standard argument.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{short}
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
-The following two properties are then sufficient to ensure that applying
- rules eagerly eventually leads to a coequaliser:
-\end_layout
-
-\begin_layout Itemize
-progress, i.e., there is always one rule that applies (Section
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-~
+
+\backslash
+begin{full}
 \end_layout
 
 \end_inset
 
 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "subsec:progress"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-);
-\end_layout
-
-\begin_layout Itemize
-termination, i.e., there is no infinite sequence of rule applications (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "subsec:termination"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
 \end_layout
 
 \begin_layout Subsection
@@ -11282,13 +10476,8 @@ name "subsec:progress"
 
 \begin_layout Standard
 Progress for the main unification phase means that given a coequalising
- diagram 
-\begin_inset Formula $\xymatrix{\coprod_{i}Ka_{i}\coeqr{t}{u} & \Gamma}
-$
-\end_inset
-
-, there is always one rule that applies, in some sense that can be made
- precise for each rule, roughly meaning that 
+ diagram, there is always one rule that applies, in some sense that can
+ be made precise for each rule, roughly meaning that 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -11317,28 +10506,7 @@ $
 \end_inset
 
 , and all the side conditions in the premises are satisfied (as, for example,
- the only premise of
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-facto-wo-regular"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
+ the premises of the cyclic flex-rigid rule).
  Similar definitions are required for the pruning phase.
 \end_layout
 
@@ -11364,7 +10532,7 @@ status open
 LatexCommand eqref
 reference "eq:unify-stepwise"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11385,7 +10553,7 @@ status open
 LatexCommand eqref
 reference "eq:pruning-stepwise"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11439,7 +10607,24 @@ name "subsec:termination"
 
 \begin_layout Standard
 Here we sketch a standard termination argument for pattern unification.
- Roughly, it consists in defining the size of an input and realising that
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Roughly, it consists in defining the size of an input and realising that
  it strictly decreases in the premises.
  This relies on the notion of the size 
 \begin_inset Formula $|\Gamma|$
@@ -11457,23 +10642,12 @@ Here we sketch a standard termination argument for pattern unification.
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- (see Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ (see 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "rem:D-finite-family"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11493,23 +10667,12 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-The difference with the size definition in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+The difference with the size definition in 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11600,7 +10763,7 @@ First, we sketch the termination argument for the pruning phase, and then
 \end_layout
 
 \begin_layout Standard
-Let us prove first termination of the pruning phase.
+Let us first quickly justify termination of the pruning phase.
  We define the size of a judgment 
 \begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
 \end_inset
@@ -11611,8 +10774,25 @@ Let us prove first termination of the pruning phase.
 
 .
  It is straightforward to check that the sizes of the premises are strictly
- smaller than the size of the conclusion, for each recursive rule of the
- pruning phase.
+ smaller than the size of the conclusion, for the two recursive rules 
+\shape smallcaps
+P-Split
+\shape default
+ and 
+\shape smallcaps
+P-Rig
+\shape default
+ of the pruning phase (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Personal Question
@@ -11630,9 +10810,26 @@ Now, we tackle termination for the unification phase.
 \end_inset
 
 .
- The following lemmas ensures that for each recursive rule of the unification
- phase, the sizes of the premises are strictly smaller (for the lexicographic
- order) than the size of the conclusion.
+ The following lemmas ensures that for the two recursive rules 
+\shape smallcaps
+U-Split
+\shape default
+ and 
+\shape smallcaps
+U-RigRig
+\shape default
+ of the unification phase (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the sizes of the premises are strictly smaller than the size of the conclusio
+n, for the lexicographic order.
 \end_layout
 
 \begin_layout Standard
@@ -11645,7 +10842,7 @@ There are two recursive rules:
 LatexCommand eqref
 reference "eq:unify-stepwise"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -11655,7 +10852,7 @@ noprefix "false"
 LatexCommand eqref
 reference "eq:unifying-rec"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -12156,23 +11353,12 @@ Take
 \end_inset
 
  to be the discrete category whose objects are natural numbers.
- Following Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Following 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand formatted
 reference "rem:ar-A"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -12393,23 +11579,12 @@ Let
 \end_inset
 
 .
- Following Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Following 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand formatted
 reference "rem:ar-A"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -12650,23 +11825,12 @@ literal "false"
 \end_inset
 
 .
- Following Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ Following 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand formatted
 reference "rem:ar-A"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -12799,10 +11963,10 @@ status open
 
 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:D-kleisli-finite-connected-colims"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -12821,23 +11985,12 @@ name "sec:proof-kleisli-finite"
 \end_layout
 
 \begin_layout Plain Layout
-We exploit here the observations and notations of Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+We exploit here the observations and notations of 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "sec:occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -12930,10 +12083,10 @@ status open
 
 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:D+-fc"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -13131,10 +12284,10 @@ status open
 
 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:initial-not-connected"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -13331,10 +12484,10 @@ status open
 
 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand formatted
 reference "lem:pbk-lemma-occur-check"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
