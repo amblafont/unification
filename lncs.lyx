@@ -10,6 +10,10 @@
 \usepackage{quiver}
 \newcommand{\Ker}{\mathrm{Ker}}
 \usepackage{fullshort}
+
+% to comment for the short version
+\setboolean{fullpaper}{false}
+
 \newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\commentaire}[1]{}
 \usepackage{cmll}
@@ -77,7 +81,8 @@ Style "Personal Question"
     LatexName             personalquestion
     LabelString           "Personal Question \thethm."
     Preamble
-      \newenvironment{personalquestion}{\shortfull{\comment}{\begin{question}\color{red}(personal)}}{\shortfull{\endcomment}{\end{question}}}
+      %\newenvironment{personalquestion}{\shortfull{\comment}{\begin{question}\color{red}(personal)}}{\shortfull{\endcomment}{\end{question}}}
+      \newenvironment{personalquestion}{\comment}{\endcomment}
     EndPreamble
 End
 
@@ -298,22 +303,6 @@ faire une table d'exemples a la fin, preuves detaillees, decrire l'algo
 
 \begin_inset FormulaMacro
 \newcommand{\none}{\bang}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-setboolean{fullpaper}{false} 
-\end_layout
-
 \end_inset
 
 
@@ -704,10 +693,18 @@ noprefix "false"
 
 .
  
-\begin_inset Note Note
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
+
+
+\backslash
+iffull{
+\end_layout
+
+\end_inset
+
 Applications are presented in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -719,6 +716,12 @@ noprefix "false"
 \end_inset
 
 .
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \end_inset
@@ -3251,7 +3254,7 @@ ble
 \begin_inset Formula $N:n$
 \end_inset
 
- requires providing a choice of distinct variables 
+ amounts to a choice of distinct variables 
 \begin_inset Formula $x_{1},\dots,x_{n}\in\{0,\dots,m-1\}$
 \end_inset
 
@@ -3290,7 +3293,7 @@ The restriction of the monad
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus, as in the introduction.
+-calculus.
  We can design
 \begin_inset Foot
 status open
@@ -3339,17 +3342,17 @@ with
 \begin_inset Formula $P$
 \end_inset
 
-, while it replaces 
-\begin_inset Formula $M$
-\end_inset
-
- with a constant metavariable when computed in the Kleisli category restricted
- to 
+.
+ But in the Kleisli category restricted to coproducts of representable functors,
+ or more generally, to objects of 
 \begin_inset Formula $\C$
 \end_inset
 
-.
- 
+, the coequaliser replaces 
+\begin_inset Formula $M$
+\end_inset
+
+ with a constant metavariable, as expected.
 \color red
 
 \begin_inset Note Note
@@ -3505,12 +3508,16 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The Yoneda embedding 
-\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+By the Yoneda Lemma, any representable functor is in 
+\begin_inset Formula $\C$
 \end_inset
 
- factors through 
+ and thus the embedding 
 \begin_inset Formula $\mathcal{C}\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ factors the Yoneda embedding 
+\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
 .
@@ -3639,6 +3646,8 @@ name "assu:presentable"
 
 \end_deeper
 \begin_layout Long Proof
+We prove the second item.
+ 
 \begin_inset Formula $\C$
 \end_inset
 
@@ -3907,11 +3916,21 @@ name "assu:finite-connected"
 \begin_inset Formula $\D$
 \end_inset
 
- has finite connected colimits and 
+ has finite connected colimits.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:K-finite-connected"
+
+\end_inset
+
+
 \begin_inset Formula $K$
 \end_inset
 
- preserves them.
+ preserves finite connected colimits.
 \end_layout
 
 \begin_layout Enumerate
@@ -4034,7 +4053,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Long Proof
-Because 
+
+\emph on
+(i)-(ii)
+\emph default
+ Because 
 \begin_inset Formula $K$
 \end_inset
 
@@ -4099,15 +4122,12 @@ Thus,
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Long Proof
-A morphism 
+
+\emph on
+(iii)
+\emph default
+ A morphism 
 \begin_inset Formula $f:a\rightarrow b$
 \end_inset
 
@@ -4191,7 +4211,7 @@ end{tikzcd}
 We conclude by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:finite-connected"
+reference "assu:K-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
@@ -4206,242 +4226,12 @@ noprefix "false"
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-In fact, we have the following stronger property, that we state separately
- because as argued in Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:regular-mono"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, this is not strictly required.
-\end_layout
-
-\begin_layout Property
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:effective-epi"
-
-\end_inset
-
-Given any morphism 
-\begin_inset Formula $f:A\rightarrow B$
-\end_inset
-
- in 
-\begin_inset Formula $\D$
-\end_inset
-
-, the following diagram is a coequaliser
-\end_layout
-
-\begin_layout Property
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-YADE DIAGRAM {"graph":{"edges":[{"from":0,"id":3,"label":{"label":"p_1","style":
-{"alignment":"left","bend":-0.2,"dashed":false,"double":false,"head":"default","p
-osition":0.5,"tail":"none"}},"to":1},{"from":0,"id":4,"label":{"label":"p_2","sty
-le":{"alignment":"right","bend":0.2,"dashed":false,"double":false,"head":"default
-","position":0.5,"tail":"none"}},"to":1},{"from":1,"id":5,"label":{"label":"f","s
-tyle":{"alignment":"left","bend":0,"dashed":false,"double":false,"head":"default
-","position":0.5,"tail":"none"}},"to":2}],"latexPreamble":"","nodes":[{"id":0,"la
-bel":{"isMath":true,"label":"A
-\end_layout
-
-\end_inset
-
-
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% https://q.uiver.app/?q=WzAsMyxbMCwwLCJBXFx0aW1lc19CIEEiXSxbMSwwLCJBIl0sWzIsMCwiQ
-iJdLFswLDEsInBfMSIsMCx7ImN1cnZlIjotMn1dLFswLDEsInBfMiIsMix7ImN1cnZlIjoyfV0sWzEsM
-iwiZiJdXQ== 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd}  {
-\backslash
-Ker(f)} & A & B  
-\backslash
-arrow["{p_1}", curve={height=-12pt}, from=1-1, to=1-2]  
-\backslash
-arrow["{p_2}"', curve={height=12pt}, from=1-1, to=1-2]  
-\backslash
-arrow["f", from=1-2, to=1-3] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-where 
-\begin_inset Formula $\Ker(f)\rightrightarrows A$
-\end_inset
-
- is the kernel pair of 
-\begin_inset Formula $f$
-\end_inset
-
- defined as the pullback of 
-\begin_inset Formula $f$
-\end_inset
-
- with itself, as in
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	
-\backslash
-Ker(f) & A 
-\backslash
-
-\backslash
- 	A & B 	
-\backslash
-arrow["f", from=1-2, to=2-2] 	
-\backslash
-arrow[
-\begin_inset Quotes eld
-\end_inset
-
-p_1
-\begin_inset Quotes erd
-\end_inset
-
-, from=1-1, to=1-2] 	
-\backslash
-arrow["f"', from=2-1, to=2-2] 	
-\backslash
-arrow[
-\begin_inset Quotes eld
-\end_inset
-
-p_2
-\begin_inset Quotes erd
-\end_inset
-
-', from=1-1, to=2-1] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Long Proof
-Since 
-\begin_inset Formula $\C$
-\end_inset
 
- has pullbacks (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:presentable"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), it is enough to show that 
-\begin_inset Formula $Kf$
-\end_inset
-
- is regular.
- But since 
-\begin_inset Formula $f$
-\end_inset
-
- is a regular epimorphism by assumption, we know that the 
-\begin_inset Formula $f$
-\end_inset
-
- is the coequaliser of some 
-\begin_inset Formula $u_{1},u_{2}:C\rightarrow A$
-\end_inset
-
- in 
-\begin_inset Formula $\D$
-\end_inset
-
-.
- We conclude by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Long Proof
-This follows from 
+\emph on
+(iv)
+\emph default
+ This follows from 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "lem:lims-coprod-pw"
@@ -4498,6 +4288,24 @@ end{tikzcd}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Long Proof
+
+\emph on
+(v)
+\emph default
+ This follows from coproducts being computed pointwise (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:lims-coprod-pw"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), and representable functors being connected.
 \end_layout
 
 \begin_layout Standard
@@ -5250,7 +5058,11 @@ status open
 
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 As anticipated in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -5272,8 +5084,9 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Standard
-We now abstract this situation by stating the properties that we will need.
+\end_inset
+
+
 \end_layout
 
 \begin_layout Notation
@@ -5309,10 +5122,10 @@ Given
 .
 \end_layout
 
-\begin_layout Property
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "assu:mor-FX"
+name "lem:mor-FX"
 
 \end_inset
 
@@ -5333,6 +5146,24 @@ A morphism
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Proof
+This follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We now abstract this situation by stating the properties that we will need.
 \end_layout
 
 \begin_layout Standard
@@ -5691,7 +5522,7 @@ Given
  is induced by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:mor-FX"
+reference "lem:mor-FX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -5731,7 +5562,7 @@ Let
 \begin_layout Property
 \begin_inset CommandInset label
 LatexCommand label
-name "lem:facto-TX"
+name "assu:facto-TX"
 
 \end_inset
 
@@ -5806,10 +5637,10 @@ rigid
 
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Property
 \begin_inset CommandInset label
 LatexCommand label
-name "lem:op-subst"
+name "assu:op-subst"
 
 \end_inset
 
@@ -5976,8 +5807,52 @@ name "subsec:examples-settings"
 
 \end_inset
 
-The following table sketches some examples, detailed in the supplemental
- material.
+The following table sketches some examples, detailed in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+shortfull{
+\end_layout
+
+\end_inset
+
+the supplemental material
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+.
  The shape of metavariable arities determine the objects of 
 \begin_inset Formula ${\cal A}$
 \end_inset
@@ -6326,6 +6201,10 @@ Let
 \end_layout
 
 \end_deeper
+\begin_layout Long Proof
+Straightforward, because a colimit is defined as an initial cocone.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -6403,7 +6282,11 @@ We denote by
 \begin_inset Formula $\bot$
 \end_inset
 
- the terminal object.
+ the freely added terminal object in 
+\begin_inset Formula $\B^{*}$
+\end_inset
+
+.
  Recall that 
 \begin_inset Formula $\bang$
 \end_inset
@@ -6515,10 +6398,13 @@ name "sec:coequalising-phase"
 \end_layout
 
 \begin_layout Standard
-In this section, we describe the main unification phase, which relies on
- the pruning phase, as we shall see.
- The goal is to compute a coequaliser in 
+In this section, we describe the main unification phase, whose goal is to
+ compute a colimit in 
 \begin_inset Formula $\Kl T^{*}$
+\end_inset
+
+ of a coequaliser diagram chosen in 
+\begin_inset Formula $\Kl{\D^{+}}$
 \end_inset
 
 .
@@ -6907,47 +6793,10 @@ What remains to be addressed is the case where the coproduct is a singleton
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Since 
-\begin_inset Formula $T\Gamma\cong I+C+\coprod_{o}R_{o}T\Gamma$
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:lambek-lemma"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-) and 
-\begin_inset Formula $Ka$
-\end_inset
-
- is connected (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
 By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:facto-TX"
+reference "assu:facto-TX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -7060,143 +6909,6 @@ noprefix "false"
 ).
 \end_layout
 
-\begin_layout Description
-\begin_inset Note Note
-status open
-
-\begin_layout Description
-Rigid-rigid 
-\begin_inset Formula $t$
-\end_inset
-
- is 
-\begin_inset Formula $o(g;s)$
-\end_inset
-
- and 
-\begin_inset Formula $u$
-\end_inset
-
- is 
-\begin_inset Formula $o'(g';s')$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
-Flex-rigid,
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-cyclic 
-\begin_inset Formula $t=M(f)$
-\end_inset
-
-, 
-\begin_inset Formula $u=o(g;s)$
-\end_inset
-
- and 
-\begin_inset Formula $M$
-\end_inset
-
- occurs in 
-\begin_inset Formula $u$
-\end_inset
-
-, in the sense that 
-\begin_inset Formula $T\Gamma\xrightarrow{Tin_{\Gamma}}T(\Gamma,M:b)$
-\end_inset
-
- does not factor 
-\begin_inset Formula $u$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
-Flex-Flex,
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-same 
-\begin_inset Formula $t=M(f)$
-\end_inset
-
-, 
-\begin_inset Formula $u=M(g)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-Flex-*,
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-no
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-cycle 
-\begin_inset Formula $t=M(f)$
-\end_inset
-
- and 
-\begin_inset Formula $M$
-\end_inset
-
- does not occur in 
-\begin_inset Formula $u$
-\end_inset
-
-, in the sense that 
-\begin_inset Formula $T\Gamma\xrightarrow{Tin_{\Gamma}}T(\Gamma,M:b)$
-\end_inset
-
- factors 
-\begin_inset Formula $u$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Rigid-rigid
 \end_layout
@@ -7252,7 +6964,7 @@ Assume given a unifier, i.e., a Kleisli morphism
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:op-subst"
+reference "assu:op-subst"
 plural "false"
 caps "true"
 noprefix "false"
@@ -7267,7 +6979,7 @@ noprefix "false"
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:facto-TX"
+reference "assu:facto-TX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -7350,155 +7062,6 @@ We now assume
 \[
 \unificationrigrig
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Subsection
-Flex-*
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:unify-metavar"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-In this section, we consider a coequaliser diagram 
-\begin_inset Formula $\xymatrix{Ka\coeqr{t}{u} & T(\Gamma,M:b)}
-$
-\end_inset
-
- such that 
-\begin_inset Formula $t=M(f)$
-\end_inset
-
- for some 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
-
-.
- In the subsections below, we investigate three mutually exclusive cases:
-\end_layout
-
-\begin_layout Description
-Flex-rigid,
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-cyclic 
-\begin_inset Formula $u$
-\end_inset
-
- is 
-\begin_inset Formula $o(g;s)$
-\end_inset
-
- and 
-\begin_inset Formula $M$
-\end_inset
-
- occurs in 
-\begin_inset Formula $u$
-\end_inset
-
-, in the sense that 
-\begin_inset Formula $T\Gamma\xrightarrow{Tin_{\Gamma}}T(\Gamma,M:b)$
-\end_inset
-
- does not factor 
-\begin_inset Formula $u$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
-Flex-Flex,
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-same 
-\begin_inset Formula $u$
-\end_inset
-
- is 
-\begin_inset Formula $M(g)$
-\end_inset
-
- for some 
-\begin_inset Formula $g$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
-Flex-*,
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-no
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\end_layout
-
-\end_inset
-
-cycle 
-\begin_inset Formula $M$
-\end_inset
-
- does not occur in 
-\begin_inset Formula $u$
-\end_inset
-
-, in the sense that 
-\begin_inset Formula $T\Gamma\xrightarrow{Tin_{\Gamma}}T(\Gamma,M:b)$
-\end_inset
-
- factors 
-\begin_inset Formula $u$
-\end_inset
-
-.
-\end_layout
 
 \end_inset
 
@@ -8277,7 +7840,7 @@ Therefore, it is enough to compute the coequaliser of
  preserves coequalisers (
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:finite-connected"
+reference "assu:K-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
@@ -8982,7 +8545,7 @@ $
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:facto-TX"
+reference "assu:facto-TX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -9055,7 +8618,7 @@ noprefix "false"
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:op-subst"
+reference "assu:op-subst"
 plural "false"
 caps "true"
 noprefix "false"
@@ -9070,7 +8633,7 @@ noprefix "false"
  Now, by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:facto-TX"
+reference "assu:facto-TX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -9109,7 +8672,7 @@ noprefix "false"
 , by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:facto-TX"
+reference "assu:facto-TX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -9120,7 +8683,7 @@ noprefix "false"
  So we are in the second case, and again by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:facto-TX"
+reference "assu:facto-TX"
 plural "false"
 caps "true"
 noprefix "false"
@@ -9617,7 +9180,7 @@ Since
  preserves pushouts (
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:finite-connected"
+reference "assu:K-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
@@ -9850,6 +9413,263 @@ with the sum convention as above for
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+More formally, given 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
+\end_inset
+
+, the size 
+\begin_inset Formula $|t|$
+\end_inset
+
+ is defined as the natural number 
+\begin_inset Formula $n$
+\end_inset
+
+ such that 
+\begin_inset Formula $1\xrightarrow{n}\mathbb{N}$
+\end_inset
+
+ factors 
+\begin_inset Formula $Ka\rightarrow T\Gamma\rightarrow\mathbb{N}$
+\end_inset
+
+ (by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:connected"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, since 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+ is the coproduct 
+\begin_inset Formula $\coprod_{n\in\mathbb{N}}1$
+\end_inset
+
+), where 
+\begin_inset Formula $T\Gamma\rightarrow\mathbb{N}$
+\end_inset
+
+ is defined as the universal 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra morphism induced by the constant morphism 
+\begin_inset Formula $\Gamma\xrightarrow{0}\mathbb{N}$
+\end_inset
+
+ and the 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra 
+\begin_inset Formula $F\mathbb{N}\cong\coprod_{o}\mathbb{N}^{J_{o}}\times S_{o}\xrightarrow{\coprod_{o}\pi_{1}}\coprod_{o}\mathbb{N}^{J_{o}}\xrightarrow{\coprod_{o}(1+\sum)}\coprod_{o}\mathbb{N}\rightarrow\mathbb{N}$
+\end_inset
+
+, informally mapping 
+\begin_inset Formula $o(\vec{n};s)$
+\end_inset
+
+ to 
+\begin_inset Formula $1+\sum_{j}n_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+Given 
+\begin_inset Formula $t:Ka\rightarrow T(\Gamma,M:b)$
+\end_inset
+
+, the natural number 
+\begin_inset Formula $|t|_{M}$
+\end_inset
+
+ is computed similarly by the postcomposition with the universal 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra morphism 
+\begin_inset Formula $T(\Gamma,M:b)\rightarrow\mathbb{N}$
+\end_inset
+
+ induced by 
+\begin_inset Formula $\Gamma,M:b\xrightarrow{0,1}\mathbb{N}$
+\end_inset
+
+ and the 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra structure 
+\begin_inset Formula $F\mathbb{N}\cong\coprod_{o}\mathbb{N}^{J_{o}}\times S_{o}\xrightarrow{\coprod_{o}\pi_{1}}\coprod_{o}\mathbb{N}^{J_{o}}\xrightarrow{\coprod_{o}\sum}\coprod_{o}\mathbb{N}\rightarrow\mathbb{N}$
+\end_inset
+
+, informally mapping 
+\begin_inset Formula $o(\vec{n};s)$
+\end_inset
+
+ to 
+\begin_inset Formula $\sum_{j}n_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The lemmas below are easy consequences of the following standard induction
+ lemma.
+\end_layout
+
+\begin_layout Lemma
+Assume given, for each object 
+\begin_inset Formula $a$
+\end_inset
+
+ of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, a predicate 
+\begin_inset Formula $P_{a}$
+\end_inset
+
+ on 
+\begin_inset Formula $\hom(Ka,T\Gamma$
+\end_inset
+
+) such that
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $P_{a}(M(f))$
+\end_inset
+
+ holds for any 
+\begin_inset Formula $M:b\in\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $f\in\hom_{\D}(a,b)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $P_{a}(o(g;s))$
+\end_inset
+
+ holds for any 
+\begin_inset Formula $o\in O$
+\end_inset
+
+, 
+\begin_inset Formula $s:Ka\rightarrow S_{o}$
+\end_inset
+
+, and 
+\begin_inset Formula $g:\coprod_{j\in J_{o}}KL_{o,j}a\rightarrow S_{o}$
+\end_inset
+
+ such that 
+\begin_inset Formula $P_{L_{o,j}a}(g_{j})$
+\end_inset
+
+ holds for every 
+\begin_inset Formula $j\in J_{o}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+Then, 
+\begin_inset Formula $P_{a}(t)$
+\end_inset
+
+ holds for any 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, consider the functor 
+\begin_inset Formula $X:|{\cal A}|\rightarrow\Set$
+\end_inset
+
+ defined by 
+\begin_inset Formula $X_{a}=\{t\in Ka\rightarrow T\Gamma_{a}|\forall f:b\rightarrow a,P_{a}(t\circ Kf)\}$
+\end_inset
+
+.
+ By universal property of 
+\begin_inset Formula $T\Gamma$
+\end_inset
+
+ as the free 
+\begin_inset Formula $F$
+\end_inset
+
+ algebra on 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, the projection morphism 
+\begin_inset Formula $X\rightarrow T\Gamma$
+\end_inset
+
+ given by the Yoneda lemma has a section, and is thus an isomorphism (as
+ it is both surjective and injective).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
@@ -9874,7 +9694,10 @@ For any
 \end_inset
 
 .
- 
+\begin_inset Note Note
+status open
+
+\begin_layout Lemma
 \begin_inset ERT
 status open
 
@@ -9887,7 +9710,8 @@ begin{full}
 
 \end_inset
 
- In other words, the following diagram is an equaliser.
+ In fact, this is a logical equivalence, i.e., the following diagram is an
+ equaliser.
  
 \begin_inset Note Note
 status open
@@ -10002,6 +9826,11 @@ status open
 
 \backslash
 end{full}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -10341,286 +10170,17 @@ noprefix "false"
 \end_inset
 
  The following two properties are then sufficient to ensure that applying
- rules eagerly eventually leads to a coequaliser: progress, i.e., there is
- always one rule that applies given son input data
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-iffull{
-\end_layout
-
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:progress"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-, and termination, i.e., there is no infinite sequence of rule applications
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-iffull{
-\end_layout
-
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:termination"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{short}
-\end_layout
-
-\end_inset
-
-In this section, we sketch the proof of the latter termination property,
+ rules eagerly eventually leads to a coequaliser: 
+\emph on
+progress
+\emph default
+, i.e., there is always one rule that applies given some input data, and 
+\emph on
+termination
+\emph default
+, i.e., there is no infinite sequence of rule applications.
+ In this section, we sketch the proof of the latter termination property,
  following the standard argument.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{short}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Progress
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:progress"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Progress for the main unification phase means that given a coequalising
- diagram, there is always one rule that applies, in some sense that can
- be made precise for each rule, roughly meaning that 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-, 
-\begin_inset Formula $t$
-\end_inset
-
-, and 
-\begin_inset Formula $u$
-\end_inset
-
- are of the shape 
-\begin_inset Formula $\Gamma'$
-\end_inset
-
-, 
-\begin_inset Formula $t'$
-\end_inset
-
- and 
-\begin_inset Formula $u'$
-\end_inset
-
- (up to isomorphism) when the conclusion of the rule is 
-\begin_inset Formula $\Gamma'\vdash t'=u'\Rightarrow\dots$
-\end_inset
-
-, and all the side conditions in the premises are satisfied (as, for example,
- the premises of the cyclic flex-rigid rule).
- Similar definitions are required for the pruning phase.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Note that if we do not add the above mentioned side conditions to the stepwise
- rules
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:unify-stepwise"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-stepwise"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, they always apply.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proposition
-Given an input data for the unification phase, there is one rule of the
- unification phase that applies.
- Given an input 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\xymatrix{\coprod_{i\in I}Ka_{i}\ar[r]^{\coprod_{i}{\cal L}Kf_{i}}\ar[d]_{g} & \coprod_{i\in I}Kb_{i}\\
-X
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- for the pruning phase there is one rule in the pruning phase that applies.
-\end_layout
-
-\begin_layout Subsection
-Termination
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:termination"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Here we sketch a standard termination argument for pattern unification.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -10940,17 +10500,22 @@ The proof of the first lemma relies on the fact that when the pruning phase
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
+\begin_layout Lemma
 If there is a finite derivation tree of 
 \begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
 \end_inset
@@ -10991,6 +10556,17 @@ renaming
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
 \end_inset
 
 
@@ -11004,310 +10580,7 @@ renaming
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Effectivity
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:effectivity"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To turn this categorical construction into an algorithm, we need some basic
- operations:
-\end_layout
-
-\begin_layout Enumerate
-effective connectedness, i.e., being able to determine which coproduct injection
- factors any morphism 
-\begin_inset Formula $Ka\rightarrow\coprod_{i}X_{i}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-pullbacks and equalisers in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-given morphisms 
-\begin_inset Formula $Kf:Ka\rightarrow Kb$
-\end_inset
-
- and morphism 
-\begin_inset Formula $s:Ka\rightarrow S_{o}$
-\end_inset
-
- for some 
-\begin_inset Formula $o$
-\end_inset
-
-, determining the (unique) morphism 
-\begin_inset Formula $s':Kb\rightarrow S_{o}$
-\end_inset
-
- such that 
-\begin_inset Formula $s=s'\circ Kf$
-\end_inset
-
-, if it exists;
-\end_layout
-
-\begin_layout Enumerate
-given 
-\begin_inset Formula $u:Ka\rightarrow T(\Gamma,M:b)$
-\end_inset
-
- determining the (unique) morphism 
-\begin_inset Formula $u':Ka\rightarrow T\Gamma$
-\end_inset
-
- such that 
-\begin_inset Formula $u=Tin_{\Gamma}\circ u'$
-\end_inset
-
-, if it exists.
-\end_layout
-
-\begin_layout Standard
-The third item is used for the rigid case in the pruning phase.
- 
-\end_layout
-
-\begin_layout Standard
-In this section, we show that the last item, used when performing the occur-chec
-k, is already implied by the other effectivity requirements.
-\end_layout
-
-\begin_layout Standard
-Given a context 
-\begin_inset Formula $\Gamma,M:b$
-\end_inset
-
-, we can define a universal morphism 
-\begin_inset Formula $m:T(\Gamma,M:b)\rightarrow T\Gamma+1$
-\end_inset
-
-, by providing a 
-\begin_inset Formula $F$
-\end_inset
-
--algebra morphism to the codomain and considering the embedding 
-\begin_inset Formula $\Gamma,M:b\xrightarrow{\eta+!}T\Gamma+1$
-\end_inset
-
-, such that the following square is a pullback.
-\begin_inset Formula 
-\[
-\xymatrix{T\Gamma\ar@{=}[d]\ar[rr]^{Tin_{\Gamma}} &  & T(\Gamma,M:b)\ar[d]^{m}\\
-T\Gamma\ar[rr]_{in_{1}} &  & T\Gamma+1
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This provides an effective way to determine whether 
-\begin_inset Formula $u:Ka\rightarrow T(\Gamma,M:b)$
-\end_inset
-
- factors through 
-\begin_inset Formula $Tin_{\Gamma}$
-\end_inset
-
-, by postcomposing it by 
-\begin_inset Formula $m$
-\end_inset
-
-.
- Indeed, since 
-\begin_inset Formula $Ka$
-\end_inset
-
- is connected, the resulting morphism factors either through 
-\begin_inset Formula $T\Gamma\hookrightarrow T\Gamma+1$
-\end_inset
-
- or 
-\begin_inset Formula $1\hookrightarrow T\Gamma$
-\end_inset
-
-.
- The first case applies exactly when 
-\begin_inset Formula $t$
-\end_inset
-
- can be factored by 
-\begin_inset Formula $T\Gamma\rightarrow T(\Gamma,M:a)$
-\end_inset
-
-, and moreover provides the factorisation.
-\end_layout
-
-\begin_layout Standard
-Therefore, we can replace the first two rules of the case Flex-* in the
- unification phase by
-\begin_inset Formula 
-\[
-\unificationfailingoccurcheckeffective{\Gamma}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationoccurcheckeffective
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Subsection
-Effective rigid pruning
-\end_layout
-
-\begin_layout Plain Layout
-The two rules addressing the rigid case in the pruning phase handle two
- different situations, whether 
-\begin_inset Formula $Kf:Ka\rightarrow Kb$
-\end_inset
-
- factors 
-\begin_inset Formula $s:Ka\rightarrow S_{o}$
-\end_inset
-
- for some 
-\begin_inset Formula $o\in O$
-\end_inset
-
-.
- If 
-\begin_inset Formula $f$
-\end_inset
-
- is the coequaliser of 
-\begin_inset Formula $u$
-\end_inset
-
- and 
-\begin_inset Formula $v$
-\end_inset
-
- in 
-\begin_inset Formula $\D$
-\end_inset
-
-, then the non-factorisation situation can be detected by comparing 
-\begin_inset Formula $s\circ Ku$
-\end_inset
-
- and 
-\begin_inset Formula $s\circ Kv$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Plain Layout
-As an example, take 
-\begin_inset Formula ${\cal A}=\mathbb{F}_{m}$
-\end_inset
-
- and 
-\begin_inset Formula $S_{o}=I$
-\end_inset
-
- the variable functor.
- A morphism 
-\begin_inset Formula $s:Ka\rightarrow S_{o}$
-\end_inset
-
- corresponds to a variable 
-\begin_inset Formula $n\in\{0,\dots,a-1\}$
-\end_inset
-
-, and 
-\begin_inset Formula $f$
-\end_inset
-
- is an injection from 
-\begin_inset Formula $\{0,\dots,b-1\}$
-\end_inset
-
- into 
-\begin_inset Formula $\{0,\dots,a-1\}$
-\end_inset
-
-.
- The question is whether 
-\begin_inset Formula $n$
-\end_inset
-
- is in the image of 
-\begin_inset Formula $f$
-\end_inset
-
- or not.
-\end_layout
-
-\begin_layout Plain Layout
-We can't do much more.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
+\begin_inset Separator plain
 \end_inset
 
 
@@ -11917,682 +11190,6 @@ LatexCommand bibtex
 btprint "btPrintCited"
 bibfiles "biblio,bib"
 options "plain"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\start_of_appendix
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\start_of_appendix
-sda
-\end_layout
-
-\begin_layout Section
-Proof of Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:D-kleisli-finite-connected-colims"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:proof-kleisli-finite"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-We exploit here the observations and notations of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:occur-check"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Definition
-An object 
-\begin_inset Formula $X$
-\end_inset
-
- of 
-\begin_inset Formula $\C$
-\end_inset
-
- is said to preserve finite connected colimits if 
-\begin_inset Formula $JX:\op{\D}\rightarrow\Set$
-\end_inset
-
- does.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:D+-fc"
-
-\end_inset
-
-Any coproduct 
-\begin_inset Formula $\coprod_{i}Kd_{i}$
-\end_inset
-
- preserve finite connected colimits.
-\end_layout
-
-\begin_layout Proof
-Recall that 
-\begin_inset Formula $J(\coprod_{i}Kd_{i})=\coprod_{i}yd_{i}$
-\end_inset
-
-.
- Now, representable presheaves are tiny, and coproducts commute with finite
- connected colimits in 
-\begin_inset Formula $\Set$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Plain Layout
-We will prove the following stronger result.
-\end_layout
-
-\begin_layout Proposition
-\begin_inset CommandInset label
-LatexCommand label
-name "prop:Kl-fc"
-
-\end_inset
-
-Let 
-\begin_inset Formula $\Kl{fc}$
-\end_inset
-
- be the full subcategory of 
-\begin_inset Formula $\Kl T$
-\end_inset
-
- spanned by objects preserving finite connected colimits.
- Then, 
-\begin_inset Formula $\D\rightarrow\Kl{fc}$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Plain Layout
-By Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:D+-fc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset Formula $\Kl{\D^{+}}$
-\end_inset
-
- is a full subcategory of 
-\begin_inset Formula $\Kl{fc}$
-\end_inset
-
-, so we this proposition entails the desired fact that 
-\begin_inset Formula ${\cal D}\rightarrow\Kl{\D^{+}}$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Proof of Proposition~
-\backslash
-ref{prop:Kl-fc}]
-\end_layout
-
-\end_inset
-
-Let 
-\begin_inset Formula $P:{\cal B}\rightarrow\D$
-\end_inset
-
- be a finite connected diagram in 
-\begin_inset Formula $\D$
-\end_inset
-
-, and 
-\begin_inset Formula $X$
-\end_inset
-
- be an object of 
-\begin_inset Formula $\C$
-\end_inset
-
- preserving finite connected colimits.
- TODO
-\begin_inset Formula 
-\begin{align*}
-\Kl{fc}(K\colim P,X) & =\C(K\colim P,TX)\\
- & \cong JTX(K\colim P)\\
- & \cong MJX(K\colim P)\\
- & \cong\lim\C(KP-,X)\tag{because \ensuremath{X} preserves finite connected colimits}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Some lemmas
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:initial-not-connected"
-
-\end_inset
-
-An initial object is not connected.
-\end_layout
-
-\begin_layout Proof
-Let 
-\begin_inset Formula $0$
-\end_inset
-
- be an initial object.
- Then the coproduct 
-\begin_inset Formula $0+0$
-\end_inset
-
- exists (it is just 
-\begin_inset Formula $0$
-\end_inset
-
-), but 
-\begin_inset Formula $\hom(0,0+0)$
-\end_inset
-
- is a singleton set (by initiality), while 
-\begin_inset Formula $\hom(0,0)+\hom(0,0)$
-\end_inset
-
- is a two element set: they can't be isomorphic.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:connected-no-commuting"
-
-\end_inset
-
-If 
-\begin_inset Formula $X$
-\end_inset
-
- is connected in an extensive category, there is no commutating diagram
-\begin_inset Formula 
-\[
-\xymatrix{X\ar[r]\ar[d] & A\ar[d]\\
-B\ar[r] & A+B
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Since sums are disjoint in an extensive category (
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Proposition 2.6"
-key "ExtensiveCats"
-literal "false"
-
-\end_inset
-
-), the above commutation induces a morphism 
-\begin_inset Formula $X\rightarrow0$
-\end_inset
-
-.
- By
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Proposition 2.8"
-key "ExtensiveCats"
-literal "false"
-
-\end_inset
-
-, 
-\begin_inset Formula $X$
-\end_inset
-
- is then initial.
- But that is not possible, by Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:initial-not-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:pbk-free-mon-ext"
-
-\end_inset
-
-Let 
-\begin_inset Formula $M$
-\end_inset
-
- be an algebraically free monad on an extensive category.
- Then, for any Kleisli morphism 
-\begin_inset Formula $B\rightarrow M(B')$
-\end_inset
-
-, for any object 
-\begin_inset Formula $A$
-\end_inset
-
-, the following square is a pullback (TODO: refine the assumptions)
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Formula 
-\[
-\xymatrix{A\ar[r]\ar[d] & M(A+B)\ar[d]\\
-A\ar[r] & M(A+B')
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-By Lambek's lemma, 
-\begin_inset Formula $M(X)\cong X+GMX$
-\end_inset
-
- where 
-\begin_inset Formula $M=G^{*}$
-\end_inset
-
-.
- Through this isomorphism, this square becomes
-\begin_inset Formula 
-\[
-\xymatrix{A\ar[r]\ar[d] & A+B+GM(A+B)\ar[d]\\
-A\ar[r] & A+B'+GM(A+B')
-}
-\]
-
-\end_inset
-
-where horizontal morphisms are left coproduct injections.
- TODO: conclude by extensivity.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:pbk-free-mon-ext-2"
-
-\end_inset
-
-Let 
-\begin_inset Formula $M$
-\end_inset
-
- be an algebraically free cartesian monad on an extensive category.
- Then, for any Kleisli morphism 
-\begin_inset Formula $B\rightarrow MB'$
-\end_inset
-
-, the following square is a pullback (TODO: refine the assumptions)
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Formula 
-\[
-\xymatrix{MB\ar[r]\ar[d] & M(A+B)\ar[d]\\
-MB'\ar[r] & M(A+B')
-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-This commuting square expands as
-\begin_inset Formula 
-\[
-\xymatrix{MB\ar[r]^{Min_{2}}\ar[d] & M(A+B)\ar[d]\\
-MMB'\ar[d]_{=}\ar[r] & M(A+M(A+B'))\ar[d]\\
-MMB'\ar[r]^{MMin_{2}}\ar[d]_{\mu} & MM(A+B')\ar[d]^{\mu}\\
-MB'\ar[r]_{Min_{2}} & M(A+B')
-}
-\]
-
-\end_inset
-
-where each square is a pullback square.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:product-topos"
-
-\end_inset
-
-Grothendieck topoi are stable under products.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-citer thm 5.2.2 de Accessible
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Let 
-\begin_inset Formula $(A_{i})_{i\in I}$
-\end_inset
-
- be a family of Grothendieck topoi.
- Then, there exists a family of small categories 
-\begin_inset Formula $(B_{i})_{i\in I}$
-\end_inset
-
- such that each 
-\begin_inset Formula $A_{i}$
-\end_inset
-
- is reflective subcategory of 
-\begin_inset Formula $\hat{B_{i}}$
-\end_inset
-
- and moreover, the reflector is left exact.
- Then, 
-\begin_inset Formula $\prod_{i}A_{i}\rightarrow\prod_{i}\hat{B_{i}}\cong\widehat{\coprod_{i}B_{i}}$
-\end_inset
-
- is also coreflective and the reflector is left exact, concluding the proof.
-\end_layout
-
-\begin_layout Section
-Proof of Proposition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:pbk-lemma-occur-check"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:proof-prop-pbk-lemma-occur-check"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The results of this section are formalised in agda (see occurcheck-ind.agda).
- The crucial point that keeps the agda formalisation simple is that we can
- work on 
-\begin_inset Formula $[\D_{0},\Set]$
-\end_inset
-
- rather than in 
-\begin_inset Formula $[\D,\Set]$
-\end_inset
-
-, where 
-\begin_inset Formula $\D_{0}$
-\end_inset
-
- is the discrete category consisting of objects of 
-\begin_inset Formula $\D$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Now, the basic idea is that we can define by recursion a morphism 
-\begin_inset Formula $MX\rightarrow M0+\mathbb{N}$
-\end_inset
-
- such that the following is a pullback
-\begin_inset Formula 
-\[
-\xymatrix{M0\ar[d]\ar[r] & MX\ar[d]\\
-M0\ar[r] & M0+\mathbb{N}
-}
-\]
-
-\end_inset
-
-This morphism either returns the closed term is the given input 
-\begin_inset Formula $t\in MX$
-\end_inset
-
- is a closed term, or it returns the depth of some leaf.
- Assuming it indeed returns 
-\begin_inset Formula $n$
-\end_inset
-
-, then the height of 
-\begin_inset Formula $t[u]$
-\end_inset
-
- must be bigger than the height of 
-\begin_inset Formula $u$
-\end_inset
-
- raised by 
-\begin_inset Formula $n$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-Now, the basic idea for the proof is that if 
-\begin_inset Formula $t[u]=u$
-\end_inset
-
- then it must be that 
-\begin_inset Formula $n=0$
-\end_inset
-
-, so 
-\begin_inset Formula $t$
-\end_inset
-
- is a metavariable (otherwise, it is a closed term).
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
 
 \end_inset
 
