@@ -391,12 +391,22 @@ setboolean{fullpaper}{false}
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\pruningempty}{\dfrac{}{\Gamma\prune{()}{()}{1_{\Gamma}}{()}\dashv\Gamma}}
+\newcommand{\pruningemptyconcl}{\Gamma\prune{()}{()}{1_{\Gamma}}{()}\dashv\Gamma}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\pruningtop}{\dfrac{}{\bot\prune tf{\bang}{\bang}\dashv\bot}}
+\newcommand{\pruningempty}{\dfrac{}{\pruningemptyconcl}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningtopconcl}{\bot\prune tf{\bang}{\bang}\dashv\bot}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningtop}{\dfrac{}{\pruningtopconcl}}
 \end_inset
 
 
@@ -525,7 +535,7 @@ name "subsec:intro-pattern"
 
 \begin_layout Standard
 Unification consists in finding the most general unifier of two terms involving
- metavariables.
+ metavariables, and typically happens in proof search or type inference.
  
 \begin_inset Note Note
 status open
@@ -549,7 +559,7 @@ The most general unifier is the one that uniquely factors any other unifier.
 
 \end_inset
 
- In pattern unification
+ Pattern unification
 \begin_inset ERT
 status open
 
@@ -568,14 +578,11 @@ literal "false"
 
 \end_inset
 
-, the arguments of a metavariable are restricted to be distinct variables.
+ allows metavariables to take some arguments, with the restriction that
+ they must be distinct variables.
  In that case, we can design an algorithm that either fails in case there
- is no unifier, either computes the most general unifier.
- 
-\end_layout
-
-\begin_layout Standard
-In Section
+ is no unifier, either computes the most general unifier, which we sketch
+ below in Section
 \begin_inset ERT
 status open
 
@@ -596,12 +603,12 @@ noprefix "false"
 
 \end_inset
 
- below, we first present pattern unification in the case of pure 
+, in the case of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
 -calculus.
- Then, in Section
+ In Section
 \begin_inset ERT
 status open
 
@@ -622,8 +629,266 @@ noprefix "false"
 
 \end_inset
 
-, we provide some intuitions about the categorical generalisation that we
- set up.
+, we motivate our categorical setting, based on this example.
+\end_layout
+
+\begin_layout Subsection*
+Related work
+\end_layout
+
+\begin_layout Standard
+First-order unification, where all metavariables are constant, was categorically
+ rephrased in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 9"
+key "DBLP:books/daglib/0068768"
+literal "false"
+
+\end_inset
+
+.
+ Pattern unification was introduced in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/logcom/Miller91"
+literal "false"
+
+\end_inset
+
+, as a particular case of higher-order unification for the simply-typed
+ lambda-calculus, where metavariables are applied to distinct variables.
+ It was categorically rephrased in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vezzosi2014categorical"
+literal "false"
+
+\end_inset
+
+, with concluding hints about how to generalise their work.
+ The present paper can be thought of as an explicit realisation of this
+ 
+\lang british
+generalisation
+\lang english
+.
+\end_layout
+
+\begin_layout Personal Question
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 9"
+key "DBLP:books/daglib/0068768"
+literal "false"
+
+\end_inset
+
+ propose une generalisation interessante, avec le lemme sur les epis.
+ (Theorem 10).
+ Est-ce qu'on pourrait encore generaliser encore notre business?
+\end_layout
+
+\begin_layout Subsection*
+Plan of the paper
+\end_layout
+
+\begin_layout Standard
+In Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:cat-settings"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we present our categorical setting.
+ In Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Main-result"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we state the main result that motivates the pattern unification algorithm.
+ Then we describe the construction of the most general unifier, as summarised
+ in Figure
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:algo-summary"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, starting with the unification phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:coequalising-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the pruning phase (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:pruning-phase"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the occur-check (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:occur-check"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ We finally justify completeness in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:completeness"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Applications are presented in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:applications"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -641,7 +906,7 @@ name "subsec:example-lambda"
 
 \end_inset
 
-Consider the De Bruijn encoded syntax of pure 
+Consider the syntax of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -2442,7 +2707,7 @@ The rigid-rigid rules handle all the cases where no metavariable is involved
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Operation
 \end_layout
 
 \end_inset
@@ -2983,257 +3248,6 @@ where
 
 \end_layout
 
-\begin_layout Subsection*
-Related work
-\end_layout
-
-\begin_layout Standard
-First-order unification was categorically described in
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Chapter 9"
-key "DBLP:books/daglib/0068768"
-literal "false"
-
-\end_inset
-
-, which basically corresponds to replacing 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
- in the introduction by the terminal category.
- Pattern unification was introduced in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "DBLP:journals/logcom/Miller91"
-literal "false"
-
-\end_inset
-
-, as a particular case of higher-order unification for the simply-typed
- lambda-calculus, where metavariables are applied to distinct variables.
- It was categorically rephrased in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "vezzosi2014categorical"
-literal "false"
-
-\end_inset
-
-, with concluding hints about how to generalise their work.
- The present paper can be thought of as an explicit realisation of this
- 
-\lang british
-generalisation
-\lang english
-.
-\end_layout
-
-\begin_layout Personal Question
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Chapter 9"
-key "DBLP:books/daglib/0068768"
-literal "false"
-
-\end_inset
-
- propose une generalisation interessante, avec le lemme sur les epis.
- (Theorem 10).
- Est-ce qu'on pourrait encore generaliser encore notre business?
-\end_layout
-
-\begin_layout Subsection*
-Plan of the paper
-\end_layout
-
-\begin_layout Standard
-In Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:cat-settings"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we present our categorical setting.
- In Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Main-result"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we state our main result that justifies pattern unification algorithms.
- Then we describe the construction of the most general unifier, as summarised
- in Figure
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:algo-summary"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, starting with the the unification phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:coequalising-phase"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), the pruning phase (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:pruning-phase"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), the occur-check (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:occur-check"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), and finally we justify completeness (Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:completeness"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
- Applications are presented in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:applications"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -3502,13 +3516,100 @@ name "sec:cat-settings"
 
 \end_layout
 
+\begin_layout Standard
+In our setting, syntax is specified as an endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on a category 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ We introduce conditions for the latter in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:base-cat"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and for the former in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ssec:endo-syntax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Finally, in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:examples-settings"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we sketch some examples.
+\end_layout
+
 \begin_layout Subsection
 Base category
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:base-cat"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 We work in a full subcategory 
-\begin_inset Formula $\mathcal{C}$
+\begin_inset Formula $\C$
 \end_inset
 
  of functors 
@@ -3543,7 +3644,26 @@ The example of the introduction consider
 \begin_inset Formula $\C$
 \end_inset
 
- is the category of nominal sets.
+ is the category of nominal sets
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PittsAM:newaas"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Remark
@@ -3557,40 +3677,26 @@ The category
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- is intuitively the category of ground contexts and 
-\emph on
-renamings
-\emph default
-.
- A ground context can also be thought of as a metavariable arity, in the
- sense that it specifies the necessary substitution data, that is, a term
- in the given ground context.
- The argument of a metavariable 
+ is intuitively the category of metavariable arities.
+ A morphism in this category can be thought of as data to substitute a metavaria
+ble 
 \begin_inset Formula $M:a$
 \end_inset
 
- living in a (larger) ground context 
-\begin_inset Formula $a'$
-\end_inset
-
- is given by a renaming 
-\begin_inset Formula $a\rightarrow a'$
-\end_inset
-
-.
- In the example of pure 
+ with another.
+ For example, in the case of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus described in the introduction, a metavariable 
-\begin_inset Formula $M:n$
+-calculus, replacing a metavariable 
+\begin_inset Formula $M:m$
 \end_inset
 
- in a context 
-\begin_inset Formula $m\in\mathbb{N}$
+ with a metavariable 
+\begin_inset Formula $N:n$
 \end_inset
 
- takes as argument a choice of distinct variables 
+ requires providing a choice of distinct variables 
 \begin_inset Formula $x_{1},\dots,x_{n}\in\{0,\dots,m-1\}$
 \end_inset
 
@@ -6428,6 +6534,296 @@ Let
 .
 \end_layout
 
+\begin_layout Subsection
+Examples
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:examples-settings"
+
+\end_inset
+
+The following table sketches some examples, detailed in the supplemental
+ material.
+ The shape of metavariable arities determine the objects of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, as hinted by Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:ar-A"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Metavariable arity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Operations (examples)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n\in\mathbb{F}_{m}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+See introduction.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Linear 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{p\vdash t\quad q\vdash u}{p+q\vdash t\ u}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\underbrace{\tau_{1},\dots,\tau_{n}\vdash\tau_{o}}_{\text{simple types}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\Gamma\vdash t:\tau_{1}\Rightarrow\tau_{2}\qquad\Gamma\vdash u:\tau_{1}}{\Gamma\vdash t\ u:\tau_{2}}\vphantom{\dfrac{\dfrac{}{}}{}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Intrinsic system F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m|\underbrace{\tau_{1},\dots,\tau_{n}\vdash\tau_{o}}_{\mathclap{<\text{ \ensuremath{m} type variables}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{m+1|wk(\Gamma)\vdash t:\tau}{m|\Gamma\vdash\Lambda t:\Lambda\tau}\textsc{Type-Abstr}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{m|\Gamma\vdash t:\Lambda\tau\qquad m\vdash\sigma}{m|\Gamma\vdash t[\sigma]:\tau[*\mapsto\sigma]}\textsc{Type-App}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Main result
 \end_layout
@@ -7889,7 +8285,6 @@ status open
 
 \backslash
 begin{array}{c}
-
 \backslash
 xymatrix{A
 \backslash
@@ -7901,14 +8296,11 @@ ar@{-->}[d]^{v}
 \backslash
 
 \backslash
-
 C
 \backslash
 ar@{-->}[r]_{
 \backslash
-sigma} & D
-}
-
+sigma} & D}
 \backslash
 end{array}
 \end_layout
@@ -8964,26 +9356,27 @@ Could we use Reddy's syntax, to differentiate the input/output? We need
 \end_layout
 
 \begin_layout Standard
-The simplest case is when the coproduct is empty: then, the pushout is 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-.
- Another simple case is when 
+Let us start with simple cases.
+ When 
 \begin_inset Formula $\Gamma=\bot$
 \end_inset
 
-.
- Then, the pushout is the terminal cocone.
- Therefore, we have the rules
-\begin_inset Formula 
-\[
-\pruningempty\qquad\pruningtop
-\]
-
+, the pushout is the terminal cocone, i.e., 
+\begin_inset Formula $\pruningtopconcl$
 \end_inset
 
+ holds.
+ .
+ When the coproduct is empty, the pushout is just 
+\begin_inset Formula $\Gamma$
+\end_inset
 
+, i.e., 
+\begin_inset Formula $\pruningemptyconcl$
+\end_inset
+
+ holds.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -10518,7 +10911,7 @@ name "cor:occurcheck-final"
 \end_inset
 
 If there is a commuting square in 
-\begin_inset Formula $\Kl{\D^{+}}$
+\begin_inset Formula $\Kl T$
 \end_inset
 
 
@@ -10531,10 +10924,6 @@ Kb\ar[r]_{u} & \Delta
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Corollary
 then 
 \begin_inset Formula $t=M(g)$
 \end_inset
@@ -11727,6 +12116,22 @@ end{full}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Applications
 \end_layout
@@ -12050,22 +12455,6 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Meta-arities as sets
 \end_layout
@@ -12143,22 +12532,6 @@ Then, a metavariable is assigned a set of possible ordinary variables.
 
  when defining the endofunctor on the syntax as in 
 \begin_inset Formula $F(X)_{A,n}=n+A+X_{A,n+1}+\dots$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
 \end_inset
 
 
@@ -12304,6 +12677,22 @@ noprefix "false"
 
  specifies the number of type arguments, the list of input types, and the
  output type.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
