@@ -144,7 +144,7 @@ End
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
-\biblio_style plain
+\biblio_style splncs04
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -700,7 +700,38 @@ status open
 
 
 \backslash
-iffull{
+shortfull{
+\end_layout
+
+\end_inset
+
+An expanded version of this paper with proofs and detailed examples can
+ be found in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "longgenericunif"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
 \end_layout
 
 \end_inset
@@ -3149,6 +3180,7 @@ noprefix "false"
 \end_inset
 
 , we sketch some examples.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -5820,7 +5852,15 @@ shortfull{
 
 \end_inset
 
-the supplemental material
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "longgenericunif"
+literal "false"
+
+\end_inset
+
+
 \begin_inset ERT
 status open
 
@@ -11189,7 +11229,7 @@ Mais est -ce que ca fait bien la moande des termes.
 LatexCommand bibtex
 btprint "btPrintCited"
 bibfiles "biblio,bib"
-options "plain"
+options "splncs04"
 
 \end_inset
 
