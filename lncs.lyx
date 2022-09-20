@@ -97,7 +97,7 @@ Style "Long Proof"
     EndPreamble
 End
 \end_local_layout
-\language english
+\language british
 \language_package default
 \inputencoding auto
 \fontencoding global
@@ -440,9 +440,19 @@ We provide a generic setting for pattern unification using category theory.
  coproducts of representable functors; the most general unifier is computed
  as a coequaliser in the Kleisli category of this monad.
  Beyond simply typed second-order syntax, our categorical proof handles
- unification for linear or (intrinsic) polymorphic syntax such as system
- F.
+ unification for linear syntax.
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+or (intrinsic) polymorphic syntax such as system F.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -469,7 +479,9 @@ Introduction
 
 \begin_layout Standard
 Unification consists in finding the most general unifier of two terms involving
- metavariables, and typically happens in proof search or type inference.
+ metavariables.
+ It is used in logic programming languages such as Prolog, or in proof search,
+ type inference algorithms.
  
 \begin_inset Note Note
 status open
@@ -515,33 +527,54 @@ literal "false"
  allows metavariables to take some arguments, with the restriction that
  they must be distinct variables.
  In that case, we can design an algorithm that either fails in case there
- is no unifier, either computes the most general unifier, which we sketch
- below in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
+ is no unifier, either computes the most general unifier.
+ In this work, we present a generic construction of the most general unifier,
+ in a categorical setting.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ifshort{
+\end_layout
 
 \end_inset
 
-, in the case of pure 
-\begin_inset Formula $\lambda$
-\end_inset
+An expanded version of this paper with proofs and detailed examples can
+ be found in
+\begin_inset ERT
+status open
 
--calculus.
- In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:intro-generalise"
-plural "false"
-caps "true"
-noprefix "false"
+\begin_layout Plain Layout
+
+~
+\end_layout
 
 \end_inset
 
-, we motivate our categorical setting, based on this example.
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "longgenericunif"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
@@ -589,13 +622,19 @@ literal "false"
 
 \end_inset
 
-, with concluding hints about how to generalise their work.
- The present paper can be thought of as an explicit realisation of this
- 
-\lang british
-generalisation
-\lang english
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, with concluding hints about how to generalise their work.
+ 
+\end_layout
+
+\end_inset
+
+The present paper can be thought of as a generalisation of their work.
 \end_layout
 
 \begin_layout Personal Question
@@ -705,27 +744,7 @@ shortfull{
 
 \end_inset
 
-An expanded version of this paper with proofs and detailed examples can
- be found in
-\begin_inset ERT
-status open
 
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "longgenericunif"
-literal "false"
-
-\end_inset
-
-.
 \begin_inset ERT
 status open
 
@@ -760,6 +779,34 @@ status open
 
 \end_layout
 
+\begin_layout Standard
+Let us start by presenting pattern unification in the case of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus: we sketch the algorithm in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, and in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generalise"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we motivate our categorical setting, based on this example.
+\end_layout
+
 \begin_layout Subsection
 An example: pure 
 \begin_inset Formula $\lambda$
@@ -780,7 +827,11 @@ Consider the syntax of pure
 \end_inset
 
 -calculus extended with metavariables satisfying the pattern restriction,
- defined by the following inductive rule, where 
+ defined by the following inductive rules, where 
+\begin_inset Formula $C\in\mathbb{N}$
+\end_inset
+
+ is a ground context and 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -796,11 +847,7 @@ Consider the syntax of pure
 \begin_inset Formula $n_{i}$
 \end_inset
 
-, and 
-\begin_inset Formula $C\in\mathbb{N}$
-\end_inset
-
- is a ground context.
+.
 \begin_inset Formula 
 \[
 \dfrac{x<C}{\Gamma;C\vdash x}\qquad\dfrac{\Gamma;C\vdash t\quad\Gamma;C\vdash u}{\Gamma;C\vdash t\ u}\qquad\dfrac{\Gamma;C+1\vdash t}{\Gamma;C\vdash\lambda t}
@@ -816,7 +863,7 @@ Consider the syntax of pure
 
 \end_inset
 
-We choose the convention that the variable bound by 
+We choose the convention that the variable bound in 
 \begin_inset Formula $\lambda t$
 \end_inset
 
@@ -824,11 +871,11 @@ We choose the convention that the variable bound by
 \begin_inset Formula $C$
 \end_inset
 
-) is denoted by 
+) is 
 \begin_inset Formula $C$
 \end_inset
 
-, rather than by 
+, rather than the usual De Bruijn choice of 
 \begin_inset Formula $0$
 \end_inset
 
@@ -838,8 +885,7 @@ We choose the convention that the variable bound by
 \end_inset
 
 , making substitution simpler.
- However, determining whether a variable is bound requires to know the context.
- 
+ Whether a variable is bound or not depends on the ground context.
 \end_layout
 
 \begin_layout Standard
@@ -950,18 +996,27 @@ most general unifier
 \begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Gamma'$
 \end_inset
 
-.
+, leaving the ground context 
+\begin_inset Formula $C$
+\end_inset
+
+ implicit.
  The motivation behind this notation is that the symbol 
 \begin_inset Formula $\Rightarrow$
 \end_inset
 
- separates the input and the output of the algorithm.
+ separates the input and the output of a unification algorithm.
  
 \end_layout
 
 \begin_layout Standard
-Let us now describe the pattern unification algorithm using inductive rules.
- In the process, we introduce explicit notations to make it closer to the
+Let us now describe the pattern unification algorithm.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In the process, we introduce explicit notations to make it closer to the
  generic categorical algorithm summarised in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -973,7 +1028,12 @@ noprefix "false"
 \end_inset
 
 .
- To handle the failing case (when no unifier exists), we add
+ 
+\end_layout
+
+\end_inset
+
+To handle the failing case (when no unifier exists), we add
 \begin_inset Foot
 status open
 
@@ -997,11 +1057,11 @@ noprefix "false"
 \begin_inset Formula $\bot$
 \end_inset
 
- in which the only term is a formal error term 
+ in which the only term (in any ground context) is a formal error term 
 \begin_inset Formula $!$
 \end_inset
 
-, inducing a substitution 
+, inducing a unique substitution 
 \begin_inset Formula $!:\Gamma\rightarrow\bot$
 \end_inset
 
@@ -1211,7 +1271,8 @@ In the second case, we only keep the argument positions that are the same
 \begin_inset Formula $y_{1},\dots,y_{n}$
 \end_inset
 
-: the most general unifier consists in substituting 
+.
+ In other words, the most general unifier substitutes 
 \begin_inset Formula $M$
 \end_inset
 
@@ -1259,9 +1320,9 @@ noprefix "false"
 : both are (co)equalisers.
  We therefore get the rule
 \begin_inset Formula 
-\[
-\dfrac{n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p}{\Gamma,M:n\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(\vec{z})\dashv\Gamma,M':p}
-\]
+\begin{equation}
+\dfrac{n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p}{\Gamma,M:n\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(\vec{z})\dashv\Gamma,M':p}\label{eq:coeq-mvar-lc}
+\end{equation}
 
 \end_inset
 
@@ -1273,7 +1334,7 @@ Finally, the first case happens when we want to unify
 \begin_inset Formula $M(\vec{x})$
 \end_inset
 
- and some 
+ with some 
 \begin_inset Formula $u$
 \end_inset
 
@@ -1294,7 +1355,7 @@ Finally, the first case happens when we want to unify
 \end_inset
 
 .
- We state this statement explicitely by 
+ We denote such a situation by 
 \begin_inset Formula $u_{|\Gamma}=\underline{u'}$
 \end_inset
 
@@ -1311,11 +1372,11 @@ Finally, the first case happens when we want to unify
 \end_inset
 
 .
- In this situation, the algorithm, enters a 
+ In this case, the algorithm, enters a 
 \emph on
 pruning phase
 \emph default
-: it tries to remove all 
+ and tries to remove all 
 \emph on
 outbound 
 \emph default
@@ -1329,13 +1390,13 @@ variables in
 
 .
  It does so by producing a substitution that restricts the arities of the
- metavariables occuring in 
-\begin_inset Formula $u$
+ metavariables occurring in 
+\begin_inset Formula $u'$
 \end_inset
 
 .
  Let us introduce a specific notation for this phase: 
-\begin_inset Formula $\Gamma\prune u{M(\vec{x})}{\sigma\dashv\Delta}v$
+\begin_inset Formula $\Gamma\prune{u'}{M(\vec{x})}{\sigma\dashv\Delta}v$
 \end_inset
 
  means that 
@@ -1347,7 +1408,7 @@ variables in
 \end_inset
 
  is essentially 
-\begin_inset Formula $u[\sigma][x_{i}\mapsto i]$
+\begin_inset Formula $u'[\sigma][x_{i}\mapsto i]$
 \end_inset
 
 , where 
@@ -1355,7 +1416,7 @@ variables in
 \end_inset
 
  is renaming of free variables.
- By convention, 
+ In this notation, 
 \begin_inset Formula $M$
 \end_inset
 
@@ -1363,8 +1424,20 @@ variables in
 \begin_inset Formula $\Gamma$
 \end_inset
 
- in this notation.
- The third case is thus accounted by the rule
+, and the ground context 
+\begin_inset Formula $C$
+\end_inset
+
+ for 
+\begin_inset Formula $u'$
+\end_inset
+
+ is left implicit.
+ 
+\end_layout
+
+\begin_layout Standard
+We thus have the rule
 \begin_inset Formula 
 \[
 \dfrac{u_{|\Gamma}=\underline{u'}\qquad\Gamma\prune{u'}{M(\vec{x})}{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}
@@ -1398,7 +1471,7 @@ In
 \begin_inset Formula $C$
 \end_inset
 
- must be allowed in the argument.
+ need not been pruned: we extend the list of allowed variables accordingly.
 \begin_inset Formula 
 \begin{equation}
 \dfrac{\Gamma\prune t{M(C,\vec{x})}{\sigma}v\dashv\Delta}{\Gamma\prune{\lambda t}{M(\vec{x})}{\sigma}v\dashv\Delta}\label{eq:pruning-lambda-lc}
@@ -1406,8 +1479,8 @@ In
 
 \end_inset
 
-Application requires to prune two terms, thus the premise with custom notation
- in the following rule.
+Application requires to prune two terms, justifying the premise with the
+ intuitive notation in the following rule.
 \end_layout
 
 \begin_layout Standard
@@ -1418,7 +1491,10 @@ Application requires to prune two terms, thus the premise with custom notation
 
 \end_inset
 
-This is done sequentially as follows
+This is done sequentially by first pruning the first term, applying the
+ pruning substitution to the second term, and finally pruning the resulting
+ term.
+ 
 \begin_inset Formula 
 \[
 \dfrac{\Gamma\prune{u_{1}}{M(\vec{x})}{\sigma_{1}}{v_{1}}\dashv\Delta_{1}\qquad\Delta_{1}\prune{u_{2}[\sigma_{1}]}{M(\vec{x})}{\sigma_{2}\dashv\Delta_{2}}{v_{2}}}{\Gamma\prune{u_{1},u_{2}}{M(\vec{x})+M(\vec{x})}{\sigma_{1}[\sigma_{2}]}{v_{1}[\sigma_{2}],v_{2}}\dashv\Delta_{2}}
@@ -1469,7 +1545,7 @@ The remaining case consists in pruning a metavariable
 \end_inset
 
 .
- Again, the similarity with the pruning notation will be categorically justified
+ The similarity with the pruning notation will be categorically justified
  in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -1538,7 +1614,7 @@ Assume
 \end_inset
 
  with a new metavariable whose arity is the number of common variables positions
- in both handsides.
+ in both hand sides.
 \end_layout
 
 \end_inset
@@ -1566,7 +1642,7 @@ In this section, we define the syntax of pure
 \end_inset
 
 -calculus and state unification from a categorical point of view in order
- to motivate our general account of pattern unification.
+ to motivate our general setting.
 \end_layout
 
 \begin_layout Standard
@@ -1659,7 +1735,7 @@ In pattern unification, we consider extensions of this syntax with metavariables
 \begin_inset Formula $n$
 \end_inset
 
-, corresponding a choice of arguments for the metavariable.
+, corresponding to a choice of arguments for the metavariable.
  Note that 
 \begin_inset Formula $Inj(p,n)$
 \end_inset
@@ -1854,32 +1930,16 @@ To understand how a unification problem is stated in this general setting,
 \end_inset
 
 -term 
-\begin_inset Formula $t$
+\begin_inset Formula $M:n;p\vdash t$
 \end_inset
 
- potentially involving a metavariable of arity 
-\begin_inset Formula $n$
-\end_inset
-
-, with 
-\begin_inset Formula $p$
-\end_inset
-
- free variables.
+.
  Note that this is the necessary data to substitute a metavariable 
-\begin_inset Formula $M$
+\begin_inset Formula $N$
 \end_inset
 
  of arity 
 \begin_inset Formula $p$
-\end_inset
-
-: then, 
-\begin_inset Formula $M(x_{1},\dots,x_{p})$
-\end_inset
-
- gets replaced with 
-\begin_inset Formula $t[i\mapsto x_{i+1}]$
 \end_inset
 
 .
@@ -1912,31 +1972,19 @@ To understand how a unification problem is stated in this general setting,
 \begin_layout Standard
 A unification problem can be stated as a pair of parallel Kleisli morphisms
  
-\begin_inset Formula $\xymatrix{yp\ar@<+0.5ex>[r]\ar@<-.5ex>[r] & T(yq_{1}+\dots+yq_{n})}
+\begin_inset Formula $\xymatrix{yp\coeqr{t}{u} & T(yq_{1}+\dots+yq_{n})}
 $
 \end_inset
 
- corresponding to selecting a pair of terms with 
-\begin_inset Formula $p$
-\end_inset
-
- free variables and involving metavariables of arity 
-\begin_inset Formula $q_{1}$
-\end_inset
-
-, 
-\begin_inset Formula $\dots$
-\end_inset
-
-, 
-\begin_inset Formula $q_{n}$
+ corresponding to selecting a pair of terms 
+\begin_inset Formula $M_{1}:q_{1},\dots,M_{n}:q_{n};p\vdash t,u$
 \end_inset
 
 .
  A unifier is nothing but a Kleisli morphism coequalising this pair.
- The property required by the most general unifier menas that it is the
+ The property required by the most general unifier means that it is the
  coequaliser, in the full subcategory spanned by coproducts of representable
- presheaves.
+ functors.
  The main purpose of the pattern unification algorithm consists thus in
  constructing this coequaliser, if it exists, which is the case as long
  as there exists a unifier.
@@ -2259,7 +2307,7 @@ noprefix "false"
 
 -calculus, starting with the unification phase for a list of term pairs.
  The first structural rule handles the case of an empty list of term pairs:
- in this case there is nothing to unify.
+ there is nothing to unify.
  The second rule merely propagates the error.
  The third structural rule performs sequential unification of a non empty
  list of term pairs, as described earlier.
@@ -2530,7 +2578,52 @@ Abstraction
 \begin_layout Standard
 The other rules of the unification phase follow the scheme described in
  the previous section.
- We now comment the pruning phase.
+ As we will see in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:coequalising-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, the premise of the rule
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:coeq-mvar-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ precisely means that 
+\begin_inset Formula $\xymatrix{p\ar[r]^{z} & n\coeqr{x}{y} & C}
+$
+\end_inset
+
+ is an equaliser in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We now comment the pruning phase.
  The structural rules perform a job similar to those of the unification
  phase.
  The metavariable pruning case (Flex) is textually similar to the rule
@@ -2565,16 +2658,26 @@ noprefix "false"
 
 \end_inset
 
-, the categorical meaning of the premise is a pushout in 
+, 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+the categorical meaning of the premise is a pushout in 
 \begin_inset Formula $\D=\op{\mathbb{F}_{m}}$
 \end_inset
 
-, that is a pullback in 
+, that is, a pullback in 
 \begin_inset Formula $\mathbb{F}_{m}$
 \end_inset
 
 .
- And indeed, the premise of the rule
+ And indeed,
+\end_layout
+
+\end_inset
+
+ the premise of the rule
 \begin_inset ERT
 status open
 
@@ -2595,7 +2698,11 @@ noprefix "false"
 
 \end_inset
 
- precisely means that the following square is a pullback
+ precisely means that the following square is a pullback in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+.
 \begin_inset Formula 
 \[
 \xymatrix{p\ar[r]^{l}\ar[d]_{r} & n\ar[d]^{x}\\
@@ -2835,7 +2942,8 @@ where
 \begin_inset Formula $y2\rightrightarrows Ty1$
 \end_inset
 
- of the same metavariable but applied to a different variable on both handsides.
+ of the same metavariable but applied to a different variable on both hand
+ sides.
  Consider indeed the squash functor 
 \begin_inset Formula $S$
 \end_inset
@@ -5925,7 +6033,7 @@ status open
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="3">
+<lyxtabular version="3" rows="4" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -6035,7 +6143,7 @@ Linear
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6048,7 +6156,7 @@ Simply-typed
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6060,7 +6168,7 @@ Simply-typed
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6073,6 +6181,35 @@ Simply-typed
 \end_inset
 </cell>
 </row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
@@ -6146,12 +6283,6 @@ Intrinsic system F
 \end_inset
 
 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
 \end_layout
 
 \end_inset
@@ -8060,7 +8191,6 @@ The pruning phase corresponds to computing a pushout diagram in
 \end_inset
 
  where one branch is a finite coproduct of free morphisms.
- 
 \end_layout
 
 \begin_layout Notation
@@ -11030,6 +11160,10 @@ Intrinsic polymorphic syntax
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 We present intrinsic system F, following
 \begin_inset ERT
 status open
@@ -11071,20 +11205,32 @@ literal "false"
 \end_inset
 
 .
+ Intuitively, a metavariable arity 
+\begin_inset Formula $n;\sigma_{1},\dots,\sigma_{p}\vdash\tau$
+\end_inset
+
+ specifies the number 
+\begin_inset Formula $n$
+\end_inset
+
+ of free type variables, the list of input types 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+, and the output type 
+\begin_inset Formula $\tau$
+\end_inset
+
+, all living in 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+.
  Now, consider the category 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- of contexts of the shape 
-\begin_inset Formula $n;\sigma_{1},\dots,\sigma_{p}\vdash\tau$
-\end_inset
-
-, where 
-\begin_inset Formula $\sigma_{i},\tau\in Sn$
-\end_inset
-
-.
- A morphism between 
+ of metavariable arities where a morphism between 
 \begin_inset Formula $n,\Gamma\vdash\tau$
 \end_inset
 
@@ -11092,25 +11238,29 @@ literal "false"
 \begin_inset Formula $n',\Gamma'\vdash\tau'$
 \end_inset
 
- is a monomorphism 
+ is a morphism 
 \begin_inset Formula $\sigma:n\rightarrow n'$
 \end_inset
 
- and renamings 
-\begin_inset Formula $\Gamma[\sigma]\rightarrow\Gamma'$
+ in 
+\begin_inset Formula $\mathbb{F}_{m}$
 \end_inset
 
  such that 
 \begin_inset Formula $\tau[\sigma]=\tau'$
 \end_inset
 
-.
+, and a renaming 
+\begin_inset Formula $\Gamma[\sigma]\rightarrow\Gamma'$
+\end_inset
+
+ .
  More formally, 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
  is the op-lax colimit of 
-\begin_inset Formula $n\mapsto\mathbb{F}_{m}[Sn]\times Sn$
+\begin_inset Formula $n\mapsto\mathbb{F}_{m}[S_{n}]\times S_{n}$
 \end_inset
 
 .
@@ -11138,22 +11288,239 @@ literal "false"
 \end_inset
 
 .
- Following 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:ar-A"
-plural "false"
-caps "true"
-noprefix "false"
+ The basic idea is that a typing rule
+\begin_inset Formula 
+\[
+\dfrac{m_{1}|\Gamma_{1}\vdash t_{1}:\tau_{1}\quad\dots\quad m_{n}|\Gamma_{n}\vdash t_{n}:\tau_{n}}{m|\Gamma\vdash C(t_{1},\dots t_{n}):C'(\tau_{1},\dots,\tau_{n})}
+\]
 
 \end_inset
 
-, a metavariable arity 
-\begin_inset Formula $n;\sigma_{1},\dots,\sigma_{p}\vdash\tau$
+is interpreted as a rule 
+\begin_inset Formula $F(X)_{m|\Gamma\vdash\tau}=X_{m_{1}|\Gamma_{1}\vdash\tau_{1}}\times\dots\times X_{m_{n}|\Gamma_{n}\vdash\tau_{n}}\times y(m|\Gamma\vdash C'(\tau_{1},\dots,\tau_{n}))(m|\Gamma\vdash\tau)$
 \end_inset
 
- specifies the number of type arguments, the list of input types, and the
- output type.
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Operations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $o(?,s)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $o(f,?)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Type abstraction
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{m+1|wk(\Gamma)\vdash t:\tau}{m|\Gamma\vdash\Lambda t:\Lambda\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m+1|wk(\Gamma)\vdash t:\tau'$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta_{\tau,\Lambda\tau'}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F(X)_{n|\Gamma\vdash\tau}=\coprod_{\tau'}X(n+1|\Gamma\vdash\tau')\delta_{\tau,\forall\tau'}
+\]
+
+\end_inset
+
+ problem! 
+\begin_inset Formula $\delta_{-,\forall\tau'}$
+\end_inset
+
+ does not preserve connected limits.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+variables:Here, 
+\begin_inset Formula $V$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $V(n;\Gamma\vdash\sigma)=\#\{\sigma\in\Gamma\}$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+F(X)=\coprod_{m,\tau\in S_{m}}y(m|\tau\vdash\tau)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
