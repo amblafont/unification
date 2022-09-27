@@ -5015,7 +5015,12 @@ If
 \end_inset
 
 .
- Conversely, if 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Conversely, if 
 \begin_inset Formula $g:\coprod_{i\in I}A_{i}\rightarrow B$
 \end_inset
 
@@ -5028,6 +5033,10 @@ If
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
  Coproduct injections 
 \begin_inset Formula $A_{i}\rightarrow\coprod_{i\in I}A_{i}$
 \end_inset
@@ -5555,7 +5564,7 @@ By the Yoneda Lemma, any representable functor is in
 \end_inset
 
  and thus the embedding 
-\begin_inset Formula $\mathcal{C}\rightarrow[\mathcal{A},\Set]$
+\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
  factors the Yoneda embedding 
@@ -5583,26 +5592,65 @@ name "lem:lims-coprod-pw"
 \end_inset
 
 
-\begin_inset Formula $\mathcal{C}$
+\begin_inset Formula $\C$
 \end_inset
 
  is closed under limits, coproducts, and filtered colimits.
+ Moreover, it is cocomplete.
 \end_layout
 
 \begin_layout Long Proof
-All we have to check is that limits, coproducts, and filtered colimits of
- functors preserving finite connected limits still preserve finite connected
- limits.
- The case of limits is clear, since limits commute with limits.
- The case of coproducts follows from connected limits commuting with coproducts
- in 
-\begin_inset Formula $\Set$
+Cocompleteness follows from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Remark 1.56"
+key "Adamek"
+literal "false"
+
+\end_inset
+
+, since 
+\begin_inset Formula $\C$
+\end_inset
+
+ is the category of models of a limit sketch, and is thus locally presentable,
+ by
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Proposition 1.51"
+key "Adamek"
+literal "false"
+
 \end_inset
 
 .
- The case of filtered colimits follows from finite limits commuting with
- filtered colimits in 
-\begin_inset Formula $\Set$
+ 
+\end_layout
+
+\begin_layout Long Proof
+For the claimed closure property, all we have to check is that limits, coproduct
+s, and filtered colimits of functors preserving finite connected limits
+ still preserve finite connected limits.
+ The case of limits is clear, since limits commute with limits.
+ The same argument applies for coproducts and filtered colimits: they commute
+ with finite connected limits 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Example 1.3.(vi)"
+key "classificationaccessible"
+literal "false"
+
 \end_inset
 
 .
@@ -5970,7 +6018,7 @@ name "assu:K-finite-connected"
 \end_inset
 
 
-\begin_inset Formula $K$
+\begin_inset Formula $K:\D\rightarrow\C$
 \end_inset
 
  preserves finite connected colimits.
@@ -6101,45 +6149,42 @@ noprefix "false"
 \begin_layout Long Proof
 
 \emph on
-(i)-(ii)
+(i)
 \emph default
- Because 
-\begin_inset Formula $K$
-\end_inset
-
- is fully faithful, an equivalent statement is that 
-\begin_inset Formula $\D$
-\end_inset
-
- is closed under finite connected colimits and 
-\begin_inset Formula $K$
-\end_inset
-
- preserves them.
- Now, we assumed that 
-\begin_inset Formula $\mathcal{A}$
+ We assume that 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
  has finite connected limits.
- Let us show that the Yoneda embedding preserves them.
- We have a natural isomorphism 
-\begin_inset Formula $[\mathcal{A},\Set](ya,JX)\simeq\mathcal{C}(Ka,X)$
+ Hence, its opposite category 
+\begin_inset Formula $\D=\op{{\cal A}}$
 \end_inset
 
-, where 
-\begin_inset Formula $y$
+ has finite connected colimits.
+\end_layout
+
+\begin_layout Long Proof
+
+\emph on
+(ii)
+\emph default
+ Let 
+\begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
- is the Yoneda embedding in 
-\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
-, and 
+ denote the Yoneda embedding and 
 \begin_inset Formula $J:\mathcal{C}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
- the canonical embedding.
- Now consider a finite connected limit 
+ denote the canonical embedding, so that 
+\begin_inset Formula 
+\begin{equation}
+y=J\circ K.\label{eq:def-y}
+\end{equation}
+
+\end_inset
+
+Now consider a finite connected limit 
 \begin_inset Formula $\lim F$
 \end_inset
 
@@ -6151,11 +6196,13 @@ noprefix "false"
  Then, 
 \begin_inset Formula 
 \begin{align*}
-\mathcal{C}(K\lim F,X) & \cong[\mathcal{A},\Set](y\lim F,JX)\\
+\mathcal{C}(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
+ & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By \prettyref{eq:def-y}}\\
  & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
- & \cong\lim(JX\circ F)\tag{By definition of \ensuremath{\mathcal{C}}}\\
+ & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
  & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
- & \cong\lim\mathcal{C}(KF-,X)\\
+ & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By \prettyref{eq:def-y}}\\
+ & \cong\lim\mathcal{C}(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
  & \cong\mathcal{C}(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
 \end{align*}
 
@@ -6177,7 +6224,16 @@ Thus,
 \begin_inset Formula $f:a\rightarrow b$
 \end_inset
 
- is epimorphic if and only if the following square is a pushout
+ is epimorphic if and only if the following square is a pushout 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Exercise III.4.4"
+key "MacLane:cwm"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -6255,12 +6311,25 @@ end{tikzcd}
 
 \begin_layout Standard
 We conclude by 
+\emph on
+(ii)
+\emph default
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "assu:K-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -6351,7 +6420,7 @@ noprefix "false"
 
 \end_inset
 
-), and representable functors being connected.
+), and representable functors being connected, by the Yoneda Lemma.
 \end_layout
 
 \begin_layout Remark
@@ -7143,8 +7212,26 @@ name "lem:finitary-restriction"
 \begin_inset Formula $F$
 \end_inset
 
- is finitary because filtered colimits commute with finite limits and colimits.
+ is finitary because filtered colimits commute with finite limits 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem IX.2.1"
+key "MacLane:cwm"
+literal "false"
+
+\end_inset
+
+ and colimits.
  It restricts as stated because finite connected limits commute with coproducts
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Example 1.3.(vi)"
+key "classificationaccessible"
+literal "false"
+
+\end_inset
+
  and limits.
 \end_layout
 
@@ -7199,6 +7286,18 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Proof
+By 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Reiterman"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -8519,21 +8618,23 @@ in particular, coproducts in
 .
 \end_layout
 
+\begin_layout Theorem
+\begin_inset Formula $\KlD^{*}$
+\end_inset
+
+ has coequalisers.
+\end_layout
+
 \begin_layout Standard
-The pattern unification algorithm can be thought of as a construction of
- coequalisers in 
+The pattern unification algorithm indeed provides a construction of coequalisers
+ in 
 \begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Theorem
-\begin_inset Formula $\KlD^{*}$
-\end_inset
-
- has coequalisers.
- 
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -8759,7 +8860,37 @@ literal "false"
 ).
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have already discussed the structural rules of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generalise"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -8772,7 +8903,11 @@ begin{full}
 
 \end_inset
 
- Let us explicitly state the involved lemma.
+ Let us explicitly state the categorical involved lemma for the rule 
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -8785,13 +8920,6 @@ status open
 \backslash
 cite{DBLP:books/daglib/0068768}]
 \end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:coeq-stepwise"
 
 \end_inset
 
@@ -8841,10 +8969,13 @@ status open
 
 \begin_layout Plain Layout
 
-% https://q.uiver.app/?q=WzAsOCxbMCwxLCJBXzEiXSxbMSwxLCJCIl0sWzIsMSwiQyJdLFszLDEsI
-kFfMiJdLFs0LDAsIkIiXSxbNSwxLCJDIl0sWzQsMiwiQiJdLFs2LDEsIkQiXSxbMCwxLCJmXzEiLDAse
-yJjdXJ2ZSI6LTF9XSxbMCwxLCJmXzEnIiwyLHsiY3VydmUiOjF9XSxbMSwyLCJ1Il0sWzMsNCwiZl8yI
-l0sWzQsNSwidSJdLFszLDYsImZfMiciLDJdLFs2LDUsInUiLDJdLFs1LDcsInYiXV0=
+% https://q.uiver.app/?q=WzAsOCxbMCwxLCJBXzEiXSxbMSwxLCJcXEdhbW1hIl0sWzIsMSwiXFxEZ
+Wx0YV8xIl0sWzMsMSwiQV8yIl0sWzQsMCwiXFxHYW1tYSJdLFs1LDEsIlxcRGVsdGFfMSJdLFs0LDIsI
+lxcR2FtbWEiXSxbNiwxLCJcXERlbHRhXzIiXSxbMCwxLCJ0XzEiLDAseyJjdXJ2ZSI6LTF9XSxbMCwxL
+CJ1XzEiLDIseyJjdXJ2ZSI6MX1dLFsxLDIsIlxcc2lnbWFfMSIsMCx7InN0eWxlIjp7ImJvZHkiOnsib
+mFtZSI6ImRhc2hlZCJ9fX1dLFszLDQsInRfMiJdLFs0LDUsIlxcc2lnbWFfMSJdLFszLDYsInVfMiIsM
+l0sWzYsNSwiXFxzaWdtYV8xIiwyXSxbNSw3LCJcXHNpZ21hXzIiLDAseyJzdHlsZSI6eyJib2R5Ijp7I
+m5hbWUiOiJkYXNoZWQifX19XV0=
 \end_layout
 
 \begin_layout Plain Layout
@@ -8858,7 +8989,9 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	&&&& B 
+	&&&& 
+\backslash
+Gamma 
 \backslash
 
 \backslash
@@ -8867,7 +9000,15 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	{A_1} & B & C & {A_2} && C & D 
+	{A_1} & 
+\backslash
+Gamma & {
+\backslash
+Delta_1} & {A_2} && {
+\backslash
+Delta_1} & {
+\backslash
+Delta_2} 
 \backslash
 
 \backslash
@@ -8876,63 +9017,73 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	&&&& B
-\end_layout
-
-\begin_layout Plain Layout
-
-	
+	&&&& 
 \backslash
-arrow["{f_1}", curve={height=-6pt}, from=2-1, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{f_1'}"', curve={height=6pt}, from=2-1, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["u", dashed, from=2-2, to=2-3]
+Gamma
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["{f_2}", from=2-4, to=1-5]
+arrow["{t_1}", curve={height=-6pt}, from=2-1, to=2-2]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["u", from=1-5, to=2-6]
+arrow["{u_1}"', curve={height=6pt}, from=2-1, to=2-2]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["{f_2'}"', from=2-4, to=3-5]
+arrow["{
+\backslash
+sigma_1}", dashed, from=2-2, to=2-3]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["u"', from=3-5, to=2-6]
+arrow["{t_2}", from=2-4, to=1-5]
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-arrow["v", dashed, from=2-6, to=2-7]
+arrow["{
+\backslash
+sigma_1}", from=1-5, to=2-6]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{u_2}"', from=2-4, to=3-5]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_1}"', from=3-5, to=2-6]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_2}", dashed, from=2-6, to=2-7]
 \end_layout
 
 \begin_layout Plain Layout
@@ -8952,9 +9103,21 @@ end{tikzcd}
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\xymatrix{A_{1}+A_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Preview
 
 \begin_layout Standard
@@ -8974,15 +9137,23 @@ SxbMSwyLCJ2XFxjaXJjIHUiXV0=
 \backslash
 [
 \backslash
-begin{tikzcd} 	{A_1+A_2} & B & D 	
+begin{tikzcd} 	{A_1+A_2} & 
 \backslash
-arrow["{f_1,f_2}", curve={height=-12pt}, from=1-1, to=1-2] 	
+Gamma & 
 \backslash
-arrow["{f_1',f_2'}"', curve={height=12pt}, from=1-1, to=1-2] 	
+Delta_2 	
 \backslash
-arrow["{v
+arrow["{t_1,t_2}"above, curve={height=-12pt}, from=1-1, to=1-2] 	
 \backslash
-circ u}", from=1-2, to=1-3, dashed] 
+arrow["{u_1,u_2}"', curve={height=12pt}, from=1-1, to=1-2] 	
+\backslash
+arrow["{
+\backslash
+sigma_2
+\backslash
+circ 
+\backslash
+sigma_1}", from=1-2, to=1-3, dashed] 
 \backslash
 end{tikzcd}
 \backslash
@@ -8999,7 +9170,12 @@ end{tikzcd}
 
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -9015,35 +9191,9 @@ end{full}
 
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
-We have already discussed the structural rules of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:intro-generalise"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- We now justify the other rules, dealing with a single term pair, in a metavaria
-ble context 
+We now justify the other rules, dealing with a single term pair, in a metavariab
+le context 
 \begin_inset Formula $\Gamma=\coprod_{j}Kb_{j}$
 \end_inset
 
@@ -9421,7 +9571,7 @@ In any category, denoting morphism composition
 , the following rule applies:
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\prune t{t'}{\sigma}v\dashv\Delta}{\Gamma\vdash t[in_{1}]=t'[in_{2}]\Rightarrow\sigma,v\dashv\Delta}
+\dfrac{\Gamma\prune t{t'}{\sigma}v\dashv\Delta}{\Gamma+B\vdash t[in_{1}]=t'[in_{2}]\Rightarrow\sigma,v\dashv\Delta}
 \]
 
 \end_inset
@@ -9480,19 +9630,23 @@ begin{array}{c}
 \backslash
 xymatrix{A
 \backslash
-ar[r]^{a}
+ar[r]^{t'}
 \backslash
-ar[d]_{b} & B
+ar[d]_{t} & B
 \backslash
 ar@{-->}[d]^{v}
 \backslash
 
 \backslash
-C
+
+\backslash
+Gamma
 \backslash
 ar@{-->}[r]_{
 \backslash
-sigma} & D}
+sigma} & 
+\backslash
+Delta}
 \backslash
 end{array}
 \end_layout
@@ -9528,7 +9682,9 @@ begin{tikzcd}[row sep=-4pt]
 
 \begin_layout Plain Layout
 
- & B 
+ & 
+\backslash
+Gamma 
 \backslash
 
 \backslash
@@ -9537,7 +9693,11 @@ begin{tikzcd}[row sep=-4pt]
 
 \begin_layout Plain Layout
 
- A && {B+C} & D 
+ A && {
+\backslash
+Gamma+B} & 
+\backslash
+Delta 
 \backslash
 
 \backslash
@@ -9546,21 +9706,21 @@ begin{tikzcd}[row sep=-4pt]
 
 \begin_layout Plain Layout
 
- & C
+ & B
 \end_layout
 
 \begin_layout Plain Layout
 
  
 \backslash
-arrow["a"above, curve={height=-6pt}, from=2-1, to=1-2]
+arrow["t'"above, curve={height=-6pt}, from=2-1, to=1-2]
 \end_layout
 
 \begin_layout Plain Layout
 
  
 \backslash
-arrow["b"below, curve={height=6pt}, from=2-1, to=3-2]
+arrow["t"below, curve={height=6pt}, from=2-1, to=3-2]
 \end_layout
 
 \begin_layout Plain Layout
@@ -9581,9 +9741,9 @@ arrow["{in_1}"above, curve={height=-6pt}, from=1-2, to=2-3]
 
  
 \backslash
-arrow["{v,
+arrow["{
 \backslash
-sigma}", dashed, from=2-3, to=2-4]
+sigma,v}", dashed, from=2-3, to=2-4]
 \end_layout
 
 \begin_layout Plain Layout
@@ -9645,6 +9805,10 @@ A\ar[ru]^{x}\ar[rd]_{y} &  & B+C\ar@{-->}[r]_{u,v} & D\\
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -9696,7 +9860,12 @@ status open
 
 \begin_layout Plain Layout
 
-}{
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -9709,18 +9878,7 @@ status open
 \begin_inset Formula $t'=u'$
 \end_inset
 
-, we 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-thus have the rule
+, we thus have the rule
 \begin_inset Formula 
 \begin{equation}
 \unificationoccurcheck\label{eq:flex-no-cycle-facto}
@@ -9752,7 +9910,17 @@ Let us make the factorisation assumption about
 .
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:facto-m"
+
+\end_inset
+
 There is a morphism 
 \begin_inset Formula $m_{\Gamma;b}:T(\Gamma,M:b)\rightarrow T\Gamma+1$
 \end_inset
@@ -9770,8 +9938,47 @@ T\Gamma\ar[rr]_{in_{1}} &  & T\Gamma+1
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:factor-occur-check"
+
+\end_inset
+
+There exsits 
+\begin_inset Formula $m_{\Gamma;b}:T(\Gamma,M:b)\rightarrow T\Gamma+1$
+\end_inset
+
+ such that a morphism 
+\begin_inset Formula $u:Ka\rightarrow T(\Gamma,M:b)$
+\end_inset
+
+ factors as 
+\begin_inset Formula $Ka\xrightarrow{u'}T\Gamma\hookrightarrow T(\Gamma,M:b)$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $m_{\Gamma;b}\circ u=in_{1}\circ u'$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Proof
-The proof consists in equipping 
+We construct 
+\begin_inset Formula $m$
+\end_inset
+
+ by 
+\emph on
+recursion
+\emph default
+, by equipping 
 \begin_inset Formula $T\Gamma+1$
 \end_inset
 
@@ -9793,6 +10000,97 @@ The proof consists in equipping
 \end_inset
 
 -algebra.
+ The desired property is proven by induction
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+shortfull{.}{
+\end_layout
+
+\end_inset
+
+ (see the induction lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:induction-TX"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ introduced later).
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Therefore, we can rephrase
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:flex-no-cycle-facto"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ as the rule 
+\begin_inset Formula $\refrule{U-NoCycle}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, using the following notation.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\unificationoccurcheckeffective
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Notation
@@ -9836,84 +10134,6 @@ Given
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:factor-occur-check"
-
-\end_inset
-
-A morphism 
-\begin_inset Formula $u:Ka\rightarrow T(\Gamma,M:b)$
-\end_inset
-
- factors as 
-\begin_inset Formula $Ka\xrightarrow{u'}T\Gamma\hookrightarrow T(\Gamma,M:b)$
-\end_inset
-
- if and only if 
-\begin_inset Formula $u_{|\Gamma}=\underline{u'}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Therefore, we can rephrase
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:flex-no-cycle-facto"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- as the rule 
-\begin_inset Formula $\refrule{U-NoCycle}$
-\end_inset
-
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\unificationoccurcheckeffective
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -10395,7 +10615,7 @@ status open
  Then, 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "cor:factor-occur-check"
+reference "lem:factor-occur-check"
 plural "false"
 caps "true"
 noprefix "false"
@@ -10793,10 +11013,290 @@ begin{full}
 
 \begin_layout Lemma
 In other words, if the first two diagrams below are pushouts, then the last
- one as well
+ one as well.
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+	A & {A'} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Gamma & {
+\backslash
+Delta_1}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{t_1}"', from=1-1, to=2-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{f_1}", from=1-1, to=1-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_1}"', dashed, from=2-1, to=2-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{u_1}", dashed, from=1-2, to=2-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+quad
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+	B & {B'} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Gamma 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\backslash
+Delta_1} & {
+\backslash
+Delta_2}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{t_2}"', from=1-1, to=2-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{f_2}", from=1-1, to=1-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_1}"', from=2-1, to=3-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{u_2}", dashed, from=1-2, to=3-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_2}"', dashed, from=3-1, to=3-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+quad
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+	{A+B} && {A'+B'} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Gamma && {
+\backslash
+Delta_2}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{t_1,t_2}"', from=1-1, to=2-1]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{f_1+f_2}", from=1-1, to=1-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_2
+\backslash
+circ u_1, u_2}", dashed, from=1-3, to=2-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_2
+\backslash
+circ 
+\backslash
+sigma_1}"', dashed, from=2-1, to=2-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Preview
 
 \begin_layout Standard
@@ -10825,7 +11325,11 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	A & {A'} & B & {B'} 
+	A & {B} & 
+\backslash
+Gamma & {
+\backslash
+Delta_1} 
 \backslash
 
 \backslash
@@ -10850,7 +11354,7 @@ begin{tikzcd}
 
 	
 \backslash
-arrow["g_1"', from=1-1, to=2-1]
+arrow["t_1"', from=1-1, to=2-1]
 \end_layout
 
 \begin_layout Plain Layout
@@ -10880,7 +11384,7 @@ arrow["u_1", dashed, from=1-2, to=2-2]
 
 	
 \backslash
-arrow["{g_2}"', from=1-3, to=2-3]
+arrow["{t_2}"', from=1-3, to=2-3]
 \end_layout
 
 \begin_layout Plain Layout
@@ -10962,7 +11466,7 @@ begin{tikzcd}
 
 	
 \backslash
-arrow["{[g_1,g_2]}"', from=1-1, to=2-1]
+arrow["{t_1,t_2}"', from=1-1, to=2-1]
 \end_layout
 
 \begin_layout Plain Layout
@@ -10976,11 +11480,11 @@ arrow["{f_1+f_2}", from=1-1, to=1-3]
 
 	
 \backslash
-arrow["{[
+arrow["{
 \backslash
 sigma_2
 \backslash
-circ u_1, u_2]}", dashed, from=1-3, to=2-3]
+circ u_1, u_2}", dashed, from=1-3, to=2-3]
 \end_layout
 
 \begin_layout Plain Layout
@@ -11008,6 +11512,11 @@ end{tikzcd}
 
 \backslash
 ]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -11381,7 +11890,7 @@ noprefix "false"
 
 .
  This actually induces an isomorphism between the two categories of cocones.
- We therefore get the rules
+ We therefore have the following rules.
 \begin_inset Formula 
 \[
 \pruningrig\quad\pruningrigfail
@@ -12106,7 +12615,7 @@ noprefix "false"
 \begin_inset Formula $T\Gamma\rightarrow\mathbb{N}$
 \end_inset
 
- is defined as the universal 
+ is the universal 
 \begin_inset Formula $F$
 \end_inset
 
@@ -12179,6 +12688,12 @@ The lemmas below are easy consequences of the following standard induction
 \end_layout
 
 \begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:induction-TX"
+
+\end_inset
+
 Assume given, for each object 
 \begin_inset Formula $a$
 \end_inset
@@ -12255,12 +12770,17 @@ Then,
 \end_layout
 
 \begin_layout Proof
-Now, consider the functor 
-\begin_inset Formula $X:|{\cal A}|\rightarrow\Set$
+Consider the functor 
+\begin_inset Formula $X:{\cal A}\rightarrow\Set$
 \end_inset
 
  defined by 
-\begin_inset Formula $X_{a}=\{t\in Ka\rightarrow T\Gamma_{a}|\forall f:b\rightarrow a,P_{a}(t\circ Kf)\}$
+\begin_inset Formula $X_{a}=\{t\in Ka\rightarrow T\Gamma|\forall f:b\rightarrow a,P_{a}(t\circ Kf)\}$
+\end_inset
+
+.
+ By the Yoneda lemma, there is an injective projection 
+\begin_inset Formula $X\rightarrow T\Gamma$
 \end_inset
 
 .
@@ -12272,16 +12792,11 @@ Now, consider the functor
 \begin_inset Formula $F$
 \end_inset
 
- algebra on 
+-algebra on 
 \begin_inset Formula $\Gamma$
 \end_inset
 
-, the projection morphism 
-\begin_inset Formula $X\rightarrow T\Gamma$
-\end_inset
-
- given by the Yoneda lemma has a section, and is thus an isomorphism (as
- it is both surjective and injective).
+, this projection has a section, and is thus an isomorphism.
 \end_layout
 
 \begin_layout Standard
