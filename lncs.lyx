@@ -7,6 +7,7 @@
 \textclass llncs
 \begin_preamble
 \usepackage{tikz-cd}
+\usepackage{adjustbox}
 \usepackage{quiver}
 \newcommand{\Ker}{\mathrm{Ker}}
 \usepackage{fullshort}
@@ -48,6 +49,106 @@
 \newref{nota}{refcmd={Notation~\ref{#1}}}
 \newref{tab}{refcmd={Table~\ref{#1}}}
 \newref{subsec}{refcmd={Section~\S\ref{#1}}}
+
+%%%
+%% from the paper quantum lambda
+\usepackage{proof}
+
+\newcommand{\ass}{:=}
+\newcommand{\abs}[1]{|#1|}              
+\newcommand{\homof}[2]{#1(#2)}          
+\newcommand{\seq}{\subseteq}    
+\newcommand{\such}{\,\,|\,\,}           
+\newcommand{\pc}{\mathbin{;}}           
+\newcommand{\id}{{\textrm{\rm id}}}     
+\newcommand{\N}{\mathbb{N}}                     
+\newcommand{\categ}[1]{\textrm{\bf #1}} 
+\newcommand{\FV}{{\rm FV}}                      
+\newcommand{\bang}{{!}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\bor}{\ \ \rule[-.75ex]{.01in}{2.75ex}\ \ }  
+%\newcommand{\C}{\mathbb{C}}                     
+\newcommand{\Rp}{{\mathbb{R}^+}}                     
+\newcommand{\sqleq}{\sqsubseteq}
+\newcommand{\sqgeq}{\sqsupseteq}
+\newcommand{\bit}{{\bf bit}}
+\newcommand{\qubit}{{\bf qubit}}
+\newcommand{\xmatrix}[4]{{\renewcommand{\arraystretch}{#1}%
+\arraycolsep=#2ex\left(\begin{array}{#3}#4\end{array}\right)}}
+\newcommand{\zmatrix}{\xmatrix{0.8}{0.8}}
+\newcommand{\zzmatrix}[2]{{\textrm{\scriptsize$\zmatrix{#1}{#2}$}}}
+\newcommand{\CPM}{\textrm{\bf CPM}}
+\newcommand{\CPMs}{\textrm{\bf CPM}_s}
+\newcommand{\inv}{^{-1}}
+\newcommand{\freecat}[1][C]{\ensuremath{\categ{#1}^{\oplus}}}  
+\newcommand{\cpms}{\categ{CPMs}} 
+\newcommand{\ccpms}{\ensuremath{\overline{\categ{CPMs}}}} 
+\newcommand{\M}{{\cal M}}
+\newcommand{\supp}[1]{\vert #1\vert}   
+\newcommand{\eq}[2][]{\mathop{eq^{#2}_{#1}}\nolimits} 
+\newcommand*{\mystackrel}[2]{%
+\stackrel{\raise-2pt\hbox{$\scriptstyle\!#1$}}{#2}}
+\newcommand*{\redto}[1][]{\mystackrel{#1}{\rightarrow}}
+\newcommand*{\xredto}[1][]{%
+\xrightarrow{\raisebox{-2pt}{$\scriptstyle\!{#1}$}}}
+\newcommand{\qfin}[1]{\mathfrak{#1}} 
+\newcommand{\web}[1]{\vert{#1}\vert} 
+\newcommand{\swap}[1][]{\sigma_{#1}} 
+\newcommand{\proj}[1]{\pi^{#1}} 
+\newcommand{\inj}[1]{\iota^{#1}} 
+\newcommand{\unit}{\mathbf{1}} 
+\newcommand{\Cl}{\mathrm{Cl}} 
+\newcommand{\Val}{\mathrm{Val}} 
+\newcommand{\apprv}{\mathrel{\triangleleft}} 
+\newcommand{\contr}{\mathtt{c}} 
+\newcommand{\der}{\mathtt{d}} 
+\newcommand{\weak}{\mathtt{w}} 
+\newcommand{\dig}{\mathtt{dig}} 
+\newcommand{\bierman}{\mathtt{m}} 
+\newcommand{\cmatrix}[1]{\Lambda(#1)} 
+\newcommand{\injl}[2][]{{\mathtt{in}_\ell^{#1}}~{#2}} 
+\newcommand{\injr}[2][]{{\mathtt{in}}_r^{#1}~{#2}} 
+\newcommand{\fprod}[2]{\langle #1\rangle_{#2}}
+\newcommand{\fcoprod}[2]{[#1]_{#2}}
+\newcommand{\pdistr}{{\mathtt{distr}}} 
+\newcommand{\symgroup}{S}	
+\newcommand{\Lowner}{L\"owner}
+\newcommand{\tr}{\mathop{\mathrm{\rm tr}}\nolimits}
+\newcommand{\cs}{c}
+\newcommand{\down}{{\downarrow}}
+\newcommand{\define}[1]{{\em #1}}
+\newcommand{\punit}{\mathtt{skip}}
+\newcommand{\tensterm}[2]{{{#1}\tensor{#2}}}
+\newcommand{\lettensterm}[4]{{\mathtt{let}~{#1}%
+\tensor{#2}~=~{#3}~\mathtt{in}~{#4}}}
+\newcommand{\letunitterm}[2]{{#1}\mathtt{;}{#2}}
+\newcommand{\ttrue}{\mathtt{tt}}
+\newcommand{\ffalse}{\mathtt{ff}}
+\newcommand{\iftermx}[3]{{{\mathtt{if}}~{#1}~\mathtt{then}~{#2}~%
+\mathtt{else}~{#3}}}
+\newcommand{\match}[5]{{{\mathtt{match}}~{#1}~{\mathtt{with}}%
+~({#2:#3}\mid{#4:#5})}}
+\newcommand{\letrec}[4]{{{\mathtt{letrec}}~{#1}\,{#2}={#3}~{\mathtt{in}}~{#4}}}
+\newcommand{\letrecn}[5]{{{\mathtt{letrec}}^{#1}~{#2}%
+\,{#3}={#4}~{\mathtt{in}}~{#5}}}
+\newcommand{\nil}{{\mathtt{nil}}}
+\newcommand{\cons}[3][]{{{#2}\,{\mathtt :}{\mathtt :}^{#1}\,{#3}}}
+\newcommand{\splitlist}[1][]{{\mathtt{split}^{#1}}}
+\newcommand{\meas}{{\mathtt{meas}}}
+\newcommand{\new}{{\mathtt{new}}}
+\newcommand{\loli}{\multimap}
+\newcommand{\tlist}[1]{{{#1}^\ell}}
+\newcommand{\sumtype}{\oplus}
+\newcommand{\tunit}{{1}}
+\newcommand{\arity}[1]{d^{#1}} 
+\newcommand{\symm}[1]{G^{#1}} 
+\newcommand{\entail}{\vdash}
+\newcommand{\am}[1]{{[}{#1}{]}}
+\newcommand{\qarray}{q} 
+\newcommand{\qlist}{\ell} 
+\newcommand{\ket}[1]{{|{#1}\rangle}}
+\newcommand{\dual}[1]{{#1}^{\perp}} 
+\newcommand{\denot}[1]{{\llbracket #1 \rrbracket}}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -8174,7 +8275,19 @@ noprefix "false"
 \end_inset
 
 .
- 
+ In the case of quantum 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, 
+\begin_inset Formula $\bang\Delta$
+\end_inset
+
+ consists of non linear types, whereas 
+\begin_inset Formula $\Gamma,\Delta$
+\end_inset
+
+ consist of linear types only.
 \end_layout
 
 \begin_layout Standard
@@ -8219,7 +8332,7 @@ Metavariable arity
 \begin_inset Text
 
 \begin_layout Plain Layout
-Operations (examples)
+Operations (example)
 \end_layout
 
 \end_inset
@@ -8255,7 +8368,7 @@ Pure
 \begin_inset Text
 
 \begin_layout Plain Layout
-See introduction.
+See the introduction.
 \end_layout
 
 \end_inset
@@ -8263,6 +8376,74 @@ See introduction.
 </row>
 <row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simply-typed
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\underbrace{\tau_{1},\dots,\tau_{n}\vdash\tau_{o}}_{\text{simple types}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\Gamma\vdash t:\tau_{1}\Rightarrow\tau_{2}\qquad\Gamma\vdash u:\tau_{1}}{\Gamma\vdash t\ u:\tau_{2}}\vphantom{\dfrac{\dfrac{}{}}{}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8275,50 +8456,11 @@ Quantum
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $n\in\mathbb{N}$
-\end_inset
-
- 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{p\vdash t\quad q\vdash u}{p+q\vdash t\ u}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\underbrace{\tau_{1},\dots,\tau_{n}\vdash\tau_{o}}_{\text{simple types}}$
+\begin_inset Formula $\tau_{1},\dots,\tau_{n}\vdash\tau_{o}$
 \end_inset
 
 
@@ -8330,7 +8472,75 @@ Simply-typed
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{\Gamma\vdash t:\tau_{1}\Rightarrow\tau_{2}\qquad\Gamma\vdash u:\tau_{1}}{\Gamma\vdash t\ u:\tau_{2}}\vphantom{\dfrac{\dfrac{}{}}{}}$
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer{
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail MN:B}{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:A
+\backslash
+loli B   &   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma
+\backslash
+entail N:A } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{}}$
 \end_inset
 
 
@@ -8359,17 +8569,17 @@ status open
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="3">
+<lyxtabular version="3" rows="2" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8378,7 +8588,7 @@ Intrinsic system F
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8390,7 +8600,7 @@ Intrinsic system F
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8428,6 +8638,45 @@ Intrinsic system F
 </row>
 </lyxtabular>
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Quantum 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{p\vdash t\quad q\vdash u}{p+q\vdash t\ u}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -13757,13 +14006,11 @@ name "sec:applications"
 
 \end_inset
 
-In the following examples, we always motivate the definition of the category
- 
+In the examples, we motivate the definition of the category 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- based on what we expect from metavariables arities and their substitution,
- following 
+ based on what we expect from metavariable arities, following 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "rem:ar-A"
@@ -13841,7 +14088,11 @@ literal "false"
 \end_inset
 
 ).
- Let 
+ 
+\end_layout
+
+\begin_layout Standard
+Let 
 \begin_inset Formula $T$
 \end_inset
 
@@ -13935,7 +14186,7 @@ literal "false"
 \begin_inset Formula $\Gamma$
 \end_inset
 
-, for each construction of the syntax.
+.
 \end_layout
 
 \begin_layout Standard
@@ -14039,7 +14290,11 @@ Application
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\coprod_{\tau_{1}}X_{\Gamma\vdash\tau_{1}\Rightarrow\tau}\times X_{\Gamma\vdash\tau_{1}}$
+\begin_inset Formula $X_{\Gamma\vdash\tau_{1}\Rightarrow\tau_{2}}\times X_{\Gamma\vdash\tau_{2}}$
+\end_inset
+
+
+\begin_inset Formula $\text{ if \ensuremath{\tau=\tau_{2}}}$
 \end_inset
 
 
@@ -14078,7 +14333,7 @@ Abstraction
 \end_inset
 
 
-\begin_inset Formula $\text{ if \ensuremath{\tau=\tau_{1}\Rightarrow\tau_{2}}}$
+\begin_inset Formula $\text{ if \ensuremath{\tau=(\tau_{1}\Rightarrow\tau_{2})}}$
 \end_inset
 
 
@@ -14108,11 +14363,27 @@ Let us denote by
 \begin_inset Formula $F(X)$
 \end_inset
 
- as the coproduct of each row of the last column in the following table
+ as the coproduct of each row of the last column in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:endo-simplytyped-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
  satisfies those expectations.
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="4" columns="3">
@@ -14178,7 +14449,7 @@ Variable
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\coprod_{\tau}y(\tau\vdash\tau)$
+\begin_inset Formula ${\displaystyle \coprod_{\tau}}y(\tau\vdash\tau)$
 \end_inset
 
 
@@ -14213,7 +14484,7 @@ Application
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\coprod_{\tau_{1}}X_{\underline{\Gamma}\vdash\tau_{1}\Rightarrow\underline{\tau}}\times X_{\underline{\Gamma}\vdash\tau_{1}}$
+\begin_inset Formula ${\displaystyle \coprod_{\tau_{1},\tau_{2}}}X_{\underline{\Gamma}\vdash\tau_{1}\Rightarrow\tau_{2}}\times X_{\underline{\Gamma}\vdash\tau_{1}}\times y(\cdot\vdash\tau_{2})$
 \end_inset
 
 
@@ -14248,7 +14519,7 @@ Abstraction
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\coprod_{\tau_{1},\tau_{2}}X_{\underline{\Gamma},\tau_{1}\vdash\tau_{2}}\times y(\cdot\vdash\tau_{1}\Rightarrow\tau_{2})$
+\begin_inset Formula ${\displaystyle \coprod_{\tau_{1},\tau_{2}}}X_{\underline{\Gamma},\tau_{1}\vdash\tau_{2}}\times y(\cdot\vdash\tau_{1}\Rightarrow\tau_{2})$
 \end_inset
 
 
@@ -14264,8 +14535,36 @@ Abstraction
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Endofunctor for the syntax of simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:endo-simplytyped-lc"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-This definition can be adapted to fit into the scheme of 
+This definition can be adapted to fit the scheme of 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:endo-syntax"
@@ -14275,11 +14574,15 @@ noprefix "false"
 
 \end_inset
 
- by having in 
+, by having in 
 \begin_inset Formula $O$
 \end_inset
 
- one label 
+:
+\end_layout
+
+\begin_layout Itemize
+one label 
 \begin_inset Formula $v_{\tau}$
 \end_inset
 
@@ -14287,15 +14590,23 @@ noprefix "false"
 \begin_inset Formula $\tau$
 \end_inset
 
-, accounting for variables, one label 
-\begin_inset Formula $a_{\tau}$
+, accounting for variables;
+\end_layout
+
+\begin_layout Itemize
+one label 
+\begin_inset Formula $a_{\tau_{1},\tau_{2}}$
 \end_inset
 
- for each 
-\begin_inset Formula $\tau$
+ for each pair of simple types 
+\begin_inset Formula $(\tau_{1},\tau_{2})$
 \end_inset
 
-, accounting for application, and one label 
+, accounting for application;
+\end_layout
+
+\begin_layout Itemize
+one label 
 \begin_inset Formula $l_{\tau_{1},\tau_{2}}$
 \end_inset
 
@@ -14303,7 +14614,11 @@ noprefix "false"
 \begin_inset Formula $(\tau_{1},\tau_{2})$
 \end_inset
 
-, accounting for applications.
+, accounting for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction.
  
 \end_layout
 
@@ -14425,7 +14740,11 @@ Application
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $S_{a_{\tau}}=1$
+\begin_inset Formula $S_{a_{\tau_{1},\tau_{2}}}=y(\cdot\vdash\tau_{2})$
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -14437,7 +14756,7 @@ Application
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $J_{a_{\tau}}=2$
+\begin_inset Formula $J_{a_{\tau_{1},\tau_{2}}}=2$
 \end_inset
 
 
@@ -14450,8 +14769,8 @@ Application
 
 \begin_layout Plain Layout
 \begin_inset Formula $\begin{array}{l}
-L_{a_{\tau},1}=\underline{\Gamma}\vdash\tau\Rightarrow\underline{\tau}\\
-L_{a_{\tau},2}=\underline{\Gamma}\vdash\tau
+L_{a_{\tau_{1},\tau_{2}},1}=\underline{\Gamma}\vdash\tau_{1}\Rightarrow\tau_{2}\\
+L_{a_{\tau_{1},\tau_{2}},2}=\underline{\Gamma}\vdash\tau_{1}
 \end{array}$
 \end_inset
 
@@ -14519,14 +14838,43 @@ Abstraction
 
 \end_layout
 
+\begin_layout Remark
+The coproducts in the last column of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:endo-simplytyped-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ are inferred in a systematic way.
+ They could be more economical (thus reducing the set 
+\begin_inset Formula $O$
+\end_inset
+
+ of labels) when the type of the conclusion of the typing rule is undeterminate,
+ as for variable and application.
+ For example, the variable case 
+\begin_inset Formula $\coprod_{\tau}y(\tau\vdash\tau)$
+\end_inset
+
+ could be replaced with 
+\begin_inset Formula $y(\underline{\tau}\vdash\underline{\tau})$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 Arguments as sets
 \end_layout
 
 \begin_layout Standard
-If we think of the arguments of the metavariable as specifying the available
- variables, then it makes sense to gather them in a set rather than in a
- list.
+If we think of the arguments of a metavariable as specifying the available
+ variables, then it makes sense to assemble them in a set rather than in
+ a list.
  This motivates considering the category 
 \begin_inset Formula ${\cal A}=\mathbb{I}$
 \end_inset
@@ -14579,7 +14927,7 @@ noprefix "false"
 \begin_inset Formula $\refrule{P-Flex}$
 \end_inset
 
-) both amount to computing a set intersection.
+) amount to computing a set intersection.
 \end_layout
 
 \begin_layout Subsection
@@ -14591,7 +14939,7 @@ In this example, we describe pure
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus extended with metavariable whose arities are sets of free variables.
+-calculus extended with metavariables whose arities are sets of free variables.
  They do not take any explicit argument and they cannot be applied to bound
  variables.
  
@@ -14625,7 +14973,7 @@ We adopt a locally nameless approach, with two kinds of variables: the named
 \end_inset
 
  and inclusions (not injections!) between them.
- Note that pure 
+ Pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -14645,15 +14993,20 @@ A metavariable arity, as an object of
 \begin_inset Formula ${\cal A}$
 \end_inset
 
-, consists of two components: the first one is a finite set of named variables,
- and the second one specifies a number of arguments among unnamed variables.
- We say that an arity is pure if the second component 
+, consists of two components: a finite set of named variables, and a number
+ of arguments among unnamed variables.
+ Let us define pure arities as those whose second component is 
 \begin_inset Formula $0$
 \end_inset
 
-, and a metavariable is said pure if its arity is.
- The pure metavariables are the ones mentioned at the beginning of this
- section.
+.
+ A metavariable is said pure if its arity is, and a metavariable context
+ is said pure if each metavariable is.
+ 
+\end_layout
+
+\begin_layout Standard
+The pure metavariables are the ones mentioned at the beginning of this section.
  Unifying a pure metavariable with itself, as in the rule 
 \begin_inset Formula $\refrule{U-FlexFlex}$
 \end_inset
@@ -14665,8 +15018,8 @@ A metavariable arity, as an object of
 
 ) produces a new pure metavariable whose arity is the intersection of the
  input metavariable arities.
- Exploiting this observation, an easy induction is enough to show that the
- most general unifier targets a pure metavariable context.
+ Exploiting this observation, an easy induction shows that the most general
+ unifier targets a pure metavariable context.
 \end_layout
 
 \begin_layout Lemma
@@ -14689,19 +15042,19 @@ noprefix "false"
 \begin_inset Formula $\Gamma\prune t{\coprod_{i}{\cal L}f_{i}}{\sigma}u\dashv\Delta$
 \end_inset
 
+, and 
+\begin_inset Formula $\Delta\neq\bot$
+\end_inset
+
 , then 
 \begin_inset Formula $\Delta$
 \end_inset
 
- is a coproduct of pure arities whenever 
+ is pure whenever 
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is, and 
-\begin_inset Formula $\Delta\neq\bot$
-\end_inset
-
-.
+ is.
 \end_layout
 
 \begin_layout Standard
@@ -14889,11 +15242,12 @@ Quantum
 \end_layout
 
 \begin_layout Standard
-In this section we explain how the quantum 
+In this section we explain how we can define pattern unification for quantum
+ 
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus of
+-calculus
 \begin_inset ERT
 status open
 
@@ -14912,7 +15266,7 @@ literal "false"
 
 \end_inset
 
- fits into our setting.
+.
  We denote by 
 \begin_inset Formula $S$
 \end_inset
@@ -14929,12 +15283,17 @@ where
 \begin_inset Formula $A^{\ell}$
 \end_inset
 
- is intuitively the type of finite lists of type 
+ is intuitively the type of finite lists of elements of type 
 \begin_inset Formula $A$
 \end_inset
 
 .
- We denote by 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We denote by 
 \begin_inset Formula $!S$
 \end_inset
 
@@ -14956,22 +15315,4257 @@ where
 \end_inset
 
 .
+ We denote by 
+\begin_inset Formula $\boldsymbol{S}$
+\end_inset
+
+ the set of linear types.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-A metavariable could have linear arguments, and non linear ones.
- Therefore, we take 
+We consider metavariable arities of the shape 
+\begin_inset Formula $\Delta\vdash A$
+\end_inset
+
+, where 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is the multiset of the argument types, and 
+\begin_inset Formula $A$
+\end_inset
+
+ is the output type of the metavariable.
+ We denote by 
+\begin_inset Formula $!\Delta$
+\end_inset
+
+ the non linear part of 
+\begin_inset Formula $\Delta$
+\end_inset
+
+, i.e., its sub-multiset consisting of its non-linear types, that is, types
+ of the shape 
+\begin_inset Formula $!A$
+\end_inset
+
+.
+ We denote by 
+\begin_inset Formula $\boldsymbol{\Delta}$
+\end_inset
+
+ the linear part of 
+\begin_inset Formula $\Delta$
+\end_inset
+
+.
+ Substituting a metavariable of arity 
+\begin_inset Formula $\Delta_{1}\vdash A_{1}$
+\end_inset
+
+ with a metavariable of arity 
+\begin_inset Formula $\Delta_{2}\vdash A_{2}$
+\end_inset
+
+ requires that 
+\begin_inset Formula $A_{1}=A_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\boldsymbol{\Delta_{1}}=\boldsymbol{\Delta_{2}}$
+\end_inset
+
+, and an injective renaming 
+\begin_inset Formula $\bang\Delta_{1}\hookrightarrow\bang\Delta_{2}$
+\end_inset
+
+.
+ Therefore, we choose 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- to be 
-\begin_inset Formula $\mathbb{F}_{m}[A$
+ to be the category whose objects are metavariable arities 
+\begin_inset Formula $\Delta\vdash A$
+\end_inset
+
+ and the set of morphisms between 
+\begin_inset Formula $\Delta_{1}\vdash A_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta_{2}\vdash A_{2}$
+\end_inset
+
+ is empty if 
+\begin_inset Formula $A_{1}\neq A_{2}$
+\end_inset
+
+ or 
+\begin_inset Formula $\boldsymbol{\Delta_{1}}\neq\boldsymbol{\Delta_{2}}$
+\end_inset
+
+, or is the set of injective renamings between 
+\begin_inset Formula $!\Delta_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\bang\Delta_{2}$
+\end_inset
+
+ otherwise.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+A metavariable could have linear arguments, and non linear ones.
+ We therefore consider metavariable arities 
+\begin_inset Formula $\Gamma;!\Delta\vdash A$
+\end_inset
+
+, where 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is a finite multi-set of linear types, 
+\begin_inset Formula $!\Delta$
+\end_inset
+
+ is a multi-set of non linear types, and 
+\begin_inset Formula $A$
+\end_inset
+
+ is the output type of the metavariable.
+ Substituting a metavariable of arity 
+\begin_inset Formula $\Gamma_{1};!\Delta_{1}\vdash A_{1}$
+\end_inset
+
+ with a metavariable of arity 
+\begin_inset Formula $\Gamma_{2};!\Delta_{2}\vdash A_{2}$
+\end_inset
+
+ requires that 
+\begin_inset Formula $\Gamma_{1}=\Gamma_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $A_{1}=A_{2}$
+\end_inset
+
+, and an injective renaming 
+\begin_inset Formula $!\Delta_{1}\hookrightarrow!\Delta_{2}$
+\end_inset
+
+.
+ Therefore, we choose 
+\begin_inset Formula ${\cal A}=\bang S\times\mathbb{R}[\underline{S}]\times S$
+\end_inset
+
+, where 
+\begin_inset Formula $\mathbb{R}[\underline{S}]$
+\end_inset
+
+ is the category of multisets in 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ and injective renamings between them.
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
+The rest of this section is devoted to listing the (coproduct) components
+ of the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ specifying the syntax of quantum 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, listed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:quantum-endo"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ A type 
+\begin_inset Formula $\boldsymbol{A}$
+\end_inset
+
+ in bold face is implicitly assumed to be linear; a multiset 
+\begin_inset Formula $\boldsymbol{\Gamma}$
+\end_inset
+
+ in bold face is implicitly assumed to consist of linear types ony.
+ A context 
+\begin_inset Formula $!\Delta$
+\end_inset
+
+ in the typing rules consists of non linear types only.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We start with the term constants 
+\begin_inset Formula $\punit,{\tt split}^{A},\ensuremath{}\meas,\new,U$
+\end_inset
+
+, that all have typing rules of the following shape
+\begin_inset Formula 
+\[
+\dfrac{c\in\{\punit,{\tt split}^{A},\ensuremath{}\meas,\new,U\}}{!\Delta\vdash c:A_{c}\multimap B_{c}}
+\]
+
+\end_inset
+
+Here, the context 
+\begin_inset Formula $!\Delta$
+\end_inset
+
+ consists only of non linear types.
+ We take
+\begin_inset Formula 
+\[
+F(X)=\dots+{\displaystyle \coprod_{c}}y(\emptyset\vdash A_{c}\multimap B_{c})
+\]
+
+\end_inset
+
+Indeed, evaluating 
+\begin_inset Formula $y(\emptyset\vdash A)$
+\end_inset
+
+ at 
+\begin_inset Formula $\Delta\vdash\tau$
+\end_inset
+
+ is non-empty and a singleton set (accounting for the constant 
+\begin_inset Formula $c$
+\end_inset
+
+) precisely when 
+\begin_inset Formula $A=\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{\Delta}=\emptyset$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, we introduce the linear variable case
+\begin_inset Formula 
+\[
+\infer[ax]{\bang{\Delta},x:A\entail x:A}{\text{\ensuremath{A} linear}}
+\]
+
+\end_inset
+
+Denoting linear types with a bold face, we take
+\begin_inset Formula 
+\[
+F(X)=\dots+{\displaystyle \coprod_{\boldsymbol{A}}y(\boldsymbol{A}\vdash\boldsymbol{A})}
+\]
+
+\end_inset
+
+Indeed, 
+\begin_inset Formula $y(\boldsymbol{A}\vdash\boldsymbol{A})$
+\end_inset
+
+ evaluated at 
+\begin_inset Formula $\Delta\vdash\tau$
+\end_inset
+
+ is a singleton set (accounting for the variable 
+\begin_inset Formula $x$
+\end_inset
+
+) and non empty precisely when 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is of the shape 
+\begin_inset Formula $!\Delta,x:\boldsymbol{A}$
+\end_inset
+
+, and 
+\begin_inset Formula $\tau=\boldsymbol{A}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Let us handle the non linear variable case.
+\begin_inset Formula 
+\[
+\infer[axd]{\bang{\Delta},x:\bang(A\loli B)\entail x:A\loli B}{}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We take 
+\begin_inset Formula 
+\[
+F(X)=\dots+{\displaystyle \coprod_{A,B}y(!(A\multimap B)\vdash A\multimap B)}
+\]
+
+\end_inset
+
+Indeed, 
+\begin_inset Formula $y(!(A\multimap B)\vdash A\multimap B)$
+\end_inset
+
+ evaluated at 
+\begin_inset Formula $\Delta\vdash\tau$
+\end_inset
+
+ is the number (as a cardinal set) of occurences of 
+\begin_inset Formula $!(A\multimap B)$
+\end_inset
+
+ in 
+\begin_inset Formula $\Delta$
+\end_inset
+
+, whenever 
+\begin_inset Formula $\tau=A\multimap B$
+\end_inset
+
+ (otherwise, it is the empty set).
+\end_layout
+
+\begin_layout Standard
+Let us now handle the 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction rule.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\infer[\loli_{I}]{\Delta\entail\lambda x^{A}.M:A\loli B}{\Delta,x:A\entail M:B}
+\]
+
+\end_inset
+
+Denoting linear contexts with a bold face, we take 
+\begin_inset Formula 
+\[
+F(X)=\dots+{\displaystyle \coprod_{\boldsymbol{\Gamma},A,B}}X_{\underline{\Delta},A\vdash B}\times y(\boldsymbol{\Gamma}\vdash A\multimap B)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\underline{\Delta},A\vdash B$
+\end_inset
+
+ denotes the endofunctor on 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ mapping 
+\begin_inset Formula $\Delta'\vdash A'$
+\end_inset
+
+ to 
+\begin_inset Formula $\Delta',A\vdash B$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $y(\boldsymbol{\Gamma}\vdash A\multimap B)$
+\end_inset
+
+ evaluated at 
+\begin_inset Formula $\Delta\vdash\tau$
+\end_inset
+
+ is non-empty only when 
+\begin_inset Formula $\boldsymbol{\Delta}=\boldsymbol{\Gamma}$
+\end_inset
+
+ and 
+\begin_inset Formula $\tau=A\multimap B$
+\end_inset
+
+, in which case it is a singleton set.
+ This is why we have to quantify over 
+\begin_inset Formula $\boldsymbol{\Gamma}$
+\end_inset
+
+, so that it works for any 
+\begin_inset Formula $\Delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us now discuss promotion for values.
+\begin_inset Formula 
+\[
+\infer[p]{\bang\Delta\entail V:\bang{(A\loli B)}}{\bang\Delta\entail V:A\loli B}
+\]
+
+\end_inset
+
+This typing rule can be split as in the following table, depending on what
+ 
+\begin_inset Formula $V$
+\end_inset
+
+ is: a variable, a 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, or a term constant 
+\begin_inset Formula $c\in\{\punit,{\tt split}^{A},\ensuremath{}\meas,\new,U\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rules for values
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\dots+\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{}{!\Delta,x:\bang(A\multimap B)\vdash x:\bang(A\multimap B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A,B}y(!(A\multimap B)\vdash\bang(A\multimap B))}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{!\Delta,x:A\vdash M:B}{!\Delta\vdash\lambda x^{A}.M:\bang(A\multimap B)}$
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A,B}X_{\underline{\Delta},A\vdash B}\times y(\emptyset\vdash A\multimap B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{}{!\Delta\vdash c:\bang(A_{c}\multimap B_{c})}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{c}}y(\emptyset\vdash\bang(A_{c}\multimap B_{c}))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All the other typing rules are listed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:quantum-endo"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Let us explain how the coproduct components are inferred.
+ Each premise is straightforwardly translated.
+ For example, in the elimination rule for abstraction, the premise 
+\begin_inset Formula $\bang\Delta,\Gamma\entail M:A\loli B$
+\end_inset
+
+ becomes 
+\begin_inset Formula $X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A\multimap B}$
+\end_inset
+
+, where 
+\begin_inset Formula $\underline{!\Delta},\boldsymbol{\Gamma}\vdash A\multimap B$
+\end_inset
+
+ is the endofunctor on 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ mapping 
+\begin_inset Formula $\Delta\vdash\tau$
+\end_inset
+
+ to 
+\begin_inset Formula $!\Delta,\boldsymbol{\Gamma}\vdash A\multimap B$
+\end_inset
+
+.
+ Conclusions are always of the shape 
+\begin_inset Formula $!\Delta,\Gamma\vdash t:\tau$
+\end_inset
+
+, or 
+\begin_inset Formula $!\Delta,\Gamma,\Sigma\vdash t:\tau$
+\end_inset
+
+ where 
+\begin_inset Formula $\Gamma,\Sigma$
+\end_inset
+
+ consist of linear types.
+ This justifies the global quantification over 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, and the multiplication by a representable functor 
+\begin_inset Formula $y(\boldsymbol{\Gamma}\vdash\tau)$
+\end_inset
+
+ or 
+\begin_inset Formula $y(\boldsymbol{\Gamma},\boldsymbol{\Sigma}\vdash\tau)$
+\end_inset
+
+, which evaluated at 
+\begin_inset Formula $\Delta\vdash A$
+\end_inset
+
+ is non-empty (and a singleton set) precisely when 
+\begin_inset Formula $A=\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{\Delta}=\boldsymbol{\Gamma}$
+\end_inset
+
+, or 
+\begin_inset Formula $\boldsymbol{\Delta}=\boldsymbol{\Gamma},\boldsymbol{\Sigma}$
+\end_inset
+
+ in the second case.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rules (
+\begin_inset Formula $!\Delta$
+\end_inset
+
+ is non linear)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[axd]{
+\backslash
+bang{
+\backslash
+Delta},x:
+\backslash
+bang (A
+\backslash
+loli B)
+\backslash
+entail x:A
+\backslash
+loli B}{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A,B}y(!(A\multimap B)\vdash A\multimap B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[p]{
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:
+\backslash
+bang{(A
+\backslash
+loli B)}}{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:A
+\backslash
+loli B   &   V
+\backslash
+textrm{ value} } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+loli_I]{
+\backslash
+Delta
+\backslash
+entail
+\backslash
+lambda x^A.M:A
+\backslash
+loli B}{   
+\backslash
+Delta,x:A
+\backslash
+entail M:B} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A,B}}X_{\underline{\Delta},A\vdash B}\times y(\boldsymbol{\Gamma}\vdash A\multimap B)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rules (
+\begin_inset Formula $!\Delta$
+\end_inset
+
+ is non linear)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{c\in\{\punit,{\tt split}^{A},\ensuremath{}\meas,\new,U\}}{!\Delta\vdash c:A_{c}\multimap B_{c}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{c}}y(\emptyset\vdash A_{c}\multimap B_{c})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[ax]{
+\backslash
+bang{
+\backslash
+Delta},x:A
+\backslash
+entail x:A}{
+\backslash
+text{$A$ linear}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{A}}y(\boldsymbol{A}\vdash\boldsymbol{A})}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[axd]{
+\backslash
+bang{
+\backslash
+Delta},x:
+\backslash
+bang (A
+\backslash
+loli B)
+\backslash
+entail x:A
+\backslash
+loli B}{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A,B}y(!(A\multimap B)\vdash A\multimap B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[p]{
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:
+\backslash
+bang{(A
+\backslash
+loli B)}}{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:A
+\backslash
+loli B   &   V
+\backslash
+textrm{ value} } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+loli_I]{
+\backslash
+Delta
+\backslash
+entail
+\backslash
+lambda x^A.M:A
+\backslash
+loli B}{   
+\backslash
+Delta,x:A
+\backslash
+entail M:B} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A,B}}X_{\underline{\Delta},A\vdash B}\times y(\boldsymbol{\Gamma}\vdash A\multimap B)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustbox}{rotate=90}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rules (
+\begin_inset Formula $\Gamma$
+\end_inset
+
+,
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ linear)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\dots+\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+loli_E]{
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail MN:B}{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:A
+\backslash
+loli B   &   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma
+\backslash
+entail N:A } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},\boldsymbol{\Sigma},A,B}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A\multimap B}\times X_{\underline{!\Delta},\boldsymbol{\Sigma}\vdash A}\times y(\boldsymbol{\Gamma},\boldsymbol{\Sigma}\vdash B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tunit_E]{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail   
+\backslash
+letunitterm{M}{N}:A }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:
+\backslash
+tunit   &   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma
+\backslash
+entail N:A } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},\boldsymbol{\Sigma},A}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash1}\times X_{\underline{!\Delta},\boldsymbol{\Sigma}\vdash A}\times y(\boldsymbol{\Gamma},\boldsymbol{\boldsymbol{\Sigma}}\vdash A)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tensor_I]{   
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail 
+\backslash
+tensterm{M}{N}:A
+\backslash
+tensor B }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:A   &   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma
+\backslash
+entail N:B } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},\boldsymbol{\Sigma},A,B}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A}\times X_{\underline{!\Delta},\boldsymbol{\Sigma}\vdash B}\times y(\boldsymbol{\Gamma},\boldsymbol{\boldsymbol{\Sigma}}\vdash A\otimes B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tensor_E]{   
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail    
+\backslash
+lettensterm{x^{A}}{y^{B}}{M}{N}:C }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:A
+\backslash
+tensor B   &   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma,x:A,y:B
+\backslash
+entail N:C } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},\boldsymbol{\Sigma},A,B,C}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A\otimes B}\times X_{\underline{!\Delta},\boldsymbol{\Sigma},A,B\vdash C}\times y(\boldsymbol{\Gamma},\boldsymbol{\Sigma}\vdash C)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+oplus_{I}^
+\backslash
+ell]{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail   
+\backslash
+injl{M}:A
+\backslash
+sumtype B }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:A } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A,B}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A}\times y(\boldsymbol{\Gamma}\vdash A\oplus B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+oplus_{I}^r]{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail   
+\backslash
+injr{M}:A
+\backslash
+sumtype B }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:B } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A,B}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash B}\times y(\boldsymbol{\Gamma}\vdash A\oplus B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+oplus_E]{   
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail 
+\backslash
+match{P}{x^A}{M}{y^B}N:C }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail P:A
+\backslash
+sumtype B   &   
+\backslash
+deduce{
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma,y:B
+\backslash
+entail N:C}{
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma,x:A
+\backslash
+entail M:C} } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{\frac{}{}}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},\boldsymbol{\Sigma},A,B,C}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A\oplus B}\times X_{\underline{!\Delta},\boldsymbol{\Sigma},A\vdash C}\times X_{\underline{!\Delta},\boldsymbol{\Sigma},B\vdash C}\times y(\boldsymbol{\Gamma},\boldsymbol{\Sigma}\vdash C)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tlist{-
+\backslash
+!}_{
+\backslash
+!
+\backslash
+!I}]{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail   M:
+\backslash
+tlist{A} }{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:
+\backslash
+tunit
+\backslash
+oplus(A{
+\backslash
+otimes}
+\backslash
+tlist A) } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash1\oplus(A\otimes A^{l})}\times y(\boldsymbol{\Gamma}\vdash A^{l})}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[{
+\backslash
+tt rec}]{   
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma
+\backslash
+entail 
+\backslash
+letrec{f^{A
+\backslash
+multimap B}}{x}{M}{N}:C }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  
+\backslash
+deduce
+\end_layout
+
+\begin_layout Plain Layout
+
+{ 
+\backslash
+bang
+\backslash
+Delta,f:
+\backslash
+bang{(A
+\backslash
+multimap B)},x:A
+\backslash
+entail M:B   }
+\end_layout
+
+\begin_layout Plain Layout
+
+{  
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma,f:
+\backslash
+bang{(A
+\backslash
+multimap B)}
+\backslash
+entail N:C} } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{\frac{}{}}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A,B,C}X_{\underline{!\Delta},!(A\multimap B),A\vdash B}\times X_{\underline{!\Delta},\boldsymbol{\Gamma},!(A\multimap B)\vdash C}\times y(\boldsymbol{\Gamma}\vdash C)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustbox}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Some components of the endofunctor specifying the quantum 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:quantum-endo"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rules (
+\begin_inset Formula $\Gamma$
+\end_inset
+
+,
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ linear)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tunit_I]{   
+\backslash
+bang{
+\backslash
+Delta}
+\backslash
+entail 
+\backslash
+punit:
+\backslash
+tunit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(\emptyset\vdash1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+splitlist]{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail
+\backslash
+splitlist[A] :    
+\backslash
+tlist A {
+\backslash
+multimap}
+\backslash
+tunit
+\backslash
+oplus(A{
+\backslash
+otimes}
+\backslash
+tlist A) }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A}}y(\emptyset\vdash A^{\ell}{\multimap}\tunit\oplus(A{\otimes}\tlist A))$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+meas]{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail   
+\backslash
+meas:
+\backslash
+qubit
+\backslash
+multimap 
+\backslash
+bit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(\emptyset\vdash\qubit\multimap\bit)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+new]{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail   
+\backslash
+new:
+\backslash
+bit
+\backslash
+multimap
+\backslash
+qubit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(\emptyset\vdash\bit\multimap\qubit)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[U]{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail   U:
+\backslash
+qubit^{
+\backslash
+otimes n}
+\backslash
+multimap
+\backslash
+qubit^{
+\backslash
+otimes n} }{U 
+\backslash
+text{ of arity $n$}} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{n}\coprod_{U\text{ of arity \ensuremath{n}}}}y(\emptyset\vdash\qubit^{\otimes n}\multimap\qubit^{\otimes n})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{adjustbox}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)_{\Gamma;!\Delta\vdash\tau}=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[ax]{
+\backslash
+bang{
+\backslash
+Delta},x:A
+\backslash
+entail x:A}{
+\backslash
+text{$A$ linear}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{ (\ensuremath{\Gamma=\{A\}}, \ensuremath{\tau=A})}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A\in\bang S}y(A;\emptyset\vdash A)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[axd]{
+\backslash
+bang{
+\backslash
+Delta},x:
+\backslash
+bang (A
+\backslash
+loli B)
+\backslash
+entail x:A
+\backslash
+loli B}{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $|!\Delta|_{!A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A,B\in S}y(\emptyset;!(A\multimap B)\vdash A\multimap B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[p]{
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:
+\backslash
+bang{(A
+\backslash
+loli B)}}{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:A
+\backslash
+loli B   &   V
+\backslash
+textrm{ value} } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+See note below
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tunit_I]{   
+\backslash
+bang{
+\backslash
+Delta}
+\backslash
+entail 
+\backslash
+punit:
+\backslash
+tunit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta_{1,\tau}\delta_{\Gamma,\emptyset}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(\emptyset;\emptyset\vdash1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+loli_I]{
+\backslash
+Delta
+\backslash
+entail
+\backslash
+lambda x^A.M:A
+\backslash
+loli B}{   
+\backslash
+Delta,x:A
+\backslash
+entail M:B} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $X_{\Gamma,A;!\Delta\vdash B}$
+\end_inset
+
+ or 
+\begin_inset Formula $X_{\Gamma;!\Delta,A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tunit_I]{   
+\backslash
+bang{
+\backslash
+Delta}
+\backslash
+entail 
+\backslash
+punit:
+\backslash
+tunit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tunit_I]{   
+\backslash
+bang{
+\backslash
+Delta}
+\backslash
+entail 
+\backslash
+punit:
+\backslash
+tunit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rules (
+\begin_inset Formula $\Gamma$
+\end_inset
+
+,
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ linear)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)_{\Delta\vdash\tau}=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)=\ ?$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[ax]{
+\backslash
+bang{
+\backslash
+Delta},x:A
+\backslash
+entail x:A}{
+\backslash
+text{$A$ linear}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta_{\boldsymbol{\Delta},\{A\}}\delta_{\tau,A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A\in\boldsymbol{S}}y(A\vdash A)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[axd]{
+\backslash
+bang{
+\backslash
+Delta},x:
+\backslash
+bang (A
+\backslash
+loli B)
+\backslash
+entail x:A
+\backslash
+loli B}{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $|!\Delta|_{!(A\multimap B)}\delta_{\boldsymbol{\Delta},\emptyset}\delta_{\tau,A\multimap B}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{A,B\in S}y(!(A\multimap B)\vdash A\multimap B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[p]{
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:
+\backslash
+bang{(A
+\backslash
+loli B)}}{   
+\backslash
+bang
+\backslash
+Delta
+\backslash
+entail V:A
+\backslash
+loli B   &   V
+\backslash
+textrm{ value} } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+See note below
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+tunit_I]{   
+\backslash
+bang{
+\backslash
+Delta}
+\backslash
+entail 
+\backslash
+punit:
+\backslash
+tunit }{} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta_{\tau,1}\delta_{\boldsymbol{\Delta},\emptyset}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y(\emptyset\vdash1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+loli_I]{
+\backslash
+Delta
+\backslash
+entail
+\backslash
+lambda x^A.M:A
+\backslash
+loli B}{   
+\backslash
+Delta,x:A
+\backslash
+entail M:B} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $X_{\Delta,A\vdash B}\delta_{\tau,A\multimap B}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},A,B}}X_{\underline{\Delta},A\vdash B}\times y(\boldsymbol{\Gamma}\vdash A\multimap B)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+infer[
+\backslash
+loli_E]{
+\backslash
+bang{
+\backslash
+Delta},
+\backslash
+Gamma,
+\backslash
+Sigma
+\backslash
+entail MN:B}{   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Gamma
+\backslash
+entail M:A
+\backslash
+loli B   &   
+\backslash
+bang
+\backslash
+Delta,
+\backslash
+Sigma
+\backslash
+entail N:A } 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $X_{!\Delta,\Gamma\vdash A\multimap B}\times X_{!\Delta,\Sigma\vdash A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta_{\Delta,(!\Delta,\Gamma,\Sigma)}\delta_{\tau,B}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\boldsymbol{\Gamma},\boldsymbol{\Sigma},A,B}X_{\underline{!\Delta},\boldsymbol{\Gamma}\vdash A\multimap B}\times X_{\underline{!\Delta},\boldsymbol{\Sigma}\vdash A}\times y(\boldsymbol{\Gamma},\boldsymbol{\Delta}\vdash B)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 We take the example of linear 
 \begin_inset Formula $\lambda$
 \end_inset
@@ -15008,11 +19602,11 @@ literal "false"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Each typing rule provides an operation
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="3" columns="4">
 <features tabularvalignment="middle">
@@ -15152,12 +19746,6 @@ Application
 
 
 \end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\Gamma
-\]
 
 \end_inset
 
