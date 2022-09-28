@@ -5678,7 +5678,7 @@ By the Yoneda Lemma, any representable functor is in
 \end_inset
 
  and denote the fully faithful embedding as 
-\begin_inset Formula $\D\xrightarrow{K}\mathcal{C}$
+\begin_inset Formula $\D\xrightarrow{K}\C$
 \end_inset
 
 .
@@ -5763,7 +5763,7 @@ status open
 
 \begin_layout Plain Layout
 We will never unfold the definition of 
-\begin_inset Formula $\mathcal{C}$
+\begin_inset Formula $\C$
 \end_inset
 
  afterwards.
@@ -6274,7 +6274,7 @@ noprefix "false"
 \end_inset
 
  denote the Yoneda embedding and 
-\begin_inset Formula $J:\mathcal{C}\rightarrow[\mathcal{A},\Set]$
+\begin_inset Formula $J:\C\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
  denote the canonical embedding, so that 
@@ -6297,14 +6297,14 @@ Now consider a finite connected limit
  Then, 
 \begin_inset Formula 
 \begin{align*}
-\mathcal{C}(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
+\C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
  & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By \prettyref{eq:def-y}}\\
  & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
  & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
  & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
  & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By \prettyref{eq:def-y}}\\
- & \cong\lim\mathcal{C}(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
- & \cong\mathcal{C}(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
+ & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
+ & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
 \end{align*}
 
 \end_inset
