@@ -6942,6 +6942,7 @@ We moreover assume that
 
 , i..e, that it maps functors preserving finite connected limits to functors
  preserving finite connected limits.
+ This has the following consequence.
 \end_layout
 
 \begin_layout Lemma
@@ -7062,49 +7063,6 @@ status open
 \end_inset
 
 .
- In all our examples, 
-\begin_inset Formula $O=\coprod_{\ell\in V}O_{\ell}$
-\end_inset
-
- for some 
-\begin_inset Formula $O_{\ell}\in\C$
-\end_inset
-
- and 
-\begin_inset Formula $J_{a,in_{\ell}(o)}=\gamma_{\ell}$
-\end_inset
-
- for some finite cardinal 
-\begin_inset Formula $\gamma_{\ell}$
-\end_inset
-
-.
- In this case, 
-\begin_inset Formula $L$
-\end_inset
-
- is induced by a family of functors 
-\begin_inset Formula $H_{\ell,j}:\int O_{\ell}\rightarrow\Set$
-\end_inset
-
- for each 
-\begin_inset Formula $j\in\gamma_{\ell}$
-\end_inset
-
- by 
-\begin_inset Formula $L_{a,in_{\ell}(o),j}=H_{\ell,j}(a,o)$
-\end_inset
-
-.
- Then, there is a simple condition for 
-\begin_inset Formula $F$
-\end_inset
-
- to restrict on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
  
 \begin_inset Note Note
 status open
@@ -7193,91 +7151,7 @@ In this case,
 
 \end_layout
 
-\begin_layout Lemma
-If 
-\begin_inset Formula $O$
-\end_inset
-
- and 
-\begin_inset Formula $J$
-\end_inset
-
- are as in the above paragraph, then 
-\begin_inset Formula $F$
-\end_inset
-
- restrists as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
- if and only if 
-\begin_inset Formula $O\in\C$
-\end_inset
-
- and each 
-\begin_inset Formula $H_{\ell,j}$
-\end_inset
-
- preserves finite limits, i.e., the canonical morphism
-\begin_inset Formula 
-\[
-H_{\ell,j}(\lim d,x)\rightarrow\int_{i}H_{\ell,j}(d_{i},O_{\ell}(p_{i})(x))
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-nd 
-\begin_inset Formula $L$
-\end_inset
-
- preserves finite connected limits, or equivalently, for any finite connected
- limit 
-\begin_inset Formula $\lim d$
-\end_inset
-
- in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
-, and 
-\begin_inset Formula $\beta\in\underline{\gamma_{\lim d}(x)}$
-\end_inset
-
-, the canonical morphism
-\begin_inset Formula 
-\[
-L_{\lim d,x,\beta}\rightarrow\int_{i}L_{d_{i},O_{p_{i}}(x),\beta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-is an isomorphism, where 
-\begin_inset Formula $\int_{i}l_{i}$
-\end_inset
-
- denotes the limit of a functor 
-\begin_inset Formula $l$
-\end_inset
-
-, and 
-\begin_inset Formula $p_{i}:\lim d\rightarrow d_{i}$
-\end_inset
-
- is the canonical projection
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -7302,7 +7176,7 @@ status open
 
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -8831,8 +8705,194 @@ We denote the set of connected components of a category
 .
 \end_layout
 
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:shape-examples"
+
+\end_inset
+
+In all our examples (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Section 8"
+key "longgenericunif"
+literal "false"
+
+\end_inset
+
+), 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $O$
+\end_inset
+
+ is a coproduct
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $\coprod_{\ell\in V}O_{\ell}$
+\end_inset
+
+ for some 
+\begin_inset Formula $O_{\ell}:{\cal A}\rightarrow\Set$
+\end_inset
+
+ and 
+\begin_inset Formula $J_{a,in_{\ell}(o)}=\gamma_{\ell}$
+\end_inset
+
+ for some finite cardinal 
+\begin_inset Formula $\gamma_{\ell}$
+\end_inset
+
+.
+ In this case, 
+\begin_inset Formula $L$
+\end_inset
+
+ is equivalently given by a family of functors 
+\begin_inset Formula $H_{\ell,j}:\int O_{\ell}\rightarrow\Set$
+\end_inset
+
+ for each 
+\begin_inset Formula $j\in\gamma_{\ell}$
+\end_inset
+
+ by 
+\begin_inset Formula $L_{a,in_{\ell}(o),j}=H_{\ell,j}(a,o)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+F(X)_{a}\cong\coprod_{\ell\in V}\coprod_{o\in O_{\ell}}\prod_{j\in\gamma_{\ell}}X_{H_{\ell,j}(a,o)}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-This section is devoted to the proof of the following result.
+In this case there is a simple characterisation.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:F-restricts-simpl"
+
+\end_inset
+
+If 
+\begin_inset Formula $O$
+\end_inset
+
+ and 
+\begin_inset Formula $J$
+\end_inset
+
+ are in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:shape-examples"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, then 
+\begin_inset Formula $F$
+\end_inset
+
+ restrists as an endofunctor on 
+\begin_inset Formula $\C$
+\end_inset
+
+ if and only if each 
+\begin_inset Formula $O_{l}\in\C$
+\end_inset
+
+ and each 
+\begin_inset Formula $H_{\ell,j}$
+\end_inset
+
+ preserves finite limits, or equivalently, the canonical morphism
+\begin_inset Formula 
+\[
+H_{\ell,j}(\lim d,x)\rightarrow\int_{i}H_{\ell,j}(d_{i},O_{\ell}(p_{i})(x))
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+nd 
+\begin_inset Formula $L$
+\end_inset
+
+ preserves finite connected limits, or equivalently, for any finite connected
+ limit 
+\begin_inset Formula $\lim d$
+\end_inset
+
+ in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, 
+\begin_inset Formula $x\in O_{\lim d}$
+\end_inset
+
+, and 
+\begin_inset Formula $\beta\in\underline{\gamma_{\lim d}(x)}$
+\end_inset
+
+, the canonical morphism
+\begin_inset Formula 
+\[
+L_{\lim d,x,\beta}\rightarrow\int_{i}L_{d_{i},O_{p_{i}}(x),\beta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+is an isomorphism.
+\end_layout
+
+\begin_layout Standard
+As we will see, this is a consequene of the following general proposition.
 \end_layout
 
 \begin_layout Proposition
@@ -9058,7 +9118,7 @@ is an isomorphism, where
 \begin_inset Formula $\overline{\beta}$
 \end_inset
 
- is full subcategory of 
+ is the full subcategory of 
 \begin_inset Formula $\int J_{d-,O_{p_{-}}(x)}$
 \end_inset
 
@@ -9111,7 +9171,6 @@ The colimit of a functor
 \end_inset
 
  by the canonical morphism.
- 
 \end_layout
 
 \begin_layout Standard
@@ -10713,6 +10772,232 @@ noprefix "false"
 \end_inset
 
  states.
+\end_layout
+
+\begin_layout Standard
+We can now address the simple situation of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:shape-examples"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+]
+\end_layout
+
+\end_inset
+
+First, let us show that 
+\begin_inset Formula $O=\coprod_{\ell\in V}O_{\ell}$
+\end_inset
+
+ preserves finite connected limits if and only if each 
+\begin_inset Formula $O_{\ell}$
+\end_inset
+
+ does.
+ By 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 2.4 and Example 2.3.(iii)"
+key "classificationaccessible"
+literal "false"
+
+\end_inset
+
+, since 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits, a functor 
+\begin_inset Formula $G:{\cal A}\rightarrow\Set$
+\end_inset
+
+ preserves those limits if and only if 
+\begin_inset Formula $\int G$
+\end_inset
+
+ is a coproduct of filtered categories.
+ The equivalence follows from 
+\begin_inset Formula $\int O=\coprod_{\ell\in V}\int O_{\ell}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Let us assume that 
+\begin_inset Formula $O$
+\end_inset
+
+ preserves finite connected limits: let us show that the other condition
+ of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ is equivalent to 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-L"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ First, 
+\begin_inset Formula $\int J$
+\end_inset
+
+ is isomorphic to 
+\begin_inset Formula $\coprod_{\ell\in V}\gamma_{\ell}\times\int O_{\ell}$
+\end_inset
+
+,, 
+\begin_inset Formula $J$
+\end_inset
+
+ preserves finite connected limits, by the same argument as above (
+\begin_inset Formula $\int O$
+\end_inset
+
+ has finite connected limits by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:data-functor-elt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:lim-elt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+Now, consider the canonical morphism 
+\begin_inset Formula $L_{\lim d,in_{\ell}(x),\beta}\rightarrow\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(in_{\ell}(x)),j}$
+\end_inset
+
+, where 
+\begin_inset Formula $\overline{\beta}$
+\end_inset
+
+ is the full subcategory of 
+\begin_inset Formula $\int J_{d-,O_{p_{-}}(x)}$
+\end_inset
+
+ consiting of pairs 
+\begin_inset Formula $(i,j)$
+\end_inset
+
+ such that 
+\begin_inset Formula $\beta=J_{p_{i}}(j)$
+\end_inset
+
+.
+ Because of the specific shape of 
+\begin_inset Formula $J$
+\end_inset
+
+, this means 
+\begin_inset Formula $\beta=j$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula $\overline{\beta}$
+\end_inset
+
+ is isomorphic to 
+\begin_inset Formula $I$
+\end_inset
+
+, and this canonical morphism rewrites as 
+\begin_inset Formula 
+\[
+H_{\ell,\beta}(\lim d,x)\rightarrow\int_{i:I}H_{\ell,\beta}(d_{i},O_{\ell,p_{i}}(x))
+\]
+
+\end_inset
+
+which is the same morphism that is considered in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ It is an isomorphism if and only if 
+\begin_inset Formula $H_{\ell,\beta}$
+\end_inset
+
+ preserves finite connected limits, by It 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:preserves-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -22132,7 +22417,7 @@ An important remark is that
 We apply 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 4.2"
+after "Theorem 4.2 and Proposition 4.1"
 key "grayfib"
 literal "false"
 
