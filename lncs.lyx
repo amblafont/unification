@@ -520,7 +520,7 @@ University of Cambridge
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\prune{u'}{M(\arg x)}{\sigma}v\dashv\Delta\qquad u=Tin_{\Gamma}\circ u'}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\prune{u'}{M(\arg x)}{\sigma}v\dashv\Delta\qquad u=u'[in_{\Gamma}]}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
 \end_inset
 
 
@@ -2595,8 +2595,8 @@ noprefix "false"
  summarises the generic algorithm that we will later interpret in a more
  general setting.
  In the figure, the vector notation for the arguments of metavariables is
- dropped because in the general setting we consider in this paper, they
- are abstract and could thus instantiate to other objects than lists
+ dropped because in the general setting we consider in this paper, nothing
+ enforces them to be lists
 \begin_inset Foot
 status open
 
@@ -3477,11 +3477,9 @@ Judgments
 \begin_layout Plain Layout
 
 \series bold
-Unification Phase
-\end_layout
-
-\begin_layout Itemize
-Structural rules (
+Unification Phase 
+\series default
+(
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:coequalising-phase"
@@ -3492,6 +3490,30 @@ noprefix "false"
 \end_inset
 
 )
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:coequalising-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \unificationempty\quad\unificationtop
@@ -3593,7 +3615,7 @@ noprefix "false"
 ) 
 \begin_inset Formula 
 \[
-\unificationfailingoccurcheckeffective\quad\text{+ symmetric rule}
+\labellabelrule{\unificationfailingoccurcheckeffective}{U-Cyclic}\quad\text{+ symmetric rule}
 \]
 
 \end_inset
@@ -3604,11 +3626,9 @@ noprefix "false"
 \begin_layout Plain Layout
 
 \series bold
-Pruning phase
-\end_layout
-
-\begin_layout Itemize
-Structural rules (
+Pruning phase 
+\series default
+(
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:pruning-phase"
@@ -3619,6 +3639,30 @@ noprefix "false"
 \end_inset
 
 )
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:pruning-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \pruningempty\quad\pruningtop
@@ -13494,7 +13538,7 @@ recursion
 \end_inset
 
 -algebra.
- The desired property is proven by induction
+ The claimed property is proven by induction
 \begin_inset ERT
 status open
 
@@ -13625,7 +13669,7 @@ we denote the morphism
 
 \end_inset
 
- and for any 
+ for any 
 \begin_inset Formula $u':Ka\rightarrow T\Gamma$
 \end_inset
 
@@ -14052,7 +14096,7 @@ Here we handle unification of
 \begin_inset Formula $M$
 \end_inset
 
- appears in 
+ occurs in 
 \begin_inset Formula $u$
 \end_inset
 
@@ -14137,7 +14181,7 @@ noprefix "false"
 \end_inset
 
  justify the rule 
-\begin_inset Formula $\refrule{P-Fail}$
+\begin_inset Formula $\refrule{U-Cyclic}$
 \end_inset
 
 .
@@ -14392,6 +14436,10 @@ Could we use Reddy's syntax, to differentiate the input/output? We need
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 We have already discussed the structural rules of the pruning phase in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -14403,11 +14451,20 @@ noprefix "false"
 \end_inset
 
 .
- Let us add that the sequential rule 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Before focusing with the rules dealing with a singleton list, let us note
+ that the sequential rule 
 \begin_inset Formula $\refrule{P-Split}$
 \end_inset
 
- is valid in any category.
+ is in fact valid in any category.
 \begin_inset Note Note
 status open
 
@@ -15064,7 +15121,7 @@ end{full}
 \end_layout
 
 \begin_layout Standard
-We now focus on the other rules of the pruning phase in 
+We now focus on the non-structural rules of the pruning phase in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:algo-summary"
@@ -15263,7 +15320,17 @@ noprefix "false"
 \end_inset
 
 .
- We introduce some notation for the latter condition.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We introduce some notation for the latter condition.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15379,11 +15446,64 @@ end{full}
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+shortfull{
+\end_layout
+
+\end_inset
+
+Note that there is at most one 
+\begin_inset Formula $o'$
+\end_inset
+
+ such that 
+\begin_inset Formula $o=\acton x{o'}$
+\end_inset
+
+, by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:epis"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ In this case,
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
 In case 
 \begin_inset Formula $o=\acton{\arg x}{o'}$
 \end_inset
 
-, it follows from the above observations that a cocone is equivalently given
+,
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ it follows from the above observations that a cocone is equivalently given
  by a cospan 
 \begin_inset Formula $T\Gamma\xrightarrow{\sigma}T\Delta\xleftarrow{\vec{u}}b^{o}$
 \end_inset
@@ -15404,7 +15524,7 @@ noprefix "false"
 \end_inset
 
 , this is precisely the data for a pushout cocone for 
-\begin_inset Formula $\Gamma\xleftarrow{\vec{t}}a^{o}\xrightarrow{\arg x^{o}}b^{o}$
+\begin_inset Formula $\Gamma\xleftarrow{\vec{t}}a^{o}\xrightarrow{{\cal L}^{+}\arg x^{o}}b^{o}$
 \end_inset
 
 .
@@ -15553,6 +15673,9 @@ $
 \end_inset
 
 .
+
+\color red
+ N'est ce pas une version pareil que la'utre
 \end_layout
 
 \begin_layout Lemma
@@ -15920,8 +16043,15 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
-, then either the metavariable does not occur in the r.h.s, either it occurs
- at top-level (see 
+, then either 
+\begin_inset Formula $M$
+\end_inset
+
+ does not occur in 
+\begin_inset Formula $t$
+\end_inset
+
+, either it occurs at top-level (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "cor:occurcheck-final"
@@ -15932,7 +16062,7 @@ noprefix "false"
 \end_inset
 
 ).
- The argument follows the basic intuition that 
+ The argument formalises the basic intuition that 
 \begin_inset Formula $t=u[M\mapsto t]$
 \end_inset
 
@@ -16550,7 +16680,7 @@ For any
 \end_inset
 
 , 
-\begin_inset Formula $f\in\hom_{\D}(a,b)$
+\begin_inset Formula $x\in\hom_{\D}(a,b)$
 \end_inset
 
 , 
@@ -16562,7 +16692,7 @@ For any
 \end_inset
 
  and 
-\begin_inset Formula $|{\cal L}f[u]|=|u|$
+\begin_inset Formula $|M(x)[u]|=|u|$
 \end_inset
 
 .
@@ -16589,19 +16719,19 @@ If there is a commuting square in
 
 \begin_inset Formula 
 \[
-\xymatrix{Ka\ar[d]_{{\cal L}f}\hautr{t} & \Gamma,M:b\ar[d]^{\sigma,u}\\
-Kb\ar[r]_{u} & \Delta
+\xymatrix{Ka\ar[d]_{M(\arg x)}\hautr{t} & \Gamma,M:b\ar[d]^{\sigma,u}\\
+M:b\ar[r]_{u} & \Delta
 }
 \]
 
 \end_inset
 
 then either 
-\begin_inset Formula $t=M(\arg x)$
+\begin_inset Formula $t=M(\arg y)$
 \end_inset
 
  for some 
-\begin_inset Formula $\arg x$
+\begin_inset Formula $y$
 \end_inset
 
 , or 
@@ -16617,11 +16747,11 @@ then either
 
 \begin_layout Proof
 Since 
-\begin_inset Formula $t[\sigma,u]={\cal L}f[u]$
+\begin_inset Formula $t[\sigma,u]=M(x)[u]$
 \end_inset
 
 , we have 
-\begin_inset Formula $|t[\sigma,u]|=|{\cal L}f[u]|$
+\begin_inset Formula $|t[\sigma,u]|=|M(x)[u]|$
 \end_inset
 
 .
@@ -16667,11 +16797,11 @@ noprefix "false"
 \end_inset
 
  is 
-\begin_inset Formula $M(\arg x)$
+\begin_inset Formula $M(\arg y)$
 \end_inset
 
  for some 
-\begin_inset Formula $\arg x$
+\begin_inset Formula $y$
 \end_inset
 
 .
@@ -16698,13 +16828,13 @@ Each inductive rule presented so far provides an elementary step for the
  in a finite number of steps.
  To make the argument more straightforward, we explicitly assume that in
  the splitting rules 
-\shape smallcaps
-U-Split
-\shape default
- et 
-\shape smallcaps
-P-Split
-\shape default
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Split}$
+\end_inset
+
  in 
 \begin_inset CommandInset ref
 LatexCommand formatted
