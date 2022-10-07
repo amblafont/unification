@@ -937,134 +937,6 @@ literal "false"
 
 \end_layout
 
-\begin_layout Subsection*
-Plan of the paper
-\end_layout
-
-\begin_layout Standard
-In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:cat-settings"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we present our categorical setting.
- In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:Main-result"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we state the existence of the most general unifier as a categorical property.
- Then we describe the construction of the most general unifier, as summarised
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, starting with the unification phase (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:coequalising-phase"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), the pruning phase (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:pruning-phase"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), the occur-check (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:occur-check"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
- We finally justify completeness in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:completeness"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-shortfull{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}{
-\end_layout
-
-\end_inset
-
-Applications are presented in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:applications"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 As an introduction, we start by presenting pattern unification in the case
  of pure 
@@ -1927,11 +1799,19 @@ pruning phase
 \begin_inset Formula $t\ u$
 \end_inset
 
- with a metavariable application 
+ with a metavariable 
 \begin_inset Formula $M(x_{1},\dots,x_{n})$
 \end_inset
 
- in this situation, we create two fresh metavariables 
+ which does not occur in 
+\begin_inset Formula $t$
+\end_inset
+
+,
+\begin_inset Formula $u$
+\end_inset
+
+, two fresh metavariables 
 \begin_inset Formula $M_{1}$
 \end_inset
 
@@ -1939,20 +1819,29 @@ pruning phase
 \begin_inset Formula $M_{2}$
 \end_inset
 
-, unify 
+ are created.
+ Then, 
 \begin_inset Formula $t$
 \end_inset
 
- with 
+ is unified with 
 \begin_inset Formula $M_{1}(x_{1},\dots,x_{n})$
 \end_inset
 
- and 
-\begin_inset Formula $u$
+, outputing a unifier 
+\begin_inset Formula $\sigma_{1}$
 \end_inset
 
- with 
+, and 
+\begin_inset Formula $u[\sigma_{1}]$
+\end_inset
+
+ is unified with 
 \begin_inset Formula $M_{2}(x_{1},\dots,x_{n})$
+\end_inset
+
+, outputing a unifier 
+\begin_inset Formula $\sigma_{2}$
 \end_inset
 
 .
@@ -1960,16 +1849,36 @@ pruning phase
 \begin_inset Formula $M$
 \end_inset
 
- is going to be replaced with 
-\begin_inset Formula $(M_{1}(\vec{x})\ M_{2}(\vec{x}))[\sigma]$
+ is replaced with 
+\begin_inset Formula $(M_{1}(\vec{x})\ M_{2}(\vec{x}))[\sigma_{2}]$
 \end_inset
 
 , where 
-\begin_inset Formula $\sigma$
+\begin_inset Formula $\sigma_{2}$
 \end_inset
 
- is the output unifying substitution.
- We call it the pruning phase because it effectively removes all 
+ is the output unifier.
+ We call it 
+\emph on
+pruning 
+\emph default
+because unifying 
+\begin_inset Formula $u'$
+\end_inset
+
+ and 
+\begin_inset Formula $M(\vec{x})$
+\end_inset
+
+ when 
+\begin_inset Formula $M$
+\end_inset
+
+ does not occur in 
+\begin_inset Formula $u'$
+\end_inset
+
+ consists in removing all 
 \emph on
 outbound 
 \emph default
@@ -2140,7 +2049,16 @@ This rules shows that the output
 \end_layout
 
 \begin_layout Standard
-As before, we generalise the pruning phase to handle lists 
+Note that 
+\begin_inset Formula $M$
+\end_inset
+
+ is indeed substituted by 
+\begin_inset Formula $v$
+\end_inset
+
+, as hinted above.
+ As before, we generalise the pruning phase to handle lists 
 \begin_inset Formula $\vec{u}=(u_{1},\dots,u_{n})$
 \end_inset
 
@@ -2208,7 +2126,7 @@ noprefix "false"
 
 \end_inset
 
- that each 
+ that 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -2220,7 +2138,11 @@ noprefix "false"
 \begin_inset Formula $u_{i}[\sigma][x_{i,j+1}\mapsto j]$
 \end_inset
 
-.
+, which 
+\begin_inset Formula $M_{i}$
+\end_inset
+
+ ought to be substituted with.
  Again, 
 \begin_inset Formula $(\sigma,\vec{v})$
 \end_inset
@@ -2290,7 +2212,7 @@ noprefix "false"
 
 \end_inset
 
-: it intuitively means that the metavariables used in 
+: it intuitively enforces that the metavariables used in 
 \begin_inset Formula $\vec{f}_{2}$
 \end_inset
 
@@ -2299,9 +2221,7 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
+ 
 \begin_inset Note Note
 status open
 
@@ -2415,7 +2335,15 @@ This is done sequentially by first pruning the first term, applying the
 
 \end_inset
 
-The remaining case consists in pruning a metavariable 
+The remaining case consists in unifying 
+\begin_inset Formula $N(\vec{x})$
+\end_inset
+
+ and 
+\begin_inset Formula $M(\vec{y})$
+\end_inset
+
+, or equivalently, pruning a metavariable 
 \begin_inset Formula $N(x_{1},\dots,x_{m})$
 \end_inset
 
@@ -2667,8 +2595,8 @@ noprefix "false"
  summarises the generic algorithm that we will later interpret in a more
  general setting.
  In the figure, the vector notation for the arguments of metavariables is
- dropped because in the general setting, they are abstract and could thus
- instantiate to other objects than lists
+ dropped because in the general setting we consider in this paper, they
+ are abstract and could thus instantiate to other objects than lists
 \begin_inset Foot
 status open
 
@@ -2793,8 +2721,7 @@ In the rule
 \end_inset
 
 .
- Let us comment the rigid case in the pruning phase.
- Both rules 
+ The rigid case in the pruning phase consists in two rules 
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
 
@@ -2802,7 +2729,8 @@ In the rule
 \begin_inset Formula $\refrule{P-Fail}$
 \end_inset
 
- are concerned with pruning a non metavariable term 
+.
+ Both are concerned with pruning a non metavariable term 
 \begin_inset Formula $\Gamma;C\vdash o(\vec{t})$
 \end_inset
 
@@ -2850,7 +2778,7 @@ noprefix "false"
 \begin_inset Formula $o$
 \end_inset
 
- is an operation 
+ is an operation, then 
 \begin_inset Formula $\acton{\vec{x}}o$
 \end_inset
 
@@ -2862,7 +2790,11 @@ noprefix "false"
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
 
- always applies.
+ always applies with 
+\begin_inset Formula $o'=o$
+\end_inset
+
+.
  If 
 \begin_inset Formula $\alpha_{o}=(n_{1},\dots,n_{p})$
 \end_inset
@@ -3316,7 +3248,7 @@ noprefix "false"
 \end_inset
 
 , we make explicit assumptions about this endofunctor for the unification
- algorithm to be properly generalised.
+ algorithm to properly generalise.
 \end_layout
 
 \end_inset
@@ -3340,14 +3272,28 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-To understand how a unification problem is stated in this general setting,
- let us come back to the example of pure 
-\begin_inset Formula $\lambda$
+To understand how a unification problem is stated in this general setting
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+What follows is a generalisation of the first-order case explained in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Chapter 8"
+key "DBLP:books/daglib/0068768"
+literal "false"
+
 \end_inset
 
--calculus.
- We first provide the familiar metavariable context notation with a formal
- meaning.
+, in the sense that we consider a free monad on a presheaf category, rather
+ than on sets.
+\end_layout
+
+\end_inset
+
+, let us first provide the familiar metavariable context notation with a
+ formal meaning.
 \end_layout
 
 \begin_layout Notation
@@ -3398,8 +3344,7 @@ If
 \begin_inset Formula $i\in\{1,\dots,p\}$
 \end_inset
 
-.
- Note that this is precisely the data for a metavariable substitution 
+: this is precisely the data for a metavariable substitution 
 \begin_inset Formula $\Delta\rightarrow\Gamma$
 \end_inset
 
@@ -3459,27 +3404,7 @@ $
  A unifier is nothing but a Kleisli morphism coequalising this pair.
  The property required by the most general unifier means that it is the
  coequaliser, in the full subcategory spanned by coproducts of representable
- functors
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-This generalises the first-order case 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Chapter 8"
-key "DBLP:books/daglib/0068768"
-literal "false"
-
-\end_inset
-
- in the sense that we consider a free monad on a presheaf category, rather
- than on sets.
-\end_layout
-
-\end_inset
-
-.
+ functors.
  The main purpose of the pattern unification algorithm consists in constructing
  this coequaliser, if it exists, which is the case as long as there exists
  a unifier, as stated in 
@@ -3817,7 +3742,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-With this in mind, we can provide the categorical semantics of the unification
+With this in mind, we can give categorical semantics to the unification
  notation in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -3828,7 +3753,7 @@ noprefix "false"
 
 \end_inset
 
-.
+ as follows.
 \end_layout
 
 \begin_layout Notation
@@ -4644,9 +4569,10 @@ m\ar[r]_{y} & C
 \end_inset
 
 
-\end_layout
+\begin_inset Note Note
+status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Again, the rule 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
@@ -4662,6 +4588,11 @@ noprefix "false"
 \end_inset
 
 ).
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -5348,6 +5279,134 @@ Some benefits: we unify the operation and the variable case.
 \end_layout
 
 \begin_layout Subsection*
+Plan of the paper
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:cat-settings"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we present our categorical setting.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Main-result"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we state the existence of the most general unifier as a categorical property.
+ Then we describe the construction of the most general unifier, as summarised
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, starting with the unification phase (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:coequalising-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the pruning phase (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:pruning-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the occur-check (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:occur-check"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ We finally justify completeness in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:completeness"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+shortfull{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+Applications are presented in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
 General notations
 \end_layout
 
@@ -5778,9 +5837,8 @@ name "rem:res-monad"
 \end_inset
 
 .
- In fact, the precise argument we develop works not only in the category
- of metavariable contexts and substitutions, but also in the (larger) category
- of objects of 
+ In fact, the argument works not only in the category of metavariable contexts
+ and substitutions, but also in the (larger) category of objects of 
 \begin_inset Formula $\C$
 \end_inset
 
@@ -6021,29 +6079,16 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-By the Yoneda Lemma, any representable functor is in 
-\begin_inset Formula $\C$
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+A useful lemma that we will exploit is the following:
+\end_layout
+
 \end_inset
 
- and thus the embedding 
-\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
-\end_inset
 
- factors the Yoneda embedding 
-\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
-.
- We set 
-\begin_inset Formula $\D=\op{{\cal A}}$
-\end_inset
-
- and denote the fully faithful embedding as 
-\begin_inset Formula $\D\xrightarrow{K}\C$
-\end_inset
-
-.
- A useful lemma that we will exploit is the following:
 \end_layout
 
 \begin_layout Lemma
@@ -6323,8 +6368,35 @@ end{full}
 
 \end_layout
 
+\begin_layout Standard
+By right continuity of the homset bifunctor, any representable functor is
+ in 
+\begin_inset Formula $\C$
+\end_inset
+
+ and thus the embedding 
+\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ factors the Yoneda embedding 
+\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Notation
-We denote by 
+We set 
+\begin_inset Formula $\D=\op{{\cal A}}$
+\end_inset
+
+ and denote the fully faithful Yoneda embedding as 
+\begin_inset Formula $\D\xrightarrow{K}\C$
+\end_inset
+
+.
+ We denote by 
 \begin_inset Formula $\D^{+}\xrightarrow{K^{+}}\C$
 \end_inset
 
@@ -6337,6 +6409,33 @@ We denote by
 \end_inset
 
 .
+ Moreover, we adopt 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "nota:context"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ for objects of 
+\begin_inset Formula $\D^{+}$
+\end_inset
+
+, that is, a coproduct 
+\begin_inset Formula $\coprod_{i\in\{M,N,\dots\}}Ka_{i}$
+\end_inset
+
+ is denoted by a 
+\emph on
+(metavariable) context
+\emph default
+ 
+\begin_inset Formula $M:a_{M},N:a_{N},\dots$
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Remark
@@ -6374,36 +6473,6 @@ noprefix "false"
 \end_inset
 
  can be thought of as the category of metavariable contexts.
-\end_layout
-
-\begin_layout Standard
-We adapt 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "nota:context"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- for objects of 
-\begin_inset Formula $\D^{+}$
-\end_inset
-
-, that is, a coproduct 
-\begin_inset Formula $\coprod_{i\in\{M,N,\dots\}}Ka_{i}$
-\end_inset
-
- is denoted by a 
-\emph on
-(metavariable) context
-\emph default
- 
-\begin_inset Formula $M:a_{M},N:a_{N},\dots$
-\end_inset
-
- 
 \end_layout
 
 \begin_layout Standard
@@ -8215,7 +8284,7 @@ Given
 \begin_inset Formula $u:Kb\rightarrow X$
 \end_inset
 
-, we sometimes denote 
+, we denote 
 \begin_inset Formula $u\circ Kf$
 \end_inset
 
@@ -8245,11 +8314,11 @@ Given
 
 .
  Given 
-\begin_inset Formula $f\in\hom_{\D}(a,b)$
+\begin_inset Formula $f\in\hom_{\D}(b,a)$
 \end_inset
 
 , we denote the induced morphism 
-\begin_inset Formula $\overline{o}\rightarrow\overline{\acton fo}$
+\begin_inset Formula $\overline{f\cdot o}\rightarrow\overline{o}$
 \end_inset
 
  by 
@@ -8266,7 +8335,11 @@ name "lem:mor-FX"
 
 \end_inset
 
-A morphism 
+For any 
+\begin_inset Formula $X\in\C$
+\end_inset
+
+, a morphism 
 \begin_inset Formula $Ka\rightarrow FX$
 \end_inset
 
@@ -8275,7 +8348,7 @@ A morphism
 \end_inset
 
 , and a morphism 
-\begin_inset Formula $f:a^{o}\rightarrow X$
+\begin_inset Formula $f:\overline{o}\rightarrow X$
 \end_inset
 
 .
@@ -8905,7 +8978,7 @@ name "subsec:examples-settings"
 
 \end_inset
 
-The following table sketches some examples, detailed in 
+The following table sketches some examples among those detailed in 
 \begin_inset ERT
 status open
 
@@ -8921,6 +8994,7 @@ shortfull{
 
 \begin_inset CommandInset citation
 LatexCommand cite
+after "Section 8"
 key "longgenericunif"
 literal "false"
 
@@ -8974,7 +9048,12 @@ noprefix "false"
 \end_inset
 
 .
- In the case of quantum 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In the case of quantum 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -8987,6 +9066,11 @@ noprefix "false"
 \end_inset
 
  consist of linear types only.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -12008,6 +12092,10 @@ in particular, coproducts in
 .
 \end_layout
 
+\begin_layout Standard
+The main point of pattern unification is the following result.
+\end_layout
+
 \begin_layout Theorem
 \begin_inset Formula $\KlD^{*}$
 \end_inset
@@ -12016,12 +12104,36 @@ in particular, coproducts in
 \end_layout
 
 \begin_layout Standard
+In the next sections, we show how the generic unification algorithm summarised
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ provides a construction of such coequalisers.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 The pattern unification algorithm indeed provides a construction of coequalisers
  in 
 \begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15799,10 +15911,17 @@ noprefix "false"
 \end_inset
 
 ), whenever the metavariable appearing at the top-level of the l.h.s does
- not appear in the r.h.s.
- This section is devoted to the proof that if there is a unifier, then either
- the metavariable does not occur in the r.h.s, either it occurs at top-level
- (see 
+ not occur in the r.h.s.
+ This section is devoted to the proof that if there is a unifier of 
+\begin_inset Formula $M(\vec{x})$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+, then either the metavariable does not occur in the r.h.s, either it occurs
+ at top-level (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "cor:occurcheck-final"
@@ -15871,7 +15990,7 @@ The size
 \end_inset
 
 , for any 
-\begin_inset Formula $\vec{t}:\coprod_{i}Ka_{i}\rightarrow T\Gamma$
+\begin_inset Formula $\vec{t}:\coprod_{i}Ka_{i}\xrightarrow{\dots,t_{i},\dots}T\Gamma$
 \end_inset
 
 .
@@ -16586,7 +16705,7 @@ U-Split
 \shape smallcaps
 P-Split
 \shape default
- (see 
+ in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:algo-summary"
@@ -16596,8 +16715,11 @@ noprefix "false"
 
 \end_inset
 
-), the expressions with vector notation are not empty lists.
+, the expressions with vector notation are not empty lists.
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -16700,8 +16822,8 @@ noprefix "false"
 
 \end_inset
 
- The following two properties are then sufficient to ensure that applying
- rules eagerly eventually leads to a coequaliser: 
+ The following two properties are sufficient to ensure that applying rules
+ eagerly eventually leads to a coequaliser: 
 \emph on
 progress
 \emph default
@@ -16817,7 +16939,7 @@ noprefix "false"
 \begin_inset Formula $1$
 \end_inset
 
- to metavariables.
+ to metavariables, so that no term is of empty size.
  
 \begin_inset Note Note
 status open
@@ -16915,7 +17037,83 @@ Let us first quickly justify termination of the pruning phase.
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
 
- of the pruning phase.
+ of the pruning phase, thanks to the following lemmas
+\end_layout
+
+\begin_layout Lemma
+For any 
+\begin_inset Formula $t:Ka\rightarrow T\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
+\end_inset
+
+, if 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a renaming, i.e., 
+\begin_inset Formula $\sigma={\cal L}^{+}\sigma'$
+\end_inset
+
+, for some 
+\begin_inset Formula $\sigma'$
+\end_inset
+
+, then 
+\begin_inset Formula $||t[\sigma]||=||t||$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+If there is a finite derivation tree of 
+\begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta\neq\bot$
+\end_inset
+
+, 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\bot$
+\end_inset
+
+ n'est pas connexe car 
+\begin_inset Formula $\bot+\bot=\bot$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ then 
+\begin_inset Formula $|\Gamma|=|\Delta|$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a 
+\emph on
+renaming
+\emph default
+.
 \end_layout
 
 \begin_layout Personal Question
@@ -16929,11 +17127,11 @@ Now, we tackle termination for the unification phase.
 \end_inset
 
  to be the pair 
-\begin_inset Formula $(|\Gamma|,||t||+||u||)$
+\begin_inset Formula $(|\Gamma|,||t||)$
 \end_inset
 
 .
- The following lemmas ensures that for the two recursive rules 
+ The following lemma ensures that for the two recursive rules 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
 
@@ -17001,7 +17199,13 @@ If there is a finite derivation tree of
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a renaming, i.e., it is 
+ is a renaming.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, i.e., it is 
 \begin_inset Formula ${\cal L}^{+}\sigma'$
 \end_inset
 
@@ -17012,31 +17216,9 @@ If there is a finite derivation tree of
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
-\end_layout
-
-\begin_layout Lemma
-For any 
-\begin_inset Formula $t:Ka\rightarrow T\Gamma$
-\end_inset
-
- and 
-\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
-\end_inset
-
-, if 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is a renaming, then 
-\begin_inset Formula $||t[\sigma]||=||t||$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -17047,6 +17229,10 @@ For any
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -17062,54 +17248,13 @@ begin{full}
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The proof of the first lemma relies on the fact that when the pruning phase
  does not fail, it produces a renaming targetting a metavariable context
  of the same size as the input one.
 \end_layout
 
-\begin_layout Lemma
-If there is a finite derivation tree of 
-\begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
-\end_inset
-
- and 
-\begin_inset Formula $\Delta\neq\bot$
-\end_inset
-
-, 
-\begin_inset Note Note
-status open
-
 \begin_layout Plain Layout
-\begin_inset Formula $\bot$
-\end_inset
-
- n'est pas connexe car 
-\begin_inset Formula $\bot+\bot=\bot$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- then 
-\begin_inset Formula $|\Gamma|=|\Delta|$
-\end_inset
-
- and 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is a 
-\emph on
-renaming
-\emph default
-.
-\end_layout
-
-\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -17118,6 +17263,11 @@ status open
 
 \backslash
 end{full}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
