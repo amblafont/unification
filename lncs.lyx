@@ -13,7 +13,7 @@
 \usepackage{fullshort}
 
 % to comment for the short version
-\setboolean{fullpaper}{false}
+\setboolean{fullpaper}{true}
 
 \newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\commentaire}[1]{}
@@ -2593,10 +2593,8 @@ noprefix "false"
 \end_inset
 
  summarises the generic algorithm that we will later interpret in a more
- general setting.
- In the figure, the vector notation for the arguments of metavariables is
- dropped because in the general setting we consider in this paper, nothing
- enforces them to be lists
+ general setting, where metavariable arguments are morphisms in a category.
+ Since nothing enforces them to be lists
 \begin_inset Foot
 status open
 
@@ -2660,10 +2658,43 @@ status open
 
 \end_inset
 
-.
- We still use the vector notation in the following instantiation for a syntax
+, the vector notation is dropped for these arguments in the figure, but
+ we still use it in the following specialisation to syntax specified by
+ a binding signature.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ summarises the generic algorithm that we will later interpret in a more
+ broader setting.
+ In this general setting, metavariable arguments are morphisms in a category:
+ nothing enforces them to be lists.
+\end_layout
+
+\begin_layout Plain Layout
+In the figure, the vector notation for the arguments of metavariables is
+ dropped because in the general setting we consider in this paper, nothing
+ enforces them to be lists .
+ We still use the vector notation in the following specialisation to a syntax
  specified by a binding signature.
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -12289,7 +12320,20 @@ In this section, we describe the main unification phase, which computes
 \end_inset
 
 .
- We use 
+ We denote a coequaliser 
+\begin_inset Formula $\xymatrix{\coprod_{i}Ka_{i}\coeqr{\vec{t}}{\vec{u}} & \Gamma\ar[r]^{\sigma} & \Delta}
+$
+\end_inset
+
+ in 
+\begin_inset Formula $\Kl{\D^{+}}^{*}$
+\end_inset
+
+ by 
+\begin_inset Formula $\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, following 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "nota:coeq"
@@ -12299,10 +12343,12 @@ noprefix "false"
 
 \end_inset
 
- for coequalisers in 
-\begin_inset Formula $\Kl{\D^{+}}^{*}$
-\end_inset
+.
+ 
+\begin_inset Note Note
+status open
 
+\begin_layout Plain Layout
 , implicitly assuming that 
 \begin_inset Formula $A\in\D^{+}$
 \end_inset
@@ -12314,49 +12360,13 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-The intuition behind this notation is that the symbol 
-\begin_inset Formula $\Rightarrow$
-\end_inset
-
- separates the input and the output of the algorithm, that we are going
- to describe with inductive rules.
- 
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-that we sometimes abbreviate as 
-\begin_inset Formula $\Gamma\vdash\vec{t}=_{\vec{A}}\vec{u}\Rightarrow\sigma\dashv\Delta$
-\end_inset
-
-.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Let us start with simple cases.
+Let us start with the structural rules.
  When 
 \begin_inset Formula $\Gamma=\bot$
 \end_inset
@@ -12375,40 +12385,7 @@ Let us start with simple cases.
 \end_inset
 
  holds.
-\end_layout
-
-\begin_layout Plain Layout
-Furthermore, when the coproduct is neither empty nor a singleton, the coequalise
-r can be computed sequentially by 
-\begin_inset Formula $\refrule{U-Split}$
-\end_inset
-
- rule, as argued in the introduction (see
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Theorem 9"
-key "DBLP:books/daglib/0068768"
-literal "false"
-
-\end_inset
-
-).
-\end_layout
-
-\end_inset
-
-
+ 
 \end_layout
 
 \begin_layout Standard
@@ -12746,17 +12723,85 @@ end{full}
 \end_layout
 
 \begin_layout Standard
-We mainly focus on the rules dealing with a single term pair, in a metavariable
- context 
-\begin_inset Formula $\Gamma=\coprod_{j}Kb_{j}$
+Thanks to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fullshort{
+\end_layout
+
 \end_inset
 
-, that is, a coequaliser diagram 
-\begin_inset Formula $\xymatrix{Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & T\Gamma}
+this
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+the 
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ rule which constructs coequalisers sequentially
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fullshort{}{
+\end_layout
+
+\end_inset
+
+ (as discussed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:categorification"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+, we can now focus on the rules dealing with singleton lists, that is, with
+ coequaliser diagrams 
+\begin_inset Formula $\xymatrix{Ka\ar@<+.5ex>[r]^{t}\ar@<-.5ex>[r]_{u} & T\Gamma.}
 $
 \end_inset
 
-.
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -14244,18 +14289,9 @@ The pruning phase computes a pushout in
 \end_inset
 
 .
- We use 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "nota:pushouts"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- for pushouts, always implicitly assuming (and enforcing) that the right
- branch is a finite coproduct of free morphisms, as in the above span.
+ We always implicitly assume (and enforce) that the right branch is a finite
+ coproduct of free morphisms.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -14430,6 +14466,29 @@ A pushout cocone for the above span consists in morphisms
 .
 \end_layout
 
+\begin_layout Standard
+When 
+\begin_inset Formula $\Gamma\xrightarrow{\sigma}\Delta\xleftarrow{\vec{u}}\coprod_{i}Kb_{i}$
+\end_inset
+
+ induces a pushout of the above span, we use 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "nota:pushouts"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and denote such a situation by 
+\begin_inset Formula $\Gamma\prune{\vec{t}}{\coprod_{i}{\cal L}x_{i}}{\sigma}{\vec{u}}\dashv\Delta$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Personal Question
 Could we use Reddy's syntax, to differentiate the input/output? We need
  to know what his syntax is the internal language of.
@@ -14459,14 +14518,32 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Before focusing with the rules dealing with a singleton list, let us note
- that the sequential rule 
+Let us start with the structural rules.
+ When 
+\begin_inset Formula $\Gamma=\bot$
+\end_inset
+
+, the pushout is the terminal cocone, i.e., 
+\begin_inset Formula $\pruningtopconcl$
+\end_inset
+
+ holds.
+ When the coproduct is empty, the pushout is just 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\pruningemptyconcl$
+\end_inset
+
+ holds.
+ Finally, let us note that the sequential rule 
 \begin_inset Formula $\refrule{P-Split}$
 \end_inset
 
  is in fact valid in any category.
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 When 
@@ -14498,7 +14575,7 @@ When
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The pushout can be decomposed into smaller components, thanks to the following
@@ -15121,26 +15198,15 @@ end{full}
 \end_layout
 
 \begin_layout Standard
-We now focus on the non-structural rules of the pruning phase in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
+Thanks to the above rule, we can now focus on the case where 
+\begin_inset Formula $\vec{t}$
 \end_inset
 
-, dealing with a span 
-\begin_inset Formula $\xymatrix{T\Gamma & Ka\hautr{N(\arg x)}\ar[l] & T(N:b),}
+ is a singleton list, thus dealing with a span 
+\begin_inset Formula $\xymatrix{T\Gamma & Ka\hautr{N(\arg x)}\ar[l]_{t} & T(N:b).}
 $
 \end_inset
 
- that is, a single term in a metavariable context 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-.
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -15528,12 +15594,31 @@ noprefix "false"
 \end_inset
 
 .
- This actually induces an isomorphism between the two categories of cocones.
- We therefore have the following rules.
+ This actually induces an isomorphism between the two categories of cocones,
+ thus justifying the rules 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We therefore have the following rules.
 \begin_inset Formula 
 \[
 \pruningrig\quad\pruningrigfail
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -15649,10 +15734,6 @@ Here, we construct the pushout of
 $
 \end_inset
 
- where 
-\begin_inset Formula $\arg y:a\rightarrow c$
-\end_inset
-
 .
  Note that in this span, 
 \begin_inset Formula $N(\arg x)={\cal L}\arg x$
@@ -15673,9 +15754,6 @@ $
 \end_inset
 
 .
-
-\color red
- N'est ce pas une version pareil que la'utre
 \end_layout
 
 \begin_layout Lemma
@@ -25156,8 +25234,25 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \end_layout
 
 \begin_layout Standard
-Let us detail how this example fits our assumptions: we need to show
+To understand how unification of two metavariables works (see the rules
+ 
+\begin_inset Formula $\refrule{U-RigRig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+), let us explain how finite connected limits are computed in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
 \end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
 \begin_layout Enumerate
 \begin_inset Formula ${\cal A}$
@@ -25195,8 +25290,13 @@ noprefix "false"
  preserves finite connected limits.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-To show the first item, let us introduce the category 
+Let us introduce the category 
 \begin_inset Formula ${\cal A}'$
 \end_inset
 
@@ -25466,6 +25566,113 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+This means that to unify 
+\begin_inset Formula $M(\vec{\alpha};\vec{\tau})$
+\end_inset
+
+ with 
+\begin_inset Formula $M(\vec{\alpha}';\vec{\tau}')$
+\end_inset
+
+, with 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $p;\vec{u}\vdash u'$
+\end_inset
+
+, we first need to compute the vector of common position 
+\begin_inset Formula $\vec{i}$
+\end_inset
+
+ between 
+\begin_inset Formula $\vec{\alpha}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\alpha}'$
+\end_inset
+
+, i.e, the largest vector 
+\begin_inset Formula $(i_{1}<\dots<i_{n})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\alpha_{i_{j}}=\alpha'_{i_{j}}$
+\end_inset
+
+.
+ Then, we consider 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}'$
+\end_inset
+
+ so that 
+\begin_inset Formula $\vec{\sigma}[j\mapsto i_{j+1}]$
+\end_inset
+
+ is the sub-list of 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ that only use type variables in 
+\begin_inset Formula $\alpha_{i_{1}},\dots,\alpha_{i_{n}}$
+\end_inset
+
+, and similarly for 
+\begin_inset Formula $\vec{\sigma}'$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\tau}'$
+\end_inset
+
+.
+ Finally, we define 
+\begin_inset Formula $(t_{1},\dots,t_{m})$
+\end_inset
+
+ as the vector of common positions between 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}'$
+\end_inset
+
+.
+ The most general unifier is then 
+\begin_inset Formula $M\mapsto N(\vec{i},\vec{t})$
+\end_inset
+
+ for a fresh metavariable 
+\begin_inset Formula $N$
+\end_inset
+
+ of arity 
+\begin_inset Formula $n;\sigma_{t_{1}},\dots\sigma_{t_{m}}\vdash t'$
+\end_inset
+
+, where 
+\begin_inset Formula $t'$
+\end_inset
+
+ is 
+\begin_inset Formula $u'[i_{j+1}\mapsto j]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 With this explicit description, it is straightforward to check that each
  
 \begin_inset Formula $O_{\ell}$
@@ -25476,6 +25683,11 @@ With this explicit description, it is straightforward to check that each
 \end_inset
 
  preserves finite connected limits.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
