@@ -13,7 +13,7 @@
 \usepackage{fullshort}
 
 % to comment for the short version
-\setboolean{fullpaper}{true}
+\setboolean{fullpaper}{false}
 
 \newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\commentaire}[1]{}
