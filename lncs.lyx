@@ -13658,7 +13658,11 @@ noprefix "false"
 
 \end_inset
 
-, using the following notation.
+, using the following notations (in the second one, we take 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ as the empty context).
 \begin_inset Note Note
 status open
 
@@ -13726,6 +13730,48 @@ we denote the morphism
 
  by 
 \begin_inset Formula $\underline{u'}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+\begin_inset CommandInset label
+LatexCommand label
+name "nota:subst-nota"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ be metavariable contexts and 
+\begin_inset Formula $a\in\D$
+\end_inset
+
+.
+ Any 
+\begin_inset Formula $t:Ka\rightarrow T(\Gamma+\Delta)$
+\end_inset
+
+ induces a Kleisli morphism 
+\begin_inset Formula $(\Gamma,M:a)\xrightarrow{}T(\Gamma+\Delta)$
+\end_inset
+
+ which we denote by 
+\begin_inset Formula $M\mapsto t$
 \end_inset
 
 .
@@ -14053,36 +14099,20 @@ noprefix "false"
 \begin_inset Formula $\refrule{U-FlexFlex}$
 \end_inset
 
-, using the following notation.
+, using 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "nota:subst-nota"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Notation
-Let 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- and 
-\begin_inset Formula $\Delta$
-\end_inset
-
- be metavariable contexts and 
-\begin_inset Formula $a\in\D$
-\end_inset
-
-.
- Any 
-\begin_inset Formula $t:Ka\rightarrow T(\Gamma+\Delta)$
-\end_inset
-
- induces a Kleisli morphism 
-\begin_inset Formula $(\Gamma,M:a)\xrightarrow{}T(\Gamma+\Delta)$
-\end_inset
-
- which we denote by 
-\begin_inset Formula $M\mapsto t$
-\end_inset
-
-.
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
