@@ -25187,7 +25187,7 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n;\Gamma\vdash t:\Lambda\tau_{1}\quad\tau_{2}\in S_{n}}{n;\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{n;\Gamma\vdash t:\forall\tau_{1}\quad\tau_{2}\in S_{n}}{n;\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -25211,7 +25211,7 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $H_{-,0}=n;\Gamma\vdash\Lambda\tau_{1}$
+\begin_inset Formula $H_{-,0}=n;\Gamma\vdash\forall\tau_{1}$
 \end_inset
 
 
@@ -25225,7 +25225,7 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1;wk(\Gamma)\vdash t:\tau}{n;\Gamma\vdash\Lambda t:\Lambda\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{n+1;wk(\Gamma)\vdash t:\tau}{n;\Gamma\vdash\Lambda t:\forall\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -25237,7 +25237,7 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\Lambda\tau'\}$
+\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\forall\tau'\}$
 \end_inset
 
 
