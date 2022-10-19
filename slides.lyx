@@ -1,0 +1,5886 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% or ...
+
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+\setbeamercovered{transparent}
+% or whatever (possibly just delete it)
+\usepackage{etoolbox}
+\setbeamertemplate{headline}{%
+\leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex]{palette quaternary}%
+    \insertsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt plus1filll}
+    \end{beamercolorbox}%
+  }
+}
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing,tikzmark,calc}
+\usepackage{tikz-cd}
+\usepackage{cmll}
+\newcommand{\vecif}[2]{\ifthenelse{\equal{#1}{}}{#2}{\vec{#2}}}
+
+\makeatother
+\newcommand{\coeqr}[2]{\ar@<+.5ex>[r]^-{#1}\ar@<-.5ex>[r]_-{#2}}
+\makeatletter
+
+\usepackage{mathrsfs}
+\newcommand{\D}{\mathscr{D}}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "lmodern" "default"
+\font_sans "lmss" "default"
+\font_typewriter "lmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style british
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This file is a solution template for:
+\end_layout
+
+\begin_layout Itemize
+Talk at a conference/colloquium.
+ 
+\end_layout
+
+\begin_layout Itemize
+Talk length is about 20min.
+ 
+\end_layout
+
+\begin_layout Itemize
+Style is ornate.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+In principle, this file can be redistributed and/or modified under the terms
+ of the GNU Public License, version 2.
+ However, this file is supposed to be a template to be modified for your
+ own needs.
+ For this reason, if you use this file as a template and not specifically
+ distribute it as part of a another package/program, the author grants the
+ extra permission to freely copy and modify this file as you see fit and
+ even to delete this copyright notice.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Generic pattern unification
+\end_layout
+
+\begin_layout Subtitle
+A categorical approach
+\end_layout
+
+\begin_layout Author
+
+\bar under
+Ambroise
+\begin_inset space ~
+\end_inset
+
+Lafont
+\bar default
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Neel
+\begin_inset space ~
+\end_inset
+
+Krishnaswami
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Itemize
+Give the names in the same order as the appear in the paper.
+ 
+\end_layout
+
+\begin_layout Itemize
+Use the 
+\begin_inset Quotes eld
+\end_inset
+
+Institute mark
+\begin_inset Quotes erd
+\end_inset
+
+ inset (
+\family sans
+Insert\SpecialChar menuseparator
+Custom Insets\SpecialChar menuseparator
+InstituteMark
+\family default
+) only if the authors have different affiliations.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+\bar under
+A.
+ Lafont
+\bar default
+, N.
+ Krishnaswami
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+- optional, use only with lots of authors
+\end_layout
+
+\begin_layout Plain Layout
+- if there are really lots of authors, use 
+\begin_inset Quotes eld
+\end_inset
+
+Author et al.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+University of Cambridge
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Itemize
+Use the 
+\begin_inset Quotes eld
+\end_inset
+
+Institute mark
+\begin_inset Quotes erd
+\end_inset
+
+ inset (
+\family sans
+Insert\SpecialChar menuseparator
+Custom Insets\SpecialChar menuseparator
+InstituteMark
+\family default
+) only if there are several affiliations.
+\end_layout
+
+\begin_layout Itemize
+Keep it simple, no one is interested in your street address.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+University of Cambridge
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+optional, but mostly needed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+October 2022
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Conference on Fabulous Presentations, 2003
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Itemize
+Either use conference name or its abbreviation.
+\end_layout
+
+\begin_layout Itemize
+Not really informative to the audience, more for people (including yourself)
+ who are reading the slides online
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+CFP 2003
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+optional, should be abbreviation of conference name
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\varctxt}{n}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\bang}{\oc}
+{!}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\labelrule}[2]{#1}
+{#1\underline{\textsc{#2}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\labellabelrule}[2]{\labelrule{#1\textsc{#2}}{#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\veciflyx}[2]{\vecif{#1}{#2}}
+{\vec{#2}_{#1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\arg}[1]{#1}
+{#1}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Set}{\mathrm{Set}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\something}[1]{\underline{#1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\acton}[2]{#1\cdot#2}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\prunecat}[5]{\vdash_{#5}#1:>#2\Rightarrow#4;#3}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\prune}[4]{\prunecat{#1}{#2}{#3}{#4}{}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationtopconcl}{\bot\vdash\vec{t}=\vec{u}\Rightarrow\bang\dashv\bot}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationtop}{\dfrac{}{\unificationtopconcl}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unificationemptyconcl}{\Gamma\vdash()=()\Rightarrow1_{\Gamma}\dashv\Gamma}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationempty}{\dfrac{}{\unificationemptyconcl}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unificationstepwise}[1]{\dfrac{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{u_{1}}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash\veciflyx{#1}{t_{2}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{u_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}=\veciflyx{}{u_{1}},\veciflyx{#1}{u_{2}}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}\textsc{U-Split}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationrigrig}{\dfrac{\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(\vec{t})=o(\vec{u})\Rightarrow\sigma\dashv\Delta}\textsc{U-RigRig}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationrigrigneqo}{\dfrac{o\neq o'}{\Gamma\vdash o(\vec{t})=o'(\vec{u})\Rightarrow\bang\dashv\bot}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationfailingoccurcheck}{\dfrac{T\Gamma\xrightarrow{Tin_{\Gamma}}T(\Gamma,M:b)\text{ does not factor }\vec{g}:a^{o}\rightarrow T(\Gamma,M:b)}{\Gamma,M:b\vdash M(\arg x)=o(\vec{g})\Rightarrow\bang\dashv\bot}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unificationfailingoccurcheckeffective}{\dfrac{u=o(\vec{t})\qquad u_{|\Gamma}\neq\something{\dots}}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\bang\dashv\bot}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationflexflex}{\dfrac{b\vdash\arg x=_{\D}\arg y\Rightarrow\arg z\dashv c}{\Gamma,M:b\vdash M(\arg x)=M(\arg y)\Rightarrow M\mapsto M'(\arg z)\dashv\Gamma,M':c}\textsc{U-FlexFlex}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\prune{u'}{M(\arg x)}{\sigma}v\dashv\Delta\qquad u=u'[in_{\Gamma}]}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\unificationoccurcheckeffective}{\dfrac{u_{|\Gamma}=\something{u'}\qquad\Gamma\prune{u'}{M(\arg x)}{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\pruningemptyconcl}{\Gamma\prune{()}{()}{1_{\Gamma}}{()}\dashv\Gamma}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningempty}{\dfrac{}{\pruningemptyconcl}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningtopconcl}{\bot\prune{\vec{t}}{\vec{f}}{\bang}{\bang}\dashv\bot}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningtop}{\dfrac{}{\pruningtopconcl}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningflex}[1]{\dfrac{c\prunecat{\veciflyx{#1}y}{\veciflyx{#1}x}{\veciflyx{#1}x'\dashv d}{\veciflyx{#1}{y'}}{\D}}{\Gamma,M:c\prune{M(\veciflyx{#1}y)}{N(\veciflyx{#1}x)}{M\mapsto M'(\veciflyx{#1}{x'})}{M'(\veciflyx{#1}{y'})}\dashv\Gamma,M':d}\textsc{P-Flex}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningrigfail}{\dfrac{o\neq\acton{\arg x}{\dots}}{\Gamma\prune{o(\vec{t})}{N(\arg x)}{\bang}{\bang}\dashv\bot}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\pruningrig}{\dfrac{\Gamma\prune{\vec{t}}{{\cal L}^{+}\arg x^{o}}{\sigma}{\vec{u}}\dashv\Delta\qquad o=\acton{\arg x}{o'}}{\Gamma\prune{o(\vec{t})}{N(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\pruningstepwise}[1]{\dfrac{\Gamma\prune{\veciflyx{}{t_{1}}}{\veciflyx{}{f_{1}}}{\sigma_{1}}{\veciflyx{}{u_{1}}}\dashv\Delta_{1}\quad\Delta_{1}\prune{\veciflyx{#1}{t_{2}}[\sigma_{1}]}{\veciflyx{#1}{f_{2}}}{\sigma_{2}\dashv\Delta_{2}}{\veciflyx{#1}{u_{2}}}}{\Gamma\prune{\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}}{\veciflyx{}{f_{1}}+\veciflyx{#1}{f_{2}}}{\sigma_{1}[\sigma_{2}]}{\veciflyx{}{u_{1}}[\sigma_{2}],\veciflyx{#1}{u_{2}}}\dashv\Delta_{2}}\textsc{P-Split}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If you have a file called "institution-logo-filename.xxx", where xxx is a
+ graphic format that can be processed by latex or pdflatex, resp., then you
+ can add a logo by uncommenting the following:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+pgfdeclareimage[height=0.5cm]{institution-logo}{institution-logo-filename}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+logo{
+\backslash
+pgfuseimage{institution-logo}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The following causes the table of contents to be shown at the beginning
+ of every subsection.
+ Delete this, if you do not want it.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSubsection[]{%
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Outline}   
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection,currentsubsection] 
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AtBeginSection[]{%
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+frame<beamer>{ 
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+frametitle{Outline}   
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+tableofcontents[currentsection] 
+\end_layout
+
+\begin_layout Plain Layout
+
+  }
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If you wish to uncover everything in a step-wise fashion, uncomment the
+ following command:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\backslash
+beamerdefaultoverlayspecification{<+->}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Structuring a talk is a difficult task and the following structure may not
+ be suitable.
+ Here are some rules that apply for this solution: 
+\end_layout
+
+\begin_layout Itemize
+Exactly two or three sections (other than the summary).
+ 
+\end_layout
+
+\begin_layout Itemize
+At *most* three subsections per section.
+ 
+\end_layout
+
+\begin_layout Itemize
+Talk about 30s to 2min per frame.
+ So there should be between about 15 and 30 frames, all told.
+\end_layout
+
+\begin_layout Itemize
+A conference audience is likely to know very little of what you are going
+ to talk about.
+ So *simplify*! 
+\end_layout
+
+\begin_layout Itemize
+In a 20min talk, getting the main ideas across is hard enough.
+ Leave out details, even if it means being less precise than you think necessary.
+ 
+\end_layout
+
+\begin_layout Itemize
+If you omit details that are vital to the proof/implementation, just say
+ so once.
+ Everybody will be happy with that.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+What is unification?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underbrace{t}\stackrel{?}{=}\underbrace{u}
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\text{terms with metavariables \ensuremath{M,N,\dots}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+Unifier 
+\series default
+=
+\series bold
+ 
+\series default
+metavariable substitution 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ s.t.
+\begin_inset Formula 
+\[
+t[\sigma]=u[\sigma]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Most general unifier
+\series default
+ =
+\series bold
+ 
+\series default
+unifier 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ that uniquely factors any other
+\begin_inset Formula 
+\[
+\forall\delta,\qquad t[\delta]=u[\delta]\quad\Leftrightarrow\quad\exists!\delta'.\ \ \delta=\delta'\circ\sigma
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align left
+
+\series bold
+Goal of unification 
+\series default
+= find the most general unifier
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Where is unification used?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}[t]{0.5
+\backslash
+textwidth}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+First-order unification
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+No metavariable argument
+\end_layout
+
+\begin_layout ExampleBlock
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Examples
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Logic programming (Prolog)
+\end_layout
+
+\begin_layout Itemize
+ML type inference systems
+\end_layout
+
+\end_deeper
+\begin_layout ExampleBlock
+\begin_inset Formula 
+\[
+(M\rightarrow N)\stackrel{?}{=}(\mathbb{N}\rightarrow M)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vrule 
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}[t]{0.5
+\backslash
+textwidth}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+Second-order unification
+\end_layout
+
+\end_deeper
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset Formula $M(\dots)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout ExampleBlock
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Example
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Type theory, proof assistants
+\end_layout
+
+\begin_layout Standard
+\align left
+\begin_inset Formula 
+\[
+(\forall x.M(x,u))\stackrel{?}{=}t
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\color red
+Indecidable
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pattern unification [Miller '91]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+A 
+\color red
+decidable
+\color inherit
+ fragment of second-order unification.
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Pattern restriction
+\series default
+:
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M(\underbrace{x_{1},\dots,x_{n}}_{\text{distinct variables}})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Formula $\exists$
+\end_inset
+
+ unification algorithm [Miller '91]
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+fails if no unifier
+\end_layout
+
+\begin_layout Itemize
+returns the most general unifier
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+This work
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+A 
+\series bold
+generic 
+\series default
+algorithm for pattern unification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Parameterised by a 
+\emph on
+signature
+\end_layout
+
+\begin_layout Itemize
+Categorical semantics
+\end_layout
+
+\end_deeper
+\begin_layout Block
+
+\end_layout
+
+\begin_layout Block
+
+\end_layout
+
+\begin_layout Examples
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+binding signatures
+\end_layout
+
+\begin_layout Itemize
+Linear syntax (e.g., quantum 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus)
+\end_layout
+
+\begin_layout Itemize
+Intrinsic system F
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Related work: algebraic accounts of unification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}[t]{0.5
+\backslash
+textwidth}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+First-order unification
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Lattice theory [Plotkin '70]
+\end_layout
+
+\begin_layout Itemize
+Category theory
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[-]
+\end_layout
+
+\end_inset
+
+[Rydeheard-Burstall '88] 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[-]
+\end_layout
+
+\end_inset
+
+[Goguen '89]
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vrule 
+\backslash
+hfill
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{column}[t]{0.5
+\backslash
+textwidth}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+Pattern unification
+\end_layout
+
+\end_deeper
+\begin_layout Columns
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Category theory 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[-]
+\end_layout
+
+\end_inset
+
+[Vezzosi-Abel '14]
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+normalised 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-terms
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[-]
+\end_layout
+
+\end_inset
+
+
+\color blue
+This work
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{column}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Outline
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Pattern unification for pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\begin_layout Subsection
+Syntax
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Syntax (De Bruijn levels)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Formation rules:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\overbrace{\Gamma}^{\mathclap{\text{Metavariable context \ensuremath{(M_{1}:n_{1},\dots)}}}};\underbrace{\varctxt}_{\mathclap{\text{Variable context }}}\vdash t
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\tikzmark{G}{\Gamma};\tikzmark{\varctxt}{\varctxt}\vdash t
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Formation rules:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{2em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{x<\varctxt}{\Gamma;\varctxt\vdash x}\textsc{Var}\qquad\dfrac{\Gamma;\varctxt\vdash t\quad\Gamma;\varctxt\vdash u}{\Gamma;\varctxt\vdash t\ u}\textsc{App}\qquad\dfrac{\Gamma;\varctxt+1\vdash t}{\Gamma;\varctxt\vdash\lambda t}\textsc{Abs}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{(M:n)\in\Gamma\qquad x_{1},\dots,x_{n}<\varctxt\qquad x_{1},\dots x_{n}\text{ distinct}}{\Gamma;\varctxt\vdash M(x_{1},\dots,x_{n})}\textsc{Flex}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="right" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Gamma;C\vdash t\ \Leftrightarrow\ $
+\end_inset
+
+
+\begin_inset Formula $t$
+\end_inset
+
+ is a term in context 
+\begin_inset Formula $\Gamma;C$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Metavariables contexts:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Gamma=M_{1}:n_{1},\dots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variable contexts:
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $C=(0:\tau,\dots,n:\tau)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Metavariable substitution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\begin{array}{clcl}
+\sigma: & \overbrace{(M_{1}:m_{1},\dots)}^{{\displaystyle {\color{blue}\Gamma}}} & \stackrel{}{\rightarrow} & {\color{red}\Delta}\\
+\sigma= & (\sigma_{1},\dots) & \text{s.t.} & {\color{red}\Delta};\boldsymbol{m_{i}}\vdash\sigma_{i}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\begin{array}{crcl}
+\sigma: & \overbrace{(M_{1}:m_{1},\dots)}^{{\displaystyle {\color{blue}\Gamma}}} & \stackrel{}{\rightarrow} & {\color{red}\Delta}\\
+\sigma= & (\sigma_{1},\dots)\\
+ & M_{i}:\boldsymbol{m_{i}} & \mapsto & \sigma_{i}\quad\text{ s.t. }\quad{\color{red}\Delta};\boldsymbol{m_{i}}\vdash\sigma_{i}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Substitution 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ from 
+\begin_inset Formula $\overbrace{(M_{1}:m_{1},\dots,M_{p}:m_{p})}^{{\color{blue}{\displaystyle \Gamma}}}$
+\end_inset
+
+ to 
+\begin_inset Formula ${\color{red}\Delta}$
+\end_inset
+
+
+\series default
+: 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+M_{i}\mapsto\sigma_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\sigma_{1},\dots,\sigma_{p})\qquad\text{s.t.}\qquad{\color{red}\Delta};m_{i}\vdash\sigma_{i}
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{2em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sigma$
+\end_inset
+
+ extends to terms:
+\begin_inset Formula 
+\[
+{\color{blue}\Gamma};\varctxt\vdash t\quad\mapsto\quad{\color{red}\Delta};\varctxt\vdash t[\sigma]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Subsection
+Unification algorithm
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unification algorithm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\overbrace{\Gamma\vdash\tikzmarknode{t}{t}=\tikzmarknode{u}{u}}^{\text{input}}\Rightarrow\overbrace{\tikzmarknode{sigma}{\sigma}\dashv\Delta}^{\text{output}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma;(n)\vdash\tikzmarknode{tudef}{t,u}\qquad\qquad\qquad\qquad\qquad\qquad
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
+\tikzmarknode{sigmadef}{\sigma}:\Gamma\rightarrow\Delta\text{ s.t. }t[\sigma]=u[\sigma]\\
+\text{most general unifier}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (sigma) edge (sigmadef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (t) edge (tudef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (u) edge (tudef);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Examples
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma,M:2\vdash M(x,y)=x\Rightarrow(M\mapsto0)\dashv\Gamma
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma,M:2\vdash M(x,y)=y\Rightarrow(M\mapsto1)\dashv\Gamma
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash\lambda t=\lambda u\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash"t_{1},t_{2}=u_{1,}u_{2}"\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unifying lists of terms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\overbrace{\Gamma\vdash\tikzmarknode{ts}{\vec{t}}=\tikzmarknode{us}{\vec{u}}}^{\text{input}}\Rightarrow\overbrace{\tikzmarknode{sigma2}{\sigma}\dashv\Delta}^{\text{output}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma;(n_{i})\vdash\tikzmarknode{tusdef}{t_{i},u_{i}}\qquad\qquad\qquad\qquad\qquad\qquad
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
+\tikzmarknode{sigma2def}{\sigma}:\Gamma\rightarrow\Delta\text{ s.t. }\vec{t}[\sigma]=\vec{u}[\sigma]\\
+\text{most general unifier}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (sigma2) edge (sigma2def); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (ts) edge (tusdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (us) edge (tusdef);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Examples (lists)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma\vdash()=()\Rightarrow id_{\Gamma}\dashv\Gamma
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationstepwise 1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Impossible cases
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma\vdash\lambda t=u_{1}\ u_{2}\Rightarrow\tikzmarknode{bang}{\color{red}\bang}\dashv\tikzmarknode{bot}{\color{red}\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\qquad\qquad\qquad\tikzmarknode{botdef}{\text{formal "error" context}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\tikzmarknode{bangdef}{\text{formal "error" substitution}}\qquad
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (bot) edge (botdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=7pt, <-] (bang) edge (bangdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+node{$
+\backslash
+overbrace{
+\backslash
+Gamma
+\backslash
+vdash t=u}^{
+\backslash
+text{input}}
+\backslash
+Rightarrow
+\backslash
+overbrace{
+\backslash
+sigma
+\backslash
+dashv
+\backslash
+Delta}^{
+\backslash
+text{output}}$} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\overbrace{\Gamma\vdash t=u}^{\text{input}}\Rightarrow\overbrace{\underbrace{\sigma}_{\mathclap{\sigma:\Gamma\rightarrow\Delta\text{ s.t. }t[\sigma]=u[\sigma]}}\dashv\Delta}^{\text{output}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unifying a metavariable 
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}\dots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+Three cases
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}M(\vec{y})$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma,M:n\dashv M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto N(\vec{z})\dashv\Gamma,N:p
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzmark{topbraceunifmvar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}\dots M(\vec{y})\dots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}u$
+\end_inset
+
+ and 
+\begin_inset Formula $M\notin u$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzmark{botbraceunifmvar}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[overlay, remember picture]
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw [decoration={brace,amplitude=0.5em},decorate,black]
+\end_layout
+
+\begin_layout Plain Layout
+
+    let 
+\backslash
+p1=(pic cs:topbraceunifmvar), 
+\backslash
+p2=(pic cs:botbraceunifmvar) in
+\end_layout
+
+\begin_layout Plain Layout
+
+    ({max(
+\backslash
+x1,
+\backslash
+x2)+1em}, {
+\backslash
+y1+0.8em}) -- node[right=1em] {Cf next slides} ({max(
+\backslash
+x1,
+\backslash
+x2)+1em}, {
+\backslash
+y2});
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unifying a metavariable with itself
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+M(\vec{x})\stackrel{?}{=}M(\vec{y})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\series bold
+Most general unifier
+\series default
+: 
+\begin_inset Formula $M\mapsto M'(\vec{z})$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\vec{z}$
+\end_inset
+
+ = vector of common positions: 
+\begin_inset Formula $x_{\vec{z}}=y_{\vec{z}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+Formally,
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{"n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p"}{\Gamma,M:n\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(\vec{z})\dashv\Gamma,M':p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Cyclic case
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M(\vec{x})\stackrel{?}{=}\dots M(\vec{y})\dots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+No unifier (sizes cannot match after substitution)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma\vdash\underbrace{M(\vec{x})}\underset{\mathclap{\begin{array}{c}
+\\
+\text{sizes cannot match after substitution}
+\end{array}}}{=}\underbrace{\dots M(\vec{y})\dots}\Rightarrow\bang\dashv\bot
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Non cyclic case
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+M(\vec{x})\stackrel{?}{=}u\text{ (\ensuremath{M\notin u})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+Most general unifier
+\series default
+: 
+\begin_inset Formula $M\mapsto u[\vec{x}^{-1}]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Requires 
+\begin_inset Formula 
+\begin{equation}
+fv(u)\subset\vec{x}\label{eq:fv}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Requires that 
+\begin_inset Formula $fv(u)\subset\vec{x}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\series bold
+Pruning phase
+\series default
+:
+\series bold
+ 
+\series default
+enforces 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:fv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by restricting metavariable arities.
+\end_layout
+
+\begin_deeper
+\begin_layout Example
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+M(x) & \stackrel{?}{=} & N(x,y)\\
+N(x,y) & \xRightarrow{\text{pruning}} & N'(x)
+\end{array}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash M(x)=y\Rightarrow\bang\dashv\Delta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma,N:2\vdash M(x)=N(x,y)\Rightarrow N\mapsto N'(0)\dashv\Gamma,N':1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pruning phase
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma\prune u{\tikzmarknode{Mpruning}{M}(\vec{x})}{\tikzmarknode{sigmapruning}{\sigma}}{\overbrace{v}^{\mathclap{u\text{ after pruning and renamed by \ensuremath{\vec{x}^{-1}}}}}}\dashv\Delta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\tikzmarknode{Mpruningdef}{\text{\ensuremath{M\notin\ensuremath{\Gamma}},u}}\qquad\qquad\qquad\qquad
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
+\tikzmarknode{sigmapruningdef}{\sigma}:\Gamma\rightarrow\Delta\\
+\text{pruning substitution}
+\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (sigmapruning) edge (sigmapruningdef);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (Mpruning) edge (Mpruningdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Characterising the output
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Formula $(\sigma,v)$
+\end_inset
+
+ = 
+\begin_inset Quotes bld
+\end_inset
+
+most general
+\begin_inset Quotes brd
+\end_inset
+
+ satisfying
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\begin_inset Formula 
+\[
+u[\sigma]=v[\text{\ensuremath{\vec{x}}}]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Most general unifier: 
+\begin_inset Formula $\sigma,M\mapsto v$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{M\notin u\qquad\Gamma\prune u{M(\vec{x})}{\sigma}v\dashv\Delta}{\Gamma,M:n\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\series bold
+Intuition
+\series default
+: 
+\begin_inset Formula $\sigma,M\mapsto v$
+\end_inset
+
+ = most general unifier for 
+\begin_inset Formula $u\stackrel{?}{=}M(\vec{x})$
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+
+\emph on
+\begin_inset Quotes bld
+\end_inset
+
+
+\begin_inset Formula $v$
+\end_inset
+
+ replaces 
+\begin_inset Formula $M$
+\end_inset
+
+'
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Characterising pruning
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+
+\series bold
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Universal property
+\end_layout
+
+\end_inset
+
+
+\series default
+
+\begin_inset Formula 
+\[
+\Gamma\prune u{M(\vec{x})}{{\color{red}\sigma}}{{\color{red}v}}\dashv\Delta\quad\Leftrightarrow\quad\begin{array}{c}
+({\color{red}\sigma},{\color{red}v})=\text{"most general"}\\
+\text{ satisfying }u[{\color{red}\sigma}]={\color{red}v}[\text{\ensuremath{\vec{x}}}]
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\series bold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Thus,
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{M\notin u\qquad\Gamma\prune u{M(\vec{x})}{{\color{red}\sigma}}{{\color{red}v}}\dashv\Delta}{\Gamma,M:n\vdash M(\vec{x})=u\Rightarrow{\color{red}\sigma},M\mapsto{\color{red}v}\dashv\Delta}\qquad\textit{"v replaces M"}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pruning a metavariable
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M(\vec{x})\stackrel{?}{=}N(\vec{y})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\series bold
+Most general unifier
+\series default
+: 
+\begin_inset Formula $M\mapsto N'({\color{blue}\vec{l}})$
+\end_inset
+
+, 
+\begin_inset Formula $N\mapsto N'({\color{blue}\vec{r}})$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vec{l},\vec{r}$
+\end_inset
+
+ = vectors of common value positions: 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+x_{{\color{blue}\vec{l}}}=y_{{\color{blue}\vec{r}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\dfrac{"n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}"}{\Gamma,N:n\prune{N(\vec{x})}{M(\vec{y})}{N\mapsto N'(\vec{r})}{N'(\vec{l})}\dashv\Gamma,N':p}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{"m\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}"}{\Gamma,M:m,N:n\vdash M(\vec{x})=N(\vec{y})\Rightarrow\dashv\Gamma,M':p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pruning: other examples
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{}{\Gamma\prune{x_{i}}{M(x_{0},\dots,x_{n})}{id_{\Gamma}}i\dashv\Gamma}\qquad\dfrac{y\notin\vec{x}}{\Gamma\prune y{M(\vec{x})}{\bang}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\prune t{M_{1}(\vec{x},\overbrace{n}^{\mathclap{\text{{\color{blue}bound} {\color{blue}variable}}}})}{\sigma}v\dashv\Delta}{\Gamma\prune{{\color{blue}\lambda}t}{M(\vec{x})}{\sigma}{\lambda v}\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{"\Gamma\prune{t,u}{M_{1}(\vec{x}),M_{2}(\vec{x})}{\sigma}{v_{1},v_{2}}\dashv\Delta"}{\Gamma\prune{t\ u}{M(\vec{x})}{\sigma}{v_{1}\ v_{2}}\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pruning multi-terms
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma\prune{\tikzmarknode{uspruning}{u_{1},\dots,u_{n}}}{\tikzmarknode{Mspruning}{M_{1}(\vec{x}_{1}),\dots M_{n}(\vec{x}_{n})}}{\tikzmarknode{sigmaspruning}{\sigma}}{\tikzmarknode{vspruning}{v_{1},\dots,v_{n}}}\dashv\Delta
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tikzmarknode{uspruningdef}{\Gamma;(n_{i})\vdash u_{i}}\qquad\qquad\qquad\qquad\begin{array}{c}
+\tikzmarknode{vspruningdef}{\Delta;{\color{blue}m_{i}}\vdash v_{i}}\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\tikzmarknode{Mspruningdef}{\text{\ensuremath{(M_{i}:{\color{blue}m_{i}})\notin\ensuremath{\Gamma},u_{j}}}}\qquad\qquad\qquad\qquad\tikzmarknode{sigmaspruningdef}{\sigma}:\Gamma\rightarrow\Delta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (sigmaspruning) edge (sigmaspruningdef);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (vspruning) edge (vspruningdef);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (uspruning) edge (uspruningdef);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (Mspruning) edge (Mspruningdef);
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Generalisation to binding signatures
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Parameterisation by a 
+\emph on
+signature
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout ExampleBlock
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Binding signature for pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+app:(\tikzmarknode{numbound1}{0},\tikzmarknode{numbound2}{0})\qquad abs:(\tikzmarknode{numbound3}{1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tikzmarknode{numbounddef}{\text{number of bound variables in the argument}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (numbounddef.north -| numbound1.south)
+ -- (numbound1); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (numbounddef) edge (numbound2); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (numbounddef.north -| numbound3.south)
+ -- (numbound3); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align center
+The previous unification algorithm generalises to any syntax specified by
+ a binding signature
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example: pruning an operation
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(\vec{t})=o(\vec{u})\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+o:(\alpha_{1},\dots,\alpha_{p})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{n,\dots,n+\alpha_{1}-1}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{N(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Semantics
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\begin{array}{rcrlc}
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta & \Leftrightarrow & \sigma & \text{ = \textbf{coequaliser} of \ensuremath{t} and \ensuremath{u}}\\
+\Gamma\prune tf{\sigma}v\dashv\Delta & \Leftrightarrow & \ensuremath{\sigma,v} & \text{ = \textbf{pushout} of \ensuremath{t} and \ensuremath{f}}
+\end{array}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\qquad\Leftrightarrow\qquad\sigma\text{ = \textbf{coequaliser} of \ensuremath{t} and \ensuremath{u}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma\prune tf{\sigma}v\dashv\Delta\qquad\Leftrightarrow\qquad\text{\ensuremath{\sigma,v}}\text{ = \textbf{pushout} of \ensuremath{t} and \ensuremath{f}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+...
+ in the 
+\emph on
+second-order algebraic theory
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+footnote{[Fiore-Mahmoud 2010]}
+\end_layout
+
+\end_inset
+
+
+\emph default
+ of 
+\begin_inset Formula $S$
+\end_inset
+
+ (cf next section)
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Section
+Categorical generalisation
+\end_layout
+
+\begin_layout Subsection
+A case study: syntax of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus as a functor
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\mathbb{F}_{m}:=\text{category of finite cardinals and injections between them}
+\]
+
+\end_inset
+
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus as a functor 
+\begin_inset Formula $\Lambda:\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Lambda_{n}=\{t\ |\ \cdot;n\vdash t\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus as a fixpoint
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align left
+\begin_inset Formula 
+\[
+\Lambda_{n}\cong\underbrace{\{0,\dots,n-1\}}_{\text{variables}}+\underbrace{\Lambda_{n}\times\Lambda_{n}}_{\text{application}}+\underbrace{\Lambda_{n+1}}_{\text{abstraction}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+In fact,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Lambda=\tikzmarknode{fixpointnotation}{\mu X.F(X)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzmarknode{fixpointnotationdef}{
+\end_layout
+
+\end_inset
+
+
+\series bold
+Initial algebra
+\series default
+ of the endofunctor
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $[\mathbb{F}_{m},\Set]$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+F(X)_{n}=\{0,\dots,n-1\}+X_{n}\times X_{n}+X_{n+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (fixpointnotation) edge (fixpointnotation
+def); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus with a metavariable
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Lambda(M:m)_{n} & =\{t\ |\ M:m;n\vdash t\}
+\end{align*}
+
+\end_inset
+
+As a fixpoint:
+\begin_inset Formula 
+\[
+\Lambda(M:m)=\mu X.(\underbrace{\tikzmarknode{Fmvar}{F(X)}}_{\mathclap{\text{operations / variables}}}+\ \tikzmarknode{argmvar}{\color{blue}arg^{M}})
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\tikzmarknode{Fmvardef}{\text{operations / variables}}\qquad\tikzmarknode{argmvardef}{\text{arguments for \ensuremath{M}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (Fmvardef) edge (Fmvar); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (argmvardef) edge (argmvar); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}arg^{M}}_{\boldsymbol{n}} & =\{\text{\ensuremath{M}-arguments in the variable context \textbf{\ensuremath{\boldsymbol{n}}}\}}\\
+ & =\left\{ \vec{x}\in\{0,\dots,n-1\}^{m}\ \left|x_{1},\dots,x_{m}\text{ distinct}\right.\right\} \\
+ & =\hom_{\mathbb{F}_{m}}(m,n)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Lambda(M:m)=\mu X.(F(X)+ym)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus with metavariables
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Lambda(\Gamma)_{n}=\{t\ |\ \Gamma;n\vdash t\}
+\]
+
+\end_inset
+
+As a fixpoint:
+\begin_inset Formula 
+\begin{align*}
+\Lambda(\Gamma) & =\mu X.(F(X)+\underbrace{{\displaystyle \coprod_{(M:m)\in\Gamma}ym}}_{{\displaystyle \underline{\Gamma}}})\\
+\\
+ & =\underbrace{\tikzmarknode{Tmvars}{T}}_{\text{\text{free monad generated by \ensuremath{F}}}}(\tikzmarknode{Gmvars}{\underline{\Gamma}})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T(\underline{\Gamma})_{n}=\{t\ |\ \Gamma;n\vdash t\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\tikzmarknode{Tmvarsdef}{\text{free monad generated by \ensuremath{F}}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\tikzmarknode{Gmvarsdef}{\coprod_{(M:m)\in\Gamma}ym}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (Tmvarsdef) edge (Tmvars); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, ->] (Gmvarsdef) edge (Gmvars); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+=\underbrace{T}_{\text{free monad generated by \ensuremath{F}}}(\underbrace{\underline{\Gamma}}_{\coprod_{(M:m)\in\Gamma}ym})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Terms are Kleisli morphisms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Claim
+\series default
+: 
+\begin_inset Formula $\hom(yn,T\underline{\Gamma})$
+\end_inset
+
+ is the set of terms in context 
+\begin_inset Formula $\Gamma;n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Proof
+\series default
+:
+\begin_inset Formula 
+\begin{align*}
+\hom(yn,T\underline{\Gamma}) & \cong T(\underline{\Gamma}){}_{n}\\
+ & \cong\{t|\Gamma;n\vdash t\}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Substitutions are Kleisli morphisms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Claim
+\series default
+: 
+\begin_inset Formula $\hom(\underline{\Gamma},T\underline{\Delta})$
+\end_inset
+
+ is the set of substitutions 
+\begin_inset Formula $\Gamma\rightarrow\Delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Proof
+\series default
+:
+\begin_inset Formula 
+\begin{align*}
+\hom(\underline{\Gamma},T\underline{\Delta}) & \cong\hom\left(\coprod_{M:m\in\Gamma}ym,T\underline{\Delta}\right)\\
+ & \cong\coprod_{M:m\in\Gamma}\hom\left(ym,T\underline{\Delta}\right)\\
+ & \cong\coprod_{M:m\in\Gamma}T(\underline{\Delta})_{m}\\
+ & \cong\coprod_{M:m\in\Gamma}\{t|\Delta;m\vdash t\}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unification as a Kleisli coequaliser
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Claims
+\series default
+: 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\hom(yn,T\underline{\Gamma})$
+\end_inset
+
+ = set of terms in context 
+\begin_inset Formula $\Gamma;n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\hom(\underline{\Gamma},T\underline{\Delta})$
+\end_inset
+
+ = set of metavariable substitutions 
+\begin_inset Formula $\Gamma\rightarrow\Delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Most general unifier of 
+\begin_inset Formula $t,u$
+\end_inset
+
+ = coequaliser of 
+\begin_inset Formula $\xymatrix{yn\coeqr{t}{u} & T\underline{\Gamma}}
+$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+in 
+\begin_inset Formula $\text{Th}_{F}$
+\end_inset
+
+ = Kleisli category restricted to finite coproducts of representable functors
+ (
+\begin_inset Formula $\underline{\Gamma}$
+\end_inset
+
+).
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Generic pattern unification
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Signature
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ small category (e.g., 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+) s.t.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+all morphisms are monic (pattern restriction)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits (
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}N(\vec{y})$
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $F$
+\end_inset
+
+ endofunctor on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ of the shape
+\begin_inset Formula 
+\[
+F(X)_{a}=\coprod_{o\in O_{a}}X_{L_{o,1}}\times\dots\times X_{L_{o,n_{o}}}
+\]
+
+\end_inset
+
+such that 
+\begin_inset Formula $F$
+\end_inset
+
+ restricts to an endofunctor on functors preserving finite connected limits.
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Semantics of unification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Claim
+\series default
+: Given a signature 
+\begin_inset Formula $({\cal A},F)$
+\end_inset
+
+, a coequaliser diagram in 
+\begin_inset Formula $\text{Th}_{F}$
+\end_inset
+
+ has a coequaliser as soon as there exists a cocone (i.e., a 
+\begin_inset Quotes bld
+\end_inset
+
+unifier
+\begin_inset Quotes brd
+\end_inset
+
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(
+\begin_inset Formula $\text{Th}_{F}=$
+\end_inset
+
+ Kleisli category of 
+\begin_inset Formula $F^{*}$
+\end_inset
+
+ restricted to coproducts of representable presheaves.)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Proof
+\series default
+: By proving termination of the unification algorithm.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+System F
+\end_layout
+
+\end_inset
+
+Example: System F
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Example: System F
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Objects of 
+\begin_inset Formula ${\cal A}:$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+n|\underbrace{\tau_{1},\dots,\tau_{p}\vdash\tau_{f}}_{\mathclap{\text{Types taking free variables in \ensuremath{\{0,\dots,n-1\}}}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+Rightarrow$]
+\end_layout
+
+\end_inset
+
+System F defines a functor 
+\begin_inset Formula $\Phi:{\cal A}\rightarrow\Set$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Phi(n|\tau_{1},\dots,\tau_{p}\vdash\tau_{f})=\{t\text{ s.t. }\text{n|\ensuremath{\tau_{1},\dots,\tau_{p}\vdash t:\tau_{f}}}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $\Phi=\mu X.F(X)$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Itemize
+Metavariables?
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The endofunctor for system 
+\begin_inset Formula $F$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F(X)_{a}=\coprod_{o\in O_{a}}X_{L_{o,1}}\times\dots\times X_{L_{o,n_{o}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(X)_{n|\Gamma\vdash\tau}=\coprod\dots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n+1|wk(\Gamma)\vdash t:\tau'}{n|\Gamma\vdash\Lambda t:\Lambda\tau'}\textsc{T-Abs}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\tau'\text{ s.t. }\tau=\Lambda\tau'}X_{n+1|wk(\Gamma)\vdash\tau'}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n|\Gamma\vdash t:\Lambda\tau_{1}}{n|\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\textsc{T-App}$
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\tau_{1},\tau_{2}\text{ s.t. }\tau=\tau_{1}[\tau_{2}]}}X_{n|\Gamma\vdash\Lambda\tau_{1}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n|\Gamma\vdash t:\tau'\Rightarrow\tau\quad n|\Gamma\vdash u:\tau'}{n|\Gamma\vdash t\ u:\tau}\textsc{App}$
+\end_inset
+
+
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\displaystyle \coprod_{\tau'}}X_{n|\Gamma\vdash\tau'\Rightarrow\tau}\times X_{n|\Gamma\vdash\tau'}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+System F = initial algebra for 
+\begin_inset Formula $F$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Metavariables in system F
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\dfrac{\alpha_{1},\dots,\alpha_{p}\text{ distinct},<n\qquad x_{1},\dots x_{q}\text{ distinct}\qquad\tau_{i}[\vec{\alpha}]=\Gamma_{i}}{\underbrace{\Delta,M:(p|\tau_{1},\dots,\tau_{q}\vdash\tau_{f})}_{\mathclap{\text{Metavariable context}}};n|\Gamma\vdash M(\underbrace{\vec{\alpha}}_{\mathclap{\text{type variables}}},\vec{x}):\tau_{f}[\vec{\alpha}]}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unification in system F
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+M(\vec{\alpha},\vec{x})\stackrel{?}{=}M(\vec{\beta},\vec{y})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Most general unifier
+\series default
+: 
+\begin_inset Formula $M\mapsto N(\vec{\gamma},\vec{z})$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\vec{\gamma}$
+\end_inset
+
+ maximal s.t.
+ 
+\begin_inset Formula 
+\[
+\alpha_{\vec{\gamma}}=\beta_{\vec{\gamma}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{z}$
+\end_inset
+
+ maximal s.t.
+ 
+\begin_inset Formula 
+\[
+x'_{\vec{z}}=y'_{\vec{z}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\vec{x}'=\vec{x}[\vec{\gamma}^{-1}]$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{y}'=\vec{y}[\vec{\gamma}^{-1}]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Section
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Summary
+\end_layout
+
+\end_inset
+
+Summary of the generic unification algorithm
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Interpreting the unification statements
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Notations
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{array}{rcrlc}
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta & \Leftrightarrow & \sigma & \text{ = \textbf{coequaliser} of \ensuremath{t} and \ensuremath{u}}\\
+\Gamma\prune tf{\sigma}v\dashv\Delta & \Leftrightarrow & \ensuremath{\sigma,v} & \text{ = \textbf{pushout} of \ensuremath{t} and \ensuremath{f}}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta\qquad\Leftrightarrow\qquad\sigma\text{ = \textbf{coequaliser} of \ensuremath{t} and \ensuremath{u}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma\prune tf{\sigma}v\dashv\Delta\qquad\Leftrightarrow\qquad\text{\ensuremath{\sigma,v}}\text{ = \textbf{pushout} of \ensuremath{t} and \ensuremath{f}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+mostly used in 
+\begin_inset Formula $\text{Th}_{F}^{*}=\text{Th}_{F}$
+\end_inset
+
+ + a free terminal object 
+\begin_inset Formula $\bot$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Summary of the generic unification algorithm
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationempty\quad\unificationtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labelrule{\unificationstepwise v}{U-Split}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labelrule{\unificationrigrig}{U-RigRig}\qquad\unificationrigrigneqo
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationoccurcheckeffective}{U-NoCycle}\quad\text{+ sym}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labelrule{\unificationflexflex}{U-FlexFlex}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationfailingoccurcheckeffective}{U-Cyclic}\quad\text{+ sym}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pruning phase
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\pruningempty\quad\pruningtop
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\pruningstepwise 1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\labellabelrule{\pruningrig}{P-Rig}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pruningrigfail
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\labelrule{\pruningflex{}}{P-Flex}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ 
+\series bold
+initial algebra
+\series default
+ of the endofunctor
+\begin_inset Formula 
+\[
+X\mapsto F(X)+\coprod_{(M:m)\in\Gamma}ym
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+In other words, 
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Lambda(\Gamma)=
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
