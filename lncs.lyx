@@ -13,7 +13,7 @@
 \usepackage{fullshort}
 
 % to comment for the short version
-\setboolean{fullpaper}{false}
+\setboolean{fullpaper}{true}
 
 \newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\commentaire}[1]{}
@@ -2346,11 +2346,11 @@ The remaining case consists in unifying
 \end_inset
 
 , or equivalently, pruning a metavariable 
-\begin_inset Formula $N(x_{1},\dots,x_{m})$
+\begin_inset Formula $N(x_{1},\dots,x_{n})$
 \end_inset
 
 , whose arity must then be restricted to those positions in 
-\begin_inset Formula $y_{1},\dots,y_{n}$
+\begin_inset Formula $y_{1},\dots,y_{m}$
 \end_inset
 
 .
@@ -2359,11 +2359,11 @@ The remaining case consists in unifying
 \end_inset
 
  of common values in 
-\begin_inset Formula $x_{1},\dots,x_{m}$
+\begin_inset Formula $x_{1},\dots,x_{n}$
 \end_inset
 
  and 
-\begin_inset Formula $y_{1},\dots,y_{n}$
+\begin_inset Formula $y_{1},\dots,y_{m}$
 \end_inset
 
 , so that 
@@ -2379,11 +2379,11 @@ The remaining case consists in unifying
 \end_inset
 
  of distinct elements of 
-\begin_inset Formula $\{0,\dots,m-1\}$
+\begin_inset Formula $\{0,\dots,n-1\}$
 \end_inset
 
  and 
-\begin_inset Formula $\{0,\dots,n-1\}$
+\begin_inset Formula $\{0,\dots,m-1\}$
 \end_inset
 
  respectively.
@@ -2444,7 +2444,7 @@ noprefix "false"
 \end_inset
 
  such a situation by 
-\begin_inset Formula $m\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}$
+\begin_inset Formula $n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}$
 \end_inset
 
 .
@@ -2492,7 +2492,7 @@ in the variable context
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\dfrac{m\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}}{\Gamma,N:m\prune{N(\vec{x})}{\maybold M(\vec{y})}{N\mapsto N'(\vec{r})}{N'(\vec{l})}\dashv\Gamma,N':p}\label{eq:pruning-mvar-lc}
+\dfrac{n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}}{\Gamma,N:n\prune{N(\vec{x})}{\maybold M(\vec{y})}{N\mapsto N'(\vec{r})}{N'(\vec{l})}\dashv\Gamma,N':p}\label{eq:pruning-mvar-lc}
 \end{equation}
 
 \end_inset
@@ -24735,11 +24735,11 @@ literal "false"
 \end_inset
 
  of metavariable arities where a morphism between 
-\begin_inset Formula $n,\Gamma\vdash\tau$
+\begin_inset Formula $n;\Gamma\vdash\tau$
 \end_inset
 
  and 
-\begin_inset Formula $n',\Gamma'\vdash\tau'$
+\begin_inset Formula $n';\Gamma'\vdash\tau'$
 \end_inset
 
  is a morphism 
@@ -25073,7 +25073,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Delta;\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{n;\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -25108,7 +25108,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma\vdash t:\tau'\Rightarrow\tau\quad n;\Gamma\vdash u:\tau'}{n;\Gamma\vdash t\ u:\tau}$
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma\vdash t:\tau'\Rightarrow\tau\quad n;\Gamma\vdash u:\tau'}{n;\Gamma\vdash t\ u|\tau}$
 \end_inset
 
 
@@ -25187,7 +25187,7 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n|\Gamma\vdash t:\Lambda\tau_{1}\quad\tau_{2}\in S_{n}}{n|\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{n;\Gamma\vdash t:\Lambda\tau_{1}\quad\tau_{2}\in S_{n}}{n;\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -25225,7 +25225,7 @@ H_{-,1}=n;\Gamma\vdash\tau'
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1|wk(\Gamma)\vdash t:\tau}{n|\Gamma\vdash\Lambda t:\Lambda\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{n+1;wk(\Gamma)\vdash t:\tau}{n;\Gamma\vdash\Lambda t:\Lambda\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
