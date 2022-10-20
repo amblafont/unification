@@ -25108,7 +25108,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma\vdash t:\tau'\Rightarrow\tau\quad n;\Gamma\vdash u:\tau'}{n;\Gamma\vdash t\ u|\tau}$
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma\vdash t:\tau'\Rightarrow\tau\quad n;\Gamma\vdash u:\tau'}{n;\Gamma\vdash t\ u:\tau}$
 \end_inset
 
 
