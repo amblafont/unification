@@ -7686,6 +7686,13 @@ such that
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ is the category of finite cardinals and any morphisms between them;
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\int O$
 \end_inset
 
@@ -8267,55 +8274,6 @@ Let
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-Note that 
-\begin_inset Formula $\Kl{\D^{+}}$
-\end_inset
-
- is equivalent to the opposite category of the multi-sorted theory associated
- with 
-\begin_inset Formula $T$
-\end_inset
-
- extended to the category of families of sets indexed by objects of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Property
@@ -25059,16 +25017,6 @@ L_{-,1}=n;\Gamma\vdash\tau'
 
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 
 \end_layout
 
