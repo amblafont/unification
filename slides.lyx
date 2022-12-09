@@ -6286,7 +6286,7 @@ vspace{-2em}
 \Gamma\ar@{-->}[r]_{\sigma} & \Delta
 }
 \end{array}\qquad\text{pushout}}{\xymatrix{ & b\ar[dr]^{in_{2}}\\
-a\ar[ru]^{"M(x)"}\ar[dr]_{u'} &  & \Gamma+b\ar@{-->}[r]^{[v,\sigma]} & \Gamma & \text{coequaliser}\\
+a\ar[ru]^{"M(x)"}\ar[dr]_{u'} &  & \Gamma+b\ar@{-->}[r]^{[v,\sigma]} & \Delta & \text{coequaliser}\\
  & \Gamma\ar[ru]_{in_{1}}
 }
 }
