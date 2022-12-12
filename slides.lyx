@@ -45,6 +45,7 @@
 \usepackage{quiver}
 
 \newcommand{\xymatrixrigid}[1]{\xymatrix@C=2pc{#1}}
+\usepackage{appendixnumberbeamer}
 \end_preamble
 \use_default_options false
 \maintain_unincluded_children false
@@ -328,7 +329,7 @@ optional, but mostly needed
 \end_layout
 
 \begin_layout Date
-October 2022
+December 2022
 \begin_inset Note Note
 status open
 
@@ -410,7 +411,7 @@ optional, should be abbreviation of conference name
 
 
 \begin_inset FormulaMacro
-\newcommand{\Th}[1]{\text{Th}(#1)}
+\newcommand{\Th}[1]{\text{Th}^{op}(#1)}
 \end_inset
 
 
@@ -1114,7 +1115,7 @@ vspace{0.5em}
 status open
 
 \begin_layout Plain Layout
-Example
+Examples
 \end_layout
 
 \end_inset
@@ -1123,6 +1124,13 @@ Example
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\lambda$
+\end_inset
+
+-Prolog
+\end_layout
+
 \begin_layout Itemize
 Type theory, proof assistants
 \end_layout
@@ -1259,6 +1267,10 @@ fails if no unifier
 returns the most general unifier
 \end_layout
 
+\begin_layout Itemize
+linear complexity
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1342,6 +1354,10 @@ Intrinsic system F
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+See our preprint.
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1769,7 +1785,7 @@ vspace{2em}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\dfrac{x<\varctxt}{\Gamma;\varctxt\vdash x}\textsc{Var}\qquad\dfrac{\Gamma;\varctxt\vdash t\quad\Gamma;\varctxt\vdash u}{\Gamma;\varctxt\vdash t\ u}\textsc{App}\qquad\dfrac{\Gamma;\varctxt+1\vdash t}{\Gamma;\varctxt\vdash\lambda t}\textsc{Abs}
+\dfrac{0<i\leq\varctxt}{\Gamma;\varctxt\vdash v_{i}}\textsc{Var}\qquad\dfrac{\Gamma;\varctxt\vdash t\quad\Gamma;\varctxt\vdash u}{\Gamma;\varctxt\vdash t\ u}\textsc{App}\qquad\dfrac{\Gamma;\varctxt+1\vdash t}{\Gamma;\varctxt\vdash\lambda t}\textsc{Abs}
 \]
 
 \end_inset
@@ -1793,7 +1809,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{(M:n)\in\Gamma\qquad x_{1},\dots,x_{n}<\varctxt\qquad x_{1},\dots x_{n}\text{ distinct}}{\Gamma;\varctxt\vdash M(x_{1},\dots,x_{n})}\textsc{Flex}
+\dfrac{(M:m)\in\Gamma\qquad0<i_{1},\dots,i_{m}\leq\varctxt\qquad i_{1},\dots i_{m}\text{ distinct}}{\Gamma;\varctxt\vdash M(v_{i_{1}},\dots,v_{i_{m}})}\textsc{Flex}
 \]
 
 \end_inset
@@ -2022,26 +2038,68 @@ M_{i}\mapsto\sigma_{i}
 \end_inset
 
 
-\begin_inset ERT
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-vspace{2em}
+Notation
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Formula 
+\[
+M_{i}(v_{1},\dots,v_{m_{i}})\mapsto\sigma_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\sigma$
+\begin_inset Separator plain
 \end_inset
 
- extends to terms:
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Term substitution
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
 \begin_inset Formula 
 \[
 {\color{blue}\Gamma};\varctxt\vdash t\quad\mapsto\quad{\color{red}\Delta};\varctxt\vdash t[\sigma]
@@ -2052,6 +2110,19 @@ vspace{2em}
 
 \end_layout
 
+\begin_layout Standard
+Base case:
+\begin_inset Formula 
+\[
+M_{i}(x_{1},\dots,x_{m_{i}})\mapsto\sigma_{i}[v_{j}\mapsto x_{m_{j}}]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Frame
 
@@ -2189,7 +2260,7 @@ Examples
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\Gamma,M:2\vdash M(5,3)=5\Rightarrow(M\mapsto0)\dashv\Gamma
+\Gamma,M:2\vdash M(x,y)=x\Rightarrow(M(v_{1},v_{2})\mapsto v_{1})\dashv\Gamma
 \]
 
 \end_inset
@@ -2213,24 +2284,8 @@ vspace{0.5em}
 
 \begin_inset Formula 
 \[
-\Gamma,M:2\vdash M(5,3)=3\Rightarrow(M\mapsto1)\dashv\Gamma
+\Gamma,M:2\vdash M(x,y)=y\Rightarrow(M(v_{1},v_{2})\mapsto v_{2})\dashv\Gamma
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{0.5em}
-\end_layout
 
 \end_inset
 
@@ -2239,202 +2294,6 @@ vspace{0.5em}
 
 \end_deeper
 \begin_layout Frame
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash\lambda t=\lambda u\Rightarrow\sigma\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{0.5em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\vdash"t_{1},t_{2}=u_{1,}u_{2}"\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Unifying lists of terms
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\overbrace{\Gamma\vdash\tikzmarknode{ts}{\vec{t}}=\tikzmarknode{us}{\vec{u}}}^{\text{input}}\Rightarrow\overbrace{\tikzmarknode{sigma2}{\sigma}\dashv\Delta}^{\text{output}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Gamma;(n_{i})\vdash\tikzmarknode{tusdef}{t_{i},u_{i}}\qquad\qquad\qquad\qquad\qquad\qquad
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
-\tikzmarknode{sigma2def}{\sigma}:\Gamma\rightarrow\Delta\text{ s.t. }\vec{t}[\sigma]=\vec{u}[\sigma]\\
-\text{most general unifier}
-\end{array}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzpicture}[remember picture,overlay] 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-draw[shorten <=2pt, shorten >=5pt, <-] (sigma2) edge (sigma2def); 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-draw[shorten <=4pt, shorten >=5pt, <-] (ts) edge (tusdef); 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-draw[shorten <=4pt, shorten >=5pt, <-] (us) edge (tusdef);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzpicture}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Examples (lists)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Gamma\vdash()=()\Rightarrow id_{\Gamma}\dashv\Gamma
-\]
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationstepwise 1
-\]
-
-\end_inset
-
 
 \end_layout
 
@@ -2631,6 +2490,226 @@ end{tikzpicture}
 status open
 
 \begin_layout Plain Layout
+Congruence
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash\lambda t=\lambda u\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash"t_{1},t_{2}=u_{1,}u_{2}"\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unifying lists of terms
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\overbrace{\Gamma\vdash\tikzmarknode{ts}{\vec{t}}=\tikzmarknode{us}{\vec{u}}}^{\text{input}}\Rightarrow\overbrace{\tikzmarknode{sigma2}{\sigma}\dashv\Delta}^{\text{output}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma;(n_{i})\vdash\tikzmarknode{tusdef}{t_{i},u_{i}}\qquad\qquad\qquad\qquad\qquad\qquad
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
+\tikzmarknode{sigma2def}{\sigma}:\Gamma\rightarrow\Delta\text{ s.t. }\vec{t}[\sigma]=\vec{u}[\sigma]\\
+\text{most general unifier}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[remember picture,overlay] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=2pt, shorten >=5pt, <-] (sigma2) edge (sigma2def); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (ts) edge (tusdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (us) edge (tusdef);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Unifying two lists of terms
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Gamma\vdash()=()\Rightarrow id_{\Gamma}\dashv\Gamma
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\unificationstepwise 1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Unifying a metavariable 
 \begin_inset Formula $M(\vec{x})\stackrel{?}{=}\dots$
 \end_inset
@@ -2719,7 +2798,7 @@ vspace{1em}
 \begin_inset Formula $M(\vec{x})\stackrel{?}{=}\dots M(\vec{y})\dots$
 \end_inset
 
-
+ (cyclic)
 \end_layout
 
 \begin_layout Enumerate
@@ -2743,7 +2822,7 @@ vspace{1em}
 \begin_inset Formula $M\notin u$
 \end_inset
 
-
+ (non-cyclic)
 \begin_inset ERT
 status open
 
@@ -2863,7 +2942,7 @@ status open
 
 \begin_inset Formula 
 \[
-M(\vec{x})\stackrel{?}{=}M(\vec{y})
+M(x_{1},\dots,x_{m})\stackrel{?}{=}M(y_{1},\dots,y_{m})
 \]
 
 \end_inset
@@ -2871,44 +2950,74 @@ M(\vec{x})\stackrel{?}{=}M(\vec{y})
 
 \end_layout
 
-\end_deeper
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
-\series bold
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
 Most general unifier
-\series default
-: 
-\begin_inset Formula $M\mapsto M'(\vec{z})$
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-\begin_inset Formula $\vec{z}$
+\begin_layout Standard
+\begin_inset Formula ${\color{blue}\vec{\textrm{p}}}$
 \end_inset
 
  = vector of common positions: 
-\begin_inset Formula $x_{\vec{z}}=y_{\vec{z}}$
+\begin_inset Formula $(x_{\textrm{{\color{blue}\textrm{p}_{1}}}},\dots,x_{\textrm{{\color{blue}\textrm{p}_{n}}}})=(y_{\textrm{{\color{blue}\textrm{p}_{1}}}},\dots,y_{\textrm{{\color{blue}\textrm{p}_{n}}}})$
 \end_inset
 
 
 \end_layout
 
 \end_deeper
+\begin_layout Block
+\begin_inset Formula 
+\[
+\sigma:M(v_{1},\dots,v_{m})\mapsto N(v_{\textrm{{\color{blue}\textrm{p}_{1}}}},\dots v_{\textrm{{\color{blue}\textrm{p}_{n}}}})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Examples
+\begin_inset Formula 
+\begin{align*}
+\overbrace{M(x,y)=M(x,z)}^{{\displaystyle \vec{p}=(1)}} & \Rightarrow M(v_{1},v_{2})\mapsto N(v_{1})\\
+\underbrace{M(x,y)=M(z,x)}_{{\displaystyle \vec{p}=()}} & \Rightarrow M(v_{1},v_{2})\mapsto N
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Itemize
+\begin_inset Formula $x_{\vec{z}}=y_{\vec{z}}$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Frame
 \begin_inset ERT
 status open
@@ -2926,11 +3035,40 @@ Formally,
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\dfrac{"n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p"}{\Gamma,M:n\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(\vec{z})\dashv\Gamma,M':p}
+\dfrac{"m\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv n"}{\Gamma,M:m\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto N(\vec{z})\dashv\Gamma,N:n}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+M(\vec{x})[\sigma]=N(v_{\vec{z}})[v_{i}\mapsto x_{i}] & =N(x_{\vec{z}})\\
+ & =N(y_{\vec{z}})\\
+ & =N(v_{\vec{z}})[v_{i}\mapsto y_{i}]=M(\vec{y})[\sigma]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -2992,7 +3130,7 @@ No unifier
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\Gamma\vdash\underbrace{M(\vec{x})}\underset{\mathclap{\begin{array}{c}
+\underbrace{M(\vec{x})}\underset{\mathclap{\begin{array}{c}
 \\
 \text{sizes cannot match after substitution}
 \end{array}}}{=}\underbrace{\dots M(\vec{y})\dots}\Rightarrow\bang\dashv\bot
@@ -3024,7 +3162,7 @@ No unifier
 status open
 
 \begin_layout Plain Layout
-Non cyclic case
+Non-cyclic case
 \end_layout
 
 \end_inset
@@ -3059,15 +3197,20 @@ M(\vec{x})\stackrel{?}{=}u\text{ (\ensuremath{M\notin u})}
 
 \end_layout
 
-\begin_layout Frame
-\begin_inset ERT
+\begin_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
+Most general unifier
 \end_layout
 
 \end_inset
@@ -3077,19 +3220,52 @@ vspace{1em}
 
 \begin_deeper
 \begin_layout Standard
+\begin_inset Formula 
+\[
+\sigma:M(v_{1},\dots,v_{m})\mapsto u[x_{i}\mapsto v_{i}]
+\]
 
-\series bold
-Most general unifier
-\series default
-: 
-\begin_inset Formula $M\mapsto u[\vec{x}^{-1}]$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-Requires 
+\begin_layout Standard
+Intuition:
+\begin_inset Formula 
+\[
+M(\vec{x})[\sigma]=u[x_{i}\mapsto v_{i}][v_{i}\mapsto x_{i}]=u
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Block
+
+\end_layout
+
+\begin_layout AlertBlock
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Side condition
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \begin{equation}
 fv(u)\subset\vec{x}\label{eq:fv}
@@ -3100,75 +3276,170 @@ fv(u)\subset\vec{x}\label{eq:fv}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout AlertBlock
+\begin_inset Formula 
+\[
+fv(u)\subset\vec{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout AlertBlock
+\begin_inset Formula $M(x)\stackrel{?}{=}y$
+\end_inset
+
+ has no unifier 
+\begin_inset Formula $(x\neq y)$
+\end_inset
+
+
+\end_layout
+
 \end_deeper
 \begin_layout Frame
-\begin_inset Note Note
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-Requires that 
+Non-cycling case: pruning 
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+What about 
+\begin_inset Formula $M(x)\stackrel{?}{=}\underbrace{N(x,y)}_{u}$
+\end_inset
+
+?
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Most general unifier
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+N(v_{1},v_{2})\mapsto M(v_{1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Side-condition 
 \begin_inset Formula $fv(u)\subset\vec{x}$
+\end_inset
+
+ is too pessimistic.
+ 
+\end_layout
+
+\begin_layout Itemize
+Can be enforced by restricting metavariable arities in 
+\begin_inset Formula $u$
 \end_inset
 
 .
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset ERT
+\begin_layout Block
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
+Pruning phase
 \end_layout
 
 \end_inset
 
 
-\begin_inset Formula $\Rightarrow$
-\end_inset
-
- 
-\series bold
-Pruning phase
-\series default
-:
-\series bold
- 
-\series default
-enforces 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fv"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- by restricting metavariable arities.
 \end_layout
 
 \begin_deeper
-\begin_layout Example
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \begin{array}{rcl}
-M(x) & \stackrel{?}{=} & N(x,y)\\
-N(x,y) & \xRightarrow{\text{pruning}} & N'(x)
-\end{array}
+N(x,y) & \xRightarrow{\text{pruning}} & N'(x)\end{array}
 \]
 
 \end_inset
 
- 
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
 \end_layout
 
 \begin_deeper
@@ -3201,7 +3472,6 @@ status open
 \end_layout
 
 \end_deeper
-\end_deeper
 \begin_layout Frame
 
 \end_layout
@@ -3228,6 +3498,10 @@ Pruning phase
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \Gamma\prune u{\tikzmarknode{Mpruning}{M}(\vec{x})}{\tikzmarknode{sigmapruning}{\sigma}}{\overbrace{{\color{blue}v}}^{\mathclap{u\text{ after pruning and renamed by \ensuremath{\vec{x}^{-1}}}}}}\dashv\Delta
@@ -3238,10 +3512,37 @@ Pruning phase
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\tikzmarknode{Mpruningdef}{\text{\ensuremath{M\notin\ensuremath{\Gamma}},u}}\qquad\qquad\qquad\qquad
+\Gamma\prune{\tikzmarknode{upruning}{u}}{\tikzmarknode{Mpruning}{M}(\tikzmarknode{xpruning}{\vec{x}})}{\tikzmarknode{sigmapruning}{\sigma}}{\overbrace{{\color{blue}w}}^{\mathclap{"u[\sigma][x_{i}\mapsto v_{i}]"}}}\dashv\Delta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\tikzmarknode{upruningdef}{\Gamma;(n)\vdash u}\qquad\qquad\qquad\qquad\qquad
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\tikzmarknode{Mpruningdef}{\text{\ensuremath{M\notin\ensuremath{\Gamma}}}}\quad\tikzmarknode{xpruningdef}{n\ensuremath{\vdash\vec{x}}}\qquad
 \]
 
 \end_inset
@@ -3281,6 +3582,20 @@ draw[shorten <=2pt, shorten >=5pt, <-] (sigmapruning) edge (sigmapruningdef);
 
 \backslash
 draw[shorten <=4pt, shorten >=5pt, <-] (Mpruning) edge (Mpruningdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (upruning) edge (upruningdef); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (xpruning) edge (xpruningdef);
 \end_layout
 
 \begin_layout Plain Layout
@@ -3341,7 +3656,7 @@ most general
  
 \begin_inset Formula 
 \[
-u[\sigma]=v[\text{\ensuremath{\vec{x}}}]
+u[\sigma]=w[\text{\ensuremath{\vec{x}}}]
 \]
 
 \end_inset
@@ -3396,7 +3711,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Intuition
+Correctness criterion: solving the non-cyclic case
 \end_layout
 
 \end_inset
@@ -3407,14 +3722,14 @@ Intuition
 \begin_deeper
 \begin_layout Standard
 \align center
-\begin_inset Formula $u\stackrel{?}{=}M(\vec{x})\quad\Rightarrow\quad$
+\begin_inset Formula $(\sigma,M(v_{1},\dots,v_{m})\mapsto{\color{blue}w})$
+\end_inset
+
+ = most general unifier for 
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}u$
 \end_inset
 
 
-\begin_inset Formula $(\sigma,M\mapsto{\color{blue}v})$
-\end_inset
-
- = most general unifier
 \end_layout
 
 \end_deeper
@@ -3525,6 +3840,58 @@ Thus,
 status open
 
 \begin_layout Plain Layout
+Pruning a variable
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{y\notin\vec{x}}{\Gamma\prune y{M(\vec{x})}{\bang}{\bang}\dashv\bot}\textsc{Var-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{}{\Gamma\prune{x_{i}}{M(\vec{x})}{id_{\Gamma}}{v_{i}}\dashv\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Pruning a metavariable
 \end_layout
 
@@ -3551,7 +3918,7 @@ status open
 \begin_layout Standard
 \begin_inset Formula 
 \[
-M(\vec{x})\stackrel{?}{=}N(\vec{y})
+M(\vec{x})\stackrel{?}{=}N(\vec{y})\qquad(M\neq N)
 \]
 
 \end_inset
@@ -3560,12 +3927,61 @@ M(\vec{x})\stackrel{?}{=}N(\vec{y})
 \end_layout
 
 \end_deeper
-\end_deeper
-\begin_layout Frame
+\begin_layout Block
 
 \end_layout
 
-\begin_layout Frame
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Most general unifier
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+M(v_{1},\dots,v_{m}) & \mapsto P(v_{{\color{blue}l_{1}}},\dots,v_{{\color{blue}l_{p}}})\\
+N(v_{1},\dots,v_{n}) & \mapsto P(v_{{\color{blue}r_{1}}},\dots,v_{{\color{blue}r_{p}}})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -3593,16 +4009,40 @@ Most general unifier
  such that
 \end_layout
 
-\begin_deeper
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-\begin_inset Note Note
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-\begin_inset Formula $\vec{l},\vec{r}$
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
 \end_inset
 
- = vectors of common value positions: 
+
+\begin_inset Formula ${\color{blue}\vec{l}},{\color{blue}\vec{r}}$
+\end_inset
+
+ = vectors of common value positions:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
 \end_layout
 
 \end_inset
@@ -3610,7 +4050,7 @@ status open
 
 \begin_inset Formula 
 \[
-x_{{\color{blue}\vec{l}}}=y_{{\color{blue}\vec{r}}}
+(x_{{\color{blue}l_{1}}},\dots,x_{{\color{blue}l_{p}}})=(y_{{\color{blue}r_{1}}},\dots,y_{{\color{blue}r_{p}}})
 \]
 
 \end_inset
@@ -3619,27 +4059,21 @@ x_{{\color{blue}\vec{l}}}=y_{{\color{blue}\vec{r}}}
 \end_layout
 
 \end_deeper
+\end_deeper
 \begin_layout Frame
-\begin_inset ERT
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
+\begin_inset Formula 
+\[
+\dfrac{"n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}"}{\Gamma,N:n\prune{N(\vec{x})}{M(\vec{y})}{N(v_{1},\dots,v_{n})\mapsto P(v_{\vec{r}})}{P(v_{\vec{l}})}\dashv\Gamma,P:p}
+\]
 
 \end_inset
 
 
 \end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\dfrac{"n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}"}{\Gamma,N:n\prune{N(\vec{x})}{M(\vec{y})}{N\mapsto N'(\vec{r})}{N'(\vec{l})}\dashv\Gamma,N':p}
-\]
 
 \end_inset
 
@@ -3663,6 +4097,67 @@ status open
 
 \end_layout
 
+\begin_deeper
+\begin_layout Examples
+
+\end_layout
+
+\begin_layout Examples
+\begin_inset Formula 
+\[
+\begin{array}{ccc}
+M(x,y)=N(z,x) & \Rightarrow & M(v_{1},v_{2})\mapsto P(v_{1})\\
+ &  & N(v_{1},v_{2})\mapsto P(v_{2})\\
+M(x,y)=N(z)\hphantom{,x} & \Rightarrow & M(v_{1},v_{2}),N(v_{1})\mapsto P
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Examples
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+M(x,y)=N(z,x) & \Rightarrow M(v_{1},v_{2})\mapsto P(v_{1})\\
+ & \hphantom{\Rightarrow M}N(v_{1},v_{2})\mapsto P(v_{2})\\
+M(x,y)=N(z) & \Rightarrow M(v_{1},v_{2}),N(v_{1})\mapsto P
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\overbrace{M(x,y)=N(z,x)}^{\vec{l}\ =\ (1),\ \vec{r}\ =\ (2)} & \Rightarrow M(v_{1},v_{2})\mapsto P(v_{1}),N(v_{1},v_{2})\mapsto P(v_{2})\\
+\underbrace{M(x,y)=N(z)}_{\vec{l}\ =\ \vec{r}\ =\ ()} & \Rightarrow M(v_{1},v_{2}),N(v_{1})\mapsto P
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -3675,7 +4170,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Pruning: other examples
+Pruning operations
 \end_layout
 
 \end_inset
@@ -3683,15 +4178,7 @@ Pruning: other examples
 
 \begin_inset Formula 
 \[
-\dfrac{}{\Gamma\prune{x_{i}}{M(x_{0},\dots,x_{n})}{id_{\Gamma}}i\dashv\Gamma}\qquad\dfrac{y\notin\vec{x}}{\Gamma\prune y{M(\vec{x})}{\bang}{\bang}\dashv\bot}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\prune t{M_{1}(\vec{x},\overbrace{n}^{\mathclap{\text{{\color{blue}bound} {\color{blue}variable}}}})}{\sigma}v\dashv\Delta}{\Gamma\prune{{\color{blue}\lambda}t}{M(\vec{x})}{\sigma}{\lambda v}\dashv\Delta}
+\dfrac{\Gamma\prune t{M_{1}(\vec{x},\overbrace{v_{n+1}}^{\mathclap{\text{{\color{blue}bound} {\color{blue}variable}}}})}{\sigma}w\dashv\Delta}{\Gamma\prune{{\color{blue}\lambda}t}{M(\vec{x})}{\sigma}{\lambda w}\dashv\Delta}
 \]
 
 \end_inset
@@ -3715,7 +4202,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{"\Gamma\prune{t,u}{M_{1}(\vec{x}),M_{2}(\vec{x})}{\sigma}{v_{1},v_{2}}\dashv\Delta"}{\Gamma\prune{t\ u}{M(\vec{x})}{\sigma}{v_{1}\ v_{2}}\dashv\Delta}
+\dfrac{"\Gamma\prune{t,u}{M_{1}(\vec{x}),M_{2}(\vec{x})}{\sigma}{w_{1},w_{2}}\dashv\Delta"}{\Gamma\prune{t\ u}{M(\vec{x})}{\sigma}{w_{1}\ w_{2}}\dashv\Delta}
 \]
 
 \end_inset
@@ -3743,7 +4230,7 @@ Pruning multi-terms
 
 \begin_inset Formula 
 \[
-\Gamma\prune{\tikzmarknode{uspruning}{u_{1},\dots,u_{n}}}{\tikzmarknode{Mspruning}{M_{1}(\vec{x}_{1}),\dots M_{n}(\vec{x}_{n})}}{\tikzmarknode{sigmaspruning}{\sigma}}{\tikzmarknode{vspruning}{v_{1},\dots,v_{n}}}\dashv\Delta
+\Gamma\prune{\tikzmarknode{uspruning}{u_{1},\dots,u_{n}}}{\tikzmarknode{Mspruning}{M_{1}(\vec{x}_{1}),\dots M_{n}(\vec{x}_{n})}}{\tikzmarknode{sigmaspruning}{\sigma}}{\tikzmarknode{vspruning}{w_{1},\dots,w_{n}}}\dashv\Delta
 \]
 
 \end_inset
@@ -3765,7 +4252,7 @@ vspace{1em}
 \begin_inset Formula 
 \[
 \tikzmarknode{uspruningdef}{\Gamma;(n_{i})\vdash u_{i}}\qquad\qquad\qquad\qquad\begin{array}{c}
-\tikzmarknode{vspruningdef}{\Delta;{\color{blue}m_{i}}\vdash v_{i}}\end{array}
+\tikzmarknode{vspruningdef}{\Delta;{\color{blue}m_{i}}\vdash w_{i}}\end{array}
 \]
 
 \end_inset
@@ -3776,7 +4263,7 @@ vspace{1em}
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\qquad\qquad\qquad\qquad\tikzmarknode{Mspruningdef}{\text{\ensuremath{(M_{i}:{\color{blue}m_{i}})\notin\ensuremath{\Gamma},u_{j}}}}\qquad\qquad\qquad\qquad\tikzmarknode{sigmaspruningdef}{\sigma}:\Gamma\rightarrow\Delta
+\qquad\qquad\qquad\qquad\tikzmarknode{Mspruningdef}{\text{\ensuremath{(M_{i}:{\color{blue}m_{i}})\notin\ensuremath{\Gamma}}}}\qquad\qquad\qquad\qquad\tikzmarknode{sigmaspruningdef}{\sigma}:\Gamma\rightarrow\Delta
 \]
 
 \end_inset
@@ -3839,10 +4326,36 @@ end{tikzpicture}
 
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Correctness criterion
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
+\begin_layout Block
+\begin_inset Formula $(\sigma,M_{i}(v_{1},\dots,v_{m_{i}})\mapsto w_{i})$
+\end_inset
+
+ = most general unifier for 
+\begin_inset Formula 
+\[
+M_{1}(\vec{x}_{1}),\dots M_{n}(\vec{x}_{n})\stackrel{?}{=}u_{1},\dots,u_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Frame
 
 \end_layout
@@ -4122,7 +4635,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{n,\dots,n+\alpha_{1}-1}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{N(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
+\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{v_{n+1},\dots,v_{n+1+\alpha_{1}}}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{N(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
 \]
 
 \end_inset
@@ -4565,9 +5078,11 @@ vspace{1em}
 
 As a fixpoint:
 \begin_inset Formula 
-\[
-\Lambda(m)=\mu X.(\underbrace{\tikzmarknode{Fmvar}{F(X)}}_{\mathclap{\text{operations / variables}}}+\ \tikzmarknode{argmvar}{\color{blue}arg^{M}})
-\]
+\begin{align*}
+\Lambda(m) & =\mu X.(\underbrace{\tikzmarknode{Fmvar}{F(X)}}_{\mathclap{\text{operations / variables}}}+\ \overbrace{{\color{blue}arg^{M}}}^{\text{metavariables}})\\
+\\
+ & =\underbrace{T}_{\mathclap{\text{free monad generated by \ensuremath{F}}}}({\color{blue}arg^{M}})
+\end{align*}
 
 \end_inset
 
@@ -4626,12 +5141,30 @@ end{tikzpicture}
 \end_inset
 
 
-\begin_inset Formula 
-\begin{align*}
-{\color{blue}arg^{M}}_{\boldsymbol{n}} & =\{\text{\ensuremath{M}-arguments in the variable context \textbf{\ensuremath{\boldsymbol{n}}}\}}\\
- & =\left\{ \vec{x}\in\{0,\dots,n-1\}^{m}\ \left|x_{1},\dots,x_{m}\text{ distinct}\right.\right\} \\
- & =\hom_{\mathbb{F}_{m}}(m,n)
-\end{align*}
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus extended with a metavariable 
+\begin_inset Formula $M:m$
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -4650,9 +5183,12 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Block
 \begin_inset Formula 
 \[
-\Lambda(m)=\mu X.(F(X)+ym)
+\Lambda(m)=T({\color{blue}arg^{M}})
 \]
 
 \end_inset
@@ -4660,6 +5196,94 @@ status open
 
 \end_layout
 
+\end_deeper
+\begin_layout Frame
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}arg^{M}}_{\boldsymbol{n}} & =\{\text{\ensuremath{M}-arguments in the variable context \textbf{\ensuremath{\boldsymbol{n}}}\}}\\
+ & =\left\{ \vec{x}\in\{0,\dots,n-1\}^{m}\ \left|x_{1},\dots,x_{m}\text{ distinct}\right.\right\} \\
+ & =\hom_{\mathbb{F}_{m}}(m,n)=ym_{n}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\Lambda(m) & =\mu X.(F(X)+ym)\\
+ & =\underbrace{T}_{\mathclap{\text{free monad generated by \ensuremath{F}}}}(ym)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\Lambda(m) & =T(ym)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -4703,6 +5327,10 @@ vspace{1em}
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \Lambda(\Gamma)_{n}=\{t\ |\ \Gamma;n\vdash t\}
@@ -4710,13 +5338,66 @@ vspace{1em}
 
 \end_inset
 
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 As a fixpoint:
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \begin{align*}
 \Lambda(\Gamma) & =\mu X.(F(X)+\underbrace{{\displaystyle \coprod_{(M:m)\in\Gamma}ym}}_{{\displaystyle \underline{\Gamma}}})\\
 \\
  & =\underbrace{\tikzmarknode{Tmvars}{T}}_{\text{\text{free monad generated by \ensuremath{F}}}}(\tikzmarknode{Gmvars}{\underline{\Gamma}})
 \end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\Lambda(\Gamma)=T(\underbrace{{\displaystyle \coprod_{(M:m)\in\Gamma}ym}}_{{\displaystyle \underline{\Gamma}}})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Given a metavariable context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, define 
+\begin_inset Formula 
+\[
+\underline{\Gamma}:=\coprod_{(M:m)\in\Gamma}ym
+\]
 
 \end_inset
 
@@ -5015,6 +5696,16 @@ Unification as a Kleisli coequaliser
 \series bold
 Claims
 \series default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+well-known in the first-order case.
+\end_layout
+
+\end_inset
+
 : 
 \end_layout
 
@@ -5108,7 +5799,7 @@ vspace{2em}
 \qquad\tikzmarknode{ThFdef}{\begin{array}{c}
 \text{Objects: }\text{\ensuremath{\underline{\Gamma}},\ensuremath{\underline{\Delta}},\ensuremath{\dots}}\text{ }\\
 \text{(finite coproducts of representable functors)}\\
-\text{"Lawvere theory of \ensuremath{T}"}
+\text{"Lawvere theory"}
 \end{array}}
 \]
 
@@ -5243,7 +5934,7 @@ Signature
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- small category (e.g., 
+ small category of contexts (e.g., 
 \begin_inset Formula $\mathbb{F}_{m}$
 \end_inset
 
@@ -5298,7 +5989,7 @@ All morphisms in
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- has finite connected limits (
+ has equalisers and pullbacks (
 \begin_inset Formula $M(\vec{x})\stackrel{?}{=}N(\vec{y})$
 \end_inset
 
@@ -6282,11 +6973,11 @@ vspace{-2em}
 \begin_inset Formula 
 \[
 \dfrac{\begin{array}{c}
-\xymatrix{a\ar[r]^{"M(x)"}\ar[d]_{u'} & b\ar@{-->}[d]^{v}\\
+\xymatrix{ya\ar[r]^{"M(x)"}\ar[d]_{u'} & yb\ar@{-->}[d]^{v}\\
 \Gamma\ar@{-->}[r]_{\sigma} & \Delta
 }
-\end{array}\qquad\text{pushout}}{\xymatrix{ & b\ar[dr]^{in_{2}}\\
-a\ar[ru]^{"M(x)"}\ar[dr]_{u'} &  & \Gamma+b\ar@{-->}[r]^{[v,\sigma]} & \Delta & \text{coequaliser}\\
+\end{array}\qquad\text{pushout}}{\xymatrix{ & yb\ar[dr]^{in_{2}}\\
+ya\ar[ru]^{"M(x)"}\ar[dr]_{u'} &  & \Gamma+yb\ar@{-->}[r]^{[v,\sigma]} & \Delta & \text{coequaliser}\\
  & \Gamma\ar[ru]_{in_{1}}
 }
 }
@@ -6449,7 +7140,7 @@ vspace{-1.5em}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\dfrac{\alpha<n}{\wftype n{\alpha}}\textsc{Type-Var}\qquad\dfrac{\wftype{n+1}{\tau}}{\wftype n{\forall\tau}}\textsc{Forall}
+\dfrac{0<i\leq n}{\wftype n{\eta_{i}}}\textsc{Type-Var}\qquad\dfrac{\wftype{n+1}{\tau}}{\wftype n{\forall\tau}}\textsc{Forall}
 \]
 
 \end_inset
@@ -6641,81 +7332,6 @@ end{tikzpicture}
 status open
 
 \begin_layout Plain Layout
-Typing rule for metavariables
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-Typing judgement
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\underbrace{\Gamma}_{\text{Metavariable context}};\overbrace{n}^{\text{Type variable context}}|\underbrace{\overbrace{t_{1},\dots,t_{m}}^{\text{Types of variables}}\vdash u:t_{f}}_{\wftype n{t_{i}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Frame
-
-\end_layout
-
-\begin_deeper
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-Typing metavariables
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dfrac{\alpha_{1},\dots,\alpha_{p}\text{ distinct},<n\qquad x_{1},\dots x_{q}\text{ distinct},<m\qquad\tau_{i}[\vec{\alpha}]=t_{x_{i}}}{\Gamma,M:(p|\tau_{1},\dots,\tau_{q}\vdash\tau_{f})\;;\;n\;|\;t_{1},\dots,t_{m}\vdash M(\underbrace{\vec{\alpha}}_{\mathclap{\text{type variables}}}|\vec{x}):\tau_{f}[\vec{\alpha}]}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
 Signature
 \end_layout
 
@@ -6739,9 +7355,26 @@ Objects of
 \end_inset
 
  = metavariables arities
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
-n|\underbrace{\tau_{1},\dots,\tau_{p}}_{C}\vdash\tau_{f}
+n|\underbrace{\tau_{1},\dots,\tau_{p}}_{C}\vdash\textrm{\sigma_{f}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+n|\vec{\tau}\vdash\textrm{\sigma_{f}}
 \]
 
 \end_inset
@@ -6791,7 +7424,7 @@ System F defines a functor
 
 \begin_inset Formula 
 \[
-\Phi(n|\tau_{1},\dots,\tau_{p}\vdash\tau_{f})=\{t\text{ s.t. }\text{n|\ensuremath{\tau_{1},\dots,\tau_{p}\vdash t:\tau_{f}}}\}
+\Phi(n|\tau_{1},\dots,\tau_{p}\vdash\tau_{f})=\{t\text{ s.t. }\text{n|\ensuremath{\tau_{1},\dots,\tau_{p}\vdash t:\textrm{\sigma_{f}}}}\}
 \]
 
 \end_inset
@@ -6805,7 +7438,7 @@ System F defines a functor
 \end_layout
 
 \begin_layout Itemize
-Need an endofunctor 
+Endofunctor 
 \begin_inset Formula $F$
 \end_inset
 
@@ -6817,7 +7450,7 @@ Need an endofunctor
  
 \begin_inset Formula 
 \[
-\mu F(n|C\vdash\tau_{f})=\{t\text{ s.t. }\text{n|\ensuremath{C\vdash t:\tau_{f}}}\}
+\mu F(n|\vec{\tau}\vdash\textrm{\sigma_{f}})=\{t\text{ s.t. }\text{n|\ensuremath{\vec{\tau}\vdash t:\textrm{\sigma_{f}}}}\}
 \]
 
 \end_inset
@@ -6892,7 +7525,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $F(X)_{n|C\vdash\tau}=\coprod\dots$
+\begin_inset Formula $F(X)_{n|\vec{\tau}\vdash\textrm{\sigma_{f}}}=\coprod\dots$
 \end_inset
 
 
@@ -6906,7 +7539,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{C_{i}=\tau}{n|C\vdash i:\tau}\textsc{Var}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{\tau_{i}=\textrm{\sigma_{f}}}{n|\vec{\tau}\vdash v_{i}:\textrm{\sigma_{f}}}\textsc{Var}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -6918,7 +7551,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $|C|_{\tau}$
+\begin_inset Formula $|\vec{\tau}|_{\textrm{\sigma_{f}}}$
 \end_inset
 
 
@@ -6932,7 +7565,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n|C,\tau_{1}\vdash t:\tau_{2}}{n|C\vdash\lambda t:\tau_{1}\rightarrow\tau_{2}}\textsc{Abs}$
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n|\vec{\tau},\sigma_{1}\vdash t:\sigma_{2}}{n|\vec{\tau}\vdash\lambda t:\sigma_{1}\rightarrow\sigma_{2}}\textsc{Abs}$
 \end_inset
 
 
@@ -6944,7 +7577,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\tau_{1},\tau_{2}\text{ s.t. \ensuremath{\tau=(\tau_{1}\rightarrow\tau_{2})}}}}X_{n|C,\tau_{1}\vdash\tau_{2}}$
+\begin_inset Formula ${\displaystyle \coprod_{\sigma_{1},\sigma_{2}\text{ s.t. \ensuremath{\textrm{\sigma_{f}}=(\sigma_{1}\rightarrow\sigma_{2})}}}}X_{n|\vec{\tau},\sigma_{1}\vdash\sigma_{2}}$
 \end_inset
 
 
@@ -6958,7 +7591,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n|C\vdash t:\tau'\rightarrow\tau\quad n|C\vdash u:\tau'}{n|C\vdash t\ u:\tau}\textsc{App}$
+\begin_inset Formula $\dfrac{n|\textrm{\vec{\tau}}\vdash t:\sigma\rightarrow\textrm{\sigma_{f}}\quad n|\textrm{\vec{\tau}}\vdash u:\sigma_{f}}{n|\textrm{\vec{\tau}}\vdash t\ u:\sigma_{f}}\textsc{App}$
 \end_inset
 
 
@@ -6974,7 +7607,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\tau'}}X_{n|C\vdash\tau'\rightarrow\tau}\times X_{n|C\vdash\tau'}$
+\begin_inset Formula ${\displaystyle \coprod_{\sigma}}X_{n|\textrm{\vec{\tau}}\vdash\sigma\rightarrow\sigma_{f}}\times X_{n|\textrm{\vec{\tau}}\vdash\sigma}$
 \end_inset
 
 
@@ -6988,7 +7621,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1|C\vdash t:\tau'}{n|C\vdash\Lambda t:\forall\tau'}\textsc{T-Abs}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{n+1|\textrm{\vec{\tau}}\vdash t:\sigma}{n|\textrm{\vec{\tau}}\vdash\Lambda t:\forall\sigma}\textsc{T-Abs}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -7004,7 +7637,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\tau'\text{ s.t. }\tau=\forall\tau'}X_{n+1|C\vdash\tau'}}$
+\begin_inset Formula ${\displaystyle \coprod_{\sigma\text{ s.t. }\sigma_{f}=\forall\sigma}X_{n+1|\textrm{\vec{\tau}}\vdash\sigma}}$
 \end_inset
 
 
@@ -7018,7 +7651,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n|C\vdash t:\forall\tau_{1}}{n|C\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\textsc{T-App}$
+\begin_inset Formula $\dfrac{n|\textrm{\vec{\tau}}\vdash t:\forall\sigma_{1}}{n|\textrm{\vec{\tau}}\vdash t\cdot\sigma_{2}:\sigma_{1}[\sigma_{2}]}\textsc{T-App}$
 \end_inset
 
 
@@ -7034,7 +7667,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\tau_{1},\tau_{2}\text{ s.t. }\tau=\tau_{1}[\tau_{2}]}}X_{n|C\vdash\forall\tau_{1}}$
+\begin_inset Formula ${\displaystyle \coprod_{\sigma_{1},\sigma_{2}\text{ s.t. }\sigma_{f}=\sigma_{1}[\sigma_{2}]}}X_{n|\textrm{\vec{\tau}}\vdash\forall\sigma_{1}}$
 \end_inset
 
 
@@ -7098,25 +7731,41 @@ vspace{2em}
 
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
 
-\series bold
+\begin_layout Plain Layout
 Most general unifier
-\series default
-: 
-\begin_inset Formula $M\mapsto N(\vec{\gamma},\vec{z})$
+\end_layout
+
 \end_inset
 
-, where
+
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M(\eta_{1},\dots,\eta_{p}|v_{1},\dots v_{m})\mapsto N(\vec{\gamma}|\vec{z})
+\]
+
+\end_inset
+
+where 
 \begin_inset Formula $\vec{\gamma}$
 \end_inset
 
- maximal s.t.
- 
+ and 
+\begin_inset Formula $\vec{z}$
+\end_inset
+
+ are vectors of common positions
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \alpha_{\vec{\gamma}}=\beta_{\vec{\gamma}}
@@ -7125,14 +7774,6 @@ Most general unifier
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\vec{z}$
-\end_inset
-
- maximal s.t.
- 
 \begin_inset Formula 
 \[
 x_{\vec{z}}=y{}_{\vec{z}}
@@ -7143,6 +7784,7 @@ x_{\vec{z}}=y{}_{\vec{z}}
 
 \end_layout
 
+\end_deeper
 \end_deeper
 \begin_layout Frame
 
@@ -7293,6 +7935,10 @@ Pruning phase
 \end_layout
 
 \begin_layout Frame
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -7348,6 +7994,11 @@ end{tikzpicture}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Frame
 
 \end_layout
@@ -7361,6 +8012,19 @@ end{tikzpicture}
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+appendix
+\end_layout
+
+\end_inset
+
+
 \begin_inset Separator plain
 \end_inset
 
@@ -7585,5 +8249,80 @@ status open
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Typing rule for metavariables
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Typing judgement
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underbrace{\Gamma}_{\text{Metavariable context}};\overbrace{n}^{\text{Type variable context}}|\underbrace{\overbrace{t_{1},\dots,t_{m}}^{\text{Types of variables}}\vdash u:t_{f}}_{\wftype n{t_{i}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Typing metavariables
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{0<\overbrace{\alpha_{1},\dots,\alpha_{p}}^{\text{distinct}}\leq n\qquad0<\overbrace{x_{1},\dots x_{q}}^{\text{distinct}}\leq m\qquad\tau_{i}[\vec{\alpha}]=t_{x_{i}}}{\Gamma,M:(p|\tau_{1},\dots,\tau_{q}\vdash\tau_{f})\;;\;n\;|\;t_{1},\dots,t_{m}\vdash M(\underbrace{\vec{\alpha}}_{\mathclap{\text{type variables}}}|\vec{x}):\tau_{f}[\vec{\alpha}]}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
 \end_body
 \end_document
