@@ -1268,7 +1268,7 @@ returns the most general unifier
 \end_layout
 
 \begin_layout Itemize
-linear complexity
+linear complexity [Qian '96]
 \end_layout
 
 \end_deeper

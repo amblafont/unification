@@ -13,7 +13,7 @@
 \usepackage{fullshort}
 
 % to comment for the short version
-\setboolean{fullpaper}{true}
+\setboolean{fullpaper}{false}
 
 \newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
 \newcommand{\commentaire}[1]{}
@@ -337,6 +337,11 @@ University of Cambridge
 \end_layout
 
 \begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Inj}{\mathrm{Inj}}
+\end_inset
+
+
 \begin_inset FormulaMacro
 \newcommand{\veciflyx}[2]{\vecif{#1}{#2}}
 {\vec{#2}_{#1}}
@@ -1338,7 +1343,7 @@ congruence
  rule for application.
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
+\dfrac{\Gamma\vdash t_{1},t_{2}=u_{1},u_{2}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
 \]
 
 \end_inset
@@ -1582,7 +1587,7 @@ lly.
 \end_inset
 
  at top level on either hand side of 
-\begin_inset Formula $\Gamma,M:n\vdash t=u$
+\begin_inset Formula $\Gamma,M:n\vdash t,u$
 \end_inset
 
 .
@@ -2438,7 +2443,7 @@ noprefix "false"
 
 \end_inset
 
-: as we will see, both are (co)pushouts.
+: as we will see, both are pullbacks.
 \end_layout
 
 \end_inset
@@ -2963,9 +2968,9 @@ noprefix "false"
 
 , although for a syntax specified by a binding signature, they have the
  same meaning as in the previous section.
- This is because the generic algorithm works in a more general setting,
- as we are going to explain in the next section, so that they need to be
- customised for each specific situation.
+ In fact, the generic algorithm works in a more general setting, as we are
+ going to explain in the next section, so that they need to be customised
+ for each specific situation.
 \end_layout
 
 \begin_layout Subsection
@@ -3078,11 +3083,11 @@ In pattern unification, we consider extensions of this syntax with metavariables
 \end_inset
 
  now satisfies the recursive equation 
-\begin_inset Formula $\Lambda'_{n}=\underline{n}+\Lambda'_{n}\times\Lambda'_{n}+\Lambda_{n+1}'+Inj(p,n)$
+\begin_inset Formula $\Lambda'_{n}=\underline{n}+\Lambda'_{n}\times\Lambda'_{n}+\Lambda_{n+1}'+\Inj(p,n)$
 \end_inset
 
 , where 
-\begin_inset Formula $Inj(p,n)$
+\begin_inset Formula $\Inj(p,n)$
 \end_inset
 
  is the set of injections between the cardinal sets 
@@ -3095,7 +3100,7 @@ In pattern unification, we consider extensions of this syntax with metavariables
 
 , corresponding to a choice of arguments for the metavariable.
  In fact, 
-\begin_inset Formula $Inj(p,n)$
+\begin_inset Formula $\Inj(p,n)$
 \end_inset
 
  is nothing but the set of morphisms between 
@@ -3241,7 +3246,7 @@ Obviously, the functors
 \end_inset
 
 .
- Similarly, the functor would be 
+ Similarly, the functor 
 \begin_inset Formula $T(yp+yq)$
 \end_inset
 
@@ -3255,7 +3260,7 @@ Obviously, the functors
 
 \begin_layout Standard
 In the view to abstracting pattern unification, these observations motivate
- considering functors categories 
+ considering functor categories 
 \begin_inset Formula $[\mathcal{A},\Set]$
 \end_inset
 
@@ -3382,8 +3387,8 @@ If
 \end_inset
 
 .
- Thus, Kleisli morphisms are nothing but metavariable substitution.
- Moreover, Kleisli composition correspond to composition of substitutions.
+ Thus, Kleisli morphisms are nothing but metavariable substitutions.
+ Moreover, Kleisli composition corresponds to composition of substitutions.
  
 \begin_inset Note Note
 status open
@@ -5736,7 +5741,7 @@ Any Kleisli morphism
 \end_inset
 
  and 
-\begin_inset Formula $g:TB\rightarrow TC$
+\begin_inset Formula $g:B\rightarrow TC$
 \end_inset
 
  by 
@@ -5843,7 +5848,7 @@ regular
 
 \end_inset
 
- monomorphisms and has finite connected limits.
+ monomorphisms and which has finite connected limits.
  
 \end_layout
 
@@ -7890,8 +7895,8 @@ status open
 
 \begin_layout Plain Layout
 The fact that it preserves pullbacks is crucial when unifying a metavariable
- with a variable, to show that either there is no unifier, either there
- is a coequaliser.
+ with a variable, to show that either there is no unifier, or there is a
+ coequaliser.
 \end_layout
 
 \end_inset
@@ -8453,7 +8458,7 @@ name "nota:op"
 \end_inset
 
 Given 
-\begin_inset Formula $o:Ka\rightarrow TX$
+\begin_inset Formula $o:Ka\rightarrow O$
 \end_inset
 
  and 
@@ -12014,11 +12019,12 @@ name "sec:Main-result"
 \end_layout
 
 \begin_layout Standard
-The main point of pattern unification is that a coequaliser diagram in 
+The main point of pattern unification is that a pair of parallel morphisms
+ in 
 \begin_inset Formula $\KlD$
 \end_inset
 
- either has no unifier, either has a colimiting cocone.
+ either has no unifier, or has a coequaliser.
  Working with this logical disjunction is slightly inconvenient; we rephrase
  it in terms of a true coequaliser by freely adding a terminal object.
 \end_layout
@@ -12285,7 +12291,7 @@ In other words, for any coequaliser diagram
 \begin_inset Formula $\D^{+}$
 \end_inset
 
-, either there is no cocone, either there is a coequaliser 
+, either there is no cocone, or there is a coequaliser 
 \begin_inset Formula $B\rightarrow TC$
 \end_inset
 
@@ -14503,7 +14509,7 @@ When
 \begin_inset Formula $\Gamma\xrightarrow{\sigma}\Delta\xleftarrow{\vec{u}}\coprod_{i}Kb_{i}$
 \end_inset
 
- induces a pushout of the above span, we use 
+ is a pushout of the above span, we use 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "nota:pushouts"
@@ -16161,7 +16167,7 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
-, either it occurs at top-level (see 
+, or it occurs at top-level (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "cor:occurcheck-final"
@@ -16894,7 +16900,7 @@ noprefix "false"
 
 \end_inset
 
-, either 
+, or 
 \begin_inset Formula $|t|_{M}=1$
 \end_inset
 
