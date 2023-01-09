@@ -806,7 +806,7 @@ If you omit details that are vital to the proof/implementation, just say
 status open
 
 \begin_layout Plain Layout
-What is unification?
+A quick introduction to unification
 \end_layout
 
 \end_inset
@@ -1815,6 +1815,14 @@ vspace{1em}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+No 
+\begin_inset Formula $\beta/\eta$
+\end_inset
+
+-equation.
 \begin_inset Note Note
 status open
 
