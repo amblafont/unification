@@ -1722,7 +1722,7 @@ Formation rules:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\overbrace{\Gamma}^{\mathclap{\text{Metavariable context \ensuremath{(M_{1}:n_{1},\dots)}}}};\underbrace{\varctxt}_{\mathclap{\text{Variable context }}}\vdash t
+\overbrace{\Gamma}^{\mathclap{\text{Metavariable context \ensuremath{(M_{1}:m_{1},\dots)}}}};\underbrace{\varctxt}_{\mathclap{\text{Variable context }}}\vdash t
 \]
 
 \end_inset
@@ -1785,7 +1785,7 @@ vspace{2em}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\dfrac{0<i\leq\varctxt}{\Gamma;\varctxt\vdash v_{i}}\textsc{Var}\qquad\dfrac{\Gamma;\varctxt\vdash t\quad\Gamma;\varctxt\vdash u}{\Gamma;\varctxt\vdash t\ u}\textsc{App}\qquad\dfrac{\Gamma;\varctxt+1\vdash t}{\Gamma;\varctxt\vdash\lambda t}\textsc{Abs}
+\dfrac{1\leq i\leq\varctxt}{\Gamma;\varctxt\vdash v_{i}}\textsc{Var}\qquad\dfrac{\Gamma;\varctxt\vdash t\quad\Gamma;\varctxt\vdash u}{\Gamma;\varctxt\vdash t\ u}\textsc{App}\qquad\dfrac{\Gamma;\varctxt+1\vdash t}{\Gamma;\varctxt\vdash\lambda t}\textsc{Abs}
 \]
 
 \end_inset
@@ -1809,7 +1809,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{(M:m)\in\Gamma\qquad0<i_{1},\dots,i_{m}\leq\varctxt\qquad i_{1},\dots i_{m}\text{ distinct}}{\Gamma;\varctxt\vdash M(v_{i_{1}},\dots,v_{i_{m}})}\textsc{Flex}
+\dfrac{(M:m)\in\Gamma\qquad1\leq i_{1},\dots,i_{m}\leq\varctxt\qquad i_{1},\dots i_{m}\text{ distinct}}{\Gamma;\varctxt\vdash M(v_{i_{1}},\dots,v_{i_{m}})}\textsc{Flex}
 \]
 
 \end_inset
@@ -2114,7 +2114,7 @@ Term substitution
 Base case:
 \begin_inset Formula 
 \[
-M_{i}(x_{1},\dots,x_{m_{i}})\mapsto\sigma_{i}[v_{j}\mapsto x_{m_{j}}]
+M_{i}(x_{1},\dots,x_{m_{i}})\mapsto\sigma_{i}[v_{j}\mapsto x_{j}]
 \]
 
 \end_inset
@@ -2661,12 +2661,16 @@ end{tikzpicture}
 status open
 
 \begin_layout Plain Layout
-Unifying two lists of terms
+Sequential unification
 \end_layout
 
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \Gamma\vdash()=()\Rightarrow id_{\Gamma}\dashv\Gamma
@@ -2675,6 +2679,15 @@ Unifying two lists of terms
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -2683,6 +2696,11 @@ status open
 
 \backslash
 vspace{1em}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2798,7 +2816,7 @@ vspace{1em}
 \begin_inset Formula $M(\vec{x})\stackrel{?}{=}\dots M(\vec{y})\dots$
 \end_inset
 
- (cyclic)
+
 \end_layout
 
 \begin_layout Enumerate
@@ -2997,7 +3015,7 @@ Most general unifier
 \begin_layout Examples
 \begin_inset Formula 
 \begin{align*}
-\overbrace{M(x,y)=M(x,z)}^{{\displaystyle \vec{p}=(1)}} & \Rightarrow M(v_{1},v_{2})\mapsto N(v_{1})\\
+\overbrace{M(x,y)=M(z,y)}^{{\displaystyle \vec{p}=(2)}} & \Rightarrow M(v_{1},v_{2})\mapsto N(v_{2})\\
 \underbrace{M(x,y)=M(z,x)}_{{\displaystyle \vec{p}=()}} & \Rightarrow M(v_{1},v_{2})\mapsto N
 \end{align*}
 
@@ -3088,7 +3106,7 @@ M(\vec{x})[\sigma]=N(v_{\vec{z}})[v_{i}\mapsto x_{i}] & =N(x_{\vec{z}})\\
 status open
 
 \begin_layout Plain Layout
-Cyclic case
+Deep cyclic case
 \end_layout
 
 \end_inset
@@ -3183,9 +3201,9 @@ status open
 
 
 \begin_inset Formula 
-\[
-M(\vec{x})\stackrel{?}{=}u\text{ (\ensuremath{M\notin u})}
-\]
+\begin{equation}
+M(\vec{x})\stackrel{?}{=}u\text{ (\ensuremath{M\notin u})}\label{eq:non-cyclic}
+\end{equation}
 
 \end_inset
 
@@ -3218,6 +3236,23 @@ Most general unifier
 
 \end_layout
 
+\begin_layout Block
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:non-cyclic"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as the definition of 
+\begin_inset Formula $M$
+\end_inset
+
+:
+\end_layout
+
 \begin_deeper
 \begin_layout Standard
 \begin_inset Formula 
@@ -3231,11 +3266,20 @@ Most general unifier
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Intuition:
 \begin_inset Formula 
 \[
 M(\vec{x})[\sigma]=u[x_{i}\mapsto v_{i}][v_{i}\mapsto x_{i}]=u
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -3321,11 +3365,7 @@ fv(u)\subset\vec{x}
 status open
 
 \begin_layout Plain Layout
-Non-cycling case: pruning 
-\begin_inset Formula $u$
-\end_inset
-
-
+Pruning
 \end_layout
 
 \end_inset
@@ -3406,20 +3446,6 @@ Can be enforced by restricting metavariable arities in
 .
 \end_layout
 
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-Pruning phase
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
 \begin_layout Standard
 \begin_inset Formula 
 \[
@@ -3432,7 +3458,6 @@ N(x,y) & \xRightarrow{\text{pruning}} & N'(x)\end{array}
 
 \end_layout
 
-\end_deeper
 \end_deeper
 \begin_layout Frame
 
@@ -3492,7 +3517,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Pruning phase
+Non-cyclic phase
 \end_layout
 
 \end_inset
@@ -3520,7 +3545,7 @@ status open
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\Gamma\prune{\tikzmarknode{upruning}{u}}{\tikzmarknode{Mpruning}{M}(\tikzmarknode{xpruning}{\vec{x}})}{\tikzmarknode{sigmapruning}{\sigma}}{\overbrace{{\color{blue}w}}^{\mathclap{"u[\sigma][x_{i}\mapsto v_{i}]"}}}\dashv\Delta
+\Gamma\prune{\tikzmarknode{upruning}{u}}{\tikzmarknode{Mpruning}{M}(\tikzmarknode{xpruning}{\vec{x}})}{\tikzmarknode{sigmapruning}{\sigma}}{{\color{blue}w}}\dashv\Delta
 \]
 
 \end_inset
@@ -3711,7 +3736,7 @@ status open
 status open
 
 \begin_layout Plain Layout
-Correctness criterion: solving the non-cyclic case
+Formal meaning
 \end_layout
 
 \end_inset
@@ -3872,7 +3897,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{}{\Gamma\prune{x_{i}}{M(\vec{x})}{id_{\Gamma}}{v_{i}}\dashv\Gamma}
+\dfrac{}{\Gamma\prune{x_{n}}{M(\vec{x})}{id_{\Gamma}}{v_{n}}\dashv\Gamma}
 \]
 
 \end_inset
@@ -3952,27 +3977,6 @@ Most general unifier
 \end_layout
 
 \begin_layout Block
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{align*}
-M(v_{1},\dots,v_{m}) & \mapsto P(v_{{\color{blue}l_{1}}},\dots,v_{{\color{blue}l_{p}}})\\
-N(v_{1},\dots,v_{n}) & \mapsto P(v_{{\color{blue}r_{1}}},\dots,v_{{\color{blue}r_{p}}})
-\end{align*}
-
-\end_inset
-
 
 \end_layout
 
@@ -4015,6 +4019,10 @@ Most general unifier
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -4023,6 +4031,11 @@ status open
 
 \backslash
 vspace{-1em}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4059,6 +4072,32 @@ vspace{-1em}
 \end_layout
 
 \end_deeper
+\begin_layout Block
+Then,
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+M(v_{1},\dots,v_{m}) & \mapsto P(v_{{\color{blue}l_{1}}},\dots,v_{{\color{blue}l_{p}}})\\
+N(v_{1},\dots,v_{n}) & \mapsto P(v_{{\color{blue}r_{1}}},\dots,v_{{\color{blue}r_{p}}})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \end_deeper
 \begin_layout Frame
 \begin_inset Note Note
@@ -4176,9 +4215,17 @@ Pruning operations
 \end_inset
 
 
+\end_layout
+
+\begin_layout Frame
+
+\series bold
+Divide & Conquer
+\series default
+: a fresh metavariable for each argument.
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\prune t{M_{1}(\vec{x},\overbrace{v_{n+1}}^{\mathclap{\text{{\color{blue}bound} {\color{blue}variable}}}})}{\sigma}w\dashv\Delta}{\Gamma\prune{{\color{blue}\lambda}t}{M(\vec{x})}{\sigma}{\lambda w}\dashv\Delta}
+\dfrac{\Gamma\prune t{M'(\vec{x},\overbrace{v_{n+1}}^{\mathclap{\text{{\color{blue}bound} {\color{blue}variable}}}})}{\sigma}w\dashv\Delta}{\Gamma\prune{{\color{blue}\lambda}t}{M(\vec{x})}{\sigma}{\lambda w}\dashv\Delta}\qquad M=\lambda M'
 \]
 
 \end_inset
@@ -4202,7 +4249,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{"\Gamma\prune{t,u}{M_{1}(\vec{x}),M_{2}(\vec{x})}{\sigma}{w_{1},w_{2}}\dashv\Delta"}{\Gamma\prune{t\ u}{M(\vec{x})}{\sigma}{w_{1}\ w_{2}}\dashv\Delta}
+\dfrac{"\Gamma\prune{t,u}{M_{1}(\vec{x}),M_{2}(\vec{x})}{\sigma}{w_{1},w_{2}}\dashv\Delta"}{\Gamma\prune{t\ u}{M(\vec{x})}{\sigma}{w_{1}\ w_{2}}\dashv\Delta}\text{\ensuremath{\qquad M=M_{1}\ M_{2}}}
 \]
 
 \end_inset
@@ -4222,7 +4269,7 @@ vspace{1em}
 status open
 
 \begin_layout Plain Layout
-Pruning multi-terms
+Non-cyclic unification of multi-terms
 \end_layout
 
 \end_inset
@@ -4332,7 +4379,7 @@ end{tikzpicture}
 status open
 
 \begin_layout Plain Layout
-Correctness criterion
+Formal meaning
 \end_layout
 
 \end_inset
@@ -4379,12 +4426,16 @@ M_{1}(\vec{x}_{1}),\dots M_{n}(\vec{x}_{n})\stackrel{?}{=}u_{1},\dots,u_{n}
 status open
 
 \begin_layout Plain Layout
-Rules for multi-terms
+Sequential non-cyclic unification
 \end_layout
 
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \pruningempty
@@ -4393,6 +4444,15 @@ Rules for multi-terms
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -4401,6 +4461,11 @@ status open
 
 \backslash
 vspace{1em}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4573,7 +4638,11 @@ The previous unification algorithm generalises to any syntax specified by
 status open
 
 \begin_layout Plain Layout
-Example: pruning an operation
+Example: 
+\begin_inset Formula $M(\vec{x})\stackrel{?}{=}o(\vec{t})$
+\end_inset
+
+, non-cyclic
 \end_layout
 
 \end_inset
@@ -4635,7 +4704,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{v_{n+1},\dots,v_{n+1+\alpha_{1}}}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{N(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
+\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{v_{n+1},\dots,v_{n+1+\alpha_{1}}}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{M(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
 \]
 
 \end_inset
@@ -4856,6 +4925,17 @@ end{tikzpicture}
 \end_layout
 
 \begin_layout Frame
+\begin_inset Formula 
+\[
+M(\vec{x})[\sigma]=\sigma_{M}\overbrace{[v_{i}\mapsto x_{i}]}^{\mathclap{\text{injective renaming}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
 
 \end_layout
 
@@ -4906,7 +4986,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\Lambda_{n}\cong\underbrace{\{0,\dots,n-1\}}_{\text{variables}}+\underbrace{\Lambda_{n}\times\Lambda_{n}}_{\text{application}}+\underbrace{\Lambda_{n+1}}_{\text{abstraction}}
+\Lambda_{n}\cong\underbrace{\{1,\dots,n\}}_{\text{variables}}+\underbrace{\Lambda_{n}\times\Lambda_{n}}_{\text{application}}+\underbrace{\Lambda_{n+1}}_{\text{abstraction}}
 \]
 
 \end_inset
@@ -5071,15 +5151,15 @@ vspace{1em}
 
 \begin_inset Formula 
 \begin{align*}
-\Lambda(m)_{n} & =\{t\ |\ M:m;n\vdash t\}
+\Lambda_{n}^{M:m} & =\{t\ |\ M:m;n\vdash t\}
 \end{align*}
 
 \end_inset
 
-As a fixpoint:
+As an initial algebra:
 \begin_inset Formula 
 \begin{align*}
-\Lambda(m) & =\mu X.(\underbrace{\tikzmarknode{Fmvar}{F(X)}}_{\mathclap{\text{operations / variables}}}+\ \overbrace{{\color{blue}arg^{M}}}^{\text{metavariables}})\\
+\Lambda^{M:m} & =\mu X.(\underbrace{\tikzmarknode{Fmvar}{F(X)}}_{\mathclap{\text{operations / variables}}}+\ \overbrace{{\color{blue}arg^{M}}}^{\text{metavariables}})\\
 \\
  & =\underbrace{T}_{\mathclap{\text{free monad generated by \ensuremath{F}}}}({\color{blue}arg^{M}})
 \end{align*}
@@ -5169,6 +5249,11 @@ Pure
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Frame
+
 \end_layout
 
 \begin_deeper
@@ -5194,32 +5279,31 @@ status open
 \end_inset
 
 
-\end_layout
-
-\end_deeper
-\begin_layout Frame
 \begin_inset Formula 
-\begin{align*}
-{\color{blue}arg^{M}}_{\boldsymbol{n}} & =\{\text{\ensuremath{M}-arguments in the variable context \textbf{\ensuremath{\boldsymbol{n}}}\}}\\
- & =\left\{ \vec{x}\in\{0,\dots,n-1\}^{m}\ \left|x_{1},\dots,x_{m}\text{ distinct}\right.\right\} \\
- & =\hom_{\mathbb{F}_{m}}(m,n)=ym_{n}
-\end{align*}
+\[
+=\left\{ \vec{x}\in\{1,\dots,n\}^{m}\ \left|\ x_{1},\dots,x_{m}\text{ distinct}\right.\right\} 
+\]
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
+\end_deeper
+\end_inset
 
 
-\backslash
-vspace{-1em}
 \end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\begin{align*}
+{\color{blue}arg^{M}}_{\hphantom{\boldsymbol{n}}} & :\mathbb{F}_{m}\rightarrow\Set\\
+{\color{blue}arg^{M}}_{\boldsymbol{n}} & =\{\text{\ensuremath{M}-arguments in the variable context \textbf{\ensuremath{\boldsymbol{n}}}\}}\\
+ & =\left\{ \text{choice of \ensuremath{m} distinct variables in the context \ensuremath{\boldsymbol{n}}}\right\} \\
+ & =\textrm{Inj}(m,n)\\
+ & =\hom_{\mathbb{F}_{m}}(m,n)=ym_{n}
+\end{align*}
 
 \end_inset
 
@@ -5275,7 +5359,7 @@ status open
 
 \begin_inset Formula 
 \begin{align*}
-\Lambda(m) & =T(ym)
+\Lambda^{M:m} & =T(ym)
 \end{align*}
 
 \end_inset
@@ -7140,7 +7224,7 @@ vspace{-1.5em}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\dfrac{0<i\leq n}{\wftype n{\eta_{i}}}\textsc{Type-Var}\qquad\dfrac{\wftype{n+1}{\tau}}{\wftype n{\forall\tau}}\textsc{Forall}
+\dfrac{1\leq i\leq n}{\wftype n{\eta_{i}}}\textsc{Type-Var}\qquad\dfrac{\wftype{n+1}{\tau}}{\wftype n{\forall\tau}}\textsc{Forall}
 \]
 
 \end_inset
@@ -7874,7 +7958,7 @@ Summary of the generic unification algorithm
 status open
 
 \begin_layout Plain Layout
-Pruning phase
+Non cyclic phase
 \end_layout
 
 \end_inset
@@ -8323,6 +8407,64 @@ Typing metavariables
 \end_layout
 
 \end_deeper
+\begin_layout Block
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Future directions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Implementation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+logic programming
+\end_layout
+
+\begin_layout Itemize
+verified in Coq/Agda 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+(needs rephrasing using structural recursion)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Unification modulo reduction
+\end_layout
+
+\begin_layout Itemize
+Efficient pattern unification [Qian '96]
+\end_layout
+
+\begin_layout Itemize
+Anti-unification
+\end_layout
+
 \end_deeper
 \end_body
 \end_document

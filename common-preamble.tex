@@ -1,0 +1,151 @@
+% for subfigures/subtables
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{tikz-cd}
+\usepackage{adjustbox}
+\usepackage{quiver}
+\newcommand{\Ker}{\mathrm{Ker}}
+\usepackage{mathpartir}
+\usepackage{fullshort}
+
+% to comment for the short version
+\setboolean{fullpaper}{true}
+
+\newcommand{\pullbackcorner}[1][dl]{\save*!/#1-1pc/#1:(-1,1)@^{|-}\restore}
+\newcommand{\commentaire}[1]{}
+\usepackage{cmll}
+
+\makeatother
+\newcommand{\coeqr}[2]{\ar@<+.5ex>[r]^-{#1}\ar@<-.5ex>[r]_-{#2}}
+\makeatletter
+\newcommand{\hautr}[1]{\ar[r]^-{#1}}
+\newcommand{\hautl}[1]{\ar[l]_-{#1}}
+
+
+\newcommand{\vecif}[2]{\ifthenelse{\equal{#1}{}}{#2}{\vec{#2}}}
+
+%\newref{rem}{refcmd={Remark~\ref{#1}}}
+\newrefformat{rem}{Remark~\ref{#1}}
+%\newref{def}{refcmd={Definition~\ref{#1}}}
+\newrefformat{def}{Definition~\ref{#1}}
+%\newref{assu}{refcmd={Property~\ref{#1}}}
+\newrefformat{assu}{Property~\ref{#1}}
+%\newref{cor}{refcmd={Corollary~\ref{#1}}}
+%\newref{lem}{refcmd={Lemma~\ref{#1}}}
+%\newref{prop}{refcmd={Proposition~\ref{#1}}}
+%\newref{nota}{refcmd={Notation~\ref{#1}}}
+%\newref{tab}{refcmd={Table~\ref{#1}}}
+%\newref{subsec}{refcmd={Section~\S\ref{#1}}}
+
+%%%
+%% from the paper quantum lambda
+\usepackage{proof}
+
+\newcommand{\ass}{:=}
+\newcommand{\abs}[1]{|#1|}              
+\newcommand{\homof}[2]{#1(#2)}          
+\newcommand{\seq}{\subseteq}    
+\newcommand{\such}{\,\,|\,\,}           
+\newcommand{\pc}{\mathbin{;}}           
+\newcommand{\id}{{\textrm{\rm id}}}     
+\newcommand{\N}{\mathbb{N}}                     
+\newcommand{\categ}[1]{\textrm{\bf #1}} 
+\newcommand{\FV}{{\rm FV}}                      
+\newcommand{\bang}{{!}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\bor}{\ \ \rule[-.75ex]{.01in}{2.75ex}\ \ }  
+%\newcommand{\C}{\mathbb{C}}                     
+\newcommand{\Rp}{{\mathbb{R}^+}}                     
+\newcommand{\sqleq}{\sqsubseteq}
+\newcommand{\sqgeq}{\sqsupseteq}
+\newcommand{\bit}{{\bf bit}}
+\newcommand{\qubit}{{\bf qubit}}
+\newcommand{\xmatrix}[4]{{\renewcommand{\arraystretch}{#1}%
+\arraycolsep=#2ex\left(\begin{array}{#3}#4\end{array}\right)}}
+\newcommand{\zmatrix}{\xmatrix{0.8}{0.8}}
+\newcommand{\zzmatrix}[2]{{\textrm{\scriptsize$\zmatrix{#1}{#2}$}}}
+\newcommand{\CPM}{\textrm{\bf CPM}}
+\newcommand{\CPMs}{\textrm{\bf CPM}_s}
+\newcommand{\inv}{^{-1}}
+\newcommand{\freecat}[1][C]{\ensuremath{\categ{#1}^{\oplus}}}  
+\newcommand{\cpms}{\categ{CPMs}} 
+\newcommand{\ccpms}{\ensuremath{\overline{\categ{CPMs}}}} 
+\newcommand{\M}{{\cal M}}
+\newcommand{\supp}[1]{\vert #1\vert}   
+\newcommand{\eq}[2][]{\mathop{eq^{#2}_{#1}}\nolimits} 
+\newcommand*{\mystackrel}[2]{%
+\stackrel{\raise-2pt\hbox{$\scriptstyle\!#1$}}{#2}}
+\newcommand*{\redto}[1][]{\mystackrel{#1}{\rightarrow}}
+\newcommand*{\xredto}[1][]{%
+\xrightarrow{\raisebox{-2pt}{$\scriptstyle\!{#1}$}}}
+\newcommand{\qfin}[1]{\mathfrak{#1}} 
+\newcommand{\web}[1]{\vert{#1}\vert} 
+\newcommand{\swap}[1][]{\sigma_{#1}} 
+\newcommand{\proj}[1]{\pi^{#1}} 
+\newcommand{\inj}[1]{\iota^{#1}} 
+\newcommand{\unit}{\mathbf{1}} 
+\newcommand{\Cl}{\mathrm{Cl}} 
+\newcommand{\Val}{\mathrm{Val}} 
+\newcommand{\apprv}{\mathrel{\triangleleft}} 
+\newcommand{\contr}{\mathtt{c}} 
+\newcommand{\der}{\mathtt{d}} 
+\newcommand{\weak}{\mathtt{w}} 
+\newcommand{\dig}{\mathtt{dig}} 
+\newcommand{\bierman}{\mathtt{m}} 
+\newcommand{\cmatrix}[1]{\Lambda(#1)} 
+\newcommand{\injl}[2][]{{\mathtt{in}_\ell^{#1}}~{#2}} 
+\newcommand{\injr}[2][]{{\mathtt{in}}_r^{#1}~{#2}} 
+\newcommand{\fprod}[2]{\langle #1\rangle_{#2}}
+\newcommand{\fcoprod}[2]{[#1]_{#2}}
+\newcommand{\pdistr}{{\mathtt{distr}}} 
+\newcommand{\symgroup}{S}	
+\newcommand{\Lowner}{L\"owner}
+\newcommand{\tr}{\mathop{\mathrm{\rm tr}}\nolimits}
+\newcommand{\cs}{c}
+\newcommand{\down}{{\downarrow}}
+\newcommand{\define}[1]{{\em #1}}
+\newcommand{\punit}{\mathtt{skip}}
+\newcommand{\tensterm}[2]{{{#1}\tensor{#2}}}
+\newcommand{\lettensterm}[4]{{\mathtt{let}~{#1}%
+\tensor{#2}~=~{#3}~\mathtt{in}~{#4}}}
+\newcommand{\letunitterm}[2]{{#1}\mathtt{;}{#2}}
+\newcommand{\ttrue}{\mathtt{tt}}
+\newcommand{\ffalse}{\mathtt{ff}}
+\newcommand{\iftermx}[3]{{{\mathtt{if}}~{#1}~\mathtt{then}~{#2}~%
+\mathtt{else}~{#3}}}
+\newcommand{\match}[5]{{{\mathtt{match}}~{#1}~{\mathtt{with}}%
+~({#2:#3}\mid{#4:#5})}}
+\newcommand{\letrec}[4]{{{\mathtt{letrec}}~{#1}\,{#2}={#3}~{\mathtt{in}}~{#4}}}
+\newcommand{\letrecn}[5]{{{\mathtt{letrec}}^{#1}~{#2}%
+\,{#3}={#4}~{\mathtt{in}}~{#5}}}
+\newcommand{\nil}{{\mathtt{nil}}}
+\newcommand{\cons}[3][]{{{#2}\,{\mathtt :}{\mathtt :}^{#1}\,{#3}}}
+\newcommand{\splitlist}[1][]{{\mathtt{split}^{#1}}}
+\newcommand{\meas}{{\mathtt{meas}}}
+\newcommand{\new}{{\mathtt{new}}}
+\newcommand{\loli}{\multimap}
+\newcommand{\tlist}[1]{{{#1}^\ell}}
+\newcommand{\sumtype}{\oplus}
+\newcommand{\tunit}{{1}}
+\newcommand{\arity}[1]{d^{#1}} 
+\newcommand{\symm}[1]{G^{#1}} 
+\newcommand{\entail}{\vdash}
+\newcommand{\am}[1]{{[}{#1}{]}}
+\newcommand{\qarray}{q} 
+\newcommand{\qlist}{\ell} 
+\newcommand{\ket}[1]{{|{#1}\rangle}}
+\newcommand{\dual}[1]{{#1}^{\perp}} 
+\newcommand{\denot}[1]{{\llbracket #1 \rrbracket}}
+
+\newcommand{\inferruletwo}[3]{\inferrule{#1 \\ #2}{#3}}
+
+\newref{rem}{refcmd={Remark~\ref{#1}}}
+\newref{def}{refcmd={Definition~\ref{#1}}}
+\newref{assu}{refcmd={Property~\ref{#1}}}
+\newref{cor}{refcmd={Corollary~\ref{#1}}}
+\newref{lem}{refcmd={Lemma~\ref{#1}}}
+\newref{prop}{refcmd={Proposition~\ref{#1}}}
+\newref{nota}{refcmd={Notation~\ref{#1}}}
+\newref{tab}{refcmd={Table~\ref{#1}}}
+\newref{subsec}{refcmd={Section~\S\ref{#1}}}
+\newref{app}{refcmd={Appendix~\S\ref{#1}}}
+
