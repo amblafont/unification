@@ -2155,6 +2155,19 @@ Unification algorithm
 \end_inset
 
 
+\end_layout
+
+\begin_layout Frame
+\begin_inset Flex Alert
+status open
+
+\begin_layout Plain Layout
+make the n explicit?
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \overbrace{\Gamma\vdash\tikzmarknode{t}{t}=\tikzmarknode{u}{u}}^{\text{input}}\Rightarrow\overbrace{\tikzmarknode{sigma}{\sigma}\dashv\Delta}^{\text{output}}
@@ -4146,6 +4159,15 @@ status open
 
 \begin_deeper
 \begin_layout Examples
+\begin_inset Flex Alert
+status open
+
+\begin_layout Plain Layout
+Intuition?
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -5890,7 +5912,7 @@ vspace{2em}
 \[
 \qquad\tikzmarknode{ThFdef}{\begin{array}{c}
 \text{Objects: }\text{\ensuremath{\underline{\Gamma}},\ensuremath{\underline{\Delta}},\ensuremath{\dots}}\text{ }\\
-\text{(finite coproducts of representable functors)}\\
+\\
 \text{"Lawvere theory"}
 \end{array}}
 \]
@@ -6191,6 +6213,10 @@ F(X)_{a}=\coprod_{o\in O_{a}}X_{L_{o,1}}\times\dots\times X_{L_{o,n_{o}}}
 \end_layout
 
 \end_deeper
+\begin_layout Frame
+No equation.
+\end_layout
+
 \begin_layout Frame
 
 \end_layout
@@ -6828,7 +6854,17 @@ vspace{-2em}
 
 \end_inset
 
-Diagrammatically,
+Diagrammatically, 
+\begin_inset Flex Alert
+status open
+
+\begin_layout Plain Layout
+faire le line explcite avec le pure lamdba
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

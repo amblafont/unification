@@ -763,6 +763,8 @@ noprefix "false"
 \end_inset
 
 .
+ The goal of this paper is to generalise it, by parameterising the algorithm
+ by a signature specifying a syntax.
  In 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -773,17 +775,7 @@ noprefix "false"
 
 \end_inset
 
-, we then present the generic algorithm summarised in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, instantiated for a syntax specified by a 
+, we present a first generalisation to a syntax specified by a 
 \emph on
 binding signature
 \emph default
@@ -798,8 +790,8 @@ noprefix "false"
 
 \end_inset
 
-, we motivate our general setting and provide categorical semantics of the
- algorithm, by revisiting pure 
+, we motivate our further generalisation and provide categorical semantics
+ of the algorithm, by revisiting pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -1101,7 +1093,7 @@ Note that the De Bruijn level convention means that the variable bound in
 \end_inset
 
  is 
-\begin_inset Formula $n+1$
+\begin_inset Formula $v_{n+1}$
 \end_inset
 
 .
@@ -1131,8 +1123,12 @@ metavariable substitution
 \begin_inset Formula $\sigma:\Gamma\rightarrow\Gamma'$
 \end_inset
 
- assigns to each declaration 
-\begin_inset Formula $M:m$
+ assigns to each metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $m$
 \end_inset
 
  in 
@@ -1166,6 +1162,28 @@ where
 \end_inset
 
  is variable renaming.
+ For example, the identity substitution 
+\begin_inset Formula $1_{\Gamma}:\Gamma\rightarrow\Gamma$
+\end_inset
+
+ is defined by the term 
+\begin_inset Formula $M(v_{1},\dots,v_{m})$
+\end_inset
+
+ for each metavariable declaration 
+\begin_inset Formula $M:m$
+\end_inset
+
+ in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ It indeed satisfies 
+\begin_inset Formula $t[1_{\Gamma}]=t$
+\end_inset
+
+.
  Composition of substitutions 
 \begin_inset Formula $\sigma:\Gamma_{1}\rightarrow\Gamma_{2}$
 \end_inset
@@ -1267,7 +1285,31 @@ status open
 
 \end_inset
 
-, we add a formal error metavariable context 
+, we add
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+We will interpret 
+\begin_inset Formula $\bot$
+\end_inset
+
+ as a freely added terminal object in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Main-result"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ a formal error metavariable context 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -1294,21 +1336,7 @@ status open
 \end_inset
 
 .
- Formally, we will interpret 
-\begin_inset Formula $\bot$
-\end_inset
-
- as a freely added terminal object in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:Main-result"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1610,18 +1638,18 @@ lly.
 \begin_inset Formula $M$
 \end_inset
 
- appears deeply in 
+ occurs deeply in 
 \begin_inset Formula $u$
 \end_inset
 
-
+;
 \end_layout
 
 \begin_layout Enumerate
 \begin_inset Formula $M$
 \end_inset
 
- appears in 
+ occurs in 
 \begin_inset Formula $u$
 \end_inset
 
@@ -1636,11 +1664,11 @@ lly.
 \begin_inset Formula $M$
 \end_inset
 
- does not appear in 
+ does not occur in 
 \begin_inset Formula $u$
 \end_inset
 
-;
+.
 \end_layout
 
 \begin_layout Standard
@@ -1670,7 +1698,7 @@ where
 \begin_inset Formula $M$
 \end_inset
 
- does appear in 
+ does occur in 
 \begin_inset Formula $u$
 \end_inset
 
@@ -1706,24 +1734,16 @@ we only keep the argument positions that are the same in
 
 \end_inset
 
- The most general unifier substitutes 
-\begin_inset Formula $M$
+ The most general unifier 
+\begin_inset Formula $\sigma$
 \end_inset
 
- with 
-\begin_inset Formula $M'(z_{1},\dots,z_{p})$
+ coincides with the identity substitution except for 
+\begin_inset Formula $\sigma_{M}=M'(v_{\vec{z}})=M'(v_{z_{1}},\dots,v_{z_{p}})$
 \end_inset
 
 , where 
-\begin_inset Formula $z_{1}$
-\end_inset
-
-, 
-\begin_inset Formula $\dots$
-\end_inset
-
-, 
-\begin_inset Formula $z_{p}$
+\begin_inset Formula $\vec{z}$
 \end_inset
 
  is the family of common positions 
@@ -1734,7 +1754,11 @@ we only keep the argument positions that are the same in
 \begin_inset Formula $x_{i}=y_{i}$
 \end_inset
 
-.
+, and 
+\begin_inset Formula $M'$
+\end_inset
+
+ is fresh.
  We denote
 \begin_inset Foot
 status open
@@ -1754,7 +1778,7 @@ The similarity with the above introduced notation is no coincidence: as
  We therefore get the rule
 \begin_inset Formula 
 \begin{equation}
-\dfrac{m\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p}{\Gamma,M:m\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(\vec{z})\dashv\Gamma,M':p}\label{eq:coeq-mvar-lc}
+\dfrac{m\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p}{\Gamma,M:m\vdash M(\vec{x})=M(\vec{y})\Rightarrow M\mapsto M'(v_{\vec{z}})\dashv\Gamma,M':p}\label{eq:coeq-mvar-lc}
 \end{equation}
 
 \end_inset
@@ -1762,8 +1786,41 @@ The similarity with the above introduced notation is no coincidence: as
 
 \end_layout
 
+\begin_layout Example
+Let 
+\begin_inset Formula $x,y,z$
+\end_inset
+
+ be three distinct variables.
+ The most general unifier of 
+\begin_inset Formula $M(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $M(z,y)$
+\end_inset
+
+ is 
+\begin_inset Formula $M\mapsto M(v_{2})$
+\end_inset
+
+; the most general unifier of 
+\begin_inset Formula $M'(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $M(z,x)$
+\end_inset
+
+ is 
+\begin_inset Formula $M\mapsto M'$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
-The last case is unification of 
+Finally, the last case consists in unifying 
 \begin_inset Formula $M(\vec{x})$
 \end_inset
 
@@ -1775,7 +1832,7 @@ The last case is unification of
 \begin_inset Formula $M$
 \end_inset
 
- does not appear in 
+ does not occur in 
 \begin_inset Formula $u$
 \end_inset
 
@@ -1805,79 +1862,41 @@ The last case is unification of
 \end_inset
 
 .
- In this case, the algorithm enters a 
+ The algorithm then enters a 
 \emph on
-pruning phase
+non-cyclic phase
 \emph default
-.
- To give an example, when unifying an application 
-\begin_inset Formula $t\ u$
+, which specifically addresses such non-cyclic unification problems.
+ Let us introduce a specific notation: 
+\begin_inset Formula $\Gamma\prune{u'}{\maybold M(\vec{x})}{\sigma\dashv\Delta}w$
 \end_inset
 
- with a metavariable 
-\begin_inset Formula $M(x_{1},\dots,x_{n})$
+ means that 
+\begin_inset Formula $u'$
 \end_inset
 
- which does not occur in 
-\begin_inset Formula $t$
+ is a term in a metavariable context 
+\begin_inset Formula $\Gamma$
 \end_inset
 
-,
-\begin_inset Formula $u$
-\end_inset
-
-, two fresh metavariables 
-\begin_inset Formula $M_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $M_{2}$
-\end_inset
-
- are created.
- Then, 
-\begin_inset Formula $t$
-\end_inset
-
- is unified with 
-\begin_inset Formula $M_{1}(x_{1},\dots,x_{n})$
-\end_inset
-
-, outputing a unifier 
-\begin_inset Formula $\sigma_{1}$
-\end_inset
-
-, and 
-\begin_inset Formula $u[\sigma_{1}]$
-\end_inset
-
- is unified with 
-\begin_inset Formula $M_{2}(x_{1},\dots,x_{n})$
-\end_inset
-
-, outputing a unifier 
-\begin_inset Formula $\sigma_{2}$
-\end_inset
-
-.
- Eventually, 
+, while 
 \begin_inset Formula $M$
 \end_inset
 
- is replaced with 
-\begin_inset Formula $(M_{1}(\vec{x})\ M_{2}(\vec{x}))[\sigma_{2}]$
+ is a fresh metavariable with respect to 
+\begin_inset Formula $\Gamma$
 \end_inset
 
-, where 
-\begin_inset Formula $\sigma_{2}$
+ and 
+\begin_inset Formula $\vec{x}=(x_{1},\dots,x_{m})$
 \end_inset
 
- is the output unifier.
- We call it 
-\emph on
-pruning 
-\emph default
-because unifying 
+ are distinct variables in the (implicit) variable context of 
+\begin_inset Formula $u'$
+\end_inset
+
+.
+ The output is the most general unifier of 
 \begin_inset Formula $u'$
 \end_inset
 
@@ -1885,155 +1904,124 @@ because unifying
 \begin_inset Formula $M(\vec{x})$
 \end_inset
 
- when 
+, both considered in the extended metavariable context 
+\begin_inset Formula $\Gamma,M:m$
+\end_inset
+
+.
+ This substitution from 
+\begin_inset Formula $\Gamma,M:m$
+\end_inset
+
+ to 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is explicitly defined as the extension of a substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ with a term 
+\begin_inset Formula $\Delta;m\vdash w$
+\end_inset
+
+ for substituting 
 \begin_inset Formula $M$
 \end_inset
 
- does not occur in 
-\begin_inset Formula $u'$
+.
+\end_layout
+
+\begin_layout Remark
+The symbol 
+\begin_inset Formula $:>$
 \end_inset
 
- consists in removing all 
+ evokes the 
 \emph on
-outbound 
+pruning
 \emph default
-variables in 
-\begin_inset Formula $u'$
-\end_inset
-
-, i.e., those that are not among the arguments 
-\begin_inset Formula $x_{1},\dots,x_{n}$
-\end_inset
-
- of the metavariable, by producing a substitution that restricts the arities
- of the metavariables occurring in 
-\begin_inset Formula $u'$
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-The pruning phase is nothing but unification restricted to this particular
- situation.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Let us introduce a specific notation for this phase: 
-\begin_inset Formula $\Gamma\prune{u'}{\maybold M(\vec{x})}{\sigma\dashv\Delta}w$
-\end_inset
-
- means that 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is the output pruning substitution, and 
-\begin_inset Formula $w$
-\end_inset
-
- is essentially 
-\begin_inset Formula $u'[\sigma][x_{i}\mapsto v_{i}]$
-\end_inset
-
-, the term that the metavariable 
-\begin_inset Formula $M$
-\end_inset
-
- ought to be substituted with.
- Note that the metavariable symbol 
-\begin_inset Formula $M$
-\end_inset
-
- is fresh in this notation: it appears neither in 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- nor 
-\begin_inset Formula $u'$
-\end_inset
-
-, and is not in the domain of 
-\begin_inset Formula $\sigma$
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-and can be thought of as a formal syntactic symbol
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-A precise categorical meaning will be given to this notation.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Standard
-The output 
-\begin_inset Formula $\sigma,w$
-\end_inset
-
- defines a substitution 
-\begin_inset Formula $(\Gamma,\maybold M:n)\rightarrow\Delta$
-\end_inset
-
- which can be characterised as the most general unifier of 
-\begin_inset Formula $u'$
+ involved in this phase.
+ Indeed, one intuition behind the non-cyclic unification of 
+\begin_inset Formula $M(\vec{x})$
 \end_inset
 
  and 
-\begin_inset Formula $\maybold M(\vec{x})$
+\begin_inset Formula $u$
+\end_inset
+
+ consists in taking 
+\begin_inset Formula $u[x_{i}\mapsto v_{i}]$
+\end_inset
+
+ as a definition for 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ This only makes sense if the free variables of 
+\begin_inset Formula $u$
+\end_inset
+
+ are among 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+: if 
+\begin_inset Formula $u$
+\end_inset
+
+ is a variable that does not occur in 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, then obviously there is no unifier.
+ However, it is possible to remove the 
+\emph on
+outbound
+\emph default
+ variables in 
+\begin_inset Formula $u$
+\end_inset
+
+ if they only occur in metavariable arguments, by restricting the arities
+ of those metavariables.
+ We accordingly call 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ the pruning substitution.
+ As an example, if 
+\begin_inset Formula $u$
+\end_inset
+
+ is a metavariable application 
+\begin_inset Formula $N(\vec{x},\vec{y})$
+\end_inset
+
+, then although the free variables are not all included in 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, there is still a most general unifier, and the corresponding pruning substitut
+ion essentially replaces 
+\begin_inset Formula $N$
+\end_inset
+
+ with 
+\begin_inset Formula $M$
+\end_inset
+
+, discarding the outbound variables 
+\begin_inset Formula $\vec{y}$
 \end_inset
 
 .
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Moreover the variable context 
-\begin_inset Formula $C$
-\end_inset
-
- for 
-\begin_inset Formula $u'$
-\end_inset
-
- is left implicit.
 \end_layout
 
-\end_inset
-
- We thus have the rule
+\begin_layout Standard
+From the previous discussion, we have the rule
 \begin_inset Formula 
 \begin{equation}
 \dfrac{u_{|\Gamma}=\something{u'}\qquad\Gamma\prune{u'}{\maybold M(\vec{x})}{\sigma}w\dashv\Delta}{\Gamma,M:n\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}\label{eq:u-nocycle}
@@ -2042,20 +2030,79 @@ Moreover the variable context
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-This rules shows that the output 
-\begin_inset Formula $w$
+It is tempting to take 
+\begin_inset Formula $M(\vec{x})=u$
 \end_inset
 
- in the pruning notation is intuitively what 
+ as a definition for 
 \begin_inset Formula $M$
 \end_inset
 
- is going to be substituted with.
- 
+, and thus consider the substitution 
+\begin_inset Formula $M\mapsto u[x_{i}\mapsto v_{i}]$
+\end_inset
+
+.
+ However, this only makes sense if the free variables of 
+\begin_inset Formula $u$
+\end_inset
+
+ are among 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+: if 
+\begin_inset Formula $u$
+\end_inset
+
+ is a variable that does not occur in 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, then obviously there is no unifier.
+ On the other hand, it is possible to remove the 
+\emph on
+outbound
+\emph default
+ variables in 
+\begin_inset Formula $u$
+\end_inset
+
+ if they only occur in metavariable arguments, by restricting the arities
+ of those metavariables.
+ For example, if 
+\begin_inset Formula $u$
+\end_inset
+
+ is a metavariable application 
+\begin_inset Formula $N(\vec{x},\vec{y})$
+\end_inset
+
+, then although the free variables are not all included in 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, there is still a most general unifier that replaces 
+\begin_inset Formula $N$
+\end_inset
+
+ with 
+\begin_inset Formula $M$
+\end_inset
+
+, discarding the outbound variables 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+.
+ Intuitively,
 \end_layout
 
 \end_inset
@@ -2064,125 +2111,62 @@ This rules shows that the output
 \end_layout
 
 \begin_layout Standard
-Note that 
-\begin_inset Formula $M$
+The non-cyclic phase proceeds recursively by introducing fresh metavariables
+ for each argument of the top-level operation.
+ For example, the rule for 
+\begin_inset Formula $\lambda$
 \end_inset
 
- is indeed substituted by 
+-abstraction is
+\begin_inset Formula 
+\begin{equation}
+\dfrac{\Gamma\prune t{\maybold M'(\vec{x},\overbrace{v_{n+1}}^{\mathclap{\text{bound variable}}})}{\sigma}w\dashv\Delta}{\Gamma\prune{\lambda t}{\maybold M(\vec{x})}{\sigma}{\lambda w}\dashv\Delta}\label{eq:pruning-lambda-lc}
+\end{equation}
+
+\end_inset
+
+Note that a fresh variable 
+\begin_inset Formula $M'$
+\end_inset
+
+ is introduced for the body of the 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction which is supplied the bound variable 
+\begin_inset Formula $v_{n+1}$
+\end_inset
+
+ as an argument, as it should not be pruned.
+ Keeping in mind the intuition that 
+\begin_inset Formula $M=\lambda M'$
+\end_inset
+
+, if 
+\begin_inset Formula $M'$
+\end_inset
+
+ is to be substituted with 
 \begin_inset Formula $w$
 \end_inset
 
-, as hinted above.
- As before, we generalise the pruning phase to handle lists 
-\begin_inset Formula $\vec{u}=(u_{1},\dots,u_{n})$
+, then 
+\begin_inset Formula $M$
 \end_inset
 
- of terms such that 
-\begin_inset Formula $\Gamma;C_{i}\vdash u_{i}$
+ should be substituted with 
+\begin_inset Formula $\lambda w$
 \end_inset
 
-, and lists of pruning patterns 
-\begin_inset Formula $(\vec{x}_{1},\dots,\vec{x}_{n})$
-\end_inset
-
- where each 
-\begin_inset Formula $\vec{x_{i}}$
-\end_inset
-
- is a choice of distinct variables in 
-\begin_inset Formula $C_{i}$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula $\Gamma\prune{\vec{u}}{\maybold M_{1}(\vec{x}_{1}),\dots,\maybold M_{n}(\vec{x}_{n})}{\sigma}{\vec{w}}\dashv\Delta$
-\end_inset
-
- means
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-The usage of 
-\begin_inset Formula $+$
-\end_inset
-
- as a list separator 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-instead of a comma
-\end_layout
-
-\end_inset
-
- will be justified later in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:pruning-list-notation"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- that 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is the common pruning substitution, and 
-\begin_inset Formula $w_{i}$
-\end_inset
-
- is essentially 
-\begin_inset Formula $u_{i}[\sigma][x_{i,j}\mapsto v_{j}]$
-\end_inset
-
-, which 
-\begin_inset Formula $M_{i}$
-\end_inset
-
- ought to be substituted with.
- Again, 
-\begin_inset Formula $(\sigma,\vec{w})$
-\end_inset
-
- define a substitution from 
-\begin_inset Formula $\Gamma,\maybold M_{1}:|\vec{x}_{1}|,\dots,\maybold M_{n}:|\vec{x}_{n}|$
-\end_inset
-
- to 
-\begin_inset Formula $\Delta$
-\end_inset
-
- which can be characterised as the most general unifier of 
-\begin_inset Formula $\vec{u}$
-\end_inset
-
- and 
-\begin_inset Formula $\maybold M_{1}(\vec{x}_{1}),\dots\maybold M_{n}(\vec{x}_{n})$
-\end_inset
-
-.
+, as seen in the conclusion.
 \end_layout
 
 \begin_layout Standard
-We can then handle application as follows.
+As before, the rule for application motivates generalising the non-cyclic
+ phase to handle lists.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
 \dfrac{\Gamma\prune{t,u}{\maybold M_{1}(\vec{x}),\maybold M_{2}(\vec{x})}{\sigma}{w_{1},w_{2}}\dashv\Delta}{\Gamma\prune{t\ u}{\maybold M(\vec{x})}{\sigma}{w_{1}\ w_{2}}\dashv\Delta}\label{eq:pruning-app-lc}
@@ -2194,11 +2178,59 @@ We can then handle application as follows.
 \end_layout
 
 \begin_layout Standard
-As for unification (rule 
+More formally given a list 
+\begin_inset Formula $\vec{u}=(u_{1},\dots,u_{p})$
+\end_inset
+
+ of terms in context 
+\begin_inset Formula $\Gamma;n_{i}\vdash u_{i}$
+\end_inset
+
+, and lists of pruning patterns 
+\begin_inset Formula $(\vec{x}_{1},\dots,\vec{x}_{p})$
+\end_inset
+
+ where each 
+\begin_inset Formula $\vec{x_{i}}$
+\end_inset
+
+ is a choice of distinct variables in 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+, the judgement 
+\begin_inset Formula $\Gamma\prune{\vec{u}}{\maybold M_{1}(\vec{x}_{1}),\dots,\maybold M_{p}(\vec{x}_{p})}{\sigma}{\vec{w}}\dashv\Delta$
+\end_inset
+
+ means that the substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ extended with 
+\begin_inset Formula $M_{i}\mapsto w_{i}$
+\end_inset
+
+ is the most general unifier of 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\maybold M_{1}(\vec{x}_{1}),\dots\maybold M_{p}(\vec{x}_{p})$
+\end_inset
+
+ in the extended metavariable context 
+\begin_inset Formula $\Gamma,M_{1}:n_{1},\dots,M_{p}:n_{p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The sequential rule 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
 
-), pruning can be done sequentially, as in the rule 
+ can be adapted to the non-cyclic phase as in the rule 
 \begin_inset Formula $\refrule{P-Split}$
 \end_inset
 
@@ -2266,23 +2298,6 @@ Thanks to this sequential rule, we can focus on pruning a single term.
 \end_layout
 
 \begin_layout Standard
-In 
-\begin_inset Formula $\lambda$
-\end_inset
-
--abstraction, the bound variable 
-\begin_inset Formula $n+1$
-\end_inset
-
- need not be pruned: we extend the list of allowed variables accordingly.
-\begin_inset Formula 
-\begin{equation}
-\dfrac{\Gamma\prune t{\maybold M'(\vec{x},n+1)}{\sigma}w\dashv\Delta}{\Gamma\prune{\lambda t}{\maybold M(\vec{x})}{\sigma}{\lambda w}\dashv\Delta}\label{eq:pruning-lambda-lc}
-\end{equation}
-
-\end_inset
-
-
 \begin_inset Note Note
 status open
 
@@ -2358,16 +2373,8 @@ The remaining case consists in unifying
 \begin_inset Formula $M(\vec{y})$
 \end_inset
 
-, or equivalently, pruning a metavariable 
-\begin_inset Formula $N(x_{1},\dots,x_{n})$
-\end_inset
-
-, whose arity must then be restricted to those positions in 
-\begin_inset Formula $y_{1},\dots,y_{m}$
-\end_inset
-
 .
- To be more precise, consider the family 
+ Consider the family 
 \begin_inset Formula $z_{1},\dots,z_{p}$
 \end_inset
 
@@ -2392,11 +2399,11 @@ The remaining case consists in unifying
 \end_inset
 
  of distinct elements of 
-\begin_inset Formula $\{0,\dots,n-1\}$
+\begin_inset Formula $\{1,\dots,n\}$
 \end_inset
 
  and 
-\begin_inset Formula $\{0,\dots,m-1\}$
+\begin_inset Formula $\{1,\dots,m\}$
 \end_inset
 
  respectively.
@@ -2431,7 +2438,8 @@ injections
 status open
 
 \begin_layout Plain Layout
-Again, the similarity with the pruning notation is no coincidence
+Again, the similarity with the notation for non-cyclic unification is no
+ coincidence
 \begin_inset Note Note
 status open
 
@@ -2446,12 +2454,12 @@ noprefix "false"
 
 \end_inset
 
-
+: as we will see
 \end_layout
 
 \end_inset
 
-: as we will see, both are pullbacks.
+: both are pullbacks.
 \end_layout
 
 \end_inset
@@ -2461,16 +2469,16 @@ noprefix "false"
 \end_inset
 
 .
- Then, the metavariable 
+ Then, the most general unifier replaces 
 \begin_inset Formula $N$
 \end_inset
 
- is substituted with 
-\begin_inset Formula $N'(\vec{r})$
+ with 
+\begin_inset Formula $P(v_{\vec{r}})$
 \end_inset
 
- for some new metavariable 
-\begin_inset Formula $N'$
+ for some fresh metavariable 
+\begin_inset Formula $P$
 \end_inset
 
  of arity 
@@ -2482,7 +2490,7 @@ noprefix "false"
 \end_inset
 
  is replaced with 
-\begin_inset Formula $N'(\vec{l})$
+\begin_inset Formula $P(v_{\vec{l}})$
 \end_inset
 
 
@@ -2505,19 +2513,57 @@ in the variable context
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\dfrac{n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}}{\Gamma,N:n\prune{N(\vec{x})}{\maybold M(\vec{y})}{N\mapsto N'(\vec{r})}{N'(\vec{l})}\dashv\Gamma,N':p}\label{eq:pruning-mvar-lc}
+\dfrac{n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}}{\Gamma,N:n\prune{N(\vec{x})}{\maybold M(\vec{y})}{N\mapsto P(\vec{r})}{P(\vec{l})}\dashv\Gamma,P:p}\label{eq:pruning-mvar-lc}
 \end{equation}
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Example
+Let 
+\begin_inset Formula $x,y,z$
+\end_inset
+
+ be three distinct variables.
+ The most general unifier of 
+\begin_inset Formula $M(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $N(z,x)$
+\end_inset
+
+ is 
+\begin_inset Formula $M\mapsto N'(v_{1}),N\mapsto N'(v_{2})$
+\end_inset
+
+.
+ The most general unifier of 
+\begin_inset Formula $M(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $N(z)$
+\end_inset
+
+ is 
+\begin_inset Formula $M\mapsto N',N\mapsto N'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 This ends our description of the unification algorithm, in the specific
  case of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
 -calculus.
- The goal of this paper is to generalise it, by parameterising the algorithm
- by a signature specifying a syntax.
+ The purpose of this work is to present a generalisation, by parameterising
+ the algorithm by a signature specifying a syntax.
 \begin_inset Note Note
 status open
 
@@ -2786,156 +2832,15 @@ In the rule
 \end_inset
 
 .
- The rigid case in the pruning phase consists in two rules 
-\begin_inset Formula $\refrule{P-Rig}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{P-Fail}$
-\end_inset
-
-.
- Both are concerned with pruning a non metavariable term 
-\begin_inset Formula $\Gamma;n\vdash o(\vec{t})$
-\end_inset
-
-.
- In the variable case, these two rules instantiate to
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
+ The rigid case for operations in the non-cyclic phase consists in the following
+ rule.
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{v_{n+1},\mydots,v_{n+1+\alpha_{1}}}^{\mathclap{\text{bound variables}}}),\mydots,M_{p}(\mydots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{M(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
+\]
 
 \end_inset
 
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-var-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- More precisely, if 
-\begin_inset Formula $o$
-\end_inset
-
- is a variable in 
-\begin_inset Formula $n$
-\end_inset
-
-, the side condition 
-\begin_inset Formula $\acton{o=\vec{x}}{o'}$
-\end_inset
-
- means that 
-\begin_inset Formula $o=x_{o'+1}$
-\end_inset
-
-.
- On the other hand, if 
-\begin_inset Formula $o$
-\end_inset
-
- is an operation, then 
-\begin_inset Formula $\acton{\vec{x}}o$
-\end_inset
-
- is defined as 
-\begin_inset Formula $o$
-\end_inset
-
- and thus the rule 
-\begin_inset Formula $\refrule{P-Rig}$
-\end_inset
-
- always applies with 
-\begin_inset Formula $o'=o$
-\end_inset
-
-.
- If 
-\begin_inset Formula $\alpha_{o}=(n_{1},\dots,n_{p})$
-\end_inset
-
-, then the notation 
-\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}$
-\end_inset
-
- essentially unfolds to a list of the same size as 
-\begin_inset Formula $\alpha_{o}$
-\end_inset
-
- and whose 
-\begin_inset Formula $i^{th}$
-\end_inset
-
- element is 
-\begin_inset Formula $M_{i}(\vec{x},|C|,\dots,|C|+n_{i}-1)$
-\end_inset
-
-.
- For example, for pure 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus, 
-\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x}),\maybold M_{2}(\vec{x})$
-\end_inset
-
- in the application case, and 
-\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x},|C|)$
-\end_inset
-
- in the abstraction case, thus recovering the rules 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-app-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-lambda-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
  
 \begin_inset Note Note
 status open
@@ -2988,7 +2893,7 @@ Note that the premises of the rules
 LatexCommand formatted
 reference "fig:algo-summary"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3059,7 +2964,7 @@ Consider the category of functors
 \end_inset
 
  of expressions with free variables taken in the set 
-\begin_inset Formula $\underline{n}=\{v_{1},\dots,v_{n}\}$
+\begin_inset Formula $V_{n}=\{v_{1},\dots,v_{n}\}$
 \end_inset
 
 .
@@ -3080,8 +2985,13 @@ noprefix "false"
 \end_inset
 
 .
- Let us mention already that it will be convenient in the proofs to restrict
- to the full subcategory of 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Let us mention that it will be convenient in the proofs to consider the
+ full subcategory of 
 \begin_inset Formula $[\mathbb{F}_{m},\Set]$
 \end_inset
 
@@ -3109,6 +3019,11 @@ literal "false"
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Pure 
 \begin_inset Formula $\lambda$
@@ -3122,9 +3037,8 @@ Pure
 \begin_inset Formula $\Lambda_{n}=\{t\ |\ \cdot;n\vdash t\}$
 \end_inset
 
-.
- It satisfies the recursive equation 
-\begin_inset Formula $\Lambda_{n}\cong\underline{n}+\Lambda_{n}\times\Lambda_{n}+\Lambda_{n+1}$
+, satisfying the recursive equation 
+\begin_inset Formula $\Lambda_{n}\cong V_{n}+\Lambda_{n}\times\Lambda_{n}+\Lambda_{n+1}$
 \end_inset
 
 , where 
@@ -3132,44 +3046,123 @@ Pure
 \end_inset
 
  is disjoint union.
- In pattern unification, we consider extensions of this syntax with metavariable
-s taking a list of distinct variables as arguments.
- As an example, let us add a metavariable of arity 
-\begin_inset Formula $p$
+ In fact, 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ can be defined as the initial algebra for the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $[\mathbb{\mathbb{F}}_{m},\Set]$
+\end_inset
+
+ mapping 
+\begin_inset Formula $X$
+\end_inset
+
+ to 
+\begin_inset Formula $V+X\times X+X_{-+1}$
+\end_inset
+
+.
+ In pattern unification, we need to consider extensions of this syntax with
+ metavariables.
+ Let us start with a metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $m$
 \end_inset
 
 .
  The extended syntax 
-\begin_inset Formula $\Lambda'$
+\begin_inset Formula $\Lambda^{M:m}$
 \end_inset
 
  defined by 
-\begin_inset Formula $\Lambda'_{n}=\{t\ |\ M:p;n\vdash t\}$
+\begin_inset Formula $\Lambda{}_{n}^{M:m}=\{t\ |\ M:m;n\vdash t\}$
 \end_inset
 
- now satisfies the recursive equation 
-\begin_inset Formula $\Lambda'_{n}=\underline{n}+\Lambda'_{n}\times\Lambda'_{n}+\Lambda_{n+1}'+\Inj(p,n)$
+ now can be characterised as the initial algebra for the endofunctor mapping
+ 
+\begin_inset Formula $X$
+\end_inset
+
+ to 
+\begin_inset Formula $F(X)+arg^{M:m}$
 \end_inset
 
 , where 
-\begin_inset Formula $\Inj(p,n)$
+\begin_inset Formula $arg^{M:m}:\mathbb{F}_{m}\rightarrow\Set$
 \end_inset
 
- is the set of injections between the cardinal sets 
-\begin_inset Formula $p$
+ is the functor which provides the set of valid arguments for 
+\begin_inset Formula $M$
+\end_inset
+
+ in the variable context 
+\begin_inset Formula $n$
+\end_inset
+
+, when evaluated at 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ We recognise the usual construction of free algebras: denoting 
+\begin_inset Formula $T$
+\end_inset
+
+ the free monad generated by 
+\begin_inset Formula $F$
+\end_inset
+
+, the functor 
+\begin_inset Formula $\Lambda^{M:m}$
+\end_inset
+
+ is the free 
+\begin_inset Formula $F$
+\end_inset
+
+-algebra 
+\begin_inset Formula $T(arg^{M:m})$
+\end_inset
+
+ on 
+\begin_inset Formula $arg^{M:m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us have a closer look at the functor 
+\begin_inset Formula $arg^{M:m}$
+\end_inset
+
+.
+ According to the pattern restriction, 
+\begin_inset Formula $arg_{n}^{M:m}$
+\end_inset
+
+ is isomorphic to the set of injections between the cardinal sets 
+\begin_inset Formula $m$
 \end_inset
 
  and 
 \begin_inset Formula $n$
 \end_inset
 
-, corresponding to a choice of arguments for the metavariable.
- In fact, 
-\begin_inset Formula $\Inj(p,n)$
+, or equivalently, the set of morphisms 
+\begin_inset Formula $\mathbb{F}_{m}(m,n)$
 \end_inset
 
- is nothing but the set of morphisms between 
-\begin_inset Formula $p$
+ between 
+\begin_inset Formula $m$
 \end_inset
 
  and 
@@ -3180,8 +3173,17 @@ s taking a list of distinct variables as arguments.
 \begin_inset Formula $\mathbb{F}_{m}$
 \end_inset
 
+.
+ Thus, 
+\begin_inset Formula $arg^{M:m}$
+\end_inset
+
+ can be taken as the representable functor 
+\begin_inset Formula $\mathbb{F}_{m}(m,-)$
+\end_inset
+
 , which we denote by 
-\begin_inset Formula $\mathbb{F}_{m}(p,n)$
+\begin_inset Formula $ym$
 \end_inset
 
 .
@@ -3189,92 +3191,8 @@ s taking a list of distinct variables as arguments.
 \end_layout
 
 \begin_layout Standard
-Obviously, the functors 
-\begin_inset Formula $\Lambda$
-\end_inset
-
- and 
-\begin_inset Formula $\Lambda'$
-\end_inset
-
- satisfy similar recursive equations.
- Denoting 
-\begin_inset Formula $F$
-\end_inset
-
- the endofunctor on 
-\begin_inset Formula $[\mathbb{\mathbb{F}}_{m},\Set]$
-\end_inset
-
- mapping 
-\begin_inset Formula $X$
-\end_inset
-
- to 
-\begin_inset Formula $I+X\times X+X_{-+1}$
-\end_inset
-
-, where 
-\begin_inset Formula $I$
-\end_inset
-
- is the functor mapping 
-\begin_inset Formula $n$
-\end_inset
-
- to 
-\begin_inset Formula $\underline{n}$
-\end_inset
-
-, the functor 
-\begin_inset Formula $\Lambda$
-\end_inset
-
- can be characterised as the initial algebra for 
-\begin_inset Formula $F$
-\end_inset
-
-, thus satisfying the recursive equation 
-\begin_inset Formula $\Lambda\cong F(\Lambda)$
-\end_inset
-
-.
- In other words, 
-\begin_inset Formula $\Lambda$
-\end_inset
-
- is the free 
-\begin_inset Formula $F$
-\end_inset
-
--algebra on the initial functor 
-\begin_inset Formula $0$
-\end_inset
-
-.
- On the other hand, 
-\begin_inset Formula $\Lambda'$
-\end_inset
-
- is characterised as the initial algebra for 
-\begin_inset Formula $F(-)+yp$
-\end_inset
-
-, where 
-\begin_inset Formula $yp$
-\end_inset
-
- is the (representable) functor 
-\begin_inset Formula $\mathbb{F}_{m}(p,-):\mathbb{F}_{m}\rightarrow\Set$
-\end_inset
-
-, thus satisfying the recursive equation 
-\begin_inset Formula $\Lambda'\cong F(\Lambda')+yp$
-\end_inset
-
-.
- In other words, 
-\begin_inset Formula $\Lambda'$
+It follows from the previous discussion that 
+\begin_inset Formula $\Lambda^{M:m}$
 \end_inset
 
  is the free 
@@ -3282,50 +3200,55 @@ Obviously, the functors
 \end_inset
 
 -algebra on 
-\begin_inset Formula $yp$
+\begin_inset Formula $ym$
 \end_inset
 
 .
- Denoting 
-\begin_inset Formula $T$
-\end_inset
-
- the free 
-\begin_inset Formula $F$
-\end_inset
-
--algebra monad, 
-\begin_inset Formula $\Lambda$
-\end_inset
-
- is 
-\begin_inset Formula $T(0)$
-\end_inset
-
- and 
-\begin_inset Formula $\Lambda'$
-\end_inset
-
- is 
-\begin_inset Formula $T(yp)$
+ In fact, the argument works for any metavariable context 
+\begin_inset Formula $\Gamma$
 \end_inset
 
 .
- Similarly, the functor 
-\begin_inset Formula $T(yp+yq)$
+ More precisely, using the following notation, we see that 
+\begin_inset Formula $T(\underline{\Gamma})_{n}$
 \end_inset
 
- corresponds to extending the syntax with another metavariable of arity
- 
-\begin_inset Formula $q$
+ is the set of terms in the context 
+\begin_inset Formula $\Gamma;n$
 \end_inset
 
 .
 \end_layout
 
+\begin_layout Notation
+\begin_inset CommandInset label
+LatexCommand label
+name "nota:context"
+
+\end_inset
+
+Given a metavariable context 
+\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\end_inset
+
+, we denote the finite coproduct 
+\begin_inset Formula $\coprod_{i\in\{1,\dots,p\}}ym_{i}$
+\end_inset
+
+ by 
+\begin_inset Formula $\underline{\Gamma}$
+\end_inset
+
+, or just by 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ when the context is clear.
+\end_layout
+
 \begin_layout Standard
-In the view to abstracting pattern unification, these observations motivate
- considering functor categories 
+In the view to further abstracting pattern unification, these observations
+ motivate considering functor categories 
 \begin_inset Formula $[\mathcal{A},\Set]$
 \end_inset
 
@@ -3375,12 +3298,12 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-To understand how a unification problem is stated in this general setting
+Let us investigate how a unification problem is stated in this general setting
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-What follows is a generalisation of the first-order case explained in 
+What follows is a generalisation of the first-order case detailed in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DBLP:books/daglib/0068768,10.5555/92134"
@@ -3388,44 +3311,14 @@ literal "false"
 
 \end_inset
 
-, in the sense that we consider a free monad on a presheaf category, rather
- than on sets indexed by a fixed set of sorts.
+, in the sense that we consider a free monad on more general presheaf categories
+ than categories of sets indexed by a fixed set of sorts.
 \end_layout
 
 \end_inset
 
-, let us first provide the familiar metavariable context notation with a
- formal meaning.
-\end_layout
-
-\begin_layout Notation
-\begin_inset CommandInset label
-LatexCommand label
-name "nota:context"
-
-\end_inset
-
-Given a metavariable context 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
-\end_inset
-
-, we denote the finite coproduct 
-\begin_inset Formula $\coprod_{i\in\{1,\dots,p\}}ym_{i}$
-\end_inset
-
- by 
-\begin_inset Formula $\underline{\Gamma}$
-\end_inset
-
-, or just by 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- when the context is clear.
-\end_layout
-
-\begin_layout Standard
-If 
+.
+ Given metavariable contexts 
 \begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
 \end_inset
 
@@ -3433,7 +3326,7 @@ If
 \begin_inset Formula $\Delta$
 \end_inset
 
- are metavariable contexts, a Kleisli morphism 
+, a Kleisli morphism 
 \begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
 \end_inset
 
@@ -3498,19 +3391,23 @@ A unification problem can be stated as a pair of parallel Kleisli morphisms
 $
 \end_inset
 
- where 
-\begin_inset Formula $\Gamma$
+, corresponding (by the Yoneda Lemma) to selecting a pair of elements in
+ 
+\begin_inset Formula $T\Gamma_{p}$
 \end_inset
 
- is a metavariable context, corresponding to selecting a pair of terms 
+, or equivalently, a pair of terms 
 \begin_inset Formula $\Gamma;p\vdash t,u$
 \end_inset
 
 .
  A unifier is nothing but a Kleisli morphism coequalising this pair.
  The property required by the most general unifier means that it is the
- coequaliser, in the full subcategory spanned by coproducts of representable
- functors.
+ coequaliser in the full subcategory spanned by objects of the shape 
+\begin_inset Formula $\underline{\Gamma}$
+\end_inset
+
+.
  The main purpose of the pattern unification algorithm consists in constructing
  this coequaliser, if it exists, which is the case as long as there exists
  a unifier, as stated in 
@@ -3732,7 +3629,7 @@ noprefix "false"
 \begin_layout Plain Layout
 
 \series bold
-Pruning phase 
+Non-cyclic phase 
 \series default
 (
 \begin_inset CommandInset ref
@@ -3942,8 +3839,8 @@ This notation is used in the unification phase, taking
 \begin_inset Formula $T$
 \end_inset
 
- restricted to coproducts of representable functors, and extended with an
- error object 
+ restricted to coproducts of representable functors, and extended with a
+ free terminal (error) object 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -3991,7 +3888,7 @@ noprefix "false"
 
 \end_inset
 
-, whose premise precisely means that 
+: the premise precisely means that 
 \begin_inset Formula $\xymatrix{p\ar[r]^{\vec{z}} & m\coeqr{\vec{x}}{\vec{y}} & n}
 $
 \end_inset
@@ -4606,7 +4503,7 @@ noprefix "false"
 
 \end_inset
 
-, let us provide the pruning notation with categorical semantics.
+, let us provide the non-cyclic notation with categorical semantics.
 \end_layout
 
 \begin_layout Notation
@@ -4842,6 +4739,211 @@ noprefix "false"
 
 .
  
+\end_layout
+
+\begin_layout Remark
+
+\color red
+We will explain the rules 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+ later TODO.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Finally, let us explain the rules 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+, by specialising them to a syntax specified by a binding signature.
+ In this case, the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $[\mathbb{F}_{m},\Set]$
+\end_inset
+
+ maps 
+\begin_inset Formula $X$
+\end_inset
+
+ to 
+\begin_inset Formula $V+\coprod_{o\in O}X_{-+\alpha_{o}^{1}}\times\dots\times X_{-+\alpha_{o}^{n_{o}}}$
+\end_inset
+
+, where 
+\begin_inset Formula $O$
+\end_inset
+
+ is the set of operation symbols, and 
+\begin_inset Formula $(\alpha_{o}^{1},\dots,\alpha_{o}^{n_{o}})$
+\end_inset
+
+ is the arity of 
+\begin_inset Formula $o\in O$
+\end_inset
+
+.
+ Both rules are concerned with pruning a non metavariable term 
+\begin_inset Formula $\Gamma;n\vdash o(\vec{t})$
+\end_inset
+
+.
+ In the variable case, these two rules instantiate to
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-var-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ More precisely, if 
+\begin_inset Formula $o$
+\end_inset
+
+ is a variable in 
+\begin_inset Formula $n$
+\end_inset
+
+, the side condition 
+\begin_inset Formula $\acton{o=\vec{x}}{o'}$
+\end_inset
+
+ means that 
+\begin_inset Formula $o=x_{o'+1}$
+\end_inset
+
+.
+ On the other hand, if 
+\begin_inset Formula $o$
+\end_inset
+
+ is an operation, then 
+\begin_inset Formula $\acton{\vec{x}}o$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $o$
+\end_inset
+
+ and thus the rule 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ always applies with 
+\begin_inset Formula $o'=o$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\alpha_{o}=(n_{1},\dots,n_{p})$
+\end_inset
+
+, then the notation 
+\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}$
+\end_inset
+
+ essentially unfolds to a list of the same size as 
+\begin_inset Formula $\alpha_{o}$
+\end_inset
+
+ and whose 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ element is 
+\begin_inset Formula $M_{i}(\vec{x},|C|,\dots,|C|+n_{i}-1)$
+\end_inset
+
+.
+ For example, for pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, 
+\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x}),\maybold M_{2}(\vec{x})$
+\end_inset
+
+ in the application case, and 
+\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x},|C|)$
+\end_inset
+
+ in the abstraction case, thus recovering the rules 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-app-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-lambda-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
 status open
 
@@ -4935,7 +5037,7 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-We now describe the pruning phase as summarised in 
+We now describe the non-cyclic phase as summarised in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:algo-summary"
@@ -4956,8 +5058,8 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-The structural rules of the pruning phase are similar to those of the unificatio
-n phase.
+The structural rules of the non-cyclic phase are similar to those of the
+ unification phase.
  
 \end_layout
 
@@ -5447,7 +5549,7 @@ noprefix "false"
 
 \end_inset
 
-, we present our categorical setting.
+, we present our general categorical setting.
  In 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -5480,7 +5582,7 @@ noprefix "false"
 
 \end_inset
 
-), the pruning phase (
+), the non-cyclic phase (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:pruning-phase"
@@ -6242,7 +6344,7 @@ noprefix "false"
 \begin_inset Formula $g$
 \end_inset
 
-?), during the pruning phase (see Equation
+?), during the non-cyclic phase (see Equation
 \begin_inset ERT
 status open
 
@@ -8664,7 +8766,7 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-a finite colimit is too general, we really need coproducts in the pruning
+a finite colimit is too general, we really need coproducts in the non-cyclic
  phase, see 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -14338,7 +14440,7 @@ status open
 \end_layout
 
 \begin_layout Section
-Pruning phase
+Non-cyclic phase
 \end_layout
 
 \begin_layout Standard
@@ -14352,7 +14454,7 @@ name "sec:pruning-phase"
 \end_layout
 
 \begin_layout Standard
-The pruning phase computes a pushout in 
+The non-cyclic phase computes a pushout in 
 \begin_inset Formula $\Kl{\D^{+}}^{*}$
 \end_inset
 
@@ -14571,7 +14673,8 @@ Could we use Reddy's syntax, to differentiate the input/output? We need
 status open
 
 \begin_layout Plain Layout
-We have already discussed the structural rules of the pruning phase in 
+We have already discussed the structural rules of the non-cyclic phase in
+ 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:intro-generalise"
@@ -16173,7 +16276,7 @@ noprefix "false"
 
 \end_inset
 
-) to the pruning phase (
+) to the non-cyclic phase (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:pruning-phase"
@@ -17288,8 +17391,8 @@ One way to solve this issue consists in avoiding creating new metavariables.
 status open
 
 \begin_layout Plain Layout
-First, we sketch the termination argument for the pruning phase, and then
- for the main unification phase.
+First, we sketch the termination argument for the non-cyclic phase, and
+ then for the main unification phase.
 \end_layout
 
 \end_inset
@@ -17298,7 +17401,7 @@ First, we sketch the termination argument for the pruning phase, and then
 \end_layout
 
 \begin_layout Standard
-Let us first quickly justify termination of the pruning phase.
+Let us first quickly justify termination of the non-cyclic phase.
  We define the size of a judgment 
 \begin_inset Formula $\Gamma\prune fg{\sigma}u\dashv\Delta$
 \end_inset
@@ -17317,7 +17420,7 @@ Let us first quickly justify termination of the pruning phase.
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
 
- of the pruning phase, thanks to the following lemmas
+ of the non-cyclic phase, thanks to the following lemmas
 \end_layout
 
 \begin_layout Lemma
@@ -17449,7 +17552,7 @@ noprefix "false"
 \end_inset
 
 .
- Contrary to the pruning phase, the first one is not structurally recursive
+ Contrary to the non-cyclic phase, the first one is not structurally recursive
  since a substitution is applied to the argument.
 \end_layout
 
@@ -17529,8 +17632,8 @@ begin{full}
 \end_layout
 
 \begin_layout Plain Layout
-The proof of the first lemma relies on the fact that when the pruning phase
- does not fail, it produces a renaming targetting a metavariable context
+The proof of the first lemma relies on the fact that when the non-cyclic
+ phase does not fail, it produces a renaming targetting a metavariable context
  of the same size as the input one.
 \end_layout
 
