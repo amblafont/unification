@@ -150,6 +150,116 @@ End
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\rename}[2]{#1\{#2\}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\naraction}[3]{\epsilon(#1,#2)_{#3}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\nar}[1]{\kappa_{#1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ntharvec}[1]{\alpha_{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\ntharvecaction}[3]{\alpha_{#1,#2,#3}}
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ntharvecaction}[3]{#2_{#3}^{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\ntharrenamed}[3]{\rename{\alpha}{#1}_{#2,#3}}
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ntharvecfunct}{\ntharvec{}}
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\nthar}[2]{\alpha_{#1,#2}}
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\nthar}[2]{\overline{#1}_{#2}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\nthaarvec}[1]{\alpha'_{#1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\nthaarvecfunct}{\nthaarvec{}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\nthaar}[2]{\alpha'_{#1,#2}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\Inj}{\mathrm{Inj}}
 \end_inset
 
@@ -1126,7 +1236,7 @@ Structural rules
 
 \begin_inset Formula 
 \[
-\labelruletwo{\unificationstepwisenolabel{}}{U\ensuremath{\Lambda}-Split}{UL-Split}
+\labelULrule{\unificationstepwisenolabel{}}{Split}{}
 \]
 
 \end_inset
@@ -1211,7 +1321,7 @@ Structural rules
 
 \begin_inset Formula 
 \[
-\labellabelrule{\inferruletwo{\Gamma\prune{t_{1}}{M(\vec{x}_{1})}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}}{\Delta_{1}\prune{\vec{t_{2}}[\sigma_{1}]}{\overrightarrow{M(\vec{x}_{2})}}{\sigma_{2}\dashv\Delta_{2}}{\vec{u_{2}}}}{\Gamma\prune{t_{1},\vec{t_{2}}}{M_{1}(\vec{x}_{1}),\overrightarrow{M(\vec{x}_{2})}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],\vec{u}_{2}}\dashv\Delta_{2}}}{\textsc{P\ensuremath{\Lambda}-Split}}
+\labelPLrule{\inferruletwo{\Gamma\prune{t_{1}}{M(\vec{x}_{1})}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}}{\Delta_{1}\prune{\vec{t_{2}}[\sigma_{1}]}{\overrightarrow{M(\vec{x}_{2})}}{\sigma_{2}\dashv\Delta_{2}}{\vec{u_{2}}}}{\Gamma\prune{t_{1},\vec{t_{2}}}{M_{1}(\vec{x}_{1}),\overrightarrow{M(\vec{x}_{2})}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],\vec{u}_{2}}\dashv\Delta_{2}}}{Split}
 \]
 
 \end_inset
@@ -1486,13 +1596,13 @@ metavariable substitution
  The base case is 
 \begin_inset Formula 
 \begin{equation}
-M(x_{1},\dots,x_{n})[\sigma]=\sigma_{M}[\var i\mapsto x_{i}],\label{eq:base-case-subst}
+M(x_{1},\dots,x_{n})[\sigma]=\rename{\sigma_{M}}{\var i\mapsto x_{i}},\label{eq:base-case-subst}
 \end{equation}
 
 \end_inset
 
 where 
-\begin_inset Formula $-[\var i\mapsto x_{i}]$
+\begin_inset Formula $\rename -{\var i\mapsto x_{i}}$
 \end_inset
 
  is variable renaming.
@@ -2897,6 +3007,1592 @@ Assume
 \end_layout
 
 \begin_layout Subsection
+A generic pattern unification algorithm
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:intro-generic"
+
+\end_inset
+
+Our algorithm is parameterised by a notion of signature that generalises
+ binding signatures
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BindingSignatures"
+literal "false"
+
+\end_inset
+
+.
+ To recall, a binding signature 
+\begin_inset Formula $(O,\alpha)$
+\end_inset
+
+ specifies a set of operation symbols 
+\begin_inset Formula $O$
+\end_inset
+
+ together with an arity 
+\begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar o{\nar o})$
+\end_inset
+
+ which is a list of natural numbers specifying how many arguments are bound
+ in each argument.
+ For example, pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus is specified by 
+\begin_inset Formula $O=\{lam,app\}$
+\end_inset
+
+ with 
+\begin_inset Formula $\ntharvec{app}=(0,0)$
+\end_inset
+
+ and 
+\begin_inset Formula $\ntharvec{lam}=(1)$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Note that variables cannot be specified by an arity.
+ They are always implicitly included in the syntax specified by a binding
+ signature.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us introduce some generalisation.
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+generalised binding signature
+\emph default
+, or GB-signature, is a triple 
+\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
+\end_inset
+
+ consisting of 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+a category 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ whose objects are called 
+\emph on
+arities
+\shape italic
+\emph default
+ or 
+\emph on
+variable contexts,
+\shape default
+\emph default
+ and morphisms are called 
+\shape italic
+\emph on
+renamings
+\shape default
+\emph default
+;
+\end_layout
+
+\begin_layout Itemize
+for each arity 
+\begin_inset Formula $a$
+\end_inset
+
+, a set of operation symbols 
+\begin_inset Formula $O_{a}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+for each operation symbol 
+\begin_inset Formula $o\in O_{a}$
+\end_inset
+
+, a list of arities 
+\begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar o{\nar o})$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+such that 
+\begin_inset Formula $O$
+\end_inset
+
+ and 
+\begin_inset Formula $\ntharvecfunct$
+\end_inset
+
+ are functorial in a suitable sense (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:bgsig-functorial"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ below for more details).
+ We call an element of 
+\begin_inset Formula $\{1,\dots,\nar o\}$
+\end_inset
+
+ an 
+\emph on
+
+\begin_inset Formula $o$
+\end_inset
+
+-index.
+\end_layout
+
+\begin_layout Standard
+Intuitively, 
+\begin_inset Formula $O_{a}$
+\end_inset
+
+ is the set of operation symbols available in the variable context 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The syntax specified by a GB-signature 
+\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
+\end_inset
+
+ is inductively defined by the two following rules.
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{o\in O_{a}\quad\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar o{\nar o}\vdash t_{\nar o}}{\Gamma;a\vdash o(t_{1},\dots,t_{\nar o})}}{Rig}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M:m\in\Gamma\quad x\in\hom_{{\cal A}}(m,a)}{\Gamma;a\vdash M(x)}}{Flex}
+\]
+
+\end_inset
+
+where a context 
+\begin_inset Formula $\Gamma;a$
+\end_inset
+
+ consists of a variable context 
+\begin_inset Formula $a$
+\end_inset
+
+ and a metavariable context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, that is, a list of metavariable symbols with their associated arities.
+\end_layout
+
+\begin_layout Standard
+Note that morphisms of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ are only involved in the formation rule 
+\begin_inset Formula $\refrule{Flex}$
+\end_inset
+
+ for metavariables.
+ 
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "ex:gbsig-bsig"
+
+\end_inset
+
+Binding signatures can be compiled into GB-signatures.
+ More specifically, a syntax specified by a binding signature 
+\begin_inset Formula $(O,\alpha)$
+\end_inset
+
+ is also generated by the GB-signature 
+\begin_inset Formula $(\mathbb{F}_{m},O',\nthaarvecfunct$
+\end_inset
+
+), where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ is the category of finite cardinals and injections between them;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $O_{n}'=\{v_{1},\dots,v_{n}\}\sqcup\{o_{n}|o\in O\}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\nthaarvec{v_{i}}=()$
+\end_inset
+
+ and 
+\begin_inset Formula $\nthaarvec{o_{n}}=n+\ntharvec o$
+\end_inset
+
+ for any 
+\begin_inset Formula $o\in O$
+\end_inset
+
+, 
+\begin_inset Formula $i,n\in\mathbb{N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that variables 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ are explicitly specified as nullary operations and thus do not require
+ a separate formation rule, contrary to what happens with binding signatures.
+ Moreover, the choice of renamings (i.e., morphisms in the category of arities)
+ is motivated by the 
+\begin_inset Formula $\refrule{Flex}$
+\end_inset
+
+ rule.
+ Indeed, if 
+\begin_inset Formula $M$
+\end_inset
+
+ has arity 
+\begin_inset Formula $m\in\mathbb{N}$
+\end_inset
+
+, then a choice of arguments in the variable context 
+\begin_inset Formula $a\in\mathbb{N}$
+\end_inset
+
+ consists of a list of distinct variables in the variable context 
+\begin_inset Formula $a$
+\end_inset
+
+, or equivalently, an injection between the cardinal sets 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $a$
+\end_inset
+
+, that is, a morphism in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ between 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Example
+GB-signatures also capture multi-sorted binding signatures such as simply-typed
+ 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, or polymorphic syntaxes such as System F (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Remark
+The syntax specified by a GB-signature in the empty metavariable context
+ is also generated by the indexed container
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:conf/lics/AltenkirchM09"
+literal "false"
+
+\end_inset
+
+ induced by keeping only identity morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:bgsig-functorial"
+
+\end_inset
+
+The syntax generated by a GB-signature supports renaming: given a morphism
+ 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+ and a term 
+\begin_inset Formula $\Gamma;a\vdash t$
+\end_inset
+
+, we can recursively define a term 
+\begin_inset Formula $\Gamma;b\vdash\rename tf$
+\end_inset
+
+.
+ The case of metavariables is simple: 
+\begin_inset Formula $\rename{M(x)}f=M(f\circ x)$
+\end_inset
+
+.
+ For an operation 
+\begin_inset Formula $o(t_{1},\dots,t_{\nar o})$
+\end_inset
+
+, functoriality provides the following components:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+an operation symbol 
+\begin_inset Formula $\rename of\in O_{b}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+a list of natural numbers 
+\begin_inset Formula $(\naraction of1\dots,\naraction of{\nar{\rename of}})$
+\end_inset
+
+ between 
+\begin_inset Formula $1$
+\end_inset
+
+ and 
+\begin_inset Formula $\nar o$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+a morphism 
+\begin_inset Formula $\ntharvecaction ofi:\nthar o{\naraction ofi}\rightarrow\nthar{\rename of}i$
+\end_inset
+
+ for each 
+\begin_inset Formula $\rename of$
+\end_inset
+
+-index 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Then, 
+\begin_inset Formula $\rename{o(t_{1},\dots,t_{\nar o})}f$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $\rename of(\rename{t_{\naraction of1}}{\ntharvecaction of1},\dots)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+In our examples, 
+\begin_inset Formula $\nar{\rename of}$
+\end_inset
+
+ is always equal to 
+\begin_inset Formula $\nar o$
+\end_inset
+
+ and 
+\begin_inset Formula $(\naraction of1\dots,\naraction of{\nar{\rename of}})$
+\end_inset
+
+ is 
+\begin_inset Formula $(1,\dots,\nar o)$
+\end_inset
+
+, so that 
+\begin_inset Formula $\ntharvecaction ofi$
+\end_inset
+
+ is a morphism between 
+\begin_inset Formula $\nthar oi$
+\end_inset
+
+ and 
+\begin_inset Formula $\nthar{\rename of}i$
+\end_inset
+
+ and thus 
+\begin_inset Formula $\rename{o(t_{1},\dots,t_{\nar o})}f=\rename of(\rename{t_{1}}{\ntharvecaction of1},\dots,\rename{t_{\nar o}}{\ntharvecaction of{\nar o}})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Unification can be formulated by following the same route as the pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ A metavariable substitution 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ from 
+\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\end_inset
+
+ to 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is a list of terms 
+\begin_inset Formula $(\sigma_{1},\dots,\sigma_{p})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Delta;m_{i}\vdash\sigma_{i}$
+\end_inset
+
+.
+ Given a term 
+\begin_inset Formula $\Gamma;a\vdash t$
+\end_inset
+
+, we can recursively define the substituted case 
+\begin_inset Formula $\Delta;a\vdash t[\sigma]$
+\end_inset
+
+ by 
+\begin_inset Formula $o(\vec{t})[\sigma]=o(\vec{t}[\sigma])$
+\end_inset
+
+ and 
+\begin_inset Formula $M_{i}(x)[\sigma]=\rename{\sigma_{i}}x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:generic-algo"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ summarises our generic algorithm, parameterised by a GB-signature, and
+ a few more parameters: a solver for the equation 
+\begin_inset Formula 
+\begin{equation}
+o=\rename{o'}x,\label{eq:invert-eq}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $o'$
+\end_inset
+
+ is the unknown (see the rules 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+, detailed below), and a construction of equalisers and pullbacks in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, highlighted in blue.
+ These are used to compute the most general unifier of two metavariable
+ applications in the rules 
+\begin_inset Formula $\refrule{U-Flex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Flex}$
+\end_inset
+
+.
+ For example, for pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, they correspond to the rules 
+\begin_inset Formula $\refULrule{Flex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refPLrule{Flex}$
+\end_inset
+
+: indeed, the vector of common positions of 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ can be characterised as their equaliser in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+, when thinking of lists as functions from a finite domain, while the vectors
+ of common value positions can be characterised as a pullback.
+\end_layout
+
+\begin_layout Standard
+The main differences with the example of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus presented above in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-pure-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ is that the vector notation is dropped for arguments of metavariables,
+ since they are now morphisms in a category.
+ Moreover, the case for operations and variables are merged in the non-cyclic
+ phase with the rules 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+ that both are handling non-cyclic unification of 
+\begin_inset Formula $M(x)$
+\end_inset
+
+ with 
+\begin_inset Formula $o(\vec{t})$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $o=\rename{o'}x$
+\end_inset
+
+ for some 
+\begin_inset Formula $o'$
+\end_inset
+
+, then 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ applies; otherwise, 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+ applies.
+ Let us explain how they specialise for a syntax specified by a binding
+ signature as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "ex:gbsig-bsig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ In this case, 
+\begin_inset Formula $x$
+\end_inset
+
+ is a list of distinct variables 
+\begin_inset Formula $(x_{1},\dots,x_{m})$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $o$
+\end_inset
+
+ is a variable, then the side condition 
+\begin_inset Formula $o=\rename{o'}x$
+\end_inset
+
+ that means that 
+\begin_inset Formula $o$
+\end_inset
+
+ is 
+\begin_inset Formula $x_{o'}$
+\end_inset
+
+ for some 
+\begin_inset Formula $o'$
+\end_inset
+
+.
+ Thus, those rules specialises to the rules 
+\begin_inset Formula $\refPLrule{VarOk}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refPLrule{VarFail}$
+\end_inset
+
+.
+ On the other hand, if 
+\begin_inset Formula $o$
+\end_inset
+
+ is actually 
+\begin_inset Formula $o_{n}$
+\end_inset
+
+, i.e., an operation symbol in variable context 
+\begin_inset Formula $n$
+\end_inset
+
+, then 
+\begin_inset Formula $o_{n}=\rename{o_{m}}x$
+\end_inset
+
+ and thus the rule 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ always applies with 
+\begin_inset Formula $o'=o_{m}$
+\end_inset
+
+.
+ Moreover, 
+\begin_inset Formula $\ntharvecaction oxi$
+\end_inset
+
+ is in fact the morphism from 
+\begin_inset Formula $m+\alpha_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $n+\alpha_{i}$
+\end_inset
+
+ defined as 
+\begin_inset Formula $x+\alpha_{i}$
+\end_inset
+
+, corresponding to the list (
+\begin_inset Formula $\vec{x},n+1,\dots,n+\alpha_{i})$
+\end_inset
+
+.
+ Thus, the rule 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ unfolds as 
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\prune{\vec{t}}{\mydots,M_{i}(\vec{x},\overbrace{\var{n+1},\mydots,\var{n+1+\alpha_{i}}}^{\mathclap{\text{bound variables}}}),\mydots}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{M(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The correctness of the algorithm relies on additionnal assumptions on the
+ GB-signature that we will introduce later.
+ In particular all morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ must be monomorphic: this ensures that 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:invert-eq"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ has at most one solution.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For example, for pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, 
+\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x}),\maybold M_{2}(\vec{x})$
+\end_inset
+
+ in the application case, and 
+\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x},|C|)$
+\end_inset
+
+ in the abstraction case, thus recovering the rules 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-app-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pruning-lambda-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide true
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\series bold
+Judgments
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow & \quad\text{\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ is the most general unifier of \ensuremath{\vec{t}} and \ensuremath{\vec{u}}}}\\
+\Gamma\prune{\vec{u}}{\ensuremath{\overrightarrow{M(x)}}}{\sigma}{\vec{w}}\dashv\Delta\quad\Longleftrightarrow & \quad\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ extended with \ensuremath{M_{i}\mapsto w_{i}} is the most \text{general unifier of \ensuremath{\Gamma\vdash\vec{u}} and \ensuremath{\overrightarrow{M(\vec{x})}}}}\\
+\highlighted{m\vdash x=y\Rightarrow z\dashv p}\quad\Longleftrightarrow & \quad\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
+\text{ is an equaliser in \ensuremath{{\cal A}}}\\
+\highlighted{\highlighted{n\prunecat xy{r\dashv p}l{}}}\quad\Longleftrightarrow & \quad\begin{array}{c}
+\xymatrix{p\ar[r]^{l}\ar[d]_{r} & n\ar[d]^{x}\\
+\dots\ar[r]_{y} & \dots
+}
+\end{array}\text{ is a pullback in \ensuremath{{\cal A}}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Unification Phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Formula 
+\[
+\unificationempty\quad\unificationtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationstepwisenolabel x}{U-Split}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid-rigid
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationrigrignolabel}{U-Rig}\qquad\unificationrigrigneqo
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-*, no cycle 
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{u_{|\Gamma}=\something{u'}\qquad\Gamma\prune{u'}{\maybold M(x)}{\sigma}w\dashv\Delta}{\Gamma,M:m\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{U-NoCycle}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-Flex, same
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\Gamma,M:m\vdash M(x)=M(y)\Rightarrow M\mapsto M'(z)\dashv\Gamma,M':p}}{U-Flex}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-Rigid, cyclic
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{u\neq M(\dots)\qquad u_{|\Gamma}\neq\something{\dots}}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{U-Cyclic}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Non-cyclic phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Formula 
+\[
+\pruningempty\quad\dfrac{}{\bot\prune{\vec{t}}{\overrightarrow{M(x)}}{\bang}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\inferruletwo{\Gamma\prune{t_{1}}{M_{1}(x_{1})}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}}{\Delta_{1}\prune{\vec{t_{2}}[\sigma_{1}]}{\overrightarrow{M_{2}(x_{2})}}{\sigma_{2}\dashv\Delta_{2}}{\vec{u_{2}}}}{\Gamma\prune{t_{1},\vec{t_{2}}}{M_{1}(x_{1}),\overrightarrow{M(x_{2})}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],\vec{u}_{2}}\dashv\Delta_{2}}}{\textsc{P-Split}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{1}(\ntharvecaction{o'}x{\nar o})}{\sigma}{\vec{u}}\dashv\Delta\quad o=\rename{o'}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\sigma}{o(\vec{u})}\dashv\Delta}}{P-Rig}\quad\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{n\prunecat xy{r\dashv p}l{}}}{\Gamma,N:n\prune{N(x)}{\maybold M(y)}{N\mapsto P(r)}{P(l)}\dashv\Gamma,P:p}}{P-Flex}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generic pattern unification algorithm (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:generic-algo"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Plan of the paper
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:cat-settings"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we present our general categorical setting.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:Main-result"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we state the existence of the most general unifier as a categorical property.
+ Then we describe the construction of the most general unifier, as summarised
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-summary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, starting with the unification phase (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:coequalising-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the non-cyclic phase (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:pruning-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the occur-check (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:occur-check"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ We finally justify completeness in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:completeness"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+shortfull{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+Applications are presented in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+General notations
+\end_layout
+
+\begin_layout Standard
+Given 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, we denote the set 
+\begin_inset Formula $\{0,\dots n-1\}$
+\end_inset
+
+ by 
+\begin_inset Formula $\underline{n}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\op{\B}$
+\end_inset
+
+ denotes the opposite category of 
+\begin_inset Formula $\B$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\B$
+\end_inset
+
+ is a category and 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ are two objects, we denote the set of morphisms between 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ by 
+\begin_inset Formula $\hom_{\B}(a,b)$
+\end_inset
+
+ or 
+\begin_inset Formula $\B(a,b)$
+\end_inset
+
+.
+ We denote the identity morphism at an object 
+\begin_inset Formula $x$
+\end_inset
+
+ by 
+\begin_inset Formula $1_{x}$
+\end_inset
+
+.
+ We denote by 
+\begin_inset Formula $()$
+\end_inset
+
+ any initial morphism and by 
+\begin_inset Formula $!$
+\end_inset
+
+ any terminal morphism.
+ We denote the coproduct of two objects 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ by 
+\begin_inset Formula $A+B$
+\end_inset
+
+ and the coproduct of a family of objects 
+\begin_inset Formula $(A_{i})_{i\in I}$
+\end_inset
+
+ by 
+\begin_inset Formula $\coprod_{i\in I}A_{i}$
+\end_inset
+
+, and similarly for morphisms.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If 
+\begin_inset Formula $(g_{i}:A_{i}\rightarrow B)_{i\in I}$
+\end_inset
+
+ is a family of arrows, we denote by 
+\begin_inset Formula $[g_{i}]:\coprod_{i\in I}A_{i}\rightarrow B$
+\end_inset
+
+ the induced coproduct pairing.
+\end_layout
+
+\end_inset
+
+ If 
+\begin_inset Formula $f:A\rightarrow B$
+\end_inset
+
+ and 
+\begin_inset Formula $g:A'\rightarrow B$
+\end_inset
+
+, we  denote the induced morphism 
+\begin_inset Formula $A+A'\rightarrow B$
+\end_inset
+
+ by 
+\begin_inset Formula $f,g$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Conversely, if 
+\begin_inset Formula $g:\coprod_{i\in I}A_{i}\rightarrow B$
+\end_inset
+
+, we denote by 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+ the morphism 
+\begin_inset Formula $A_{i}\rightarrow\coprod_{i}A_{i}\rightarrow B$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ Coproduct injections 
+\begin_inset Formula $A_{i}\rightarrow\coprod_{i\in I}A_{i}$
+\end_inset
+
+ are typically denoted by 
+\begin_inset Formula $in_{i}$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Given an adjunction 
+\begin_inset Formula $L\dashv R$
+\end_inset
+
+ and a morphism 
+\begin_inset Formula $f:A\rightarrow RB$
+\end_inset
+
+, we denote by 
+\begin_inset Formula $f^{*}:LA\rightarrow B$
+\end_inset
+
+ its transpose, and similarly, if 
+\begin_inset Formula $g:LA\rightarrow B$
+\end_inset
+
+, then 
+\begin_inset Formula $g^{*}:A\rightarrow RB$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $T$
+\end_inset
+
+ be a monad on a category 
+\begin_inset Formula $\B$
+\end_inset
+
+.
+ We denote its unit by 
+\begin_inset Formula $\eta$
+\end_inset
+
+, and its Kleisli category by 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+: the objects are the same as those of 
+\begin_inset Formula $\B$
+\end_inset
+
+, and a Kleisli morphism from 
+\begin_inset Formula $A$
+\end_inset
+
+ to 
+\begin_inset Formula $B$
+\end_inset
+
+ is a morphism 
+\begin_inset Formula $A\rightarrow TB$
+\end_inset
+
+ in 
+\begin_inset Formula $\B$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Any Kleisli morphism 
+\begin_inset Formula $f:A\rightarrow TB$
+\end_inset
+
+ induces a morphism 
+\begin_inset Formula $f^{*}:TA\rightarrow TB$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+ We denote the Kleisli composition of 
+\begin_inset Formula $f:A\rightarrow TB$
+\end_inset
+
+ and 
+\begin_inset Formula $g:B\rightarrow TC$
+\end_inset
+
+ by 
+\begin_inset Formula $f[g]:A\rightarrow TC$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Section
+General setting
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:cat-settings"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In our setting, syntax is specified as an endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on a category 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ We introduce conditions for the latter in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:base-cat"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and for the former in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:endo-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Examples are presented in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Finally, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:examples-settings"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we sketch some examples.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Categorification
 \end_layout
 
@@ -2911,7 +4607,11 @@ name "subsec:categorification"
 \end_layout
 
 \begin_layout Standard
-In this section, we define the syntax of pure 
+
+\color red
+TODO: redoit
+\color inherit
+ In this section, we define the syntax of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -3415,6 +5115,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide true
 sideways false
@@ -3581,7 +5285,7 @@ noprefix "false"
 
 \end_inset
 
-) 
+)
 \end_layout
 
 \begin_layout Plain Layout
@@ -3738,6 +5442,11 @@ Generic unification algorithm
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:algo-summary"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -5518,489 +7227,6 @@ status open
 
 \begin_layout Plain Layout
 Some benefits: we unify the operation and the variable case.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection*
-Plan of the paper
-\end_layout
-
-\begin_layout Standard
-In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:cat-settings"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we present our general categorical setting.
- In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:Main-result"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we state the existence of the most general unifier as a categorical property.
- Then we describe the construction of the most general unifier, as summarised
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, starting with the unification phase (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:coequalising-phase"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), the non-cyclic phase (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:pruning-phase"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), the occur-check (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:occur-check"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
- We finally justify completeness in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:completeness"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-shortfull{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}{
-\end_layout
-
-\end_inset
-
-Applications are presented in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:applications"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection*
-General notations
-\end_layout
-
-\begin_layout Standard
-Given 
-\begin_inset Formula $n\in\mathbb{N}$
-\end_inset
-
-, we denote the set 
-\begin_inset Formula $\{0,\dots n-1\}$
-\end_inset
-
- by 
-\begin_inset Formula $\underline{n}$
-\end_inset
-
-.
- 
-\begin_inset Formula $\op{\B}$
-\end_inset
-
- denotes the opposite category of 
-\begin_inset Formula $\B$
-\end_inset
-
-.
- If 
-\begin_inset Formula $\B$
-\end_inset
-
- is a category and 
-\begin_inset Formula $a$
-\end_inset
-
- and 
-\begin_inset Formula $b$
-\end_inset
-
- are two objects, we denote the set of morphisms between 
-\begin_inset Formula $a$
-\end_inset
-
- and 
-\begin_inset Formula $b$
-\end_inset
-
- by 
-\begin_inset Formula $\hom_{\B}(a,b)$
-\end_inset
-
- or 
-\begin_inset Formula $\B(a,b)$
-\end_inset
-
-.
- We denote the identity morphism at an object 
-\begin_inset Formula $x$
-\end_inset
-
- by 
-\begin_inset Formula $1_{x}$
-\end_inset
-
-.
- We denote by 
-\begin_inset Formula $()$
-\end_inset
-
- any initial morphism and by 
-\begin_inset Formula $!$
-\end_inset
-
- any terminal morphism.
- We denote the coproduct of two objects 
-\begin_inset Formula $A$
-\end_inset
-
- and 
-\begin_inset Formula $B$
-\end_inset
-
- by 
-\begin_inset Formula $A+B$
-\end_inset
-
- and the coproduct of a family of objects 
-\begin_inset Formula $(A_{i})_{i\in I}$
-\end_inset
-
- by 
-\begin_inset Formula $\coprod_{i\in I}A_{i}$
-\end_inset
-
-, and similarly for morphisms.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-If 
-\begin_inset Formula $(g_{i}:A_{i}\rightarrow B)_{i\in I}$
-\end_inset
-
- is a family of arrows, we denote by 
-\begin_inset Formula $[g_{i}]:\coprod_{i\in I}A_{i}\rightarrow B$
-\end_inset
-
- the induced coproduct pairing.
-\end_layout
-
-\end_inset
-
- If 
-\begin_inset Formula $f:A\rightarrow B$
-\end_inset
-
- and 
-\begin_inset Formula $g:A'\rightarrow B$
-\end_inset
-
-, we  denote the induced morphism 
-\begin_inset Formula $A+A'\rightarrow B$
-\end_inset
-
- by 
-\begin_inset Formula $f,g$
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Conversely, if 
-\begin_inset Formula $g:\coprod_{i\in I}A_{i}\rightarrow B$
-\end_inset
-
-, we denote by 
-\begin_inset Formula $g_{i}$
-\end_inset
-
- the morphism 
-\begin_inset Formula $A_{i}\rightarrow\coprod_{i}A_{i}\rightarrow B$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- Coproduct injections 
-\begin_inset Formula $A_{i}\rightarrow\coprod_{i\in I}A_{i}$
-\end_inset
-
- are typically denoted by 
-\begin_inset Formula $in_{i}$
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Given an adjunction 
-\begin_inset Formula $L\dashv R$
-\end_inset
-
- and a morphism 
-\begin_inset Formula $f:A\rightarrow RB$
-\end_inset
-
-, we denote by 
-\begin_inset Formula $f^{*}:LA\rightarrow B$
-\end_inset
-
- its transpose, and similarly, if 
-\begin_inset Formula $g:LA\rightarrow B$
-\end_inset
-
-, then 
-\begin_inset Formula $g^{*}:A\rightarrow RB$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- Let 
-\begin_inset Formula $T$
-\end_inset
-
- be a monad on a category 
-\begin_inset Formula $\B$
-\end_inset
-
-.
- We denote its unit by 
-\begin_inset Formula $\eta$
-\end_inset
-
-, and its Kleisli category by 
-\begin_inset Formula $\Kl T$
-\end_inset
-
-: the objects are the same as those of 
-\begin_inset Formula $\B$
-\end_inset
-
-, and a Kleisli morphism from 
-\begin_inset Formula $A$
-\end_inset
-
- to 
-\begin_inset Formula $B$
-\end_inset
-
- is a morphism 
-\begin_inset Formula $A\rightarrow TB$
-\end_inset
-
- in 
-\begin_inset Formula $\B$
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Any Kleisli morphism 
-\begin_inset Formula $f:A\rightarrow TB$
-\end_inset
-
- induces a morphism 
-\begin_inset Formula $f^{*}:TA\rightarrow TB$
-\end_inset
-
-.
- 
-\end_layout
-
-\end_inset
-
- We denote the Kleisli composition of 
-\begin_inset Formula $f:A\rightarrow TB$
-\end_inset
-
- and 
-\begin_inset Formula $g:B\rightarrow TC$
-\end_inset
-
- by 
-\begin_inset Formula $f[g]:A\rightarrow TC$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Section
-General setting
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:cat-settings"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In our setting, syntax is specified as an endofunctor 
-\begin_inset Formula $F$
-\end_inset
-
- on a category 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- We introduce conditions for the latter in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:base-cat"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and for the former in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:endo-syntax"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Examples are presented in
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:applications"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Finally, in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:examples-settings"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we sketch some examples.
- 
 \end_layout
 
 \end_inset
@@ -17741,11 +18967,15 @@ rqshape}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
 \begin_layout Subsection
 Binding signatures
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:bidning-sig"
@@ -17895,7 +19125,7 @@ status open
  a binding signature.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Note Note
 status open
 
@@ -17928,7 +19158,7 @@ In the figure, the vector notation for the arguments of metavariables is
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In the rule 
 \begin_inset Formula $\refrule{U-RigRig}$
 \end_inset
@@ -18030,7 +19260,7 @@ The notation
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Note that the premises of the rules 
 \begin_inset Formula $\refrule{U-FlexFlex}$
 \end_inset
@@ -18056,7 +19286,7 @@ noprefix "false"
  for each specific situation.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Note Note
 status open
 
@@ -18074,6 +19304,11 @@ we propose an interpretation of typing rules to define the endofunctor
 \[
 \Gamma
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
