@@ -1997,15 +1997,15 @@ metavariable substitution
 \end_inset
 
 .
- The base case is 
+ The base case is
 \begin_inset Formula 
-\begin{equation}
-M(x_{1},\dots,x_{n})[\sigma]=\rename{\sigma_{M}}{\var i\mapsto x_{i}},\label{eq:base-case-subst}
-\end{equation}
+\[
+M(x_{1},\dots,x_{n})[\sigma]=\rename{\sigma_{M}}{\var i\mapsto x_{i}},
+\]
 
 \end_inset
 
-where 
+ where 
 \begin_inset Formula $\rename -{\var i\mapsto x_{i}}$
 \end_inset
 
@@ -4150,7 +4150,18 @@ The correctness of the algorithm relies on additional assumptions on the
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- must be monomorphic: this ensures that 
+ must be monomorphic: this ensures that Equation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "eq:invert-eq"
@@ -6144,11 +6155,11 @@ Now consider a finite connected limit
 \begin_inset Formula 
 \begin{align*}
 \C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
- & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By \prettyref{eq:def-y-1}}\\
+ & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By Equation \prettyref{eq:def-y-1}}\\
  & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
  & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
  & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
- & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By \prettyref{eq:def-y-1}}\\
+ & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By Equation \prettyref{eq:def-y-1}}\\
  & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
  & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
 \end{align*}
@@ -7795,7 +7806,18 @@ Now,
 \begin_inset Formula $\rename ux=\rename{M(y)}x=M(\arg x\circ\arg y)$
 \end_inset
 
-, contradicting 
+, contradicting Equation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "eq:unif-prig"
@@ -7828,7 +7850,18 @@ noprefix "false"
 \end_inset
 
 .
- It follows from 
+ It follows from Equation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "eq:unif-prig"
@@ -14945,7 +14978,17 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Examples of GB-signatures
+Examples of generalised binding signatures (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:GB-signature"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
 \end_layout
 
 \end_inset
@@ -17341,7 +17384,7 @@ Let
 \int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
  & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
  & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{o_{i}}1}\times\dots\times X_{\nthar{o_{i}}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{\Oop n-}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{O_{n}}}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By \prettyref{cor:can-iso-app}}\\
@@ -17434,7 +17477,7 @@ Assume
 \int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
  & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
  & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{o_{i}}1}\times\dots\times X_{\nthar{o_{i}}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{\Oop n-}preserves finite connected limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{O_{n}}preserves finite connected limits}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}
 \end{align*}
