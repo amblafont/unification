@@ -192,20 +192,6 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset FormulaMacro
-\newcommand{\naraction}[3]{\epsilon(#1,#2)_{#3}}
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset FormulaMacro
 \newcommand{\nar}[1]{\kappa_{#1}}
 \end_inset
 
@@ -223,23 +209,6 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset FormulaMacro
-\newcommand{\ntharvecaction}[3]{\alpha_{#1,#2,#3}}
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset FormulaMacro
 \newcommand{\ntharvecaction}[3]{#2_{#3}^{#1}}
 \end_inset
@@ -248,36 +217,8 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset FormulaMacro
-\newcommand{\ntharrenamed}[3]{\rename{\alpha}{#1}_{#2,#3}}
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset FormulaMacro
 \newcommand{\ntharvecfunct}{\ntharvec{}}
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset FormulaMacro
-\newcommand{\nthar}[2]{\alpha_{#1,#2}}
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
 
@@ -551,46 +492,7 @@ status open
 
 
 \begin_inset FormulaMacro
-\newcommand{\unificationrigrig}{\unificationrigrignolabel\textsc{U-RigRig}}
-\end_inset
-
-
-\begin_inset FormulaMacro
 \newcommand{\unificationrigrigneqo}{\dfrac{o\neq o'}{\Gamma\vdash o(\vec{t})=o'(\vec{u})\Rightarrow\bang\dashv\bot}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\unificationfailingoccurcheck}{\dfrac{T\Gamma\xrightarrow{Tin_{\Gamma}}T(\Gamma,M:b)\text{ does not factor }\vec{g}:a^{o}\rightarrow T(\Gamma,M:b)}{\Gamma,M:b\vdash M(\arg x)=o(\vec{g})\Rightarrow\bang\dashv\bot}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\unificationfailingoccurcheckeffective}{\dfrac{u=o(\vec{t})\qquad u_{|\Gamma}\neq\something{\dots}}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\bang\dashv\bot}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\unificationflexflex}{\dfrac{\highlighted{b\vdash\arg x=_{\D}\arg y\Rightarrow\arg z\dashv c}}{\Gamma,M:b\vdash M(\arg x)=M(\arg y)\Rightarrow M\mapsto M'(\arg z)\dashv\Gamma,M':c}\textsc{U-FlexFlex}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\unificationoccurcheck}{\dfrac{\Gamma\prune{u'}{M(\arg x)}{\sigma}v\dashv\Delta\qquad u=u'[in_{\Gamma}]}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\unificationoccurcheckeffective}{\dfrac{u_{|\Gamma}=\something{u'}\qquad\Gamma\prune{u'}{M(\arg x)}{\sigma}v\dashv\Delta}{\Gamma,M:b\vdash M(\arg x)=u\Rightarrow\sigma,M\mapsto v\dashv\Delta}}
 \end_inset
 
 
@@ -604,56 +506,6 @@ status open
 
 \begin_inset FormulaMacro
 \newcommand{\pruningempty}{\dfrac{}{\pruningemptyconcl}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\pruningtopconcl}{\bot\prune{\vec{t}}{\vec{f}}{\bang}{\bang}\dashv\bot}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\pruningtop}{\dfrac{}{\pruningtopconcl}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\pruningflex}[1]{\dfrac{\highlighted{c\prunecat{\veciflyx{#1}y}{\veciflyx{#1}x}{\veciflyx{#1}x'\dashv d}{\veciflyx{#1}{y'}}{\D}}}{\Gamma,M:c\prune{M(\veciflyx{#1}y)}{N(\veciflyx{#1}x)}{M\mapsto M'(\veciflyx{#1}{x'})}{M'(\veciflyx{#1}{y'})}\dashv\Gamma,M':d}\textsc{P-Flex}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\pruningrigfail}{\dfrac{o\neq\acton{\arg x}{\dots}}{\Gamma\prune{o(\vec{t})}{N(\arg x)}{\bang}{\bang}\dashv\bot}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\pruningrig}{\dfrac{\Gamma\prune{\vec{t}}{{\cal L}^{+}\arg x^{o}}{\sigma}{\vec{u}}\dashv\Delta\qquad o=\acton{\arg x}{o'}}{\Gamma\prune{o(\vec{t})}{N(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset FormulaMacro
-\newcommand{\pruningstepwise}[1]{\inferruletwo{\Gamma\prune{\veciflyx{}{t_{1}}}{\veciflyx{}{f_{1}}}{\sigma_{1}}{\veciflyx{}{u_{1}}}\dashv\Delta_{1}}{\Delta_{1}\prune{\veciflyx{#1}{t_{2}}[\sigma_{1}]}{\veciflyx{#1}{f_{2}}}{\sigma_{2}\dashv\Delta_{2}}{\veciflyx{#1}{u_{2}}}}{\Gamma\prune{\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}}{\veciflyx{}{f_{1}}+\veciflyx{#1}{f_{2}}}{\sigma_{1}[\sigma_{2}]}{\veciflyx{}{u_{1}}[\sigma_{2}],\veciflyx{#1}{u_{2}}}\dashv\Delta_{2}}\textsc{P-Split}}
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\prune{\veciflyx{}{t_{1}}}{\veciflyx{}{f_{1}}}{\sigma_{1}}{\veciflyx{}{u_{1}}}\dashv\Delta_{1}\qquad\Delta_{1}\prune{\veciflyx{#1}{t_{2}}[\sigma_{1}]}{\veciflyx{#1}{f_{2}}}{\sigma_{2}\dashv\Delta_{2}}{\veciflyx{#1}{u_{2}}}}{\Gamma\prune{\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}}{\veciflyx{}{f_{1}}+\veciflyx{#1}{f_{2}}}{\sigma_{1}[\sigma_{2}]}{\veciflyx{}{u_{1}}[\sigma_{2}],\veciflyx{#1}{u_{2}}}\dashv\Delta_{2}}\textsc{P-Split}
-\]
-
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
 
@@ -1312,11 +1164,11 @@ Given a list
 \begin_inset Formula $\vec{x}=(x_{1},\dots,x_{n})$
 \end_inset
 
- and a list of 
+ and a list of positions 
 \begin_inset Formula $\vec{p}=(p_{1},\dots,p_{m})$
 \end_inset
 
- of elements of 
+ taken in 
 \begin_inset Formula $\{1,\dots,n\}$
 \end_inset
 
@@ -1330,19 +1182,19 @@ Given a list
 
 .
  
-\begin_inset Formula $\op{\B}$
+\end_layout
+
+\begin_layout Standard
+Given a category 
+\begin_inset Formula $\B$
 \end_inset
 
- denotes the opposite category of 
-\begin_inset Formula $\B$
+, we denote its opposite category by 
+\begin_inset Formula $\op{\B}$
 \end_inset
 
 .
  If 
-\begin_inset Formula $\B$
-\end_inset
-
- is a category and 
 \begin_inset Formula $a$
 \end_inset
 
@@ -1350,7 +1202,11 @@ Given a list
 \begin_inset Formula $b$
 \end_inset
 
- are two objects, we denote the set of morphisms between 
+ are two objects of 
+\begin_inset Formula $\B$
+\end_inset
+
+, we denote the set of morphisms between 
 \begin_inset Formula $a$
 \end_inset
 
@@ -1372,15 +1228,6 @@ Given a list
 \end_inset
 
 .
- We denote by 
-\begin_inset Formula $()$
-\end_inset
-
- any initial morphism and by 
-\begin_inset Formula $!$
-\end_inset
-
- any terminal morphism.
  We denote the coproduct of two objects 
 \begin_inset Formula $A$
 \end_inset
@@ -1402,24 +1249,6 @@ Given a list
 \end_inset
 
 , and similarly for morphisms.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-If 
-\begin_inset Formula $(g_{i}:A_{i}\rightarrow B)_{i\in I}$
-\end_inset
-
- is a family of arrows, we denote by 
-\begin_inset Formula $[g_{i}]:\coprod_{i\in I}A_{i}\rightarrow B$
-\end_inset
-
- the induced coproduct pairing.
-\end_layout
-
-\end_inset
-
  If 
 \begin_inset Formula $f:A\rightarrow B$
 \end_inset
@@ -1437,28 +1266,6 @@ If
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Conversely, if 
-\begin_inset Formula $g:\coprod_{i\in I}A_{i}\rightarrow B$
-\end_inset
-
-, we denote by 
-\begin_inset Formula $g_{i}$
-\end_inset
-
- the morphism 
-\begin_inset Formula $A_{i}\rightarrow\coprod_{i}A_{i}\rightarrow B$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
  Coproduct injections 
 \begin_inset Formula $A_{i}\rightarrow\coprod_{i\in I}A_{i}$
 \end_inset
@@ -1468,36 +1275,6 @@ Conversely, if
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Given an adjunction 
-\begin_inset Formula $L\dashv R$
-\end_inset
-
- and a morphism 
-\begin_inset Formula $f:A\rightarrow RB$
-\end_inset
-
-, we denote by 
-\begin_inset Formula $f^{*}:LA\rightarrow B$
-\end_inset
-
- its transpose, and similarly, if 
-\begin_inset Formula $g:LA\rightarrow B$
-\end_inset
-
-, then 
-\begin_inset Formula $g^{*}:A\rightarrow RB$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
  Let 
 \begin_inset Formula $T$
 \end_inset
@@ -1536,25 +1313,6 @@ Given an adjunction
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Any Kleisli morphism 
-\begin_inset Formula $f:A\rightarrow TB$
-\end_inset
-
- induces a morphism 
-\begin_inset Formula $f^{*}:TA\rightarrow TB$
-\end_inset
-
-.
- 
-\end_layout
-
-\end_inset
-
  We denote the Kleisli composition of 
 \begin_inset Formula $f:A\rightarrow TB$
 \end_inset
@@ -4936,7 +4694,7 @@ Pattern unification is often stated as the existence of a coequaliser on
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Thus, a unification problem can be stated as a pair of parallel Kleisli
@@ -5104,6 +4862,22 @@ Given a category
 
  extended freely with a terminal object 
 \begin_inset Formula $\bot$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Notation
+We denote by 
+\begin_inset Formula $\bang$
+\end_inset
+
+ any terminal morphism to 
+\begin_inset Formula $\bot$
+\end_inset
+
+ in 
+\begin_inset Formula $\B_{\bot}$
 \end_inset
 
 .
@@ -6058,22 +5832,13 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-See the appendix
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
+See 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "app:resF-direct"
 plural "false"
 caps "true"
 noprefix "false"
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -8589,7 +8354,60 @@ name "sec:applications"
 
 \end_inset
 
+In this section, we present various examples of pattern-friendly signatures.
+ We start in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ex-arg-sets"
+plural "false"
+caps "true"
+noprefix "false"
 
+\end_inset
+
+ with a variant of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus where metavariable arguments are sets rather than lists.
+ Then, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:simply-typed-so"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we present simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, as an example of syntax specified by a multi-sorted binding signature.
+ Next, we introduce an example of unification for ordered syntax in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ordered-calculus"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, and finally we present an example of polymorphic such as System F, in
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:system-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
 \begin_inset Note Note
 status open
 
@@ -16371,7 +16189,7 @@ name "subsec:system-F"
 \end_layout
 
 \begin_layout Standard
-We present intrinsic system F, following
+We present intrinsic System F, in the spirit of
 \begin_inset ERT
 status open
 
@@ -16555,15 +16373,22 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-All morphisms in 
+ The induced GB-signature is pattern-friendly.
+ For example, morphisms in 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- are monomorphic.
- 
+ are easily seen to be monomorphic; we detail in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "app:A-finite-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ the proof of the following statement.
 \end_layout
 
 \begin_layout Lemma
@@ -16581,11 +16406,14 @@ name "lem:A-finite-connected"
 \end_layout
 
 \begin_layout Standard
-Before tackling the proof, let us mention that those pullbacks and equalisers
- are computed as in 
+Pullbacks and equalisers in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ are essentially computed as in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "subsec:example-lambda"
+reference "subsec:simply-typed-so"
 plural "false"
 caps "true"
 noprefix "false"
@@ -16678,226 +16506,20 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Standard
-Let us now turn to the proof of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:A-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- In fact, we are going to show that 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- is finitely complete.
- First, note that 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- is the op-lax colimit of the functor from 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
- to the category of small categories mapping 
-\begin_inset Formula $n$
-\end_inset
-
- to 
-\begin_inset Formula $\mathbb{F}_{m}[S_{n}]\times S_{n}$
-\end_inset
-
-.
- 
+\begin_layout Section
+Conclusion
 \end_layout
 
 \begin_layout Standard
-Let us introduce the category 
-\begin_inset Formula ${\cal A}'$
-\end_inset
-
- whose definition follows that of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, but without the output types: objects are pairs of a natural number 
-\begin_inset Formula $n$
-\end_inset
-
- and an element of 
-\begin_inset Formula $S_{n}$
-\end_inset
-
-.
- Formally, this is the op-lax colimit of 
-\begin_inset Formula $n\mapsto\mathbb{F}_{m}[S_{n}]$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:A'-lim"
-
-\end_inset
-
-
-\begin_inset Formula ${\cal A}'$
-\end_inset
-
- has finite limits, and the projection functor 
-\begin_inset Formula ${\cal A}'\rightarrow\mathbb{F}_{m}$
-\end_inset
-
- preserves them.
-\end_layout
-
-\begin_layout Proof
-The crucial point is that 
-\begin_inset Formula ${\cal A}'$
-\end_inset
-
- is not only op-fibred over 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
- by construction, it is also fibred over 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
-.
- Intuitively, if 
-\begin_inset Formula $\vec{\sigma}\in\mathbb{F}_{m}[S_{n}]$
-\end_inset
-
- and 
-\begin_inset Formula $f:n'\rightarrow n$
-\end_inset
-
- is a morphism in 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
-, then 
-\begin_inset Formula $f_{!}\vec{\sigma}\in\mathbb{F}_{m}[S_{n'}]$
-\end_inset
-
- is essentially 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- restricted to elements of 
-\begin_inset Formula $S_{n}$
-\end_inset
-
- that are in the image of 
-\begin_inset Formula $S_{f}$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula $f_{!}$
-\end_inset
-
- is right adjoint to 
-\begin_inset Formula $\vec{\sigma}\mapsto\vec{\sigma}[f]$
-\end_inset
-
-, and is thus continuous.
- We now apply 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Theorem 4.2 and Proposition 4.1"
-key "grayfib"
-literal "false"
-
-\end_inset
-
-: each 
-\begin_inset Formula $\mathbb{F}_{m}[S_{n}]$
-\end_inset
-
- has those limits.
-\end_layout
-
-\begin_layout Lemma
-The projection functor 
-\begin_inset Formula ${\cal A}\rightarrow{\cal A}'$
-\end_inset
-
- creates finite limits.
-\end_layout
-
-\begin_layout Proof
-Let 
-\begin_inset Formula $d:I\rightarrow{\cal A}$
-\end_inset
-
- be a functor.
- We denote 
-\begin_inset Formula $d_{i}$
-\end_inset
-
- by 
-\begin_inset Formula $n_{i}\Fsep\vec{\sigma}_{i}\arSep\tau_{i}$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $n\Fsep\vec{\sigma}$
-\end_inset
-
- be the limit of 
-\begin_inset Formula $i\mapsto n_{i}\Fsep\vec{\sigma}_{i}$
-\end_inset
-
- in 
-\begin_inset Formula ${\cal A}'$
-\end_inset
-
-.
- By the previous lemma, 
-\begin_inset Formula $n$
-\end_inset
-
- is the limit of 
-\begin_inset Formula $i\mapsto n_{i}$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula $S:\mathbb{F}_{m}\rightarrow\Set$
-\end_inset
-
- preserves finite connected limits.
- Thus, we can define 
-\begin_inset Formula $\tau\in S_{n}$
-\end_inset
-
- as corresponding to the universal function 
-\begin_inset Formula $1\rightarrow S_{n}$
-\end_inset
-
- factorising the cone 
-\begin_inset Formula $(1\xrightarrow{\tau_{i}}S_{n_{i}})_{i}$
-\end_inset
-
-.
- It is easy to check that 
-\begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
-\end_inset
-
- is the limit of 
-\begin_inset Formula $d$
-\end_inset
-
-.
+We presented a generic unification algorithm with its associated categorical
+ semantics, parameterised by a new notion of signature for syntax with metavaria
+bles generalising Miller's pattern fragment.
+ In the future, we would like to extend this setting to cover unification
+ modulo equations.
+ We also plan to see how this work applies to dependently-typed languages,
+ going beyond polymorphic syntax.
+ Finally, we are also interested in investigating linear syntax without
+ restriction on the order the variables are used.
 \end_layout
 
 \begin_layout Standard
@@ -17555,6 +17177,54 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Limits commute with dependent pairs]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:lim-commute-dependent-pairs"
+
+\end_inset
+
+Given functors 
+\begin_inset Formula $K:D\rightarrow\Set$
+\end_inset
+
+ and 
+\begin_inset Formula $G:\int K\rightarrow\Set$
+\end_inset
+
+, the following canonical morphism is an isomorphism
+\begin_inset Formula 
+\[
+\int_{d:D}\coprod_{x\in K(d)}G(d,x)\rightarrow\coprod_{\alpha\in\lim K}\int_{d}G(d,\alpha_{d})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+It is straightforward to check that both sets share the same universal property.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proof
 \begin_inset ERT
 status open
@@ -17741,5 +17411,249 @@ This implies that each function
 \end_layout
 
 \end_deeper
+\begin_layout Appendix
+Proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:A-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:A-finite-F"
+
+\end_inset
+
+In this section, we show that the category 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ of arities for System F (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:system-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) is finitely complete.
+ First, note that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ is the op-lax colimit of the functor from 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ to the category of small categories mapping 
+\begin_inset Formula $n$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathbb{F}_{m}[S_{n}]\times S_{n}$
+\end_inset
+
+.
+ Let us introduce the category 
+\begin_inset Formula ${\cal A}'$
+\end_inset
+
+ whose definition follows that of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, but without the output types: objects are pairs of a natural number 
+\begin_inset Formula $n$
+\end_inset
+
+ and an element of 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+.
+ Formally, this is the op-lax colimit of 
+\begin_inset Formula $n\mapsto\mathbb{F}_{m}[S_{n}]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:A'-lim"
+
+\end_inset
+
+
+\begin_inset Formula ${\cal A}'$
+\end_inset
+
+ has finite limits, and the projection functor 
+\begin_inset Formula ${\cal A}'\rightarrow\mathbb{F}_{m}$
+\end_inset
+
+ preserves them.
+\end_layout
+
+\begin_layout Proof
+The crucial point is that 
+\begin_inset Formula ${\cal A}'$
+\end_inset
+
+ is not only op-fibred over 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ by construction, it is also fibred over 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+.
+ Intuitively, if 
+\begin_inset Formula $\vec{\sigma}\in\mathbb{F}_{m}[S_{n}]$
+\end_inset
+
+ and 
+\begin_inset Formula $f:n'\rightarrow n$
+\end_inset
+
+ is a morphism in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+, then 
+\begin_inset Formula $f_{!}\vec{\sigma}\in\mathbb{F}_{m}[S_{n'}]$
+\end_inset
+
+ is essentially 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ restricted to elements of 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+ that are in the image of 
+\begin_inset Formula $S_{f}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $f_{!}$
+\end_inset
+
+ is right adjoint to 
+\begin_inset Formula $\vec{\sigma}\mapsto\vec{\sigma}[f]$
+\end_inset
+
+, and is thus continuous.
+ We now apply 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 4.2 and Proposition 4.1"
+key "grayfib"
+literal "false"
+
+\end_inset
+
+: each 
+\begin_inset Formula $\mathbb{F}_{m}[S_{n}]$
+\end_inset
+
+ has those limits.
+\end_layout
+
+\begin_layout Lemma
+The projection functor 
+\begin_inset Formula ${\cal A}\rightarrow{\cal A}'$
+\end_inset
+
+ creates finite limits.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $d:I\rightarrow{\cal A}$
+\end_inset
+
+ be a functor.
+ We denote 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ by 
+\begin_inset Formula $n_{i}\Fsep\vec{\sigma}_{i}\arSep\tau_{i}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $n\Fsep\vec{\sigma}$
+\end_inset
+
+ be the limit of 
+\begin_inset Formula $i\mapsto n_{i}\Fsep\vec{\sigma}_{i}$
+\end_inset
+
+ in 
+\begin_inset Formula ${\cal A}'$
+\end_inset
+
+.
+ By the previous lemma, 
+\begin_inset Formula $n$
+\end_inset
+
+ is the limit of 
+\begin_inset Formula $i\mapsto n_{i}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $S:\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+ preserves finite connected limits.
+ Thus, we can define 
+\begin_inset Formula $\tau\in S_{n}$
+\end_inset
+
+ as corresponding to the universal function 
+\begin_inset Formula $1\rightarrow S_{n}$
+\end_inset
+
+ factorising the cone 
+\begin_inset Formula $(1\xrightarrow{\tau_{i}}S_{n_{i}})_{i}$
+\end_inset
+
+.
+ It is easy to check that 
+\begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
+\end_inset
+
+ is the limit of 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ is finitely complete.
+\end_layout
+
 \end_body
 \end_document
