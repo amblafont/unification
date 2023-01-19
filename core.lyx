@@ -702,7 +702,8 @@ literal "false"
 
 \end_inset
 
-, or Jinxu et al
+, or Jinxu et.
+ al
 \begin_inset ERT
 status open
 
@@ -1040,7 +1041,7 @@ literal "false"
 
 \end_inset
 
- than to the nominal sets'
+ than to the nominal approach
 \begin_inset ERT
 status open
 
@@ -1341,28 +1342,10 @@ name "sec:summary-algo"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-An example: pure 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus.
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:example-lambda"
-
-\end_inset
-
-
 \begin_inset Float figure
 wide true
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1581,6 +1564,219 @@ name "fig:algo-pure-lambda"
 
 
 \end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide true
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\series bold
+Judgments
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow & \quad\text{\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ is the most general unifier of \ensuremath{\vec{t}} and \ensuremath{\vec{u}}}}\\
+\Gamma\prune{\vec{u}}{\ensuremath{\overrightarrow{M(x)}}}{\sigma}{\vec{w}}\dashv\Delta\quad\Longleftrightarrow & \quad\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ extended with \ensuremath{M_{i}\mapsto w_{i}} is the most \text{general unifier of \ensuremath{\Gamma\vdash\vec{u}} and \ensuremath{\overrightarrow{M(\vec{x})}}}}\\
+\highlighted{m\vdash x=y\Rightarrow z\dashv p}\quad\Longleftrightarrow & \quad\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
+\text{ is an equaliser in \ensuremath{{\cal A}}}\\
+\highlighted{\highlighted{n\prunecat xy{r\dashv p}l{}}}\quad\Longleftrightarrow & \quad\begin{array}{c}
+\xymatrix{p\ar[r]^{l}\ar[d]_{r} & n\ar[d]^{x}\\
+\dots\ar[r]_{y} & \dots
+}
+\end{array}\text{ is a pullback in \ensuremath{{\cal A}}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Unification Phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Formula 
+\[
+\unificationempty\quad\unificationtop
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationstepwisenolabel x}{U-Split}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid-rigid
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationrigrignolabel}{U-RigRig}\qquad\labellabelrule{\unificationrigrigneqo}{U-Clash}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-*, no cycle 
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\notin u\qquad\Gamma\prune u{\maybold M(x)}{\sigma}w\dashv\Delta}{\Gamma,M:m\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{U-NoCycle}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-Flex, same
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\Gamma,M:m\vdash M(x)=M(y)\Rightarrow M\mapsto M'(z)\dashv\Gamma,M':p}}{U-Flex}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex-Rigid, cyclic
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{U-Cyclic}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Non-cyclic phase
+\end_layout
+
+\begin_layout Itemize
+Structural rules
+\begin_inset Formula 
+\[
+\pruningempty\quad\dfrac{}{\bot\prune{\vec{t}}{\overrightarrow{M(x)}}{\bang}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\inferruletwo{\Gamma\prune{t_{1}}{M_{1}(x_{1})}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}}{\Delta_{1}\prune{\vec{t_{2}}[\sigma_{1}]}{\overrightarrow{M_{2}(x_{2})}}{\sigma_{2}\dashv\Delta_{2}}{\vec{u_{2}}}}{\Gamma\prune{t_{1},\vec{t_{2}}}{M_{1}(x_{1}),\overrightarrow{M(x_{2})}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],\vec{u}_{2}}\dashv\Delta_{2}}}{\textsc{P-Split}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rigid
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{1}(\ntharvecaction{o'}xn)}{\sigma}{\vec{u}}\dashv\Delta\quad o=\rename{o'}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}{P-Rig}\quad\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Flex
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{n\prunecat xy{r\dashv p}l{}}}{\Gamma,N:n\prune{N(x)}{\maybold M(y)}{N\mapsto P(r)}{P(l)}\dashv\Gamma,P:p}}{P-Flex}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generic pattern unification algorithm (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:generic-algo"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+An example: pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:example-lambda"
 
 \end_inset
 
@@ -3164,7 +3360,7 @@ Our algorithm is parameterised by a
 \emph on
 generalised binding signature
 \emph default
-, or GB-signature, a notion we will formaly introduce in 
+, or GB-signature, a notion we will formally introduce in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "def:GB-signature"
@@ -3886,7 +4082,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The correctness of the algorithm relies on additionnal assumptions on the
+The correctness of the algorithm relies on additional assumptions on the
  GB-signature that we will introduce later.
  In particular all morphisms in 
 \begin_inset Formula ${\cal A}$
@@ -3913,204 +4109,6 @@ noprefix "false"
 \end_inset
 
  below).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide true
-sideways false
-status open
-
-\begin_layout Plain Layout
-
-\series bold
-Judgments
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\begin{align*}
-\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow & \quad\text{\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ is the most general unifier of \ensuremath{\vec{t}} and \ensuremath{\vec{u}}}}\\
-\Gamma\prune{\vec{u}}{\ensuremath{\overrightarrow{M(x)}}}{\sigma}{\vec{w}}\dashv\Delta\quad\Longleftrightarrow & \quad\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ extended with \ensuremath{M_{i}\mapsto w_{i}} is the most \text{general unifier of \ensuremath{\Gamma\vdash\vec{u}} and \ensuremath{\overrightarrow{M(\vec{x})}}}}\\
-\highlighted{m\vdash x=y\Rightarrow z\dashv p}\quad\Longleftrightarrow & \quad\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
-\text{ is an equaliser in \ensuremath{{\cal A}}}\\
-\highlighted{\highlighted{n\prunecat xy{r\dashv p}l{}}}\quad\Longleftrightarrow & \quad\begin{array}{c}
-\xymatrix{p\ar[r]^{l}\ar[d]_{r} & n\ar[d]^{x}\\
-\dots\ar[r]_{y} & \dots
-}
-\end{array}\text{ is a pullback in \ensuremath{{\cal A}}}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\series bold
-Unification Phase
-\end_layout
-
-\begin_layout Itemize
-Structural rules
-\begin_inset Formula 
-\[
-\unificationempty\quad\unificationtop
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\unificationstepwisenolabel x}{U-Split}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Rigid-rigid
-\begin_inset Formula 
-\[
-\labellabelrule{\unificationrigrignolabel}{U-RigRig}\qquad\labellabelrule{\unificationrigrigneqo}{U-Clash}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex-*, no cycle 
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{M\notin u\qquad\Gamma\prune u{\maybold M(x)}{\sigma}w\dashv\Delta}{\Gamma,M:m\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{U-NoCycle}\quad\text{+ symmetric rule}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex-Flex, same
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\Gamma,M:m\vdash M(x)=M(y)\Rightarrow M\mapsto M'(z)\dashv\Gamma,M':p}}{U-Flex}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex-Rigid, cyclic
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{U-Cyclic}\quad\text{+ symmetric rule}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\series bold
-Non-cyclic phase
-\end_layout
-
-\begin_layout Itemize
-Structural rules
-\begin_inset Formula 
-\[
-\pruningempty\quad\dfrac{}{\bot\prune{\vec{t}}{\overrightarrow{M(x)}}{\bang}{\bang}\dashv\bot}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\inferruletwo{\Gamma\prune{t_{1}}{M_{1}(x_{1})}{\sigma_{1}}{u_{1}}\dashv\Delta_{1}}{\Delta_{1}\prune{\vec{t_{2}}[\sigma_{1}]}{\overrightarrow{M_{2}(x_{2})}}{\sigma_{2}\dashv\Delta_{2}}{\vec{u_{2}}}}{\Gamma\prune{t_{1},\vec{t_{2}}}{M_{1}(x_{1}),\overrightarrow{M(x_{2})}}{\sigma_{1}[\sigma_{2}]}{u_{1}[\sigma_{2}],\vec{u}_{2}}\dashv\Delta_{2}}}{\textsc{P-Split}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Rigid
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{1}(\ntharvecaction{o'}xn)}{\sigma}{\vec{u}}\dashv\Delta\quad o=\rename{o'}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}{P-Rig}\quad\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Flex
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\highlighted{n\prunecat xy{r\dashv p}l{}}}{\Gamma,N:n\prune{N(x)}{\maybold M(y)}{N\mapsto P(r)}{P(l)}\dashv\Gamma,P:p}}{P-Flex}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Generic pattern unification algorithm (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:intro-generic"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:generic-algo"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -4229,7 +4227,7 @@ Let us first quickly justify termination of the non-cyclic phase.
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
 
- of the non-cyclic phase, thanks to the following lemmas
+ of the non-cyclic phase, thanks to the following lemmas.
 \end_layout
 
 \begin_layout Lemma
@@ -4313,17 +4311,18 @@ Can we define it truly recursively?
 \end_layout
 
 \begin_layout Standard
-Now, we tackle termination for the unification phase.
- We define the size of a judgment 
+The size invariance in the above lemma is actually used in the termination
+ proof of the main unification phase, where  the size of a judgment 
 \begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
 \end_inset
 
- to be the pair 
+ is defined as the pair 
 \begin_inset Formula $(|\Gamma|,||t||)$
 \end_inset
 
 .
- The following lemma ensures that for the two recursive rules 
+ More precisely, it is used in the following lemma that ensures size decreasing
+ (with respect to the lexicographic order) in the two recursive rules 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
 
@@ -4331,8 +4330,7 @@ Now, we tackle termination for the unification phase.
 \begin_inset Formula $\refrule{U-RigRig}$
 \end_inset
 
- in the unification phase, the sizes of the premises are strictly smaller
- than the size of the conclusion, for the lexicographic order.
+.
 \end_layout
 
 \begin_layout Standard
@@ -4391,7 +4389,7 @@ If there is a finite derivation tree of
 \begin_inset Formula $\sigma$
 \end_inset
 
- is a renaming.
+ is a metavariable renaming.
  
 \end_layout
 
@@ -4566,7 +4564,7 @@ Metavariable contexts and substitutions (with their composition) between
 \begin_layout Standard
 This relies on functoriality of GB-signatures that we will spell out formally
  in the next section.
- There, we will see that this category fully faithfuly embeds in a Kleisli
+ There, we will see that this category fully faithfully embeds in a Kleisli
  category for a monad generated by 
 \begin_inset Formula $S$
 \end_inset
@@ -4995,7 +4993,7 @@ in particular, coproducts in
 
 \begin_layout Standard
 Categorically speaking, our pattern unification algorithm provides an explicit
- proof of the following statment.
+ proof of the following statement.
 \end_layout
 
 \begin_layout Theorem
@@ -5141,7 +5139,7 @@ end{full}
 \end_layout
 
 \begin_layout Subsection
-Generalised binding signatures
+Initial Algebra Semantics for GB-signatures
 \end_layout
 
 \begin_layout Standard
@@ -5610,7 +5608,7 @@ F_{S}(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\do
 \begin_inset Formula $F$
 \end_inset
 
- is finitary and generates a free monad that restricts to a monad 
+ is finitary and generates a free monad 
 \begin_inset Formula $T$
 \end_inset
 
@@ -5630,8 +5628,7 @@ F_{S}(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\do
 \begin_inset Formula $F$
 \end_inset
 
- is finitary because filtered colimits commute wi.
- In this setting, we proveth finite limits 
+ is finitary because filtered colimits commute with finite limits 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Theorem IX.2.1"
@@ -6051,7 +6048,12 @@ name "lem:K-finite-connected"
 \end_layout
 
 \begin_layout Proof
-Let 
+This essentially follows from the fact functors in 
+\begin_inset Formula $\C$
+\end_inset
+
+ preserves finite connected limits.
+ Let us detail the argument: let 
 \begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
@@ -6668,7 +6670,7 @@ Here we detail unification of
 \begin_inset Formula $M(x)$
 \end_inset
 
- amd 
+ and 
 \begin_inset Formula $M(y)$
 \end_inset
 
@@ -16514,12 +16516,13 @@ Conclusion
 We presented a generic unification algorithm with its associated categorical
  semantics, parameterised by a new notion of signature for syntax with metavaria
 bles generalising Miller's pattern fragment.
- In the future, we would like to extend this setting to cover unification
- modulo equations.
+ In the future, we plan to a implement a reusable library based on this
+ work.
  We also plan to see how this work applies to dependently-typed languages,
  going beyond polymorphic syntax.
- Finally, we are also interested in investigating linear syntax without
- restriction on the order the variables are used.
+ Finally, we are interesting in further extending the setting to cover unificati
+on modulo equations, or linear syntax without restriction on the order the
+ variables are used.
 \end_layout
 
 \begin_layout Standard
@@ -17109,7 +17112,7 @@ Assuming that
 \begin_inset Formula $O_{n}$
 \end_inset
 
- preserves finite connected limits, the finite limite preservation on 
+ preserves finite connected limits, the finite limit preservation on 
 \begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
 \end_inset
 
