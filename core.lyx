@@ -150,12 +150,27 @@ End
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\type}{\ \mathrm{type}}
+\end_inset
+
+
+\begin_inset FormulaMacro
 \newcommand{\Th}[1]{\mathrm{MCon}(#1)}
 \end_inset
 
 
 \begin_inset FormulaMacro
+\newcommand{\arSep}{\rightarrow}
+\end_inset
+
+
+\begin_inset FormulaMacro
 \newcommand{\Thbot}[1]{\mathrm{MCon_{\bot}}(#1)}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Fsep}{|}
 \end_inset
 
 
@@ -172,13 +187,31 @@ End
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset FormulaMacro
 \newcommand{\naraction}[3]{\epsilon(#1,#2)_{#3}}
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset FormulaMacro
 \newcommand{\nar}[1]{\kappa_{#1}}
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -271,6 +304,11 @@ status open
 
 \begin_inset FormulaMacro
 \newcommand{\nthaar}[2]{\alpha'_{#1,#2}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Oop}[2]{O_{#1}(#2)}
 \end_inset
 
 
@@ -622,7 +660,8 @@ status open
 \end_layout
 
 \begin_layout Abstract
-We provide a generic second-order unification for Miller's pattern fragment.
+We provide a generic second-order unification algorithm for Miller's pattern
+ fragment.
  The syntax with metavariables is parameterised by a notion of signature
  generalising binding signatures, covering ordered 
 \begin_inset Formula $\lambda$
@@ -1211,6 +1250,18 @@ Plan of the paper
 In 
 \begin_inset CommandInset ref
 LatexCommand formatted
+reference "sec:summary-algo"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we present our generic pattern unification algorithm, with our generalised
+ notion of binding signature.
+ We introduce categorical semantics of pattern unification in 
+\begin_inset CommandInset ref
+LatexCommand formatted
 reference "sec:cat-settings"
 plural "false"
 caps "true"
@@ -1218,30 +1269,8 @@ noprefix "false"
 
 \end_inset
 
-, we present our general categorical setting.
- In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:Main-result"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we state the existence of the most general unifier as a categorical property.
- Then we describe the construction of the most general unifier, as summarised
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-summary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, starting with the unification phase (
+.
+ We finally show correctness of the two phases of the algorithms in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:coequalising-phase"
@@ -1251,7 +1280,7 @@ noprefix "false"
 
 \end_inset
 
-), the non-cyclic phase (
+ and 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:pruning-phase"
@@ -1261,53 +1290,7 @@ noprefix "false"
 
 \end_inset
 
-), the occur-check (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:occur-check"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
- We finally justify completeness in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:completeness"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-shortfull{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}{
-\end_layout
-
-\end_inset
-
-Applications are presented in 
+), before presenting some applications in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:applications"
@@ -1318,17 +1301,6 @@ noprefix "false"
 \end_inset
 
 .
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection*
@@ -1336,6 +1308,28 @@ General notations
 \end_layout
 
 \begin_layout Standard
+Given a list 
+\begin_inset Formula $\vec{x}=(x_{1},\dots,x_{n})$
+\end_inset
+
+ and a list of 
+\begin_inset Formula $\vec{p}=(p_{1},\dots,p_{m})$
+\end_inset
+
+ of elements of 
+\begin_inset Formula $\{1,\dots,n\}$
+\end_inset
+
+, we denote 
+\begin_inset Formula $(x_{p_{1}},\dots,x_{p_{m}})$
+\end_inset
+
+ by 
+\begin_inset Formula $x_{\vec{p}}$
+\end_inset
+
+.
+ 
 \begin_inset Formula $\op{\B}$
 \end_inset
 
@@ -1366,10 +1360,6 @@ General notations
 
  by 
 \begin_inset Formula $\hom_{\B}(a,b)$
-\end_inset
-
- or 
-\begin_inset Formula $\B(a,b)$
 \end_inset
 
 .
@@ -1582,7 +1572,17 @@ Any Kleisli morphism
 \end_layout
 
 \begin_layout Section
-Summary of the algorithm
+Presentation of the algorithm
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:summary-algo"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3336,15 +3336,23 @@ literal "false"
 
 .
  To recall, a binding signature 
-\begin_inset Formula $(O,\nar{},\alpha)$
+\begin_inset Formula $(O,\alpha)$
 \end_inset
 
- specifies a set of operation symbols 
-\begin_inset Formula $O$
+ specifies for each natural number 
+\begin_inset Formula $n$
+\end_inset
+
+ a set of 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbols 
+\begin_inset Formula $O_{n}$
 \end_inset
 
  together with an arity 
-\begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar o{\nar o})$
+\begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar on)$
 \end_inset
 
  which is a list of natural numbers specifying how many arguments are bound
@@ -3354,10 +3362,22 @@ literal "false"
 \end_inset
 
 -calculus is specified by 
-\begin_inset Formula $O=\{lam,app\}$
+\begin_inset Formula $O_{1}=\{lam\}$
 \end_inset
 
- with 
+, 
+\begin_inset Formula $O_{2}=\{app\}$
+\end_inset
+
+, 
+\begin_inset Formula $O_{n}=\emptyset$
+\end_inset
+
+ for any other natural number 
+\begin_inset Formula $n$
+\end_inset
+
+, 
 \begin_inset Formula $\ntharvec{app}=(0,0)$
 \end_inset
 
@@ -3398,7 +3418,7 @@ noprefix "false"
 
 .
  A GB-signature consists in a tuple 
-\begin_inset Formula $({\cal A},O,\nar{},\ntharvecfunct)$
+\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
 \end_inset
 
  consisting of 
@@ -3433,8 +3453,16 @@ for each arity
 \begin_inset Formula $a$
 \end_inset
 
-, a set of operation symbols 
-\begin_inset Formula $O_{a}$
+ and natural number 
+\begin_inset Formula $n$
+\end_inset
+
+, a set of 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbols 
+\begin_inset Formula $\Oop na$
 \end_inset
 
 ;
@@ -3442,11 +3470,11 @@ for each arity
 
 \begin_layout Itemize
 for each operation symbol 
-\begin_inset Formula $o\in O_{a}$
+\begin_inset Formula $o\in\Oop na$
 \end_inset
 
 , a list of arities 
-\begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar o{\nar o})$
+\begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar on)$
 \end_inset
 
 
@@ -3472,8 +3500,13 @@ noprefix "false"
 \end_inset
 
  below for more details).
- We will call an element of 
-\begin_inset Formula $\{1,\dots,\nar o\}$
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We will call an element of 
+\begin_inset Formula $\{1,\dots,n\}$
 \end_inset
 
  an 
@@ -3488,9 +3521,14 @@ noprefix "false"
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Intuitively, 
-\begin_inset Formula $O_{a}$
+\begin_inset Formula $\Oop na$
 \end_inset
 
  is the set of operation symbols available in the variable context 
@@ -3521,7 +3559,7 @@ The syntax specified by a GB-signature
  is inductively defined by the two following rules.
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\in O_{a}\quad\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar o{\nar o}\vdash t_{\nar o}}{\Gamma;a\vdash o(t_{1},\dots,t_{\nar o})}}{Rig}
+\labellabelrule{\dfrac{o\in\Oop na\quad\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}}{Rig}
 \]
 
 \end_inset
@@ -3546,8 +3584,8 @@ where a context
 \begin_inset Formula $\Gamma$
 \end_inset
 
-, that is, an arity function from a finite set of metavariable symbols to
- the underlying set of objects of 
+, that is, an metavariable arity function from a finite set of metavariable
+ symbols to the set of objects of 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
@@ -3610,11 +3648,11 @@ name "ex:gbsig-bsig"
 
 Binding signatures can be compiled into GB-signatures.
  More specifically, a syntax specified by a binding signature 
-\begin_inset Formula $(O,\nar{},\alpha)$
+\begin_inset Formula $(O,\alpha)$
 \end_inset
 
  is also generated by the GB-signature 
-\begin_inset Formula $(\mathbb{F}_{m},O',\nar{}',\nthaarvecfunct$
+\begin_inset Formula $(\mathbb{F}_{m},O',\nthaarvecfunct$
 \end_inset
 
 ), where
@@ -3629,14 +3667,7 @@ Binding signatures can be compiled into GB-signatures.
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $O_{n}'=\{v_{1},\dots,v_{n}\}\sqcup\{o_{n}|o\in O\}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\nar o'=\nar o$
+\begin_inset Formula $\Oop np=\{v_{1},\dots,v_{p}\}\sqcup\{o_{n}|o\in O_{n}\}$
 \end_inset
 
 ;
@@ -3647,7 +3678,7 @@ Binding signatures can be compiled into GB-signatures.
 \end_inset
 
  and 
-\begin_inset Formula $\nthaarvec{o_{n}}=(n+\nthar o1,\dots,n+\nthar o{\nar o})$
+\begin_inset Formula $\nthaarvec{o_{n}}=(n+\nthar o1,\dots,n+\nthar on)$
 \end_inset
 
  for any 
@@ -3771,7 +3802,7 @@ In the notion of GB-signature, functoriality ensures that the generated
 
 .
  For an operation 
-\begin_inset Formula $o(t_{1},\dots,t_{\nar o})$
+\begin_inset Formula $o(t_{1},\dots,t_{n})$
 \end_inset
 
 , functoriality provides the following components:
@@ -3780,19 +3811,7 @@ In the notion of GB-signature, functoriality ensures that the generated
 \begin_deeper
 \begin_layout Itemize
 an operation symbol 
-\begin_inset Formula $\rename of\in O_{b}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Itemize
-a list of 
-\begin_inset Formula $o$
-\end_inset
-
--indices 
-\begin_inset Formula $(\naraction of1\dots,\naraction of{\nar{\rename of}})$
+\begin_inset Formula $\rename of\in\Oop nb$
 \end_inset
 
 ;
@@ -3800,15 +3819,11 @@ a list of
 
 \begin_layout Itemize
 a morphism 
-\begin_inset Formula $\ntharvecaction ofi:\nthar o{\naraction ofi}\rightarrow\nthar{\rename of}i$
+\begin_inset Formula $\ntharvecaction ofi:\nthar oi\rightarrow\nthar{\rename of}i$
 \end_inset
 
  for each 
-\begin_inset Formula $\rename of$
-\end_inset
-
--index 
-\begin_inset Formula $i$
+\begin_inset Formula $i\in\{1,\dots,n\}$
 \end_inset
 
 .
@@ -3817,61 +3832,17 @@ a morphism
 
 \begin_layout Standard
 Then, 
-\begin_inset Formula $\rename{o(t_{1},\dots,t_{\nar o})}f$
+\begin_inset Formula $\rename{o(t_{1},\dots,t_{n})}f$
 \end_inset
 
  is defined as 
-\begin_inset Formula $\rename of(\rename{t_{\naraction of1}}{\ntharvecaction of1},\dots)$
+\begin_inset Formula $\rename of(\rename{t_{1}}{\ntharvecaction of1},\dots,\rename{t_{n}}{\ntharvecaction ofn})$
 \end_inset
 
 .
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-In our examples, 
-\begin_inset Formula $\nar{\rename of}$
-\end_inset
-
- is always equal to 
-\begin_inset Formula $\nar o$
-\end_inset
-
- and 
-\begin_inset Formula $(\naraction of1\dots,\naraction of{\nar{\rename of}})$
-\end_inset
-
- is 
-\begin_inset Formula $(1,\dots,\nar o)$
-\end_inset
-
-, so that 
-\begin_inset Formula $\ntharvecaction ofi$
-\end_inset
-
- is a morphism between 
-\begin_inset Formula $\nthar oi$
-\end_inset
-
- and 
-\begin_inset Formula $\nthar{\rename of}i$
-\end_inset
-
- and thus 
-\begin_inset Formula $\rename{o(t_{1},\dots,t_{\nar o})}f=\rename of(\rename{t_{1}}{\ntharvecaction of1},\dots,\rename{t_{\nar o}}{\ntharvecaction of{\nar o}})$
-\end_inset
-
-.
- 
-\end_layout
-
 \begin_layout Standard
 Unification can be formulated by following the same route as the pure 
 \begin_inset Formula $\lambda$
@@ -4173,71 +4144,17 @@ noprefix "false"
 
 \end_inset
 
- has at most one solution.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-For example, for pure 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus, 
-\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x}),\maybold M_{2}(\vec{x})$
-\end_inset
-
- in the application case, and 
-\begin_inset Formula ${\cal L}^{+}\vec{x}^{o}=\maybold M_{1}(\vec{x},|C|)$
-\end_inset
-
- in the abstraction case, thus recovering the rules 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ has at most one solution (see 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-app-lc"
+LatexCommand formatted
+reference "assu:O-mono"
 plural "false"
 caps "true"
 noprefix "false"
 
 \end_inset
 
- and
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pruning-lambda-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
+ below).
 \end_layout
 
 \begin_layout Standard
@@ -4381,7 +4298,7 @@ Rigid
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{1}(\ntharvecaction{o'}x{\nar o})}{\sigma}{\vec{u}}\dashv\Delta\quad o=\rename{o'}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}{P-Rig}\quad\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
+\labellabelrule{\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{1}(\ntharvecaction{o'}xn)}{\sigma}{\vec{u}}\dashv\Delta\quad o=\rename{o'}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}{P-Rig}\quad\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
 \]
 
 \end_inset
@@ -4438,7 +4355,7 @@ name "fig:generic-algo"
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Progress and termination
 \end_layout
 
@@ -4718,24 +4635,6 @@ If there is a finite derivation tree of
 
  is a renaming.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-, i.e., it is 
-\begin_inset Formula ${\cal L}^{+}\sigma'$
-\end_inset
-
- for some 
-\begin_inset Formula $\sigma'$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -4823,13 +4722,30 @@ It remains to be proven that each rule is sound, e.g., for the rule
 
 , if the output of the premises are most general unifiers, then so is the
  conclusion.
- We will handle these proves by introducing first categorical semantics
- for pattern unification.
- Before going
-\end_layout
+ In this section, we first introduce categorical semantics for pattern unificati
+on.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:categorification"
+plural "false"
+caps "true"
+noprefix "false"
 
-\begin_layout Standard
-Let us start by giving a more formal definition of GB-signatures.
+\end_inset
+
+, we relate pattern unification to coequaliser construction, and in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:GB-sig"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we provide a formal definition of GB-signatures with Initial Algebra Semantics
+ for the generated syntax.
 \end_layout
 
 \begin_layout Subsection
@@ -4848,7 +4764,7 @@ name "subsec:categorification"
 
 \begin_layout Standard
 In this section, we assume given a GB-signature 
-\begin_inset Formula $S=({\cal A},O,\nar{},\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
 \end_inset
 
  and explain how most general unifiers can be thought of as equalisers in
@@ -4890,9 +4806,15 @@ Metavariable contexts and substitutions (with their composition) between
 \end_layout
 
 \begin_layout Standard
-We will show later how this category fully faithfuly embeds in a Kleisli
+This relies on functoriality of GB-signatures that we will spell out formally
+ in the next section.
+ There, we will see that this category fully faithfuly embeds in a Kleisli
  category for a monad generated by 
 \begin_inset Formula $S$
+\end_inset
+
+ on 
+\begin_inset Formula $[{\cal A},\Set]$
 \end_inset
 
 .
@@ -5448,6 +5370,16 @@ end{full}
 Generalised binding signatures
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:GB-sig"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
 \begin_inset CommandInset label
 LatexCommand label
@@ -5464,7 +5396,7 @@ generalised binding signature
 GB-signature, 
 \emph default
 is a tuple 
-\begin_inset Formula $({\cal A},O,\nar{},\ntharvecfunct)$
+\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
 \end_inset
 
  consisting of
@@ -5481,169 +5413,396 @@ a small category
 
 \begin_layout Itemize
 a functor 
-\begin_inset Formula $O:{\cal A}\rightarrow\Set$
+\begin_inset Formula $O_{-}(-):\mathbb{N}\times{\cal A}\rightarrow\Set$
 \end_inset
 
- of operations;
+ of operation symbols;
 \end_layout
 
 \begin_layout Itemize
 a functor 
-\begin_inset Formula $\nar{}:\op{(\int O)}\rightarrow\mathbb{F}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Itemize
-a functor 
-\begin_inset Formula $\alpha:\op{(\int\nar{})}\rightarrow{\cal A}$
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-where
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- is the category of finite cardinals and any morphisms between them;
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\int O$
+where 
+\begin_inset Formula $\int J$
 \end_inset
 
  denotes the category of elements of 
-\begin_inset Formula $O$
+\begin_inset Formula $J:\mathbb{N}\times{\cal A}\rightarrow\Set$
 \end_inset
 
- whose objects are pairs of an object 
-\begin_inset Formula $a$
+ mapping 
+\begin_inset Formula $(n,a)$
 \end_inset
 
- of 
-\begin_inset Formula ${\cal A}$
+ to 
+\begin_inset Formula $\Oop na\times\{1,\dots.,n\}$
 \end_inset
 
- and an element 
-\begin_inset Formula $o$
-\end_inset
+, defined as follows:
+\end_layout
 
- in 
-\begin_inset Formula $O_{a}$
-\end_inset
-
-, and morphisms between 
-\begin_inset Formula $(a,o)$
-\end_inset
-
- and 
-\begin_inset Formula $(a',o')$
-\end_inset
-
- are morphisms 
-\begin_inset Formula $f:a\rightarrow a'$
+\begin_layout Itemize
+objects are tuples 
+\begin_inset Formula $(n,a,o,i)$
 \end_inset
 
  such that 
-\begin_inset Formula $\rename of=o'$
+\begin_inset Formula $o\in\Oop na$
+\end_inset
+
+ and 
+\begin_inset Formula $i\in\{1,\dots,n\}$
 \end_inset
 
 ;
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\int\nar{}$
-\end_inset
-
- denotes the category of elements of 
-\begin_inset Formula $\op{(\int O)}\xrightarrow{\nar{}}\mathbb{F}\hookrightarrow\Set$
-\end_inset
-
-.
- Objects are triples 
-\begin_inset Formula $(a,o,i)$
-\end_inset
-
-, where 
-\begin_inset Formula $a$
-\end_inset
-
- is an object of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, 
-\begin_inset Formula $o\in O_{a}$
-\end_inset
-
-, and 
-\begin_inset Formula $j\in\{1,\dots,\nar o\}$
-\end_inset
-
-, and a morphism in 
-\begin_inset Formula $\int\nar{}$
-\end_inset
-
- between 
-\begin_inset Formula $(a,o,i)$
+a morphism between 
+\begin_inset Formula $(n,a,o,i)$
 \end_inset
 
  and 
-\begin_inset Formula $(a',o',i')$
+\begin_inset Formula $(n',a',o',i')$
 \end_inset
 
  is a morphism 
-\begin_inset Formula $f:a'\rightarrow a$
+\begin_inset Formula $f:a\rightarrow a'$
+\end_inset
+
+ such that 
+\begin_inset Formula $n=n'$
+\end_inset
+
+, 
+\begin_inset Formula $i=i'$
+\end_inset
+
+ and 
+\begin_inset Formula $\rename of=o'$
+\end_inset
+
+ .
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We now introduce our conditions for the correctness criterion.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:pattern-friendly"
+
+\end_inset
+
+A GB-signature 
+\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\end_inset
+
+ is said 
+\emph on
+pattern-friendly 
+\emph default
+if 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits, 
+\end_layout
+
+\begin_layout Enumerate
+all morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ are monomorphic, 
+\end_layout
+
+\begin_layout Enumerate
+Each 
+\begin_inset Formula $O_{n}(-):{\cal A}\rightarrow\Set$
+\end_inset
+
+ preserves finite connected limits, 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\alpha$
+\end_inset
+
+ preserves finite limits.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+These conditions ensure the following two properties.
+\end_layout
+
+\begin_layout Property
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:main-properties"
+
+\end_inset
+
+The following properties hold.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+label=(
+\backslash
+roman{enumi}), ref=
+\backslash
+theproperty.(
+\backslash
+roman{enumi})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:O-mono"
+
+\end_inset
+
+The action of 
+\begin_inset Formula $O_{n}:{\cal A}\rightarrow\Set$
+\end_inset
+
+ on any renaming is an injection: given any 
+\begin_inset Formula $o\in\Oop nb$
+\end_inset
+
+ and renaming 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+, there is at most one 
+\begin_inset Formula $o'\in\Oop na$
 \end_inset
 
  such that 
 \begin_inset Formula $o=\rename{o'}f$
 \end_inset
 
- and 
-\begin_inset Formula $i'=\naraction ofi$
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "assu:L-finite-conncted"
+
 \end_inset
 
-, where 
-\begin_inset Formula $\naraction of-$
+Let 
+\begin_inset Formula ${\cal L}$
 \end_inset
 
- is the morphism between 
-\begin_inset Formula $\nar o$
+ be the functor 
+\begin_inset Formula $\op{{\cal A}}\xrightarrow{}\Th S$
 \end_inset
 
- and 
-\begin_inset Formula $\nar{o'}$
+ mapping a morphism 
+\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
 \end_inset
 
- induced by the functorial action of 
-\begin_inset Formula $\nar{}$
+ to the substitution 
+\begin_inset Formula $(A:a)\rightarrow(M:m)$
 \end_inset
 
- on 
-\begin_inset Formula $f$
+ selecting (by the Yoneda Lemma) the term 
+\begin_inset Formula $M(x)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula ${\cal L}$
+\end_inset
+
+ preserves finite connected colimits: it maps pullbacks and equalisers in
+ 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ to pushouts and coequalisers in 
+\begin_inset Formula $\Th S$
 \end_inset
 
 .
 \end_layout
 
 \end_deeper
+\begin_layout Proof
+(i) Since 
+\begin_inset Formula $O_{n}$
+\end_inset
+
+ preserves finite connected limits, it preserves monomorphisms because a
+ morphism 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+ is monomorphic if and only if the following square is a pullback 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Exercise III.4.4"
+key "MacLane:cwm"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset Preview
+
 \begin_layout Standard
-\begin_inset Separator plain
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\backslash
+begin{tikzcd} 	A & A 
+\backslash
+
+\backslash
+ 	A & B 	
+\backslash
+arrow["f", from=1-2, to=2-2] 	
+\backslash
+arrow[equal, from=1-1, to=1-2] 	
+\backslash
+arrow["f"', from=2-1, to=2-2] 	
+\backslash
+arrow[Rightarrow, no head, from=1-1, to=2-1] 
+\backslash
+end{tikzcd}
+\backslash
+]
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(ii) The proof is deferred to the end of this section.
+\end_layout
+
+\begin_layout Standard
+The first property is used for soundness of the rules 
+\begin_inset Formula $\refrule{P-Rig}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+.
+ The second one is used to justify unification of two metavariables applications
+ as pullbacks and equalisers in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, in the rules 
+\begin_inset Formula $\refrule{U-FlexFlex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Flex}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:functor-L-intuition"
+
+\end_inset
+
+A metavariable application 
+\begin_inset Formula $\Gamma;a\vdash M(x)$
+\end_inset
+
+ corresponds to the composition 
+\begin_inset Formula ${\cal L}x[in_{M}]$
+\end_inset
+
+, where 
+\begin_inset Formula $in_{M}$
+\end_inset
+
+ is the embedding of 
+\begin_inset Formula $M:m$
+\end_inset
+
+ into 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The rest of this section can be safely skipped at first reading: we provide
+ Initial Algebra Semantics for the generated syntax that we exploit to prove
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:L-finite-conncted"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Standard
 Any GB-signature 
-\begin_inset Formula $S=({\cal A},O,\nar{},\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
 \end_inset
 
 , generates an endofunctor 
@@ -5661,9 +5820,13 @@ Any GB-signature
  when the context is clear, defined by
 \begin_inset Formula 
 \[
-F_{S}(X)_{a}=\coprod_{o\in O_{a}}X_{\nthar o1}\times\dots\times X_{\nthar o{\nar o}}.
+F_{S}(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\times X_{\nthar on}.
 \]
 
+\end_inset
+
+
+\begin_inset Separator plain
 \end_inset
 
 
@@ -5693,7 +5856,8 @@ F_{S}(X)_{a}=\coprod_{o\in O_{a}}X_{\nthar o1}\times\dots\times X_{\nthar o{\nar
 \begin_inset Formula $F$
 \end_inset
 
- is finitary because filtered colimits commute with finite limits 
+ is finitary because filtered colimits commute wi.
+ In this setting, we proveth finite limits 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Theorem IX.2.1"
@@ -5707,74 +5871,6 @@ literal "false"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Reiterman"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-We now introduce our conditions for the correctness criterion.
-\end_layout
-
-\begin_layout Definition
-A GB-signature 
-\begin_inset Formula $S=({\cal A},O,\nar{},\ntharvecfunct)$
-\end_inset
-
- is said 
-\emph on
-pattern-friendly 
-\emph default
-if 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits, all morphisms are monomorphic, and moreover
- 
-\begin_inset Formula $F$
-\end_inset
-
- restricts to an endofunctor on the full subcategory 
-\begin_inset Formula $\C$
-\end_inset
-
- of functors from 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- to 
-\begin_inset Formula $\Set$
-\end_inset
-
- preserving finite limits.
-\end_layout
-
-\begin_layout Example
-When 
-\begin_inset Formula $\mathcal{A}=\mathbb{F}_{m}$
-\end_inset
-
-, the category 
-\begin_inset Formula $\C$
-\end_inset
-
- is equivalent to the category of nominal sets
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "PittsAM:newaas"
 literal "false"
 
 \end_inset
@@ -5913,26 +6009,80 @@ The category
 
 \begin_layout Standard
 We will exploit this characterisation to prove various properties of this
- category when the signature is pattern-friendly.
+ category when the signature is 
+\emph on
+pattern-friendly
+\emph default
+.
 \end_layout
 
-\begin_layout Subsection
-Properties of pattern-friendly signatures
-\end_layout
-
-\begin_layout Standard
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:base-cat"
+name "lem:res-F"
+
+\end_inset
+
+Given a GB-signature 
+\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\end_inset
+
+ such that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits, 
+\begin_inset Formula $F_{S}$
+\end_inset
+
+ restricts as an endofunctor on the full subcategory 
+\begin_inset Formula $\C$
+\end_inset
+
+ of 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ consisting of functors preserving finite connected limits if and only if
+ the last two conditions of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:pattern-friendly"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ holds.
+\end_layout
+
+\begin_layout Proof
+See the appendix
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "app:resF-direct"
+plural "false"
+caps "true"
+noprefix "false"
 
 \end_inset
 
 
 \end_layout
 
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 We now assume given a pattern-friendly signature 
-\begin_inset Formula $S=({\cal A},O,\nar{},\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
 \end_inset
 
 .
@@ -5953,7 +6103,7 @@ name "lem:lims-coprod-pw"
  Moreover, it is cocomplete.
 \end_layout
 
-\begin_layout Long Proof
+\begin_layout Proof
 Cocompleteness follows from 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -5992,7 +6142,7 @@ literal "false"
  
 \end_layout
 
-\begin_layout Long Proof
+\begin_layout Proof
 For the claimed closure property, all we have to check is that limits, coproduct
 s, and filtered colimits of functors preserving finite connected limits
  still preserve finite connected limits.
@@ -6010,7 +6160,14 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:-T-res"
+
+\end_inset
+
+
 \begin_inset Formula $T$
 \end_inset
 
@@ -6018,7 +6175,56 @@ literal "false"
 \begin_inset Formula $\C$
 \end_inset
 
+ freely generated by the restriction of 
+\begin_inset Formula $F$
+\end_inset
+
+ as an endofunctor on 
+\begin_inset Formula $\C$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+The result follows from the construction of 
+\begin_inset Formula $T$
+\end_inset
+
+ using colimits of initial chains, thanks to the closure properties of 
+\begin_inset Formula $\C$
+\end_inset
+
 .
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+We now turn to the proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:L-finite-conncted"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ It relies on the following lemma.
 \end_layout
 
 \begin_layout Standard
@@ -6036,146 +6242,39 @@ By right continuity of the homset bifunctor, any representable functor is
 \end_inset
 
 .
- 
 \end_layout
 
-\begin_layout Notation
-We set 
-\begin_inset Formula $\D=\op{{\cal A}}$
-\end_inset
-
- and denote the fully faithful Yoneda embedding as 
-\begin_inset Formula $\D\xrightarrow{K}\C$
-\end_inset
-
-.
- We denote by 
-\begin_inset Formula $\D^{+}\xrightarrow{K^{+}}\C$
-\end_inset
-
- the full subcategory of 
-\begin_inset Formula $\C$
-\end_inset
-
- consisting of finite coproducts of objects of 
+\begin_layout Lemma
+Let 
 \begin_inset Formula $\D$
 \end_inset
 
-.
- Given a metavariable context 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
-\end_inset
-
-, we denote by 
-\begin_inset Formula $\underline{\Gamma}$
-\end_inset
-
- or even 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- the coproduct 
-\begin_inset Formula $\coprod_{i\in\{1,\dots,p\}}Km_{i}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:D-finite-family"
-
-\end_inset
-
-
-\begin_inset Formula $\D^{+}$
-\end_inset
-
- is equivalent to the category of finite families of objects of 
+ denote the opposite category of 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
-, and can be thought of as the category of metavariable contexts and metavariabl
-e renamings.
+ and 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ the factorisation of 
+\begin_inset Formula $\C\rightarrow[{\cal A},\Set]$
+\end_inset
+
+ by the Yoneda embedding.
 \end_layout
 
 \begin_layout Standard
-We now abstract the situation by listing a number of properties that we
- will use to justify the unification algorithm.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-We will be interested in coequalisers in the Kleisli category restricted
- to 
-\begin_inset Formula $\D^{+}$
-\end_inset
-
-.
-\end_layout
-
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Property
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "assu:various"
-
-\end_inset
-
-The following properties hold.
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-label=(
-\backslash
-roman{enumi}), ref=
-\backslash
-theproperty.(
-\backslash
-roman{enumi})
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:finite-connected"
-
-\end_inset
-
- 
-\begin_inset Formula $\D$
-\end_inset
-
- has finite connected colimits.
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:K-finite-connected"
+name "lem:K-finite-connected"
 
 \end_inset
 
@@ -6186,151 +6285,8 @@ name "assu:K-finite-connected"
  preserves finite connected colimits.
 \end_layout
 
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:epis"
-
-\end_inset
-
-Given any morphism 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
-
- in 
-\begin_inset Formula $\D$
-\end_inset
-
-, the morphism 
-\begin_inset Formula $Kf$
-\end_inset
-
- is epimorphic.
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:inj-are-mono"
-
-\end_inset
-
-Coproduct injections 
-\begin_inset Formula $A_{i}\rightarrow\coprod_{j}A_{j}$
-\end_inset
-
- in 
-\begin_inset Formula $\C$
-\end_inset
-
- are monomorphisms.
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:connected"
-
-\end_inset
-
-For each 
-\begin_inset Formula $d\in\D$
-\end_inset
-
-, the object 
-\begin_inset Formula $Kd$
-\end_inset
-
- is connected, i.e., any morphism 
-\begin_inset Formula $Kd\rightarrow\coprod_{i}A_{i}$
-\end_inset
-
- factors through exactly one coproduct injection 
-\begin_inset Formula $A_{j}\rightarrow\coprod_{i}A_{i}$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This is to deal with the case 
-\begin_inset Formula $M(f)=N(g)$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Remark
-I think that the algorithm still works without this assumption: it is just
- that at some point we need to compute a colimit of elements of 
-\begin_inset Formula $\D$
-\end_inset
-
-, in particular in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:flex-flex-same-metavar"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- We already know that such a colimit exists in 
-\begin_inset Formula $\C$
-\end_inset
-
-, but in concrete examples, but we need to compute them in 
-\begin_inset Formula $\D$
-\end_inset
-
- so that we can chain the coequalisers when unifying multiple terms.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Proof
-
-\emph on
-(i)
-\emph default
- We assume that 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits.
- Hence, its opposite category 
-\begin_inset Formula $\D=\op{{\cal A}}$
-\end_inset
-
- has finite connected colimits.
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-(ii)
-\emph default
- Let 
+Let 
 \begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
 \end_inset
 
@@ -6377,216 +6333,6 @@ Thus,
 .
 \end_layout
 
-\begin_layout Standard
-
-\emph on
-(iii)
-\emph default
- A morphism 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
-
- is epimorphic if and only if the following square is a pushout 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Exercise III.4.4"
-key "MacLane:cwm"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-YADE DIAGRAM {"graph":{"edges":[{"from":0,"id":4,"label":{"label":"f","style":{"
-alignment":"left","bend":0,"dashed":false,"double":false,"head":"default","posit
-ion":0.5,"tail":"none"}},"to":1},{"from":1,"id":5,"label":{"label":"","style":{"a
-lignment":"left","bend":0,"dashed":false,"double":true,"head":"none","position":
-0.5,"tail":"none"}},"to":2},{"from":0,"id":6,"label":{"label":"f","style":{"align
-ment":"right","bend":0,"dashed":false,"double":false,"head":"default","position"
-:0.5,"tail":"none"}},"to":3},{"from":3,"id":7,"label":{"label":"","style":{"align
-ment":"left","bend":0,"dashed":false,"double":true,"head":"none","position":0.5,"
-tail":"none"}},"to":2}],"latexPreamble":"","nodes":[{"id":0,"label":{"isMath":tr
-ue,"label":"A","pos":[300,100]}},{"id":1,"label":{"isMath":true,"label":"B","pos
-":[500,100]}},{"id":2,"label":{"isMath":true,"label":"B","pos":[500,300]}},{"id"
-:3,"label":{"isMath":true,"label":"A","pos":[300,300]}}],"sizeGrid":200},"versio
-n":5}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIl0sWzEsMCwiQiJdLFsxLDEsIkIiXSxbMCwxLCJBI
-l0sWzAsMSwiZiJdLFsxLDIsIiIsMCx7ImxldmVsIjoyLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub
-25lIn19fV0sWzAsMywiZiIsMl0sWzMsMiwiIiwwLHsibGV2ZWwiOjIsInN0eWxlIjp7ImhlYWQiOnsib
-mFtZSI6Im5vbmUifX19XV0= 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	a & b 
-\backslash
-
-\backslash
- 	b & b 	
-\backslash
-arrow["f", from=1-1, to=1-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-2, to=2-2] 	
-\backslash
-arrow["f"', from=1-1, to=2-1] 	
-\backslash
-arrow[Rightarrow, no head, from=2-1, to=2-2] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We conclude by 
-\emph on
-(ii)
-\emph default
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-, because all morphisms in 
-\begin_inset Formula $\D=\op{{\cal A}}$
-\end_inset
-
- are epimorphic by assumption.
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-(iv)
-\emph default
- This follows from 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lims-coprod-pw"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, because a morphism 
-\begin_inset Formula $f:A\rightarrow B$
-\end_inset
-
- is monomorphic if and only if the following square is a pullback
-\end_layout
-
-\begin_layout Standard
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	A & A 
-\backslash
-
-\backslash
- 	A & B 	
-\backslash
-arrow["f", from=1-2, to=2-2] 	
-\backslash
-arrow[equal, from=1-1, to=1-2] 	
-\backslash
-arrow["f"', from=2-1, to=2-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-1, to=2-1] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-(v)
-\emph default
- This follows from coproducts being computed pointwise (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lims-coprod-pw"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), and representable functors being connected, by the Yoneda Lemma.
-\end_layout
-
-\begin_layout Proof
-.
-\end_layout
-
 \begin_layout Remark
 Unification of two metavariables as pullbacks or equalisers in 
 \begin_inset Formula ${\cal A}$
@@ -6595,7 +6341,7 @@ Unification of two metavariables as pullbacks or equalisers in
  crucially relies on 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:K-finite-connected"
+reference "lem:K-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
@@ -6604,229 +6350,6 @@ noprefix "false"
 
 , which holds because we restrict to functors preserving finite connected
  limits.
- 
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:F-restricts-O"
-
-\end_inset
-
-
-\begin_inset Formula $O$
-\end_inset
-
- preserves finite connected limits.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula $O$
-\end_inset
-
- is isomorphic to 
-\begin_inset Formula $F(1)$
-\end_inset
-
-, where 
-\begin_inset Formula $1$
-\end_inset
-
- is the constant functor mapping everything to the singleton set 
-\begin_inset Formula $\{0\}$
-\end_inset
-
-.
- Since 
-\begin_inset Formula $1$
-\end_inset
-
- trivially preserves limits, it is in 
-\begin_inset Formula $\C$
-\end_inset
-
- and thus 
-\begin_inset Formula $F(1)\cong O$
-\end_inset
-
- also is.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:F-restrict"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we provide sufficient and necessary conditions on 
-\begin_inset Formula $J$
-\end_inset
-
- and 
-\begin_inset Formula $L$
-\end_inset
-
- for 
-\begin_inset Formula $F$
-\end_inset
-
- to restrict as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Notation
-We denote by 
-\begin_inset Formula ${\cal L}^{+}:\D^{+}\rightarrow\Th S$
-\end_inset
-
- the functor which is the identity on objects and postcomposes any morphism
- 
-\begin_inset Formula $A\rightarrow B$
-\end_inset
-
- by 
-\begin_inset Formula $\eta_{B}:B\rightarrow TB$
-\end_inset
-
-, and by 
-\begin_inset Formula ${\cal L}$
-\end_inset
-
- the functor 
-\begin_inset Formula $\D\hookrightarrow\D^{+}\xrightarrow{{\cal L}^{+}}\Th S$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:functor-L-intuition"
-
-\end_inset
-
-Intuitively, the functor 
-\begin_inset Formula ${\cal L}$
-\end_inset
-
- maps a morphism 
-\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
-\end_inset
-
- to the morphism 
-\begin_inset Formula $ya\rightarrow T(M:m)$
-\end_inset
-
- selecting (by the Yoneda Lemma) the term 
-\begin_inset Formula $M(x)$
-\end_inset
-
-.
- Thus, a metavariable application 
-\begin_inset Formula $\Gamma;a\vdash M(x)$
-\end_inset
-
- corresponds to the composition 
-\begin_inset Formula ${\cal L}x[in_{M}]$
-\end_inset
-
-, where 
-\begin_inset Formula $in_{M}$
-\end_inset
-
- is the embedding of 
-\begin_inset Formula $M:m$
-\end_inset
-
- into 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Property
-\begin_inset CommandInset label
-LatexCommand label
-name "assu:L-finite-conncted"
-
-\end_inset
-
-The functor 
-\begin_inset Formula $\D\xrightarrow{{\cal L}}\Th S$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Long Proof
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- preserves finite connected colimits by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:K-finite-connected"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Thus, postcomposition with the left adjoint 
-\begin_inset Formula $\C\rightarrow\Kl T$
-\end_inset
-
- yields a functor 
-\begin_inset Formula $\D\rightarrow\Kl T$
-\end_inset
-
- preserving those colimits.
- The result follows because this functor factors as 
-\begin_inset Formula $\D\xrightarrow{{\cal L}}\KlD\hookrightarrow\Kl T$
-\end_inset
-
-, where the right functor is full and faithful.
 \end_layout
 
 \begin_layout Standard
@@ -6860,2464 +6383,93 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Proof
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-
-\backslash
-begin{full}
+[Proof of 
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-Restricting 
-\begin_inset Formula $F$
-\end_inset
-
- as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:F-restrict"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this section, we provide sufficient and necessary conditions for the
- functor 
-\begin_inset Formula $F$
-\end_inset
-
- to restrict as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- Let us first introduce some notations.
-\end_layout
-
-\begin_layout Notation
-Given a functor 
-\begin_inset Formula $F:D\rightarrow\B$
-\end_inset
-
-, we denote the limit (resp.
- colimit) of 
-\begin_inset Formula $F$
-\end_inset
-
- by 
-\begin_inset Formula $\int_{d:D}F(d)$
-\end_inset
-
- or 
-\begin_inset Formula $\lim F$
-\end_inset
-
- (resp.
- 
-\begin_inset Formula $\int^{d:D}F(d)$
-\end_inset
-
- or 
-\begin_inset Formula $\colim F$
-\end_inset
-
-), and the canonical projection 
-\begin_inset Formula $\lim F\rightarrow Fd$
-\end_inset
-
- by 
-\begin_inset Formula $p_{d}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Notation
-We denote the set of connected components of a category 
-\begin_inset Formula $D$
-\end_inset
-
- by 
-\begin_inset Formula $||D||$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-newcommand{
-\backslash
-rqshape}{
-\end_layout
-
-\end_inset
-
-In all our examples, 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $O$
-\end_inset
-
- is a coproduct
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- 
-\begin_inset Formula $\coprod_{\ell\in V}O_{\ell}$
-\end_inset
-
- for some 
-\begin_inset Formula $O_{\ell}:{\cal A}\rightarrow\Set$
-\end_inset
-
- and 
-\begin_inset Formula $J_{a,in_{\ell}(o)}=\gamma_{\ell}$
-\end_inset
-
- for some finite cardinal 
-\begin_inset Formula $\gamma_{\ell}$
-\end_inset
-
-.
- In this case, 
-\begin_inset Formula $L$
-\end_inset
-
- is equivalently given by a family of functors 
-\begin_inset Formula $H_{\ell,j}:\int O_{\ell}\rightarrow\Set$
-\end_inset
-
- for each 
-\begin_inset Formula $j\in\gamma_{\ell}$
-\end_inset
-
- by 
-\begin_inset Formula $L_{a,in_{\ell}(o),j}=H_{\ell,j}(a,o)$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula 
-\[
-F(X)_{a}\cong\coprod_{\ell\in V}\coprod_{o\in O_{\ell}}\prod_{j\in\gamma_{\ell}}X_{H_{\ell,j}(a,o)}
-\]
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:shape-examples"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-rqshape
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this case there is a simple characterisation.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:F-restricts-simpl"
-
-\end_inset
-
-If 
-\begin_inset Formula $O$
-\end_inset
-
- and 
-\begin_inset Formula $J$
-\end_inset
-
- are in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:shape-examples"
+reference "assu:L-finite-conncted"
 plural "false"
 caps "true"
 noprefix "false"
 
 \end_inset
 
-, then 
-\begin_inset Formula $F$
-\end_inset
 
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
- if and only if each 
-\begin_inset Formula $O_{l}\in\C$
-\end_inset
-
- and each 
-\begin_inset Formula $H_{\ell,j}$
-\end_inset
-
- preserves finite limits, or equivalently, the canonical morphism
-\begin_inset Formula 
-\[
-H_{\ell,j}(\lim d,x)\rightarrow\int_{i}H_{\ell,j}(d_{i},O_{\ell}(p_{i})(x))
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
- 
-\begin_inset Formula $L$
-\end_inset
-
- preserves finite connected limits, or equivalently, for any finite connected
- limit 
-\begin_inset Formula $\lim d$
-\end_inset
-
- in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
-, and 
-\begin_inset Formula $\beta\in\underline{\gamma_{\lim d}(x)}$
-\end_inset
-
-, the canonical morphism
-\begin_inset Formula 
-\[
-L_{\lim d,x,\beta}\rightarrow\int_{i}L_{d_{i},O_{p_{i}}(x),\beta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-is an isomorphism.
-\end_layout
-
-\begin_layout Standard
-As we will see, this is a consequence of the following general proposition.
-\end_layout
-
-\begin_layout Proposition
-\begin_inset CommandInset label
-LatexCommand label
-name "prop:F-restricts"
-
-\end_inset
-
-The functor 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
- if and only if 
-\begin_inset Formula $O\in\C$
-\end_inset
-
- and one of the following conditions hold:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "prop:F-restriction-L-hom-1"
-
-\end_inset
-
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-label=(
-\backslash
-roman{enumi}), ref=
-\backslash
-theproposition.(
-\backslash
-roman{enumi})
+]
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-for each object 
-\begin_inset Formula $b$
-\end_inset
-
- of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, the functor 
-\begin_inset Formula $(a,o)\mapsto\prod_{j\in J_{a,o}}{\cal A}(b,L_{a,o,j})$
-\end_inset
-
- from 
-\begin_inset Formula $\op{(\int O)}$
-\end_inset
-
- to 
-\begin_inset Formula $\Set$
-\end_inset
-
- preserves finite connected limits;
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "prop:F-restriction-L-hom-2"
-
-\end_inset
-
-for each object 
-\begin_inset Formula $b$
-\end_inset
-
- of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, any functor 
-\begin_inset Formula $d:I\rightarrow O$
-\end_inset
-
- with 
-\begin_inset Formula $I$
-\end_inset
-
- finite and connected, and for any 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
-, the canonical morphism 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\int^{i:I}\prod_{j\in J_{d_{i},O_{p_{i}}(x)}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\rightarrow\prod_{j\in J_{\lim d,x}}{\cal A}(b,L_{\lim d,x,j})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\prod_{j\in J_{\lim d,x}}{\cal A}(b,L_{\lim d,x,j})\rightarrow\int_{i:I}\prod_{j\in J_{d_{i},O_{p_{i}}(x)}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\prod_{j\in J_{\lim d,x}}{\cal A}(b,L_{\lim d,x,j})\rightarrow{\cal A}(b,\int_{(i,j):\int J_{d-,O_{p_{i}}(x)}}L_{d_{i},O_{p_{i}}(x),j})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-is an isomorphism.
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset CommandInset label
-LatexCommand label
-name "prop:F-restriction-L"
-
-\end_inset
-
-
-\begin_inset Formula $J:\op{(\int O)}\rightarrow\mathbb{F}$
-\end_inset
-
- preserves finitely connected colimits (i.e., it maps finitely connected limits
- in 
-\begin_inset Formula $\int O$
-\end_inset
-
- to colimits in 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
-) and for any 
-\begin_inset Formula $d:I\rightarrow O$
-\end_inset
-
- with 
-\begin_inset Formula $I$
-\end_inset
-
- finite and connected, any 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
- and 
-\begin_inset Formula $\beta\in J_{\lim d,x}$
-\end_inset
-
-, the canonical morphism in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-L_{\lim d,x,\beta}\rightarrow\int_{i:I}\prod_{\substack{j\\
-J_{p_{i}}(j)=\beta
-}
-}L_{d_{i},O_{p_{i}}(x),j}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-L_{\lim d,x,\beta}\rightarrow\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j}
-\]
-
-\end_inset
-
-is an isomorphism, where 
-\begin_inset Formula $\overline{\beta}$
-\end_inset
-
- is the full subcategory of 
-\begin_inset Formula $\int J_{d-,O_{p_{-}}(x)}$
-\end_inset
-
- consisting of pairs 
-\begin_inset Formula $(i,j)$
-\end_inset
-
- such that 
-\begin_inset Formula $\beta=J_{p_{i}}(j)$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:colim-connected-elt"
-
-\end_inset
-
-The colimit of a functor 
-\begin_inset Formula $d:I\rightarrow\Set$
-\end_inset
-
- can be computed as the set 
-\begin_inset Formula $||\int d||$
-\end_inset
-
- of connected components of 
-\begin_inset Formula $\int d$
-\end_inset
-
-.
- In the last condition of the above proposition, 
-\begin_inset Formula $\overline{\beta}$
-\end_inset
-
- is equivalently the connected component of 
-\begin_inset Formula $\int J_{d-,O_{p-}(x)}$
-\end_inset
-
- corresponding to the element in the colimit 
-\begin_inset Formula $\int^{i}J_{d_{i},O_{p_{i}}(x)}$
-\end_inset
-
- which is mapped to 
-\begin_inset Formula $\beta\in J_{\lim d,x}$
-\end_inset
-
- by the canonical morphism.
-\end_layout
-
-\begin_layout Standard
-We have already seen in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-O"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- that if 
-\begin_inset Formula $F$
-\end_inset
-
- restricts on 
-\begin_inset Formula $\C$
-\end_inset
-
-, then 
-\begin_inset Formula $O\in\C$
-\end_inset
-
-.
- We need a few technical lemmas in order to address the other statements.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Limits commute with dependent pairs]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:lim-commute-dependent-pairs"
-
-\end_inset
-
-Given functors 
-\begin_inset Formula $K:D\rightarrow\Set$
-\end_inset
-
- and 
-\begin_inset Formula $G:\int K\rightarrow\Set$
-\end_inset
-
-, the following canonical morphism is an isomorphism
-\begin_inset Formula 
-\[
-\int_{d:D}\coprod_{x\in K(d)}G(d,x)\rightarrow\coprod_{\alpha\in\lim K}\int_{d}G(d,\alpha_{d})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-It is straightforward to check that both sets share the same universal property.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:data-functor-elt"
-
-\end_inset
-
-Let 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- be a functor.
- A functor 
-\begin_inset Formula $G:D\rightarrow\int F$
-\end_inset
-
- is equivalently given by a functor 
-\begin_inset Formula $H:D\rightarrow\B$
-\end_inset
-
- and an element 
-\begin_inset Formula $x\in\lim(F\circ H)$
-\end_inset
-
-, retrieving 
-\begin_inset Formula $G$
-\end_inset
-
- as 
-\begin_inset Formula $Gd=(Hd,x_{d})$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula $\int F$
-\end_inset
-
- is isomorphic to the opposite of the comma category 
-\begin_inset Formula $y/F$
-\end_inset
-
-, where 
-\begin_inset Formula $y:\op{\B}\rightarrow[\B,\Set]$
-\end_inset
-
- is the Yoneda embedding.
- The statement follows from the universal property of a comma category.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:lim-elt"
-
-\end_inset
-
-Let 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- preserving a limit 
-\begin_inset Formula $\lim G$
-\end_inset
-
-.
  Let 
-\begin_inset Formula $x\in F\lim G$
+\begin_inset Formula $T_{|\C}$
 \end_inset
 
-, thus inducing a functor 
-\begin_inset Formula $G_{x}:D\rightarrow\int F$
+ be the monad 
+\begin_inset Formula $T$
 \end_inset
 
- by the previous lemma.
- Then, the limit of 
-\begin_inset Formula $G_{x}$
-\end_inset
-
- is 
-\begin_inset Formula $(\lim D,x)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Let 
+ restricted to 
 \begin_inset Formula $\C$
 \end_inset
 
- denote the full subcategory of 
-\begin_inset Formula $[\B,\Set]$
-\end_inset
-
- of functors preserving 
-\begin_inset Formula $\lim G$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula $\int F$
-\end_inset
-
- is isomorphic to the opposite of the comma category 
-\begin_inset Formula $K/F$
-\end_inset
-
-, where 
-\begin_inset Formula $K:\op{\B}\rightarrow\C$
-\end_inset
-
- is the Yoneda embedding, which preserves 
-\begin_inset Formula $\colim G$
-\end_inset
-
-, by an argument similar to the proof of 
+, following 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:K-finite-connected"
+reference "cor:-T-res"
 plural "false"
 caps "true"
 noprefix "false"
 
-\end_inset
-
-.
- The forgetful functor from a comma category 
-\begin_inset Formula $L/R$
-\end_inset
-
- to the product of the categories creates colimits that 
-\begin_inset Formula $L$
-\end_inset
-
- preserve.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:preserves-elt"
-
-\end_inset
-
-Given categories 
-\begin_inset Formula $I$
-\end_inset
-
- and 
-\begin_inset Formula $\B$
-\end_inset
-
- such that any functor 
-\begin_inset Formula $d:I\rightarrow\B$
-\end_inset
-
- has a limit, if a functor 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- preserves each such limit, then the following properties are equivalent
- for a functor 
-\begin_inset Formula $G:\int F\rightarrow\B'$
-\end_inset
-
-.
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-label=(
-\backslash
-roman{enumi}), ref=
-\backslash
-theproperty.(
-\backslash
-roman{enumi})
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $G$
-\end_inset
-
- preserves limits over any 
-\begin_inset Formula $d':I\rightarrow\int F$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-For any 
-\begin_inset Formula $d:I\rightarrow\B$
-\end_inset
-
- and 
-\begin_inset Formula $x\in F\lim d$
-\end_inset
-
-, the canonical morphism 
-\begin_inset Formula $G(\lim d,x)\rightarrow\int_{i:I}G(d_{i},Fp_{i}(x))$
-\end_inset
-
- is an isomorphism, where 
-\begin_inset Formula $p_{i}:\lim d\rightarrow d_{i}$
-\end_inset
-
- is the canonical projection.
-\end_layout
-
-\end_deeper
-\begin_layout Proof
-\begin_inset Formula $(i)\Rightarrow(ii)$
-\end_inset
-
- Define 
-\begin_inset Formula $d':I\rightarrow\int F$
-\end_inset
-
- as 
-\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
-\end_inset
-
-.
- The implication follows from 
-\begin_inset Formula $\lim d'=(\lim d,x)$
-\end_inset
-
-, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lim-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula $(ii)\Rightarrow(i)$
-\end_inset
-
- By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:data-functor-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-O"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, there exists 
-\begin_inset Formula $d:I\rightarrow\B$
-\end_inset
-
- and 
-\begin_inset Formula $x\in F\lim d$
-\end_inset
-
- such that 
-\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
-\end_inset
-
-.
- Again, the implication follows from 
-\begin_inset Formula $\lim d'=(\lim d,x)$
-\end_inset
-
-, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lim-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-It is straightforward to check that both objects share the same universal
- property.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:colim-commute-dependent-pairs"
-
-\end_inset
-
-Given functors 
-\begin_inset Formula $K:D\rightarrow\Set$
-\end_inset
-
- and 
-\begin_inset Formula $G:\int K\rightarrow\B$
-\end_inset
-
-, the following canonical morphism is an isomorphism
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Formula 
-\[
-\int^{d:D}\coprod_{x\in K(d)}G(d,x)\rightarrow\int^{(d,x):\int K}G(d,x)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:colim-connected-component"
-
-\end_inset
-
-Given a functor 
-\begin_inset Formula $K:D\rightarrow\B$
-\end_inset
-
-, the following canonical morphism is an isomorphism
-\begin_inset Formula 
-\[
-\coprod_{\beta\in||D||}\int^{d:\beta}Kd\rightarrow\int^{d:D}Kd
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $||D||$
-\end_inset
-
- is the set of connected components of 
-\begin_inset Formula $D$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-We now have enough tools to address the proof of 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prop:F-restricts"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Let us introduce auxiliary lemmas.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-We define the functor 
-\begin_inset Formula $M:\op{(\int O)}\rightarrow\C$
-\end_inset
-
- by 
-\begin_inset Formula 
-\[
-M(a,o)=\coprod_{j\in J_{a,o}}KL_{a,o,j}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:F-M"
-
-\end_inset
-
-Given any 
-\begin_inset Formula $X\in\C$
-\end_inset
-
- and object 
-\begin_inset Formula $a$
-\end_inset
-
- of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, 
-\begin_inset Formula 
-\[
-F(X)_{a}\cong\coprod_{o\in O_{a}}\C(M(a,o),X)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:M-preserves"
-
-\end_inset
-
-If 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-, then the functor 
-\begin_inset Formula $M$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This remark does not make the proof easier; it merely allows us to use 
-\begin_inset Formula $K$
-\end_inset
-
- and thus alleviate notations.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:preserves-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-O"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, it is enough to show that given a functor 
-\begin_inset Formula $d:I\rightarrow{\cal A}$
-\end_inset
-
-, where 
-\begin_inset Formula $I$
-\end_inset
-
- is a finite connected category, the canonical morphism 
-\begin_inset Formula $\alpha_{x}:\int^{i}M_{d_{i},O_{p_{i}}(x)}\rightarrow M_{\lim d,x}$
-\end_inset
-
- is an isomorphism, for any 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Now, if 
-\begin_inset Formula $X\in\C$
-\end_inset
-
-, then 
-\begin_inset Formula $F(X)_{a}$
-\end_inset
-
- is isomorphic to 
-\begin_inset Formula $\coprod_{o\in O_{a}}\C(M_{a,o},X)$
-\end_inset
-
-.
- Since then 
-\begin_inset Formula $F(X)\in\C$
-\end_inset
-
-, the canonical morphism 
-\begin_inset Formula $F(X)_{\lim d}\rightarrow\int_{i}F(X)_{d_{i}}$
-\end_inset
-
- is an isomorphism.
- The codomain unfolds as
-\color red
- 
-\color inherit
-
-\begin_inset Formula 
-\begin{align*}
-\int_{i}F(X)_{d_{i}} & \cong\int_{i:I}\coprod_{o\in O_{d_{i}}}\C(M_{d_{i},o},X)\tag{By \prettyref{rem:F-M}}\\
- & \cong\coprod_{o\in\int_{i}O_{d_{i}}}\int_{i:I}\C(M_{d_{i},o_{i}},X)\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
- & \cong\coprod_{o\in O_{\lim d}}\int_{i:I}\C(M_{d_{i},O_{p_{i}}(o)},X)\tag{By \prettyref{lem:F-restricts-O}}\\
- & \cong\coprod_{o\in O_{\lim d}}\C(\int^{i:I}M_{d_{i},O_{p_{i}}(o)},X)\tag{By left cocontinuity of the homset bifunctor}
-\end{align*}
-
-\end_inset
-
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-Existence of the colimit in 
-\begin_inset Formula $\C$
-\end_inset
-
- is ensured by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lims-coprod-pw"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Now, the domain unfolds as
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-
-\begin_inset Formula 
-\[
-F(X)_{\lim d}\cong\coprod_{o\in O_{\lim d}}\C(M_{\lim d,o},X)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Through these isomorphisms, the canonical morphism 
-\begin_inset Formula $F(X)_{\lim d}\rightarrow\int_{i}F(X)_{d_{i}}$
-\end_inset
-
- is
-\begin_inset Formula 
-\begin{equation}
-\coprod_{o\in O_{\lim d}}\C(M_{\lim d,o},X)\xrightarrow{\coprod_{o\in O_{\lim d}}\C(\alpha_{o},X)}\coprod_{o\in O_{\lim d}}\C(\int^{i:I}M_{d_{i},O_{p_{i}}(o)},X)\label{eq:M-preserve}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Because it is a bijection, each 
-\begin_inset Formula $\C(\alpha_{o},X)$
-\end_inset
-
- also is.
- By the Yoneda lemma, each 
-\begin_inset Formula $\alpha_{o}$
-\end_inset
-
- is itself an isomorphism.
-\end_layout
-
-\begin_layout Standard
-It is easy to see from the proof that the converse implication also holds.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:M-preserves-converse"
-
-\end_inset
-
-If 
-\begin_inset Formula $O\in\C$
-\end_inset
-
- and the functor 
-\begin_inset Formula $M$
-\end_inset
-
- preserves finite connected colimits, then 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-It easily follows from the fact that 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:M-preserve"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- is an isomorphism if and only if each 
-\begin_inset Formula $\alpha_{o}$
-\end_inset
-
- is.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:F-restricts-J"
-
-\end_inset
-
-If 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-, then 
-\begin_inset Formula $J:\op{(\int O)}\rightarrow\mathbb{F}$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Proof
-By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:preserves-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-O"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, it is enough to show that given a functor 
-\begin_inset Formula $d:I\rightarrow{\cal A}$
-\end_inset
-
-, where 
-\begin_inset Formula $I$
-\end_inset
-
- is a finite connected category, the canonical morphism 
-\begin_inset Formula $\alpha_{x}:\int^{i}J_{d_{i},O_{p_{i}}(x)}\rightarrow J_{\lim d,x}$
-\end_inset
-
- is an isomorphism, for any 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Given a set 
-\begin_inset Formula $X$
-\end_inset
-
-, we denote by 
-\begin_inset Formula $\underline{X}:{\cal A}\rightarrow\Set$
-\end_inset
-
- the constant functor mapping anything to 
-\begin_inset Formula $X$
 \end_inset
 
 .
  Since 
-\begin_inset Formula $\underline{X}$
+\begin_inset Formula $K:\D\rightarrow\C$
 \end_inset
 
- preserves finite connected limits, 
-\begin_inset Formula $F(\underline{X})$
-\end_inset
-
- also does.
- Thus, we know that the canonical morphism 
-\begin_inset Formula $F(\underline{X})_{\lim d}\rightarrow\int_{i:I}F(\underline{X})_{d_{i}}$
-\end_inset
-
- is an isomorphism.
- The codomain unfolds as
-\begin_inset Formula 
-\begin{align*}
-\int_{i:I}F(\underline{X})_{d_{i}} & \cong\int_{i:I}{\displaystyle \coprod_{o\in O_{d_{i}}}}X^{J_{d_{i},o}}\\
- & \cong\coprod_{o\in\int_{i}O_{d_{i}}}\int_{i:I}X^{J_{d_{i},o_{i}}}\tag{By \prettyref{lem:colim-commute-dependent-pairs}}\\
- & \cong\coprod_{o\in O_{\lim d}}\int_{i:I}X^{J_{d_{i},O_{p_{i}}(o)}}\tag{By \prettyref{lem:F-restricts-O}}\\
- & \cong\coprod_{o\in O_{\lim d}}X^{\int^{i:I}J_{d_{i},O_{p_{i}}(o)}}\tag{By left cocontinuity of the homset bifunctor}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The domain unfolds as
-\begin_inset Formula 
-\begin{align*}
-F(\underline{X})_{\lim d} & \cong{\displaystyle \coprod_{o\in O_{\lim d}}}X^{J_{\lim d,o}}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Through these isomorphisms, the canonical morphism 
-\begin_inset Formula $F(\underline{X})_{\lim d}\rightarrow\int_{i:I}F(\underline{X})_{d_{i}}$
-\end_inset
-
- becomes
-\begin_inset Formula 
-\[
-{\displaystyle \coprod_{o\in O_{\lim d}}}X^{J_{\lim d,o}}\xrightarrow{\coprod_{o\in O_{\lim d}}X^{\alpha_{o}}}\coprod_{o\in O_{\lim d}}X^{\int^{i:I}J_{d_{i},O_{p_{i}}(o)}}
-\]
-
-\end_inset
-
- Because it is a bijection, each 
-\begin_inset Formula $X^{\alpha_{o}}$
-\end_inset
-
- also is.
- Since this is true for any set 
-\begin_inset Formula $X$
-\end_inset
-
-, by the Yoneda lemma, each 
-\begin_inset Formula $\alpha_{o}$
-\end_inset
-
- is itself an isomorphism.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:F-restricts-L"
-
-\end_inset
-
-If 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-, then for any 
-\begin_inset Formula $d:I\rightarrow O$
-\end_inset
-
- with 
-\begin_inset Formula $I$
-\end_inset
-
- finite and connected, any 
-\begin_inset Formula $x\in O_{\lim d}$
-\end_inset
-
- and 
-\begin_inset Formula $\beta\in J_{\lim d,x}$
-\end_inset
-
-, the canonical morphism in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\alpha_{\beta}:L_{\lim d,x,\beta}\rightarrow\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j}\label{eq:canonical-L}
-\end{equation}
-
-\end_inset
-
-is an isomorphism, where 
-\begin_inset Formula $\overline{\beta}$
-\end_inset
-
- is full subcategory of 
-\begin_inset Formula $\op{\left(\int J_{d-,O_{p_{-}}(x)}\right)}$
-\end_inset
-
- consisting of pairs 
-\begin_inset Formula $(i,j)$
-\end_inset
-
- such that 
-\begin_inset Formula $\beta=J_{p_{i}}(j)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This is not a limit preservation, since 
-\begin_inset Formula $\int^{(i,j):\overline{\beta}}(d_{i},O_{p_{i}}(x),j)$
-\end_inset
-
- in 
-\begin_inset Formula $\int J$
-\end_inset
-
- may differ from 
-\begin_inset Formula $(\lim d,x,\beta)$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[
-\end_layout
-
-\end_inset
-
-
+ preserves finite connected colimits (
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:F-restricts-L"
+reference "lem:K-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
 
 \end_inset
 
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:M-preserves"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:preserves-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, the canonical morphism 
-\begin_inset Formula $\int^{i}M_{d_{i},O_{p_{i}}(x)}\rightarrow M_{\lim d,x}$
-\end_inset
-
- is an isomorphism.
- The domain unfolds as 
-\begin_inset Formula 
-\begin{align*}
-\int^{i}M_{d_{i},O_{p_{i}}(x)} & \cong\int^{i}\coprod_{j\in J_{d_{i},O_{p_{i}}(x)}}KL_{d_{i},O_{p_{i}(x)},j}\\
- & \cong\int_{(i,j):\int J_{d-,O_{p-}(x)}}KL_{d_{i},O_{p_{i}(x)},j}\tag{By \prettyref{lem:colim-commute-dependent-pairs}}\\
- & \cong\coprod_{\beta\in\int^{i}J_{d_{i},O_{p_{i}}(x)}}\int^{(i,j):\overline{\beta}}KL_{d_{i},O_{p_{i}(x)},j}\tag{By \prettyref{lem:colim-connected-component}}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-where 
-\begin_inset Formula $\overline{\beta}$
-\end_inset
-
- is the connected component of 
-\begin_inset Formula $\int J_{d_{-},\alpha_{-}}$
-\end_inset
-
- corresponding to 
-\begin_inset Formula $\beta$
-\end_inset
-
- by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:colim-connected-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Since the domain category of 
-\begin_inset Formula $i\mapsto J_{d-,\alpha-}$
-\end_inset
-
- is assumed to be finite, and any 
-\begin_inset Formula $J_{d,\alpha}$
-\end_inset
-
- is finite, 
-\begin_inset Formula $\int J_{d_{-},\alpha_{-}}$
-\end_inset
-
- is finite, and thus 
-\begin_inset Formula $\overline{\beta}$
-\end_inset
-
- also is.
- Since 
-\begin_inset Formula $K$
-\end_inset
-
- preserves finite connected limits by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, we get
-\begin_inset Formula 
-\begin{align*}
-\int^{i}M_{d_{i},O_{p_{i}}(x)} & \cong\coprod_{\beta\in\int^{i}J_{d_{i},O_{p_{i}}(x)}}K\int^{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}(x)},j}\\
- & \cong\coprod_{\beta\in J_{\int_{i}(d_{i},O_{p_{i}}(x))}}K\int^{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}(x)},j}\tag{By \prettyref{lem:F-restricts-J}}\\
- & \cong\coprod_{\beta\in J_{\lim d,x}}K\int^{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}(x)},j}\tag{By \prettyref{lem:lim-elt}}
-\end{align*}
-
-\end_inset
-
-Through this isomorphism, the canonical morphism 
-\begin_inset Formula $\int^{i}M_{d_{i},O_{p_{i}}(x)}\rightarrow M_{\lim d,x}$
-\end_inset
-
- becomes
-\begin_inset Formula 
-\begin{equation}
-\coprod_{\beta\in J_{\lim d,x}}K\int^{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}(x)},j}\xrightarrow{\coprod_{\beta\in J_{\lim d,x}}K\alpha_{\beta}}\coprod_{j\in J_{\lim d,x}}KL_{\lim d,x,j}\label{eq:canonoical-L-iso}
-\end{equation}
-
-\end_inset
-
-where 
-\begin_inset Formula $\alpha_{\beta}$
-\end_inset
-
- is considered as a morphism in 
-\begin_inset Formula $\D=\op{{\cal A}}$
-\end_inset
-
-.
- Now, because coproducts are computed pointwise in 
-\begin_inset Formula $\C$
-\end_inset
-
- by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lims-coprod-pw"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, this is an isomorphism if and only if each 
-\begin_inset Formula $K\alpha_{\beta}$
-\end_inset
-
- is.
- Since 
-\begin_inset Formula $K$
-\end_inset
-
- is full and faithful, this means that each 
-\begin_inset Formula $\alpha_{\beta}$
-\end_inset
-
- is an isomorphism.
-\end_layout
-
-\begin_layout Standard
-The converse statement holds
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:F-preserve-L-converse"
-
-\end_inset
-
-If 
-\begin_inset Formula $O\in\C$
-\end_inset
-
-, 
-\begin_inset Formula $J:\op{(\int O)}\rightarrow\mathbb{F}_{m}$
-\end_inset
-
- preserves finite connected colimits, and each 
-\begin_inset Formula $\alpha_{\beta}$
-\end_inset
-
- as defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:canonical-L"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- is an isomorphism then 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-This follows easily from 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:M-preserves-converse"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and the fact that 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:canonoical-L-iso"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- is an isomorphism if and only if each 
-\begin_inset Formula $\alpha_{\beta}$
-\end_inset
-
- is.
-\end_layout
-
-\begin_layout Standard
-We finally prove 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restricts"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restricts"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Assume that 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- Then, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-O"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset Formula $O\in\C$
-\end_inset
-
-.
- Moreover, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-J"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset Formula $J:\op{(\int O)}\rightarrow\mathbb{F}$
-\end_inset
-
- preserves finite connected colimits and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- holds by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-L"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Conversely, if 
-\begin_inset Formula $O\in\C$
-\end_inset
-
-, 
-\begin_inset Formula $J$
-\end_inset
-
- preserves finite connected colimits and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- holds, then 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-preserve-L-converse"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Assuming 
-\begin_inset Formula $O\in\C$
-\end_inset
-
-, it remains to show that 
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
- if and only if 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L-hom-1"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- or 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L-hom-2"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Note that both are equivalent by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:preserves-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-Let us show that 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L-hom-2"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- is equivalent to 
-\begin_inset Formula 
-\[
-\alpha_{\beta}:L_{\lim d,x,\beta}\rightarrow\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j}
-\]
-
-\end_inset
-
- being an isomorphism, under the further assumption that 
-\begin_inset Formula $J$
-\end_inset
-
- preserves finite connected colimits, as in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- thus concluding the argument.
- First, 
-\begin_inset Formula $\alpha_{\beta}:L_{\lim d,x,\beta}\rightarrow\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j}$
-\end_inset
-
- is an isomorphism if and only if the induced natural transformation 
-\begin_inset Formula ${\cal A}(-,L_{\lim d,x,\beta})\rightarrow{\cal A}(-,\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j})$
-\end_inset
-
- is an isomorphism, by the Yoneda lemma, that is, if for each object 
-\begin_inset Formula $b$
-\end_inset
-
- of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, the canonical morphism 
-\begin_inset Formula ${\cal A}(b,L_{\lim d,x,\beta})\rightarrow{\cal A}(b,\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j})$
-\end_inset
-
- is an isomorphism.
- Since this is true for any 
-\begin_inset Formula $\beta$
-\end_inset
-
-, this implies that 
-\begin_inset Formula 
-\begin{equation}
-\prod_{\beta\in J_{\lim d,x}}{\cal A}(b,L_{\lim d,x,\beta})\xrightarrow{\prod_{\beta\in J_{\lim d,x}}{\cal A}(b,\alpha_{\beta})}\prod_{\beta\in J_{\lim d,x}}{\cal A}(b,\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j})\label{eq:fin-prop}
-\end{equation}
-
-\end_inset
-
- is an isomorphism.
- In fact, the converse implication holds as well.
- Now, the codomain is
-\begin_inset Formula 
-\begin{align*}
-\prod_{\beta\in J_{\lim d,x}}{\cal A}(b,\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(x),j}) & \cong\prod_{\beta\in J_{\lim d,x}}\int_{(i,j):\overline{\beta}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\tag{By right continuity of the homset bifunctor}\\
- & \cong\prod_{\beta\in J_{\int_{i}(d_{i},O_{p_{i}}(x))}}\int_{(i,j):\overline{\beta}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\tag{By \prettyref{lem:lim-elt}}\\
- & \cong\prod_{\beta\in\int^{i}J_{d_{i},O_{p_{i}}(x)}}\int_{(i,j):\overline{\beta}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\tag{\ensuremath{J} preserves finite connected colimits}\\
- & \cong\prod_{\beta\in||J_{d_{i},O_{p_{i}}(x)}||}\int_{(i,j):\overline{\beta}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\tag{By \prettyref{rem:colim-connected-elt}}\\
- & \cong\int_{(i,j):\int J_{d-,O_{p-}(x)}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\tag{By \prettyref{lem:colim-connected-component}}\\
- & \cong\int_{i:I}\prod_{j\in J_{d_{i},O_{p_{i}}(x)}}{\cal A}(b,L_{d_{i},O_{p_{i}}(x),j})\tag{By \prettyref{lem:colim-commute-dependent-pairs}}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Therefore, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:fin-prop"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- is an isomorphism if and only if the canonical morphism 
-\begin_inset Formula 
-\[
-\prod_{j\in J_{\lim d,x}}{\cal A}(b,L_{\lim d,x,j})\rightarrow\int_{i:I}\prod_{j\in J_{d_{i},O_{p_{i}}(x)}}{\cal A}(b,\int_{i:I}L_{d_{i},O_{p_{i}}(x),j})
-\]
-
-\end_inset
-
- is an isomorphism, which is precisely what 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "prop:F-restriction-L-hom-2"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- states.
-\end_layout
-
-\begin_layout Standard
-We can now address the simple situation of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:shape-examples"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-simpl"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
-First, let us show that 
-\begin_inset Formula $O=\coprod_{\ell\in V}O_{\ell}$
-\end_inset
-
- preserves finite connected limits if and only if each 
-\begin_inset Formula $O_{\ell}$
-\end_inset
-
- does.
- By 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Theorem 2.4 and Example 2.3.(iii)"
-key "classificationaccessible"
-literal "false"
-
-\end_inset
-
-, since 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits, a functor 
-\begin_inset Formula $G:{\cal A}\rightarrow\Set$
-\end_inset
-
- preserves those limits if and only if 
-\begin_inset Formula $\int G$
-\end_inset
-
- is a coproduct of filtered categories.
- The equivalence follows from 
-\begin_inset Formula $\int O=\coprod_{\ell\in V}\int O_{\ell}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-Let us assume that 
-\begin_inset Formula $O$
-\end_inset
-
- preserves finite connected limits: let us show that the other condition
- of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-simpl"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- is equivalent to 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-L"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- First, 
-\begin_inset Formula $\int J$
-\end_inset
-
- is isomorphic to 
-\begin_inset Formula $\coprod_{\ell\in V}\gamma_{\ell}\times\int O_{\ell}$
-\end_inset
-
-,, 
-\begin_inset Formula $J$
-\end_inset
-
- preserves finite connected limits, by the same argument as above (
-\begin_inset Formula $\int O$
-\end_inset
-
- has finite connected limits by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:data-functor-elt"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lim-elt"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Proof
-Now, consider the canonical morphism 
-\begin_inset Formula $L_{\lim d,in_{\ell}(x),\beta}\rightarrow\int_{(i,j):\overline{\beta}}L_{d_{i},O_{p_{i}}(in_{\ell}(x)),j}$
-\end_inset
-
-, where 
-\begin_inset Formula $\overline{\beta}$
-\end_inset
-
- is the full subcategory of 
-\begin_inset Formula $\int J_{d-,O_{p_{-}}(x)}$
-\end_inset
-
- consisting of pairs 
-\begin_inset Formula $(i,j)$
-\end_inset
-
- such that 
-\begin_inset Formula $\beta=J_{p_{i}}(j)$
-\end_inset
-
-.
- Because of the specific shape of 
-\begin_inset Formula $J$
+), composing it with the left adjoint 
+\begin_inset Formula $\C\rightarrow\Kl{T_{|\C}}$
 \end_inset
 
-, this means 
-\begin_inset Formula $\beta=j$
+ yields a functor 
+\begin_inset Formula $\D\rightarrow\Kl{T_{|\C}}$
 \end_inset
 
-.
- Therefore, 
-\begin_inset Formula $\overline{\beta}$
+ also preserving those colimits.
+ Since it factors as 
+\begin_inset Formula $\D\xrightarrow{{\cal L}}\Th S\hookrightarrow\Kl{T_{|\C}}$
 \end_inset
 
- is isomorphic to 
-\begin_inset Formula $I$
+, where the right functor is full and faithful, 
+\begin_inset Formula ${\cal L}$
 \end_inset
-
-, and this canonical morphism rewrites as 
-\begin_inset Formula 
-\[
-H_{\ell,\beta}(\lim d,x)\rightarrow\int_{i:I}H_{\ell,\beta}(d_{i},O_{\ell,p_{i}}(x))
-\]
-
-\end_inset
-
-which is the same morphism that is considered in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-simpl"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- It is an isomorphism if and only if 
-\begin_inset Formula $H_{\ell,\beta}$
-\end_inset
-
- preserves finite connected limits, by It 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:preserves-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
 
+ also preserves finite connected colimits.
 \end_layout
 
 \begin_layout Section
@@ -9962,16 +7114,6 @@ It follows that it is enough to compute the coequaliser of
  Furthermore, by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
 reference "assu:L-finite-conncted"
 plural "false"
 caps "true"
@@ -9979,7 +7121,11 @@ noprefix "false"
 
 \end_inset
 
-, it can be computed as the image of the coequaliser of 
+, it is the image by 
+\begin_inset Formula ${\cal L}$
+\end_inset
+
+ of the equaliser of 
 \begin_inset Formula $\arg x$
 \end_inset
 
@@ -10772,6 +7918,10 @@ In this section, we describe soundness for the rules
 \begin_inset Formula $\Gamma,M:m$
 \end_inset
 
+ for some 
+\begin_inset Formula $o\in\Oop na$
+\end_inset
+
 .
  By 
 \begin_inset CommandInset ref
@@ -10832,11 +7982,11 @@ noprefix "false"
 \end_inset
 
  for some 
-\begin_inset Formula $o'\in O_{m}$
+\begin_inset Formula $o'\in\Oop nm$
 \end_inset
 
  and 
-\begin_inset Formula $\vec{v}=(v_{1},\dots,v_{\nar{o'}})$
+\begin_inset Formula $\vec{v}=(v_{1},\dots,v_{n})$
 \end_inset
 
  such that 
@@ -10845,7 +7995,7 @@ noprefix "false"
 
 .
  Then, 
-\begin_inset Formula $\rename ux=(\rename{o'}x)(\rename{v_{\naraction{o'}x1}}{\ntharvecaction{o'}x1},\dots,)$
+\begin_inset Formula $\rename ux=(\rename{o'}x)(\rename{v_{1}}{\ntharvecaction{o'}x1},\dots,)$
 \end_inset
 
 .
@@ -10864,7 +8014,7 @@ noprefix "false"
 \end_inset
 
 , and 
-\begin_inset Formula $t_{i}[\sigma]=\rename{v_{\naraction{o'}xi}}{\ntharvecaction{o'}xi}$
+\begin_inset Formula $t_{i}[\sigma]=\rename{v_{i}}{\ntharvecaction{o'}xi}$
 \end_inset
 
 .
@@ -11017,7 +8167,7 @@ Note that there is at most one
 , by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:epis"
+reference "assu:O-mono"
 plural "false"
 caps "true"
 noprefix "false"
@@ -11056,7 +8206,7 @@ status open
 \end_inset
 
  and a list of terms 
-\begin_inset Formula $\vec{v}=(v_{1},\dots,v_{\nar{o'}})$
+\begin_inset Formula $\vec{v}=(v_{1},\dots,v_{n})$
 \end_inset
 
  such that 
@@ -11064,11 +8214,7 @@ status open
 \end_inset
 
  and 
-\begin_inset Formula $t_{i}[\sigma]=\rename{v_{\naraction{o'}xi}}{\ntharvecaction{o'}xi}$
-\end_inset
-
- for all 
-\begin_inset Formula $i\in\{1,\dots,p\}$
+\begin_inset Formula $t_{i}[\sigma]=\rename{v_{i}}{\ntharvecaction{o'}xi}$
 \end_inset
 
 .
@@ -11087,7 +8233,7 @@ noprefix "false"
 \end_inset
 
  and 
-\begin_inset Formula $M_{1}(x_{i}^{o'}),\dots,M_{p}(x_{p}^{o'})$
+\begin_inset Formula $M_{1}(x_{i}^{o'}),\dots,M_{n}(x_{n}^{o'})$
 \end_inset
 
 .
@@ -11394,16 +8540,6 @@ end{tikzcd}
 By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
 reference "assu:L-finite-conncted"
 plural "false"
 caps "true"
@@ -11423,12 +8559,16 @@ noprefix "false"
 \begin_inset Formula ${\cal L}$
 \end_inset
 
- of the pushout of 
+ of the pullback of 
 \begin_inset Formula $\arg x$
 \end_inset
 
  and 
 \begin_inset Formula $\arg y$
+\end_inset
+
+ in 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
 , thus justifying the rule 
@@ -11449,6 +8589,11 @@ name "sec:applications"
 
 \end_inset
 
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 In the examples, we motivate the definition of the category 
 \begin_inset Formula ${\cal A}$
 \end_inset
@@ -11466,7 +8611,7 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -11517,9 +8662,14 @@ rqshape}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Subsection
 Binding signatures
@@ -11871,947 +9021,6 @@ we propose an interpretation of typing rules to define the endofunctor
 \end_layout
 
 \begin_layout Subsection
-Simply-typed second-order syntax
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:simply-typed-so"
-
-\end_inset
-
- In this section, we present the example of simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus.
- Our treatment generalises to any second-order binding signature (see
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "FioreHur"
-literal "false"
-
-\end_inset
-
-).
- 
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $T$
-\end_inset
-
- denote the set of simple types generated by a set of simple types.
- A metavariable arity 
-\begin_inset Formula $\tau_{1},\dots,\tau_{n}\vdash\tau_{f}$
-\end_inset
-
- is given by a list of input types 
-\begin_inset Formula $\tau_{1},\dots,\tau_{n}$
-\end_inset
-
- and an output type 
-\begin_inset Formula $\tau_{f}$
-\end_inset
-
-.
- Substituting a metavariable 
-\begin_inset Formula $M:(\Gamma\vdash\tau)$
-\end_inset
-
- with another 
-\begin_inset Formula $M':(\Gamma'\vdash\tau')$
-\end_inset
-
- requires that 
-\begin_inset Formula $\tau=\tau'$
-\end_inset
-
- and involves an injective renaming 
-\begin_inset Formula $\Gamma\rightarrow\Gamma'$
-\end_inset
-
-.
- Thus, we consider 
-\begin_inset Formula ${\cal A}=\mathbb{F}_{m}[T]\times T$
-\end_inset
-
- , where 
-\begin_inset Formula $\mathbb{F}_{m}[T]$
-\end_inset
-
- is the category of finite lists of elements of 
-\begin_inset Formula $T$
-\end_inset
-
- and injective renamings between them.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-The syntax for simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus can be specified by a suitable endofunctor, see e.g.
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "FioreHur"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "tab:all-syntax"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- summarises the definition of the endofunctor 
-\begin_inset Formula $F$
-\end_inset
-
- on 
-\begin_inset Formula $[{\cal A},\Set]$
-\end_inset
-
- specifying the syntax, where 
-\begin_inset Formula $|\Gamma|_{\tau}$
-\end_inset
-
- denotes the number (as a cardinal set) of occurrences of 
-\begin_inset Formula $\tau$
-\end_inset
-
- in 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float table
-wide true
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Examples of endofunctors for syntax
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:all-syntax"
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-F(X)_{a}\cong\coprod_{\ell\in V}\coprod_{o\in O_{\ell}}\prod_{j\in\gamma_{\ell}}X_{H_{\ell,j}(a,o)}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-(
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:simply-typed-so"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O_{\ell}(\Gamma\vdash\tau)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{\ell,j}(\Gamma\vdash\tau)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v_{i}|i\in|\Gamma|_{\tau}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\vdash t:\tau'\Rightarrow\tau\quad\Gamma\vdash u:\tau'}{\Gamma\vdash t\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{l}
-H_{-,0}=\Gamma\vdash\tau'\Rightarrow\ensuremath{\tau}\\
-H_{-,1}=\Gamma\vdash\tau'
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{-,0}=\Gamma,\tau_{1}\vdash\tau_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-System F
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-(
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:system-F"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O_{\ell}(n;\Gamma\vdash\tau)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{\ell,j}(n;\Gamma\vdash\tau,o)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{n;\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v_{i}|i\in|\Gamma|_{\tau}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma\vdash t:\tau'\Rightarrow\tau\quad n;\Gamma\vdash u:\tau'}{n;\Gamma\vdash t\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}|\tau'\in S_{n}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{l}
-H_{-,0}=n;\Gamma\vdash\tau'\Rightarrow\ensuremath{\tau}\\
-H_{-,1}=n;\Gamma\vdash\tau'
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{n;\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{-,0}=n;\Gamma,\tau_{1}\vdash\tau_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n;\Gamma\vdash t:\forall\tau_{1}\quad\tau_{2}\in S_{n}}{n;\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{A_{\tau_{1},\tau_{2}}|\tau=\tau_{1}[\tau_{2}]\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{-,0}=n;\Gamma\vdash\forall\tau_{1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1;wk(\Gamma)\vdash t:\tau}{n;\Gamma\vdash\Lambda t:\forall\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\forall\tau'\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{-,0}=n+1;wk(\Gamma)\vdash\tau'$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Quantum 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-(
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:quantum-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rules for values
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O_{\ell}(\Delta\vdash C)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{\ell,j}(\Delta\vdash C,o)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $!\Delta,x:\bang(A\multimap B)\vdash x:\bang(A\multimap B)$
-\end_inset
-
-
-\begin_inset Formula $\vphantom{\dfrac{\frac{}{}}{}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\delta(\Delta=\bang\Delta)\times|\Delta|_{C}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{!\Delta,x:A\vdash M:B}{!\Delta\vdash\lambda x^{A}.M:\bang(A\multimap B)}$
-\end_inset
-
-
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{r}
-\{l_{A,B,v}|\Delta\vdash C=\\
-\bang\Delta\vdash\bang(A\multimap B)\}
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $H_{-,1}(l_{A,B,v})=\Delta,A\vdash B$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $!\Delta\vdash c:\bang(A_{c}\multimap B_{c})$
-\end_inset
-
-
-\begin_inset Formula $\vphantom{\dfrac{\frac{}{}}{}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{c}
-\delta(\Delta\vdash C=\\
-\bang\Delta\vdash\bang(A_{c}\multimap B_{c}))
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 Arguments as sets
 \end_layout
 
@@ -12852,23 +9061,8 @@ If we think of the arguments of a metavariable as specifying the available
 
  consisting of strictly increasing injections, or as the subcategory of
  the augmented simplex category consisting of injective functions.
- Again, we can define the endofunctor for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus as in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:bidning-sig"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- Then, a metavariable takes as argument a set of available variables, rather
- than a list of distinct variables.
+ Then, a metavariable takes as argument a set of variables, rather than
+ a list of distinct variables.
  In this approach, unifying two metavariables (see the rules 
 \begin_inset Formula $\refrule{U-FlexFlex}$
 \end_inset
@@ -18617,7 +14811,7 @@ entail N:A }
 \end_layout
 
 \begin_layout Subsection
-Linear ordered 
+Simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -18625,25 +14819,18 @@ Linear ordered
 \end_layout
 
 \begin_layout Standard
-Properties of Terms in Continuation-Passing Style in an Ordered Logical
- Framework
-\end_layout
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:simply-typed-so"
 
-\begin_layout Standard
-We take the example of linear 
+\end_inset
+
+ In this section, we present the example of simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
 -calculus.
- A metavariable arity is then a natural number specifying the number of
- arguments, and because of linearity, a metavariable can only be substituted
- with another one with the same arity.
- We therefore 
-\begin_inset Formula ${\cal A}={\cal P}$
-\end_inset
-
- to be category whose objects are finite cardinals and morphisms are bijections
- as in
+ Our treatment generalises to any multi-sorted binding signature
 \begin_inset ERT
 status open
 
@@ -18657,7 +14844,7 @@ status open
 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "DBLP:conf/mfcs/Tanaka00"
+key "FioreHur"
 literal "false"
 
 \end_inset
@@ -18667,44 +14854,298 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Each typing rule provides an operation
+The set 
+\begin_inset Formula $T$
+\end_inset
+
+ denote the set of simple types generated by a set of atomic types and a
+ binary arrow type construction 
+\begin_inset Formula $-\Rightarrow-$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
+Let us now describe the category 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ of arities, or variable contexts, and renamings between them.
+ An arity 
+\begin_inset Formula $\vec{\sigma}\arSep\tau$
+\end_inset
+
+ consists of a list of input types 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and an output type 
+\begin_inset Formula $\tau$
+\end_inset
+
+.
+ A term 
+\begin_inset Formula $t$
+\end_inset
+
+ in 
+\begin_inset Formula $\vec{\sigma}\arSep\tau$
+\end_inset
+
+ considered as a variable context is intuitively a well-typed term 
+\begin_inset Formula $\vec{\sigma}\vdash t:\tau$
+\end_inset
+
+.
+ A valid choice of arguments for a metavariable 
+\begin_inset Formula $M:(\vec{\sigma}\arSep\tau)$
+\end_inset
+
+ in variable context 
+\begin_inset Formula $\vec{\sigma}'\arSep\tau'$
+\end_inset
+
+ thus first requires 
+\begin_inset Formula $\tau=\tau'$
+\end_inset
+
+, and consists of an injective renaming 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ between 
+\begin_inset Formula $\vec{\sigma}=(\sigma_{1},\dots,\sigma_{n})$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}'=(\sigma'_{1},\dots,\sigma'_{m})$
+\end_inset
+
+, that is, a choice of distinct positions 
+\begin_inset Formula $(r_{1},\dots,r_{n})$
+\end_inset
+
+ in 
+\begin_inset Formula $\{1,\dots,m\}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\vec{\sigma}=\sigma'_{\vec{r}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This discussion determines the category of arities as 
+\begin_inset Formula ${\cal A}=\mathbb{F}_{m}[T]\times T$
+\end_inset
+
+ , where 
+\begin_inset Formula $\mathbb{F}_{m}[T]$
+\end_inset
+
+ is the category of finite lists of elements of 
+\begin_inset Formula $T$
+\end_inset
+
+ and injective renamings between them.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:all-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ summarises the definition of the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ specifying the syntax, where 
+\begin_inset Formula $|\vec{\sigma}|_{\tau}$
+\end_inset
+
+ denotes the number (as a cardinal set) of occurrences of 
+\begin_inset Formula $\tau$
+\end_inset
+
+ in 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The induced signature is pattern-friendly and so the generic pattern unification
+ algorithm applies.
+ Equalisers and pullbacks are computed following the same pattern as in
+ pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ For example, to unify 
+\begin_inset Formula $M(\vec{x})$
+\end_inset
+
+ and 
+\begin_inset Formula $M(\vec{y})$
+\end_inset
+
+, we first compute the vector 
+\begin_inset Formula $\vec{z}$
+\end_inset
+
+ of common positions between 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+, thus satisfying 
+\begin_inset Formula $x_{\vec{z}}=y_{\vec{z}}$
+\end_inset
+
+.
+ Then, the most general unifier maps 
+\begin_inset Formula $M:(\vec{\sigma}\arSep\tau)$
+\end_inset
+
+ to the term 
+\begin_inset Formula $P(\vec{z})$
+\end_inset
+
+, where the arity 
+\begin_inset Formula $\vec{\sigma}'\arSep\tau'$
+\end_inset
+
+ of the fresh metavariable 
+\begin_inset Formula $P$
+\end_inset
+
+ is the only possible choice such that 
+\begin_inset Formula $P(\vec{z})$
+\end_inset
+
+ is a valid term in the variable context 
+\begin_inset Formula $\vec{\sigma}\arSep\tau$
+\end_inset
+
+, that is, 
+\begin_inset Formula $\tau'=\tau$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}'=\sigma_{\vec{z}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide true
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Examples of GB-signatures
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:all-syntax"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="4">
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ordered-calculus"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Variable
+Typing rule
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1\vdash*$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $y1$
+\begin_inset Formula $O_{n}(\vec{\sigma}\Fsep\vec{\omega}\arSep\tau)=\mydots+$
 \end_inset
 
 
@@ -18712,10 +15153,13 @@ Variable
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
 
 \end_layout
 
@@ -18723,20 +15167,11 @@ Variable
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Application
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n\vdash t\qquad m\vdash u}{n+m\vdash t\ u}$
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\Fsep\cdot\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
@@ -18744,11 +15179,11 @@ Application
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $X_{n}\times X_{m}\times y_{n+m}$
+\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\text{\text{ and }\ensuremath{\vec{\omega}=()}}\}$
 \end_inset
 
 
@@ -18756,10 +15191,13 @@ Application
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $()$
+\end_inset
+
 
 \end_layout
 
@@ -18767,37 +15205,195 @@ Application
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\dfrac{}{\Gamma\Fsep x:\tau\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\{v^{>}|\text{\ensuremath{\vec{\omega}=()}}\}$
+\end_inset
+
 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $()$
+\end_inset
+
 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega\vdash t:\tau'\Rightarrow\tau\quad\Gamma\Fsep\cdot\vdash u:\tau'}{\Gamma\Fsep\Omega\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+\vec{\sigma}\Fsep\vec{\omega}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
+\vec{\sigma}\Fsep()\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega_{1}\vdash t:\tau'\twoheadrightarrow\tau\quad\Gamma\Fsep\Omega_{2}\vdash u:\tau'}{\Gamma\Fsep\Omega_{1},\Omega_{2}\vdash t^{>}\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}^{\vec{\omega}_{1},\vec{\omega}_{2}}|\tau'\in T\text{ and }\text{\ensuremath{\vec{\omega}=\vec{\omega}_{1},\vec{\omega}_{2}}}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+\vec{\sigma}\Fsep\vec{\omega}_{1}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
+\vec{\sigma}\Fsep\vec{\omega}_{2}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\Fsep\Omega\vdash t:\tau_{2}}{\Gamma\Fsep\Omega\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\Fsep\vec{\omega}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\Fsep\Omega\vdash\lambda^{>}x.t:\tau_{1}\twoheadrightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}^{>}|\tau=(\tau_{1}\twoheadrightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\Fsep\vec{\omega}\arSep\tau_{2})$
+\end_inset
+
 
 \end_layout
 
@@ -18811,9 +15407,814 @@ Application
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:simply-typed-so"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O_{n}(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $()$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\vdash t:\tau'\Rightarrow\tau\quad\Gamma\vdash u:\tau'}{\Gamma\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+\vec{\sigma}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
+\vec{\sigma}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+System F
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:system-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O_{n}(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{n\Fsep\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+()
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma\vdash t:\tau'\Rightarrow\tau\quad n\Fsep\Gamma\vdash u:\tau'}{n\Fsep\Gamma\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}|\tau'\in S_{n}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+n\Fsep\vec{\sigma}\arSep\tau'\Rightarrow\ensuremath{\tau}\\
+n\Fsep\vec{\sigma}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{n\Fsep\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n\Fsep\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n\Fsep\Gamma\vdash t:\forall\tau_{1}\quad\tau_{2}\in S_{n}}{n\Fsep\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{A_{\tau_{1},\tau_{2}}|\tau=\tau_{1}[\tau_{2}]\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n\Fsep\vec{\sigma}\arSep\forall\tau_{1})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n+1\Fsep wk(\Gamma)\vdash t:\tau}{n\Fsep\Gamma\vdash\Lambda t:\forall\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\forall\tau'\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n+1\Fsep wk(\vec{\sigma})\arSep\tau')$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:ordered-calculus"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our setting handles linear ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, consisting of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-terms using all the variables in context.
+ In this context, a metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $m\in\mathbb{N}$
+\end_inset
+
+ can only be used in the variable context 
+\begin_inset Formula $m$
+\end_inset
+
+, and there is no freedom in choosing the arguments of a metavariable applicatio
+n, since all the variables must be used, in order.
+ Thus, there is no need to even mention those arguments in the syntax.
+ It is thus not surprising that ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus is already handled by first-order unification, where metavariables
+ do not take any argument, by considering ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus as a multi-sorted Lawvere theory where the sorts are the variable
+ contexts, and the syntax is generated by operations 
+\begin_inset Formula $L_{n}\times L_{m}\rightarrow L_{n+m}$
+\end_inset
+
+ and abstractions 
+\begin_inset Formula $L_{n+1}\rightarrow L_{n}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+With our generalisation, we can now handle calculi combining ordered and
+ unrestricted variables, such as the calculus underlying ordered linear
+ logic described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Polakow00lfm"
+literal "false"
+
+\end_inset
+
+.
+ In this section we explain how our setting handles this specific example.
+\end_layout
+
+\begin_layout Standard
+The set 
+\begin_inset Formula $T$
+\end_inset
+
+ of types is generated by a set of atomic types and two binary arrow type
+ constructions 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ and 
+\begin_inset Formula $\twoheadrightarrow$
+\end_inset
+
+.
+ The syntax extends pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus with a distinct application 
+\begin_inset Formula $t^{>}\ u$
+\end_inset
+
+ and abstraction 
+\begin_inset Formula $\lambda^{>}u$
+\end_inset
+
+.
+ Variables contexts are of the shape 
+\begin_inset Formula $\vec{\sigma}\Fsep\vec{\omega}\arSep\tau$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+, 
+\begin_inset Formula $\vec{\omega}$
+\end_inset
+
+, and 
+\begin_inset Formula $\tau$
+\end_inset
+
+ are taken in 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ The idea is that a term in such a context has type 
+\begin_inset Formula $\tau$
+\end_inset
+
+ and must use all the variables of 
+\begin_inset Formula $\vec{\omega}$
+\end_inset
+
+ in order, but is free to use any of the variables in 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+.
+ Assuming a metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $\vec{\sigma}\Fsep\vec{\omega}\arSep\tau$
+\end_inset
+
+, the above discussion about ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus justifies that there is no need to specify the arguments for the
+ ordered part 
+\begin_inset Formula $\vec{\omega}$
+\end_inset
+
+ of the context when applying 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ Thus, a metavariable application 
+\begin_inset Formula $M(\vec{x})$
+\end_inset
+
+ in the variable context 
+\begin_inset Formula $\vec{\sigma}'\Fsep\vec{\omega}'\arSep\tau'$
+\end_inset
+
+ is well-formed if 
+\begin_inset Formula $\tau=\tau'$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ is an injective renaming from 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ to 
+\begin_inset Formula $\vec{\sigma}'$
+\end_inset
+
+.
+ Therefore, we take 
+\begin_inset Formula ${\cal A}=\mathbb{F}_{m}[T]\times T^{*}\times T$
+\end_inset
+
+ for the category of arities, where 
+\begin_inset Formula $T^{*}$
+\end_inset
+
+ denote the discrete category whose objects are lists of elements of 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ The remaining components of the GB-signature are specified in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:all-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+: we alternate typing rules for the unrestricted and the ordered fragments
+ (variables, application, abstraction).
+\end_layout
+
+\begin_layout Standard
+Pullbacks and equalisers are computed essentially as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:simply-typed-so"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ For example, the most general unifier of 
+\begin_inset Formula $M(\vec{x})$
+\end_inset
+
+ and 
+\begin_inset Formula $M(\vec{y})$
+\end_inset
+
+ maps 
+\begin_inset Formula $M$
+\end_inset
+
+ to 
+\begin_inset Formula $P(\vec{z})$
+\end_inset
+
+ where 
+\begin_inset Formula $\vec{z}$
+\end_inset
+
+ is the vector of common positions of 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+, and 
+\begin_inset Formula $P$
+\end_inset
+
+ is a fresh metavariable of arity 
+\begin_inset Formula $\sigma_{\vec{z}}\Fsep\vec{\omega}\arSep\tau$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Intuitively, given 
@@ -18970,10 +16371,6 @@ name "subsec:system-F"
 \end_layout
 
 \begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
 We present intrinsic system F, following
 \begin_inset ERT
 status open
@@ -19011,12 +16408,28 @@ literal "false"
 \end_inset
 
  taking free type variables in 
-\begin_inset Formula $\{0,\dots,n-1\}$
+\begin_inset Formula $\{1,\dots,n\}$
 \end_inset
 
 .
- Intuitively, a metavariable arity 
-\begin_inset Formula $n;\sigma_{1},\dots,\sigma_{p}\vdash\tau$
+ The set of types in context 
+\begin_inset Formula $n$
+\end_inset
+
+ is inductively generated as follows, following the De Bruijn level convention.
+\begin_inset Formula 
+\[
+\dfrac{1\leq i\leq n}{n\vdash\var i}\qquad\dfrac{n\vdash t\quad n\vdash u}{n\vdash t\Rightarrow u}\qquad\dfrac{n+1\vdash t}{n\vdash\forall t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Intuitively, a metavariable arity 
+\begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
 \end_inset
 
  specifies the number 
@@ -19036,16 +16449,50 @@ literal "false"
 \end_inset
 
 .
- Substituting a metavariable 
-\begin_inset Formula $M:(n;\vec{\sigma}\vdash\tau)$
+ This provides the underlying set of objects of the category 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
- with another 
-\begin_inset Formula $M':(n';\vec{\sigma}'\vdash\tau')$
+ of renamings.
+ A term 
+\begin_inset Formula $t$
 \end_inset
 
- requires a choice 
-\begin_inset Formula $(\alpha_{0},\dots,\alpha_{n-1})$
+ in 
+\begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
+\end_inset
+
+ considered as a variable context is intuitively a well-typed term of type
+ 
+\begin_inset Formula $\tau$
+\end_inset
+
+ potentially involving ground variables of type 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and type variables in 
+\begin_inset Formula $\{1,\dots,n\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A metavariable 
+\begin_inset Formula $M:(n\Fsep\sigma_{1},\dots,\sigma_{p}\arSep\tau)$
+\end_inset
+
+ in the variable context 
+\begin_inset Formula $n'\Fsep\vec{\sigma}'\arSep\tau'$
+\end_inset
+
+ must be supplied with
+\end_layout
+
+\begin_layout Itemize
+a choice 
+\begin_inset Formula $(\eta_{1},\dots,\eta_{n})$
 \end_inset
 
  of 
@@ -19053,53 +16500,43 @@ literal "false"
 \end_inset
 
  distinct type variables among 
-\begin_inset Formula $\{0,\dots n'-1\}$
+\begin_inset Formula $\{1,\dots n'\}$
 \end_inset
 
 , such that 
-\begin_inset Formula $\tau[\vec{\alpha}]=\tau'$
+\begin_inset Formula $\tau[\vec{\eta}]=\tau'$
 \end_inset
 
-, and an injective renaming 
-\begin_inset Formula $\vec{\sigma'}[\vec{\alpha}]\rightarrow\vec{\sigma}$
+, and 
+\end_layout
+
+\begin_layout Itemize
+an injective renaming 
+\begin_inset Formula $\vec{\sigma}[\vec{\eta}]\rightarrow\vec{\sigma}'$
 \end_inset
 
-.
- We therefore consider the category 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- of metavariable arities where a morphism between 
-\begin_inset Formula $n;\Gamma\vdash\tau$
-\end_inset
-
- and 
-\begin_inset Formula $n';\Gamma'\vdash\tau'$
-\end_inset
-
- is a morphism 
-\begin_inset Formula $\sigma:n\rightarrow n'$
-\end_inset
-
- in 
-\begin_inset Formula $\mathbb{F}_{m}$
+, i.e., a list of distinct positions 
+\begin_inset Formula $r_{1},\dots,r_{p}$
 \end_inset
 
  such that 
-\begin_inset Formula $\tau[\sigma]=\tau'$
+\begin_inset Formula $\vec{\sigma}[\vec{\eta}]=\sigma'_{\vec{r}}$
 \end_inset
 
-, and a renaming 
-\begin_inset Formula $\Gamma[\sigma]\rightarrow\Gamma'$
-\end_inset
+.
+\end_layout
 
- .
- More formally, 
+\begin_layout Standard
+This defines the data for a morphism in 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- is the op-lax colimit of 
-\begin_inset Formula $n\mapsto\mathbb{F}_{m}[S_{n}]\times S_{n}$
+ between 
+\begin_inset Formula $(n\Fsep\vec{\sigma}\arSep\tau)$
+\end_inset
+
+ and 
+\begin_inset Formula $(n'\Fsep\vec{\sigma}'\arSep\tau')$
 \end_inset
 
 .
@@ -19121,315 +16558,161 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\align center
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O_{n;\Gamma\vdash\tau}=\coprod\dots$
+All morphisms in 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $L_{n;\Gamma\vdash\tau,o,j}=\ ?$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Delta;\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v_{i}|i\in|\Gamma|_{\tau}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma\vdash t:\tau'\Rightarrow\tau\quad n;\Gamma\vdash u:\tau'}{n;\Gamma\vdash t\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}|\tau'\in S_{n}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{l}
-L_{-,0}=n;\Gamma\vdash\tau'\Rightarrow\ensuremath{\tau}\\
-L_{-,1}=n;\Gamma\vdash\tau'
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n;\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{n;\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $L_{-,0}=n;\Gamma,\tau_{1}\vdash\tau_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n|\Gamma\vdash t:\Lambda\tau_{1}\quad\tau_{2}\in S_{n}}{n|\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{A_{\tau_{1},\tau_{2}}|\tau=\tau_{1}[\tau_{2}]\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $L_{-,0}=n;\Gamma\vdash\Lambda\tau_{1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1|wk(\Gamma)\vdash t:\tau}{n|\Gamma\vdash\Lambda t:\Lambda\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\Lambda\tau'\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $L_{-,0}=n+1;wk(\Gamma)\vdash\tau$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To understand how unification of two metavariables works (see the rules
+ are monomorphic.
  
-\begin_inset Formula $\refrule{U-RigRig}$
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:A-finite-connected"
+
 \end_inset
 
- and 
-\begin_inset Formula $\refrule{P-Rig}$
-\end_inset
 
-), let us explain how finite connected limits are computed in 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
-.
+ has finite connected limits.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Enumerate
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits;
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $F$
-\end_inset
-
- restricts as an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-, or equivalently, by 
+Before tackling the proof, let us mention that those pullbacks and equalisers
+ are computed as in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:F-restricts-simpl"
+reference "subsec:example-lambda"
 plural "false"
 caps "true"
 noprefix "false"
 
 \end_inset
 
-, each 
-\begin_inset Formula $O_{\ell}:{\cal A}\rightarrow\Set$
+, by computing the vector of common (value) positions.
+ For example, given a metavariable 
+\begin_inset Formula $M$
 \end_inset
 
- and each 
-\begin_inset Formula $H_{\ell,j}:\int O_{\ell}\rightarrow{\cal A}$
+ of arity 
+\begin_inset Formula $m\Fsep\vec{\sigma}\arSep\tau$
 \end_inset
 
- preserves finite connected limits.
+, to unify 
+\begin_inset Formula $M(\vec{w}\Fsep\vec{x})$
+\end_inset
+
+ with 
+\begin_inset Formula $M(\vec{y}\Fsep\vec{z})$
+\end_inset
+
+, we compute the vector of common positions 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ between 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+, and the vector of common positions 
+\begin_inset Formula $\vec{p}'$
+\end_inset
+
+ between 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{z}$
+\end_inset
+
+.
+ Then, the most general unifier maps 
+\begin_inset Formula $M$
+\end_inset
+
+ to the term 
+\begin_inset Formula $P(\vec{p}\Fsep\vec{p}')$
+\end_inset
+
+, where 
+\begin_inset Formula $P$
+\end_inset
+
+ is a fresh metavariable.
+ Its arity 
+\begin_inset Formula $m'\Fsep\vec{\sigma}'\arSep\tau'$
+\end_inset
+
+ is the only possible one for 
+\begin_inset Formula $P(\vec{p}|\vec{p}')$
+\end_inset
+
+ to be well-formed in the variable context 
+\begin_inset Formula $m\Fsep\vec{\sigma}\arSep\tau$
+\end_inset
+
+, that is, 
+\begin_inset Formula $m'$
+\end_inset
+
+ is the size of 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+, while 
+\begin_inset Formula $\tau'=\tau[p_{i}\mapsto i]$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\sigma}'=\text{\ensuremath{\sigma_{\vec{p}'}}}[p_{i}\mapsto i]$
+\end_inset
+
+.
 \end_layout
 
+\begin_layout Standard
+Let us now turn to the proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:A-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
 \end_inset
 
+.
+ In fact, we are going to show that 
+\begin_inset Formula ${\cal A}$
+\end_inset
 
+ is finitely complete.
+ First, note that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ is the op-lax colimit of the functor from 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ to the category of small categories mapping 
+\begin_inset Formula $n$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathbb{F}_{m}[S_{n}]\times S_{n}$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -19450,15 +16733,11 @@ Let us introduce the category
 \end_inset
 
 .
- Note that this is op-lax colimit of 
+ Formally, this is the op-lax colimit of 
 \begin_inset Formula $n\mapsto\mathbb{F}_{m}[S_{n}]$
 \end_inset
 
-, and there is an obvious projection 
-\begin_inset Formula ${\cal A}\rightarrow{\cal A}'$
-\end_inset
-
-, which creates finite limits, as we will show.
+.
 \end_layout
 
 \begin_layout Lemma
@@ -19494,7 +16773,7 @@ The crucial point is that
 
 .
  Intuitively, if 
-\begin_inset Formula $\Gamma\in\mathbb{F}_{m}[S_{n}]$
+\begin_inset Formula $\vec{\sigma}\in\mathbb{F}_{m}[S_{n}]$
 \end_inset
 
  and 
@@ -19506,11 +16785,11 @@ The crucial point is that
 \end_inset
 
 , then 
-\begin_inset Formula $f_{!}\Gamma\in\mathbb{F}_{m}[S_{n'}]$
+\begin_inset Formula $f_{!}\vec{\sigma}\in\mathbb{F}_{m}[S_{n'}]$
 \end_inset
 
  is essentially 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\vec{\sigma}$
 \end_inset
 
  restricted to elements of 
@@ -19527,7 +16806,7 @@ The crucial point is that
 \end_inset
 
  is right adjoint to 
-\begin_inset Formula $\Gamma\mapsto\Gamma[f]$
+\begin_inset Formula $\vec{\sigma}\mapsto\vec{\sigma}[f]$
 \end_inset
 
 , and is thus continuous.
@@ -19566,16 +16845,16 @@ Let
 \end_inset
 
  by 
-\begin_inset Formula $n_{i};\Gamma_{i}\vdash\tau_{i}$
+\begin_inset Formula $n_{i}\Fsep\vec{\sigma}_{i}\arSep\tau_{i}$
 \end_inset
 
 .
  Let 
-\begin_inset Formula $n;\Gamma$
+\begin_inset Formula $n\Fsep\vec{\sigma}$
 \end_inset
 
  be the limit of 
-\begin_inset Formula $i\mapsto n_{i};\Gamma_{i}$
+\begin_inset Formula $i\mapsto n_{i}\Fsep\vec{\sigma}_{i}$
 \end_inset
 
  in 
@@ -19610,11 +16889,8 @@ Let
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Proof
-It is easy to check that 
-\begin_inset Formula $n;\Gamma\vdash\tau$
+ It is easy to check that 
+\begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
 \end_inset
 
  is the limit of 
@@ -19622,476 +16898,6 @@ It is easy to check that
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-More concretely, a finite connected limit of 
-\begin_inset Formula $i\mapsto n_{i};\Gamma_{i}\vdash\tau_{i}$
-\end_inset
-
- in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- is computed as follows:
-\end_layout
-
-\begin_layout Enumerate
-compute the limit 
-\begin_inset Formula $n$
-\end_inset
-
- of 
-\begin_inset Formula $(n_{i})_{i}$
-\end_inset
-
- in 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
-, denoting 
-\begin_inset Formula $p_{i}:n\rightarrow n_{i}$
-\end_inset
-
- is the canonical projections;
-\end_layout
-
-\begin_layout Enumerate
-define 
-\begin_inset Formula $\tau$
-\end_inset
-
- as the (only) element of 
-\begin_inset Formula $S_{n}$
-\end_inset
-
- such that 
-\begin_inset Formula $\tau[p_{i}]=\tau_{i}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-define 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- as the limit in 
-\begin_inset Formula $\mathbb{F}_{m}[S_{n}]$
-\end_inset
-
- of 
-\begin_inset Formula $p_{i,!}\Gamma_{i}$
-\end_inset
-
-, where 
-\begin_inset Formula $p_{i,!}:\mathbb{F}_{m}[S_{n_{i}}]\rightarrow\mathbb{F}_{m}[S_{n}]$
-\end_inset
-
- is the reindexing functor described in the proof of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:A'-lim"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-This means that to unify 
-\begin_inset Formula $M(\vec{\alpha};\vec{\tau})$
-\end_inset
-
- with 
-\begin_inset Formula $M(\vec{\alpha}';\vec{\tau}')$
-\end_inset
-
-, with 
-\begin_inset Formula $M$
-\end_inset
-
- of arity 
-\begin_inset Formula $p;\vec{u}\vdash u'$
-\end_inset
-
-, we first need to compute the vector of common position 
-\begin_inset Formula $\vec{i}$
-\end_inset
-
- between 
-\begin_inset Formula $\vec{\alpha}$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{\alpha}'$
-\end_inset
-
-, i.e, the largest vector 
-\begin_inset Formula $(i_{1}<\dots<i_{n})$
-\end_inset
-
- such that 
-\begin_inset Formula $\alpha_{i_{j}}=\alpha'_{i_{j}}$
-\end_inset
-
-.
- Then, we consider 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{\sigma}'$
-\end_inset
-
- so that 
-\begin_inset Formula $\vec{\sigma}[j\mapsto i_{j+1}]$
-\end_inset
-
- is the sub-list of 
-\begin_inset Formula $\vec{\tau}$
-\end_inset
-
- that only use type variables in 
-\begin_inset Formula $\alpha_{i_{1}},\dots,\alpha_{i_{n}}$
-\end_inset
-
-, and similarly for 
-\begin_inset Formula $\vec{\sigma}'$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{\tau}'$
-\end_inset
-
-.
- Finally, we define 
-\begin_inset Formula $(t_{1},\dots,t_{m})$
-\end_inset
-
- as the vector of common positions between 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{\sigma}'$
-\end_inset
-
-.
- The most general unifier is then 
-\begin_inset Formula $M\mapsto N(\vec{i},\vec{t})$
-\end_inset
-
- for a fresh metavariable 
-\begin_inset Formula $N$
-\end_inset
-
- of arity 
-\begin_inset Formula $n;\sigma_{t_{1}},\dots\sigma_{t_{m}}\vdash t'$
-\end_inset
-
-, where 
-\begin_inset Formula $t'$
-\end_inset
-
- is 
-\begin_inset Formula $u'[i_{j+1}\mapsto j]$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-With this explicit description, it is straightforward to check that each
- 
-\begin_inset Formula $O_{\ell}$
-\end_inset
-
- and 
-\begin_inset Formula $H_{\ell,j}$
-\end_inset
-
- preserves finite connected limits.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Formula $O\in\C$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-It is enough to show that each coproduct component of the above table is
- in 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- Let us detail type application.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-The functor 
-\begin_inset Formula $(n;\Gamma\vdash\tau)\mapsto\{\Lambda_{\tau'}|\tau=\Lambda\tau'\}$
-\end_inset
-
- is the equaliser of 
-\begin_inset Formula $\xymatrix{S_{\underline{n}+1}\coeqr{u}{v} & S_{\underline{n}}}
-$
-\end_inset
-
- where 
-\begin_inset Formula $\underline{n}:{\cal A}\rightarrow\mathbb{F}_{m}$
-\end_inset
-
- is the canonical projection, 
-\begin_inset Formula $u$
-\end_inset
-
- maps 
-\begin_inset Formula $\tau'$
-\end_inset
-
- to 
-\begin_inset Formula $\Lambda\tau'$
-\end_inset
-
- and 
-\begin_inset Formula $v_{\tau}$
-\end_inset
-
- maps anything to 
-\begin_inset Formula $\tau$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula $(n;\Gamma\vdash\tau)\mapsto\{A_{\tau_{1},\tau_{2}}|\tau=\tau_{1}[\tau_{2}]\}$
-\end_inset
-
- is the equaliser of 
-\begin_inset Formula $\xymatrix{S_{\underline{n}+1}\times S_{\underline{n}}\coeqr{u}{v} & S_{\underline{n}}}
-,$
-\end_inset
-
-where 
-\begin_inset Formula $u$
-\end_inset
-
- maps 
-\begin_inset Formula $(\tau_{1},\tau_{2})$
-\end_inset
-
- to 
-\begin_inset Formula $\tau_{1}[\tau_{2}]$
-\end_inset
-
- and 
-\begin_inset Formula $v_{n;\Gamma\vdash\tau}$
-\end_inset
-
- maps anything to 
-\begin_inset Formula $\tau$
-\end_inset
-
-.
- 
-\begin_inset Formula $u$
-\end_inset
-
- is induced by a natural transformation between functors 
-\begin_inset Formula $\mathbb{F}_{m}\rightarrow\Set$
-\end_inset
-
-.
- Let us check that 
-\begin_inset Formula $v$
-\end_inset
-
- is natural.
- Let 
-\begin_inset Formula $(n\xrightarrow{f}n',\Gamma[f]\xrightarrow{g}\Gamma')$
-\end_inset
-
- be a morphism between 
-\begin_inset Formula $n;\Gamma\vdash\tau$
-\end_inset
-
- and 
-\begin_inset Formula $n';\Gamma'\vdash\tau'$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $(\tau_{1},\tau_{2})\in S_{n+1}\times S_{n}$
-\end_inset
-
-.
- We need to check that 
-\begin_inset Formula $S_{f}(v_{n;\Gamma\vdash\tau}(\tau_{1},\tau_{2}))=v_{n';\Gamma\vdash\tau'}(S_{f+1}(\tau_{1}),S_{f}(\tau_{2}))$
-\end_inset
-
-.
- The l.h.s is 
-\begin_inset Formula $S_{f}(\tau)=\tau[f]$
-\end_inset
-
- while the r.h.s is 
-\begin_inset Formula $\tau'$
-\end_inset
-
-.
- Since 
-\begin_inset Formula $(f,g)$
-\end_inset
-
- is a morphism, this equality is ensured.
-\end_layout
-
-\begin_layout Lemma
-Each 
-\begin_inset Formula $H_{\ell,j}$
-\end_inset
-
- preserves finite connected limits, or equivalently, 
-\begin_inset Formula 
-\[
-H_{\ell,j}(\lim d,x)\rightarrow\int_{i}H_{\ell,j}(d_{i},O_{\ell}(p_{i})(x))
-\]
-
-\end_inset
-
-is an isomorphism.
-\end_layout
-
-\begin_layout Proof
-Let us take the example of type application and show that it preserves pullbacks.
- Consider a pullback
-\begin_inset Formula 
-\[
-\xymatrix{n_{0};\Gamma_{0}\vdash\tau_{0}\ar[r]^{(u_{1},v_{1})}\ar[d]_{(u_{2},v_{2})} & n_{1};\Gamma_{1}\vdash\tau_{1}\ar[d]^{(f_{1},g_{1})}\\
-n_{2};\Gamma_{2}\vdash\tau_{2}\ar[r]_{(f_{2},g_{2})} & n_{3};\Gamma_{3}\vdash\tau_{3}
-}
-\]
-
-\end_inset
-
-Let us take 
-\begin_inset Formula $x=A_{\sigma_{1},\sigma_{2}}$
-\end_inset
-
-, so that 
-\begin_inset Formula $\tau_{0}=\sigma_{1}[\sigma_{2}]$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula $L_{\lim d,x,0}=n_{0};\Gamma_{0}\vdash\Lambda\sigma_{1}$
-\end_inset
-
-.
- We need to check that the following square is a pullback
-\begin_inset Formula 
-\[
-\xymatrix{n_{0};\Gamma_{0}\vdash\Lambda\sigma_{1}\ar[r]^{(u_{1},v_{1})}\ar[d]_{(u_{2},v_{2})} & n_{1};\Gamma_{1}\vdash\Lambda\sigma_{1}[u_{1}]\ar[d]^{(f_{1},g_{1})}\\
-n_{2};\Gamma_{2}\vdash\Lambda\sigma_{1}[u_{2}]\ar[r]_{(f_{2},g_{2})} & n_{3};\Gamma_{3}\vdash\Lambda\sigma_{1}[u_{1}][f_{1}]
-}
-\]
-
-\end_inset
-
-This is easy.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-We need to consider something like 
-\begin_inset Formula $\Set$
-\end_inset
-
-, but restricted to a full subcategory embedding so that the Yoneda embedding
- preserve finite connected limits.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Mais en raisonnant sur 
-\begin_inset Formula $\Set$
-\end_inset
-
-, je ne epu pas considerer la monade T' (cf main)...
- Je pourrais travailler sur 
-\begin_inset Formula $\Set$
-\end_inset
-
- ou mieux, sur les ensembles nominaux tiens, comme ca tout le monde preserve
- les pushouts.
- Mais est-ce que c'est skew monoidal, bof c'est pas si grave?
-\end_layout
-
-\begin_layout Plain Layout
-Mais est -ce que ca fait bien la moande des termes.
- Bof on peut la definir a la main.
- Mais comment on sait que c'est une monade? Ca se voit a la main.
- Ah mais non c'est une moande libre comme le fait remarquer le gars la Ah
- mais attend, les coproduits d'ensembles nominaux c'est complique non? Bah
- non en fait.
- J'ai quand meme besoin que 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -20162,7 +16968,7 @@ status open
 Proof of 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:various"
+reference "lem:res-F"
 plural "false"
 caps "true"
 noprefix "false"
@@ -20175,163 +16981,381 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "app:proof-assu-various"
+name "app:resF-direct"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-
-\emph on
-(i)
-\emph default
- We assume that 
-\begin_inset Formula ${\cal A}$
+\begin_layout Notation
+Given a functor 
+\begin_inset Formula $F:D\rightarrow\B$
 \end_inset
 
- has finite connected limits.
- Hence, its opposite category 
-\begin_inset Formula $\D=\op{{\cal A}}$
+, we denote the limit (resp.
+ colimit) of 
+\begin_inset Formula $F$
 \end_inset
 
- has finite connected colimits.
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-(ii)
-\emph default
- Let 
-\begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+ by 
+\begin_inset Formula $\int_{d:D}F(d)$
 \end_inset
 
- denote the Yoneda embedding and 
-\begin_inset Formula $J:\C\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- denote the canonical embedding, so that 
-\begin_inset Formula 
-\begin{equation}
-y=J\circ K.\label{eq:def-y}
-\end{equation}
-
-\end_inset
-
-Now consider a finite connected limit 
+ or 
 \begin_inset Formula $\lim F$
 \end_inset
 
- in 
-\begin_inset Formula $\mathcal{A}$
+ (resp.
+ 
+\begin_inset Formula $\int^{d:D}F(d)$
 \end_inset
 
-.
- Then, 
-\begin_inset Formula 
-\begin{align*}
-\C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
- & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By \prettyref{eq:def-y}}\\
- & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
- & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
- & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
- & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By \prettyref{eq:def-y}}\\
- & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
- & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
-\end{align*}
-
+ or 
+\begin_inset Formula $\colim F$
 \end_inset
 
-Thus, 
-\begin_inset Formula $K\lim F\cong\colim KF$
+), and the canonical projection 
+\begin_inset Formula $\lim F\rightarrow Fd$
+\end_inset
+
+ by 
+\begin_inset Formula $p_{d}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
+This section is dedicated to the proof of the following lemma.
+\end_layout
 
-\emph on
-(iii)
-\emph default
- A morphism 
-\begin_inset Formula $f:a\rightarrow b$
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:F-restricts-simpl"
+
 \end_inset
 
- is epimorphic if and only if the following square is a pushout 
+Given a GB-signature 
+\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\end_inset
+
+ such that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits, 
+\begin_inset Formula $F_{S}$
+\end_inset
+
+ restricts as an endofunctor on the full subcategory 
+\begin_inset Formula $\C$
+\end_inset
+
+ of 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ consisting of functors preserving finite connected limits if and only if
+ each 
+\begin_inset Formula $O_{n}\in\C$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
+\end_inset
+
+ preserves finite limits.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We first need a couple of lemmas.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:coprod-filtered"
+
+\end_inset
+
+If 
+\begin_inset Formula $\B$
+\end_inset
+
+ is a small category with finite connected limits, then a functor 
+\begin_inset Formula $G:\B\rightarrow\Set$
+\end_inset
+
+ preserves those limits if and only if 
+\begin_inset Formula $\int\B$
+\end_inset
+
+ is a coproduct of filtered categories.
+\end_layout
+
+\begin_layout Proof
+This is a direct application of 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Exercise III.4.4"
-key "MacLane:cwm"
+after "Theorem 2.4 and Example 2.3.(iii)"
+key "classificationaccessible"
 literal "false"
 
 \end_inset
 
-
+.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-YADE DIAGRAM {"graph":{"edges":[{"from":0,"id":4,"label":{"label":"f","style":{"
-alignment":"left","bend":0,"dashed":false,"double":false,"head":"default","posit
-ion":0.5,"tail":"none"}},"to":1},{"from":1,"id":5,"label":{"label":"","style":{"a
-lignment":"left","bend":0,"dashed":false,"double":true,"head":"none","position":
-0.5,"tail":"none"}},"to":2},{"from":0,"id":6,"label":{"label":"f","style":{"align
-ment":"right","bend":0,"dashed":false,"double":false,"head":"default","position"
-:0.5,"tail":"none"}},"to":3},{"from":3,"id":7,"label":{"label":"","style":{"align
-ment":"left","bend":0,"dashed":false,"double":true,"head":"none","position":0.5,"
-tail":"none"}},"to":2}],"latexPreamble":"","nodes":[{"id":0,"label":{"isMath":tr
-ue,"label":"A","pos":[300,100]}},{"id":1,"label":{"isMath":true,"label":"B","pos
-":[500,100]}},{"id":2,"label":{"isMath":true,"label":"B","pos":[500,300]}},{"id"
-:3,"label":{"isMath":true,"label":"A","pos":[300,300]}}],"sizeGrid":200},"versio
-n":5}
-\end_layout
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:J-preserve"
 
 \end_inset
 
+Assume 
+\begin_inset Formula ${\cal A}$
+\end_inset
 
-\begin_inset Preview
+ has finite connected limits.
+ Then 
+\begin_inset Formula $J:\mathbb{N}\times\mathcal{A}\rightarrow{\cal \Set}$
+\end_inset
+
+ preserves finite connected limits if and only if each 
+\begin_inset Formula $O_{n}:{\cal A\rightarrow\Set}$
+\end_inset
+
+ does.
+\end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This follows from 
+\begin_inset Formula $\int J\cong\coprod_{n\in\mathbb{N}}\coprod_{j\in\{1,\dots,n\}}\int O_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:data-functor-elt"
+
+\end_inset
+
+Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ be a functor.
+ A functor 
+\begin_inset Formula $G:D\rightarrow\int F$
+\end_inset
+
+ is equivalently given by a functor 
+\begin_inset Formula $H:D\rightarrow\B$
+\end_inset
+
+ and an element 
+\begin_inset Formula $x\in\lim(F\circ H)$
+\end_inset
+
+, retrieving 
+\begin_inset Formula $G$
+\end_inset
+
+ as 
+\begin_inset Formula $Gd=(Hd,x_{d})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\int F$
+\end_inset
+
+ is isomorphic to the opposite of the comma category 
+\begin_inset Formula $y/F$
+\end_inset
+
+, where 
+\begin_inset Formula $y:\op{\B}\rightarrow[\B,\Set]$
+\end_inset
+
+ is the Yoneda embedding.
+ The statement follows from the universal property of a comma category.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:lim-elt"
+
+\end_inset
+
+Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ preserving a limit 
+\begin_inset Formula $\lim G$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $x\in F\lim G$
+\end_inset
+
+, thus inducing a functor 
+\begin_inset Formula $G_{x}:D\rightarrow\int F$
+\end_inset
+
+ by the previous lemma.
+ Then, the limit of 
+\begin_inset Formula $G_{x}$
+\end_inset
+
+ is 
+\begin_inset Formula $(\lim D,x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\C$
+\end_inset
+
+ denote the full subcategory of 
+\begin_inset Formula $[\B,\Set]$
+\end_inset
+
+ of functors preserving 
+\begin_inset Formula $\lim G$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\int F$
+\end_inset
+
+ is isomorphic to the opposite of the comma category 
+\begin_inset Formula $K/F$
+\end_inset
+
+, where 
+\begin_inset Formula $K:\op{\B}\rightarrow\C$
+\end_inset
+
+ is the Yoneda embedding, which preserves 
+\begin_inset Formula $\colim G$
+\end_inset
+
+, by an argument similar to the proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:K-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ The forgetful functor from a comma category 
+\begin_inset Formula $L/R$
+\end_inset
+
+ to the product of the categories creates colimits that 
+\begin_inset Formula $L$
+\end_inset
+
+ preserve.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:preserves-elt"
+
+\end_inset
+
+Given categories 
+\begin_inset Formula $I$
+\end_inset
+
+ and 
+\begin_inset Formula $\B$
+\end_inset
+
+ such that any functor 
+\begin_inset Formula $d:I\rightarrow\B$
+\end_inset
+
+ has a limit, if a functor 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ preserves each such limit, then the following properties are equivalent
+ for a functor 
+\begin_inset Formula $G:\int F\rightarrow\B'$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-% https://q.uiver.app/?q=WzAsNCxbMCwwLCJBIl0sWzEsMCwiQiJdLFsxLDEsIkIiXSxbMCwxLCJBI
-l0sWzAsMSwiZiJdLFsxLDIsIiIsMCx7ImxldmVsIjoyLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub
-25lIn19fV0sWzAsMywiZiIsMl0sWzMsMiwiIiwwLHsibGV2ZWwiOjIsInN0eWxlIjp7ImhlYWQiOnsib
-mFtZSI6Im5vbmUifX19XV0= 
-\end_layout
-
-\begin_layout Plain Layout
-
-
+label=(
 \backslash
-[
+roman{enumi}), ref=
 \backslash
-begin{tikzcd} 	a & b 
+theproperty.(
 \backslash
-
-\backslash
- 	b & b 	
-\backslash
-arrow["f", from=1-1, to=1-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-2, to=2-2] 	
-\backslash
-arrow["f"', from=1-1, to=2-1] 	
-\backslash
-arrow[Rightarrow, no head, from=2-1, to=2-2] 
-\backslash
-end{tikzcd}
-\backslash
-]
+roman{enumi})
 \end_layout
 
 \end_inset
@@ -20342,21 +17366,210 @@ end{tikzcd}
 \end_inset
 
 
+\begin_inset Formula $G$
+\end_inset
+
+ preserves limits over any 
+\begin_inset Formula $d':I\rightarrow\int F$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For any 
+\begin_inset Formula $d:I\rightarrow\B$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in F\lim d$
+\end_inset
+
+, the canonical morphism 
+\begin_inset Formula $G(\lim d,x)\rightarrow\int_{i:I}G(d_{i},Fp_{i}(x))$
+\end_inset
+
+ is an isomorphism, where 
+\begin_inset Formula $p_{i}:\lim d\rightarrow d_{i}$
+\end_inset
+
+ is the canonical projection.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+\begin_inset Formula $(i)\Rightarrow(ii)$
+\end_inset
+
+ Define 
+\begin_inset Formula $d':I\rightarrow\int F$
+\end_inset
+
+ as 
+\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
+\end_inset
+
+.
+ The implication follows from 
+\begin_inset Formula $\lim d'=(\lim d,x)$
+\end_inset
+
+, by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:lim-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $(ii)\Rightarrow(i)$
+\end_inset
+
+ By 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:data-functor-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, there exists 
+\begin_inset Formula $d:I\rightarrow\B$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in F\lim d$
+\end_inset
+
+ such that 
+\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
+\end_inset
+
+.
+ Again, the implication follows from 
+\begin_inset Formula $\lim d'=(\lim d,x)$
+\end_inset
+
+, by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:lim-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:can-iso-app"
+
+\end_inset
+
+Assuming that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits and each 
+\begin_inset Formula $O_{n}$
+\end_inset
+
+ preserves finite connected limits, the finite limite preservation on 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ can be reformulated as follows: given a finite connected diagram 
+\begin_inset Formula $d:D\rightarrow{\cal A}$
+\end_inset
+
+ and element 
+\begin_inset Formula $o\in\Oop n{\lim d}$
+\end_inset
+
+, the following canonical morphism is an isomorphism
+\begin_inset Formula 
+\[
+\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j
+\]
+
+\end_inset
+
+for any 
+\begin_inset Formula $j\in\{1,\dots,n\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+This is a direct application of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:preserves-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:J-preserve"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-We conclude by 
-\emph on
-(ii)
-\emph default
+\begin_inset Separator plain
+\end_inset
 
-\begin_inset Note Note
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
+
+[Proof of 
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "assu:K-finite-connected"
+reference "lem:F-restricts-simpl"
 plural "false"
 caps "true"
 noprefix "false"
@@ -20364,98 +17577,169 @@ noprefix "false"
 \end_inset
 
 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+]
 \end_layout
 
 \end_inset
 
-, because all morphisms in 
-\begin_inset Formula $\D=\op{{\cal A}}$
-\end_inset
-
- are epimorphic by assumption.
+Let us prove the only if statement.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Proof
+Let 
+\begin_inset Formula $d:D\rightarrow{\cal A}$
+\end_inset
 
-\emph on
-(iv)
-\emph default
- This follows from 
+ be a finite connected diagram and 
+\begin_inset Formula $X$
+\end_inset
+
+ be a functor preserving finite connected limits.
+ Then,
+\begin_inset Formula 
+\begin{align*}
+\int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
+ & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{o_{i}}1}\times\dots\times X_{\nthar{o_{i}}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{\Oop n-}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By \prettyref{cor:can-iso-app}}\\
+ & =F(X)_{\lim d}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Conversely, let us assume that 
+\begin_inset Formula $F$
+\end_inset
+
+ restricts to an endofunctor on 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $F(1)=\coprod_{n}O_{n}$
+\end_inset
+
+ preserves finite connected limits.
+ By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:lims-coprod-pw"
+reference "lem:coprod-filtered"
 plural "false"
 caps "true"
 noprefix "false"
 
 \end_inset
 
-, because a morphism 
-\begin_inset Formula $f:A\rightarrow B$
+, each 
+\begin_inset Formula $O_{n}$
 \end_inset
 
- is monomorphic if and only if the following square is a pullback
-\end_layout
-
-\begin_layout Standard
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	A & A 
-\backslash
-
-\backslash
- 	A & B 	
-\backslash
-arrow["f", from=1-2, to=2-2] 	
-\backslash
-arrow[equal, from=1-1, to=1-2] 	
-\backslash
-arrow["f"', from=2-1, to=2-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-1, to=2-1] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
+ preserves finite connected limits.
+ Now, let us show that 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\emph on
-(v)
-\emph default
- This follows from coproducts being computed pointwise (
+ preserves finite connected limits.
+ By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "lem:lims-coprod-pw"
+reference "cor:can-iso-app"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
 
-), and representable functors being connected, by the Yoneda Lemma.
+, it is enough to prove that given a finite connected diagram 
+\begin_inset Formula $d:D\rightarrow{\cal A}$
+\end_inset
+
+ and element 
+\begin_inset Formula $o\in\Oop n{\lim d}$
+\end_inset
+
+, the following canonical morphism is an isomorphism
+\begin_inset Formula 
+\[
+\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j
+\]
+
+\end_inset
+
+
 \end_layout
 
+\begin_deeper
+\begin_layout Standard
+Assume 
+\begin_inset Formula $X$
+\end_inset
+
+ preserves finite connected limits.
+ Then,
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
+ & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{o_{i}}1}\times\dots\times X_{\nthar{o_{i}}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{\Oop n-}preserves finite connected limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Then, we also have
+\begin_inset Formula 
+\begin{align*}
+\int_{i}F(X)_{d_{i}} & \cong F(X)_{\lim d}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This implies that each function 
+\begin_inset Formula $X_{\nthar oj}\rightarrow X_{\int_{i:I}\nthar{\rename o{p_{i}}}j}$
+\end_inset
+
+ is a bijection, or equivalently (by the Yoneda), that 
+\begin_inset Formula $\C(K\nthar oj,X)\rightarrow\C(K\int_{i:I}\nthar{\rename o{p_{i}}}j,X)$
+\end_inset
+
+ is an isomorphism.
+ Since the Yoneda embedding is fully faithful, 
+\begin_inset Formula $\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j$
+\end_inset
+
+ is an isomorphism.
+\end_layout
+
+\end_deeper
 \end_body
 \end_document

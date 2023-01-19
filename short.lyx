@@ -18,7 +18,9 @@
 \setboolean{fullpaper}{false}
 
 \newcommand{\startappendix}{}
+%\newcommand{\startappendix}{\appendices}
 \newcommand{\secappendix}[1]{\appendix[#1]}
+%\newcommand{\secappendix}[1]{\section{#1}}
 
 
 \newcommand{\keywords}[1]{\begin{IEEEkeywords}#1\end{IEEEkeywords}}
