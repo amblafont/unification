@@ -1765,6 +1765,48 @@ name "fig:generic-algo"
 
 \end_layout
 
+\begin_layout Standard
+In this section, we start by describing a pattern unification algorithm
+ for pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, summarised in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:algo-pure-lambda"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Then we present our generic algorithm (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:generic-algo"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), and finally show that it indeed describes a terminating algorithm in
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:completeness"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Soundness of the algorithm is justified in later sections.
+\end_layout
+
 \begin_layout Subsection
 An example: pure 
 \begin_inset Formula $\lambda$
@@ -2264,7 +2306,7 @@ status open
 We will actually do so when proving completeness in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "sec:completeness"
+reference "subsec:completeness"
 plural "false"
 caps "true"
 noprefix "false"
@@ -3700,12 +3742,7 @@ Note that variables
 
 \end_deeper
 \begin_layout Example
-GB-signatures also capture multi-sorted binding signatures such as simply-typed
- 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus, or polymorphic syntaxes such as System F (see 
+The interested reader can already jump to 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:applications"
@@ -3715,7 +3752,12 @@ noprefix "false"
 
 \end_inset
 
-).
+ to see how GB-signatures also capture multi-sorted binding signatures such
+ as simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus, or polymorphic syntax such as System F.
 \end_layout
 
 \begin_layout Standard
@@ -3933,7 +3975,27 @@ noprefix "false"
 \end_inset
 
  is that the vector notation is dropped for arguments of metavariables,
- since they are now morphisms in a category.
+ since they are now morphisms in a category
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ex-arg-sets"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ for an example where metavariables arguments are sets rather than sets.
+\end_layout
+
+\end_inset
+
+.
  Moreover, the case for operations and variables are merged in the non-cyclic
  phase with the rules 
 \begin_inset Formula $\refrule{P-Rig}$
@@ -4118,7 +4180,7 @@ Progress and termination
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:completeness"
+name "subsec:completeness"
 
 \end_inset
 
@@ -4312,7 +4374,7 @@ Can we define it truly recursively?
 
 \begin_layout Standard
 The size invariance in the above lemma is actually used in the termination
- proof of the main unification phase, where  the size of a judgment 
+ proof of the main unification phase, where the size of a judgment 
 \begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
 \end_inset
 
@@ -7007,7 +7069,7 @@ status open
 The difference with the notion of size introduced in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "sec:completeness"
+reference "subsec:completeness"
 plural "false"
 caps "false"
 noprefix "false"
@@ -8841,7 +8903,7 @@ we propose an interpretation of typing rules to define the endofunctor
 \end_layout
 
 \begin_layout Subsection
-Arguments as sets
+Metavariable arguments as sets
 \end_layout
 
 \begin_layout Standard
@@ -8863,7 +8925,7 @@ If we think of the arguments of a metavariable as specifying the available
 \end_inset
 
  is a subset of 
-\begin_inset Formula $\{0,\dots,p-1\}$
+\begin_inset Formula $\{1,\dots,p\}$
 \end_inset
 
  of cardinal 
