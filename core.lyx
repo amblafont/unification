@@ -1776,7 +1776,7 @@ In this section, we start by describing a pattern unification algorithm
 LatexCommand formatted
 reference "fig:algo-pure-lambda"
 plural "false"
-caps "false"
+caps "true"
 noprefix "false"
 
 \end_inset
@@ -3990,7 +3990,7 @@ noprefix "false"
 
 \end_inset
 
- for an example where metavariables arguments are sets rather than sets.
+ for an example where metavariables arguments are sets rather than lists.
 \end_layout
 
 \end_inset
@@ -5526,7 +5526,15 @@ Let
 \begin_inset Formula $f:a\rightarrow b$
 \end_inset
 
- is monomorphic if and only if the following square is a pullback 
+ is monomorphic if and only if the pullback of 
+\begin_inset Formula $a\xrightarrow{f}b\xleftarrow{f}a$
+\end_inset
+
+ is the identity cone 
+\begin_inset Formula $a\leftarrow a\rightarrow a$
+\end_inset
+
+ (see 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Exercise III.4.4"
@@ -5535,7 +5543,11 @@ literal "false"
 
 \end_inset
 
-.
+).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Preview
 
 \begin_layout Standard
@@ -5565,6 +5577,11 @@ arrow[Rightarrow, no head, from=1-1, to=2-1]
 end{tikzcd}
 \backslash
 ]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -7427,11 +7444,8 @@ The non-cyclic phase is concerned with unifying a list of terms
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 yade file pushout-coeq
@@ -7449,29 +7463,6 @@ yade file pushout-coeq
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Preview
 
 \begin_layout Standard
@@ -17409,15 +17400,54 @@ Let
 
  be a functor preserving finite connected limits.
  Then,
+\end_layout
+
+\begin_layout Proof
 \begin_inset Formula 
 \begin{align*}
 \int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
  & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
  & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times X_{\nthar{p_{i}(o)}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{O_{n}}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By \prettyref{cor:can-iso-app}}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times\int_{i:I}X_{\nthar{p_{i}(o)}n}\tag{By commutation of limits}
+\end{align*}
+
+\end_inset
+
+Thus, since 
+\begin_inset Formula $X$
+\end_inset
+
+ preserves finite connected limits by assumption,
+\begin_inset Formula 
+\begin{align}
+\int_{i}F(X)_{d_{i}} & =\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\label{eq:F-restrict-1}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, let us prove the only if statement first.
+ Assuming that 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
+\end_inset
+
+ and each 
+\begin_inset Formula $O_{n}$
+\end_inset
+
+ preserves finite connected limits.
+ Then,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\int_{i}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{O_{n}}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By Corollary \prettyref{cor:can-iso-app}}\\
  & =F(X)_{\lim d}
 \end{align*}
 
@@ -17456,11 +17486,6 @@ noprefix "false"
 \end_inset
 
  preserves finite connected limits.
- Now, let us show that 
-\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
-\end_inset
-
- preserves finite connected limits.
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -17492,38 +17517,15 @@ noprefix "false"
 
 \begin_deeper
 \begin_layout Standard
-Assume 
-\begin_inset Formula $X$
-\end_inset
-
- preserves finite connected limits.
- Then,
-\end_layout
-
-\end_deeper
-\begin_layout Proof
-\begin_inset Formula 
-\begin{align*}
-\int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
- & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
- & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times X_{\nthar{p_{i}(o)}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{O_{n}}preserves finite connected limits}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}
-\end{align*}
-
-\end_inset
-
 
 \end_layout
 
-\begin_deeper
 \begin_layout Standard
 Then, we also have
 \begin_inset Formula 
 \begin{align*}
-\int_{i}F(X)_{d_{i}} & \cong F(X)_{\lim d}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}
+\int_{i}F(X)_{d_{i}} & \cong F(X)_{\lim d}\tag{By assumption}\\
+ & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}
 \end{align*}
 
 \end_inset
@@ -17532,7 +17534,32 @@ Then, we also have
 \end_layout
 
 \begin_layout Standard
-This implies that each function 
+Since the left hand side is 
+\begin_inset Formula $\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}$
+\end_inset
+
+ by Equation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:F-restrict-1"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, this implies that each function 
 \begin_inset Formula $X_{\nthar oj}\rightarrow X_{\int_{i:I}\nthar{\rename o{p_{i}}}j}$
 \end_inset
 
