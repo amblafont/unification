@@ -5391,6 +5391,15 @@ Each
 \end_layout
 
 \end_deeper
+\begin_layout Remark
+The first condition is equivalent to the existence of equalisers and pullbacks
+ in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, since any finite connected limit can be constructed from those.
+\end_layout
+
 \begin_layout Standard
 These conditions ensure the following two properties.
 \end_layout
@@ -16745,12 +16754,20 @@ Given a functor
 \begin_inset Formula $\colim F$
 \end_inset
 
-), and the canonical projection 
+) and the canonical projection 
 \begin_inset Formula $\lim F\rightarrow Fd$
 \end_inset
 
  by 
 \begin_inset Formula $p_{d}$
+\end_inset
+
+ for any object 
+\begin_inset Formula $d$
+\end_inset
+
+ of 
+\begin_inset Formula $D$
 \end_inset
 
 .
@@ -16807,7 +16824,7 @@ Given a GB-signature
 \end_layout
 
 \begin_layout Standard
-We first need a couple of lemmas.
+We first introduce a bunch of intermediate lemmas.
 \end_layout
 
 \begin_layout Lemma
@@ -16895,24 +16912,24 @@ Let
 \end_inset
 
  be a functor.
- A functor 
+ For any functor 
 \begin_inset Formula $G:D\rightarrow\int F$
 \end_inset
 
- is equivalently given by a functor 
-\begin_inset Formula $H:D\rightarrow\B$
+, denoting 
+\begin_inset Formula $H$
 \end_inset
 
- and an element 
+ the composite functor 
+\begin_inset Formula $D\xrightarrow{G}\int F\rightarrow\B$
+\end_inset
+
+, there exists a unique 
 \begin_inset Formula $x\in\lim(F\circ H)$
 \end_inset
 
-, retrieving 
-\begin_inset Formula $G$
-\end_inset
-
- as 
-\begin_inset Formula $Gd=(Hd,x_{d})$
+ such that 
+\begin_inset Formula $Gd=(Hd,p_{d}(x))$
 \end_inset
 
 .
@@ -16934,13 +16951,6 @@ Let
  The statement follows from the universal property of a comma category.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
@@ -16948,6 +16958,54 @@ name "lem:lim-elt"
 
 \end_inset
 
+Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ and 
+\begin_inset Formula $G:D\rightarrow\int F$
+\end_inset
+
+ such that 
+\begin_inset Formula $F$
+\end_inset
+
+ preserves the limit of 
+\begin_inset Formula $H:D\xrightarrow{G}\int F\xrightarrow{}\B$
+\end_inset
+
+.
+ Then, there exists a unique 
+\begin_inset Formula $x\in F\lim H$
+\end_inset
+
+ such that 
+\begin_inset Formula $G(d)=(H(d),Fp_{i}(x))$
+\end_inset
+
+ and moreover, 
+\begin_inset Formula $(\lim H,x)$
+\end_inset
+
+ is the limit of 
+\begin_inset Formula $G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
 Let 
 \begin_inset Formula $F:\B\rightarrow\Set$
 \end_inset
@@ -16977,8 +17035,40 @@ Let
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proof
-Let 
+The unique existence of 
+\begin_inset Formula $x\in F\lim H$
+\end_inset
+
+ such that 
+\begin_inset Formula $G(d)=(H(d),Fp_{i}(x))$
+\end_inset
+
+ follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:data-functor-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and the fact that 
+\begin_inset Formula $F$
+\end_inset
+
+ preserves 
+\begin_inset Formula $\lim H$
+\end_inset
+
+.
+ Let 
 \begin_inset Formula $\C$
 \end_inset
 
@@ -17018,7 +17108,8 @@ noprefix "false"
 \end_inset
 
 .
- The forgetful functor from a comma category 
+ We conclude from the fact that the forgetful functor from a comma category
+ 
 \begin_inset Formula $L/R$
 \end_inset
 
@@ -17044,71 +17135,51 @@ name "cor:preserves-elt"
 
 \end_inset
 
-Given categories 
-\begin_inset Formula $I$
+Let 
+\begin_inset Formula $D$
 \end_inset
 
- and 
+ be a small category, 
 \begin_inset Formula $\B$
 \end_inset
 
- such that any functor 
-\begin_inset Formula $d:I\rightarrow\B$
+ and 
+\begin_inset Formula $\B'$
 \end_inset
 
- has a limit, if a functor 
+ be categories with 
+\begin_inset Formula $D$
+\end_inset
+
+-limits (i.e., limits of any diagram over 
+\begin_inset Formula $D$
+\end_inset
+
+).
+ Let 
 \begin_inset Formula $F:\B\rightarrow\Set$
 \end_inset
 
- preserves each such limit, then the following properties are equivalent
- for a functor 
+ be a functor preserving those colimits.
+ Then, 
+\begin_inset Formula $\int F$
+\end_inset
+
+ has 
+\begin_inset Formula $D$
+\end_inset
+
+-limits, preserved by the projection 
+\begin_inset Formula $\int F\rightarrow\B$
+\end_inset
+
+.
+ Moreover, a functor 
 \begin_inset Formula $G:\int F\rightarrow\B'$
 \end_inset
 
-.
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-label=(
-\backslash
-roman{enumi}), ref=
-\backslash
-theproperty.(
-\backslash
-roman{enumi})
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $G$
-\end_inset
-
- preserves limits over any 
-\begin_inset Formula $d':I\rightarrow\int F$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-For any 
-\begin_inset Formula $d:I\rightarrow\B$
+ preserves them if and only if for any 
+\begin_inset Formula $d:D\rightarrow\B$
 \end_inset
 
  and 
@@ -17116,35 +17187,14 @@ For any
 \end_inset
 
 , the canonical morphism 
-\begin_inset Formula $G(\lim d,x)\rightarrow\int_{i:I}G(d_{i},Fp_{i}(x))$
+\begin_inset Formula $G(\lim d,x)\rightarrow\int_{i:D}G(d_{i},Fp_{i}(x))$
 \end_inset
 
- is an isomorphism, where 
-\begin_inset Formula $p_{i}:\lim d\rightarrow d_{i}$
-\end_inset
-
- is the canonical projection.
+ is an isomorphism.
 \end_layout
 
-\end_deeper
 \begin_layout Proof
-\begin_inset Formula $(i)\Rightarrow(ii)$
-\end_inset
-
- Define 
-\begin_inset Formula $d':I\rightarrow\int F$
-\end_inset
-
- as 
-\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
-\end_inset
-
-.
- The implication follows from 
-\begin_inset Formula $\lim d'=(\lim d,x)$
-\end_inset
-
-, by 
+By 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "lem:lim-elt"
@@ -17154,48 +17204,28 @@ noprefix "false"
 
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula $(ii)\Rightarrow(i)$
+, a diagram 
+\begin_inset Formula $d':D\rightarrow\int F$
 \end_inset
 
- By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:data-functor-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, there exists 
-\begin_inset Formula $d:I\rightarrow\B$
+ is equivalently given by 
+\begin_inset Formula $d:D\rightarrow\B$
 \end_inset
 
  and 
 \begin_inset Formula $x\in F\lim d$
 \end_inset
 
- such that 
+, recovering 
+\begin_inset Formula $d'$
+\end_inset
+
+ as 
 \begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
 \end_inset
 
-.
- Again, the implication follows from 
+, and moreover 
 \begin_inset Formula $\lim d'=(\lim d,x)$
-\end_inset
-
-, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lim-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
 \end_inset
 
 .
@@ -17383,7 +17413,7 @@ Let
 \begin{align*}
 \int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
  & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
- & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{o_{i}}1}\times\dots\times X_{\nthar{o_{i}}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times X_{\nthar{p_{i}(o)}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{O_{n}}}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}\\
@@ -17476,9 +17506,9 @@ Assume
 \begin{align*}
 \int_{i}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
  & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
- & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{o_{i}}1}\times\dots\times X_{\nthar{o_{i}}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times X_{\nthar{p_{i}(o)}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{O_{n}}preserves finite connected limits}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\int_{i:I}\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}\int_{i:I}X_{\nthar{\rename o{p_{i}}}1}\times\dots\times\int_{i:I}X_{\nthar{\rename o{p_{i}}}n}\tag{By commutation of limits}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{X}}
 \end{align*}
 
@@ -17554,7 +17584,7 @@ noprefix "false"
 
 \end_inset
 
-) is finitely complete.
+) has finite connected limits.
  First, note that 
 \begin_inset Formula ${\cal A}$
 \end_inset
@@ -17607,7 +17637,7 @@ name "lem:A'-lim"
 \begin_inset Formula ${\cal A}'$
 \end_inset
 
- has finite limits, and the projection functor 
+ has finite connected limits, and the projection functor 
 \begin_inset Formula ${\cal A}'\rightarrow\mathbb{F}_{m}$
 \end_inset
 
@@ -17657,8 +17687,13 @@ The crucial point is that
 \end_inset
 
 .
- Note that 
-\begin_inset Formula $f_{!}$
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Note that 
+\begin_inset Formula $f_{!}:\mathbb{F}_{m}[S_{n}]\rightarrow\mathbb{F}_{m}[S_{n'}]$
 \end_inset
 
  is right adjoint to 
@@ -17666,101 +17701,152 @@ The crucial point is that
 \end_inset
 
 , and is thus continuous.
- We now apply 
+\end_layout
+
+\end_inset
+
+ We can now apply 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Theorem 4.2 and Proposition 4.1"
+after "Corollary 4.3"
 key "grayfib"
 literal "false"
 
 \end_inset
 
-: each 
+, since each 
 \begin_inset Formula $\mathbb{F}_{m}[S_{n}]$
 \end_inset
 
- has those limits.
+ has finite connected limits.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+is it?
 \end_layout
 
-\begin_layout Lemma
-The projection functor 
-\begin_inset Formula ${\cal A}\rightarrow{\cal A}'$
 \end_inset
 
- creates finite limits.
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
 \end_layout
 
-\begin_layout Proof
-Let 
-\begin_inset Formula $d:I\rightarrow{\cal A}$
 \end_inset
 
- be a functor.
- We denote 
-\begin_inset Formula $d_{i}$
-\end_inset
 
- by 
-\begin_inset Formula $n_{i}\Fsep\vec{\sigma}_{i}\arSep\tau_{i}$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $n\Fsep\vec{\sigma}$
-\end_inset
-
- be the limit of 
-\begin_inset Formula $i\mapsto n_{i}\Fsep\vec{\sigma}_{i}$
-\end_inset
-
- in 
-\begin_inset Formula ${\cal A}'$
-\end_inset
-
-.
- By the previous lemma, 
-\begin_inset Formula $n$
-\end_inset
-
- is the limit of 
-\begin_inset Formula $i\mapsto n_{i}$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula $S:\mathbb{F}_{m}\rightarrow\Set$
-\end_inset
-
- preserves finite connected limits.
- Thus, we can define 
-\begin_inset Formula $\tau\in S_{n}$
-\end_inset
-
- as corresponding to the universal function 
-\begin_inset Formula $1\rightarrow S_{n}$
-\end_inset
-
- factorising the cone 
-\begin_inset Formula $(1\xrightarrow{\tau_{i}}S_{n_{i}})_{i}$
-\end_inset
-
-.
- It is easy to check that 
-\begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
-\end_inset
-
- is the limit of 
-\begin_inset Formula $d$
-\end_inset
-
-.
 \end_layout
 
-\begin_layout Corollary
+\begin_layout Standard
+We are now ready to prove that 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- is finitely complete.
+ has finite connected limits.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[
+\end_layout
+
+\end_inset
+
+Proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:A-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+]
+\end_layout
+
+\end_inset
+
+Since 
+\begin_inset Formula $S:\mathbb{F}_{m}\rightarrow\Set$
+\end_inset
+
+ preserves finite connected limits, 
+\begin_inset Formula $\int S$
+\end_inset
+
+ has finite connected limits and the projection functor to 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ preserves them by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:preserves-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, the 2-category of small categories with finite connected limits and
+ functors preserving those between them is the category of algebras for
+ a 2-monad on the category of small categories 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BLACKWELL19891"
+literal "false"
+
+\end_inset
+
+.
+ Thus, it includes the weak pullback of 
+\begin_inset Formula ${\cal A}'\rightarrow\mathbb{F}_{m}\leftarrow\int S$
+\end_inset
+
+.
+ But since 
+\begin_inset Formula $\int S\rightarrow\mathbb{F}_{m}$
+\end_inset
+
+ is a fibration, and thus an isofibration, by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JoyalStreetPullbacks"
+literal "false"
+
+\end_inset
+
+ this weak pullback can be computed as a pullback, which is 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
 \end_layout
 
 \end_body
