@@ -3696,7 +3696,7 @@ Binding signatures can be compiled into GB-signatures.
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Oop np=\{v_{1},\dots,v_{p}\}\sqcup\{o_{n}|o\in O_{n}\}$
+\begin_inset Formula $O'_{n}(p)=\{v_{1},\dots,v_{p}\}\sqcup\{o_{p}|o\in O_{n}\}$
 \end_inset
 
 ;
@@ -3707,15 +3707,11 @@ Binding signatures can be compiled into GB-signatures.
 \end_inset
 
  and 
-\begin_inset Formula $\nthaarvec{o_{n}}=(n+\nthar o1,\dots,n+\nthar on)$
+\begin_inset Formula $\nthaarvec{o_{p}}=(p+\nthar o1,\dots,p+\nthar on)$
 \end_inset
 
  for any 
-\begin_inset Formula $o\in O$
-\end_inset
-
-, 
-\begin_inset Formula $i,n\in\mathbb{N}$
+\begin_inset Formula $i,p,n\in\mathbb{N},o\in O_{n}$
 \end_inset
 
 .
