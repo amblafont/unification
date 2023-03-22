@@ -2158,16 +2158,6 @@ Unification algorithm
 \end_layout
 
 \begin_layout Frame
-\begin_inset Flex Alert
-status open
-
-\begin_layout Plain Layout
-make the n explicit?
-\end_layout
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \overbrace{\Gamma\vdash\tikzmarknode{t}{t}=\tikzmarknode{u}{u}}^{\text{input}}\Rightarrow\overbrace{\tikzmarknode{sigma}{\sigma}\dashv\Delta}^{\text{output}}
@@ -6854,17 +6844,7 @@ vspace{-2em}
 
 \end_inset
 
-Diagrammatically, 
-\begin_inset Flex Alert
-status open
-
-\begin_layout Plain Layout
-faire le line explcite avec le pure lamdba
-\end_layout
-
-\end_inset
-
-
+Diagrammatically,
 \end_layout
 
 \begin_layout Standard
