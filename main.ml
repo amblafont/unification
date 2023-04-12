@@ -23,24 +23,29 @@ module type Signature =
     val equaliser : renaming -> renaming -> arity * renaming
   end
 
-(*** 
+module type BindingSignature =
+  sig
+    type symbol
+    val arity : symbol -> int list
+    val symbolToString : symbol -> string
+  end
 
-Example: lambda calculus
-
-** *)
-
-module LambdaCalculus = struct 
-
-type arity = int
+module SignatureOfBSig (S : BindingSignature) =
+  struct 
+  type arity = int
 type variableContext = arity
-type symbol = App | Abs | Var of int
+type symbol = 
+    O of S.symbol
+  | Var of int
 type renaming = int list
+
+let symbolToString : symbol -> string = function Var n -> string_of_int n 
+  | O o -> S.symbolToString o
 
 
 let renv (x : arity)(r : renaming) : arity =
   List.nth r (x - 1)
 
-let symbolToString = function Var n -> Int.to_string n | App -> "@" | Abs -> "λ"
 let renamingToString (l : renaming) : string =
   String.concat ", " (List.map Int.to_string l)
 
@@ -50,8 +55,7 @@ let renameSymbol (o : symbol) (x : renaming) = match o with
 
 let symbolArity (n : variableContext) = function
   Var _ -> []
-| App -> [n; n]
-| Abs -> [n+1];; 
+| O o -> List.map ((+) n) (S.arity o)
 
 
 let composeRenamings (x : renaming)(y : renaming) : renaming = 
@@ -93,12 +97,26 @@ let pullback (x : renaming)(y : renaming) : arity * renaming * renaming =
 let rec arityFunctor (n : arity) (o : symbol) (r : renaming) : renaming list =
    match o with 
    Var _ -> []
-   | App -> [r; r]
-   | Abs -> [r @ [ n + 1]]
+   | O o ->
+     List.map (fun ar -> r @ List.init ar (fun p -> n + p + 1)) (S.arity o)
+end
 
+(*** 
 
+Example: lambda calculus
+
+** *)
+
+module LambdaCalculusBSig = struct 
+
+type symbol = App | Abs
+let arity = function App -> [0; 0] | Abs -> [1];;
+
+let symbolToString = function App -> "@" | Abs -> "λ"
 
 end
+
+module LambdaCalculus = SignatureOfBSig(LambdaCalculusBSig)
 
 (* module LCSig : Signature = struct 
   include LambdaCalculus;;
