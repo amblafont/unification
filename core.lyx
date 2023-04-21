@@ -715,8 +715,8 @@ literal "false"
 \end_inset
 
 , include very large proofs: the former comes with a 190 page appendix,
- and the latter comes with a Coq proof is many thousands of lines long --
- and both of these results are for tiny kernel calculi.
+ and the latter comes with a Coq proof many thousands of lines long -- and
+ both of these results are for tiny kernel calculi.
  If we ever hope to extend this kind of result to full programming languages
  like Haskell or OCaml, we must raise the abstraction level of these proofs,
  so that they are no longer linear (with a large constant) in the size of
@@ -1040,7 +1040,7 @@ literal "false"
 
 \end_inset
 
- than to the nominal approach
+ to binding signatures than to the nominal approach
 \begin_inset ERT
 status open
 
@@ -2000,7 +2000,7 @@ metavariable substitution
  The base case is
 \begin_inset Formula 
 \[
-M(x_{1},\dots,x_{n})[\sigma]=\rename{\sigma_{M}}{\var i\mapsto x_{i}},
+M(x_{1},\dots,x_{m})[\sigma]=\rename{\sigma_{M}}{\var i\mapsto x_{i}},
 \]
 
 \end_inset
@@ -2488,7 +2488,7 @@ lly.
 \end_inset
 
  at the top-level of either term.
- Denoting 
+ Denoting by 
 \begin_inset Formula $u$
 \end_inset
 
@@ -3155,11 +3155,11 @@ The remaining case consists in unifying
 \begin_inset Formula $y_{1},\dots,y_{m}$
 \end_inset
 
-, i.e., the maximal pair of lists distinct position 
+, i.e., the maximal pair of lists 
 \begin_inset Formula $(\vec{l},\vec{r})$
 \end_inset
 
- such that 
+ of distinct positions such that 
 \begin_inset Formula $x_{\vec{l}}=y_{\vec{r}}$
 \end_inset
 
@@ -3360,7 +3360,7 @@ status open
 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "BindingSignatures"
+key "aczel2016general"
 literal "false"
 
 \end_inset
@@ -3382,12 +3382,16 @@ literal "false"
 \begin_inset Formula $O_{n}$
 \end_inset
 
- together with an arity 
+ and for each 
+\begin_inset Formula $o\in O_{n}$
+\end_inset
+
+, an arity 
 \begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar on)$
 \end_inset
 
-, a list of natural numbers specifying how many variables are bound in each
- argument.
+ as a list of natural numbers specifying how many variables are bound in
+ each argument.
  For example, pure 
 \begin_inset Formula $\lambda$
 \end_inset
@@ -3560,7 +3564,11 @@ Intuitively,
 \begin_inset Formula $\Oop na$
 \end_inset
 
- is the set of operation symbols available in the variable context 
+ is the set of 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbols available in the variable context 
 \begin_inset Formula $a$
 \end_inset
 
@@ -4099,7 +4107,7 @@ noprefix "false"
 \begin_inset Formula $o=\rename{o'}x$
 \end_inset
 
- that means that 
+ means that 
 \begin_inset Formula $i$
 \end_inset
 
@@ -4660,7 +4668,7 @@ literal "false"
 \end_inset
 
 .
- We further more provide a formal justification for the error metavariable
+ We furthermore provide a formal justification for the error metavariable
  context 
 \begin_inset Formula $\bot$
 \end_inset
@@ -5557,15 +5565,15 @@ Let
 \end_inset
 
  mapping a morphism 
-\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
+\begin_inset Formula $x\in\hom_{{\cal A}}(b,a)$
 \end_inset
 
  to the substitution 
-\begin_inset Formula $(A:a)\rightarrow(M:m)$
+\begin_inset Formula $(X:a)\rightarrow(X:b)$
 \end_inset
 
  selecting (by the Yoneda Lemma) the term 
-\begin_inset Formula $M(x)$
+\begin_inset Formula $X(x)$
 \end_inset
 
 .
@@ -5714,12 +5722,8 @@ A metavariable application
 \begin_inset Formula $in_{M}$
 \end_inset
 
- is the embedding of 
-\begin_inset Formula $M:m$
-\end_inset
-
- into 
-\begin_inset Formula $\Gamma$
+ is the coproduct injection 
+\begin_inset Formula $(X:m)\cong(M:m)\hookrightarrow\Gamma$
 \end_inset
 
 .
@@ -5848,7 +5852,7 @@ noprefix "false"
 , 
 \begin_inset Formula 
 \[
-T(\underline{\Gamma})_{a}\cong\{t|\Gamma;a\vdash t\}
+T(\underline{\Gamma})_{a}\cong\{t\ |\ \Gamma;a\vdash t\}
 \]
 
 \end_inset
@@ -8236,7 +8240,7 @@ The rule
 \end_inset
 
  is fresh in 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\Gamma,N:n$
 \end_inset
 
 .
@@ -8245,14 +8249,18 @@ The rule
 
 \begin_layout Standard
 Note that 
-\begin_inset Formula $M(y)={\cal L}y$
+\begin_inset Formula $M(y)$
 \end_inset
 
- as a substitution 
+, as a substitution 
 \begin_inset Formula $(A:a)\rightarrow(M:m)$
 \end_inset
 
- while 
+, is isomorphic to 
+\begin_inset Formula ${\cal L}y$
+\end_inset
+
+, while 
 \begin_inset Formula $N(\arg x)={\cal L}\arg x[in_{N}]$
 \end_inset
 
@@ -14905,7 +14913,7 @@ Let
 \begin_inset Formula $\tau$
 \end_inset
 
- potentially using variables whose types are specifeid by 
+ potentially using variables whose types are specified by 
 \begin_inset Formula $\vec{\sigma}$
 \end_inset
 
@@ -17008,7 +17016,7 @@ Let
 \begin_inset Formula $G:I\rightarrow\int F$
 \end_inset
 
-, denoting 
+, denoting by 
 \begin_inset Formula $H$
 \end_inset
 
