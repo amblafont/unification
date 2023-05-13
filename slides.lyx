@@ -22,7 +22,7 @@
     \end{beamercolorbox}%
   }
 }
-\addtobeamertemplate{navigation symbols}{}{%
+\setbeamertemplate{navigation symbols}{%
     \usebeamerfont{footline}%
     \usebeamercolor[fg]{footline}%
     \hspace{1em}%
@@ -46,6 +46,14 @@
 
 \newcommand{\xymatrixrigid}[1]{\xymatrix@C=2pc{#1}}
 \usepackage{appendixnumberbeamer}
+\newcommand\mydots{\makebox[1em][c]{.\hfil.\hfil.}}
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
 \end_preamble
 \use_default_options false
 \maintain_unincluded_children false
@@ -174,10 +182,6 @@ In principle, this file can be redistributed and/or modified under the terms
 
 \begin_layout Title
 Generic pattern unification
-\end_layout
-
-\begin_layout Subtitle
-A categorical approach
 \end_layout
 
 \begin_layout Author
@@ -329,7 +333,6 @@ optional, but mostly needed
 \end_layout
 
 \begin_layout Date
-December 2022
 \begin_inset Note Note
 status open
 
@@ -411,7 +414,36 @@ optional, should be abbreviation of conference name
 
 
 \begin_inset FormulaMacro
+\newcommand{\Fsep}{|}
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
 \newcommand{\Th}[1]{\text{Th}^{op}(#1)}
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Th}[1]{\mathrm{MCon}(#1)}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\arSep}{\rightarrow}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Thbot}[1]{\mathrm{MCon_{\bot}}(#1)}
 \end_inset
 
 
@@ -472,6 +504,38 @@ optional, should be abbreviation of conference name
 \end_inset
 
 
+\begin_inset FormulaMacro
+\newcommand{\rename}[2]{#1\{#2\}}
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\nar}[1]{\kappa_{#1}}
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ntharvec}[1]{\alpha_{#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\ntharvecaction}[3]{#2_{#3}^{#1}}
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -489,7 +553,7 @@ optional, should be abbreviation of conference name
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\unificationstepwise}[1]{\dfrac{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{u_{1}}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash\veciflyx{#1}{t_{2}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{u_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}=\veciflyx{}{u_{1}},\veciflyx{#1}{u_{2}}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}\textsc{U-Split}}
+\newcommand{\unificationstepwise}[1]{\dfrac{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{u_{1}}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash\veciflyx{#1}{t_{2}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{u_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}=\veciflyx{}{u_{1}},\veciflyx{#1}{u_{2}}\Rightarrow\sigma_{2}\circ\sigma_{1}\dashv\Delta_{2}}\textsc{U-Split}}
 \end_inset
 
 
@@ -869,6 +933,10 @@ t[\sigma]=u[\sigma]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Pause
 
 \end_layout
 
@@ -1252,6 +1320,16 @@ M(\underbrace{x_{1},\dots,x_{n}}_{\text{distinct variables}})
 
 \end_deeper
 \begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
 \begin_inset Formula $\exists$
 \end_inset
 
@@ -1312,7 +1390,7 @@ algorithm for pattern unification
 
 \begin_deeper
 \begin_layout Itemize
-Parameterised by a 
+Parameterised by a custom notion of 
 \emph on
 signature
 \end_layout
@@ -1342,11 +1420,7 @@ binding signatures
 \end_layout
 
 \begin_layout Itemize
-Linear syntax (e.g., quantum 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus)
+Ordered syntax
 \end_layout
 
 \begin_layout Itemize
@@ -2083,13 +2157,7 @@ M_{i}(v_{1},\dots,v_{m_{i}})\mapsto\sigma_{i}
 
 \end_layout
 
-\end_deeper
-\begin_layout Frame
-
-\end_layout
-
-\begin_deeper
-\begin_layout Block
+\begin_layout Pause
 
 \end_layout
 
@@ -3023,6 +3091,10 @@ Most general unifier
 
 \end_layout
 
+\begin_layout Pause
+
+\end_layout
+
 \begin_layout Examples
 \begin_inset Formula 
 \begin{align*}
@@ -3221,12 +3293,10 @@ M(\vec{x})\stackrel{?}{=}u\text{ (\ensuremath{M\notin u})}\label{eq:non-cyclic}
 
 \end_layout
 
-\end_deeper
-\begin_layout Frame
+\begin_layout Pause
 
 \end_layout
 
-\begin_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -3298,7 +3368,7 @@ M(\vec{x})[\sigma]=u[x_{i}\mapsto v_{i}][v_{i}\mapsto x_{i}]=u
 \end_layout
 
 \end_deeper
-\begin_layout Block
+\begin_layout Pause
 
 \end_layout
 
@@ -3414,10 +3484,6 @@ What about
 
 \end_layout
 
-\begin_layout Frame
-
-\end_layout
-
 \begin_deeper
 \begin_layout Block
 \begin_inset Argument 2
@@ -3437,6 +3503,10 @@ N(v_{1},v_{2})\mapsto M(v_{1})
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Pause
 
 \end_layout
 
@@ -3556,7 +3626,7 @@ status open
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\Gamma\prune{\tikzmarknode{upruning}{u}}{\tikzmarknode{Mpruning}{M}(\tikzmarknode{xpruning}{\vec{x}})}{\tikzmarknode{sigmapruning}{\sigma}}{{\color{blue}w}}\dashv\Delta
+\Gamma\prune{\tikzmarknode{upruning}{u}}{\tikzmarknode{Mpruning}{M}(\tikzmarknode{xpruning}{\vec{x}})}{\tikzmarknode{sigmapruning}{\sigma}}{\tikzmarknode{wpruning}{{\color{blue}w}}}\dashv\Delta
 \]
 
 \end_inset
@@ -3567,29 +3637,29 @@ status open
 \begin_layout Frame
 \begin_inset Formula 
 \[
-\tikzmarknode{upruningdef}{\Gamma;(n)\vdash u}\qquad\qquad\qquad\qquad\qquad
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\tikzmarknode{Mpruningdef}{\text{\ensuremath{M\notin\ensuremath{\Gamma}}}}\quad\tikzmarknode{xpruningdef}{n\ensuremath{\vdash\vec{x}}}\qquad
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
+\tikzmarknode{upruningdef}{\Gamma;(n)\vdash u}\qquad\qquad\qquad\qquad\qquad\qquad\qquad\begin{array}{c}
 \tikzmarknode{sigmapruningdef}{\sigma}:\Gamma\rightarrow\Delta\\
 \text{pruning substitution}
 \end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Formula 
+\[
+\tikzmarknode{Mpruningdef}{\text{\ensuremath{M:m\notin\ensuremath{\Gamma}}}}\quad\tikzmarknode{xpruningdef}{n\ensuremath{\vdash\vec{x}}}\qquad
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\qquad\qquad\qquad\qquad\qquad\qquad\tikzmarknode{wpruningdef}{\Delta;m\ensuremath{\vdash w}}
 \]
 
 \end_inset
@@ -3632,6 +3702,13 @@ draw[shorten <=4pt, shorten >=5pt, <-] (upruning) edge (upruningdef);
 
 \backslash
 draw[shorten <=4pt, shorten >=5pt, <-] (xpruning) edge (xpruningdef);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[shorten <=4pt, shorten >=5pt, <-] (wpruning) edge (wpruningdef);
 \end_layout
 
 \begin_layout Plain Layout
@@ -3908,7 +3985,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{}{\Gamma\prune{x_{n}}{M(\vec{x})}{id_{\Gamma}}{v_{n}}\dashv\Gamma}
+\dfrac{}{\Gamma\prune{x_{i}}{M(\vec{x})}{id_{\Gamma}}{v_{i}}\dashv\Gamma}
 \]
 
 \end_inset
@@ -4109,8 +4186,7 @@ N(v_{1},\dots,v_{n}) & \mapsto P(v_{{\color{blue}r_{1}}},\dots,v_{{\color{blue}r
 
 \end_layout
 
-\end_deeper
-\begin_layout Frame
+\begin_layout Pause
 \begin_inset Note Note
 status open
 
@@ -4147,17 +4223,7 @@ status open
 
 \end_layout
 
-\begin_deeper
 \begin_layout Examples
-\begin_inset Flex Alert
-status open
-
-\begin_layout Plain Layout
-Intuition?
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
@@ -4237,12 +4303,46 @@ Pruning operations
 
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+o(\vec{t})\stackrel{?}{=}M(\vec{x})\qquad(M\notin\vec{t})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 
 \series bold
 Divide & Conquer
 \series default
 : a fresh metavariable for each argument.
+\end_layout
+
+\end_deeper
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \dfrac{\Gamma\prune t{M'(\vec{x},\overbrace{v_{n+1}}^{\mathclap{\text{{\color{blue}bound} {\color{blue}variable}}}})}{\sigma}w\dashv\Delta}{\Gamma\prune{{\color{blue}\lambda}t}{M(\vec{x})}{\sigma}{\lambda w}\dashv\Delta}\qquad M=\lambda M'
@@ -4253,6 +4353,7 @@ Divide & Conquer
 
 \end_layout
 
+\end_deeper
 \begin_layout Frame
 \begin_inset ERT
 status open
@@ -4502,7 +4603,7 @@ vspace{1em}
 \end_layout
 
 \begin_layout Section
-Generalisation to binding signatures
+Generalised binding signatures
 \end_layout
 
 \begin_layout Frame
@@ -4691,7 +4792,7 @@ status open
 \begin_layout Standard
 \begin_inset Formula 
 \[
-o:(\alpha_{1},\dots,\alpha_{p})
+o:(\overline{o}_{1},\dots,\overline{o}_{p})
 \]
 
 \end_inset
@@ -4724,7 +4825,7 @@ vspace{1em}
 
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{v_{n+1},\dots,v_{n+1+\alpha_{1}}}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{M(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
+\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\vec{x},\overbrace{v_{n+1},\dots,v_{n+1+\overline{o}_{1}}}^{\mathclap{\text{bound variables}}}),\dots,M_{p}(\dots)}{\sigma}{\vec{u}}\dashv\Delta}{\Gamma\prune{o(\vec{t})}{M(\arg{\vec{x}})}{\sigma}{o(\vec{u})}\dashv\Delta}
 \]
 
 \end_inset
@@ -4733,10 +4834,132 @@ vspace{1em}
 \end_layout
 
 \end_deeper
-\begin_layout Frame
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Generalised binding signatures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\series bold
+Generalised binding signatures
+\series default
+ = our notion of signature for syntax with (pattern-restricted) metavariables.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Examples
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+(Simply-typed) binding signatures
+\end_layout
+
+\begin_layout Itemize
+Linearly ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\begin_layout Itemize
+Intrinsic System F
+\end_layout
+
+\end_deeper
+\begin_layout Examples
+
+\end_layout
+
+\begin_layout Examples
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Pruning operations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\Gamma\prune{\vec{t}}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{n}(\ntharvecaction{o'}xn)}{\sigma}{\vec{u}}\dashv\Delta\qquad o=\rename{o'}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}}{P-Rig}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\vec{t})}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -4828,7 +5051,7 @@ vspace{1em}
 \end_layout
 
 \begin_layout Section
-Categorical generalisation
+Categorical semantics
 \end_layout
 
 \begin_layout Subsection
@@ -5006,7 +5229,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\Lambda_{n}\cong\underbrace{\{1,\dots,n\}}_{\text{variables}}+\underbrace{\Lambda_{n}\times\Lambda_{n}}_{\text{application}}+\underbrace{\Lambda_{n+1}}_{\text{abstraction}}
+\Lambda_{n}\cong\underbrace{\{v_{1},\dots,v_{n}\}}_{\text{variables}}+\underbrace{\Lambda_{n}\times\Lambda_{n}}_{\text{application}}+\underbrace{\Lambda_{n+1}}_{\text{abstraction}}
 \]
 
 \end_inset
@@ -5083,7 +5306,7 @@ status open
 
 \begin_inset Formula 
 \[
-F(X)_{n}=\{0,\dots,n-1\}+X_{n}\times X_{n}+X_{n+1}
+F(X)_{n}=\{v_{1},\dots,v_{n}\}+X_{n}\times X_{n}+X_{n+1}
 \]
 
 \end_inset
@@ -5176,6 +5399,15 @@ vspace{1em}
 
 \end_inset
 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Standard
 As an initial algebra:
 \begin_inset Formula 
 \begin{align*}
@@ -5243,6 +5475,7 @@ end{tikzpicture}
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -5331,6 +5564,10 @@ status open
 \end_layout
 
 \begin_deeper
+\begin_layout Pause
+
+\end_layout
+
 \begin_layout Block
 \begin_inset Argument 2
 status open
@@ -5729,6 +5966,9 @@ Claim
 \end_layout
 
 \begin_layout Frame
+\begin_inset Formula $\Th F$
+\end_inset
+
 
 \end_layout
 
@@ -5805,7 +6045,11 @@ Claims
 status open
 
 \begin_layout Plain Layout
-well-known in the first-order case.
+well-known in the first-order case (
+\begin_inset Quotes bld
+\end_inset
+
+free' Lawvere theories).
 \end_layout
 
 \end_inset
@@ -5903,7 +6147,7 @@ vspace{2em}
 \qquad\tikzmarknode{ThFdef}{\begin{array}{c}
 \text{Objects: }\text{\ensuremath{\underline{\Gamma}},\ensuremath{\underline{\Delta}},\ensuremath{\dots}}\text{ }\\
 \\
-\text{"Lawvere theory"}
+\text{\op{\Th F} is a "non-free" Lawvere theory}
 \end{array}}
 \]
 
@@ -6025,106 +6269,69 @@ Generic pattern unification
 status open
 
 \begin_layout Plain Layout
-Signature
+Endofunctor generated by a signature
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- small category of contexts (e.g., 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
-, 1)
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[
-\end_layout
-
-\end_inset
-
-
-\series bold
-Intuition:
-\series default
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
- objects = metavariable arities, 
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
-morphisms = metavariable arguments.
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-All morphisms in 
-\begin_inset Formula ${\cal A}$
+A GB-signature 
+\begin_inset Formula $({\cal A},O,\alpha)$
 \end_inset
 
- are monic (pattern restriction).
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has equalisers and pullbacks (
-\begin_inset Formula $M(\vec{x})\stackrel{?}{=}N(\vec{y})$
-\end_inset
-
-).
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-\begin_inset Formula $F$
-\end_inset
-
- endofunctor on 
+ generates an endofunctor on 
 \begin_inset Formula $[{\cal A},\Set]$
 \end_inset
 
  of the shape
 \begin_inset Formula 
 \[
-F(X)_{a}=\coprod_{o\in O_{a}}X_{L_{o,1}}\times\dots\times X_{L_{o,n_{o}}}
+F(X)_{a}=\coprod_{o\in O_{n}(a)}X_{\overline{o}_{1}}\times\dots\times X_{\overline{o}_{n}}
 \]
 
 \end_inset
 
-such that 
-\begin_inset Formula $F$
-\end_inset
 
- restricts to an endofunctor on functors preserving finite connected limits.
 \end_layout
 
 \end_deeper
+\begin_layout Frame
+Let 
+\begin_inset Formula $T$
+\end_inset
+
+ denote the free monad generated by 
+\begin_inset Formula $F$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underbrace{\Gamma}_{\mathclap{{\displaystyle M_{1}:m_{1},\dots,M_{n}:m_{n}}}};a\vdash t\qquad\text{means}\qquad t\in T(\underbrace{\underline{\Gamma}}_{\mathclap{{\displaystyle ym_{1}+\dots+ym_{n}}}})_{a}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
 \begin_layout Frame
 
 \end_layout
@@ -6141,15 +6348,11 @@ such that
 status open
 
 \begin_layout Plain Layout
-Typing rules
+Generic unification algorithm
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Frame
 
 \end_layout
 
@@ -6159,7 +6362,7 @@ Typing rules
 status open
 
 \begin_layout Plain Layout
-Notation
+Conditions
 \end_layout
 
 \end_inset
@@ -6168,83 +6371,45 @@ Notation
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\underbrace{\Gamma}_{\mathclap{{\displaystyle M_{1}:a_{1},\dots,M_{n}:a_{n}}}};b\vdash u\qquad\text{means}\qquad u\in T(\underbrace{\underline{\Gamma}}_{\mathclap{{\displaystyle ya_{1}+\dots+ya_{n}}}})_{b}
-\]
-
+\begin_layout Enumerate
+All morphisms in 
+\begin_inset Formula ${\cal A}$
 \end_inset
 
+ are mono (pattern restriction)
+\end_layout
 
+\begin_layout Enumerate
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has equalisers and pullbacks (Cf 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $X:{\cal A\rightarrow\Set}$
+\end_inset
+
+ preserves them, then 
+\begin_inset Formula $F(X)$
+\end_inset
+
+ also does.
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Formula 
-\[
-F(X)_{a}=\coprod_{o\in O_{a}}X_{L_{o,1}}\times\dots\times X_{L_{o,n_{o}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dfrac{\Gamma;L_{o,i}\vdash t_{i}}{\Gamma;a\vdash o(\vec{t})}\textsc{Rigid}\qquad\dfrac{x\in\hom_{{\cal A}}(a,b)}{\Gamma,M:a\quad;\quad b\vdash M(x)}\textsc{Flex}
-\]
-
-\end_inset
-
-
-\end_layout
-
 \end_deeper
-\begin_layout Frame
-No equation.
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Semantics of unification
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Frame
 
 \series bold
 Claim
 \series default
-: Given a signature 
-\begin_inset Formula $({\cal A},F)$
-\end_inset
-
-, a coequaliser diagram in 
+: A coequaliser diagram in 
 \begin_inset Formula $\Th F$
 \end_inset
 
@@ -6257,6 +6422,23 @@ unifier
 \end_inset
 
 ).
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
 \end_layout
 
 \begin_deeper
@@ -6281,6 +6463,57 @@ status open
 
 \end_layout
 
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Getting rid of partiality
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Block
+
+\series bold
+Equivalent claim
+\series default
+: 
+\begin_inset Formula 
+\[
+\underbrace{\Thbot F}_{\mathclap{\Th F\text{ extended with a free terminal object \ensuremath{\bot}}}}\text{ has coequalisers}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Pause
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof
+\series default
+: By describing a unification algorithm, constructing coequalisers in 
+\begin_inset Formula $\Thbot F$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Frame
 
@@ -6288,58 +6521,6 @@ status open
 
 \begin_layout Frame
 
-\end_layout
-
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-
-\series bold
-Proof
-\series default
-: By describing a unification algorithm.
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-End of this section: soundness proofs for 3 rules.
 \end_layout
 
 \begin_layout Standard
@@ -6499,11 +6680,7 @@ vspace{1em}
 
 \begin_layout Frame
 mostly used in 
-\begin_inset Formula $\Th F_{\bot}=\Th F$
-\end_inset
-
- + a free terminal object 
-\begin_inset Formula $\bot$
+\begin_inset Formula $\Th F_{\bot}$
 \end_inset
 
 .
@@ -6839,7 +7016,7 @@ vspace{-2em}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\text{\framebox[][]{\dfrac{b\vdash\arg x=_{\op{{\cal A}}}\arg y\Rightarrow\arg z\dashv c}{M:b\vdash M(\arg x)=M(\arg y)\Rightarrow M\mapsto M'(\arg z)\dashv M':c}\textsc{U-FlexFlex}}}
+\text{\framebox[][]{\dfrac{b\vdash\arg x=\arg y\Rightarrow\arg z\dashv c\text{\text{ in \ensuremath{\op{{\cal A}}}}}}{M:b\vdash M(\arg x)=M(\arg y)\Rightarrow M\mapsto M'(\arg z)\dashv M':c}\textsc{U-FlexFlex}}}
 \]
 
 \end_inset
@@ -7026,7 +7203,7 @@ vspace{-1em}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\text{\framebox[][]{\unificationoccurcheckeffective\textsc{U-NoCycle}}}
+\text{\dfrac{M\notin u\qquad\Gamma\prune u{M(x)}{\sigma}w\dashv\Delta}{\Gamma,M:m\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}\textsc{U-NoCycle}}
 \]
 
 \end_inset
@@ -7081,11 +7258,11 @@ vspace{-2em}
 \begin_inset Formula 
 \[
 \dfrac{\begin{array}{c}
-\xymatrix{ya\ar[r]^{"M(x)"}\ar[d]_{u'} & yb\ar@{-->}[d]^{v}\\
+\xymatrix{ya\ar[r]^{"M(x)"}\ar[d]_{u} & yb\ar@{-->}[d]^{w}\\
 \Gamma\ar@{-->}[r]_{\sigma} & \Delta
 }
 \end{array}\qquad\text{pushout}}{\xymatrix{ & yb\ar[dr]^{in_{2}}\\
-ya\ar[ru]^{"M(x)"}\ar[dr]_{u'} &  & \Gamma+yb\ar@{-->}[r]^{[v,\sigma]} & \Delta & \text{coequaliser}\\
+ya\ar[ru]^{"M(x)"}\ar[dr]_{u} &  & \Gamma+yb\ar@{-->}[r]^{[w,\sigma]} & \Delta & \text{coequaliser}\\
  & \Gamma\ar[ru]_{in_{1}}
 }
 }
@@ -7440,166 +7617,7 @@ end{tikzpicture}
 status open
 
 \begin_layout Plain Layout
-Signature
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Objects of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- = metavariables arities
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-n|\underbrace{\tau_{1},\dots,\tau_{p}}_{C}\vdash\textrm{\sigma_{f}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-n|\vec{\tau}\vdash\textrm{\sigma_{f}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Frame
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-Rightarrow$]
-\end_layout
-
-\end_inset
-
-System F defines a functor 
-\begin_inset Formula $\Phi:{\cal A}\rightarrow\Set$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Phi(n|\tau_{1},\dots,\tau_{p}\vdash\tau_{f})=\{t\text{ s.t. }\text{n|\ensuremath{\tau_{1},\dots,\tau_{p}\vdash t:\textrm{\sigma_{f}}}}\}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Endofunctor 
-\begin_inset Formula $F$
-\end_inset
-
- on 
-\begin_inset Formula $[{\cal A},\Set]$
-\end_inset
-
- s.t.
- 
-\begin_inset Formula 
-\[
-\mu F(n|\vec{\tau}\vdash\textrm{\sigma_{f}})=\{t\text{ s.t. }\text{n|\ensuremath{\vec{\tau}\vdash t:\textrm{\sigma_{f}}}}\}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-F(X)_{a}=\coprod_{o\in O_{a}}X_{L_{o,1}}\times\dots\times X_{L_{o,n_{o}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-The endofunctor for System 
+Signature for System 
 \begin_inset Formula $F$
 \end_inset
 
@@ -7614,9 +7632,53 @@ The endofunctor for System
 \begin_deeper
 \begin_layout Standard
 \align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.5em}
+\end_layout
+
+\end_inset
+
+Objects of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ are of the shape 
+\begin_inset Formula $n|\vec{\tau}\vdash\textrm{\ensuremath{\sigma_{f}}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Wider[4em]{
+\end_layout
+
+\end_inset
+
+
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="2">
+<lyxtabular version="3" rows="6" columns="3">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
@@ -7629,81 +7691,11 @@ Typing rule
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $F(X)_{n|\vec{\tau}\vdash\textrm{\sigma_{f}}}=\coprod\dots$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{\tau_{i}=\textrm{\sigma_{f}}}{n|\vec{\tau}\vdash v_{i}:\textrm{\sigma_{f}}}\textsc{Var}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $|\vec{\tau}|_{\textrm{\sigma_{f}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n|\vec{\tau},\sigma_{1}\vdash t:\sigma_{2}}{n|\vec{\tau}\vdash\lambda t:\sigma_{1}\rightarrow\sigma_{2}}\textsc{Abs}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\sigma_{1},\sigma_{2}\text{ s.t. \ensuremath{\textrm{\sigma_{f}}=(\sigma_{1}\rightarrow\sigma_{2})}}}}X_{n|\vec{\tau},\sigma_{1}\vdash\sigma_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n|\textrm{\vec{\tau}}\vdash t:\sigma\rightarrow\textrm{\sigma_{f}}\quad n|\textrm{\vec{\tau}}\vdash u:\sigma_{f}}{n|\textrm{\vec{\tau}}\vdash t\ u:\sigma_{f}}\textsc{App}$
-\end_inset
-
-
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $O_{p}(n|\vec{\sigma}\vdash\tau)=\coprod\mydots$
 \end_inset
 
 
@@ -7715,7 +7707,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\sigma}}X_{n|\textrm{\vec{\tau}}\vdash\sigma\rightarrow\sigma_{f}}\times X_{n|\textrm{\vec{\tau}}\vdash\sigma}$
+\begin_inset Formula $\alpha_{o}=(\mydots)$
 \end_inset
 
 
@@ -7729,11 +7721,19 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1|\textrm{\vec{\tau}}\vdash t:\sigma}{n|\textrm{\vec{\tau}}\vdash\Lambda t:\forall\sigma}\textsc{T-Abs}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{n\Fsep\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v_{i}\text{ s.t. }i\in|\vec{\sigma}|_{\tau}\}$
 \end_inset
 
 
@@ -7745,7 +7745,130 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\sigma\text{ s.t. }\sigma_{f}=\forall\sigma}X_{n+1|\textrm{\vec{\tau}}\vdash\sigma}}$
+()
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma\vdash t:\tau'\Rightarrow\tau\quad n\Fsep\Gamma\vdash u:\tau'}{n\Fsep\Gamma\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\{a_{\tau'}\text{ s.t. }\\
+n\vdash\tau'\text{ type}\}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+n\Fsep\vec{\sigma}\arSep\tau'\Rightarrow\ensuremath{\tau}\\
+n\Fsep\vec{\sigma}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{n\Fsep\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\{l_{\tau_{1},\tau_{2}}\text{ s.t. }\\
+\tau=(\tau_{1}\Rightarrow\tau_{2})\}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n\Fsep\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n\Fsep\Gamma\vdash t:\forall\tau_{1}\quad\tau_{2}\in S_{n}}{n\Fsep\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\{A_{\tau_{1},\tau_{2}}\text{ s.t. }\\
+\tau=\tau_{1}[\tau_{2}]\}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n\Fsep\vec{\sigma}\arSep\forall\tau_{1})$
 \end_inset
 
 
@@ -7759,11 +7882,19 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n|\textrm{\vec{\tau}}\vdash t:\forall\sigma_{1}}{n|\textrm{\vec{\tau}}\vdash t\cdot\sigma_{2}:\sigma_{1}[\sigma_{2}]}\textsc{T-App}$
+\begin_inset Formula $\dfrac{n+1\Fsep wk(\Gamma)\vdash t:\tau}{n\Fsep\Gamma\vdash\Lambda t:\forall\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
 \end_inset
 
 
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{\Lambda_{\tau'}\text{ s.t. }\tau=\forall\tau'\}$
 \end_inset
 
 
@@ -7775,7 +7906,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\displaystyle \coprod_{\sigma_{1},\sigma_{2}\text{ s.t. }\sigma_{f}=\sigma_{1}[\sigma_{2}]}}X_{n|\textrm{\vec{\tau}}\vdash\forall\sigma_{1}}$
+\begin_inset Formula $(n+1\Fsep wk(\vec{\sigma})\arSep\tau')$
 \end_inset
 
 
@@ -7785,6 +7916,20 @@ Typing rule
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \end_inset
 
@@ -7914,208 +8059,32 @@ Summary
 status open
 
 \begin_layout Plain Layout
-Summary of the generic unification algorithm
+Future directions
 \end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\unificationempty\quad\unificationtop
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labelrule{\unificationstepwise v}{U-Split}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labelrule{\unificationrigrig}{U-RigRig}\qquad\unificationrigrigneqo
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\unificationoccurcheckeffective}{U-NoCycle}\quad\text{+ sym}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labelrule{\unificationflexflex}{U-FlexFlex}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\unificationfailingoccurcheckeffective}{U-Cyclic}\quad\text{+ sym}
-\]
 
 \end_inset
 
 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Mecanisation (needs rephrasing using structural recursion)
+\end_layout
+
+\begin_layout Itemize
+Dependent types
+\end_layout
+
+\begin_layout Itemize
+Unification modulo reduction
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Non cyclic phase
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\pruningempty\quad\pruningtop
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\pruningstepwise 1
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\labelrule{\pruningflex{}}{P-Flex}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\prune{\vec{t}}{{\cal L}^{+}\arg x^{o}}{\sigma}{\vec{u}}\dashv\Delta\qquad o=\acton{\arg x}{o'}\tikzmark{topbracepruningrig}}{\Gamma\prune{o(\vec{t})}{N(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}\qquad\qquad\qquad\qquad\qquad
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\pruningrigfail\tikzmark{botbracepruningrig}\text{\qquad\qquad\qquad\qquad}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzpicture}[overlay, remember picture]
-\end_layout
-
-\begin_layout Plain Layout
-
-  
-\backslash
-draw [decoration={brace,amplitude=0.5em},decorate,black]
-\end_layout
-
-\begin_layout Plain Layout
-
-    let 
-\backslash
-p1=(pic cs:topbracepruningrig), 
-\backslash
-p2=(pic cs:botbracepruningrig) in
-\end_layout
-
-\begin_layout Plain Layout
-
-    ({max(
-\backslash
-x1,
-\backslash
-x2)+0.5em}, {
-\backslash
-y1+0.8em}) -- node[right=0.5em] {Examples in next slides} ({max(
-\backslash
-x1,
-\backslash
-x2)+0.5em}, {
-\backslash
-y2});
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzpicture}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
 
 \end_layout
 
@@ -8130,228 +8099,6 @@ status open
 appendix
 \end_layout
 
-\end_inset
-
-
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Pruning 
-\begin_inset Formula $o(\vec{t})$
-\end_inset
-
-: variable case
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula $o$
-\end_inset
-
- is a variable 
-\begin_inset Formula $\Rightarrow$
-\end_inset
-
- 
-\begin_inset Formula $\vec{t}=()$
-\end_inset
-
- .
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\begin{array}{ccc}
-\dfrac{\Gamma\vdash\overbrace{\vec{t}}^{()}:>\dots\qquad\overbrace{o=\acton{\vec{\arg x}}{o'}}^{{\displaystyle o=x_{o'}}}}{\Gamma\prune{o(\vec{t})}{N(\vec{\arg x})}{\sigma}{o'(\vec{u})}\dashv\Delta} & \Leftrightarrow & \dfrac{o=x_{i}}{\Gamma\prune o{N(\vec{x})}{id_{\Gamma}}i\dashv\Gamma}\\
-\\
-\pruningrigfail & \Leftrightarrow & \dfrac{o\notin\vec{x}}{\Gamma\prune o{N(\vec{x})}{\bang}{\bang}\dashv\bot}
-\end{array}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Pruning 
-\begin_inset Formula $o(\vec{t})$
-\end_inset
-
-: operation case
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-Assume 
-\begin_inset Formula $o:(\alpha_{1},\dots,\alpha_{p})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\begin{array}{ccc}
-o=x\cdot o' & \Leftrightarrow & o=o'\\
-\\
-\pruningrigfail &  & \text{never applies}\\
-\\
-\end{array}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\prune{\vec{t}}{\overbrace{{\cal L}^{+}\arg x^{o}}^{M_{1}(\vec{x},n,\dots,n+\alpha_{1}-1),\dots,M_{p}(\dots)}}{\sigma}{\vec{u}}\dashv\Delta\qquad\overbrace{o=\acton{\arg x}{o'}}^{o=o'}}{\Gamma\prune{o(\vec{t})}{N(\arg x)}{\sigma}{o'(\vec{u})}\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Formula 
-\[
-\begin{array}{ccc}
-\pruningrigfail &  & \text{never applies}\end{array}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\begin{align*}
-\pruningrigfail\qquad & \Rightarrow\qquad\dfrac{y\notin\vec{x}}{\Gamma\prune y{N(\vec{x})}{\bang}{\bang}\dashv\bot}\\
-\dfrac{\Gamma\vdash():>\dots\dashv\Gamma\qquad o=\acton{\arg x}{o'}}{\Gamma\prune{o()}{N(\arg x)}{id_{\Gamma}}{o'(\vec{u})}\dashv\Delta}\qquad & \Rightarrow\qquad\dfrac{}{\Gamma\prune{x_{i}}{N(\vec{x})}{id_{\Gamma}}i\dashv\Gamma}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula $\Rightarrow$
-\end_inset
-
- 
-\series bold
-initial algebra
-\series default
- of the endofunctor
-\begin_inset Formula 
-\[
-X\mapsto F(X)+\coprod_{(M:m)\in\Gamma}ym
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Frame
-In other words, 
-\end_layout
-
-\begin_deeper
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Lambda(\Gamma)=
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \end_inset
 
 
@@ -8443,52 +8190,5 @@ Typing metavariables
 
 \end_layout
 
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Future directions
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Implementation
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-logic programming
-\end_layout
-
-\begin_layout Itemize
-verified in Coq/Agda 
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-(needs rephrasing using structural recursion)
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Itemize
-Unification modulo reduction
-\end_layout
-
-\begin_layout Itemize
-Efficient pattern unification [Qian '96]
-\end_layout
-
-\begin_layout Itemize
-Anti-unification
-\end_layout
-
-\end_deeper
 \end_body
 \end_document

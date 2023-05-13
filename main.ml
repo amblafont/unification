@@ -189,7 +189,7 @@ module Unification (S : Signature) = struct
        MVar (n, _) -> x == n
        | Op (_, l) -> List.exists (occur_check x) l
 
-  let rec prune (variableContext : variableContext) (t : syntax)(x : 'renaming) :
+  let rec prune (variableContext : variableContext) (t : syntax)(x : renaming) :
        (syntax * substitution) = 
        match t with
        | Op (o, args) -> 
@@ -251,3 +251,5 @@ open LCUnification;;
 unify_lc 3 (MVar ("M", [1; 2])) (MVar ("M", [2; 1]));;
 unify_lc 3 (MVar ("M", [1; 3])) (MVar ("M", [2;3]));;
 unify_lc 3 (MVar ("M", [1; 2])) (MVar ("N", [2; 1]));;
+
+(* agad-categories *)
