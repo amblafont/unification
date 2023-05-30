@@ -23,21 +23,11 @@ open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 import Relation.Binary.Reasoning.Setoid as SetoidR
 
--- VecList : ∀ {A : Set}(B : A → Set){n : ℕ}(l : Vec A n)  → Set
--- VecList B [] = ⊤
--- VecList B (x ∷ l) = B x × VecList B l
 
 VecList : ∀ {A : Set}(B : A → Set)(l : List A)  → Set
 VecList B [] = ⊤
 VecList B (x ∷ l) = B x × VecList B l
 
--- VecListMap : ∀ {A : Set}{B B' : A → Set}{n : ℕ}{l : Vec A n} → (∀ a → B a → B' a) → VecList B l → VecList B' l
--- VecListMap {A} {B} {B'} {.ℕ.zero} {[]} f xs = tt
--- VecListMap {A} {B} {B'} {.(ℕ.suc _)} {a ∷ l} f (x , xs) = f a x  , VecListMap f xs
-
-
--- VecListMap2 : ∀ {A A' : Set}{B : A → Set}{B' : A' → Set}{l : List A} → (f : A → A') → (∀ a → B a → B' (f a)) → VecList B l → VecList B' (List.map f l)
--- VecListMap2 {A} {B} {B'}  f v = {!!}
 
 VecListMap : ∀ {A : Set}{B B' : A → Set}{l : List A} → (∀ a → B a → B' a) → VecList B l → VecList B' l
 VecListMap {A} {B} {B'}  {[]} f xs = tt
@@ -52,14 +42,6 @@ VecListNth : ∀ {A : Set}{B : A → Set}{l : List A}{a} → a ∈ l → VecList
 VecListNth {l = .(_ ∷ xs)} (here xs) (t , _) = t
 VecListNth {l = .(_ ∷ _)} (there a∈) (t , ts) = VecListNth a∈ ts
 
-
-
-eq-∈ : ∀ {A}(l : List A) {a}(t : a ∈ l){a'}(t : a' ∈ l) → 𝔹
-eq-∈ {A} .(_ ∷ _) {a} (here px) (here px₁) = true
-eq-∈ {A} .(_ ∷ _) {a} (here px) (there t') = false
-eq-∈ {A} .(_ ∷ _) {a} (there t) (here px) = false
-eq-∈ {A} .(_ ∷ _) {a} (there t) (there t') = eq-∈ _ t t'
-
 remove-∈ : ∀ {A}(l : List A){a}(a∈ : a ∈ l) → List A
 remove-∈ .(_ ∷ _) (here l) = l
 remove-∈ .(_ ∷ _) (there {x = x}{xs = l} a∈) = x ∷ remove-∈ l a∈
@@ -73,7 +55,7 @@ eq2-∈ {A} .(_ ∷ _) (there t) (there t') with eq2-∈ _ t t'
 ... | just i = just (there i)
 
 -- Basic definition of a |Category| with a Hom setoid.
--- Also comes with some reasoning combinators (see HomReasoning)
+-- Taken from the agda category library, removing properties
 record Category (ℓₒ ℓ : Level) : Set (suc (ℓₒ ⊔ ℓ)) where
   eta-equality
   infix  4 _⇒_
@@ -87,27 +69,6 @@ record Category (ℓₒ ℓ : Level) : Set (suc (ℓₒ ⊔ ℓ)) where
     id  : ∀ {A} → (A ⇒ A)
     _∘_ : ∀ {A B C} → (B ⇒ C) → (A ⇒ B) → (A ⇒ C)
 
-
-  -- When a category is quantified, it is convenient to refer to the levels from a module,
-  -- so we do not have to explicitly quantify over a category when universe levels do not
-  -- play a big part in a proof (which is the case probably all the time).
-  o-level : Level
-  o-level = ℓₒ
-
-  ℓ-level : Level
-  ℓ-level = ℓ
-
-
-  -- Reasoning combinators.  _≈⟨_⟩_ and _≈˘⟨_⟩_ from SetoidR.
-  -- Also some useful combinators for doing reasoning on _∘_ chains
-
-  op : Category ℓₒ ℓ
-  op = record
-    { Obj       = Obj
-    ; _⇒_       = flip _⇒_
-    ; _∘_       = flip _∘_
-    ; id        = id
-    }
 
 module _ {o ℓ : Level}(𝓐 : Category o ℓ) where
 
@@ -183,55 +144,39 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
 
   VecSyntax Γ as = VecList (Syntax Γ) (Vec.toList as)
 
-  -- VecSyntax Γ [] = ⊤
-  -- VecSyntax Γ (x ∷ v) = Syntax Γ x × VecSyntax Γ v 
-
   VecSyntax⊥ : MetaContext⊥ → ∀{n} → Vec A.Obj n → Set
   VecSyntax⊥ (Some Γ) as = VecSyntax Γ as
   VecSyntax⊥ ⊥ as = ⊤
 
   substitution : MetaContext → MetaContext → Set
   substitution Γ Δ = VecList (Syntax Δ) Γ
-  -- substitution [] Δ = ⊤
-  -- substitution (m ∷ Γ) Δ = Syntax Δ m × substitution Γ Δ
 
   wk-tm : ∀ {Γ}{a} m → Syntax Γ a → Syntax (m ∷ Γ) a
-  -- wk-tms : ∀ {Γ}{n}{as : Vec _ n} → VecSyntax Γ as → ∀ m → VecSyntax (m ∷ Γ) as
 
-  -- wk-tm {Γ} {a} (Rigid o x) m = Rigid o (wk-tms x m)
   wk-tm {Γ} {a} m (Rigid o x) = Rigid o ( VecListMap (λ b → wk-tm m) x)
   wk-tm {Γ} {a} m (Flexible M f) = Flexible (there M) f
-
-  -- wk-tms {Γ} {.ℕ.zero} {[]} ts m = tt
-  -- wk-tms {Γ} {.(ℕ.suc _)} {a ∷ as} (t , ts) m = (wk-tm t m) , (wk-tms ts m)
 
 
   wk-subst-gen : ∀{Γ Δ} m → substitution Γ Δ → substitution Γ (m ∷ Δ)
   wk-subst-gen m σ = VecListMap (λ x → wk-tm m) σ
-  -- wk-subst-gen {[]} {Δ} σ m = tt
-  -- wk-subst-gen {x ∷ Γ} {Δ} (t , σ) m = wk-tm t m , (wk-subst-gen σ m )
 
 
   id-subst : (Γ : MetaContext) → substitution Γ Γ
+
   wk-subst : (Γ : MetaContext) → (m : A.Obj) → substitution Γ (m ∷ Γ)
   wk-subst Γ m = wk-subst-gen m (id-subst Γ)
 
   id-subst [] = tt
   id-subst (m ∷ Γ) = (Flexible (here _) A.id) , wk-subst Γ m
 
-  substitution⊥ : MetaContext⊥ → MetaContext⊥ → Set
-  substitution⊥ Γ ⊥ = ⊤
-  substitution⊥ (Some Γ) (Some Δ) = substitution Γ Δ
-  substitution⊥ ⊥ (Some Δ) = Empty
-  
   _⟦_⟧ : ∀ {Γ}{a}(t : Syntax Γ a){b}(f : a A.⇒ b) → Syntax Γ b
   _⟦_⟧s : ∀ {Γ}{n}{as : Vec _ n}{as' : Vec _ n}(ts : VecSyntax Γ as)(fs : as V.⇒ as') → VecSyntax Γ as'
 
   _⟦_⟧ {Γ} {a} (Rigid o x) {b} f = Rigid (o 〚 f 〛) (x ⟦ αf o f ⟧s) 
   _⟦_⟧ {Γ} {a} (Flexible M g) {b} f = Flexible M (f A.∘ g) 
 
-  -- there is a way to design a map combinator to factor those two branches
-  -- but it would be complicated
+  -- there is a way to design a map combinator (generalising VecListMap) to factor those two branches
+  -- but I don't think it is worth the additional complexity 
   _⟦_⟧s {as = []} {[]} ts fs = tt
   _⟦_⟧s {as = a ∷ as} {a' ∷ as'} (t , ts) (f , fs) = (t ⟦ f ⟧) , (ts ⟦ fs ⟧s)
 
@@ -253,9 +198,6 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   _∘σ_ {Γ₃ = ⊥} σ δ = tt
   _∘σ_ {Γ₃ = Some Γ₃} σ δ = VecListMap (λ a t → t [ δ ]t) σ
 
-  -- VecSyntax⊥ : MetaContext⊥ → ∀{n}(v : Vec VariableContext n) → Set
-  -- VecSyntax⊥ (just Γ) v = {!VecSyna!}
-  -- VecSyntax⊥ nothing v = {!!}
   outSubstitution-⊥ : MetaContext → Set
   outSubstitution-⊥ Γ = Σ _ (substitution-⊥ Γ)
 
@@ -264,7 +206,7 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
 
   outPruning : MetaContext → A.Obj → Set
   outPruning Γ m = Σ MetaContext⊥ (λ Δ → Syntax⊥ Δ m × substitution-⊥ Γ Δ)
-  
+
   outPrunings : MetaContext → ∀{n} → Vec A.Obj n → Set
   outPrunings Γ as = Σ MetaContext⊥ (λ Δ → VecSyntax⊥ Δ as × substitution-⊥ Γ Δ)
 
@@ -284,12 +226,8 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   wk-out : ∀ {x}{Γ : MetaContext} → outSubstitution Γ → outSubstitution (x ∷ Γ)
   wk-out {x}(Δ , σ) = x ∷ Δ , (Flexible (here _) A.id) , (σ ∘σ wk-subst Δ x)
 
-  -- wk-out : (Γ : MetaContext) → (m : A.Obj) → Syntax (m ∷ Γ) m → substitution Γ (m ∷ Γ)
-  -- wk-out Γ m = {!σ ∘σ ?!}
 
   unify : {Γ : MetaContext} → {a : VariableContext} → ∀ (t u : Syntax Γ a) → outSubstitution-⊥ Γ
-  -- CA NE VA pAS: il faut elminier l inM du resultat de prune
-  -- idee : retourner le inM dans la sortie, pour pouvoir l'eliminer ensuite
   prune : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m A.⇒ a → outPruning Γ m
   transition-prune : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m ∈ Γ → m A.⇒ a → outSubstitution-⊥ Γ
   unifyPbks : (Γ : MetaContext)→ ∀ {P m'} → (M' : m' ∈ Γ) → (p₂ : P A.⇒ m') → Σ _ (λ Δ → P ∈ Δ × substitution Γ Δ)
@@ -297,9 +235,6 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   pruneVec : {Γ : MetaContext} → {n : ℕ} → ∀{as}{ms} → ∀ (t : VecSyntax Γ {n} as) →
      ms V.⇒ as → outPrunings Γ ms
 
-  extend-subst : ∀ {Γ}{Δ}(σ : substitution Γ Δ) → ∀ {m}(m∈ : m ∈ Γ)(t : Syntax Δ m) → substitution Γ Δ
-  extend-subst {.(m ∷ _)} {Δ} (u , σ) {m} (here _) t = t , σ
-  extend-subst {.(_ ∷ _)} {Δ} (u , σ) {m} (there m∈) t = u , extend-subst σ m∈ t
 
   extend-subst2 : ∀ {Γ}{Δ} → ∀ {m}(m∈ : m ∈ Γ)(t : Syntax Δ m) → substitution (remove-∈ Γ m∈) Δ → substitution Γ Δ
   extend-subst2 {.(m ∷ _)} {Δ} {m} (here _) t σ = t , σ
@@ -344,15 +279,13 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   ... | Some Δ₁ , u₁ , σ₁ with pruneVec (ts [ σ₁ ]ts) xs
   ... | Some Δ₂ , us , σ₂ = (Some Δ₂) , (((u₁ [ σ₂ ]t) , us) , (σ₁ ∘σ σ₂))
   ... | ⊥ , out = ⊥ , tt , tt
-  -- ... | ⊥ , σ = out-⊥ Γ
-  -- ... | Some Δ , σ with pruneVec (ts [ σ ]ts) xs
-  -- ... | (Δ' , σ') = Δ' , {!σ ∘σ σ'!}
 
   unifyVec : {Γ : MetaContext} → {n : ℕ} → ∀{as} → ∀ (t u : VecSyntax Γ {n} as) → outSubstitution-⊥ Γ
   unifyVec {Γ} {.ℕ.zero} {[]} t u = out-id Γ
   unifyVec {Γ} {.(ℕ.suc _)} {a ∷ as} (t , ts) (u , us) with unify t u
   ... | ⊥ , σ = out-⊥ Γ
   ... | Some Δ , σ with unifyVec {Δ} (ts [ σ ]ts) (us [ σ ]ts)
+  --                      One day I wish I understand why Agda's unification
   ... | (Δ' , σ') = Δ' , (σ ∘σ σ' )
 
   unifyFlexible : (Γ : MetaContext) → ∀ {m m' a} → (M : m ∈ Γ) → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → outSubstitution Γ
