@@ -1,7 +1,6 @@
 {-# OPTIONS --type-in-type --no-termination-check #-}
 module main where
 
-
 open import Agda.Builtin.Unit
 open import Data.Empty renaming (⊥ to Empty)
 open import Agda.Builtin.Maybe
@@ -14,7 +13,6 @@ open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Product using (_,_; Σ; _×_)
 
 open import Level
-open import Function.Base using (flip)
 
 open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
@@ -109,7 +107,6 @@ record Signature (ℓₒ ℓ : Level) : Set where
      α : ∀ {n a } → (o : O n a) → Vec A.Obj n
      _〚_〛  : ∀ {n}{a} → O n a → ∀ {b} (f : a A.⇒ b) → O n b
      αf : ∀ {n}{a} (o : O n a) → ∀ {b}(f : a A.⇒ b) → (α o) V.⇒ (α (o 〚 f 〛 ))
-
      _〚_〛⁻¹ : ∀ {n}{a}(o : O n a) → ∀ {b}(f : b A.⇒ a) → Maybe (Σ (O n b) (λ o' →  o' 〚 f 〛 ≡ o))
 
 
@@ -121,8 +118,6 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
 
   MetaContext : Set
   MetaContext = List A.Obj
-
-
 
   VariableContext : Set
   VariableContext = A.Obj
@@ -137,25 +132,12 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   VecSyntax Γ as = VecList.t (Syntax Γ) (Vec.toList as)
 
 
-  substitution : MetaContext → MetaContext → Set
-  substitution Γ Δ = VecList.t (Syntax Δ) Γ
 
-  wk-tm : ∀ {Γ}{a} m → Syntax Γ a → Syntax (m ∷ Γ) a
+{- ----------------------
 
-  wk-tm {Γ} {a} m (Rigid o x) = Rigid o (VecList.map (λ b → wk-tm m) x)
-  wk-tm {Γ} {a} m (Flexible M f) = Flexible (there M) f
+Renaming
 
-
-  wk-subst : ∀{Γ Δ} m → substitution Γ Δ → substitution Γ (m ∷ Δ)
-  wk-subst m σ = VecList.map (λ x → wk-tm m) σ
-
-
-  id-subst : (Γ : MetaContext) → substitution Γ Γ
-
-  wk-id : (Γ : MetaContext) → (m : A.Obj) → substitution Γ (m ∷ Γ)
-  wk-id Γ m = wk-subst m (id-subst Γ)
-
-
+-------------------------- -}
   _⟦_⟧ : ∀ {Γ}{a}(t : Syntax Γ a){b}(f : a A.⇒ b) → Syntax Γ b
   _⟦_⟧s : ∀ {Γ}{n}{as : Vec _ n}{as' : Vec _ n}(ts : VecSyntax Γ as)(fs : as V.⇒ as') → VecSyntax Γ as'
 
@@ -167,6 +149,14 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   _⟦_⟧s {as = []} {[]} ts fs = tt
   _⟦_⟧s {as = a ∷ as} {a' ∷ as'} (t , ts) (f , fs) = (t ⟦ f ⟧) , (ts ⟦ fs ⟧s)
 
+{- ----------------------
+
+Substitution
+
+-------------------------- -}
+  substitution : MetaContext → MetaContext → Set
+  substitution Γ Δ = VecList.t (Syntax Δ) Γ
+
   _[_]t : ∀ {Γ}{a}(t : Syntax Γ a){Δ}(σ : substitution Γ Δ) → Syntax Δ a
 
   _[_]ts : ∀ {Γ}{n}{as : Vec VariableContext n}(ts : VecSyntax Γ as){Δ}(σ : substitution Γ Δ) → VecSyntax Δ as
@@ -175,6 +165,34 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
   _[_]t {Γ} {a} (Rigid o x) {Δ} σ = Rigid o (x [ σ ]ts)
   _[_]t {Γ} {a} (Flexible M f) {Δ} σ = VecList.nth M σ ⟦ f ⟧ 
 
+  subst-extend : ∀ {Γ}{Δ} → ∀ {m}(m∈ : m ∈ Γ)(t : Syntax Δ m) → substitution (Γ without m∈) Δ → substitution Γ Δ
+  subst-extend {.(m ∷ _)} {Δ} {m} (here _) t σ = t , σ
+  subst-extend {.(_ ∷ _)} {Δ} {m} (there m∈) t (u , σ) = u , (subst-extend m∈ t σ)
+
+{- ----------------------
+
+Weakening
+
+-------------------------- -}
+  wk-tm : ∀ {Γ}{a} m → Syntax Γ a → Syntax (m ∷ Γ) a
+
+  wk-tm {Γ} {a} m (Rigid o x) = Rigid o (VecList.map (λ b → wk-tm m) x)
+  wk-tm {Γ} {a} m (Flexible M f) = Flexible (there M) f
+
+
+  wk-subst : ∀{Γ Δ} m → substitution Γ Δ → substitution Γ (m ∷ Δ)
+  wk-subst m σ = VecList.map (λ x → wk-tm m) σ
+
+
+{- ----------------------
+
+The category of substitutions
+
+-------------------------- -}
+  id-subst : (Γ : MetaContext) → substitution Γ Γ
+
+  wk-id : (Γ : MetaContext) → (m : A.Obj) → substitution Γ (m ∷ Γ)
+  wk-id Γ m = wk-subst m (id-subst Γ)
 
   id-subst [] = tt
   id-subst (m ∷ Γ) = (Flexible (here _) A.id) , wk-id Γ m
@@ -188,125 +206,111 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
 
   module S = Category SubstitutionCategory
 
+{- ----------------------
 
-  outSubstitution : MetaContext → Set
-  outSubstitution Γ = Σ _ (substitution Γ)
+Occur-check
 
-  outSubstitution-⊥ : MetaContext → Set
-  outSubstitution-⊥ Γ = Maybe (outSubstitution Γ)
-
-
-  outPruning : MetaContext → A.Obj → Set
-  outPruning Γ m = Maybe (Σ MetaContext (λ Δ → Syntax Δ m × substitution Γ Δ))
-
-  outPrunings : MetaContext → ∀{n} → Vec A.Obj n → Set
-  outPrunings Γ as = Maybe (Σ MetaContext (λ Δ → VecSyntax Δ as × substitution Γ Δ))
-
-  out-bottomise : ∀ {Γ} → outSubstitution Γ → outSubstitution-⊥ Γ
-  out-bottomise (Δ , σ) = just (Δ , σ)
-
-  out-⊥ : (Γ : MetaContext) → outSubstitution-⊥ Γ
-  out-⊥ Γ = nothing
-
-  out-pruning-⊥ : (Γ : MetaContext) → (a : A.Obj) → outPruning Γ a
-  out-pruning-⊥ Γ a = nothing
-
-  out-id : (Γ : MetaContext) → outSubstitution-⊥ Γ
-  out-id Γ = just (Γ , (id-subst Γ))
-
-
-  wk-out : ∀ {x}{Γ : MetaContext} → outSubstitution Γ → outSubstitution (x ∷ Γ)
-  wk-out {x}(Δ , σ) = x ∷ Δ , (Flexible (here _) A.id) , wk-subst x σ 
-
-
-  unify : {Γ : MetaContext} → {a : VariableContext} → ∀ (t u : Syntax Γ a) → outSubstitution-⊥ Γ
-  prune : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m A.⇒ a → outPruning Γ m
-  transition-prune : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m ∈ Γ → m A.⇒ a → outSubstitution-⊥ Γ
-  unifyPbks : (Γ : MetaContext)→ ∀ {P m'} → (M' : m' ∈ Γ) → (p₂ : P A.⇒ m') → Σ _ (λ Δ → P ∈ Δ × substitution Γ Δ)
-  unifyPbksTop : (Γ : MetaContext)→ ∀ {m m' a} → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → outSubstitution (m ∷ Γ)
-  pruneVec : {Γ : MetaContext} → {n : ℕ} → ∀{as}{ms} → ∀ (t : VecSyntax Γ {n} as) →
-     ms V.⇒ as → outPrunings Γ ms
-
-
-  extend-subst2 : ∀ {Γ}{Δ} → ∀ {m}(m∈ : m ∈ Γ)(t : Syntax Δ m) → substitution (Γ without m∈) Δ → substitution Γ Δ
-  extend-subst2 {.(m ∷ _)} {Δ} {m} (here _) t σ = t , σ
-  extend-subst2 {.(_ ∷ _)} {Δ} {m} (there m∈) t (u , σ) = u , (extend-subst2 m∈ t σ)
+-------------------------- -}
 
   occur-check : ∀ {Γ}{m}(M : m ∈ Γ) {a} → Syntax Γ a → Maybe (Syntax (Γ without M) a)
-  occur-checkVec : ∀ {Γ}{m}(M : m ∈ Γ) {n}{as} → VecSyntax Γ {n = n} as → Maybe (VecSyntax (Γ without M) as)
-  occur-checkVec2 : ∀ {Γ}{m}(M : m ∈ Γ){as} → VecList.t (Syntax Γ) as → Maybe (VecList.t (Syntax (Γ without M)) as)
-  occur-checkVec M {n}{as} v = occur-checkVec2 M v
-  occur-checkVec2 {Γ} {m} M {[]} l = just tt
-  occur-checkVec2 {Γ} {m} M {a ∷ as} (t , ts) with occur-checkVec2 M ts | occur-check M t
+  occur-check-Vec : ∀ {Γ}{m}(M : m ∈ Γ){as} → VecList.t (Syntax Γ) as → Maybe (VecList.t (Syntax (Γ without M)) as)
+  occur-check-Vec {Γ} {m} M {[]} l = just tt
+  occur-check-Vec {Γ} {m} M {a ∷ as} (t , ts) with occur-check-Vec M ts | occur-check M t
   ... | nothing | _ = nothing
   ... | just _ | nothing = nothing
   ... | just ts' | just t' = just (t' , ts')
-  occur-check {Γ} {m} M {a} (Rigid o ts) with occur-checkVec M ts
+  occur-check {Γ} {m} M {a} (Rigid o ts) with occur-check-Vec M ts
   ... | nothing = nothing
   ... | just ts' = just (Rigid o ts')
   occur-check {Γ} {m} M {a} (Flexible M' f) with restricts∈ Γ M M'
   ... | nothing = nothing
   ... | just i = just (Flexible i f)
- 
-  
 
-  transition-prune {Γ}{a} t {m} inM f with occur-check inM t
-  ... | nothing = out-⊥ Γ
-  ... | just t' with prune t' f
-  ... | nothing = out-⊥ Γ
-  ... | just (Δ , u , σ) = just (Δ , extend-subst2 inM u σ)
+{- ----------------------
 
-  prune {Γ} {a} (Rigid {n = n}o ts) {m} f with o 〚 f 〛⁻¹
-  ... | nothing = out-pruning-⊥ Γ m
-  ... | just (o' , ≡.refl) with pruneVec {as = α o} ts (αf o' f)
-  ... | nothing = out-pruning-⊥ Γ m
-  ... | just (Δ , us , σ) = just (Δ , (Rigid o' us) , σ)
+Unification
 
-  prune {Γ} {a} (Flexible {m = m} M x) {m'} f with 𝓐-pullbacks x f
-  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with unifyPbks Γ M p₁
-  ... | Δ , (inP , σ) = just (Δ , ((Flexible inP p₂) , σ))
+-------------------------- -}
+  Substitution-from : MetaContext → Set
+  Substitution-from Γ = Σ _ (substitution Γ)
 
-  pruneVec {Γ} {.ℕ.zero} {[]} {[]} ts xs = just (Γ , tt , id-subst Γ)
-  pruneVec {Γ} {.(ℕ.suc _)} {a ∷ as} {m ∷ ms} (t , ts) (x , xs) with prune t x
-  ... | nothing = nothing
-  ... | just (Δ₁ , u₁ , σ₁) with pruneVec (ts [ σ₁ ]ts) xs
-  ... | just (Δ₂ , us , σ₂) = just (Δ₂ , (((u₁ [ σ₂ ]t) , us) , (σ₂ S.∘ σ₁)))
-  ... | nothing = nothing
+  Substitution-from-Vec : MetaContext → ∀{n} → Vec A.Obj n → Set
+  Substitution-from-Vec Γ as = Maybe (Σ MetaContext (λ Δ → VecSyntax Δ as × substitution Γ Δ))
 
-  unifyVec : {Γ : MetaContext} → {n : ℕ} → ∀{as} → ∀ (t u : VecSyntax Γ {n} as) → outSubstitution-⊥ Γ
-  unifyVec {Γ} {.ℕ.zero} {[]} t u = out-id Γ
-  unifyVec {Γ} {.(ℕ.suc _)} {a ∷ as} (t , ts) (u , us) with unify t u
-  ... | nothing = out-⊥ Γ
-  ... | just (Δ , σ) with unifyVec {Δ} (ts [ σ ]ts) (us [ σ ]ts)
-  ... | just (Δ' , σ') = just (Δ' , (σ' S.∘ σ ))
-  ... | nothing = nothing
+  wk-out : ∀ {x}{Γ : MetaContext} → Substitution-from Γ → Substitution-from (x ∷ Γ)
+  wk-out {x}(Δ , σ) = x ∷ Δ , (Flexible (here _) A.id) , wk-subst x σ
 
-  unifyFlexible : (Γ : MetaContext) → ∀ {m m' a} → (M : m ∈ Γ) → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → outSubstitution Γ
-
-  unify {Γ} {a} (Rigid {n = n} o x) (Rigid {n = n'} o' x') with n ≟ n'
-  ... | .false because ofⁿ ¬p = out-⊥ Γ
-  ... | .true because ofʸ ≡.refl with o ≟O o'
-  ... | .false because ofⁿ ¬p = out-⊥ Γ
-  ... | .true because ofʸ ≡.refl = unifyVec x x'
-  unify {Γ} {a} (Rigid o x) (Flexible M f) = transition-prune (Rigid o x) M f
-  unify {Γ} {a} (Flexible M f) (Rigid o x) = transition-prune (Rigid o x) M f
-  unify {Γ} {a} (Flexible M f) (Flexible M' f') = out-bottomise (unifyFlexible Γ M M' f f')
-
-
-  unifyFlexible .(m ∷ _) {m} {.m} (here Γ) (here _) f f' with 𝓐-equalizers f f'
-  ... | record { obj = m'' ; arr = f'' } = (m'' ∷ Γ) , (Flexible (here _) f'') , (wk-id Γ m'')
-
-  unifyFlexible .(_ ∷ _) {m} {m'} {a} (here Γ) (there M') f f' = unifyPbksTop Γ M' f f'
-  unifyFlexible .(_ ∷ _) {m} {m'} {a} (there M) (here Γ) f f' = unifyPbksTop Γ M f' f
-  unifyFlexible .(_ ∷ _) {m} {m'} (there {x = x}{xs = Γ} M) (there M') f f' =  wk-out (unifyFlexible Γ M M' f f') 
-
-
-  unifyPbksTop Γ {m}{m'}{a} M' f f' with 𝓐-pullbacks f f'
-  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with unifyPbks Γ M' p₂
-  ... | Δ , (inP , σ) =  Δ , (Flexible inP p₁) , σ
-
+  unifyPbks : (Γ : MetaContext) → ∀ {P m'} → (M' : m' ∈ Γ) → (p₂ : P A.⇒ m') → Σ _ (λ Δ → P ∈ Δ × substitution Γ Δ)
   unifyPbks .(_ ∷ _) {P} {m'} (here Γ) p₂ = (P ∷ Γ) , ((here _) , ((Flexible (here _) p₂) , wk-id Γ P))
   unifyPbks .(_ ∷ _) {P} {m'} (there {x = x}{xs = Γ} M') p₂ with unifyPbks Γ M' p₂
   ... | Δ , (inP , σ) = (x ∷ Δ) , ((there inP) , ((Flexible (here _) A.id) , wk-subst x σ))
 
+  unifyPbksTop : (Γ : MetaContext)→ ∀ {m m' a} → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → Substitution-from (m ∷ Γ)
+  unifyPbksTop Γ {m}{m'}{a} M' f f' with 𝓐-pullbacks f f'
+  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with unifyPbks Γ M' p₂
+  ... | Δ , (inP , σ) =  Δ , (Flexible inP p₁) , σ
 
+
+
+  unify-flex-flex : (Γ : MetaContext) → ∀ {m m' a} → (M : m ∈ Γ) → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → Substitution-from Γ
+
+  unify-flex-flex .(m ∷ _) {m} {.m} (here Γ) (here _) f f' with 𝓐-equalizers f f'
+  ... | record { obj = m'' ; arr = f'' } = (m'' ∷ Γ) , (Flexible (here _) f'') , (wk-id Γ m'')
+
+  unify-flex-flex .(_ ∷ _) {m} {m'} {a} (here Γ) (there M') f f' = unifyPbksTop Γ M' f f'
+  unify-flex-flex .(_ ∷ _) {m} {m'} {a} (there M) (here Γ) f f' = unifyPbksTop Γ M f' f
+  unify-flex-flex .(_ ∷ _) {m} {m'} (there {x = x}{xs = Γ} M) (there M') f f' = wk-out (unify-flex-flex Γ M M' f f')
+
+
+
+
+  unify-no-cycle : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m A.⇒ a → Maybe (Substitution-from (m ∷ Γ))
+  unify-no-cycle-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as}{ms} → ∀ (t : VecSyntax Γ {n} as) →
+     ms V.⇒ as → Substitution-from-Vec Γ ms
+
+  unify-no-cycle {Γ} {a} (Rigid {n = n}o ts) {m} f with o 〚 f 〛⁻¹
+  ... | nothing = nothing
+  ... | just (o' , ≡.refl) with unify-no-cycle-Vec {as = α o} ts (αf o' f)
+  ... | nothing = nothing
+  ... | just (Δ , us , σ) = just (Δ , (Rigid o' us) , σ)
+
+  unify-no-cycle {Γ} {a} (Flexible {m = m} M x) {m'} f with 𝓐-pullbacks x f
+  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with unifyPbks Γ M p₁
+  ... | Δ , (inP , σ) = just (Δ , ((Flexible inP p₂) , σ))
+
+  unify-no-cycle-Vec {Γ} {.ℕ.zero} {[]} {[]} ts xs = just (Γ , tt , id-subst Γ)
+  unify-no-cycle-Vec {Γ} {.(ℕ.suc _)} {a ∷ as} {m ∷ ms} (t , ts) (x , xs) with unify-no-cycle t x
+  ... | nothing = nothing
+  ... | just (Δ₁ , u₁ , σ₁) with unify-no-cycle-Vec (ts [ σ₁ ]ts) xs
+  ... | just (Δ₂ , us , σ₂) = just (Δ₂ , (((u₁ [ σ₂ ]t) , us) , (σ₂ S.∘ σ₁)))
+  ... | nothing = nothing
+
+  transition-unify-no-cycle : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m ∈ Γ → m A.⇒ a → Maybe (Substitution-from Γ)
+
+
+  transition-unify-no-cycle {Γ}{a} t {m} inM f with occur-check inM t
+  ... | nothing = nothing
+  ... | just t' with unify-no-cycle t' f
+  ... | nothing = nothing
+  ... | just (Δ , u , σ) = just (Δ , subst-extend inM u σ)
+
+
+  unify : {Γ : MetaContext} → {a : VariableContext} → ∀ (t u : Syntax Γ a) → Maybe (Substitution-from Γ)
+  unify-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as} → ∀ (t u : VecSyntax Γ {n} as) → Maybe (Substitution-from Γ)
+
+  unify-Vec {Γ} {.ℕ.zero} {[]} t u = just (Γ , S.id)
+  unify-Vec {Γ} {.(ℕ.suc _)} {a ∷ as} (t , ts) (u , us) with unify t u
+  ... | nothing = nothing
+  ... | just (Δ , σ) with unify-Vec {Δ} (ts [ σ ]ts) (us [ σ ]ts)
+  ... | just (Δ' , σ') = just (Δ' , (σ' S.∘ σ ))
+  ... | nothing = nothing
+
+
+  unify {Γ} {a} (Rigid {n = n} o x) (Rigid {n = n'} o' x') with n ≟ n'
+  ... | .false because ofⁿ ¬p = nothing
+  ... | .true because ofʸ ≡.refl with o ≟O o'
+  ... | .false because ofⁿ ¬p = nothing
+  ... | .true because ofʸ ≡.refl = unify-Vec x x'
+  unify {Γ} {a} (Rigid o x) (Flexible M f) = transition-unify-no-cycle (Rigid o x) M f
+  unify {Γ} {a} (Flexible M f) (Rigid o x) = transition-unify-no-cycle (Rigid o x) M f
+  unify {Γ} {a} (Flexible M f) (Flexible M' f') = just (unify-flex-flex Γ M M' f f')
