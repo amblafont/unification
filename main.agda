@@ -36,7 +36,7 @@ restricts∈ {A} .(_ ∷ _) (there t) (there t') with restricts∈ _ t t'
 
 module VecList where
 
-  -- VecList.t B [l₀, .. , lₙ] is the type B l₀ × .. × B lₙ
+  -- VecList.t B [l₀ ; .. ; lₙ] ≃ B l₀ × .. × B lₙ
   t : ∀ {A : Set}(B : A → Set)(l : List A)  → Set
   t B [] = ⊤
   t B (x ∷ l) = B x × t B l
@@ -138,13 +138,14 @@ module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
 Renaming
 
 -------------------------- -}
-  _⟦_⟧ : ∀ {Γ}{a}(t : Syntax Γ a){b}(f : a A.⇒ b) → Syntax Γ b
-  _⟦_⟧s : ∀ {Γ}{n}{as : Vec _ n}{as' : Vec _ n}(ts : VecSyntax Γ as)(fs : as V.⇒ as') → VecSyntax Γ as'
+  _⟦_⟧ : ∀ {Γ}{a}{b} → Syntax Γ a → a A.⇒ b → Syntax Γ b
+  _⟦_⟧s : ∀ {Γ}{n}{as : Vec _ n}{as' : Vec _ n} → VecSyntax Γ as
+        → as V.⇒ as' → VecSyntax Γ as'
 
-  _⟦_⟧ {Γ} {a} (Rigid o x) {b} f = Rigid (o 〚 f 〛) (x ⟦ αf o f ⟧s) 
-  _⟦_⟧ {Γ} {a} (Flexible M g) {b} f = Flexible M (f A.∘ g) 
+  _⟦_⟧ (Rigid o x) f = Rigid (o 〚 f 〛) (x ⟦ αf o f ⟧s) 
+  _⟦_⟧ (Flexible M g) f = Flexible M (f A.∘ g) 
 
-  -- there is a way to design a map combinator (generalising VecListMap) to factor those two branches
+  -- there is a way to design a map combinator (generalising VecList.map) to factor those two branches
   -- but I don't think it is worth the additional complexity 
   _⟦_⟧s {as = []} {[]} ts fs = tt
   _⟦_⟧s {as = a ∷ as} {a' ∷ as'} (t , ts) (f , fs) = (t ⟦ f ⟧) , (ts ⟦ fs ⟧s)
@@ -186,7 +187,7 @@ Weakening
 
 {- ----------------------
 
-The category of substitutions
+The category of metavariable contexts and substitutions
 
 -------------------------- -}
   id-subst : (Γ : MetaContext) → substitution Γ Γ
@@ -208,12 +209,14 @@ The category of substitutions
 
 {- ----------------------
 
-Occur-check
+Occur check
 
 -------------------------- -}
 
-  occur-check : ∀ {Γ}{m}(M : m ∈ Γ) {a} → Syntax Γ a → Maybe (Syntax (Γ without M) a)
-  occur-check-Vec : ∀ {Γ}{m}(M : m ∈ Γ){as} → VecList.t (Syntax Γ) as → Maybe (VecList.t (Syntax (Γ without M)) as)
+  occur-check : ∀ {Γ}{m}(m∈ : m ∈ Γ) {a} → Syntax Γ a
+        → Maybe (Syntax (Γ without m∈) a)
+  occur-check-Vec : ∀ {Γ}{m}(m∈ : m ∈ Γ){as} → VecList.t (Syntax Γ) as →
+                                    Maybe (VecList.t (Syntax (Γ without m∈)) as)
   occur-check-Vec {Γ} {m} M {[]} l = just tt
   occur-check-Vec {Γ} {m} M {a ∷ as} (t , ts) with occur-check-Vec M ts | occur-check M t
   ... | nothing | _ = nothing
@@ -228,7 +231,7 @@ Occur-check
 
 {- ----------------------
 
-Unification
+Unification of two metavariables
 
 -------------------------- -}
   Substitution-from : MetaContext → Set
@@ -240,31 +243,39 @@ Unification
   wk-out : ∀ {x}{Γ : MetaContext} → Substitution-from Γ → Substitution-from (x ∷ Γ)
   wk-out {x}(Δ , σ) = x ∷ Δ , (Flexible (here _) A.id) , wk-subst x σ
 
-  unifyPbks : (Γ : MetaContext) → ∀ {P m'} → (M' : m' ∈ Γ) → (p₂ : P A.⇒ m') → Σ _ (λ Δ → P ∈ Δ × substitution Γ Δ)
-  unifyPbks .(_ ∷ _) {P} {m'} (here Γ) p₂ = (P ∷ Γ) , ((here _) , ((Flexible (here _) p₂) , wk-id Γ P))
-  unifyPbks .(_ ∷ _) {P} {m'} (there {x = x}{xs = Γ} M') p₂ with unifyPbks Γ M' p₂
-  ... | Δ , (inP , σ) = (x ∷ Δ) , ((there inP) , ((Flexible (here _) A.id) , wk-subst x σ))
+-- outputs a substitution Γ → Γ[M : m ↦ P : p] by mapping M :m to the term P(f), where f : p → m
+  replace-mvar : (Γ : MetaContext) → ∀ {p m} → m ∈ Γ → p A.⇒ m → Σ _ (λ Δ → p ∈ Δ × substitution Γ Δ)
+  replace-mvar .(_ ∷ _) {p} {m} (here Γ) f = (p ∷ Γ) , ((here _) , ((Flexible (here _) f) , wk-id Γ p))
+  replace-mvar .(_ ∷ _) {p} {m} (there {x = x}{xs = Γ} m∈) p₂ with replace-mvar Γ m∈ p₂
+  ... | Δ , (p∈ , σ) = (x ∷ Δ) , ((there p∈) , ((Flexible (here _) A.id) , wk-subst x σ))
 
-  unifyPbksTop : (Γ : MetaContext)→ ∀ {m m' a} → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → Substitution-from (m ∷ Γ)
-  unifyPbksTop Γ {m}{m'}{a} M' f f' with 𝓐-pullbacks f f'
-  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with unifyPbks Γ M' p₂
-  ... | Δ , (inP , σ) =  Δ , (Flexible inP p₁) , σ
+-- outputs a substitution m ∷ Γ → Γ[M' : m' ↦ P : p] using the pullback of m → a ← m'
+  replace-mvar-cons : (Γ : MetaContext) → ∀ {m m' a} → m' ∈ Γ → m A.⇒ a → m' A.⇒ a
+       → Substitution-from (m ∷ Γ)
+  replace-mvar-cons Γ {m}{m'}{a} m'∈ f f' with 𝓐-pullbacks f f'
+  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with replace-mvar Γ m'∈ p₂
+  ... | Δ , (P∈ , σ) =  Δ , (Flexible P∈ p₁) , σ
 
-
-
-  unify-flex-flex : (Γ : MetaContext) → ∀ {m m' a} → (M : m ∈ Γ) → (M' : m' ∈ Γ) → (f : m A.⇒ a)(f' : m' A.⇒ a) → Substitution-from Γ
+-- unification of two metavariables
+  unify-flex-flex : (Γ : MetaContext) → ∀ {m m' a} → m ∈ Γ → m' ∈ Γ
+      → m A.⇒ a → m' A.⇒ a → Substitution-from Γ
 
   unify-flex-flex .(m ∷ _) {m} {.m} (here Γ) (here _) f f' with 𝓐-equalizers f f'
   ... | record { obj = m'' ; arr = f'' } = (m'' ∷ Γ) , (Flexible (here _) f'') , (wk-id Γ m'')
 
-  unify-flex-flex .(_ ∷ _) {m} {m'} {a} (here Γ) (there M') f f' = unifyPbksTop Γ M' f f'
-  unify-flex-flex .(_ ∷ _) {m} {m'} {a} (there M) (here Γ) f f' = unifyPbksTop Γ M f' f
-  unify-flex-flex .(_ ∷ _) {m} {m'} (there {x = x}{xs = Γ} M) (there M') f f' = wk-out (unify-flex-flex Γ M M' f f')
+  unify-flex-flex .(_ ∷ _) {m} {m'} {a} (here Γ) (there M') f f' = replace-mvar-cons Γ M' f f'
+  unify-flex-flex .(_ ∷ _) {m} {m'} {a} (there M) (here Γ) f f' = replace-mvar-cons Γ M f' f
+  unify-flex-flex .(_ ∷ _) {m} {m'} (there {x = x}{xs = Γ} M) (there M') f f' =
+      wk-out (unify-flex-flex Γ M M' f f')
 
 
+{- ----------------------
 
+Non cyclic unification
 
-  unify-no-cycle : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m A.⇒ a → Maybe (Substitution-from (m ∷ Γ))
+-------------------------- -}
+  unify-no-cycle : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a)
+      → ∀ {m} → m A.⇒ a → Maybe (Substitution-from (m ∷ Γ))
   unify-no-cycle-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as}{ms} → ∀ (t : VecSyntax Γ {n} as) →
      ms V.⇒ as → Substitution-from-Vec Γ ms
 
@@ -275,7 +286,7 @@ Unification
   ... | just (Δ , us , σ) = just (Δ , (Rigid o' us) , σ)
 
   unify-no-cycle {Γ} {a} (Flexible {m = m} M x) {m'} f with 𝓐-pullbacks x f
-  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with unifyPbks Γ M p₁
+  ... | record { P = P ; p₁ = p₁ ; p₂ = p₂ } with replace-mvar Γ M p₁
   ... | Δ , (inP , σ) = just (Δ , ((Flexible inP p₂) , σ))
 
   unify-no-cycle-Vec {Γ} {.ℕ.zero} {[]} {[]} ts xs = just (Γ , tt , id-subst Γ)
@@ -285,14 +296,19 @@ Unification
   ... | just (Δ₂ , us , σ₂) = just (Δ₂ , (((u₁ [ σ₂ ]t) , us) , (σ₂ S.∘ σ₁)))
   ... | nothing = nothing
 
-  transition-unify-no-cycle : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a) → ∀ {m} → m ∈ Γ → m A.⇒ a → Maybe (Substitution-from Γ)
+{- ----------------------
 
+Unification
 
-  transition-unify-no-cycle {Γ}{a} t {m} inM f with occur-check inM t
+-------------------------- -}
+  transition-unify-no-cycle : {Γ : MetaContext} → {a : VariableContext}
+     → Syntax Γ a → ∀ {m} → m ∈ Γ → m A.⇒ a → Maybe (Substitution-from Γ)
+
+  transition-unify-no-cycle {Γ}{a} t {m} m∈ f with occur-check m∈ t
   ... | nothing = nothing
   ... | just t' with unify-no-cycle t' f
   ... | nothing = nothing
-  ... | just (Δ , u , σ) = just (Δ , subst-extend inM u σ)
+  ... | just (Δ , u , σ) = just (Δ , subst-extend m∈ u σ)
 
 
   unify : {Γ : MetaContext} → {a : VariableContext} → ∀ (t u : Syntax Γ a) → Maybe (Substitution-from Γ)
@@ -311,6 +327,6 @@ Unification
   ... | .true because ofʸ ≡.refl with o ≟O o'
   ... | .false because ofⁿ ¬p = nothing
   ... | .true because ofʸ ≡.refl = unify-Vec x x'
-  unify {Γ} {a} (Rigid o x) (Flexible M f) = transition-unify-no-cycle (Rigid o x) M f
-  unify {Γ} {a} (Flexible M f) (Rigid o x) = transition-unify-no-cycle (Rigid o x) M f
-  unify {Γ} {a} (Flexible M f) (Flexible M' f') = just (unify-flex-flex Γ M M' f f')
+  unify {Γ} {a} (Rigid o x) (Flexible m∈ f) = transition-unify-no-cycle (Rigid o x) m∈ f
+  unify {Γ} {a} (Flexible m∈ f) (Rigid o x) = transition-unify-no-cycle (Rigid o x) m∈ f
+  unify {Γ} {a} (Flexible m∈ f) (Flexible m'∈ f') = just (unify-flex-flex Γ m∈ m'∈ f f')
