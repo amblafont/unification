@@ -2,11 +2,9 @@
 module main where
 
 open import Agda.Builtin.Unit
-open import Data.Empty renaming (⊥ to Empty)
 open import Agda.Builtin.Maybe
 open import Agda.Builtin.Bool renaming (Bool to 𝔹)
 open import Data.Nat using (ℕ; _≟_)
-open import Data.Bool using (_∨_)
 open import Relation.Nullary
 open import Data.List as List hiding (map)
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
@@ -16,7 +14,6 @@ open import Level
 
 open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
-import Relation.Binary.Reasoning.Setoid as SetoidR
 
 data _∈_ {l : Level.Level}{A : Set l} (a : A) : List A → Set l where
   here  : ∀ xs   → a ∈ (a ∷ xs)
