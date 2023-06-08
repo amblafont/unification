@@ -4,28 +4,29 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass IEEEtran
+\textclass acmart
 \begin_preamble
 \input{common-preamble}
-\newenvironment{remark}{\begin{rem}}{\end{rem}}
-\newenvironment{lemma}{\begin{lem}}{\end{lem}}
-\newenvironment{proposition}{\begin{prop}}{\end{prop}}
-\newenvironment{corollary}{\begin{cor}}{\end{cor}}
-\newenvironment{definition}{\begin{defn}}{\end{defn}}
-\newenvironment{theorem}{\begin{thm}}{\end{thm}}
+%\newenvironment{remark}{\begin{rem}}{\end{rem}}
+%\newenvironment{lemma}{\begin{lem}}{\end{lem}}
+%\newenvironment{proposition}{\begin{prop}}{\end{prop}}
+%\newenvironment{corollary}{\begin{cor}}{\end{cor}}
+%\newenvironment{definition}{\begin{defn}}{\end{defn}}
+%\newenvironment{theorem}{\begin{thm}}{\end{thm}}
 \newcommand{\theproposition}{\thethm}
 
 \setboolean{fullpaper}{false}
 
-%\newcommand{\startappendix}{}
-\newcommand{\startappendix}{\appendices}
+\newcommand{\startappendix}{\appendix}
+%\newcommand{\startappendix}{\appendices}
 %\newcommand{\secappendix}[1]{\appendix[#1]}
 \newcommand{\secappendix}[1]{\section{#1}}
 
 
-\newcommand{\keywords}[1]{\begin{IEEEkeywords}#1\end{IEEEkeywords}}
+% LICS
+% \newcommand{\keywords}[1]{\begin{IEEEkeywords}#1\end{IEEEkeywords}}
 \end_preamble
-\options conference,10pt
+\options acmsmall,review,screen
 \use_default_options false
 \begin_modules
 enumitem
@@ -42,6 +43,9 @@ Format 66
 
 Requires    amsmath
 
+# acmart document class includes amssymb
+Provides amssymb 1
+
 # The environments defined (regular and starred) are :
 # - Property
 
@@ -51,7 +55,21 @@ Style Notation
     LatexName             notation
     LabelString           "Notation \thethm."
     Preamble
-      \newtheorem{notation}[thm]{Notation}{\bfseries}{\itshape}
+\AtEndPreamble{%
+\theoremstyle{acmdefinition}
+\newtheorem{notation}[theorem]{Notation}}
+    EndPreamble
+End
+
+Style Remark
+    CopyStyle             Theorem
+    DependsOn               Theorem
+    LatexName             remark
+    LabelString           "Remark \thethm."
+    Preamble
+\AtEndPreamble{%
+\theoremstyle{acmdefinition}
+\newtheorem{remark}[theorem]{Remark}}
     EndPreamble
 End
 
@@ -61,7 +79,9 @@ Style Property
     LatexName             property
     LabelString           "Property \thethm."
     Preamble
-      \newtheorem{property}[thm]{Property}{\bfseries}{\itshape}
+\AtEndPreamble{%
+\theoremstyle{acmdefinition}
+\newtheorem{property}[theorem]{Property}}
     EndPreamble
 End
 
@@ -135,7 +155,7 @@ End
 \pdf_pdfusetitle false
 \pdf_quoted_options "pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
 \use_package cancel 1
@@ -146,9 +166,9 @@ End
 \use_package stackrel 1
 \use_package stmaryrd 1
 \use_package undertilde 1
-\cite_engine basic
-\cite_engine_type default
-\biblio_style plain
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style ACM-Reference-Format
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -168,7 +188,7 @@ End
 \math_numbering_side default
 \quotes_style british
 \dynamic_quotes 0
-\papercolumns 2
+\papercolumns 1
 \papersides 1
 \paperpagestyle default
 \tracking_changes false
@@ -179,153 +199,6 @@ End
 \end_header
 
 \begin_body
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This is a template \SpecialChar LyX
- file for conference articles of conferences organized
- by the Institute of Electrical and Electronics Engineers (IEEE).
- For IEEE journal articles, see the template file 
-\emph on
-IEEEtran-Journal.lyx
-\emph default
-.
- For general info see 
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://wiki.lyx.org/Examples/IEEE
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-It is important that you use the correct document class options for your
- document..
- These are explained in the IEEEtran documentation: 
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-http://mirror.ctan.org/macros/latex/contrib/IEEEtran/IEEEtran_HOWTO.pdf
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Title
-Generic pattern unification
-\end_layout
-
-\begin_layout Author
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Flex Author Name
-status open
-
-\begin_layout Plain Layout
-Ambroise
-\begin_inset space ~
-\end_inset
-
-Lafont
-\end_layout
-
-\end_inset
-
-
-\begin_inset Flex Author Affiliation
-status collapsed
-
-\begin_layout Plain Layout
-Department of Computer Science and Technology
-\begin_inset Newline newline
-\end_inset
-
-University of Cambridge
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-and 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Flex Author Name
-status open
-
-\begin_layout Plain Layout
-Neelakantan
-\begin_inset space ~
-\end_inset
-
-R.
-\begin_inset space ~
-\end_inset
-
-Krishnaswami
-\end_layout
-
-\end_inset
-
-
-\begin_inset Flex Author Affiliation
-status collapsed
-
-\begin_layout Plain Layout
-Department of Computer Science and Technology
-\begin_inset Newline newline
-\end_inset
-
-University of Cambridge
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include
