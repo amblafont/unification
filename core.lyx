@@ -1147,10 +1147,11 @@ literal "false"
 
  shows that nominal unification and pattern unification problems are inter-trans
 latable.
- As he notes, this result indirectly provides semantics foundations of pattern
+ As he notes, this result indirectly provides semantic foundations for pattern
  unification based on the nominal approach.
  In this respect, the present work provides a more direct semantic analysis
- of pattern unification, amenable to generalisation.
+ of pattern unification, leading us to the generic algorithm we present,
+ parameterised by a general notion of signature for the syntax.
 \end_layout
 
 \begin_layout Subsection*
@@ -5469,7 +5470,22 @@ a morphism between
 \begin_inset Formula $\rename of=o'$
 \end_inset
 
- .
+ where 
+\begin_inset Formula $o\{f\}$
+\end_inset
+
+ denotes the image of 
+\begin_inset Formula $o$
+\end_inset
+
+ by the function 
+\begin_inset Formula $O_{n}(f):O_{n}(a)\rightarrow O_{n}(a')$
+\end_inset
+
+.
+ 
+\color red
+introduce the reverse partial notation for the P-RIG rule ?
 \end_layout
 
 \end_deeper

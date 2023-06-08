@@ -99,12 +99,16 @@ record Signature (ℓₒ ℓ : Level) : Set where
    field
      𝓐-equalizers : ∀ {a b}(f g : a A.⇒ b) → Equalizer 𝓐 f g
      𝓐-pullbacks  : ∀ {a b c}(f : a A.⇒ b) (g : c A.⇒ b)→ Pullback 𝓐 f g
+
      O : ℕ → A.Obj → Set
      _≟O_ : ∀ {n}{a}(o o' : O n a) → Dec (o ≡ o')
+
      α : ∀ {n a } → (o : O n a) → Vec A.Obj n
+
      _〚_〛  : ∀ {n}{a} → O n a → ∀ {b} (f : a A.⇒ b) → O n b
-     αf : ∀ {n}{a} (o : O n a) → ∀ {b}(f : a A.⇒ b) → (α o) V.⇒ (α (o 〚 f 〛 ))
      _〚_〛⁻¹ : ∀ {n}{a}(o : O n a) → ∀ {b}(f : b A.⇒ a) → Maybe (Σ (O n b) (λ o' →  o' 〚 f 〛 ≡ o))
+
+     αf : ∀ {n}{a} (o : O n a) → ∀ {b}(f : a A.⇒ b) → (α o) V.⇒ (α (o 〚 f 〛 ))
 
 
 module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
@@ -149,7 +153,7 @@ Renaming
 
 {- ----------------------
 
-Substitution
+MetaSubstitution
 
 -------------------------- -}
   substitution : MetaContext → MetaContext → Set
@@ -319,6 +323,7 @@ Unification
   ... | nothing = nothing
 
 
+-- equivalence between Kleisli et category of pointed sets (implementation vs proof)
   unify {Γ} {a} (Rigid {n = n} o x) (Rigid {n = n'} o' x') with n ≟ n'
   ... | .false because ofⁿ ¬p = nothing
   ... | .true because ofʸ ≡.refl with o ≟O o'
