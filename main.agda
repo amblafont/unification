@@ -49,23 +49,22 @@ module VecList where
 
 
 -- Taken from the agda-category library, removing all the properties
--- Basic definition of a |Category| with a Hom setoid.
-record Category : Set where
+record PreCategory : Set where
   eta-equality
   infix  4 _⇒_
   infixr 9 _∘_
 
   field
-    Obj : Set 
+    Obj : Set
     _⇒_ : Obj → Obj → Set
 
     id  : ∀ {A} → (A ⇒ A)
     _∘_ : ∀ {A B C} → (B ⇒ C) → (A ⇒ B) → (A ⇒ C)
 
 
-module _ (𝓐 : Category) where
+module _ (𝓐 : PreCategory) where
 
- open Category 𝓐
+ open PreCategory 𝓐
  private
   variable
     A B X Y Z : Obj
@@ -80,19 +79,19 @@ module _ (𝓐 : Category) where
     p₁  : P ⇒ X
     p₂  : P ⇒ Y
 
-module VecMor (𝓐 : Category) where
+module VecMor (𝓐 : PreCategory) where
   private
-     module A = Category 𝓐
+     module A = PreCategory 𝓐
   _⇒_ : ∀ {n} → Vec A.Obj n → Vec A.Obj n → Set
   [] ⇒ [] = ⊤
   (x ∷ v) ⇒ (x' ∷ v') = x A.⇒ x' × v ⇒ v'
 
 record Signature : Set where
-   open Category
+   open PreCategory
    field
-     𝓐 : Category
+     𝓐 : PreCategory
    private
-     module A = Category 𝓐
+     module A = PreCategory 𝓐
      module V = VecMor 𝓐
    field
      𝓐-equalizers : ∀ {a b}(f g : a A.⇒ b) → Equalizer 𝓐 f g
@@ -112,7 +111,7 @@ record Signature : Set where
 module _ (S : Signature) where
   open Signature S
   private
-    module A = Category 𝓐
+    module A = PreCategory 𝓐
     module V = VecMor 𝓐
 
   MetaContext : Set
@@ -197,14 +196,14 @@ The category of metavariable contexts and substitutions
   id-subst [] = tt
   id-subst (m ∷ Γ) = (Flexible (here _) A.id) , wk-id Γ m
 
-  SubstitutionCategory : Category
-  SubstitutionCategory = record
+  SubstitutionPreCategory : PreCategory
+  SubstitutionPreCategory = record
      { Obj = MetaContext ;
        _⇒_ = substitution ;
        id = id-subst _ ;
        _∘_ = λ σ δ → VecList.map (λ a t → t [ σ ]t) δ }
 
-  module S = Category SubstitutionCategory
+  module S = PreCategory SubstitutionPreCategory
 
 {- ----------------------
 
