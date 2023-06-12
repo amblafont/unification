@@ -10,12 +10,10 @@ open import Data.List as List hiding (map)
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Product using (_,_; Σ; _×_)
 
-open import Level
-
 open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 
-data _∈_ {l : Level.Level}{A : Set l} (a : A) : List A → Set l where
+data _∈_ {A : Set} (a : A) : List A → Set where
   here  : ∀ xs   → a ∈ (a ∷ xs)
   there : ∀ {x xs}  → a ∈ xs → a ∈ (x ∷ xs)
 
@@ -52,47 +50,47 @@ module VecList where
 
 -- Taken from the agda-category library, removing all the properties
 -- Basic definition of a |Category| with a Hom setoid.
-record Category (ℓₒ ℓ : Level) : Set (suc (ℓₒ ⊔ ℓ)) where
+record Category : Set where
   eta-equality
   infix  4 _⇒_
   infixr 9 _∘_
 
   field
-    Obj : Set ℓₒ
-    _⇒_ : Rel Obj ℓ
+    Obj : Set 
+    _⇒_ : Obj → Obj → Set
 
     id  : ∀ {A} → (A ⇒ A)
     _∘_ : ∀ {A B C} → (B ⇒ C) → (A ⇒ B) → (A ⇒ C)
 
 
-module _ {o ℓ : Level}(𝓐 : Category o ℓ) where
+module _ (𝓐 : Category) where
 
  open Category 𝓐
  private
   variable
     A B X Y Z : Obj
 
- record Equalizer (f g : A ⇒ B) : Set (o ⊔ ℓ) where
+ record Equalizer (f g : A ⇒ B) : Set where
   field
     {obj} : Obj
     arr   : obj ⇒ A
- record Pullback (f : X ⇒ Z) (g : Y ⇒ Z) : Set (o ⊔ ℓ) where
+ record Pullback (f : X ⇒ Z) (g : Y ⇒ Z) : Set where
   field
     {P} : Obj
     p₁  : P ⇒ X
     p₂  : P ⇒ Y
 
-module VecMor {ℓₒ ℓ : Level}(𝓐 : Category ℓₒ ℓ) where
+module VecMor (𝓐 : Category) where
   private
      module A = Category 𝓐
   _⇒_ : ∀ {n} → Vec A.Obj n → Vec A.Obj n → Set
   [] ⇒ [] = ⊤
   (x ∷ v) ⇒ (x' ∷ v') = x A.⇒ x' × v ⇒ v'
 
-record Signature (ℓₒ ℓ : Level) : Set where
+record Signature : Set where
    open Category
    field
-     𝓐 : Category ℓₒ ℓ
+     𝓐 : Category
    private
      module A = Category 𝓐
      module V = VecMor 𝓐
@@ -111,7 +109,7 @@ record Signature (ℓₒ ℓ : Level) : Set where
      αf : ∀ {n}{a} (o : O n a) → ∀ {b}(f : a A.⇒ b) → (α o) V.⇒ (α (o 〚 f 〛 ))
 
 
-module _ {ℓₒ ℓ : Level}(S : Signature ℓₒ ℓ) where
+module _ (S : Signature) where
   open Signature S
   private
     module A = Category 𝓐
@@ -199,7 +197,7 @@ The category of metavariable contexts and substitutions
   id-subst [] = tt
   id-subst (m ∷ Γ) = (Flexible (here _) A.id) , wk-id Γ m
 
-  SubstitutionCategory : Category zero zero
+  SubstitutionCategory : Category
   SubstitutionCategory = record
      { Obj = MetaContext ;
        _⇒_ = substitution ;
