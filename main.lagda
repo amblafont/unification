@@ -1,3 +1,4 @@
+\begin{code}
 {-# OPTIONS --type-in-type --no-termination-check #-}
 module main where
 
@@ -49,7 +50,11 @@ module VecList where
 
 
 -- Taken from the agda-category library, removing all the properties
-record PreCategory : Set where
+
+\end{code}
+%<*category>
+\begin{code}
+record Category : Set where
   eta-equality
   infix  4 _⇒_
   infixr 9 _∘_
@@ -61,10 +66,13 @@ record PreCategory : Set where
     id  : ∀ {A} → (A ⇒ A)
     _∘_ : ∀ {A B C} → (B ⇒ C) → (A ⇒ B) → (A ⇒ C)
 
+\end{code}
+%</category>
+\begin{code}
 
-module _ (𝓐 : PreCategory) where
+module _ (𝓐 : Category) where
 
- open PreCategory 𝓐
+ open Category 𝓐
  private
   variable
     A B X Y Z : Obj
@@ -79,55 +87,68 @@ module _ (𝓐 : PreCategory) where
     p₁  : P ⇒ X
     p₂  : P ⇒ Y
 
-module VecMor (𝓐 : PreCategory) where
+module VecMor (𝓐 : Category) where
   private
-     module A = PreCategory 𝓐
+     module A = Category 𝓐
   _⇒_ : ∀ {n} → Vec A.Obj n → Vec A.Obj n → Set
   [] ⇒ [] = ⊤
   (x ∷ v) ⇒ (x' ∷ v') = x A.⇒ x' × v ⇒ v'
 
+\end{code}
+%<*signature>
+\begin{code}
 record Signature : Set where
-   open PreCategory
    field
-     𝓐 : PreCategory
-   private
-     module A = PreCategory 𝓐
-     module V = VecMor 𝓐
+     𝓐 : Category
+
+   module A = Category 𝓐
+   module V = VecMor 𝓐
+
+   field
+     O : ℕ → A.Obj → Set
+     α : ∀ {n a } → (o : O n a) → Vec A.Obj n
+     -- The last two fields account for functoriality
+     _❴_❵  : ∀ {n}{a} → O n a → ∀ {b} (f : a A.⇒ b) → O n b
+     _^_ : ∀ {a}{b}(f : a A.⇒ b){n}(o : O n a) → (α o) V.⇒ (α (o ❴ f ❵ ))
+
+\end{code}
+%</signature>
+%<*friendlysignature>
+\begin{code}
+record FriendlySignature : Set where
+   field
+     BaseSignature : Signature
+   open Signature BaseSignature
    field
      𝓐-equalizers : ∀ {a b}(f g : a A.⇒ b) → Equalizer 𝓐 f g
      𝓐-pullbacks  : ∀ {a b c}(f : a A.⇒ b) (g : c A.⇒ b)→ Pullback 𝓐 f g
-
-     O : ℕ → A.Obj → Set
      _≟O_ : ∀ {n}{a}(o o' : O n a) → Dec (o ≡ o')
-
-     α : ∀ {n a } → (o : O n a) → Vec A.Obj n
-
-     _〚_〛  : ∀ {n}{a} → O n a → ∀ {b} (f : a A.⇒ b) → O n b
-     _〚_〛⁻¹ : ∀ {n}{a}(o : O n a) → ∀ {b}(f : b A.⇒ a) → Maybe (Σ (O n b) (λ o' →  o' 〚 f 〛 ≡ o))
-
-     αf : ∀ {n}{a} (o : O n a) → ∀ {b}(f : a A.⇒ b) → (α o) V.⇒ (α (o 〚 f 〛 ))
+     _❴_❵⁻¹ : ∀ {n}{a}(o : O n a) → ∀ {b}(f : b A.⇒ a) → Maybe (Σ (O n b) (λ o' →  o' ❴ f ❵ ≡ o))
 
 
-module _ (S : Signature) where
-  open Signature S
-  private
-    module A = PreCategory 𝓐
-    module V = VecMor 𝓐
+\end{code}
+%</friendlysignature>
+\begin{code}
+module Term (S : Signature) where
+   open Signature S
 
-  MetaContext : Set
-  MetaContext = List A.Obj
+\end{code}
+%<*syntax>
+\begin{code}
+   MetaContext : Set
+   MetaContext = List A.Obj
 
-  VariableContext : Set
-  VariableContext = A.Obj
+   VecTerm : MetaContext → ∀{n}(v : Vec A.Obj n) → Set
 
-  VecSyntax : MetaContext → ∀{n}(v : Vec VariableContext n) → Set
-
-  data Syntax (Γ : MetaContext) (a : VariableContext) : Set where
-    Rigid : ∀ {n} (o : O n a) → VecSyntax Γ (α o) → Syntax Γ a
-    Flexible : ∀ {m} (M : m ∈ Γ)(f : m A.⇒ a) → Syntax Γ a
+   data Term (Γ : MetaContext) (a : A.Obj) : Set where
+     Rigid : ∀ {n} (o : O n a) → VecTerm Γ (α o) → Term Γ a
+     Flexible : ∀ {m} (M : m ∈ Γ)(f : m A.⇒ a) → Term Γ a
 
 
-  VecSyntax Γ as = VecList.t (Syntax Γ) (Vec.toList as)
+   VecTerm Γ as = VecList.t (Term Γ) (Vec.toList as)
+\end{code}
+%</syntax>
+\begin{code}
 
 
 
@@ -136,51 +157,51 @@ module _ (S : Signature) where
 Renaming
 
 -------------------------- -}
-  _⟦_⟧ : ∀ {Γ}{a}{b} → Syntax Γ a → a A.⇒ b → Syntax Γ b
-  _⟦_⟧s : ∀ {Γ}{n}{as : Vec _ n}{as' : Vec _ n} → VecSyntax Γ as
-        → as V.⇒ as' → VecSyntax Γ as'
+   _⟦_⟧ : ∀ {Γ}{a}{b} → Term Γ a → a A.⇒ b → Term Γ b
+   _⟦_⟧s : ∀ {Γ}{n}{as : Vec _ n}{as' : Vec _ n} → VecTerm Γ as
+         → as V.⇒ as' → VecTerm Γ as'
 
-  _⟦_⟧ (Rigid o x) f = Rigid (o 〚 f 〛) (x ⟦ αf o f ⟧s) 
-  _⟦_⟧ (Flexible M g) f = Flexible M (f A.∘ g) 
+   _⟦_⟧ (Rigid o x) f = Rigid (o ❴ f ❵) (x ⟦ f ^ o ⟧s)
+   _⟦_⟧ (Flexible M g) f = Flexible M (f A.∘ g)
 
-  -- there is a way to design a map combinator (generalising VecList.map) to factor those two branches
-  -- but I don't think it is worth the additional complexity 
-  _⟦_⟧s {as = []} {[]} ts fs = tt
-  _⟦_⟧s {as = a ∷ as} {a' ∷ as'} (t , ts) (f , fs) = (t ⟦ f ⟧) , (ts ⟦ fs ⟧s)
+   -- there is a way to design a map combinator (generalising VecList.map) to factor those two branches
+   -- but I don't think it is worth the additional complexity 
+   _⟦_⟧s {as = []} {[]} ts fs = tt
+   _⟦_⟧s {as = a ∷ as} {a' ∷ as'} (t , ts) (f , fs) = (t ⟦ f ⟧) , (ts ⟦ fs ⟧s)
 
 {- ----------------------
 
 MetaSubstitution
 
 -------------------------- -}
-  substitution : MetaContext → MetaContext → Set
-  substitution Γ Δ = VecList.t (Syntax Δ) Γ
+   substitution : MetaContext → MetaContext → Set
+   substitution Γ Δ = VecList.t (Term Δ) Γ
 
-  _[_]t : ∀ {Γ}{a}(t : Syntax Γ a){Δ}(σ : substitution Γ Δ) → Syntax Δ a
+   _[_]t : ∀ {Γ}{a}(t : Term Γ a){Δ}(σ : substitution Γ Δ) → Term Δ a
 
-  _[_]ts : ∀ {Γ}{n}{as : Vec VariableContext n}(ts : VecSyntax Γ as){Δ}(σ : substitution Γ Δ) → VecSyntax Δ as
-  _[_]ts {Γ}{as}ts {Δ}σ = VecList.map (λ a' t → t [ σ ]t ) ts
+   _[_]ts : ∀ {Γ}{n}{as : Vec A.Obj n}(ts : VecTerm Γ as){Δ}(σ : substitution Γ Δ) → VecTerm Δ as
+   _[_]ts {Γ}{as}ts {Δ}σ = VecList.map (λ a' t → t [ σ ]t ) ts
 
-  _[_]t {Γ} {a} (Rigid o x) {Δ} σ = Rigid o (x [ σ ]ts)
-  _[_]t {Γ} {a} (Flexible M f) {Δ} σ = VecList.nth M σ ⟦ f ⟧ 
+   _[_]t {Γ} {a} (Rigid o x) {Δ} σ = Rigid o (x [ σ ]ts)
+   _[_]t {Γ} {a} (Flexible M f) {Δ} σ = VecList.nth M σ ⟦ f ⟧ 
 
-  subst-extend : ∀ {Γ}{Δ} → ∀ {m}(m∈ : m ∈ Γ)(t : Syntax Δ m) → substitution (Γ without m∈) Δ → substitution Γ Δ
-  subst-extend {.(m ∷ _)} {Δ} {m} (here _) t σ = t , σ
-  subst-extend {.(_ ∷ _)} {Δ} {m} (there m∈) t (u , σ) = u , (subst-extend m∈ t σ)
+   subst-extend : ∀ {Γ}{Δ} → ∀ {m}(m∈ : m ∈ Γ)(t : Term Δ m) → substitution (Γ without m∈) Δ → substitution Γ Δ
+   subst-extend {.(m ∷ _)} {Δ} {m} (here _) t σ = t , σ
+   subst-extend {.(_ ∷ _)} {Δ} {m} (there m∈) t (u , σ) = u , (subst-extend m∈ t σ)
 
 {- ----------------------
 
 Weakening
 
 -------------------------- -}
-  wk-tm : ∀ {Γ}{a} m → Syntax Γ a → Syntax (m ∷ Γ) a
+   wk-tm : ∀ {Γ}{a} m → Term Γ a → Term (m ∷ Γ) a
 
-  wk-tm {Γ} {a} m (Rigid o x) = Rigid o (VecList.map (λ b → wk-tm m) x)
-  wk-tm {Γ} {a} m (Flexible M f) = Flexible (there M) f
+   wk-tm {Γ} {a} m (Rigid o x) = Rigid o (VecList.map (λ b → wk-tm m) x)
+   wk-tm {Γ} {a} m (Flexible M f) = Flexible (there M) f
 
 
-  wk-subst : ∀{Γ Δ} m → substitution Γ Δ → substitution Γ (m ∷ Δ)
-  wk-subst m σ = VecList.map (λ x → wk-tm m) σ
+   wk-subst : ∀{Γ Δ} m → substitution Γ Δ → substitution Γ (m ∷ Δ)
+   wk-subst m σ = VecList.map (λ x → wk-tm m) σ
 
 
 {- ----------------------
@@ -188,22 +209,26 @@ Weakening
 The category of metavariable contexts and substitutions
 
 -------------------------- -}
-  id-subst : (Γ : MetaContext) → substitution Γ Γ
+   id-subst : (Γ : MetaContext) → substitution Γ Γ
+ 
+   wk-id : (Γ : MetaContext) → (m : A.Obj) → substitution Γ (m ∷ Γ)
+   wk-id Γ m = wk-subst m (id-subst Γ)
+ 
+   id-subst [] = tt
+   id-subst (m ∷ Γ) = (Flexible (here _) A.id) , wk-id Γ m
+ 
+   SubstitutionCategory : Category
+   SubstitutionCategory = record
+      { Obj = MetaContext ;
+        _⇒_ = substitution ;
+        id = id-subst _ ;
+        _∘_ = λ σ δ → VecList.map (λ a t → t [ σ ]t) δ }
 
-  wk-id : (Γ : MetaContext) → (m : A.Obj) → substitution Γ (m ∷ Γ)
-  wk-id Γ m = wk-subst m (id-subst Γ)
-
-  id-subst [] = tt
-  id-subst (m ∷ Γ) = (Flexible (here _) A.id) , wk-id Γ m
-
-  SubstitutionPreCategory : PreCategory
-  SubstitutionPreCategory = record
-     { Obj = MetaContext ;
-       _⇒_ = substitution ;
-       id = id-subst _ ;
-       _∘_ = λ σ δ → VecList.map (λ a t → t [ σ ]t) δ }
-
-  module S = PreCategory SubstitutionPreCategory
+module _ (Sig : FriendlySignature) where
+  open FriendlySignature Sig
+  open Signature BaseSignature
+  open Term BaseSignature
+  module S = Category SubstitutionCategory
 
 {- ----------------------
 
@@ -211,10 +236,10 @@ Occur check
 
 -------------------------- -}
 
-  occur-check : ∀ {Γ}{m}(m∈ : m ∈ Γ) {a} → Syntax Γ a
-        → Maybe (Syntax (Γ without m∈) a)
-  occur-check-Vec : ∀ {Γ}{m}(m∈ : m ∈ Γ){as} → VecList.t (Syntax Γ) as →
-                                    Maybe (VecList.t (Syntax (Γ without m∈)) as)
+  occur-check : ∀ {Γ}{m}(m∈ : m ∈ Γ) {a} → Term Γ a
+        → Maybe (Term (Γ without m∈) a)
+  occur-check-Vec : ∀ {Γ}{m}(m∈ : m ∈ Γ){as} → VecList.t (Term Γ) as →
+                                    Maybe (VecList.t (Term (Γ without m∈)) as)
   occur-check-Vec {Γ} {m} M {[]} l = just tt
   occur-check-Vec {Γ} {m} M {a ∷ as} (t , ts) with occur-check-Vec M ts | occur-check M t
   ... | nothing | _ = nothing
@@ -236,7 +261,7 @@ Unification of two metavariables
   Substitution-from Γ = Σ _ (substitution Γ)
 
   Substitution-from-Vec : MetaContext → ∀{n} → Vec A.Obj n → Set
-  Substitution-from-Vec Γ as = Maybe (Σ MetaContext (λ Δ → VecSyntax Δ as × substitution Γ Δ))
+  Substitution-from-Vec Γ as = Maybe (Σ MetaContext (λ Δ → VecTerm Δ as × substitution Γ Δ))
 
   wk-out : ∀ {x}{Γ : MetaContext} → Substitution-from Γ → Substitution-from (x ∷ Γ)
   wk-out {x}(Δ , σ) = x ∷ Δ , (Flexible (here _) A.id) , wk-subst x σ
@@ -272,14 +297,14 @@ Unification of two metavariables
 Non cyclic unification
 
 -------------------------- -}
-  unify-no-cycle : {Γ : MetaContext} → {a : VariableContext} → (t : Syntax Γ a)
+  unify-no-cycle : {Γ : MetaContext} → {a : A.Obj} → (t : Term Γ a)
       → ∀ {m} → m A.⇒ a → Maybe (Substitution-from (m ∷ Γ))
-  unify-no-cycle-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as}{ms} → ∀ (t : VecSyntax Γ {n} as) →
+  unify-no-cycle-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as}{ms} → ∀ (t : VecTerm Γ {n} as) →
      ms V.⇒ as → Substitution-from-Vec Γ ms
 
-  unify-no-cycle {Γ} {a} (Rigid {n = n}o ts) {m} f with o 〚 f 〛⁻¹
+  unify-no-cycle {Γ} {a} (Rigid {n = n}o ts) {m} f with o ❴ f ❵⁻¹
   ... | nothing = nothing
-  ... | just (o' , ≡.refl) with unify-no-cycle-Vec {as = α o} ts (αf o' f)
+  ... | just (o' , ≡.refl) with unify-no-cycle-Vec {as = α o} ts (f ^ o')
   ... | nothing = nothing
   ... | just (Δ , us , σ) = just (Δ , (Rigid o' us) , σ)
 
@@ -299,8 +324,8 @@ Non cyclic unification
 Unification
 
 -------------------------- -}
-  transition-unify-no-cycle : {Γ : MetaContext} → {a : VariableContext}
-     → Syntax Γ a → ∀ {m} → m ∈ Γ → m A.⇒ a → Maybe (Substitution-from Γ)
+  transition-unify-no-cycle : {Γ : MetaContext} → {a : A.Obj}
+     → Term Γ a → ∀ {m} → m ∈ Γ → m A.⇒ a → Maybe (Substitution-from Γ)
 
   transition-unify-no-cycle {Γ}{a} t {m} m∈ f with occur-check m∈ t
   ... | nothing = nothing
@@ -309,8 +334,8 @@ Unification
   ... | just (Δ , u , σ) = just (Δ , subst-extend m∈ u σ)
 
 
-  unify : {Γ : MetaContext} → {a : VariableContext} → ∀ (t u : Syntax Γ a) → Maybe (Substitution-from Γ)
-  unify-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as} → ∀ (t u : VecSyntax Γ {n} as) → Maybe (Substitution-from Γ)
+  unify : {Γ : MetaContext} → {a : A.Obj} → ∀ (t u : Term Γ a) → Maybe (Substitution-from Γ)
+  unify-Vec : {Γ : MetaContext} → {n : ℕ} → ∀{as} → ∀ (t u : VecTerm Γ {n} as) → Maybe (Substitution-from Γ)
 
   unify-Vec {Γ} {.ℕ.zero} {[]} t u = just (Γ , S.id)
   unify-Vec {Γ} {.(ℕ.suc _)} {a ∷ as} (t , ts) (u , us) with unify t u
@@ -329,3 +354,5 @@ Unification
   unify {Γ} {a} (Rigid o x) (Flexible m∈ f) = transition-unify-no-cycle (Rigid o x) m∈ f
   unify {Γ} {a} (Flexible m∈ f) (Rigid o x) = transition-unify-no-cycle (Rigid o x) m∈ f
   unify {Γ} {a} (Flexible m∈ f) (Flexible m'∈ f') = just (unify-flex-flex Γ m∈ m'∈ f f')
+
+\end{code}

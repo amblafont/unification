@@ -100,7 +100,7 @@ End
 \end_local_layout
 \language british
 \language_package default
-\inputencoding auto
+\inputencoding utf8
 \fontencoding global
 \font_roman "default" "default"
 \font_sans "default" "default"
@@ -959,6 +959,59 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection*
+Agda implementation
+\end_layout
+
+\begin_layout Standard
+We use Agda as a programming language, not as a theorem prover.
+ In particular, we do not provide a mechanised proof of correctness of the
+ unification algorithm.
+ Moreover, when defining data structures, we only mention the data and leave
+ out the properties.
+ For example, our definition of categories does not include associativity
+ of composition and neutrality of the identity.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{category}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Furthermore, we are not reluctant to using logically inconsistent features
+ to make programming easier: the type hierachy is collapsed and the termination
+ checker is disabled.
+ We find that the use of dependent types still helps a lot in guiding the
+ implementation.
+ In comparison, we previously implemented an ocaml version where the code
+ was much less constrained by the typing discipline, and thus more error-prone.
+\end_layout
+
+\begin_layout Subsection*
 Related work
 \end_layout
 
@@ -1686,6 +1739,19 @@ Judgments
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.5em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{align*}
 \Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta\quad\Longleftrightarrow & \quad\text{\ensuremath{\sigma:\Gamma\rightarrow\Delta}\text{ is the most general unifier of \ensuremath{\vec{t}} and \ensuremath{\vec{u}}}}\\
@@ -3472,7 +3538,11 @@ literal "false"
 \end_inset
 
  to account for syntax with metavariables.
- To recall, a binding signature 
+ 
+\end_layout
+
+\begin_layout Standard
+To recall, a binding signature 
 \begin_inset Formula $(O,\alpha)$
 \end_inset
 
@@ -3551,6 +3621,16 @@ generalised binding signature
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "def:GB-signature"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, and is implemented in Agda code as shown in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:sig-agda"
 plural "false"
 caps "true"
 noprefix "false"
@@ -3679,6 +3759,116 @@ Intuitively,
 \end_inset
 
 .
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+In the following, 
+\begin_inset Formula $\AgdaFunction{Vec}\ \AgdaFunction{X}\ \AgdaFunction{n}$
+\end_inset
+
+ is the type of vectors of elements of X of size n.
+ Given a dependent type 
+\begin_inset Formula $X:A\rightarrow\AgdaPrimitive{Set}$
+\end_inset
+
+ and a list 
+\begin_inset Formula $\ell=[a_{1},\dots,a_{n}]$
+\end_inset
+
+ of elements of type 
+\begin_inset Formula $A$
+\end_inset
+
+, the type 
+\begin_inset Formula $\AgdaFunction{VecList.t}\ \AgdaSpace{}\AgdaFunction{X}\ \AgdaFunction{\ensuremath{\ell}}$
+\end_inset
+
+ is recursively defined as the product type 
+\begin_inset Formula $X\ a_{1}\times\dots\times X\ a_{n}$
+\end_inset
+
+.
+ Given two vectors 
+\begin_inset Formula $\ell=[a_{1},\dots,a_{n}]$
+\end_inset
+
+ and 
+\begin_inset Formula $\ell'=[a'_{1},\dots,a'_{n}]$
+\end_inset
+
+ of objects of the same category, the type 
+\begin_inset Formula $\ell\ \AgdaFunction{V.\ensuremath{\Rightarrow}}\ \ell'$
+\end_inset
+
+ is recursively defined as the type 
+\begin_inset Formula $(a_{1}\Rightarrow a_{1}')\times\dots\times(a_{n}\Rightarrow a_{n}')$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ExecuteMetaData[latex/main.tex]{signature}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ExecuteMetaData[latex/main.tex]{syntax}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Definition of signatures and associated syntax in Agda
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sig-agda"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3947,6 +4137,7 @@ In the notion of GB-signature, functoriality ensures that the generated
 , functoriality provides the following components:
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
 an operation symbol 
 \begin_inset Formula $\rename of\in\Oop nb$
@@ -3955,7 +4146,6 @@ an operation symbol
 ;
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 a morphism 
 \begin_inset Formula $\ntharvecaction ofi:\nthar oi\rightarrow\nthar{\rename of}i$
@@ -8630,8 +8820,8 @@ noprefix "false"
 ) entail completeness.
  Intuitively, one may worry that the algorithm fails in cases where it should
  not.
- But soundness already ensures that this cannot happen because failure is
- really handled as a coequaliser, on par with most general unifiers.
+ In fact, soundness already ensures that this cannot happen because failure
+ is really handled as a coequaliser, on par with most general unifiers.
  As explained in 
 \begin_inset CommandInset ref
 LatexCommand formatted

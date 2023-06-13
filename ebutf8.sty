@@ -1,0 +1,525 @@
+% This package provides UTF-8 input for text and maths in a portable way. For
+% Unicode-aware TeX versions (XeTeX and LuaTeX as an approximation), the
+% appropriate specific packages are loaded, including unicode-math. For
+% others, UTF-8 through inputenc is used and math symbols are defined
+% explicitly. The utf8x inputenc and ucs package are not used because I had
+% some issues with them and utf8 inputenc works fine.
+%
+% No symbol package is loaded by this package. In order to get sources portable
+% across compilers, this package should be loaded *after* symbol packages like
+% amssymb and the like, because that is what unicode-math expects.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ebutf8}[2014/03/31 EB's configuration for UTF-8 input]
+
+% The package option 'ensuremath' allows to use defined Unicode math symbols
+% in text mode. Without it, math mode should be explicitly used.
+\newif\ifeb@ensuremath
+\DeclareOption{ensuremath}{\eb@ensuremathtrue}
+\ProcessOptions\relax
+
+% Detect if UTF-8 is natively supported by the compiler.
+
+\newif\ifeb@nativeunicode
+
+\ifdefined\XeTeXinputencoding
+  % With XeTeX, we use xltxtra, which also loads fontspec.
+  \RequirePackage{xltxtra}
+  \eb@nativeunicodetrue
+\else
+  \ifdefined\directlua
+    % With LuaTeX, we use fontspec explicitly.
+    \RequirePackage{fontspec}
+    \eb@nativeunicodetrue
+  \else
+    \eb@nativeunicodefalse
+  \fi
+\fi
+
+\ifeb@nativeunicode
+
+% XeTeX or LuaTeX with native UTF-8:
+% - fontspec is loaded above, for unicode input
+% - unicode-math provides math symbols
+
+\expandafter\let\csname not=\endcsname\relax
+\expandafter\let\csname not<\endcsname\relax
+\expandafter\let\csname not>\endcsname\relax
+% \let\coloneqq\relax
+% \let\Coloneqq\relax
+% \let\eqqcolon\relax
+\let\neq\relax
+\RequirePackage{unicode-math}
+\ExplSyntaxOn
+\AtBeginDocument
+{
+  \__um_process_symbol_noparse:nnn {"029C4}{\boxdiag}{\mathbin}
+  \char_set_active_eq:nN { `: } \colon
+  \mathcode`:="8000
+}
+\ExplSyntaxOff
+\patchcmd{\colon}{:}{∶}{}{}% first is U+003A, second is U+2236
+%\setmathfont{STIX2Math.otf}
+
+% Missing definition:
+
+\catcode`⅋=\active \def⅋{\invamp}
+\catcode`∶=\active \def∶{\colon}
+
+\else
+
+% Traditional TeX with inputenc
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{mathrsfs}
+\RequirePackage{textcomp}
+%\RequirePackage{stix}
+\RequirePackage{scalerel}
+\RequirePackage{graphicx}
+\RequirePackage{newtxmath}
+\RequirePackage{mathbbol}
+%\usepackage{stmaryrd}
+\RequirePackage{accsupp} % for ensuring the right Unicode codepoint upon pasting
+\newcommand{\freshquant}{\reflectbox{$\mathsf{N}$}}
+
+\newcommand*{\llbrace}{%
+  \BeginAccSupp{method=hex,unicode,ActualText=2983}%
+    \textnormal{\usefont{OMS}{lmr}{m}{n}\char102}%
+    \mathchoice{\mkern-4.05mu}{\mkern-4.05mu}{\mkern-4.3mu}{\mkern-4.8mu}%
+    \textnormal{\usefont{OMS}{lmr}{m}{n}\char106}%
+  \EndAccSupp{}%
+}
+\newcommand*{\rrbrace}{%
+  \BeginAccSupp{method=hex,unicode,ActualText=2984}%
+    \textnormal{\usefont{OMS}{lmr}{m}{n}\char106}%
+    \mathchoice{\mkern-4.05mu}{\mkern-4.05mu}{\mkern-4.3mu}{\mkern-4.8mu}%
+    \textnormal{\usefont{OMS}{lmr}{m}{n}\char103}%
+  \EndAccSupp{}%
+}
+
+% Declare a symbol with different code in text and math mode
+\newcommand\DeclareUnicodeAlternative[3]{%
+  \DeclareUnicodeCharacter{#1}{\ifmmode#3\else#2\fi}}
+
+% A math symbol suitable also in text mode
+\newcommand\DeclareUnicodeMath[2]{%
+  \DeclareUnicodeCharacter{#1}{%
+    \relax\ifmmode#2\else
+      {\if b\expandafter\@car\f@series\@nil\boldmath\fi
+      ${}#2$}\fi}}
+
+% A math symbol, suitable in text mode only if the ensuremath option was used.
+\ifeb@ensuremath
+  \let\DeclareUnicodeMathCharacter=\DeclareUnicodeMath
+\else
+  \let\DeclareUnicodeMathCharacter=\DeclareUnicodeMath
+  % \let\DeclareUnicodeMathCharacter=\DeclareUnicodeCharacter
+\fi
+
+% Math symbols must be defined by hand, I add entries to this list each time I
+% need new symbols.
+
+\DeclareUnicodeAlternative{0101}{\=a}{\bar a}
+\DeclareUnicodeAlternative{016B}{\=u}{\bar u}
+\DeclareUnicodeAlternative{0237}{\j}{\jmath}
+\DeclareUnicodeAlternative{2026}{...}{\ldots}
+\DeclareUnicodeAlternative{20AC}{\texteuro}{\euro}
+\DeclareUnicodeAlternative{00B0}{\textdegree}{^{∘}}
+\DeclareUnicodeAlternative{00B7}{\textperiodcentered}{\cdot}
+
+\DeclareUnicodeMath{00B9}{^1}
+\DeclareUnicodeMath{02B2}{^j}
+\DeclareUnicodeMath{02E1}{^l}
+\DeclareUnicodeMath{02E2}{^s}
+
+\DeclareUnicodeMath{0393}{\Gamma}
+\DeclareUnicodeMath{0394}{\Delta}
+\DeclareUnicodeMath{0398}{\Theta}
+\DeclareUnicodeMath{039B}{\Lambda}
+\DeclareUnicodeMath{039E}{\Xi}
+\DeclareUnicodeMath{03A0}{\Pi}
+\DeclareUnicodeMath{03A3}{\Sigma}
+\DeclareUnicodeMath{03A5}{\Upsilon}
+\DeclareUnicodeMath{03A6}{\Phi}
+\DeclareUnicodeMath{03A8}{\Psi}
+\DeclareUnicodeMath{03A9}{\Omega}
+\DeclareUnicodeMath{03B1}{\alpha}
+\DeclareUnicodeMath{03B2}{\beta}
+\DeclareUnicodeMath{03B3}{\gamma}
+\DeclareUnicodeMath{03B4}{\delta}
+\DeclareUnicodeMath{03B5}{\varepsilon}
+\DeclareUnicodeMath{03B6}{\zeta}
+\DeclareUnicodeMath{03B7}{\eta}
+\DeclareUnicodeMath{03B8}{\theta}
+\DeclareUnicodeMath{03B9}{\iota}
+\DeclareUnicodeMath{03BA}{\kappa}
+\DeclareUnicodeMath{03BB}{\lambda}
+\DeclareUnicodeMath{03BC}{\mu}
+\DeclareUnicodeMath{03BD}{\nu}
+\DeclareUnicodeMath{03BE}{\xi}
+\DeclareUnicodeMath{03BF}{o}
+\DeclareUnicodeMath{03C0}{\pi}
+\DeclareUnicodeMath{03C1}{\rho}
+\DeclareUnicodeMath{03C3}{\sigma}
+\DeclareUnicodeMath{03C4}{\tau}
+\DeclareUnicodeMath{03C5}{\upsilon}
+\DeclareUnicodeMath{03C6}{\phi}
+\DeclareUnicodeMath{03C7}{\chi}
+\DeclareUnicodeMath{03C8}{\psi}
+\DeclareUnicodeMath{03C9}{\omega}
+\DeclareUnicodeMath{03D5}{\varphi}
+
+\DeclareUnicodeCharacter{00A0}{\nobreakspace}
+\DeclareUnicodeCharacter{00A7}{\S}
+
+\DeclareUnicodeMathCharacter{00AC}{\neg}
+\DeclareUnicodeMathCharacter{00B1}{\pm}
+\DeclareUnicodeMathCharacter{00B2}{^2}
+\DeclareUnicodeMathCharacter{00B3}{^3}
+\DeclareUnicodeMathCharacter{00D7}{\times}
+\DeclareUnicodeMathCharacter{2020}{\dagger}
+\DeclareUnicodeMathCharacter{2022}{\bullet}
+\DeclareUnicodeMathCharacter{2074}{^4}
+\DeclareUnicodeMathCharacter{2075}{^5}
+\DeclareUnicodeMathCharacter{207A}{^+}
+\DeclareUnicodeMathCharacter{207F}{^n}
+\DeclareUnicodeMathCharacter{2080}{_0}
+\DeclareUnicodeMathCharacter{2081}{_1}
+\DeclareUnicodeMathCharacter{2082}{_2}
+\DeclareUnicodeMathCharacter{2083}{_3}
+\DeclareUnicodeMathCharacter{2084}{_4}
+\DeclareUnicodeMathCharacter{2085}{_5}
+\DeclareUnicodeMathCharacter{2086}{_6}
+\DeclareUnicodeMathCharacter{2087}{_7}
+\DeclareUnicodeMathCharacter{208A}{_+}
+\DeclareUnicodeMathCharacter{208B}{_-}
+\DeclareUnicodeMathCharacter{2090}{_a}
+\DeclareUnicodeMathCharacter{2091}{_e}
+\DeclareUnicodeMathCharacter{2092}{_o}
+\DeclareUnicodeMathCharacter{2093}{_x}
+\DeclareUnicodeMathCharacter{2095}{_h}
+\DeclareUnicodeMathCharacter{2096}{_k}
+\DeclareUnicodeMathCharacter{2097}{_l}
+\DeclareUnicodeMathCharacter{2098}{_m}
+\DeclareUnicodeMathCharacter{2099}{_n}
+\DeclareUnicodeMathCharacter{209A}{_p}
+\DeclareUnicodeMathCharacter{209B}{_s}
+\DeclareUnicodeMathCharacter{209C}{_t}
+\DeclareUnicodeMathCharacter{1D0E}{\freshquant}
+\DeclareUnicodeMathCharacter{1D2C}{^A}
+\DeclareUnicodeMathCharacter{1D2E}{^B}
+\DeclareUnicodeMathCharacter{1D30}{^D}
+\DeclareUnicodeMathCharacter{1D33}{^G}
+\DeclareUnicodeMathCharacter{1D34}{^H}
+\DeclareUnicodeMathCharacter{1D36}{^J}
+\DeclareUnicodeMathCharacter{1D37}{^K}
+\DeclareUnicodeMathCharacter{1D38}{^L}
+\DeclareUnicodeMathCharacter{1D39}{^M}
+\DeclareUnicodeMathCharacter{1D3C}{^O}
+\DeclareUnicodeMathCharacter{1D3E}{^P}
+\DeclareUnicodeMathCharacter{1D3F}{^R}
+\DeclareUnicodeMathCharacter{1D40}{^T}
+\DeclareUnicodeMathCharacter{1D41}{^U}
+\DeclareUnicodeMathCharacter{1D42}{^W}
+\DeclareUnicodeMathCharacter{1D48}{^d}
+\DeclareUnicodeMathCharacter{1D3A}{^N}
+\DeclareUnicodeMathCharacter{1D4F}{^k}
+\DeclareUnicodeMathCharacter{1D50}{^m}
+\DeclareUnicodeMathCharacter{1D52}{^o}
+\DeclareUnicodeMathCharacter{1D56}{^p}
+\DeclareUnicodeMathCharacter{1D57}{^t}
+\DeclareUnicodeMathCharacter{1D5B}{^v}
+\DeclareUnicodeMathCharacter{1D5D}{^β}
+\DeclareUnicodeMathCharacter{1D5F}{^δ}
+\DeclareUnicodeMathCharacter{1D62}{_i}
+\DeclareUnicodeMathCharacter{1D63}{_r}
+\DeclareUnicodeMathCharacter{1D64}{_u}
+\DeclareUnicodeMathCharacter{1D65}{_v}
+\DeclareUnicodeMathCharacter{1D66}{_β}
+\DeclareUnicodeMathCharacter{1D67}{_γ}
+\DeclareUnicodeMathCharacter{1D69}{_ϕ}
+\DeclareUnicodeMathCharacter{1D6A}{_χ}
+\DeclareUnicodeMathCharacter{1D9C}{^c}
+\DeclareUnicodeMathCharacter{2070}{^0}
+\DeclareUnicodeMathCharacter{2071}{^i}
+\DeclareUnicodeMathCharacter{207B}{^{-}}
+\DeclareUnicodeMathCharacter{207D}{{{}^{(}}}
+\DeclareUnicodeMathCharacter{207E}{{{}^{)}}}
+\DeclareUnicodeMathCharacter{20D7}{\vec}
+\DeclareUnicodeMathCharacter{2102}{\mathbb C}
+\DeclareUnicodeMathCharacter{210B}{\mathcal H}
+\DeclareUnicodeMathCharacter{210D}{\mathbb H}
+\DeclareUnicodeMathCharacter{2110}{\mathscr I}
+\DeclareUnicodeMathCharacter{2112}{\mathscr L}
+\DeclareUnicodeMathCharacter{2113}{\ell}
+\DeclareUnicodeMathCharacter{2115}{\mathbb N}
+\DeclareUnicodeMathCharacter{2119}{\mathbb P}
+\DeclareUnicodeMathCharacter{211A}{\mathbb Q}
+\DeclareUnicodeMathCharacter{211B}{\mathscr R}
+\DeclareUnicodeMathCharacter{211D}{\mathbb R}
+\DeclareUnicodeMathCharacter{2124}{\mathbb Z}
+\DeclareUnicodeMathCharacter{212C}{\mathscr B}
+\DeclareUnicodeMathCharacter{2130}{\mathscr E}
+\DeclareUnicodeMathCharacter{2131}{\mathscr F}
+\DeclareUnicodeMathCharacter{2133}{\mathscr M}
+\DeclareUnicodeMathCharacter{2135}{\aleph}
+\DeclareUnicodeMathCharacter{2138}{\daleth}
+\DeclareUnicodeMathCharacter{214B}{\invamp}
+\DeclareUnicodeMathCharacter{2190}{\leftarrow}
+\DeclareUnicodeMathCharacter{2191}{\uparrow}
+\DeclareUnicodeMathCharacter{2192}{\rightarrow}
+\DeclareUnicodeMathCharacter{2193}{\downarrow}
+\DeclareUnicodeMathCharacter{2194}{\leftrightarrow}
+\DeclareUnicodeMathCharacter{2195}{\shift}
+\DeclareUnicodeMathCharacter{2197}{\nearrow}
+\DeclareUnicodeMathCharacter{2198}{\searrow}
+\DeclareUnicodeMathCharacter{219D}{\leadsto}
+\DeclareUnicodeMathCharacter{21A3}{\rightarrowtail}
+\DeclareUnicodeMathCharacter{21A6}{\mapsto}
+\DeclareUnicodeMathCharacter{21A9}{\hookleftarrow}
+\DeclareUnicodeMathCharacter{21AA}{\hookrightarrow}
+\DeclareUnicodeMathCharacter{21A0}{\twoheadrightarrow}
+\DeclareUnicodeMathCharacter{21AF}{\lightning}
+\DeclareUnicodeMathCharacter{21BE}{\upharpoonright}
+\DeclareUnicodeMathCharacter{21C0}{\rightharpoonup}
+\DeclareUnicodeMathCharacter{21C9}{\rightrightarrows}
+\DeclareUnicodeMathCharacter{21D0}{\Leftarrow}
+\DeclareUnicodeMathCharacter{21D1}{{\mathord{\Uparrow}}}
+\DeclareUnicodeMathCharacter{21D2}{\Rightarrow}
+\DeclareUnicodeMathCharacter{21D3}{\Downarrow}
+\DeclareUnicodeMathCharacter{21D4}{\Leftrightarrow}
+\DeclareUnicodeMathCharacter{21DA}{\Lleftarrow}
+\DeclareUnicodeMathCharacter{21DB}{\Rrightarrow}
+\DeclareUnicodeMathCharacter{2200}{\forall}
+\DeclareUnicodeMathCharacter{2202}{\partial}
+\DeclareUnicodeMathCharacter{2203}{\exists}
+\DeclareUnicodeMathCharacter{2205}{\emptyset}
+\DeclareUnicodeMathCharacter{2207}{\nabla}
+\DeclareUnicodeMathCharacter{2208}{\in}
+\DeclareUnicodeMathCharacter{2209}{\notin}
+\DeclareUnicodeMathCharacter{220B}{\ni}
+\DeclareUnicodeMathCharacter{220F}{\prod}
+\DeclareUnicodeMathCharacter{2211}{\sum}
+\DeclareUnicodeMathCharacter{2214}{\dotplus}
+\DeclareUnicodeMathCharacter{2216}{\setminus}
+\DeclareUnicodeMathCharacter{2217}{\ast}
+\DeclareUnicodeMathCharacter{2218}{\circ}
+\DeclareUnicodeMathCharacter{2219}{\bullet}
+\DeclareUnicodeMathCharacter{221A}{\sqrt}
+\DeclareUnicodeMathCharacter{221B}{\sqrt[3]}
+\DeclareUnicodeMathCharacter{221E}{\infty}
+\DeclareUnicodeMathCharacter{2223}{\mid}
+\DeclareUnicodeMathCharacter{2225}{\parallel}
+\DeclareUnicodeMathCharacter{2227}{\wedge}
+\DeclareUnicodeMathCharacter{2228}{\vee}
+\DeclareUnicodeMathCharacter{2229}{\cap}
+\DeclareUnicodeMathCharacter{222A}{\cup}
+\DeclareUnicodeMathCharacter{222B}{\int}
+\DeclareUnicodeMathCharacter{2236}{\colon}
+\DeclareUnicodeMathCharacter{2237}{\mathrel{::}}
+\DeclareUnicodeMathCharacter{223C}{\sim}
+\DeclareUnicodeMathCharacter{2243}{\simeq}
+\DeclareUnicodeMathCharacter{2244}{\nsimeq}
+\DeclareUnicodeMathCharacter{2245}{\cong}
+\DeclareUnicodeMathCharacter{2248}{\approx}
+\DeclareUnicodeMathCharacter{2254}{:=}
+\DeclareUnicodeMathCharacter{225F}{\stackrel{?}{=}}
+\DeclareUnicodeMathCharacter{2260}{\neq}
+\DeclareUnicodeMathCharacter{2261}{\equiv}
+\DeclareUnicodeMathCharacter{2262}{\not\equiv}
+\DeclareUnicodeMathCharacter{2264}{\leq}
+\DeclareUnicodeMathCharacter{2265}{\geq}
+\DeclareUnicodeMathCharacter{2272}{\lesssim}
+\DeclareUnicodeMathCharacter{2273}{\gtrsim}
+\DeclareUnicodeMathCharacter{227A}{\prec}
+\DeclareUnicodeMathCharacter{227B}{\succ}
+\DeclareUnicodeMathCharacter{227D}{\succeq}
+\DeclareUnicodeMathCharacter{2282}{\subset}
+\DeclareUnicodeMathCharacter{2283}{\supset}
+\DeclareUnicodeMathCharacter{2286}{\subseteq}
+\DeclareUnicodeMathCharacter{228E}{\uplus}
+\DeclareUnicodeMathCharacter{228F}{\sqsubset}
+\DeclareUnicodeMathCharacter{2291}{\sqsubseteq}
+\DeclareUnicodeMathCharacter{2292}{\sqsupseteq}
+\DeclareUnicodeMathCharacter{2294}{\sqcup}
+\DeclareUnicodeMathCharacter{2295}{\oplus}
+\DeclareUnicodeMathCharacter{2297}{\otimes}
+\DeclareUnicodeMathCharacter{2299}{\odot}
+\DeclareUnicodeMathCharacter{229B}{\circledast}
+\DeclareUnicodeMathCharacter{22A0}{\boxtimes}
+\DeclareUnicodeMathCharacter{22A2}{\vdash}
+\DeclareUnicodeMathCharacter{22A3}{\dashv}
+\DeclareUnicodeMathCharacter{22A4}{\top}
+\DeclareUnicodeMathCharacter{22A5}{\bot}
+\DeclareUnicodeMathCharacter{22A8}{\vDash}
+\DeclareUnicodeMathCharacter{22A9}{\Vdash}
+\DeclareUnicodeMathCharacter{22B2}{\triangleleft}
+\DeclareUnicodeMathCharacter{22B3}{\triangleright}
+\DeclareUnicodeMathCharacter{22B8}{\multimap}
+\DeclareUnicodeMathCharacter{22C0}{\bigwedge}
+\DeclareUnicodeMathCharacter{22C1}{\bigvee}
+\DeclareUnicodeMathCharacter{22C3}{\bigcup}
+\DeclareUnicodeMathCharacter{22C5}{\cdot}
+\DeclareUnicodeMathCharacter{22C6}{\star}
+\DeclareUnicodeMathCharacter{22C8}{\bowtie}
+\DeclareUnicodeMathCharacter{22CA}{\rtimes}
+\DeclareUnicodeMathCharacter{22D4}{\pitchfork}
+\DeclareUnicodeMathCharacter{22EE}{\vdots}
+\DeclareUnicodeMathCharacter{22EF}{\cdots}
+\DeclareUnicodeMathCharacter{22F1}{\ddots}
+\DeclareUnicodeMathCharacter{2308}{\lceil}
+\DeclareUnicodeMathCharacter{2309}{\rceil}
+\DeclareUnicodeMathCharacter{230A}{\lfloor}
+\DeclareUnicodeMathCharacter{230B}{\rfloor}
+\DeclareUnicodeMathCharacter{231C}{\ulcorner}
+\DeclareUnicodeMathCharacter{231D}{\urcorner}
+\DeclareUnicodeMathCharacter{2323}{\smallsmile}
+\DeclareUnicodeMathCharacter{25A1}{\square}
+\DeclareUnicodeMathCharacter{25AB}{\square}
+\DeclareUnicodeMathCharacter{2610}{\square}
+\DeclareUnicodeMathCharacter{2611}{\CheckedBox}
+\DeclareUnicodeMathCharacter{2612}{\XBox}
+\DeclareUnicodeMathCharacter{266D}{\flat}
+\DeclareUnicodeMathCharacter{266F}{\sharp}
+\DeclareUnicodeMathCharacter{2720}{\maltese}
+\DeclareUnicodeMathCharacter{2774}{\{}
+\DeclareUnicodeMathCharacter{2775}{\}}
+\DeclareUnicodeMathCharacter{27E6}{\llbracket}
+\DeclareUnicodeMathCharacter{27E7}{\rrbracket}
+\DeclareUnicodeMathCharacter{27E8}{\langle}
+\DeclareUnicodeMathCharacter{27E9}{\rangle}
+\DeclareUnicodeMathCharacter{27EA}{\llangle}
+\DeclareUnicodeMathCharacter{27EB}{\rrangle}
+\DeclareUnicodeMathCharacter{27F6}{\longrightarrow}
+\DeclareUnicodeMathCharacter{27F9}{\Longrightarrow}
+\DeclareUnicodeMathCharacter{27FA}{\Longleftrightarrow}
+\DeclareUnicodeMathCharacter{2983}{\llbrace}
+\DeclareUnicodeMathCharacter{2984}{\rrbrace}
+\DeclareUnicodeMathCharacter{2987}{\Lparen}
+\DeclareUnicodeMathCharacter{2988}{\Rparen}
+\DeclareUnicodeMathCharacter{29C0}{\olessthan}
+\DeclareUnicodeMathCharacter{29C1}{\ogreaterthan}
+\DeclareUnicodeMathCharacter{29C4}{\boxdiag}
+\DeclareUnicodeMathCharacter{2A01}{\bigoplus}
+\DeclareUnicodeMathCharacter{2A04}{\biguplus}
+\DeclareUnicodeMathCharacter{2AEB}{\Bot}
+\DeclareUnicodeMathCharacter{2C7C}{_j}
+\DeclareUnicodeMathCharacter{2C7D}{^V}
+\DeclareUnicodeMathCharacter{301A}{\llbracket}
+\DeclareUnicodeMathCharacter{301B}{\rrbracket}
+
+
+\DeclareUnicodeMathCharacter{FF5C}{\mathrel{|}}
+
+
+\DeclareUnicodeMathCharacter{1D400}{\mathbf A}
+\DeclareUnicodeMathCharacter{1D401}{\mathbf B}
+\DeclareUnicodeMathCharacter{1D402}{\mathbf C}
+\DeclareUnicodeMathCharacter{1D403}{\mathbf D}
+\DeclareUnicodeMathCharacter{1D404}{\mathbf E}
+\DeclareUnicodeMathCharacter{1D405}{\mathbf F}
+\DeclareUnicodeMathCharacter{1D406}{\mathbf G}
+\DeclareUnicodeMathCharacter{1D407}{\mathbf H}
+\DeclareUnicodeMathCharacter{1D408}{\mathbf I}
+\DeclareUnicodeMathCharacter{1D409}{\mathbf J}
+\DeclareUnicodeMathCharacter{1D40A}{\mathbf K}
+\DeclareUnicodeMathCharacter{1D40B}{\mathbf L}
+\DeclareUnicodeMathCharacter{1D40C}{\mathbf M}
+\DeclareUnicodeMathCharacter{1D40D}{\mathbf N}
+\DeclareUnicodeMathCharacter{1D40E}{\mathbf O}
+\DeclareUnicodeMathCharacter{1D40F}{\mathbf P}
+\DeclareUnicodeMathCharacter{1D410}{\mathbf Q}
+\DeclareUnicodeMathCharacter{1D411}{\mathbf R}
+\DeclareUnicodeMathCharacter{1D412}{\mathbf S}
+\DeclareUnicodeMathCharacter{1D413}{\mathbf T}
+\DeclareUnicodeMathCharacter{1D414}{\mathbf U}
+\DeclareUnicodeMathCharacter{1D415}{\mathbf V}
+\DeclareUnicodeMathCharacter{1D416}{\mathbf W}
+\DeclareUnicodeMathCharacter{1D417}{\mathbf X}
+\DeclareUnicodeMathCharacter{1D418}{\mathbf Y}
+\DeclareUnicodeMathCharacter{1D419}{\mathbf Z}
+\DeclareUnicodeMathCharacter{1D41A}{\mathbf a}
+\DeclareUnicodeMathCharacter{1D41B}{\mathbf b}
+\DeclareUnicodeMathCharacter{1D41C}{\mathbf c}
+\DeclareUnicodeMathCharacter{1D41D}{\mathbf d}
+\DeclareUnicodeMathCharacter{1D41E}{\mathbf e}
+\DeclareUnicodeMathCharacter{1D41F}{\mathbf f}
+\DeclareUnicodeMathCharacter{1D420}{\mathbf g}
+\DeclareUnicodeMathCharacter{1D421}{\mathbf h}
+\DeclareUnicodeMathCharacter{1D422}{\mathbf i}
+\DeclareUnicodeMathCharacter{1D423}{\mathbf j}
+\DeclareUnicodeMathCharacter{1D424}{\mathbf k}
+\DeclareUnicodeMathCharacter{1D425}{\mathbf l}
+\DeclareUnicodeMathCharacter{1D426}{\mathbf m}
+\DeclareUnicodeMathCharacter{1D427}{\mathbf n}
+\DeclareUnicodeMathCharacter{1D428}{\mathbf o}
+\DeclareUnicodeMathCharacter{1D429}{\mathbf p}
+\DeclareUnicodeMathCharacter{1D42A}{\mathbf q}
+\DeclareUnicodeMathCharacter{1D42B}{\mathbf r}
+\DeclareUnicodeMathCharacter{1D42C}{\mathbf s}
+\DeclareUnicodeMathCharacter{1D42D}{\mathbf t}
+\DeclareUnicodeMathCharacter{1D42E}{\mathbf u}
+\DeclareUnicodeMathCharacter{1D42F}{\mathbf v}
+\DeclareUnicodeMathCharacter{1D430}{\mathbf w}
+\DeclareUnicodeMathCharacter{1D431}{\mathbf x}
+\DeclareUnicodeMathCharacter{1D432}{\mathbf y}
+\DeclareUnicodeMathCharacter{1D433}{\mathbf z}
+\DeclareUnicodeMathCharacter{1D446}{\ensuremath{S}}
+\DeclareUnicodeMathCharacter{1D447}{\ensuremath{T}}
+\DeclareUnicodeMathCharacter{1D47A}{{\boldsymbol{S}}}
+\DeclareUnicodeMathCharacter{1D49C}{\mathscr A}
+\DeclareUnicodeMathCharacter{1D49E}{\mathscr C}
+\DeclareUnicodeMathCharacter{1D49F}{\mathscr D}
+\DeclareUnicodeMathCharacter{1D4A4}{\mathscr I}
+\DeclareUnicodeMathCharacter{1D4A5}{\mathscr J}
+\DeclareUnicodeMathCharacter{1D4A6}{\mathscr K}
+\DeclareUnicodeMathCharacter{1D4A9}{\mathscr N}
+\DeclareUnicodeMathCharacter{1D4AA}{\mathscr O}
+\DeclareUnicodeMathCharacter{1D4AB}{\mathscr P}
+\DeclareUnicodeMathCharacter{1D4AC}{\mathscr Q}
+\DeclareUnicodeMathCharacter{1D4AE}{\mathscr S}
+\DeclareUnicodeMathCharacter{1D4AF}{\mathscr T}
+\DeclareUnicodeMathCharacter{1D4B0}{\mathscr U}
+\DeclareUnicodeMathCharacter{1D4B1}{\mathscr V}
+\DeclareUnicodeMathCharacter{1D4B2}{\mathscr W}
+\DeclareUnicodeMathCharacter{1D4B3}{\mathscr X}
+\DeclareUnicodeMathCharacter{1D4B4}{\mathscr Y}
+\DeclareUnicodeMathCharacter{1D4B5}{\mathscr Z}
+\DeclareUnicodeMath{1D4D0}{\mathcal A}
+\DeclareUnicodeMathCharacter{1D50F}{\mathfrak L}
+\DeclareUnicodeMathCharacter{1D510}{\mathfrak M}
+\DeclareUnicodeMathCharacter{1D511}{\mathfrak N}
+\DeclareUnicodeMathCharacter{1D516}{\mathfrak S}
+\DeclareUnicodeMathCharacter{1D530}{\mathfrak s}
+\DeclareUnicodeMathCharacter{1D531}{\mathfrak t}
+\DeclareUnicodeMathCharacter{1D538}{\mathbb A}
+\DeclareUnicodeMathCharacter{1D539}{\mathbb B}
+\DeclareUnicodeMathCharacter{1D53B}{\mathbb D}
+\DeclareUnicodeMathCharacter{1D53C}{\mathbb E}
+\DeclareUnicodeMathCharacter{1D53D}{\mathbb F}
+\DeclareUnicodeMathCharacter{1D53E}{\mathbb G}
+\DeclareUnicodeMathCharacter{1D540}{\mathbb I}
+\DeclareUnicodeMathCharacter{1D541}{\mathbb J}
+\DeclareUnicodeMathCharacter{1D542}{\mathbb K}
+\DeclareUnicodeMathCharacter{1D543}{\mathbb L}
+\DeclareUnicodeMathCharacter{1D544}{\mathbb M}
+\DeclareUnicodeMathCharacter{1D545}{\mathbb N}
+\DeclareUnicodeMathCharacter{1D546}{\mathbb O}
+\DeclareUnicodeMathCharacter{1D54A}{\mathbb S}
+\DeclareUnicodeMathCharacter{1D54B}{\mathbb T}
+\DeclareUnicodeMathCharacter{1D54C}{\mathbb U}
+\DeclareUnicodeMathCharacter{1D54D}{\mathbb V}
+\DeclareUnicodeMathCharacter{1D54F}{\mathbb X}
+\DeclareUnicodeMathCharacter{1D550}{\mathbb Y}
+\DeclareUnicodeMathCharacter{1D5B0}{\mathsf Q}
+\DeclareUnicodeMathCharacter{1D6B7}{\boldsymbol\Pi}
+\DeclareUnicodeMathCharacter{1D6CE}{\boldsymbol\nu}
+\DeclareUnicodeMathCharacter{1D7CE}{\mathbf 0}
+\DeclareUnicodeMathCharacter{1D7CF}{\mathbf 1}
+\DeclareUnicodeMathCharacter{1D7D0}{\mathbf 2}
+\DeclareUnicodeMathCharacter{1D7D1}{\mathbf 3}
+\DeclareUnicodeMathCharacter{1D7D9}{\mathbb 1}
+\DeclareUnicodeMathCharacter{1D7DA}{\mathbb{2}}
+\DeclareUnicodeMathCharacter{1D7DB}{\mathbb{3}}
+
+\fi
