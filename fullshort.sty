@@ -1,0 +1,25 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                            %%
+%%              Version control               %%
+%%                                            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{ifthen}
+\newboolean{fullpaper}
+\RequirePackage{moreverb}
+\newenvironment{full}
+  {\ifthenelse{\boolean{fullpaper}}{}{\comment}}
+  {\ifthenelse{\boolean{fullpaper}}{}{\endcomment}}
+\newenvironment{short}
+  {\ifthenelse{\boolean{fullpaper}}{\comment}{}}
+  {\ifthenelse{\boolean{fullpaper}}{\endcomment}{}}
+
+\newcommand{\ifshort}[1]{\ifthenelse{\boolean{fullpaper}}{}{#1}}
+\newcommand{\iffull}[1]{\ifthenelse{\boolean{fullpaper}}{#1}{}}
+\newcommand{\shortfull}[2]{\ifthenelse{\boolean{fullpaper}}{#2}{#1}}
+\newcommand{\fullshort}[2]{\ifthenelse{\boolean{fullpaper}}{#1}{#2}}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

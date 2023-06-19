@@ -181,4 +181,7 @@
 % \newunicodechar{←}{\ensuremath{\mathnormal\from}}
 % \newunicodechar{→}{\ensuremath{\mathnormal\to}}
 
-\newcommand{\agdacode}[1]{\ExecuteMetaData[latex/main.tex]{#1}}
+\newcommand{\agdalatexdir}{latex-agda}
+\newcommand{\agdacode}[1]{\ExecuteMetaData[\agdalatexdir/main.tex]{#1}}
+\newcommand{\agdalibcode}[1]{\ExecuteMetaData[\agdalatexdir/lib.tex]{#1}}
+\newcommand{\agdalccode}[1]{\ExecuteMetaData[\agdalatexdir/lc.tex]{#1}}
