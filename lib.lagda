@@ -1,9 +1,10 @@
 \begin{code}
-{-# OPTIONS --type-in-type --no-termination-check #-}
+{-# OPTIONS --type-in-type  #-}
 module lib where
 
 open import Agda.Builtin.Unit
-open import Data.Maybe.Base hiding (map)
+open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
+open import Data.Maybe.Base hiding (map) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Data.List hiding (map)
 open import Data.Product using (_,_; Σ; _×_)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
@@ -14,62 +15,81 @@ open import Data.Fin as Fin using (Fin)
 open import Relation.Nullary
 open import Agda.Builtin.Bool renaming (Bool to 𝔹)
 
-data PreImage {A : Set}{B : Set}(f : A → B) : B → Set where
+
+
+data PreImage {A B : Set}(f : A → B) : B → Set where
    Pre : ∀ a → PreImage f (f a)
 
 \end{code}
 %<*membership>
 \begin{code}
 data _∈_ {A : Set} (a : A) : List A → Set where
-  here  : ∀ xs   → a ∈ (a ∷ xs)
-  there : ∀ {x xs}  → a ∈ xs → a ∈ (x ∷ xs)
+  Ο  : ∀ {ℓ} → a ∈ (a ∷ ℓ)
+  1+ : ∀ {x ℓ}  → a ∈ ℓ → a ∈ (x ∷ ℓ)
 \end{code}
 %</membership>
 \begin{code}
 
-_without_ : ∀ {A}(l : List A){a}(a∈ : a ∈ l) → List A
-.(_ ∷ _) without (here l) = l
-.(_ ∷ _) without (there {x = x}{xs = l} a∈) = x ∷ l without a∈
+
+_[_∶_] : ∀ {A}(Γ : List A) {m} → m ∈ Γ → A → List A
+.(_ ∷ ℓ) [ Ο {ℓ} ∶ b ] = b ∷ ℓ
+.(_ ∷ _) [ 1+ {x}{ℓ} a∈ ∶ b ] = x ∷ ℓ [ a∈ ∶ b ]
+
+_∶_ : ∀ {A}{Γ : List A} {m} → (M : m ∈ Γ) → (a : A) → a ∈ (Γ [ M ∶ a ])
+Ο ∶ a = Ο
+1+ M ∶ a = 1+ (M ∶ a)
+
+infixl 20 _⑊_
+
+_⑊_ : ∀ {A}(ℓ : List A){a}(a∈ : a ∈ ℓ) → List A
+.(_ ∷ _) ⑊ Ο {ℓ} = ℓ
+.(_ ∷ _) ⑊ (1+ {x}{ℓ} a∈) = x ∷ ℓ ⑊ a∈
 
 module _ {A : Set}(_≟_ : Relation.Binary.Decidable (_≡_ {A = A})) where
 
-  find-PreImage-Vec : (a : A) {n : ℕ}(l : Vec A n) → Maybe (PreImage (Vec.lookup l) a)
-  find-PreImage-Vec a [] = nothing
-  find-PreImage-Vec a (x ∷ l) with a ≟ x
-  ... | yes ≡.refl = just (Pre Fin.zero)
-  ... | false because ofⁿ ¬p = do
-       Pre x ← find-PreImage-Vec a l
-       just (Pre (Fin.suc x))
+  nth⁻¹ : (a : A) {n : ℕ}(l : Vec A n) → Maybe (PreImage (Vec.lookup l) a)
+  nth⁻¹ a [] = ⊥
+  nth⁻¹ a (x ∷ l) with a ≟ x
+  ... | yes ≡.refl = ⌊ Pre Fin.zero ⌋
+  ... | no _ = do
+       Pre x ← nth⁻¹ a l
+       ⌊ Pre (Fin.suc x) ⌋
 
-  find-∈ : (a : A) {n : ℕ}(l : Vec A n) → Maybe (Fin n)
-  find-∈ a l = do
-      Pre x ← find-PreImage-Vec a l
-      just x
 
-restricts∈ : ∀ {A}{l : List A} {a}(t : a ∈ l){a'}(t' : a' ∈ l) → Maybe (a' ∈ (l without t))
-restricts∈ (here _) (here _) = nothing
-restricts∈ (here _) (there t') = just t'
-restricts∈ (there _) (here _) = just (here _)
-restricts∈ (there t) (there t') = do
-    i ← restricts∈ t t'
-    just (there i)
+
+module _ {A} where
+
+  data _⑊∨=_ {ℓ : List A}{a}(a∈ : a ∈ ℓ) : ∀ {a'} → a' ∈ ℓ → Set where
+    ⊥ : a∈ ⑊∨= a∈
+    ⌊_⌋ : ∀ {a'}{a'∈ : a' ∈ ℓ} → a ∈ (ℓ ⑊ a'∈) → a∈ ⑊∨= a'∈ 
+
+  _⑊?_ : ∀ {l : List A}{a}(a∈ : a ∈ l){a'} → (a'∈ : a' ∈ l) → a∈ ⑊∨= a'∈
+  Ο ⑊? Ο = ⊥
+  Ο ⑊? 1+ a'∈ = ⌊ Ο ⌋
+  1+ a∈ ⑊? Ο = ⌊ a∈ ⌋
+  1+ a∈ ⑊? 1+ a'∈ with a∈ ⑊? a'∈
+  ... | ⌊ a∈ ⌋ = ⌊ 1+ a∈ ⌋
+  ... | ⊥ = ⊥
+
 
 
 module VecList where
 
-  -- VecList.t B [l₀ ; .. ; lₙ] ≃ B l₀ × .. × B lₙ
-  t : ∀ {A : Set}(B : A → Set)(l : List A)  → Set
-  t B [] = ⊤
-  t B (x ∷ l) = B x × t B l
+  -- VecList B [l₀ ; .. ; lₙ] ≃ B l₀ × .. × B lₙ
+  VecList : ∀ {A : Set}(B : A → Set)(l : List A)  → Set
+  VecList B [] = ⊤
+  VecList B (x ∷ l) = B x × VecList B l
 
 
-  map : ∀ {A : Set}{B B' : A → Set}{l : List A} → (∀ a → B a → B' a) → t B l → t B' l
+  map : ∀ {A : Set}{B B' : A → Set}{l : List A} → (∀ a → B a → B' a) → VecList B l → VecList B' l
   map {l = []} f xs = tt
   map {l = a ∷ l} f (x , xs) = f a x  , map f xs
 
 
-  nth : ∀ {A : Set}{B : A → Set}{l : List A}{a} → a ∈ l → t B l →  B a
-  nth (here xs) (t , _) = t
-  nth (there a∈) (t , ts) = nth a∈ ts
+  nth : ∀ {A : Set}{B : A → Set}{l : List A}{a} → a ∈ l → VecList B l →  B a
+  nth Ο (t , _) = t
+  nth (1+ a∈) (_ , ts) = nth a∈ ts
 
 
+
+\end{code}
