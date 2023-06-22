@@ -5675,6 +5675,41 @@ name "fig:unif-flex"
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labelULrule{\dfrac{M\notin u\qquad\Gamma\prune u{\maybold M(\vec{x})}{\sigma}w\dashv\Delta}{\Gamma,M:m\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{NoCycle}\quad\text{+ symmetric rule}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -5717,39 +5752,6 @@ agdalccode{unify-flex-def}
 
 
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{\highlighted{\highlighted{m\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p}}}{\Gamma\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang\dashv\bot}
-\]
 
 \end_inset
 
@@ -8086,7 +8088,7 @@ et aussi que ca preserve la propriete qu'une des branches est un coproduit
 termination
 \emph default
 , i.e., there is no infinite sequence of rule applications.
- The former is straightforward to check.
+ The former is ensured by Agda's type-checker.
  In this section we sketch the proof of the latter termination property,
  following a standard argument.
  Roughly, it consists in realising that for each rule, the premises are
