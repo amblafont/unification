@@ -1036,237 +1036,6 @@ Furthermore, we are not reluctant to using logically inconsistent features
 \end_layout
 
 \begin_layout Subsection*
-Related work
-\end_layout
-
-\begin_layout Standard
-First-order unification has been explained from a lattice-theoretic point
- of view by Plotkin
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "plotkinunification"
-literal "false"
-
-\end_inset
-
-, and later categorically analysed in
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Section 9.7"
-key "DBLP:books/daglib/0068768,Goguen89whatis,10.5555/92134"
-literal "false"
-
-\end_inset
-
- as coequalisers.
- However, there is little work on understanding pattern unification algebraicall
-y, with the notable exception of 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "vezzosi2014categorical"
-literal "false"
-
-\end_inset
-
-, working with normalised terms of simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus.
- The present paper
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ifshort{
-\end_layout
-
-\end_inset
-
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-An expanded version of this work can be found in
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "longgenericunif"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- can be thought of as a generalisation of their work.
-\end_layout
-
-\begin_layout Standard
-Although our notion of signature has a broader scope since we are not specifical
-ly focusing on syntax where variables can be substituted, our work is closer
- in spirit to the presheaf approach
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "fiore:presheaf"
-literal "false"
-
-\end_inset
-
- to binding signatures than to the nominal approach
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "PittsAM:newaas"
-literal "false"
-
-\end_inset
-
- in that everything is explicitly scoped: terms come with their support,
- metavariables always appear with their scope of allowed variables.
-\end_layout
-
-\begin_layout Standard
-Nominal unification
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "10.1007/978-3-540-45220-1_41"
-literal "false"
-
-\end_inset
-
- is an alternative to pattern unification where metavariables are not supplied
- with the list of allowed variables.
- Instead, substitution can capture variables.
- Nominal unification explicitly deals with 
-\begin_inset Formula $\alpha$
-\end_inset
-
--equivalence as an external relation on the syntax, and as a consequence
- deals with freshness problems in addition to unification problems.
- 
-\end_layout
-
-\begin_layout Standard
-Cheney
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "cheney2005relating"
-literal "false"
-
-\end_inset
-
- shows that nominal unification and pattern unification problems are inter-trans
-latable.
- As he notes, this result indirectly provides semantic foundations for pattern
- unification based on the nominal approach.
- In this respect, the present work provides a more direct semantic analysis
- of pattern unification, leading us to the generic algorithm we present,
- parameterised by a general notion of signature for the syntax.
-\end_layout
-
-\begin_layout Subsection*
 Plan of the paper
 \end_layout
 
@@ -1326,10 +1095,21 @@ noprefix "false"
 \end_inset
 
 .
- Finally, we present some examples of signatures in 
+ We present some examples of signatures in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Related work is discussed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:related-work"
 plural "false"
 caps "true"
 noprefix "false"
@@ -20270,6 +20050,247 @@ noprefix "false"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Section
+Related work
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:related-work"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First-order unification has been explained from a lattice-theoretic point
+ of view by Plotkin
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "plotkinunification"
+literal "false"
+
+\end_inset
+
+, and later categorically analysed in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Section 9.7"
+key "DBLP:books/daglib/0068768,Goguen89whatis,10.5555/92134"
+literal "false"
+
+\end_inset
+
+ as coequalisers.
+ However, there is little work on understanding pattern unification algebraicall
+y, with the notable exception of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vezzosi2014categorical"
+literal "false"
+
+\end_inset
+
+, working with normalised terms of simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ The present paper
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ifshort{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+An expanded version of this work can be found in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "longgenericunif"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ can be thought of as a generalisation of their work.
+\end_layout
+
+\begin_layout Standard
+Although our notion of signature has a broader scope since we are not specifical
+ly focusing on syntax where variables can be substituted, our work is closer
+ in spirit to the presheaf approach
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "fiore:presheaf"
+literal "false"
+
+\end_inset
+
+ to binding signatures than to the nominal approach
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PittsAM:newaas"
+literal "false"
+
+\end_inset
+
+ in that everything is explicitly scoped: terms come with their support,
+ metavariables always appear with their scope of allowed variables.
+\end_layout
+
+\begin_layout Standard
+Nominal unification
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "10.1007/978-3-540-45220-1_41"
+literal "false"
+
+\end_inset
+
+ is an alternative to pattern unification where metavariables are not supplied
+ with the list of allowed variables.
+ Instead, substitution can capture variables.
+ Nominal unification explicitly deals with 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-equivalence as an external relation on the syntax, and as a consequence
+ deals with freshness problems in addition to unification problems.
+ 
+\end_layout
+
+\begin_layout Standard
+Cheney
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cheney2005relating"
+literal "false"
+
+\end_inset
+
+ shows that nominal unification and pattern unification problems are inter-trans
+latable.
+ As he notes, this result indirectly provides semantic foundations for pattern
+ unification based on the nominal approach.
+ In this respect, the present work provides a more direct semantic analysis
+ of pattern unification, leading us to the generic algorithm we present,
+ parameterised by a general notion of signature for the syntax.
 \end_layout
 
 \begin_layout Section
