@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --type-in-type --no-termination-check #-}
+{-# OPTIONS --type-in-type  #-}
 module lc where
 
 open import Agda.Builtin.Unit
@@ -288,29 +288,47 @@ module _ where
 \end{code}
 %</unify-flex-flex-diff>
 \begin{code}
-
 {- ----------------------
 
 Non cyclic unification
 
 -------------------------- -}
-  unify-no-cycle : ∀ {Γ n} → Tm Γ n
-      → ∀ {m} → m ⇒ n → Maybe (m ∷ Γ ⟶?)
-
+  {-# TERMINATING #-}
+\end{code}
+%<*unify-no-cycle-proto>
+\begin{code}
+  unify-no-cycle : ∀ {Γ n} → Tm Γ n → ∀ {m} → m ⇒ n → Maybe (m ∷ Γ ⟶?)
+\end{code}
+%</unify-no-cycle-proto>
+%<*unify-no-cycle-app>
+\begin{code}
   unify-no-cycle (App t u) x = do
             Δ₁ ◄ t' , σ₁ ← unify-no-cycle t x
             Δ₂ ◄ u' , σ₂ ← unify-no-cycle (u [ σ₁ ]t) x
             ⌊ Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s ⌋
+\end{code}
+%</unify-no-cycle-app>
+%<*unify-no-cycle-lam>
+\begin{code}
   unify-no-cycle (Lam t) x = do
             Δ ◄ t' , σ ← unify-no-cycle t (x ↑)
             ⌊ Δ ◄ Lam t' , σ ⌋
+\end{code}
+%</unify-no-cycle-lam>
+%<*unify-no-cycle-var>
+\begin{code}
   unify-no-cycle {Γ} (Var i) x = do
-         Pre i' ←  i ｛ x ｝⁻¹
-         ⌊ Γ ◄ Var i' , idₛ ⌋
-
-  unify-no-cycle (M ﹙ y ﹚) x =
-      ⌊ unify-flex-flex (1+ M) y Ο x ⌋
-
+         Pre j ←  i ｛ x ｝⁻¹
+         ⌊ Γ ◄ Var j , idₛ ⌋
+\end{code}
+%</unify-no-cycle-var>
+%<*unify-no-cycle-flex>
+\begin{code}
+  unify-no-cycle (M ﹙ x ﹚) y =
+      ⌊ unify-flex-flex (1+ M) x Ο y ⌋
+\end{code}
+%</unify-no-cycle-flex>
+\begin{code}
 {- ----------------------
 
 Unification
@@ -322,14 +340,19 @@ Unification
 \begin{code}
   unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm Γ n → Maybe (Γ ⟶?)
   unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
-  unify-flex-* M x u = do
-      u' ← u ⑊?ₜ M
-      Δ ◄ t , σ ← unify-no-cycle u' x
-      ⌊ Δ ◄ M ↦ t , σ ⌋
 \end{code}
 %</unify-flex-def>
+%<*unify-flex-no-flex>
+\begin{code}
+  unify-flex-* M x u = do
+      u ← u ⑊?ₜ M
+      Δ ◄ t , σ ← unify-no-cycle u x
+      ⌊ Δ ◄ M ↦ t , σ ⌋
+\end{code}
+%</unify-flex-no-flex>
 \begin{code}
 
+  {-# TERMINATING #-}
 \end{code}
 %<*unifyprototype>
 \begin{code}

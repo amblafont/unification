@@ -4331,6 +4331,18 @@ noprefix "false"
 \end_inset
 
 .
+ Formally, failure propagation is modelled by the following rule.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{}{\bot\vdash t=u\Rightarrow\bot\dashv\bot}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4564,7 +4576,7 @@ status collapsed
 
 \begin_inset Formula 
 \[
-\dfrac{M:m\in\Gamma\qquad\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\Gamma\vdash M(x)=M(y)\Rightarrow M\mapsto M(z)\dashv\Gamma[M:p]}
+\labellabelrule{\dfrac{M:m\in\Gamma\qquad\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\Gamma\vdash M(x)=M(y)\Rightarrow M\mapsto P(z)\dashv P:p,\Gamma\backslash M}}{Flex-eq}
 \]
 
 \end_inset
@@ -4693,13 +4705,16 @@ status collapsed
 
 \begin_inset Formula 
 \[
-\dfrac{\begin{array}{c}
+\labellabelrule{\dfrac{\begin{array}{c}
 M:m,M':m'\in\Gamma\quad M\neq M'\\
 \highlighted{m\prunecat xy{r\dashv p}l{}}
-\end{array}}{\Gamma\vdash M(x)=M'(y)\Rightarrow\left(\begin{array}{c}
-M\mapsto M'(l)\\
-M'\mapsto M'(r)
-\end{array}\right)\dashv\Gamma\backslash M[M':p]}
+\end{array}}{\begin{array}{l}
+\Gamma\vdash M(x)=M'(y)\Rightarrow\\
+\quad\left(\begin{array}{c}
+M\mapsto P(l)\\
+M'\mapsto P(r)
+\end{array}\right)\dashv P:p,\Gamma\backslash M\backslash M'
+\end{array}}}{Flex-neq}
 \]
 
 \end_inset
@@ -4885,27 +4900,7 @@ noprefix "false"
 \end_inset
 
 .
- In fact, instead of deleting 
-\begin_inset Formula $M$
-\end_inset
-
- from the context and inserting a fresh metavariable 
-\begin_inset Formula $P$
-\end_inset
-
-, the implementation keeps with 
-\begin_inset Formula $M$
-\end_inset
-
- and change its arity to 
-\begin_inset Formula $p$
-\end_inset
-
- resulting in a context denoted by 
-\begin_inset Formula $\Gamma[M:p]$
-\end_inset
-
-.
+ 
 \end_layout
 
 \begin_layout Example
@@ -4990,11 +4985,73 @@ A similar argument shows that the most general unifier of
 \end_layout
 
 \begin_layout Standard
+The corresponding rule 
+\begin_inset Formula $\refrule{Flex-eq}$
+\end_inset
+
+ does not stipulate how to generate the fresh metavariable symbol 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ But since 
+\begin_inset Formula $M$
+\end_inset
+
+ is removed from 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, the name 
+\begin_inset Formula $M$
+\end_inset
+
+ becomes fresh and therefore provides a canonical choice.
+ Accordingly, the implementation keeps 
+\begin_inset Formula $M$
+\end_inset
+
+ but changes its arity to 
+\begin_inset Formula $p$
+\end_inset
+
+, resulting in a context denoted by 
+\begin_inset Formula $\Gamma[M:p]$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The following rule is thus more faithful with the implementation, although
+ it is equivalent to 
+\begin_inset Formula $\refrule{Flex-eq}$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\dfrac{M:m\in\Gamma\qquad\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\Gamma\vdash M(x)=M(y)\Rightarrow M\mapsto M(z)\dashv\Gamma[M:p]}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 If 
 \begin_inset Formula $M\neq M'$
 \end_inset
 
-, consider the vector of common values positions 
+, consider the vectors of common values positions 
 \begin_inset Formula $(l_{1},\dots,l_{p})$
 \end_inset
 
@@ -5010,7 +5067,7 @@ If
 \begin_inset Formula $y_{1},\dots,y_{m'}$
 \end_inset
 
-, i.e., the maximal pair of lists 
+, i.e., the pair of maximal lists 
 \begin_inset Formula $(\vec{l},\vec{r})$
 \end_inset
 
@@ -5024,7 +5081,7 @@ If
 \end_inset
 
 .
- Then, the most general unifier 
+ The most general unifier 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -5101,7 +5158,16 @@ Let
 \end_layout
 
 \begin_layout Standard
-Again, instead of removing 
+As previously, the corresponding rule 
+\begin_inset Formula $\refrule{Flex-neq}$
+\end_inset
+
+ does not stipulate how to generate the fresh metavariable symbol 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ But since both 
 \begin_inset Formula $M$
 \end_inset
 
@@ -5109,45 +5175,47 @@ Again, instead of removing
 \begin_inset Formula $M'$
 \end_inset
 
- from the context and inserting a fresh metavariable 
-\begin_inset Formula $P$
-\end_inset
-
-, the implementation removes 
-\begin_inset Formula $M$
-\end_inset
-
- but keeps 
+ are removed from the context, either of them can be chosen as a fresh metavaria
+ble.
+ The implementation actually picks 
 \begin_inset Formula $M'$
 \end_inset
 
- and changes its arity to 
-\begin_inset Formula $p$
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The following rule is thus more faithful with the Agda code:, and can be
+ thought of as a possible implementation of 
+\begin_inset Formula $\refrule{Flex-neq}$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Standard
-Unification of a metavariable application 
-\begin_inset Formula $M(x_{1},\dots,x_{m})$
-\end_inset
-
- with a term 
-\begin_inset Formula $u$
-\end_inset
-
- is detailed in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-flex"
-plural "false"
-caps "true"
-noprefix "false"
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+M:m,M':m'\in\Gamma\quad M\neq M'\\
+\highlighted{m\prunecat xy{r\dashv p}l{}}
+\end{array}}{\Gamma\vdash M(x)=M'(y)\Rightarrow\left(\begin{array}{c}
+M\mapsto M'(l)\\
+M'\mapsto M'(r)
+\end{array}\right)\dashv\Gamma\backslash M[M':p]}
+\]
 
 \end_inset
 
-.
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5675,14 +5743,15 @@ name "fig:unif-flex"
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset Box Boxed
+\align left
+\begin_inset Box Frameless
 position "c"
 hor_pos "c"
 has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "55col%"
+width "45col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -5694,10 +5763,29 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labelULrule{\dfrac{M\notin u\qquad\Gamma\prune u{\maybold M(\vec{x})}{\sigma}w\dashv\Delta}{\Gamma,M:m\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{NoCycle}\quad\text{+ symmetric rule}
-\]
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdalccode{unify-flex-def}
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -5738,14 +5826,14 @@ status open
 
 \begin_layout Plain Layout
 
-%
+%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdalccode{unify-flex-def}
+agdalccode{unify-flex-no-flex}
 \end_layout
 
 \end_inset
@@ -5761,185 +5849,93 @@ agdalccode{unify-flex-def}
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-When reaching a metavariable application 
-\begin_inset Formula $M(x_{1},\dots,x_{m})$
-\end_inset
-
- at the top-level of either term, denoting by 
-\begin_inset Formula $u$
-\end_inset
-
- the other term, three situations must be considered:
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $u$
-\end_inset
-
- is a metavariable application 
-\begin_inset Formula $N(y_{1},\dots,y_{n})$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $u$
-\end_inset
-
- is not a metavariable application and 
-\begin_inset Formula $M$
-\end_inset
-
- occurs deeply in 
-\begin_inset Formula $u$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $M$
-\end_inset
-
- does not occur in 
-\begin_inset Formula $u$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Enumerate
-\begin_inset Formula $M$
-\end_inset
-
- occurs in 
-\begin_inset Formula $u$
-\end_inset
-
- at top level, i.e., 
-\begin_inset Formula $u=M(y_{1},\dots,y_{m})$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $M$
-\end_inset
-
- does not occur in 
-\begin_inset Formula $u$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Note that the first
-\end_layout
-
-\begin_layout Standard
-In the first case, there is no unifier because the size of both hand sides
- can never match after substitution.
- This justifies the rule 
-\begin_inset Formula $\refULrule{Cyclic}$
-\end_inset
-
-, where 
-\begin_inset Formula $M\in u$
-\end_inset
-
- means that 
-\begin_inset Formula $M$
-\end_inset
-
- occurs in 
-\begin_inset Formula $u$
-\end_inset
-
-.
- In the second case, we want to unify 
-\begin_inset Formula $M(\vec{x})$
-\end_inset
-
- with 
-\begin_inset Formula $M(\vec{y})$
-\end_inset
-
-.
- The most general unifier 
-\begin_inset Formula $\sigma$
-\end_inset
-
- coincides with the identity substitution except for 
-\begin_inset Formula $\sigma_{M}=M'(\vec{z})$
-\end_inset
-
-, where 
-\begin_inset Formula $M'$
-\end_inset
-
- is fresh and 
-\begin_inset Formula $\vec{z}=(z_{1},\dots,z_{p})$
-\end_inset
-
- is the vector of common positions, that is, a maximal vector of (distinct)
- positions 
-\begin_inset Formula $\vec{z}$
-\end_inset
-
- such that 
-\begin_inset Formula $x_{\vec{z}}=y_{\vec{z}}$
-\end_inset
-
-.
- We denote
-\begin_inset Foot
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-The similarity with the above introduced notation is no coincidence: as
- we will see (
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{Cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\notin u\qquad\Gamma\backslash M\prune u{\maybold M(\vec{x})}{\sigma}w\dashv\Delta}{\Gamma\vdash M(\vec{x})=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{No-cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Unification of a metavariable application 
+\begin_inset Formula $M(x_{1},\dots,x_{m})$
+\end_inset
+
+ with a term 
+\begin_inset Formula $u$
+\end_inset
+
+ is detailed in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:equaliser-notation"
+reference "fig:unif-flex"
 plural "false"
 caps "true"
 noprefix "false"
 
 \end_inset
 
-), both are (co)equalisers.
-\end_layout
-
-\end_inset
-
- such a situation by 
-\begin_inset Formula $n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p$
-\end_inset
-
 .
- We therefore get the rule 
-\begin_inset Formula $\refULrule{Flex}$
+ We have just discussed the case when 
+\begin_inset Formula $u$
 \end_inset
 
-.
-\end_layout
+ is a metavariable.
+ Let us detail the other case.
+ The algorithm starts by checking whether 
+\begin_inset Formula $M$
+\end_inset
+
+ can be removed from the metavariable context in which 
+\begin_inset Formula $u$
+\end_inset
+
+ is typed.
+ If not, then 
+\begin_inset Preview
 
 \begin_layout Standard
 \begin_inset ERT
@@ -5947,17 +5943,29 @@ status open
 
 \begin_layout Plain Layout
 
+
+\backslash
+AgdaBound{u}
+\backslash
+AgdaSpace{}%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-end{document}
+AgdaOperator{
+\backslash
+AgdaFunction{⑊?ₜ}}
+\backslash
+AgdaSpace{}%
 \end_layout
 
 \begin_layout Plain Layout
 
+
+\backslash
+AgdaBound{M}
 \end_layout
 
 \end_inset
@@ -5965,333 +5973,18 @@ end{document}
 
 \end_layout
 
-\begin_layout Standard
-The rule 
-\begin_inset Formula $\refULrule{ExFalso}$
 \end_inset
 
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:algo-pure-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- propagates the error from input to output.
-\end_layout
-
-\begin_layout Standard
-We generalise the notation (and thus the input of the unification algorithm)
- to lists of terms 
-\begin_inset Formula $\vec{t}=(t_{1},\dots,t_{n})$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{u}=(u_{1},\dots,u_{n})$
-\end_inset
-
- such that 
-\begin_inset Formula $\Gamma;n_{i}\vdash t_{i},u_{i}$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula $\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta$
-\end_inset
-
- means that 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
-\end_inset
-
- unifies each pair 
-\begin_inset Formula $(t_{i},u_{i})$
-\end_inset
-
- and is the most general one, in the sense that it uniquely factors any
- other substitution unifying each pair 
-\begin_inset Formula $(t_{i},u_{i})$
-\end_inset
-
-.
- As a consequence, we get the 
+ fails and the 
 \emph on
-congruence
+do 
 \emph default
- rule for application.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\vdash t_{1},t_{2}=u_{1},u_{2}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
-\]
-
+notation propagates the error.
+ This situation described by the failing rule 
+\begin_inset Formula $\refrule{Cycle}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-The rule 
-\begin_inset Formula $\refULrule{Empty}$
-\end_inset
-
- trivially handles unification of two empty lists.
- Unification of two non-empty lists of term pairs 
-\begin_inset Formula $\veciflyx{}{t_{1}},\veciflyx 1{t_{2}}$
-\end_inset
-
- and 
-\begin_inset Formula $\veciflyx{}{u_{1}},\veciflyx 1{u_{2}}$
-\end_inset
-
- can be performed sequentially by first computing the most general unifier
- of 
-\begin_inset Formula $(t_{1},u_{1})$
-\end_inset
-
-, then applying it to 
-\begin_inset Formula $(\vec{t_{2}},\vec{u_{2}})$
-\end_inset
-
-, and finally computing the most general unifier of the resulting list of
- term pairs: this is precisely the rule 
-\begin_inset Formula $\refULrule{Split}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-that we repeat here.
- 
-\begin_inset Formula 
-\[
-\unificationstepwise 1
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This rule can of course be restricted to the case where 
-\begin_inset Formula $\vec{t_{1}}$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{u_{1}}$
-\end_inset
-
- are singleton lists
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-We will actually do so when proving completeness in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:progress"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- Thanks to this rule, we can focus on unification of a single term pair.
- 
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-For the sake of brevity, we skip the error cases and the variable cases.
- 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-The congruence case for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--abstraction is straightforward.
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash\lambda x.t=\lambda x.u\Rightarrow\sigma\dashv\Delta}
-\]
-
-\end_inset
-
-For the congruence case for application 
-\begin_inset Formula $t_{1}\ t_{2}=u_{1}\ u_{2}$
-\end_inset
-
-, we need to unify both 
-\begin_inset Formula $(t_{1},u_{1})$
-\end_inset
-
- and 
-\begin_inset Formula $(t_{2},u_{2})$
-\end_inset
-
-.
- Let us introduce the notation 
-\begin_inset Formula $\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma\dashv\Delta$
-\end_inset
-
-, meaning that 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
-\end_inset
-
- unifies both 
-\begin_inset Formula $(t_{1},u_{1})$
-\end_inset
-
- and 
-\begin_inset Formula $(t_{2},u_{2})$
-\end_inset
-
-, and is the most general unifier, in the sense that it uniquely factors
- any other unifier of both term pairs.
- Computing the most general unifier of a list of term pairs can be done
- sequentially.
- In the example above, we first compute the most general unifier 
-\begin_inset Formula $\sigma_{1}$
-\end_inset
-
- of 
-\begin_inset Formula $(t_{1},u_{1})$
-\end_inset
-
-, apply the substitution to 
-\begin_inset Formula $(t_{2},u_{2})$
-\end_inset
-
- and compute the most general unifier of the resulting term pair.
- 
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\begin{equation}
-\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\sigma_{1}]=u_{2}[\sigma_{1}]\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}\label{eq:app-lc-oneshot-unif}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash t_{1}\ t_{2}=u_{1}\ u_{2}\Rightarrow\sigma\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-Computing the most general unifier of a list of term pairs can be done sequentia
-lly.
- In the example above, we first compute the most general unifier 
-\begin_inset Formula $\sigma_{1}$
-\end_inset
-
- of 
-\begin_inset Formula $(t_{1},u_{1})$
-\end_inset
-
-, apply the substitution to 
-\begin_inset Formula $(t_{2},u_{2})$
-\end_inset
-
- and compute the most general unifier of the resulting term pair:
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\Gamma\vdash t_{1}=u_{1}\Rightarrow\sigma_{1}\dashv\Delta_{1}\qquad\Delta_{1}\vdash t_{2}[\sigma_{1}]=u_{2}[\sigma_{1}]\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash t_{1},u_{1}=t_{2},u_{2}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- The idea here is to recursively inspect the structure of the given terms
- using the rules 
-\begin_inset Formula $\refULrule{RigRig}$
-\end_inset
-
- and 
-\begin_inset Formula $\refULrule{Clash}$
-\end_inset
-
-, until reaching a metavariable application 
-\begin_inset Formula $M(x_{1},\dots,x_{m})$
-\end_inset
-
- at the top-level of either term.
- Denoting by 
-\begin_inset Formula $u$
-\end_inset
-
- the other term, three mutually exclusive situations must be considered:
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $M$
-\end_inset
-
- occurs deeply in 
-\begin_inset Formula $u$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
+ happens precisely when 
 \begin_inset Formula $M$
 \end_inset
 
@@ -6299,131 +5992,22 @@ lly.
 \begin_inset Formula $u$
 \end_inset
 
- at top level, i.e., 
-\begin_inset Formula $u=M(y_{1},\dots,y_{m})$
+: since 
+\begin_inset Formula $u$
 \end_inset
 
-;
+ is not a metavariable, there is no unifier because the size of both hand
+ sides can never match after substitution.
+ 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Standard
+We are left with the case when 
 \begin_inset Formula $M$
 \end_inset
 
  does not occur in 
 \begin_inset Formula $u$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-In the first case, there is no unifier because the size of both hand sides
- can never match after substitution.
- This justifies the rule 
-\begin_inset Formula $\refULrule{Cyclic}$
-\end_inset
-
-, where 
-\begin_inset Formula $M\in u$
-\end_inset
-
- means that 
-\begin_inset Formula $M$
-\end_inset
-
- occurs in 
-\begin_inset Formula $u$
-\end_inset
-
-.
- In the second case, we want to unify 
-\begin_inset Formula $M(\vec{x})$
-\end_inset
-
- with 
-\begin_inset Formula $M(\vec{y})$
-\end_inset
-
-.
- The most general unifier 
-\begin_inset Formula $\sigma$
-\end_inset
-
- coincides with the identity substitution except for 
-\begin_inset Formula $\sigma_{M}=M'(\vec{z})$
-\end_inset
-
-, where 
-\begin_inset Formula $M'$
-\end_inset
-
- is fresh and 
-\begin_inset Formula $\vec{z}=(z_{1},\dots,z_{p})$
-\end_inset
-
- is the vector of common positions, that is, a maximal vector of (distinct)
- positions 
-\begin_inset Formula $\vec{z}$
-\end_inset
-
- such that 
-\begin_inset Formula $x_{\vec{z}}=y_{\vec{z}}$
-\end_inset
-
-.
- We denote
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-The similarity with the above introduced notation is no coincidence: as
- we will see (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:equaliser-notation"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), both are (co)equalisers.
-\end_layout
-
-\end_inset
-
- such a situation by 
-\begin_inset Formula $n\vdash\vec{x}=\vec{y}\Rightarrow\vec{z}\dashv p$
-\end_inset
-
-.
- We therefore get the rule 
-\begin_inset Formula $\refULrule{Flex}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The last case consists in unifying 
-\begin_inset Formula $M(\vec{x})$
-\end_inset
-
- with some 
-\begin_inset Formula $u$
-\end_inset
-
- such that 
-\begin_inset Formula $M$
-\end_inset
-
- does not occur in 
-\begin_inset Formula $u$
-\end_inset
-
-, described in the rule 
-\begin_inset Formula $\refULrule{NoCycle}$
 \end_inset
 
 .
@@ -6431,12 +6015,38 @@ The last case consists in unifying
 \emph on
 non-cyclic phase
 \emph default
-, which specifically addresses such non-cyclic unification problems.
- Let us introduce a specific notation: 
+, which specifically addresses such non-cyclic unification problems: this
+ is what happens in the premise of the rule 
+\begin_inset Formula $\refrule{No-cycle}$
+\end_inset
+
+.
+ It uses
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The similarity with the notation for common value positions is no coincidence:
+ both are (co)pullbacks, as we will see in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:pushout-notation"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ the notation 
 \begin_inset Formula $\Gamma\prune u{\maybold M(\vec{x})}{\sigma\dashv\Delta}w$
 \end_inset
 
- means that 
+ for this non-cyclic phase, where 
 \begin_inset Formula $u$
 \end_inset
 
@@ -6470,12 +6080,12 @@ non-cyclic phase
 \end_inset
 
 , both considered in the extended metavariable context 
-\begin_inset Formula $\Gamma,M:m$
+\begin_inset Formula $M:m,\Gamma$
 \end_inset
 
 .
  This substitution from 
-\begin_inset Formula $\Gamma,M:m$
+\begin_inset Formula $M:m,\Gamma$
 \end_inset
 
  to 
@@ -6495,6 +6105,41 @@ non-cyclic phase
 \end_inset
 
 .
+ The type signature of the non-cyclic phase is thus
+\end_layout
+
+\begin_layout Standard
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdalccode{unify-no-cycle-proto}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Note that contrary to the above notation, because of the nameless encoding,
+ the fresh metavariable symbol 
+\begin_inset Formula $M$
+\end_inset
+
+ is not explicit.
 \end_layout
 
 \begin_layout Remark
@@ -6586,100 +6231,36 @@ ion essentially replaces
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+The non-cyclic phase proceeds recursively as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-no-cycle-lam"
+plural "false"
+caps "true"
+noprefix "false"
 
-\begin_layout Plain Layout
-It is tempting to take 
-\begin_inset Formula $M(\vec{x})=u$
-\end_inset
-
- as a definition for 
-\begin_inset Formula $M$
-\end_inset
-
-, and thus consider the substitution 
-\begin_inset Formula $M\mapsto u[x_{i}\mapsto v_{i}]$
 \end_inset
 
 .
- However, this only makes sense if the free variables of 
-\begin_inset Formula $u$
+ The metavariable case is straightforward.
+ In the variable case, 
+\begin_inset Formula $i\{x\}^{-1}$
 \end_inset
 
- are among 
-\begin_inset Formula $\vec{x}$
+ returns the index 
+\begin_inset Formula $j$
 \end_inset
 
-: if 
-\begin_inset Formula $u$
+ such that 
+\begin_inset Formula $i=x_{j}$
 \end_inset
 
- is a variable that does not occur in 
-\begin_inset Formula $\vec{x}$
+, or fails if no such 
+\begin_inset Formula $j$
 \end_inset
 
-, then obviously there is no unifier.
- On the other hand, it is possible to remove the 
-\emph on
-outbound
-\emph default
- variables in 
-\begin_inset Formula $u$
-\end_inset
-
- if they only occur in metavariable arguments, by restricting the arities
- of those metavariables.
- For example, if 
-\begin_inset Formula $u$
-\end_inset
-
- is a metavariable application 
-\begin_inset Formula $N(\vec{x},\vec{y})$
-\end_inset
-
-, then although the free variables are not all included in 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
-, there is still a most general unifier that replaces 
-\begin_inset Formula $N$
-\end_inset
-
- with 
-\begin_inset Formula $M$
-\end_inset
-
-, discarding the outbound variables 
-\begin_inset Formula $\vec{y}$
-\end_inset
-
-.
- Intuitively,
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The non-cyclic phase recursively proceeds by introducing fresh metavariables
- for each argument of the top-level operation.
- The variable case is straightforward (rules 
-\begin_inset Formula $\refPLrule{VarOk}$
-\end_inset
-
- and 
-\begin_inset Formula $\refPLrule{VarFail}$
-\end_inset
-
-).
- In the congruence rule 
-\begin_inset Formula $\refruletwo{P\ensuremath{\Lambda}-Lam}{PL-App}$
-\end_inset
-
- for 
+ exist.
+ For 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -6705,7 +6286,7 @@ The non-cyclic phase recursively proceeds by introducing fresh metavariables
 \end_inset
 
  is to be substituted with 
-\begin_inset Formula $w$
+\begin_inset Formula $t'$
 \end_inset
 
 , then 
@@ -6713,7 +6294,7 @@ The non-cyclic phase recursively proceeds by introducing fresh metavariables
 \end_inset
 
  should be substituted with 
-\begin_inset Formula $\lambda w$
+\begin_inset Formula $\lambda t'$
 \end_inset
 
 , thus justifying the conclusion of the rule.
@@ -6721,105 +6302,86 @@ The non-cyclic phase recursively proceeds by introducing fresh metavariables
 \end_layout
 
 \begin_layout Standard
-As before, the rule 
-\begin_inset Formula $\refPLrule{App}$
-\end_inset
-
- for application motivates generalising the non-cyclic phase to handle lists.
- More formally given a list 
-\begin_inset Formula $\vec{u}=(u_{1},\dots,u_{p})$
-\end_inset
-
- of terms in context 
-\begin_inset Formula $\Gamma;n_{i}\vdash u_{i}$
-\end_inset
-
-, and lists of pruning patterns 
-\begin_inset Formula $(\vec{x}_{1},\dots,\vec{x}_{p})$
-\end_inset
-
- where each 
-\begin_inset Formula $\vec{x_{i}}$
-\end_inset
-
- is a choice of distinct variables in 
-\begin_inset Formula $n_{i}$
-\end_inset
-
-, the judgement 
-\begin_inset Formula $\Gamma\prune{\vec{u}}{\maybold M_{1}(\vec{x}_{1}),\dots,\maybold M_{p}(\vec{x}_{p})}{\sigma}{\vec{w}}\dashv\Delta$
-\end_inset
-
- means that the substitution 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
-\end_inset
-
- extended with 
-\begin_inset Formula $M_{i}\mapsto w_{i}$
-\end_inset
-
- is the most general unifier of 
-\begin_inset Formula $\vec{u}$
-\end_inset
-
- and 
-\begin_inset Formula $\maybold M_{1}(\vec{x}_{1}),\dots\maybold M_{p}(\vec{x}_{p})$
-\end_inset
-
- in the extended metavariable context 
-\begin_inset Formula $\Gamma,M_{1}:m_{1},\dots,M_{p}:m_{p}$
-\end_inset
-
-.
- The rule 
-\begin_inset Formula $\refPLrule{Split}$
-\end_inset
-
- adapts the sequential rule 
-\begin_inset Formula $\refULrule{Split}$
-\end_inset
-
- to the non-cyclic phase.
- 
-\begin_inset Note Note
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-The usage of 
-\begin_inset Formula $+$
-\end_inset
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
- as a separator will be formally justified later in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:pruning-list-notation"
-plural "false"
-caps "true"
-noprefix "false"
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
 
-\end_inset
+\begin_layout Standard
+\begin_inset ERT
+status open
 
-: it intuitively enforces that the metavariables used in 
-\begin_inset Formula $\vec{f}_{2}$
-\end_inset
+\begin_layout Plain Layout
 
- are distinct from the metavariable used in 
-\begin_inset Formula $f_{1}$
-\end_inset
+%%
+\end_layout
 
-.
+\begin_layout Plain Layout
+
+
+\backslash
+agdalccode{unify-no-cycle-flex}
 \end_layout
 
 \end_inset
 
- 
-\begin_inset Note Note
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
+\align left
 \begin_inset Formula 
 \[
-\pruningstepwise o
+\frac{M':m',\Gamma\vdash M(x)=M'(y)\Rightarrow t,\sigma\dashv\Delta}{\Gamma\prune{M(x)}{\maybold M'(y)}{\sigma}t\dashv\Delta}
 \]
 
 \end_inset
@@ -6829,178 +6391,321 @@ status open
 
 \end_inset
 
- 
+
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
 
 \begin_layout Standard
-The remaining case consists in unifying 
-\begin_inset Formula $N(\vec{x})$
-\end_inset
-
- and 
-\begin_inset Formula $M(\vec{y})$
-\end_inset
-
-.
- Consider the vector of common values positions 
-\begin_inset Formula $(l_{1},\dots,l_{p})$
-\end_inset
-
- and 
-\begin_inset Formula $(r_{1},\dots,r_{p})$
-\end_inset
-
- between 
-\begin_inset Formula $x_{1},\dots,x_{n}$
-\end_inset
-
- and 
-\begin_inset Formula $y_{1},\dots,y_{m}$
-\end_inset
-
-, i.e., the maximal pair of lists 
-\begin_inset Formula $(\vec{l},\vec{r})$
-\end_inset
-
- of distinct positions such that 
-\begin_inset Formula $x_{\vec{l}}=y_{\vec{r}}$
-\end_inset
-
-.
- We denote
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Again, the similarity with the notation for non-cyclic unification is no
- coincidence
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:pruning-phase"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-: as we will see
-\end_layout
-
-\end_inset
-
-: both are pushouts, as we will see in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:pushout-notation"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- such a situation by 
-\begin_inset Formula $n\prunecat{\vec{x}}{\vec{y}}{\vec{r}\dashv p}{\vec{l}}{}$
-\end_inset
-
-.
- Then, the most general unifier replaces 
-\begin_inset Formula $N$
-\end_inset
-
- with 
-\begin_inset Formula $P(\vec{r})$
-\end_inset
-
- for some fresh metavariable 
-\begin_inset Formula $P$
-\end_inset
-
- of arity 
-\begin_inset Formula $p$
-\end_inset
-
-, while the metavariable 
-\begin_inset Formula $M$
-\end_inset
-
- is replaced with 
-\begin_inset Formula $P(\vec{l})$
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-in the variable context 
-\begin_inset Formula $n$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-, as seen in the rule
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-~
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdalccode{unify-no-cycle-lam}
 \end_layout
 
 \end_inset
 
 
-\begin_inset Formula $\refPLrule{Flex}$
-\end_inset
-
-.
 \end_layout
 
-\begin_layout Example
-Let 
-\begin_inset Formula $x,y,z$
 \end_inset
 
- be three distinct variables.
- The most general unifier of 
-\begin_inset Formula $M(x,y)$
+
+\end_layout
+
 \end_inset
 
- and 
-\begin_inset Formula $N(z,x)$
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\prune t{\maybold M'(x\uparrow)}{\sigma}{t'}\dashv\Delta}{\Gamma\prune{\lambda t}{\maybold M(x)}{\sigma}{\lambda t'}\dashv\Delta}
+\]
+
 \end_inset
 
- is 
-\begin_inset Formula $M\mapsto N'(\var 1),N\mapsto N'(\var 2)$
+
+\end_layout
+
 \end_inset
 
-.
- The most general unifier of 
-\begin_inset Formula $M(x,y)$
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdalccode{unify-no-cycle-var}
+\end_layout
+
 \end_inset
 
- and 
-\begin_inset Formula $N(z)$
+
+\end_layout
+
 \end_inset
 
- is 
-\begin_inset Formula $M\mapsto N',N\mapsto N'$
+
+\end_layout
+
 \end_inset
 
-.
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{i=x_{j}}{\Gamma\prune{\lcvar i}{\maybold M(x)}{1_{\Gamma}}{\lcvar j}\dashv\Gamma}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{i\notin\vec{x}}{\Gamma\prune{\lcvar i}{\maybold M(x)}{\bang}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdalccode{unify-no-cycle-app}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\Gamma\prune t{\maybold M_{1}(x)}{\sigma_{1}}{t'}\dashv\Delta_{1}\\
+\Delta_{1}\prune{u[\sigma_{1}]}{\maybold M_{2}(x)}{\sigma}{u'}_{2}\dashv\Delta_{2}
+\end{array}}{\Gamma\prune{t\ u}{\maybold M(x)}{\sigma}{t'[\sigma_{2}]\ u'}_{1}[\sigma_{2}]\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Non-cyclic unification for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:unif-no-cycle-lam"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Standard
@@ -7012,6 +6717,9 @@ This ends our description of the unification algorithm, in the specific
 -calculus.
  The purpose of this work is to present a generalisation, by parameterising
  the algorithm by a signature specifying a syntax.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -7039,6 +6747,12 @@ Assume
 
 \begin_layout Subsection
 Generalisation
+\end_layout
+
+\begin_layout Standard
+
+\color red
+To adapt
 \end_layout
 
 \begin_layout Standard
