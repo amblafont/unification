@@ -983,6 +983,10 @@ Agda implementation
 \end_layout
 
 \begin_layout Standard
+
+\color red
+TODO: move this later
+\color inherit
 We use Agda as a programming language, not as a theorem prover.
  We leave for future work the task of mechanising the correctness proof
  of the algorithm, by investigating the formalisation of various concepts
@@ -993,41 +997,7 @@ We use Agda as a programming language, not as a theorem prover.
 \begin_layout Standard
 Since we focus on providing an effective implementation, the definitions
  of our data structures typically do not mention the properties.
- For example, our definition of categories in Agda does not include associativit
-y of composition and neutrality of the identity:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{category}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Furthermore, we are not reluctant to using logically inconsistent features
+ Furthermore, we are not reluctant to using logically inconsistent features
  to make programming easier: the type hierachy is collapsed and the termination
  checker is disabled.
  We find that dependent types are still helpful in guiding the implementation.
@@ -2077,14 +2047,14 @@ status open
 
 \begin_layout Plain Layout
 
-%
+%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdalibcode{membership}
+agdacode{membership}
 \end_layout
 
 \end_inset
@@ -2166,14 +2136,14 @@ status open
 
 
 \backslash
-agdalccode{metacontext}
+agdacode{lc-metacontext}
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdalccode{renamings}
+agdacode{lc-renamings}
 \end_layout
 
 \begin_layout Plain Layout
@@ -2185,7 +2155,7 @@ agdalccode{renamings}
 
 
 \backslash
-agdalccode{syntax}
+agdacode{lc-syntax}
 \end_layout
 
 \end_inset
@@ -2486,7 +2456,7 @@ status open
 
 
 \backslash
-agdalccode{id-renaming}
+agdacode{id-renaming}
 \end_layout
 
 \end_inset
@@ -2574,7 +2544,7 @@ status open
 
 
 \backslash
-agdalccode{compose-renamings}
+agdacode{compose-renamings}
 \end_layout
 
 \end_inset
@@ -2662,7 +2632,7 @@ status open
 
 
 \backslash
-agdalccode{wk-renamings}
+agdacode{wk-renamings}
 \end_layout
 
 \end_inset
@@ -2750,7 +2720,7 @@ status open
 
 
 \backslash
-agdalccode{renaming}
+agdacode{lc-renaming}
 \end_layout
 
 \end_inset
@@ -2889,14 +2859,14 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%
+%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdalccode{substitution-def}
+agdacode{substitution-def}
 \end_layout
 
 \end_inset
@@ -2950,7 +2920,7 @@ status open
 
 
 \backslash
-agdalccode{substitution}
+agdacode{lc-substitution}
 \end_layout
 
 \end_inset
@@ -3037,7 +3007,7 @@ status open
 
 
 \backslash
-agdalccode{composesubst}
+agdacode{composesubst}
 \end_layout
 
 \end_inset
@@ -3128,7 +3098,7 @@ status open
 
 
 \backslash
-agdalccode{lift-subst}
+agdacode{lift-subst}
 \end_layout
 
 \end_inset
@@ -3269,7 +3239,7 @@ status open
 
 
 \backslash
-agdalccode{composesubst}
+agdacode{composesubst}
 \end_layout
 
 \end_inset
@@ -3360,7 +3330,7 @@ status open
 
 
 \backslash
-agdalccode{wk-substitution}
+agdacode{wk-substitution}
 \end_layout
 
 \end_inset
@@ -3452,7 +3422,7 @@ status open
 
 
 \backslash
-agdalccode{id-subst}
+agdacode{id-subst}
 \end_layout
 
 \end_inset
@@ -3539,7 +3509,7 @@ status open
 
 
 \backslash
-agdalccode{extend-subst}
+agdacode{extend-subst}
 \end_layout
 
 \end_inset
@@ -3629,7 +3599,7 @@ status open
 
 
 \backslash
-agdalccode{replace-mvar}
+agdacode{replace-mvar}
 \end_layout
 
 \end_inset
@@ -3720,7 +3690,7 @@ status open
 
 
 \backslash
-agdalccode{lift-subst}
+agdacode{lift-subst}
 \end_layout
 
 \end_inset
@@ -3981,9 +3951,9 @@ status open
 
 
 \backslash
-agdalccode{substfrom}
+agdacode{substfrom}
 \backslash
-agdalccode{unifyprototype}
+agdacode{lc-unifyprototype}
 \end_layout
 
 \end_inset
@@ -4222,7 +4192,7 @@ status open
 
 
 \backslash
-agdalccode{unify-flex-flex-proto}
+agdacode{lc-unify-flex-flex-proto}
 \end_layout
 
 \end_inset
@@ -4276,7 +4246,7 @@ status open
 
 
 \backslash
-agdalccode{unify-flex-flex-same}
+agdacode{lc-unify-flex-flex-same}
 \end_layout
 
 \end_inset
@@ -4405,7 +4375,7 @@ status open
 
 
 \backslash
-agdalccode{unify-flex-flex-diff}
+agdacode{lc-unify-flex-flex-diff}
 \end_layout
 
 \end_inset
@@ -5040,7 +5010,7 @@ status open
 
 
 \backslash
-agdalccode{unify-flex}
+agdacode{lc-unify-flex}
 \end_layout
 
 \end_inset
@@ -5130,7 +5100,7 @@ status open
 
 
 \backslash
-agdalccode{unify-lam}
+agdacode{unify-lam}
 \end_layout
 
 \end_inset
@@ -5217,7 +5187,7 @@ status open
 
 
 \backslash
-agdalccode{unify-app}
+agdacode{unify-app}
 \end_layout
 
 \end_inset
@@ -5307,7 +5277,7 @@ status open
 
 
 \backslash
-agdalccode{unify-var}
+agdacode{unify-var}
 \end_layout
 
 \end_inset
@@ -5394,7 +5364,7 @@ status open
 
 
 \backslash
-agdalccode{unify-last}
+agdacode{unify-last}
 \end_layout
 
 \end_inset
@@ -5559,7 +5529,7 @@ status open
 
 
 \backslash
-agdalccode{unify-flex-def}
+agdacode{unify-flex-def}
 \end_layout
 
 \end_inset
@@ -5613,7 +5583,7 @@ status open
 
 
 \backslash
-agdalccode{unify-flex-no-flex}
+agdacode{unify-flex-no-flex}
 \end_layout
 
 \end_inset
@@ -5904,7 +5874,7 @@ status open
 
 
 \backslash
-agdalccode{unify-no-cycle-proto}
+agdacode{lc-unify-no-cycle-proto}
 \end_layout
 
 \end_inset
@@ -6123,7 +6093,7 @@ status open
 
 
 \backslash
-agdalccode{unify-no-cycle-flex}
+agdacode{unify-no-cycle-flex}
 \end_layout
 
 \end_inset
@@ -6210,7 +6180,7 @@ status open
 
 
 \backslash
-agdalccode{unify-no-cycle-lam}
+agdacode{unify-no-cycle-lam}
 \end_layout
 
 \end_inset
@@ -6297,7 +6267,7 @@ status open
 
 
 \backslash
-agdalccode{unify-no-cycle-var}
+agdacode{unify-no-cycle-var}
 \end_layout
 
 \end_inset
@@ -6392,7 +6362,7 @@ status open
 
 
 \backslash
-agdalccode{unify-no-cycle-app}
+agdacode{unify-no-cycle-app}
 \end_layout
 
 \end_inset

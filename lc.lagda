@@ -1,5 +1,4 @@
 \begin{code}
-{-# OPTIONS --type-in-type  #-}
 module lc where
 
 open import Agda.Builtin.Unit
@@ -10,7 +9,7 @@ open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; i
 open import Relation.Nullary
 open import Data.List as List hiding (map ; [_])
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
-open import Data.Product using (_,_; Σ; _×_) -- renaming (Σ[_∈_]_ to Σ[_∶_]_)
+open import Data.Product using (_,_; Σ; _×_) 
 open import Data.Maybe.Base hiding (map) renaming (nothing to ⊥ ; just to ⌊_⌋)
 
 open import Relation.Binary using (Rel; IsEquivalence; Setoid)
@@ -19,100 +18,97 @@ open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 open import lib
 open VecList using (VecList)
 
-module _ where
 \end{code}
-%<*renamings>
+%<*lc-renamings>
 \begin{code}
-  _⇒_ : ℕ → ℕ → Set
-  m ⇒ n = Vec (Fin n) m
+_⇒_ : ℕ → ℕ → Set
+m ⇒ n = Vec (Fin n) m
 \end{code}
-%</renamings>
+%</lc-renamings>
 \begin{code}
 
 
 \end{code}
 %<*compose-renamings>
 \begin{code}
-  _∘_ : ∀ {p q r} → (q ⇒ r) → (p ⇒ q) → (p ⇒ r)
-  xs ∘ [] = []
-  xs ∘ (y ∷ ys) = Vec.lookup xs y ∷ (xs ∘ ys)
+_∘_ : ∀ {p q r} → (q ⇒ r) → (p ⇒ q) → (p ⇒ r)
+xs ∘ [] = []
+xs ∘ (y ∷ ys) = Vec.lookup xs y ∷ (xs ∘ ys)
 \end{code}
 %</compose-renamings>
 %<*id-renaming>
 \begin{code}
-  id : ∀{n} → n ⇒ n
-  id {n} = Vec.allFin n
+id : ∀{n} → n ⇒ n
+id {n} = Vec.allFin n
 \end{code}
 %</id-renaming>
 %<*wk-renamings>
 \begin{code}
-  _↑ : ∀ {p q} → p ⇒ q → (1 + p) ⇒ (1 + q)
-  _↑ {p}{q} x = Vec.insert (Vec.map Fin.inject₁ x)
-                      (Fin.fromℕ p) (Fin.fromℕ q)
+_↑ : ∀ {p q} → p ⇒ q → (1 + p) ⇒ (1 + q)
+_↑ {p}{q} x = Vec.insert (Vec.map Fin.inject₁ x)
+                    (Fin.fromℕ p) (Fin.fromℕ q)
 \end{code}
 %</wk-renamings>
 \begin{code}
 
-module _ where
- -- open A
+_｛_｝ : ∀ {n p} → Fin n → (n ⇒ p) → Fin p
+i ｛ x ｝ = Vec.lookup x i
 
-
-
+_｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : n ⇒ p) → Maybe-PreImage (_｛ f ｝) x
+i ｛ x ｝⁻¹ = nth⁻¹ Fin._≟_ i x
 
 \end{code}
 %<*common-positions>
 \begin{code}
- commonPositions : ∀ {n m} → (x y : m ⇒ n) → Σ ℕ (λ p → p ⇒ m)
- commonPositions [] [] = 0 , []
- commonPositions (x₀ ∷ x) (y₀ ∷ y) with commonPositions x y | x₀ Fin.≟ y₀
- ... | p , z | yes _ = p     , Vec.map Fin.suc z
- ... | p , z | no _  = 1 + p , Fin.zero ∷ Vec.map Fin.suc z
+commonPositions : ∀ {n m} → (x y : m ⇒ n) → Σ ℕ (λ p → p ⇒ m)
+commonPositions [] [] = 0 , []
+commonPositions (x₀ ∷ x) (y₀ ∷ y) with commonPositions x y | x₀ Fin.≟ y₀
+... | p , z | yes _ = p     , Vec.map Fin.suc z
+... | p , z | no _  = 1 + p , Fin.zero ∷ Vec.map Fin.suc z
 \end{code}
 %</common-positions>
 \begin{code}
 
- _｛_｝ : ∀ {n p} → Fin n → (n ⇒ p) → Fin p
- i ｛ x ｝ = Vec.lookup x i
-
- _｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : n ⇒ p) → Maybe (PreImage (_｛ f ｝) x)
- i ｛ x ｝⁻¹ = nth⁻¹ Fin._≟_ i x
 
 \end{code}
 %<*common-values>
 \begin{code}
- commonValues : ∀ {m m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
- commonValues [] y = 0 , [] , []
- commonValues (x₀ ∷ x) y with commonValues x y | x₀ ｛ y ｝⁻¹ 
- ... | p , l , r | ⊥         = p     , Vec.map Fin.suc l            , r
- ... | p , l , r | ⌊ Pre i ⌋  = 1 + p , Fin.zero ∷ Vec.map Fin.suc l , i ∷ r
+commonValues : ∀ {m m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
+commonValues [] y = 0 , [] , []
+commonValues (x₀ ∷ x) y with commonValues x y | x₀ ｛ y ｝⁻¹ 
+... | p , l , r | ⊥         = p     , Vec.map Fin.suc l            , r
+... | p , l , r | ⌊ i ⌋  = 1 + p , Fin.zero ∷ Vec.map Fin.suc l , i ∷ r
 \end{code}
 %</common-values>
 \begin{code}
 
 
-module _ where
-
 \end{code}
-%<*metacontext>
+%<*lc-metacontext>
 \begin{code}
-   MetaContext : Set
-   MetaContext = List ℕ
+MetaContext : Set
+MetaContext = List ℕ
 \end{code}
-%</metacontext>
+%</lc-metacontext>
+%<*lc-syntax>
 \begin{code}
-
-   module _ where
-    -- open A
+data Tm (Γ : MetaContext) (n : ℕ) : Set where
+   Var : Fin n → Tm Γ n
+   App : Tm Γ n → Tm Γ n → Tm Γ n
+   Lam : Tm Γ (1 + n) → Tm Γ n
+   _﹙_﹚ : ∀ {m} → m ∈ Γ → m ⇒ n → Tm Γ n
 \end{code}
-%<*syntax>
+%</lc-syntax>
 \begin{code}
-    data Tm (Γ : MetaContext) (n : ℕ) : Set where
-       Var : Fin n → Tm Γ n
-       App : Tm Γ n → Tm Γ n → Tm Γ n
-       Lam : Tm Γ (1 + n) → Tm Γ n
-       _﹙_﹚ : ∀ {m} → m ∈ Γ → m ⇒ n → Tm Γ n
+-- precedence below _∷_, which is 4
+infix 3 _⟶_
 \end{code}
-%</syntax>
+%<*substitution-def>
+\begin{code}
+_⟶_  : MetaContext → MetaContext → Set
+Γ ⟶ Δ = VecList (Tm Δ) Γ
+\end{code}
+%</substitution-def>
 \begin{code}
 
 
@@ -123,29 +119,37 @@ Renaming
 -------------------------- -}
 
 \end{code}
-%<*renaming>
+%<*lc-renaming>
 \begin{code}
-    _❴_❵ : ∀ {Γ n p} → Tm Γ n → n ⇒ p → Tm Γ p
+_❴_❵ : ∀ {Γ n p} → Tm Γ n → n ⇒ p → Tm Γ p
 
-    App t u ❴ f ❵ = App (t ❴ f ❵) (u ❴ f ❵)
-    Lam t ❴ f ❵ = Lam (t ❴ f ↑ ❵)
-    Var i ❴ f ❵ = Var (i ｛ f ｝)
-    M ﹙ x ﹚ ❴ f ❵ = M ﹙ f ∘ x ﹚
+App t u ❴ f ❵ = App (t ❴ f ❵) (u ❴ f ❵)
+Lam t ❴ f ❵ = Lam (t ❴ f ↑ ❵)
+Var i ❴ f ❵ = Var (i ｛ f ｝)
+M ﹙ x ﹚ ❴ f ❵ = M ﹙ f ∘ x ﹚
 \end{code}
-%</renaming>
+%</lc-renaming>
 \begin{code}
 {- ----------------------
 
 Weakening
 
 -------------------------- -}
-   wkₜ : ∀ {Γ n m} → Tm Γ n → Tm (m ∷ Γ) n
+wkₜ : ∀ {Γ n m} → Tm Γ n → Tm (m ∷ Γ) n
 
-   wkₜ (App t u) = App (wkₜ t) (wkₜ u)
-   wkₜ (Lam t) = Lam (wkₜ t)
-   wkₜ (Var x) = Var x
-   wkₜ (M ﹙ x ﹚) = 1+ M ﹙ x ﹚
+wkₜ (App t u) = App (wkₜ t) (wkₜ u)
+wkₜ (Lam t) = Lam (wkₜ t)
+wkₜ (Var x) = Var x
+wkₜ (M ﹙ x ﹚) = 1+ M ﹙ x ﹚
 
+\end{code}
+%<*wk-substitution>
+\begin{code}
+wkₛ : ∀{Γ Δ m}  → (Γ ⟶ Δ) → (Γ ⟶ m ∷ Δ)
+wkₛ σ = VecList.map (λ _ → wkₜ) σ
+\end{code}
+%</wk-substitution>
+\begin{code}
 
 {- ----------------------
 
@@ -153,75 +157,27 @@ MetaSubstitution
 
 -------------------------- -}
 
-   -- precedence below _∷_, which is 4
-   infix 3 _⟶_
+open import Common ℕ _⇒_ id Tm _﹙_﹚ wkₛ
 \end{code}
-%<*substitution-def>
-\begin{code}
-   _⟶_  : MetaContext → MetaContext → Set
-   Γ ⟶ Δ = VecList (Tm Δ) Γ
-\end{code}
-%</substitution-def>
-%<*wk-substitution>
-\begin{code}
-   wkₛ : ∀{Γ Δ m}  → (Γ ⟶ Δ) → (Γ ⟶ m ∷ Δ)
-   wkₛ σ = VecList.map (λ _ → wkₜ) σ
-\end{code}
-%</wk-substitution>
-%<*substitution>
+%<*lc-substitution>
 \begin{code}
 
-   _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
-   App t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
-   Lam t [ σ ]t = Lam (t [ σ ]t)
-   Var i [ σ ]t = Var i
-   M ﹙ x ﹚ [ σ ]t = VecList.nth M σ ❴ x ❵ 
+_[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
+App t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
+Lam t [ σ ]t = Lam (t [ σ ]t)
+Var i [ σ ]t = Var i
+M ﹙ x ﹚ [ σ ]t = VecList.nth M σ ❴ x ❵ 
 \end{code}
-%</substitution>
+%</lc-substitution>
 %<*composesubst>
 \begin{code}
-   _[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ⟶ Γ₃)
-   δ [ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ 
+_[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ⟶ Γ₃)
+δ [ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ 
 \end{code}
 %</composesubst>
 \begin{code}
 
 
-{- ----------------------
-
-The category of metavariable contexts and substitutions
-
--------------------------- -}
-
-\end{code}
-%<*id-subst>
-\begin{code}
-   idₛ : ∀ {Γ} → Γ ⟶ Γ
-
-   idₛ {[]} = tt
-   idₛ {m ∷ Γ} = Ο ﹙ id ﹚ , wkₛ idₛ
-\end{code}
-%</id-subst>
-%<*extend-subst>
-\begin{code}
-   _↦_,_ : ∀ {Γ Δ m} → (M : m ∈ Γ) → Tm Δ m
-            → (Γ ⑊ M ⟶ Δ) → (Γ ⟶ Δ)
-   Ο ↦ t , σ = t , σ
-   1+ M ↦ t , (u , σ) = u , M ↦ t , σ
-\end{code}
-%</extend-subst>
-\begin{code}
-   infix 21 _↦-﹙_﹚
-\end{code}
-%<*replace-mvar>
-\begin{code}
-   _↦-﹙_﹚ : ∀ {Γ m p} → (M : m ∈ Γ) → p ⇒ m
-            → Γ ⟶ (Γ [ M ∶ p ])
-   Ο ↦-﹙ x ﹚ = Ο ﹙ x ﹚ , wkₛ idₛ
-   1+ M ↦-﹙ x ﹚ = Ο ﹙ id ﹚ ,  wkₛ (M ↦-﹙ x ﹚) 
-\end{code}
-%</replace-mvar>
-\begin{code}
 
 {- ----------------------
 
@@ -229,24 +185,24 @@ Occur check
 
 -------------------------- -}
 
-   infixl 20 _⑊?ₜ_
+infixl 20 _⑊?ₜ_
 \end{code}
-% <*occur-check>
+% <*lc-occur-check>
 \begin{code}
-   _⑊?ₜ_ : ∀ {Γ m n} → Tm Γ n → (M : m ∈ Γ) → Maybe (Tm (Γ ⑊ M) n)
-   Var i ⑊?ₜ M = ⌊ Var i ⌋
-   App t u ⑊?ₜ M = do
-        t' ← t ⑊?ₜ M
-        u' ← u ⑊?ₜ M
-        ⌊ App t' u' ⌋
-   Lam t ⑊?ₜ M = do
-        t' ← t ⑊?ₜ M
-        ⌊ Lam t' ⌋
-   M' ﹙ y ﹚ ⑊?ₜ M with M' ⑊? M 
-   ... | ⊥ = ⊥
-   ... | ⌊ M' ⌋ = ⌊ M' ﹙ y ﹚ ⌋
+_⑊?ₜ_ : ∀ {Γ m n} → Tm Γ n → (M : m ∈ Γ) → Maybe (Tm (Γ ⑊ M) n)
+Var i ⑊?ₜ M = ⌊ Var i ⌋
+App t u ⑊?ₜ M = do
+     t' ← t ⑊?ₜ M
+     u' ← u ⑊?ₜ M
+     ⌊ App t' u' ⌋
+Lam t ⑊?ₜ M = do
+     t' ← t ⑊?ₜ M
+     ⌊ Lam t' ⌋
+M' ﹙ y ﹚ ⑊?ₜ M with M' ⑊? M 
+... | ⊥ = ⊥
+... | ⌊ M' ⌋ = ⌊ M' ﹙ y ﹚ ⌋
 \end{code}
-% </occur-check>
+% </lc-occur-check>
 \begin{code}
 
 {- ----------------------
@@ -254,78 +210,68 @@ Occur check
 Unification of two metavariables
 
 -------------------------- -}
-module _ where
-  -- open A
-  infix 3 _◄_
-  infix 3 _⟶?
 \end{code}
-%<*substfrom>
+%<*lc-unify-flex-flex-proto>
 \begin{code}
-  data _⟶? (Γ : MetaContext) : Set where
-     _◄_ : ∀ Δ → (Γ ⟶ Δ) → Γ ⟶?
+unify-flex-flex : ∀ {Γ m m' n} → m  ∈ Γ → m  ⇒ n
+                               → m' ∈ Γ → m' ⇒ n → Γ ⟶?
+unify-flex-flex {Γ} M x M' y with M' ⑊? M
 \end{code}
-%</substfrom>
-%<*unify-flex-flex-proto>
+%</lc-unify-flex-flex-proto>
+%<*lc-unify-flex-flex-same>
 \begin{code}
-  unify-flex-flex : ∀ {Γ m m' n} → m  ∈ Γ → m  ⇒ n
-                                 → m' ∈ Γ → m' ⇒ n → Γ ⟶?
-  unify-flex-flex {Γ} M x M' y with M' ⑊? M
+... | ⊥ =
+ let p , z = commonPositions x y in
+ Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚
 \end{code}
-%</unify-flex-flex-proto>
-%<*unify-flex-flex-same>
+%</lc-unify-flex-flex-same>
+%<*lc-unify-flex-flex-diff>
 \begin{code}
-  ... | ⊥ =
-   let p , z = commonPositions x y in
-   Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚
+... | ⌊ M' ⌋ =
+ let p , l , r = commonValues x y in
+ Γ ⑊ M [ M' ∶ p ] ◄ M ↦ (M' ∶ p) ﹙ l ﹚
+                   , M' ↦-﹙ r ﹚
 \end{code}
-%</unify-flex-flex-same>
-%<*unify-flex-flex-diff>
-\begin{code}
-  ... | ⌊ M' ⌋ =
-   let p , l , r = commonValues x y in
-   Γ ⑊ M [ M' ∶ p ] ◄ M ↦ (M' ∶ p) ﹙ l ﹚
-                     , M' ↦-﹙ r ﹚
-\end{code}
-%</unify-flex-flex-diff>
+%</lc-unify-flex-flex-diff>
 \begin{code}
 {- ----------------------
 
 Non cyclic unification
 
 -------------------------- -}
-  {-# TERMINATING #-}
+{-# TERMINATING #-}
 \end{code}
-%<*unify-no-cycle-proto>
+%<*lc-unify-no-cycle-proto>
 \begin{code}
-  unify-no-cycle : ∀ {Γ n} → Tm Γ n → ∀ {m} → m ⇒ n → Maybe (m ∷ Γ ⟶?)
+unify-no-cycle : ∀ {Γ n} → Tm Γ n → ∀ {m} → m ⇒ n → Maybe (m ∷ Γ ⟶?)
 \end{code}
-%</unify-no-cycle-proto>
+%</lc-unify-no-cycle-proto>
 %<*unify-no-cycle-app>
 \begin{code}
-  unify-no-cycle (App t u) x = do
-            Δ₁ ◄ t' , σ₁ ← unify-no-cycle t x
-            Δ₂ ◄ u' , σ₂ ← unify-no-cycle (u [ σ₁ ]t) x
-            ⌊ Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s ⌋
+unify-no-cycle (App t u) x = do
+          Δ₁ ◄ t' , σ₁ ← unify-no-cycle t x
+          Δ₂ ◄ u' , σ₂ ← unify-no-cycle (u [ σ₁ ]t) x
+          ⌊ Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s ⌋
 \end{code}
 %</unify-no-cycle-app>
 %<*unify-no-cycle-lam>
 \begin{code}
-  unify-no-cycle (Lam t) x = do
-            Δ ◄ t' , σ ← unify-no-cycle t (x ↑)
-            ⌊ Δ ◄ Lam t' , σ ⌋
+unify-no-cycle (Lam t) x = do
+          Δ ◄ t' , σ ← unify-no-cycle t (x ↑)
+          ⌊ Δ ◄ Lam t' , σ ⌋
 \end{code}
 %</unify-no-cycle-lam>
 %<*unify-no-cycle-var>
 \begin{code}
-  unify-no-cycle {Γ} (Var i) x = do
-         Pre j ←  i ｛ x ｝⁻¹
-         ⌊ Γ ◄ Var j , idₛ ⌋
+unify-no-cycle {Γ} (Var i) x with i ｛ x ｝⁻¹
+... | ⊥ = ⊥
+... | ⌊ j ⌋ = ⌊ Γ ◄ Var j , idₛ ⌋
 \end{code}
 %</unify-no-cycle-var>
 %<*unify-no-cycle-flex>
 \begin{code}
-  unify-no-cycle (M ﹙ x ﹚) y =
-      ⌊ unify-flex-flex (1+ M) x Ο y ⌋
+unify-no-cycle (M ﹙ x ﹚) y =
+    ⌊ unify-flex-flex (1+ M) x Ο y ⌋
 \end{code}
 %</unify-no-cycle-flex>
 \begin{code}
@@ -336,57 +282,57 @@ Unification
 -------------------------- -}
 
 \end{code}
-%<*unify-flex-def>
+%<*lc-unify-flex-def>
 \begin{code}
-  unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm Γ n → Maybe (Γ ⟶?)
-  unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
+unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm Γ n → Maybe (Γ ⟶?)
+unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
 \end{code}
-%</unify-flex-def>
+%</lc-unify-flex-def>
 %<*unify-flex-no-flex>
 \begin{code}
-  unify-flex-* M x u = do
-      u ← u ⑊?ₜ M
-      Δ ◄ t , σ ← unify-no-cycle u x
-      ⌊ Δ ◄ M ↦ t , σ ⌋
+unify-flex-* M x u = do
+    u ← u ⑊?ₜ M
+    Δ ◄ t , σ ← unify-no-cycle u x
+    ⌊ Δ ◄ M ↦ t , σ ⌋
 \end{code}
 %</unify-flex-no-flex>
 \begin{code}
 
-  {-# TERMINATING #-}
+{-# TERMINATING #-}
 \end{code}
-%<*unifyprototype>
+%<*lc-unifyprototype>
 \begin{code}
-  unify : ∀ {Γ n} → Tm Γ n → Tm Γ n → Maybe (Γ ⟶?)
+unify : ∀ {Γ n} → Tm Γ n → Tm Γ n → Maybe (Γ ⟶?)
 \end{code}
-%</unifyprototype>
+%</lc-unifyprototype>
 %<*unify-flex>
 \begin{code}
-  unify u (M ﹙ x ﹚) = unify-flex-* M x u
-  unify (M ﹙ x ﹚) u = unify-flex-* M x u
+unify u (M ﹙ x ﹚) = unify-flex-* M x u
+unify (M ﹙ x ﹚) u = unify-flex-* M x u
 \end{code}
 %</unify-flex>
 %<*unify-app>
 \begin{code}
-  unify (App t u) (App t' u') = do
-    Δ₁ ◄ σ₁ ← unify t t'
-    Δ₂ ◄ σ₂ ← unify (u [ σ₁ ]t) (u' [ σ₁ ]t)
-    ⌊ Δ₂ ◄ σ₁ [ σ₂ ]s ⌋
+unify (App t u) (App t' u') = do
+  Δ₁ ◄ σ₁ ← unify t t'
+  Δ₂ ◄ σ₂ ← unify (u [ σ₁ ]t) (u' [ σ₁ ]t)
+  ⌊ Δ₂ ◄ σ₁ [ σ₂ ]s ⌋
 \end{code}
 %</unify-app>
 %<*unify-lam>
 \begin{code}
-  unify (Lam t) (Lam t') = unify t t'
+unify (Lam t) (Lam t') = unify t t'
 \end{code}
 %</unify-lam>
 %<*unify-var>
 \begin{code}
-  unify {Γ} (Var i) (Var j) with i Fin.≟ j
-  ... | no _ = ⊥
-  ... | yes _ = ⌊ Γ ◄ idₛ ⌋
+unify {Γ} (Var i) (Var j) with i Fin.≟ j
+... | no _ = ⊥
+... | yes _ = ⌊ Γ ◄ idₛ ⌋
 \end{code}
 %</unify-var>
 %<*unify-last>
 \begin{code}
-  unify _ _ = ⊥
+unify _ _ = ⊥
 \end{code}
 %</unify-last>

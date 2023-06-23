@@ -3,13 +3,16 @@
 module main where
 
 open import Agda.Builtin.Unit
-open import Data.Maybe.Base
 open import Agda.Builtin.Bool renaming (Bool to 𝔹)
-open import Data.Nat using (ℕ; _≟_)
+open import Data.Nat as ℕ using (ℕ; _+_)
+open import Data.Fin as Fin using (Fin)
+open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
 open import Relation.Nullary
-open import Data.List as List hiding (map)
-open import Data.Vec.Base as Vec using (Vec; []; _∷_)
-open import Data.Product using (_,_; Σ; _×_)
+open import Data.List as List hiding (map ; [_])
+open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
+open import Data.Vec.Base as Vec using (Vec; []; _∷_; toList)
+open import Data.Product using (_,_; Σ; _×_ ; uncurry) -- renaming (Σ[_∈_]_ to Σ[_∶_]_)
+open import Data.Maybe.Base hiding (map) renaming (nothing to ⊥ ; just to ⌊_⌋)
 
 open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
@@ -19,200 +22,107 @@ open VecList using (VecList)
 
 
 
-
-
--- Taken from the agda-category library, removing all the properties
-
-\end{code}
-%<*category>
-\begin{code}
-record Category : Set where
-  field
-    Obj : Set
-    _⇒_ : Obj → Obj → Set
-
-    id  : ∀ {A} → (A ⇒ A)
-    _∘_ : ∀ {A B C} → (B ⇒ C) → (A ⇒ B) → (A ⇒ C)
-\end{code}
-%</category>
-\begin{code}
-
-module _ (𝓐 : Category) where
-
- open Category 𝓐
- private
-  variable
-    A B X Y Z : Obj
-
- record Equalizer (f g : A ⇒ B) : Set where
-  field
-    obj : Obj
-    arr   : obj ⇒ A
- record Pullback (f : X ⇒ Z) (g : Y ⇒ Z) : Set where
-  field
-    P : Obj
-    p₁  : P ⇒ X
-    p₂  : P ⇒ Y
-
-module VecMor (𝓐 : Category) where
-  private
-     module A = Category 𝓐
-  _⇒_ : ∀ {n} → Vec A.Obj n → Vec A.Obj n → Set
-  [] ⇒ [] = ⊤
-  (x ∷ v) ⇒ (x' ∷ v') = x A.⇒ x' × v ⇒ v'
-
 \end{code}
 %<*signature>
 \begin{code}
 record Signature : Set where
-   field
-     𝓐 : Category
+  field
+    A : Set
+    _⇒_ : A → A → Set
 
-   module A = Category 𝓐
-   module V = VecMor 𝓐
+  MetaContext : Set
+  MetaContext = List A
 
-   field
-     O : ℕ → A.Obj → Set
-     α : ∀ {n a } → (o : O n a) → Vec A.Obj n
-     -- The last two fields account for functoriality
-     _｛_｝  : ∀ {n a} → O n a → ∀ {b} (f : a A.⇒ b) → O n b
-     _^_ : ∀ {a b}(f : a A.⇒ b){n}(o : O n a) → (α o) V.⇒ (α (o ｛ f ｝ ))
+  _⟹_ : List A → List A → Set
+  as ⟹ as' = Pointwise _⇒_ as as'
+
+  field
+    id  : ∀ {a} → (a ⇒ a)
+    _∘_ : ∀ {a b c} → (b ⇒ c) → (a ⇒ b) → (a ⇒ c)
+    O : A → Set
+    α : ∀ {a} → O a → List A
+    -- The last two fields account for functoriality
+    _｛_｝  : ∀ {a} → O a → ∀ {b} (x : a ⇒ b) → O b
+    _^_ : ∀ {a b}(x : a ⇒ b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
 
 \end{code}
 %</signature>
+
 %<*friendlysignature>
 \begin{code}
-record FriendlySignature : Set where
+record isFriendly (S : Signature) : Set where
+   open Signature S
    field
-     BaseSignature : Signature
-   open Signature BaseSignature
-   field
-     equalizers : ∀ {a b}(f g : a A.⇒ b) → Equalizer 𝓐 f g
-     pullbacks  : ∀ {a b c}(f : a A.⇒ b) (g : c A.⇒ b)→ Pullback 𝓐 f g
-     _≟O_ : ∀ {n a}(o o' : O n a) → Dec (o ≡ o')
-     -- _｛_｝⁻¹ : ∀ {n a}(o : O n a) → ∀ {b}(f : b A.⇒ a) → Maybe (Σ (O n b) (λ o' →  o' ｛ f ｝ ≡ o))
-     _｛_｝⁻¹ : ∀ {n a}(o : O n a) → ∀ {b}(f : b A.⇒ a) → Maybe (PreImage (_｛ f ｝) o)
+     equalizers : ∀ {a m} → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
+     pullbacks : ∀ {m m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
+     _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
+     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(f : b ⇒ a) → Maybe-PreImage (_｛ f ｝) o
 
 
 \end{code}
 %</friendlysignature>
+
 \begin{code}
 module Tm (S : Signature) where
    open Signature S
 
+   -- MetaContext : Set
+   -- MetaContext = List A
 \end{code}
 %<*syntax>
 \begin{code}
-   MetaContext : Set
-   MetaContext = List A.Obj
+   infix 3 _⟶_
+   _⟶_ : MetaContext → MetaContext → Set
 
-   Tms : MetaContext → ∀{n}(v : Vec A.Obj n) → Set
+   data Tm (Γ : MetaContext) (a : A) : Set where
+     Rigid : ∀ (o : O a) → (α o ⟶ Γ) → Tm Γ a
+     _﹙_﹚ : ∀ {m} → m ∈ Γ → m ⇒ a → Tm Γ a
 
-   data Tm (Γ : MetaContext) (a : A.Obj) : Set where
-     Rigid : ∀ {n} (o : O n a) → Tms Γ (α o) → Tm Γ a
-     Flexible : ∀ {m} → m ∈ Γ → m A.⇒ a → Tm Γ a
-
-
-   Tms Γ as = VecList (Tm Γ) (Vec.toList as)
+   Γ ⟶ Δ = VecList (Tm Δ) Γ
 \end{code}
 %</syntax>
 \begin{code}
-
-
 
 {- ----------------------
 
 Renaming
 
 -------------------------- -}
-   _❴_❵ : ∀ {Γ a b} → Tm Γ a → a A.⇒ b → Tm Γ b
-   _❴_❵s : ∀ {Γ n}{as as' : Vec _ n} → Tms Γ as
-         → as V.⇒ as' → Tms Γ as'
+   _❴_❵ : ∀ {Γ a b} → Tm Γ a → a ⇒ b → Tm Γ b
+   _❴_❵s : ∀ {Γ Γ' Δ} → Γ ⟶ Δ
+         → Γ ⟹ Γ' → Γ' ⟶ Δ
 
-   Rigid o x ❴ f ❵ = Rigid (o ｛ f ｝) (x ❴ f ^ o ❵s)
-   Flexible M g ❴ f ❵ = Flexible M (f A.∘ g)
+   Rigid o ts ❴ f ❵ = Rigid (o ｛ f ｝) (ts ❴ f ^ o ❵s)
+   M ﹙ x ﹚ ❴ f ❵ = M ﹙ f ∘ x ﹚
 
-   -- there is a way to design a map combinator (generalising VecList.map) to factor those two branches
-   -- but I don't think it is worth the additional complexity 
-   _❴_❵s {as = []} {[]} ts fs = tt
-   _❴_❵s {as = a ∷ as} {a' ∷ as'} (t , ts) (f , fs) = (t ❴ f ❵) , (ts ❴ fs ❵s)
-
-{- ----------------------
-
-MetaSubstitution
-
--------------------------- -}
-   substitution : MetaContext → MetaContext → Set
-   substitution Γ Δ = VecList (Tm Δ) Γ
-
-   -- precedence below _∷_, which is 4
-   infix 3 _⟶_
-   _⟶_ = substitution
-
-   _[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a
-
-   _[_]ts : ∀ {Γ n}{as : Vec A.Obj n} → Tms Γ as → ∀ {Δ} → Γ ⟶ Δ → Tms Δ as
-   ts [ σ ]ts = VecList.map (λ a' t → t [ σ ]t ) ts
-
-   Rigid o x [ σ ]t = Rigid o (x [ σ ]ts)
-   Flexible M f [ σ ]t = VecList.nth M σ ❴ f ❵ 
-
-
-
-   _↦_,_ : ∀ {Γ Δ m} → (M : m ∈ Γ) → Tm Δ m → (Γ without M ⟶ Δ) → (Γ ⟶ Δ)
-   here _ ↦ t , σ = t , σ
-   there M ↦ t , (u , σ) = u , (M ↦ t , σ) 
-
+   [] ❴ [] ❵s = []
+   (t , ts) ❴ f ∷ fs ❵s = t ❴ f ❵ , ts ❴ fs ❵s
 
 {- ----------------------
 
 Weakening
 
 -------------------------- -}
-   wk-Tm : ∀ {Γ a} m → Tm Γ a → Tm (m ∷ Γ) a
+   wkₜ : ∀ {Γ a m} → Tm Γ a → Tm (m ∷ Γ) a
 
-   wk-Tm m (Rigid o x) = Rigid o (VecList.map (λ b → wk-Tm m) x)
-   wk-Tm m (Flexible M f) = Flexible (there M) f
+   wkₛ : ∀{Γ Δ m}  → (Γ ⟶ Δ) → (Γ ⟶ m ∷ Δ)
+   wkₛ σ = VecList.map (λ _ → wkₜ) σ
 
-
-   wk-subst : ∀{Γ Δ} m → (Γ ⟶ Δ) → (Γ ⟶ m ∷ Δ)
-   wk-subst m σ = VecList.map (λ x → wk-Tm m) σ
-
-
-{- ----------------------
-
-The category of metavariable contexts and substitutions
-
--------------------------- -}
-   module S where
-      Obj : Set
-      Obj = MetaContext
-
-      _⇒_ : Obj → Obj → Set
-      _⇒_ = substitution
-
-      id : {Γ : MetaContext} → substitution Γ Γ
-
-      wk-id : ∀ {Γ} m → Γ ⟶ m ∷ Γ
-      wk-id m = wk-subst m id
-
-      id {[]} = tt
-      id {m ∷ Γ} = (Flexible (here _) A.id) , wk-id m
-
-      _∘_ : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₂ ⇒ Γ₃) → (Γ₁ ⇒ Γ₂) → (Γ₁ ⇒ Γ₃)
-      σ ∘ δ = VecList.map (λ a t → t [ σ ]t) δ 
+   wkₜ (Rigid o ts) = Rigid o (wkₛ ts)
+   wkₜ (M ﹙ x ﹚) = 1+ M ﹙ x ﹚
 
 
-   SubstitutionCategory : Category
-   SubstitutionCategory = record { S }
+   open import Common A _⇒_ id Tm _﹙_﹚ wkₛ public
 
-   _↑^_ : ∀{Γ Δ} → (Γ ⟶ Δ) → ∀ m → (m ∷ Γ ⟶ m ∷ Δ)
-   σ ↑^ m = Flexible (here _) A.id , wk-subst m σ
+   _[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a
 
-module _ (Sig : FriendlySignature) where
-  open FriendlySignature Sig
-  open Signature BaseSignature
-  open Tm BaseSignature
+   _[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ⟶ Γ₃)
+
+   Rigid o ts [ σ ]t = Rigid o (ts [ σ ]s)
+   M ﹙ x ﹚ [ σ ]t = VecList.nth M σ ❴ x ❵ 
+
+   δ [ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ 
+
 
 {- ----------------------
 
@@ -220,117 +130,149 @@ Occur check
 
 -------------------------- -}
 
-  occur-check : ∀ {Γ m}(M : m ∈ Γ) {a} → Tm Γ a
-        → Maybe (Tm (Γ without M) a)
-  occur-check-Vec : ∀ {Γ m}(M : m ∈ Γ){as} → VecList (Tm Γ) as →
-                                    Maybe (VecList (Tm (Γ without M)) as)
-  occur-check-Vec M {[]} l = just tt
-  occur-check-Vec M {a ∷ as} (t , ts) = do
-       ts' ← occur-check-Vec M ts
-       t' ← occur-check M t
-       just (t' , ts')
-  occur-check M (Rigid o ts) = do
-       ts' ← occur-check-Vec M ts
-       just (Rigid o ts')
-  occur-check M (Flexible M' f) = do
-       M'' ← restricts∈ M M'
-       just (Flexible M'' f)
+   infixl 20 _⑊?ₜ_
+\end{code}
+% <*occur-check>
+\begin{code}
+
+   _⑊?ₜ_ : ∀ {Γ m a} → Tm Γ a → (M : m ∈ Γ) → Maybe (Tm (Γ ⑊ M) a)
+   _⑊?ₛ_ : ∀ {Γ m Δ} → Δ ⟶ Γ → (M : m ∈ Γ) → Maybe (Δ ⟶ (Γ ⑊ M))
+   Rigid o ts ⑊?ₜ M = do
+       ts' ← ts ⑊?ₛ M
+       ⌊ Rigid o ts' ⌋
+   M' ﹙ y ﹚ ⑊?ₜ M with M' ⑊? M
+   ... | ⊥ = ⊥
+   ... | ⌊ M' ⌋ = ⌊ M' ﹙ y ﹚ ⌋
+
+   _⑊?ₛ_ (t , ts) M = do
+       ts' ← ts ⑊?ₛ M
+       t' ← t ⑊?ₜ M
+       ⌊ t' , ts' ⌋
+   _⑊?ₛ_ [] M = ⌊ [] ⌋
+
+\end{code}
+% </occur-check>
+
+\begin{code}
+
+module Unification (S : Signature) (F : isFriendly S) where
+  open Signature S
+  open Tm S
+  open isFriendly F
 
 {- ----------------------
 
 Unification of two metavariables
 
 -------------------------- -}
-  Substitution-from : MetaContext → Set
-  Substitution-from Γ = Σ MetaContext (λ Δ → (Γ ⟶ Δ))
+\end{code}
+%<*unify-flex-flex-proto>
+\begin{code}
+  unify-flex-flex : ∀ {Γ m m' a} → m  ∈ Γ → m  ⇒ a
+                               → m' ∈ Γ → m' ⇒ a → Γ ⟶?
+  unify-flex-flex {Γ} M x M' y with M' ⑊? M
+\end{code}
+%</unify-flex-flex-proto>
+%<*unify-flex-flex-same>
+\begin{code}
+  ... | ⊥ =
+   let p , z = equalizers x y in
+   Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚
+\end{code}
+%</unify-flex-flex-same>
+%<*unify-flex-flex-diff>
+\begin{code}
+  ... | ⌊ M' ⌋ =
+   let p , l , r = pullbacks x y in
+   Γ ⑊ M [ M' ∶ p ] ◄ M ↦ (M' ∶ p) ﹙ l ﹚
+                     , M' ↦-﹙ r ﹚
+\end{code}
+%</unify-flex-flex-diff>
 
-  Substitution-from-Vec : MetaContext → ∀{n} → Vec A.Obj n → Set
-  Substitution-from-Vec Γ as = Maybe (Σ MetaContext (λ Δ → Tms Δ as × Γ ⟶ Δ))
-
--- outputs a substitution Γ → Γ[M : m ↦ P : p] by mapping M :m to the term P(f), where f : p → m
-  replace-mvar : ∀ {Γ m} → m ∈ Γ → ∀ {p} → p A.⇒ m → Σ MetaContext (λ Δ → p ∈ Δ × Γ ⟶ Δ)
-  replace-mvar (here Γ) {p} f = p ∷ Γ , here Γ , Flexible (here Γ) f , S.wk-id p
-  replace-mvar (there {x = x} M) p₂ with replace-mvar M p₂
-  ... | Δ , p∈ , σ = x ∷ Δ , there p∈ , Flexible (here _) A.id , wk-subst x σ
-
--- outputs a substitution m ∷ Γ → Γ[M' : m' ↦ P : p] using the pullback of m → a ← m'
-  replace-mvar-cons : (Γ : MetaContext) → ∀ {m m' a} → m' ∈ Γ → m A.⇒ a → m' A.⇒ a
-       → Substitution-from (m ∷ Γ)
-  replace-mvar-cons Γ M' f f' =
-     let module Pbk = Pullback (pullbacks f f') in
-     let Δ , P , σ = replace-mvar M' Pbk.p₂ in
-      Δ , Flexible P Pbk.p₁ , σ
-
--- unification of two metavariables
-  unify-flex-flex : ∀ {Γ m m' n} → m  ∈ Γ → m  A.⇒ n
-                                 → m' ∈ Γ → m' A.⇒ n
-                                 → Substitution-from Γ
-
-  unify-flex-flex (here Γ) x (here _) y with equalizers x y
-  ... | record { obj = p ; arr = z } = p ∷ Γ , Flexible (here Γ) z , S.wk-id p
-  unify-flex-flex (here Γ ) x (there M') y = replace-mvar-cons Γ M' x y
-  unify-flex-flex (there M) x (here Γ  ) y = replace-mvar-cons Γ M  y x
-  unify-flex-flex (there {x = p} M) x (there M') y =
-      let Δ , σ = unify-flex-flex M x M' y in
-      p ∷ Δ , σ ↑^ p
-
+\begin{code}
 {- ----------------------
 
 Non cyclic unification
 
 -------------------------- -}
-  unify-no-cycle : ∀ {Γ a} → Tm Γ a
-      → ∀ {m} → m A.⇒ a → Maybe (Substitution-from (m ∷ Γ))
-  unify-no-cycle-Vec : ∀ {Γ n} {as : Vec A.Obj n} → Tms Γ as →
-     ∀ {ms} → ms V.⇒ as → Substitution-from-Vec Γ ms
+  data _∪_⟶? (Γ Γ' : MetaContext) : Set where
+     _◄_,,_ : ∀ Δ → (Γ ⟶ Δ) → (Γ' ⟶ Δ) → Γ ∪ Γ' ⟶?
+  \end{code}
+  %<*unify-no-cycle-proto>
+  \begin{code}
+  unify-no-cycle : ∀ {Γ a m} → Tm Γ a → m ⇒ a → Maybe (m ∷ Γ ⟶?)
+  unify-σ-no-cycle : ∀ {Γ Γₐ Γₘ} → (Γₐ ⟶ Γ) → (Γₘ ⟹ Γₐ) → Maybe (Γₘ ∪ Γ ⟶?)
+  \end{code}
+  %</unify-no-cycle-proto>
+  \begin{code}
+  unify-σ-no-cycle {Γ}[] [] = ⌊ Γ ◄ [] ,, idₛ ⌋
+  unify-σ-no-cycle (t , ts) (x ∷ xs) = do
+      Δ₁ ◄ t' , σ₁  ← unify-no-cycle t x
+      Δ₂ ◄ ts' ,, σ₂ ← unify-σ-no-cycle (ts [ σ₁ ]s) xs
+      ⌊ Δ₂ ◄ (t' [ σ₂ ]t , ts') ,, (σ₁ [ σ₂ ]s) ⌋
+  \end{code}
+  %<*unify-no-cycle-rigid>
+  \begin{code}
+  unify-no-cycle (Rigid o ts) x with o ｛ x ｝⁻¹
+  ... | ⊥ = ⊥
+  ... | ⌊ o' ⌋ = do
+       Δ ◄ ts' ,, σ ← unify-σ-no-cycle ts (x ^ o')
+       ⌊ Δ ◄ Rigid o' ts' , σ ⌋
 
-  unify-no-cycle (Rigid o ts) f = do
-       Pre o' ←  o ｛ f ｝⁻¹
-       (Δ , us , σ) ← unify-no-cycle-Vec {as = α o} ts (f ^ o')
-       just (Δ , (Rigid o' us) , σ)
-
-  unify-no-cycle (Flexible M x) f =
-      let module Pbk = Pullback (pullbacks x f) in
-      let Δ , P , σ = replace-mvar M Pbk.p₁ in
-      just (Δ , Flexible P Pbk.p₂ , σ)
-
-  unify-no-cycle-Vec {Γ} {as = []} ts {[]} xs = just (Γ , tt , S.id)
-  unify-no-cycle-Vec {Γ} {as = a ∷ as} (t , ts) {m ∷ ms} (x , xs) = do
-      Δ₁ , u₁ , σ₁ ← unify-no-cycle t x
-      Δ₂ , us , σ₂ ← unify-no-cycle-Vec (ts [ σ₁ ]ts) xs
-      just (Δ₂ , (u₁ [ σ₂ ]t , us) , σ₂ S.∘ σ₁)
+  \end{code}
+  %</unify-no-cycle-rigid>
+  %<*unify-no-cycle-flex>
+  \begin{code}
+  unify-no-cycle (M ﹙ x ﹚) y =
+      ⌊ unify-flex-flex (1+ M) x Ο y ⌋
+  \end{code}
+  %</unify-no-cycle-flex>
+  \begin{code}
 
 {- ----------------------
 
 Unification
 
 -------------------------- -}
-  unify-flex-* : ∀ {Γ m a} → m ∈ Γ → m A.⇒ a → Tm Γ a → Maybe (Substitution-from Γ)
-
-  unify-flex-* M x (Flexible M' y)  = just (unify-flex-flex M x M' y)
-  unify-flex-* M x u = do
-      u' ← occur-check M u
-      Δ , t , σ ← unify-no-cycle u' x
-      just (Δ , M ↦ t , σ)
-
-
-  unify : ∀ {Γ a} → Tm Γ a → Tm Γ a → Maybe (Substitution-from Γ)
-  unify-Vec : ∀ {Γ n}{as : Vec A.Obj n} → Tms Γ as → Tms Γ as  → Maybe (Substitution-from Γ)
-
-  unify-Vec {Γ} {as = []} t u = just (Γ , S.id)
-  unify-Vec {as = a ∷ as} (t , ts) (u , us) = do
-      Δ  , σ  ← unify t u
-      Δ' , σ' ← unify-Vec (ts [ σ ]ts) (us [ σ ]ts)
-      just (Δ' , σ' S.∘ σ )
-
-
--- equivalence between Kleisli et category of pointed sets (implementation vs proof)
-  unify (Rigid {n = n} o x) (Rigid {n = n'} o' x') with n ≟ n'
-  ... | no _ = nothing
-  ... | yes ≡.refl with o ≟O o'
-  ... | no _ = nothing
-  ... | yes ≡.refl = unify-Vec x x'
-  unify u (Flexible M x) = unify-flex-* M x u
-  unify (Flexible M x) u = unify-flex-* M x u
 
 \end{code}
+  %<*unify-flex-def>
+  \begin{code}
+  unify-flex-* : ∀ {Γ m a} → m ∈ Γ → m ⇒ a → Tm Γ a → Maybe (Γ ⟶?)
+  unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
+  \end{code}
+  %</unify-flex-def>
+  %<*unify-flex-no-flex>
+  \begin{code}
+  unify-flex-* M x u = do
+      u ← u ⑊?ₜ M
+      Δ ◄ t , σ ← unify-no-cycle u x
+      ⌊ Δ ◄ M ↦ t , σ ⌋
+  \end{code}
+  %</unify-flex-no-flex>
+  \begin{code}
+  
+  \end{code}
+  %<*unifyprototype>
+  \begin{code}
+  unify : ∀ {Γ a} → Tm Γ a → Tm Γ a → Maybe (Γ ⟶?)
+  unify-σ : ∀ {Γ Γ'} → (ts ts' : Γ' ⟶ Γ) → Maybe (Γ ⟶?)
+  \end{code}
+  %</unifyprototype>
+  \begin{code}
+  unify-σ {Γ} [] [] = ⌊ Γ ◄ idₛ ⌋
+  unify-σ (t , ts) (u , us) = do
+      Δ  ◄ σ  ← unify t u
+      Δ' ◄ σ' ← unify-σ (ts [ σ ]s) (us [ σ ]s)
+      ⌊ Δ' ◄ σ [ σ' ]s ⌋
+
+  unify u (M ﹙ x ﹚) = unify-flex-* M x u
+  unify (M ﹙ x ﹚) u = unify-flex-* M x u
+  \end{code}
+  %<*unify-rigid>
+  \begin{code}
+  unify (Rigid o ts) (Rigid o' ts') with o ≟ o'
+  ... | no _ = ⊥
+  ... | yes ≡.refl = unify-σ ts ts'
+  \end{code}
+  %</unify-rigid>

@@ -1,6 +1,5 @@
 agda_latex_dir = latex-agda
-agda_files = lib.lagda lc.lagda
-# agda_files = main.lagda lib.lagda lc.lagda
+agda_files = Common.lagda lib.lagda lc.lagda main.lagda
 agda_latex_files= $(agda_files:%.lagda=$(agda_latex_dir)/%.tex)
 
 .PHONY: all agdatex
