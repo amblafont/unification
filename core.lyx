@@ -2107,6 +2107,110 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "30col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-metacontext}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-renamings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "b"
 hor_pos "c"
@@ -2131,20 +2235,6 @@ status open
 \begin_layout Standard
 \begin_inset ERT
 status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-metacontext}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-renamings}
-\end_layout
 
 \begin_layout Plain Layout
 
@@ -2394,7 +2484,7 @@ AgdaBound{Γ}
 \begin_inset Formula $\AgdaFunction{VecList.t}\ \AgdaSpace{}\AgdaFunction{X}\ \AgdaFunction{\ensuremath{\ell}}$
 \end_inset
 
- is (recursively) defined as the product type 
+ is (inductively) defined as the product type 
 \begin_inset Formula $X\ a_{1}\times\dots\times X\ a_{n}$
 \end_inset
 
@@ -2866,7 +2956,7 @@ status open
 
 
 \backslash
-agdacode{substitution-def}
+agdacode{substitution-def}%
 \end_layout
 
 \end_inset
@@ -2913,14 +3003,14 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%%%%%%%%%
+%%%%%%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdacode{lc-substitution}
+agdacode{lc-substitution}%
 \end_layout
 
 \end_inset
@@ -3007,7 +3097,7 @@ status open
 
 
 \backslash
-agdacode{composesubst}
+agdacode{composesubst}%
 \end_layout
 
 \end_inset
@@ -5010,7 +5100,7 @@ status open
 
 
 \backslash
-agdacode{lc-unify-flex}
+agdacode{unify-flex}
 \end_layout
 
 \end_inset
@@ -6695,7 +6785,7 @@ for each operation symbol
 \begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar on)$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -6754,7 +6844,20 @@ Intuitively,
 \end_inset
 
 .
- 
+ Note that in the Agda code, we do not index 
+\begin_inset Formula $O$
+\end_inset
+
+ by natural numbers.
+ Instead, for each variable context 
+\begin_inset Formula $a$
+\end_inset
+
+, we have a big set 
+\begin_inset Formula $O\ a$
+\end_inset
+
+ which gathers all the available symbols whatever their arities are.
 \end_layout
 
 \begin_layout Standard
@@ -6762,31 +6865,6 @@ Intuitively,
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-In the following, 
-\begin_inset Formula $\AgdaFunction{Vec}\ \AgdaFunction{X}\ \AgdaFunction{n}$
-\end_inset
-
- is the type of vectors of elements of X of size n.
- Given two vectors 
-\begin_inset Formula $\ell=[a_{1},\dots,a_{n}]$
-\end_inset
-
- and 
-\begin_inset Formula $\ell'=[a'_{1},\dots,a'_{n}]$
-\end_inset
-
- of objects of the same category, the type 
-\begin_inset Formula $\ell\ \AgdaFunction{V.\ensuremath{\Rightarrow}}\ \ell'$
-\end_inset
-
- is recursively defined as the type 
-\begin_inset Formula $(a_{1}\Rightarrow a_{1}')\times\dots\times(a_{n}\Rightarrow a_{n}')$
-\end_inset
-
-.
-\end_layout
 
 \begin_layout Plain Layout
 \align left
@@ -6798,20 +6876,21 @@ status open
 
 \begin_layout Plain Layout
 
+%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-ExecuteMetaData[latex/main.tex]{signature}
+agdacode{signature}
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-ExecuteMetaData[latex/main.tex]{syntax}
+agdacode{syntax}
 \end_layout
 
 \end_inset
@@ -6825,7 +6904,7 @@ ExecuteMetaData[latex/main.tex]{syntax}
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Definition of signatures and associated syntax in Agda
+Generalised binding signatures in Agda
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:sig-agda"
@@ -6843,27 +6922,82 @@ name "fig:sig-agda"
 \end_inset
 
 
-\end_layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
 
 \begin_layout Standard
-\begin_inset Separator plain
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{syntax}
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
-\begin_layout Definition
-\begin_inset CommandInset label
-LatexCommand label
-name "def:syntax-bsig"
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
-The syntax specified by a GB-signature 
-\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
-\end_inset
 
- is inductively generated by the two following rules.
+\begin_inset Box Boxed
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{o\in\Oop na\quad\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}}{Rig}
@@ -6872,6 +7006,9 @@ The syntax specified by a GB-signature
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{M:m\in\Gamma\quad x\in\hom_{{\cal A}}(m,a)}{\Gamma;a\vdash M(x)}}{Flex}
@@ -6879,7 +7016,51 @@ The syntax specified by a GB-signature
 
 \end_inset
 
-where a context 
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Syntax generated by a GB-signature
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sig-syntax"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The syntax specified by a GB-signature 
+\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
+\end_inset
+
+ is inductively defined in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:sig-syntax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, where a context 
 \begin_inset Formula $\Gamma;a$
 \end_inset
 
@@ -6911,6 +7092,50 @@ flexible
 \emph default
  if it is 
 \begin_inset Formula $M(\dots)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Again, we use a nameless convention for metavariable contexts, which are
+ just lists of variable contexts.
+ As a consequence, the argument of an operation 
+\begin_inset Formula $o$
+\end_inset
+
+ in the context 
+\begin_inset Formula $\Gamma;a$
+\end_inset
+
+ can be specified either as a metavariable substitution (defined as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:subst-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) from 
+\begin_inset Formula $\alpha_{o}=(\nthar o1,\dots,\nthar on)$
+\end_inset
+
+ to 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, as in the Agda code, or explicitly as a list of terms 
+\begin_inset Formula $(t_{1},\dots,t_{n})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Gamma;\nthar oi\vdash t_{i}$
+\end_inset
+
+, as in the rule 
+\begin_inset Formula $\refrule{Rig}$
 \end_inset
 
 .
@@ -7155,27 +7380,6 @@ plural "false"
 caps "true"
 noprefix "false"
 
-\end_inset
-
-.
- A metavariable substitution 
-\begin_inset Formula $\sigma$
-\end_inset
-
- from 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
-\end_inset
-
- to 
-\begin_inset Formula $\Delta$
-\end_inset
-
- is a list of terms 
-\begin_inset Formula $(\sigma_{1},\mydots,\sigma_{p})$
-\end_inset
-
- such that 
-\begin_inset Formula $\Delta;m_{i}\vdash\sigma_{i}$
 \end_inset
 
 .
@@ -9051,7 +9255,7 @@ name "lem:free-alg-syntax"
 The syntax generated by a GB-signature (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "def:syntax-bsig"
+reference "fig:sig-syntax"
 plural "false"
 caps "true"
 noprefix "false"

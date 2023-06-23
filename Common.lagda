@@ -33,27 +33,7 @@ private
   MetaContext = List A
 \end{code}
 %</metacontext>
-\begin{code}
 
-
-
-{- ----------------------
-
-MetaSubstitution
-
--------------------------- -}
-
-\end{code}
-\begin{code}
-\end{code}
-
-{- ----------------------
-
-The category of metavariable contexts and substitutions
-
--------------------------- -}
-
-\end{code}
 %<*id-subst>
 \begin{code}
 idₛ : ∀ {Γ} → Γ ⟶ Γ

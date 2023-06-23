@@ -29,22 +29,20 @@ record Signature : Set where
   field
     A : Set
     _⇒_ : A → A → Set
-
-  MetaContext : Set
-  MetaContext = List A
-
-  _⟹_ : List A → List A → Set
-  as ⟹ as' = Pointwise _⇒_ as as'
-
-  field
     id  : ∀ {a} → (a ⇒ a)
     _∘_ : ∀ {a b c} → (b ⇒ c) → (a ⇒ b) → (a ⇒ c)
     O : A → Set
     α : ∀ {a} → O a → List A
+
+  -- [a₁,⋯, aₙ] ⟹ [b₁,⋯, bₘ] is isomorphic to a₁⇒b₁ × ⋯ × aₙ⇒bₙ if n=m
+  -- Otherwise, it is isomorphic to the empty type.
+  _⟹_ : List A → List A → Set
+  as ⟹ bs = Pointwise _⇒_ as bs
+
+  field
     -- The last two fields account for functoriality
     _｛_｝  : ∀ {a} → O a → ∀ {b} (x : a ⇒ b) → O b
     _^_ : ∀ {a b}(x : a ⇒ b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
-
 \end{code}
 %</signature>
 
@@ -65,23 +63,20 @@ record isFriendly (S : Signature) : Set where
 \begin{code}
 module Tm (S : Signature) where
    open Signature S
-
-   -- MetaContext : Set
-   -- MetaContext = List A
+   MetaContext : Set
+   infix 3 _⟶_
+   _⟶_ : MetaContext → MetaContext → Set
 \end{code}
 %<*syntax>
 \begin{code}
-   infix 3 _⟶_
-   _⟶_ : MetaContext → MetaContext → Set
-
+   MetaContext = List A
    data Tm (Γ : MetaContext) (a : A) : Set where
      Rigid : ∀ (o : O a) → (α o ⟶ Γ) → Tm Γ a
      _﹙_﹚ : ∀ {m} → m ∈ Γ → m ⇒ a → Tm Γ a
-
-   Γ ⟶ Δ = VecList (Tm Δ) Γ
 \end{code}
 %</syntax>
 \begin{code}
+   Γ ⟶ Δ = VecList (Tm Δ) Γ
 
 {- ----------------------
 
@@ -195,11 +190,11 @@ Unification of two metavariables
 Non cyclic unification
 
 -------------------------- -}
-  data _∪_⟶? (Γ Γ' : MetaContext) : Set where
-     _◄_,,_ : ∀ Δ → (Γ ⟶ Δ) → (Γ' ⟶ Δ) → Γ ∪ Γ' ⟶?
   \end{code}
   %<*unify-no-cycle-proto>
   \begin{code}
+  data _∪_⟶? (Γ Γ' : MetaContext) : Set where
+     _◄_,,_ : ∀ Δ → (Γ ⟶ Δ) → (Γ' ⟶ Δ) → Γ ∪ Γ' ⟶?
   unify-no-cycle : ∀ {Γ a m} → Tm Γ a → m ⇒ a → Maybe (m ∷ Γ ⟶?)
   unify-σ-no-cycle : ∀ {Γ Γₐ Γₘ} → (Γₐ ⟶ Γ) → (Γₘ ⟹ Γₐ) → Maybe (Γₘ ∪ Γ ⟶?)
   \end{code}
@@ -221,12 +216,10 @@ Non cyclic unification
 
   \end{code}
   %</unify-no-cycle-rigid>
-  %<*unify-no-cycle-flex>
   \begin{code}
   unify-no-cycle (M ﹙ x ﹚) y =
       ⌊ unify-flex-flex (1+ M) x Ο y ⌋
   \end{code}
-  %</unify-no-cycle-flex>
   \begin{code}
 
 {- ----------------------
@@ -234,24 +227,12 @@ Non cyclic unification
 Unification
 
 -------------------------- -}
-
-\end{code}
-  %<*unify-flex-def>
-  \begin{code}
   unify-flex-* : ∀ {Γ m a} → m ∈ Γ → m ⇒ a → Tm Γ a → Maybe (Γ ⟶?)
   unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
-  \end{code}
-  %</unify-flex-def>
-  %<*unify-flex-no-flex>
-  \begin{code}
   unify-flex-* M x u = do
       u ← u ⑊?ₜ M
       Δ ◄ t , σ ← unify-no-cycle u x
       ⌊ Δ ◄ M ↦ t , σ ⌋
-  \end{code}
-  %</unify-flex-no-flex>
-  \begin{code}
-  
   \end{code}
   %<*unifyprototype>
   \begin{code}

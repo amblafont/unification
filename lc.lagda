@@ -161,13 +161,12 @@ open import Common ℕ _⇒_ id Tm _﹙_﹚ wkₛ
 \end{code}
 %<*lc-substitution>
 \begin{code}
-
 _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
 App t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
 Lam t [ σ ]t = Lam (t [ σ ]t)
 Var i [ σ ]t = Var i
 M ﹙ x ﹚ [ σ ]t = VecList.nth M σ ❴ x ❵ 
-\end{code}
+\end{code}%
 %</lc-substitution>
 %<*composesubst>
 \begin{code}

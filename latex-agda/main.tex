@@ -179,47 +179,6 @@
 \AgdaPrimitive{Set}\<%
 \\
 %
-\\[\AgdaEmptyExtraSkip]%
-%
-\>[2]\AgdaFunction{MetaContext}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaPrimitive{Set}\<%
-\\
-%
-\>[2]\AgdaFunction{MetaContext}\AgdaSpace{}%
-\AgdaSymbol{=}\AgdaSpace{}%
-\AgdaDatatype{List}\AgdaSpace{}%
-\AgdaField{A}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
-%
-\>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}⟹\AgdaUnderscore{}}}\AgdaSpace{}%
-\AgdaSymbol{:}\AgdaSpace{}%
-\AgdaDatatype{List}\AgdaSpace{}%
-\AgdaField{A}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{List}\AgdaSpace{}%
-\AgdaField{A}\AgdaSpace{}%
-\AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\<%
-\\
-%
-\>[2]\AgdaBound{as}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{⟹}}\AgdaSpace{}%
-\AgdaBound{as'}\AgdaSpace{}%
-\AgdaSymbol{=}\AgdaSpace{}%
-\AgdaDatatype{Pointwise}\AgdaSpace{}%
-\AgdaOperator{\AgdaField{\AgdaUnderscore{}⇒\AgdaUnderscore{}}}\AgdaSpace{}%
-\AgdaBound{as}\AgdaSpace{}%
-\AgdaBound{as'}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
-%
-\>[2]\AgdaKeyword{field}\<%
-\\
-\>[2][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaField{id}%
 \>[8]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
@@ -269,6 +228,40 @@
 \AgdaField{A}\<%
 \\
 %
+\\[\AgdaEmptyExtraSkip]%
+%
+\>[2]\AgdaComment{--\ [a₁,⋯,\ aₙ]\ ⟹\ [b₁,⋯,\ bₘ]\ is\ isomorphic\ to\ a₁⇒b₁\ ×\ ⋯\ ×\ aₙ⇒bₙ\ if\ n=m}\<%
+\\
+%
+\>[2]\AgdaComment{--\ Otherwise,\ it\ is\ isomorphic\ to\ the\ empty\ type.}\<%
+\\
+%
+\>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}⟹\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaDatatype{List}\AgdaSpace{}%
+\AgdaField{A}\AgdaSpace{}%
+\AgdaSymbol{→}\AgdaSpace{}%
+\AgdaDatatype{List}\AgdaSpace{}%
+\AgdaField{A}\AgdaSpace{}%
+\AgdaSymbol{→}\AgdaSpace{}%
+\AgdaPrimitive{Set}\<%
+\\
+%
+\>[2]\AgdaBound{as}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{⟹}}\AgdaSpace{}%
+\AgdaBound{bs}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaDatatype{Pointwise}\AgdaSpace{}%
+\AgdaOperator{\AgdaField{\AgdaUnderscore{}⇒\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaBound{as}\AgdaSpace{}%
+\AgdaBound{bs}\<%
+\\
+%
+\\[\AgdaEmptyExtraSkip]%
+%
+\>[2]\AgdaKeyword{field}\<%
+\\
+\>[2][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaComment{--\ The\ last\ two\ fields\ account\ for\ functoriality}\<%
 \\
 %
@@ -314,8 +307,6 @@
 \AgdaBound{x}%
 \>[56]\AgdaOperator{\AgdaField{｝}}\AgdaSpace{}%
 \AgdaSymbol{)}\<%
-\\
-\>[0]\<%
 \end{code}
 %</signature>
 
@@ -451,15 +442,10 @@
 \AgdaBound{S}\<%
 \\
 %
-\\[\AgdaEmptyExtraSkip]%
-%
-\>[3]\AgdaComment{--\ MetaContext\ :\ Set}\<%
+\>[3]\AgdaFunction{MetaContext}\AgdaSpace{}%
+\AgdaSymbol{:}\AgdaSpace{}%
+\AgdaPrimitive{Set}\<%
 \\
-%
-\>[3]\AgdaComment{--\ MetaContext\ =\ List\ A}\<%
-\end{code}
-%<*syntax>
-\begin{code}%
 %
 \>[3]\AgdaKeyword{infix}\AgdaSpace{}%
 \AgdaNumber{3}\AgdaSpace{}%
@@ -473,9 +459,15 @@
 \AgdaFunction{MetaContext}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaPrimitive{Set}\<%
-\\
+\end{code}
+%<*syntax>
+\begin{code}%
 %
-\\[\AgdaEmptyExtraSkip]%
+\>[3]\AgdaFunction{MetaContext}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaDatatype{List}\AgdaSpace{}%
+\AgdaField{A}\<%
+\\
 %
 \>[3]\AgdaKeyword{data}\AgdaSpace{}%
 \AgdaDatatype{Tm}\AgdaSpace{}%
@@ -524,9 +516,9 @@
 \AgdaDatatype{Tm}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{a}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
+\end{code}
+%</syntax>
+\begin{code}%
 %
 \>[3]\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟶}}\AgdaSpace{}%
@@ -536,11 +528,9 @@
 \AgdaSymbol{(}\AgdaDatatype{Tm}\AgdaSpace{}%
 \AgdaBound{Δ}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaBound{Γ}\<%
-\end{code}
-%</syntax>
-\begin{code}%
-\>[0]\<%
 \\
+%
+\\[\AgdaEmptyExtraSkip]%
 \>[0]\AgdaComment{\{-\ ----------------------}\<%
 \\
 \>[0]\<%
@@ -1217,8 +1207,10 @@
 \>[0]\<%
 \\
 \>[0]\AgdaComment{--------------------------\ -\}}\<%
-\\
-\>[0][@{}l@{\AgdaIndent{0}}]%
+\end{code}
+  %<*unify-no-cycle-proto>
+  \begin{code}%
+\>[0][@{}l@{\AgdaIndent{1}}]%
 \>[2]\AgdaKeyword{data}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{\AgdaUnderscore{}∪\AgdaUnderscore{}⟶?}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{Γ}\AgdaSpace{}%
@@ -1247,9 +1239,7 @@
 \AgdaOperator{\AgdaDatatype{∪}}\AgdaSpace{}%
 \AgdaBound{Γ'}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{⟶?}}\<%
-\end{code}
-  %<*unify-no-cycle-proto>
-  \begin{code}%
+\\
 %
 \>[2]\AgdaFunction{unify-no-cycle}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -1419,7 +1409,6 @@
 \>[0]\<%
 \end{code}
   %</unify-no-cycle-rigid>
-  %<*unify-no-cycle-flex>
   \begin{code}%
 \>[0][@{}l@{\AgdaIndent{1}}]%
 \>[2]\AgdaFunction{unify-no-cycle}\AgdaSpace{}%
@@ -1440,7 +1429,6 @@
 \AgdaBound{y}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⌋}}\<%
 \end{code}
-  %</unify-no-cycle-flex>
   \begin{code}%
 \>[0]\<%
 \\
@@ -1454,11 +1442,7 @@
 \\
 \>[0]\AgdaComment{--------------------------\ -\}}\<%
 \\
-\>[0]\<%
-\end{code}
-  %<*unify-flex-def>
-  \begin{code}%
-\>[0][@{}l@{\AgdaIndent{1}}]%
+\>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaFunction{unify-flex-*}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
@@ -1498,10 +1482,7 @@
 \AgdaBound{N}\AgdaSpace{}%
 \AgdaBound{y}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⌋}}\<%
-\end{code}
-  %</unify-flex-def>
-  %<*unify-flex-no-flex>
-  \begin{code}%
+\\
 %
 \>[2]\AgdaCatchallClause{\AgdaFunction{unify-flex-*}}\AgdaSpace{}%
 \AgdaCatchallClause{\AgdaBound{M}}\AgdaSpace{}%
@@ -1539,15 +1520,9 @@
 \AgdaBound{σ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⌋}}\<%
 \end{code}
-  %</unify-flex-no-flex>
-  \begin{code}%
-\>[0]\<%
-\\
-\>[0]\<%
-\end{code}
   %<*unifyprototype>
   \begin{code}%
-\>[0][@{}l@{\AgdaIndent{1}}]%
+%
 \>[2]\AgdaFunction{unify}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
