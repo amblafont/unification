@@ -109,14 +109,19 @@ Weakening
 
    open import Common A _⇒_ id Tm _﹙_﹚ wkₛ public
 
+\end{code}
+%<*gen-subst>
+\begin{code}
    _[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a
-
    _[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ⟶ Γ₃)
 
-   Rigid o ts [ σ ]t = Rigid o (ts [ σ ]s)
-   M ﹙ x ﹚ [ σ ]t = VecList.nth M σ ❴ x ❵ 
+   Rigid o δ [ σ ]t = Rigid o (δ [ σ ]s)
+   M ﹙ x ﹚ [ σ ]t = VecList.nth M σ ❴ x ❵
 
-   δ [ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ 
+   δ [ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ
+\end{code}
+%</gen-subst>
+\begin{code}
 
 
 {- ----------------------
@@ -199,21 +204,22 @@ Non cyclic unification
   unify-σ-no-cycle : ∀ {Γ Γₐ Γₘ} → (Γₐ ⟶ Γ) → (Γₘ ⟹ Γₐ) → Maybe (Γₘ ∪ Γ ⟶?)
   \end{code}
   %</unify-no-cycle-proto>
+  %<*unify-no-cycle-subst>
   \begin{code}
   unify-σ-no-cycle {Γ}[] [] = ⌊ Γ ◄ [] ,, idₛ ⌋
-  unify-σ-no-cycle (t , ts) (x ∷ xs) = do
-      Δ₁ ◄ t' , σ₁  ← unify-no-cycle t x
-      Δ₂ ◄ ts' ,, σ₂ ← unify-σ-no-cycle (ts [ σ₁ ]s) xs
-      ⌊ Δ₂ ◄ (t' [ σ₂ ]t , ts') ,, (σ₁ [ σ₂ ]s) ⌋
+  unify-σ-no-cycle (t , δ) (x₀ ∷ xs) = do
+      Δ₁ ◄ t' , σ₁  ← unify-no-cycle t x₀
+      Δ₂ ◄ δ' ,, σ₂ ← unify-σ-no-cycle (δ [ σ₁ ]s) xs
+      ⌊ Δ₂ ◄ (t' [ σ₂ ]t , δ') ,, (σ₁ [ σ₂ ]s) ⌋
   \end{code}
+  %</unify-no-cycle-subst>
   %<*unify-no-cycle-rigid>
   \begin{code}
-  unify-no-cycle (Rigid o ts) x with o ｛ x ｝⁻¹
+  unify-no-cycle (Rigid o δ) x with o ｛ x ｝⁻¹
   ... | ⊥ = ⊥
   ... | ⌊ o' ⌋ = do
-       Δ ◄ ts' ,, σ ← unify-σ-no-cycle ts (x ^ o')
-       ⌊ Δ ◄ Rigid o' ts' , σ ⌋
-
+       Δ ◄ δ' ,, σ ← unify-σ-no-cycle δ (x ^ o')
+       ⌊ Δ ◄ Rigid o' δ' , σ ⌋
   \end{code}
   %</unify-no-cycle-rigid>
   \begin{code}
@@ -237,23 +243,26 @@ Unification
   %<*unifyprototype>
   \begin{code}
   unify : ∀ {Γ a} → Tm Γ a → Tm Γ a → Maybe (Γ ⟶?)
-  unify-σ : ∀ {Γ Γ'} → (ts ts' : Γ' ⟶ Γ) → Maybe (Γ ⟶?)
+  unify-σ : ∀ {Γ Γ'} → (Γ' ⟶ Γ) → (Γ' ⟶ Γ) → Maybe (Γ ⟶?)
   \end{code}
   %</unifyprototype>
+  %<*unify-subst>
   \begin{code}
   unify-σ {Γ} [] [] = ⌊ Γ ◄ idₛ ⌋
-  unify-σ (t , ts) (u , us) = do
-      Δ  ◄ σ  ← unify t u
-      Δ' ◄ σ' ← unify-σ (ts [ σ ]s) (us [ σ ]s)
+  unify-σ (t₁ , δ₁) (t₂ , δ₂) = do
+      Δ  ◄ σ  ← unify t₁ t₂
+      Δ' ◄ σ' ← unify-σ (δ₁ [ σ ]s) (δ₂ [ σ ]s)
       ⌊ Δ' ◄ σ [ σ' ]s ⌋
-
+  \end{code}
+  %</unify-subst>
+  \begin{code}
   unify u (M ﹙ x ﹚) = unify-flex-* M x u
   unify (M ﹙ x ﹚) u = unify-flex-* M x u
   \end{code}
   %<*unify-rigid>
   \begin{code}
-  unify (Rigid o ts) (Rigid o' ts') with o ≟ o'
+  unify (Rigid o δ) (Rigid o' δ') with o ≟ o'
   ... | no _ = ⊥
-  ... | yes ≡.refl = unify-σ ts ts'
+  ... | yes ≡.refl = unify-σ δ δ'
   \end{code}
   %</unify-rigid>

@@ -567,6 +567,32 @@ status open
 
 \begin_layout Standard
 \begin_inset FormulaMacro
+\newcommand{\unificationstepwisenovec}{\inferruletwo{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{t_{2}}\Rightarrow\sigma\dashv\Delta}{\Delta\vdash\delta_{1}[\text{\ensuremath{\sigma]}}=\delta_{2}[\text{\ensuremath{\sigma]}}\Rightarrow\sigma'\dashv\Delta'}{\Gamma\vdash\veciflyx{}{t_{1}},\delta_{1}=t_{2},\delta_{2}\Rightarrow\sigma[\sigma']\dashv\Delta'}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\unificationstepwisenolabel}[1]{\inferruletwo{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{t_{2}}\Rightarrow\sigma\dashv\Delta}{\Delta\vdash\veciflyx{#1}{\delta_{1}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{\delta_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma'\dashv\Delta'}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{\delta_{1}}=\veciflyx{}{t_{2}},\veciflyx{#1}{\delta_{2}}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta'}}
+{\dfrac{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{u_{1}}\Rightarrow\sigma_{1}\dashv\Delta_{1}\quad\Delta_{1}\vdash\veciflyx{#1}{t_{2}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{u_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}=\veciflyx{}{u_{1}},\veciflyx{#1}{u_{2}}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}}
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FormulaMacro
 \newcommand{\unificationstepwisenolabel}[1]{\inferruletwo{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{u_{1}}\Rightarrow\sigma_{1}\dashv\Delta_{1}}{\Delta_{1}\vdash\veciflyx{#1}{t_{2}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{u_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}=\veciflyx{}{u_{1}},\veciflyx{#1}{u_{2}}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}}
 {\dfrac{\Gamma\vdash\veciflyx{}{t_{1}}=\veciflyx{}{u_{1}}\Rightarrow\sigma_{1}\dashv\Delta_{1}\quad\Delta_{1}\vdash\veciflyx{#1}{t_{2}}[\text{\ensuremath{\sigma_{1}]}}=\veciflyx{#1}{u_{2}}[\text{\ensuremath{\sigma_{1}]}}\Rightarrow\sigma_{2}\dashv\Delta_{2}}{\Gamma\vdash\veciflyx{}{t_{1}},\veciflyx{#1}{t_{2}}=\veciflyx{}{u_{1}},\veciflyx{#1}{u_{2}}\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}}
 \end_inset
@@ -976,33 +1002,6 @@ noprefix "false"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection*
-Agda implementation
-\end_layout
-
-\begin_layout Standard
-
-\color red
-TODO: move this later
-\color inherit
-We use Agda as a programming language, not as a theorem prover.
- We leave for future work the task of mechanising the correctness proof
- of the algorithm, by investigating the formalisation of various concepts
- from category theory – a notorious challenge on its own – on which our
- proof relies on.
-\end_layout
-
-\begin_layout Standard
-Since we focus on providing an effective implementation, the definitions
- of our data structures typically do not mention the properties.
- Furthermore, we are not reluctant to using logically inconsistent features
- to make programming easier: the type hierachy is collapsed and the termination
- checker is disabled.
- We find that dependent types are still helpful in guiding the implementation.
- In comparison, we previously implemented an ocaml version where the code
- was much less constrained by the typing discipline, and thus more error-prone.
 \end_layout
 
 \begin_layout Subsection*
@@ -1751,6 +1750,27 @@ noprefix "false"
 
 .
  Soundness of the algorithm is justified in later sections.
+\end_layout
+
+\begin_layout Standard
+We show the most relevant parts of the Agda code; the interested reader
+ can check the full implementation in the supplemental material.
+ Note that we use Agda as a programming language, not as a theorem prover.
+ We leave for future work the task of mechanising the correctness proof
+ of the algorithm, by investigating the formalisation of various concepts
+ from category theory – a notorious challenge on its own – on which our
+ proof relies on.
+\end_layout
+
+\begin_layout Standard
+Since we focus on providing an effective implementation, the definitions
+ of our data structures typically do not mention the properties.
+ Furthermore, we are not reluctant to using logically inconsistent features
+ to make programming easier: the type hierachy is collapsed and the termination
+ checker is disabled.
+ We find that dependent types are still helpful in guiding the implementation.
+ In comparison, we previously implemented an ocaml version where the code
+ was much less constrained by the typing discipline, and thus more error-prone.
 \end_layout
 
 \begin_layout Subsection
@@ -3285,7 +3305,7 @@ name "fig:subst-lambda"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -4567,6 +4587,36 @@ M'\mapsto P(r)
 
 \end_layout
 
+\begin_layout Plain Layout
+For the generic case (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), replace 
+\begin_inset Formula $\AgdaFunction{commonPositions}$
+\end_inset
+
+ with 
+\begin_inset Formula $\AgdaFunction{equalisers}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaFunction{commonValues}$
+\end_inset
+
+ with 
+\begin_inset Formula $\AgdaFunction{pullbacks}$
+\end_inset
+
+.
+\end_layout
+
 \end_inset
 
 
@@ -5553,21 +5603,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Unification with a metavariable application for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
+Unification with a metavariable application 
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:unif-flex"
@@ -5612,14 +5648,14 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%
+%%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdacode{unify-flex-def}
+agdacode{lc-unify-flex-def}
 \end_layout
 
 \end_inset
@@ -5630,6 +5666,96 @@ agdacode{unify-flex-def}
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "70col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-unify-flex-star-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "30col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-flex-flex"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \end_inset
@@ -5732,6 +5858,38 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-no-cycle-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ (
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus) or 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-no-cycle-gen"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ (generic unification) for the implementation of 
+\begin_inset Formula $\AgdaFunction{unify-no-cycle}$
+\end_inset
+
+.
 \end_layout
 
 \end_inset
@@ -6590,20 +6748,81 @@ Generalisation
 \end_layout
 
 \begin_layout Standard
-
-\color red
-To adapt
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:intro-generic"
 
 \end_inset
 
-Our algorithm is parameterised by a notion of signature generalising binding
- signatures
+In the previous section, we described a unification algorithm for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ In this section, we show how to abstract over 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus to get a generic algorithm, parameterised by a new notion of signature
+ to account for syntax with metavariables.
+ We call them 
+\emph on
+friendly generalised binding signature
+\emph default
+s, or friendly GB-signatures.
+ They consist of two components: 
+\end_layout
+
+\begin_layout Enumerate
+a GB-signature (formally introduced 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:GB-signature"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), specifying a syntax with metavariables supporting renaming, metavariable
+ substitution; 
+\end_layout
+
+\begin_layout Enumerate
+some additional structures (formally introduced in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:pattern-friendly"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) used in the unification algorithm, making the GB-signature 
+\emph on
+friendly
+\emph default
+ , which abstracts the definition of vectors of common positions or values
+ as well as the inverse renaming 
+\begin_inset Formula $-\{-\}^{-1}$
+\end_inset
+
+ used in the variable case of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-no-cycle-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us focus on the notion of GB-signature, starting from binding signatures
 \begin_inset ERT
 status open
 
@@ -6622,12 +6841,8 @@ literal "false"
 
 \end_inset
 
- to account for syntax with metavariables.
- 
-\end_layout
-
-\begin_layout Standard
-To recall, a binding signature 
+.
+ To recall, a binding signature 
 \begin_inset Formula $(O,\alpha)$
 \end_inset
 
@@ -6682,37 +6897,7 @@ To recall, a binding signature
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Note that variables cannot be specified by an arity.
- They are always implicitly included in the syntax specified by a binding
- signature.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Our algorithm is parameterised by a 
-\emph on
-generalised binding signature
-\emph default
-, or GB-signature, a notion we will formally introduce in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "def:GB-signature"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, and is implemented in Agda code as shown in 
+ Now, a GB-signature, implemented as in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:sig-agda"
@@ -6722,8 +6907,7 @@ noprefix "false"
 
 \end_inset
 
-.
- A GB-signature consists in a tuple 
+, consists in a tuple 
 \begin_inset Formula $({\cal A},O,\ntharvecfunct)$
 \end_inset
 
@@ -6844,20 +7028,28 @@ Intuitively,
 \end_inset
 
 .
- Note that in the Agda code, we do not index 
+ In the Agda code, 
 \begin_inset Formula $O$
 \end_inset
 
- by natural numbers.
+ is not indexed by natural numbers.
  Instead, for each variable context 
 \begin_inset Formula $a$
 \end_inset
 
-, we have a big set 
+, the type 
 \begin_inset Formula $O\ a$
 \end_inset
 
- which gathers all the available symbols whatever their arities are.
+ which gathers all the available operation symbols in the variable context
+ 
+\begin_inset Formula $a$
+\end_inset
+
+, whatever their arities are.
+ Moreover, the Agda definition doesn't include properties such as associativity
+ of morphism composition, which are required in the correctness proof, but
+ not in the implementation.
 \end_layout
 
 \begin_layout Standard
@@ -6884,13 +7076,6 @@ status open
 
 \backslash
 agdacode{signature}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{syntax}
 \end_layout
 
 \end_inset
@@ -7000,7 +7185,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\in\Oop na\quad\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}}{Rig}
+\labellabelrule{\dfrac{o\in\Oop na\quad\overbrace{\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}^{"\alpha_{o}\xrightarrow{\vec{t}}\Gamma"}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}}{Rig}
 \]
 
 \end_inset
@@ -7097,9 +7282,15 @@ flexible
 .
 \end_layout
 
-\begin_layout Standard
-Again, we use a nameless convention for metavariable contexts, which are
- just lists of variable contexts.
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:arg-op-subst"
+
+\end_inset
+
+As in the previous section, we use a nameless convention for metavariable
+ contexts, which are just lists of variable contexts.
  As a consequence, the argument of an operation 
 \begin_inset Formula $o$
 \end_inset
@@ -7139,6 +7330,13 @@ noprefix "false"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark
@@ -7337,7 +7535,7 @@ In the notion of GB-signature, functoriality ensures that the generated
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
+\begin_layout Enumerate
 an operation symbol 
 \begin_inset Formula $\rename of\in\Oop nb$
 \end_inset
@@ -7345,8 +7543,16 @@ an operation symbol
 ;
 \end_layout
 
-\begin_layout Itemize
-a morphism 
+\begin_layout Enumerate
+a list of morphisms 
+\begin_inset Formula $(f_{1}^{o},\dots,f_{n}^{o})$
+\end_inset
+
+ in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ such that 
 \begin_inset Formula $\ntharvecaction ofi:\nthar oi\rightarrow\nthar{\rename of}i$
 \end_inset
 
@@ -7372,7 +7578,1228 @@ Then,
 
 \end_deeper
 \begin_layout Standard
-Unification can be formulated by following the same route as in 
+In the Agda code, if 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ are two (nameless) metavariable contexts 
+\begin_inset Formula $(a_{1},\dots,a_{n})$
+\end_inset
+
+ and 
+\begin_inset Formula $(b_{1},\dots,b_{n})$
+\end_inset
+
+, we write 
+\begin_inset Formula $\delta:\Gamma\Longrightarrow\Delta$
+\end_inset
+
+ to mean that 
+\begin_inset Formula $\delta$
+\end_inset
+
+ is a list 
+\begin_inset Formula $(\delta_{1},\dots,\delta_{n})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\delta_{i}$
+\end_inset
+
+ is a morphism between 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ and 
+\series bold
+
+\begin_inset Formula $b_{i}$
+\end_inset
+
+
+\series default
+.
+ Therefore, the second component can be specified as 
+\begin_inset Formula $f^{o}:\alpha_{o}\Longrightarrow\alpha_{\rename of}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The Agda definitions for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ generalise for a syntax generated by a generic signature.
+ The resulting code is usually shorter because the application, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, and variable cases are merged into a single rigid case.
+ Moreover, because of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:arg-op-subst"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we find it more convenient define operations on terms mutually with the
+ corresponding operations on substitutions.
+ For example, composition of substitutions is defined mutually with substitution
+ of terms in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:subst-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ (to be compared with 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:subst-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ We are similarly led to generalise unification of terms to unification
+ of substitutions.
+ Given two substitutions 
+\begin_inset Formula $\delta_{1},\delta_{2}:\Gamma'\rightarrow\Gamma$
+\end_inset
+
+, we write 
+\begin_inset Formula $\Gamma\vdash\delta_{1}=\delta_{2}\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ to mean that 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ unifies 
+\begin_inset Formula $\delta_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{2}$
+\end_inset
+
+, in the sense that 
+\begin_inset Formula $\delta_{1}[\sigma]=\delta_{2}[\sigma]$
+\end_inset
+
+, and is the most general one, i.e., it uniquely factors any other unifier
+ of 
+\begin_inset Formula $\delta_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{2}$
+\end_inset
+
+.
+ The unification algorithm is thus split in two functions for single terms
+ and for substitutions, as seen in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-gen"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ The function 
+\begin_inset Formula $\AgdaFunction{unify-flex-*}$
+\end_inset
+
+ unifying a metavariable application with a term has the same code as for
+ 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus that we already discussed (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-flex"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ What differ are the implementations of the called functions 
+\begin_inset Formula $\AgdaFunction{unify-flex-flex}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaFunction{unify-no-cycle}$
+\end_inset
+
+.
+ For the latter, recall that unifying two metavariable application involves
+ computing the vector of common positions or value positions of their arguments,
+ as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-flex-flex"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Both are actually characterised as equalisers or pullbacks in the category
+ 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ defined in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "ex:gbsig-bsig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, thus providing a natural generalisation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "70col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{gen-subst}%
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "29col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\Gamma;n\vdash t\qquad\sigma:\Gamma\rightarrow\Delta}{\Delta;n\vdash t[\sigma]}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\sigma:\Gamma_{1}\rightarrow\Gamma_{2}\quad\delta:\Gamma_{2}\rightarrow\Gamma_{3}}{\underbrace{\sigma[\delta]}_{M\mapsto\sigma_{M}[\delta]}:\Gamma_{1}\rightarrow\Gamma_{3}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "70col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status collapsed
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lift-subst}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "29col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\xrightarrow{\sigma}\Delta}{M:m,\Gamma\xrightarrow{\lamsubst{\sigma}{M:m}}M:m,\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Metavariable substitution for a GB-signature (to be compared with 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:subst-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:subst-generic"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unifyprototype}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+See 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-flex"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ (same as for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-rigid}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\Gamma\vdash o(\delta)=o'(\delta')\Rightarrow\bang\dashv\bot}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\Gamma\vdash\delta=\delta'\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(\delta)=o(\delta')\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-subst}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\unificationempty
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationstepwisenovec}{U-Split}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generic unification (to be compared with 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-lam-same-shape"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+): main phase 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:unif-gen"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main difference is that, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-no-cycle-proto}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-no-cycle-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\frac{M':m',\Gamma\vdash M(x)=M'(y)\Rightarrow t,\sigma\dashv\Delta}{\Gamma\prune{M(x)}{\maybold M'(y)}{\sigma}t\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+(same as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-no-cycle-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-no-cycle-rigid}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\delta)}{M(\arg x)}{\bang}{\bang}\dashv\bot}}{P-Fail}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\inferruletwo{\Gamma\prune{\delta}{M_{1}(\ntharvecaction{o'}x1),\dots,M_{n}(\ntharvecaction{o'}xn)}{\sigma}{\delta'}\dashv\Delta}{o=\rename{o'}x}{\Gamma\prune{o(\delta)}{M(\arg x)}{\sigma}{o'(\delta')}\dashv\Delta}}{P-Rig}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-no-cycle-subst}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\pruningempty
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\begin{array}{c}
+\Gamma\prune t{M_{0}(x_{0})}{\sigma_{1}}{t'}\dashv\Delta_{1}\\
+\Delta_{1}\prune{\delta[\sigma_{1}]}{\overrightarrow{M(x)}}{\sigma_{2}\dashv\Delta_{2}}{\delta'}
+\end{array}}{\begin{array}{r}
+\Gamma\vdash t,\delta:>M_{0}(x_{0}),\overrightarrow{M(x)}\Rightarrow\quad\\
+t'[\sigma_{2}],\delta';\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}
+\end{array}}}{\textsc{P-Split}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\inferruletwo{\Gamma\prune t{M_{0}(x_{0})}{\sigma_{1}}{t'}\dashv\Delta_{1}}{\Delta_{1}\prune{\delta[\sigma_{1}]}{\overrightarrow{M(x)}}{\sigma_{2}\dashv\Delta_{2}}{\delta'}}{\begin{array}{c}
+\Gamma\vdash t,\delta:>M_{0}(x_{0}),\overrightarrow{M(x)}\Rightarrow\\
+t'[\sigma_{2}],\delta';\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}
+\end{array}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\Gamma\prune{t,\delta}{M_{0}(x_{0}),\overrightarrow{M(x)}}{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}],\delta'}\dashv\Delta_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generic non-cyclic unification (to be compared with 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-no-cycle-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:unif-no-cycle-gen"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+from Unification can be formulated by following the same route as in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:example-lambda"

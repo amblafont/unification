@@ -284,9 +284,13 @@ Unification
 %<*lc-unify-flex-def>
 \begin{code}
 unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm Γ n → Maybe (Γ ⟶?)
-unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
 \end{code}
 %</lc-unify-flex-def>
+%<*lc-unify-flex-star-flex>
+\begin{code}
+unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
+\end{code}%
+%</lc-unify-flex-star-flex>%
 %<*unify-flex-no-flex>
 \begin{code}
 unify-flex-* M x u = do
