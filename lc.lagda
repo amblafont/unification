@@ -240,39 +240,39 @@ Non cyclic unification
 -------------------------- -}
 {-# TERMINATING #-}
 \end{code}
-%<*lc-unify-no-cycle-proto>
+%<*lc-prune-proto>
 \begin{code}
-unify-no-cycle : ∀ {Γ n} → Tm Γ n → ∀ {m} → m ⇒ n → Maybe (m ∷ Γ ⟶?)
+prune : ∀ {Γ n} → Tm Γ n → ∀ {m} → m ⇒ n → Maybe (m ∷ Γ ⟶?)
 \end{code}
-%</lc-unify-no-cycle-proto>
-%<*unify-no-cycle-app>
+%</lc-prune-proto>
+%<*prune-app>
 \begin{code}
-unify-no-cycle (App t u) x = do
-          Δ₁ ◄ t' , σ₁ ← unify-no-cycle t x
-          Δ₂ ◄ u' , σ₂ ← unify-no-cycle (u [ σ₁ ]t) x
+prune (App t u) x = do
+          Δ₁ ◄ t' , σ₁ ← prune t x
+          Δ₂ ◄ u' , σ₂ ← prune (u [ σ₁ ]t) x
           ⌊ Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s ⌋
 \end{code}
-%</unify-no-cycle-app>
-%<*unify-no-cycle-lam>
+%</prune-app>
+%<*prune-lam>
 \begin{code}
-unify-no-cycle (Lam t) x = do
-          Δ ◄ t' , σ ← unify-no-cycle t (x ↑)
+prune (Lam t) x = do
+          Δ ◄ t' , σ ← prune t (x ↑)
           ⌊ Δ ◄ Lam t' , σ ⌋
 \end{code}
-%</unify-no-cycle-lam>
-%<*unify-no-cycle-var>
+%</prune-lam>
+%<*prune-var>
 \begin{code}
-unify-no-cycle {Γ} (Var i) x with i ｛ x ｝⁻¹
+prune {Γ} (Var i) x with i ｛ x ｝⁻¹
 ... | ⊥ = ⊥
 ... | ⌊ j ⌋ = ⌊ Γ ◄ Var j , idₛ ⌋
 \end{code}
-%</unify-no-cycle-var>
-%<*unify-no-cycle-flex>
+%</prune-var>
+%<*prune-flex>
 \begin{code}
-unify-no-cycle (M ﹙ x ﹚) y =
+prune (M ﹙ x ﹚) y =
     ⌊ unify-flex-flex (1+ M) x Ο y ⌋
 \end{code}
-%</unify-no-cycle-flex>
+%</prune-flex>
 \begin{code}
 {- ----------------------
 
@@ -295,7 +295,7 @@ unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
 \begin{code}
 unify-flex-* M x u = do
     u ← u ⑊?ₜ M
-    Δ ◄ t , σ ← unify-no-cycle u x
+    Δ ◄ t , σ ← prune u x
     ⌊ Δ ◄ M ↦ t , σ ⌋
 \end{code}
 %</unify-flex-no-flex>

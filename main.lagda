@@ -51,12 +51,10 @@ record Signature : Set where
 record isFriendly (S : Signature) : Set where
    open Signature S
    field
-     equalizers : ∀ {a m} → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
+     equalisers : ∀ {a m} → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
      pullbacks : ∀ {m m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
-     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(f : b ⇒ a) → Maybe-PreImage (_｛ f ｝) o
-
-
+     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe-PreImage (_｛ x ｝) o
 \end{code}
 %</friendlysignature>
 
@@ -176,7 +174,7 @@ Unification of two metavariables
 %<*unify-flex-flex-same>
 \begin{code}
   ... | ⊥ =
-   let p , z = equalizers x y in
+   let p , z = equalisers x y in
    Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚
 \end{code}
 %</unify-flex-flex-same>
@@ -196,34 +194,34 @@ Non cyclic unification
 
 -------------------------- -}
   \end{code}
-  %<*unify-no-cycle-proto>
+  %<*prune-proto>
   \begin{code}
   data _∪_⟶? (Γ Γ' : MetaContext) : Set where
      _◄_,,_ : ∀ Δ → (Γ ⟶ Δ) → (Γ' ⟶ Δ) → Γ ∪ Γ' ⟶?
-  unify-no-cycle : ∀ {Γ a m} → Tm Γ a → m ⇒ a → Maybe (m ∷ Γ ⟶?)
-  unify-σ-no-cycle : ∀ {Γ Γₐ Γₘ} → (Γₐ ⟶ Γ) → (Γₘ ⟹ Γₐ) → Maybe (Γₘ ∪ Γ ⟶?)
+  prune : ∀ {Γ a m} → Tm Γ a → m ⇒ a → Maybe (m ∷ Γ ⟶?)
+  prune-σ : ∀ {Γ Γₐ Γₘ} → (Γₐ ⟶ Γ) → (Γₘ ⟹ Γₐ) → Maybe (Γₘ ∪ Γ ⟶?)
   \end{code}
-  %</unify-no-cycle-proto>
-  %<*unify-no-cycle-subst>
+  %</prune-proto>
+  %<*prune-subst>
   \begin{code}
-  unify-σ-no-cycle {Γ}[] [] = ⌊ Γ ◄ [] ,, idₛ ⌋
-  unify-σ-no-cycle (t , δ) (x₀ ∷ xs) = do
-      Δ₁ ◄ t' , σ₁  ← unify-no-cycle t x₀
-      Δ₂ ◄ δ' ,, σ₂ ← unify-σ-no-cycle (δ [ σ₁ ]s) xs
+  prune-σ {Γ} [] [] = ⌊ Γ ◄ [] ,, idₛ ⌋
+  prune-σ (t , δ) (x₀ ∷ xs) = do
+      Δ₁ ◄ t' , σ₁  ← prune t x₀
+      Δ₂ ◄ δ' ,, σ₂ ← prune-σ (δ [ σ₁ ]s) xs
       ⌊ Δ₂ ◄ (t' [ σ₂ ]t , δ') ,, (σ₁ [ σ₂ ]s) ⌋
   \end{code}
-  %</unify-no-cycle-subst>
-  %<*unify-no-cycle-rigid>
+  %</prune-subst>
+  %<*prune-rigid>
   \begin{code}
-  unify-no-cycle (Rigid o δ) x with o ｛ x ｝⁻¹
+  prune (Rigid o δ) x with o ｛ x ｝⁻¹
   ... | ⊥ = ⊥
   ... | ⌊ o' ⌋ = do
-       Δ ◄ δ' ,, σ ← unify-σ-no-cycle δ (x ^ o')
+       Δ ◄ δ' ,, σ ← prune-σ δ (x ^ o')
        ⌊ Δ ◄ Rigid o' δ' , σ ⌋
   \end{code}
-  %</unify-no-cycle-rigid>
+  %</prune-rigid>
   \begin{code}
-  unify-no-cycle (M ﹙ x ﹚) y =
+  prune (M ﹙ x ﹚) y =
       ⌊ unify-flex-flex (1+ M) x Ο y ⌋
   \end{code}
   \begin{code}
@@ -237,7 +235,7 @@ Unification
   unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
   unify-flex-* M x u = do
       u ← u ⑊?ₜ M
-      Δ ◄ t , σ ← unify-no-cycle u x
+      Δ ◄ t , σ ← prune u x
       ⌊ Δ ◄ M ↦ t , σ ⌋
   \end{code}
   %<*unifyprototype>
