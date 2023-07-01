@@ -187,3 +187,13 @@
 \ExecuteMetaData[\agdalatexdir/lib.tex]{#1}%
 \ExecuteMetaData[\agdalatexdir/Common.tex]{#1}%
 \ExecuteMetaData[\agdalatexdir/main.tex]{#1}}
+
+
+% Insert extra space before some tokens.
+\DeclareRobustCommand{\AgdaFormat}[2]{%
+  \ifthenelse{
+    \equal{#1}{commonPositions} \OR
+    \equal{#1}{commonValues} \OR
+    \equal{#1}{equaliser} \OR
+    \equal{#1}{pullback}
+  }{\highlighted{\textrm{\textcolor{black}{#1}}}}{{#2}}}

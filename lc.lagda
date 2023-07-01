@@ -123,10 +123,10 @@ Renaming
 \begin{code}
 _❴_❵ : ∀ {Γ n p} → Tm Γ n → n ⇒ p → Tm Γ p
 
-App t u ❴ f ❵ = App (t ❴ f ❵) (u ❴ f ❵)
-Lam t ❴ f ❵ = Lam (t ❴ f ↑ ❵)
-Var i ❴ f ❵ = Var (i ｛ f ｝)
-M ﹙ x ﹚ ❴ f ❵ = M ﹙ f ∘ x ﹚
+App t u ❴ x ❵ = App (t ❴ x ❵) (u ❴ x ❵)
+Lam t ❴ x ❵ = Lam (t ❴ x ↑ ❵)
+Var i ❴ x ❵ = Var (i ｛ x ｝)
+M ﹙ y ﹚ ❴ x ❵ = M ﹙ x ∘ y ﹚
 \end{code}
 %</lc-renaming>
 \begin{code}
@@ -153,7 +153,7 @@ wkₛ σ = VecList.map (λ _ → wkₜ) σ
 
 {- ----------------------
 
-MetaSubstitution
+Meta substitution
 
 -------------------------- -}
 
@@ -200,42 +200,21 @@ Lam t ⑊?ₜ M = do
 M' ﹙ y ﹚ ⑊?ₜ M with M' ⑊? M 
 ... | ⊥ = ⊥
 ... | ⌊ M' ⌋ = ⌊ M' ﹙ y ﹚ ⌋
+
+occur-check : ∀ {Γ m n} → (M : m ∈ Γ) → Tm Γ n → occur-cases M n
+occur-check M (M' ﹙ x ﹚) with M' ⑊? M 
+... | ⊥ = Same-MVar x
+... | ⌊ M' ⌋ = No-Cycle (M' ﹙ x ﹚)
+occur-check M t with t ⑊?ₜ M
+... | ⊥ = Cycle
+... | ⌊ t' ⌋ = No-Cycle t'
 \end{code}
 % </lc-occur-check>
 \begin{code}
 
 {- ----------------------
 
-Unification of two metavariables
-
--------------------------- -}
-\end{code}
-%<*lc-unify-flex-flex-proto>
-\begin{code}
-unify-flex-flex : ∀ {Γ m m' n} → m  ∈ Γ → m  ⇒ n
-                               → m' ∈ Γ → m' ⇒ n → Γ ⟶?
-unify-flex-flex {Γ} M x M' y with M' ⑊? M
-\end{code}
-%</lc-unify-flex-flex-proto>
-%<*lc-unify-flex-flex-same>
-\begin{code}
-... | ⊥ =
- let p , z = commonPositions x y in
- Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚
-\end{code}
-%</lc-unify-flex-flex-same>
-%<*lc-unify-flex-flex-diff>
-\begin{code}
-... | ⌊ M' ⌋ =
- let p , l , r = commonValues x y in
- Γ ⑊ M [ M' ∶ p ] ◄ M ↦ (M' ∶ p) ﹙ l ﹚
-                   , M' ↦-﹙ r ﹚
-\end{code}
-%</lc-unify-flex-flex-diff>
-\begin{code}
-{- ----------------------
-
-Non cyclic unification
+Pruning
 
 -------------------------- -}
 {-# TERMINATING #-}
@@ -267,12 +246,13 @@ prune {Γ} (Var i) x with i ｛ x ｝⁻¹
 ... | ⌊ j ⌋ = ⌊ Γ ◄ Var j , idₛ ⌋
 \end{code}
 %</prune-var>
-%<*prune-flex>
+%<*lc-prune-flex>
 \begin{code}
-prune (M ﹙ x ﹚) y =
-    ⌊ unify-flex-flex (1+ M) x Ο y ⌋
+prune {Γ} (M ﹙ x ﹚) y =
+   let p , r , l = commonValues x y in
+    ⌊ Γ [ M ∶ p ] ◄ (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚ ⌋
 \end{code}
-%</prune-flex>
+%</lc-prune-flex>
 \begin{code}
 {- ----------------------
 
@@ -281,24 +261,23 @@ Unification
 -------------------------- -}
 
 \end{code}
-%<*lc-unify-flex-def>
+%<*lc-unify-flex-proto>
 \begin{code}
 unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm Γ n → Maybe (Γ ⟶?)
 \end{code}
-%</lc-unify-flex-def>
-%<*lc-unify-flex-star-flex>
+%</lc-unify-flex-proto>
+%<*lc-unify-flex-def>
 \begin{code}
-unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
-\end{code}%
-%</lc-unify-flex-star-flex>%
-%<*unify-flex-no-flex>
-\begin{code}
-unify-flex-* M x u = do
-    u ← u ⑊?ₜ M
-    Δ ◄ t , σ ← prune u x
-    ⌊ Δ ◄ M ↦ t , σ ⌋
+unify-flex-* {Γ} M x t with occur-check M t
+... | Same-MVar y =
+   let p , z = commonPositions x y in
+   ⌊ Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚ ⌋
+... | Cycle = ⊥
+... | No-Cycle t' = do
+      Δ ◄ u , σ ← prune t' x
+      ⌊ Δ ◄ M ↦ u , σ ⌋
 \end{code}
-%</unify-flex-no-flex>
+%</lc-unify-flex-def>
 \begin{code}
 
 {-# TERMINATING #-}
@@ -310,8 +289,8 @@ unify : ∀ {Γ n} → Tm Γ n → Tm Γ n → Maybe (Γ ⟶?)
 %</lc-unifyprototype>
 %<*unify-flex>
 \begin{code}
-unify u (M ﹙ x ﹚) = unify-flex-* M x u
-unify (M ﹙ x ﹚) u = unify-flex-* M x u
+unify t (M ﹙ x ﹚) = unify-flex-* M x t
+unify (M ﹙ x ﹚) t = unify-flex-* M x t
 \end{code}
 %</unify-flex>
 %<*unify-app>

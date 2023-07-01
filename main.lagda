@@ -51,8 +51,8 @@ record Signature : Set where
 record isFriendly (S : Signature) : Set where
    open Signature S
    field
-     equalisers : ∀ {a m} → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
-     pullbacks : ∀ {m m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
+     equaliser : ∀ {a m} → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
+     pullback : ∀ {m m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
      _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe-PreImage (_｛ x ｝) o
 \end{code}
@@ -132,9 +132,9 @@ Occur check
 \end{code}
 % <*occur-check>
 \begin{code}
-
    _⑊?ₜ_ : ∀ {Γ m a} → Tm Γ a → (M : m ∈ Γ) → Maybe (Tm (Γ ⑊ M) a)
    _⑊?ₛ_ : ∀ {Γ m Δ} → Δ ⟶ Γ → (M : m ∈ Γ) → Maybe (Δ ⟶ (Γ ⑊ M))
+
    Rigid o ts ⑊?ₜ M = do
        ts' ← ts ⑊?ₛ M
        ⌊ Rigid o ts' ⌋
@@ -148,6 +148,14 @@ Occur check
        ⌊ t' , ts' ⌋
    _⑊?ₛ_ [] M = ⌊ [] ⌋
 
+   occur-check : ∀ {Γ m n} → (M : m ∈ Γ) → Tm Γ n → occur-cases M n
+   occur-check M (M' ﹙ x ﹚) with M' ⑊? M 
+   ... | ⊥ = Same-MVar x
+   ... | ⌊ M' ⌋ = No-Cycle (M' ﹙ x ﹚)
+   occur-check M t with t ⑊?ₜ M
+   ... | ⊥ = Cycle
+   ... | ⌊ t' ⌋ = No-Cycle t'
+
 \end{code}
 % </occur-check>
 
@@ -160,37 +168,7 @@ module Unification (S : Signature) (F : isFriendly S) where
 
 {- ----------------------
 
-Unification of two metavariables
-
--------------------------- -}
-\end{code}
-%<*unify-flex-flex-proto>
-\begin{code}
-  unify-flex-flex : ∀ {Γ m m' a} → m  ∈ Γ → m  ⇒ a
-                               → m' ∈ Γ → m' ⇒ a → Γ ⟶?
-  unify-flex-flex {Γ} M x M' y with M' ⑊? M
-\end{code}
-%</unify-flex-flex-proto>
-%<*unify-flex-flex-same>
-\begin{code}
-  ... | ⊥ =
-   let p , z = equalisers x y in
-   Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚
-\end{code}
-%</unify-flex-flex-same>
-%<*unify-flex-flex-diff>
-\begin{code}
-  ... | ⌊ M' ⌋ =
-   let p , l , r = pullbacks x y in
-   Γ ⑊ M [ M' ∶ p ] ◄ M ↦ (M' ∶ p) ﹙ l ﹚
-                     , M' ↦-﹙ r ﹚
-\end{code}
-%</unify-flex-flex-diff>
-
-\begin{code}
-{- ----------------------
-
-Non cyclic unification
+Pruning
 
 -------------------------- -}
   \end{code}
@@ -220,10 +198,13 @@ Non cyclic unification
        ⌊ Δ ◄ Rigid o' δ' , σ ⌋
   \end{code}
   %</prune-rigid>
+  %<*prune-flex>
   \begin{code}
-  prune (M ﹙ x ﹚) y =
-      ⌊ unify-flex-flex (1+ M) x Ο y ⌋
+  prune {Γ} (M ﹙ x ﹚) y =
+    let p , r , l = pullback x y in
+    ⌊ Γ [ M ∶ p ] ◄ (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚ ⌋
   \end{code}
+  %</prune-flex>
   \begin{code}
 
 {- ----------------------
@@ -232,12 +213,19 @@ Unification
 
 -------------------------- -}
   unify-flex-* : ∀ {Γ m a} → m ∈ Γ → m ⇒ a → Tm Γ a → Maybe (Γ ⟶?)
-  unify-flex-* M x (N ﹙ y ﹚) = ⌊ unify-flex-flex M x N y ⌋
-  unify-flex-* M x u = do
-      u ← u ⑊?ₜ M
-      Δ ◄ t , σ ← prune u x
-      ⌊ Δ ◄ M ↦ t , σ ⌋
   \end{code}
+%<*unify-flex-def>
+  \begin{code}
+  unify-flex-* {Γ} M x t with occur-check M t
+  ... | Same-MVar y =
+     let p , z = equaliser x y in
+     ⌊ Γ [ M ∶ p ] ◄ M ↦-﹙ z ﹚ ⌋
+  ... | Cycle = ⊥
+  ... | No-Cycle t' = do
+        Δ ◄ u , σ ← prune t' x
+        ⌊ Δ ◄ M ↦ u , σ ⌋
+  \end{code}
+%</unify-flex-def>
   %<*unifyprototype>
   \begin{code}
   unify : ∀ {Γ a} → Tm Γ a → Tm Γ a → Maybe (Γ ⟶?)
@@ -254,8 +242,8 @@ Unification
   \end{code}
   %</unify-subst>
   \begin{code}
-  unify u (M ﹙ x ﹚) = unify-flex-* M x u
-  unify (M ﹙ x ﹚) u = unify-flex-* M x u
+  unify t (M ﹙ x ﹚) = unify-flex-* M x t
+  unify (M ﹙ x ﹚) t = unify-flex-* M x t
   \end{code}
   %<*unify-rigid>
   \begin{code}

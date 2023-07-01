@@ -37,7 +37,6 @@ private
 %<*id-subst>
 \begin{code}
 idₛ : ∀ {Γ} → Γ ⟶ Γ
-
 idₛ {[]} = []
 idₛ {m ∷ Γ} = Ο ﹙ id ﹚ , wkₛ idₛ
 \end{code}
@@ -78,3 +77,18 @@ data _⟶? (Γ : MetaContext) : Set where
     _◄_ : ∀ Δ → (Γ ⟶ Δ) → Γ ⟶?
 \end{code}
 %</substfrom>
+
+\begin{code}
+{- ----------------------
+
+Occur check
+
+-------------------------- -}
+
+data occur-cases {Γ m} (M : m ∈ Γ) a : Set where
+   Same-MVar : m ⇒ a → occur-cases M a
+   Cycle : occur-cases M a
+   No-Cycle : Tm (Γ ⑊ M) a → occur-cases M a
+
+
+open occur-cases public
