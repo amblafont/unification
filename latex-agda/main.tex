@@ -153,7 +153,7 @@
 \\[\AgdaEmptyExtraSkip]%
 \>[0]\<%
 \end{code}
-%<*signature>
+%<*signature-core>
 \begin{code}%
 \>[0]\AgdaKeyword{record}\AgdaSpace{}%
 \AgdaRecord{Signature}\AgdaSpace{}%
@@ -226,15 +226,17 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaDatatype{List}\AgdaSpace{}%
 \AgdaField{A}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
+\end{code}
+%</signature-core>
+\begin{code}%
 %
 \>[2]\AgdaComment{--\ [a₁,⋯,\ aₙ]\ ⟹\ [b₁,⋯,\ bₘ]\ is\ isomorphic\ to\ a₁⇒b₁\ ×\ ⋯\ ×\ aₙ⇒bₙ\ if\ n=m}\<%
 \\
 %
 \>[2]\AgdaComment{--\ Otherwise,\ it\ is\ isomorphic\ to\ the\ empty\ type.}\<%
-\\
+\end{code}
+%<*renaming-vectors>
+\begin{code}%
 %
 \>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}⟹\AgdaUnderscore{}}}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -255,14 +257,16 @@
 \AgdaOperator{\AgdaField{\AgdaUnderscore{}⇒\AgdaUnderscore{}}}\AgdaSpace{}%
 \AgdaBound{as}\AgdaSpace{}%
 \AgdaBound{bs}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
+\end{code}
+%</renaming-vectors>
+\begin{code}%
 %
 \>[2]\AgdaKeyword{field}\<%
-\\
-\>[2][@{}l@{\AgdaIndent{0}}]%
-\>[4]\AgdaComment{--\ The\ last\ two\ fields\ account\ for\ functoriality}\<%
+\end{code}
+%<*signature-functoriality>
+\begin{code}%
+\>[2][@{}l@{\AgdaIndent{1}}]%
+\>[4]\AgdaComment{--\ Functoriality\ components}\<%
 \\
 %
 \>[4]\AgdaOperator{\AgdaField{\AgdaUnderscore{}｛\AgdaUnderscore{}｝}}%
@@ -308,7 +312,7 @@
 \>[56]\AgdaOperator{\AgdaField{｝}}\AgdaSpace{}%
 \AgdaSymbol{)}\<%
 \end{code}
-%</signature>
+%</signature-functoriality>
 
 %<*friendlysignature>
 \begin{code}%

@@ -23,7 +23,7 @@ open VecList using (VecList)
 
 
 \end{code}
-%<*signature>
+%<*signature-core>
 \begin{code}
 record Signature : Set where
   field
@@ -33,18 +33,28 @@ record Signature : Set where
     _∘_ : ∀ {a b c} → (b ⇒ c) → (a ⇒ b) → (a ⇒ c)
     O : A → Set
     α : ∀ {a} → O a → List A
-
+\end{code}
+%</signature-core>
+\begin{code}
   -- [a₁,⋯, aₙ] ⟹ [b₁,⋯, bₘ] is isomorphic to a₁⇒b₁ × ⋯ × aₙ⇒bₙ if n=m
   -- Otherwise, it is isomorphic to the empty type.
+\end{code}
+%<*renaming-vectors>
+\begin{code}
   _⟹_ : List A → List A → Set
   as ⟹ bs = Pointwise _⇒_ as bs
-
+\end{code}
+%</renaming-vectors>
+\begin{code}
   field
-    -- The last two fields account for functoriality
+\end{code}
+%<*signature-functoriality>
+\begin{code}
+    -- Functoriality components
     _｛_｝  : ∀ {a} → O a → ∀ {b} (x : a ⇒ b) → O b
     _^_ : ∀ {a b}(x : a ⇒ b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
 \end{code}
-%</signature>
+%</signature-functoriality>
 
 %<*friendlysignature>
 \begin{code}
