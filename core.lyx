@@ -374,6 +374,11 @@ status open
 \end_inset
 
 
+\begin_inset FormulaMacro
+\newcommand{\dotmcontext}[1]{\boldsymbol{#1}}
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1061,29 +1066,8 @@ noprefix "false"
  Termination and completeness are justified in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "sec:termination"
+reference "sec:termination-completeness"
 plural "true"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:completeness"
-plural "false"
 caps "true"
 noprefix "false"
 
@@ -1301,7 +1285,7 @@ name "sec:summary-algo"
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -1923,8 +1907,8 @@ status open
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{\highlighted{m\prunecat xy{r\dashv p}l{}}}{\begin{array}{r}
-\Gamma[M:m]\vdash M(x):>y\Rightarrow\qquad\\
-P(l);M\mapsto P(r)\dashv\Gamma[P:p]
+\dotmcontext{\Gamma}[M:m]\vdash M(x):>y\Rightarrow\qquad\\
+P(l);M\mapsto P(r)\dashv\dotmcontext{\Gamma}[P:p]
 \end{array}}}{P-Flex}
 \]
 
@@ -2047,9 +2031,9 @@ status open
 \begin_inset Formula 
 \[
 \dfrac{\begin{array}{c}
-\Gamma\prune tx{\sigma_{1}}{t'}\dashv\Delta_{1}\\
-\Delta_{1}\prune{u[\sigma_{1}]}x{\sigma}{u'}_{2}\dashv\Delta_{2}
-\end{array}}{\Gamma\prune{t\ u}x{\sigma}{t'[\sigma_{2}]\ u'}_{1}[\sigma_{2}]\dashv\Delta_{2}}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\Delta_{1}\\
+\Delta_{1}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\Delta_{2}
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\Delta_{2}}
 \]
 
 \end_inset
@@ -2149,7 +2133,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\prune t{x\uparrow\ }{\sigma}{t'}\dashv\Delta}{\Gamma\prune{\lambda t}x{\sigma}{\lambda t'}\dashv\Delta}
+\dfrac{\dotmcontext{\Gamma}\prune t{x\uparrow\ }{\sigma}{t'}\dashv\Delta}{\dotmcontext{\Gamma}\prune{\lambda t}x{\sigma}{\lambda t'}\dashv\Delta}
 \]
 
 \end_inset
@@ -2183,7 +2167,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "55col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -2249,15 +2233,107 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{i=x_{j}}{\Gamma\prune{\lcvar i}x{1_{\Gamma}}{\lcvar j}\dashv\Gamma}
+\dfrac{i\notin x}{\dotmcontext{\Gamma}\prune{\lcvar i}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{i=x_{j}}{\dotmcontext{\Gamma}\prune{\lcvar i}x{1_{\dotmcontext{\Gamma}}}{\lcvar j}\dashv\dotmcontext{\Gamma}}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-fail}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Formula 
 \[
-\dfrac{i\notin x}{\Gamma\prune{\lcvar i}x{\bang}{\bang}\dashv\bot}
+\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}
 \]
 
 \end_inset
@@ -2404,7 +2480,7 @@ M\mapsto P(z)\dashv\Gamma[P:p]
 
 \begin_inset Formula 
 \[
-\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}
+\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}
 \]
 
 \end_inset
@@ -2430,17 +2506,9 @@ M\notin u\quad\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta\end{array}}{\Gamm
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
-\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
-M\mapsto P(z)\dashv\Gamma[P:p]
+\dotmcontext{\Gamma}[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
+M\mapsto P(z)\dashv\dotmcontext{\Gamma}[P:p]
 \end{array}}}{Same-MVar}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{M\in t\qquad t\neq M(\dots)}{\Gamma,M:m\vdash M(x)=t\Rightarrow\bang\dashv\bot}}{Cycle}
 \]
 
 \end_inset
@@ -2449,10 +2517,35 @@ M\mapsto P(z)\dashv\Gamma[P:p]
 \end_layout
 
 \begin_layout Plain Layout
+\align center
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\in t\qquad t\neq M(\dots)}{\dotmcontext{\Gamma},M:m\vdash M(x)=t\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.2em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{\begin{array}{c}
-M\notin t\quad\Gamma\backslash M\prune tx{\sigma}u\dashv\Delta\end{array}}{\Gamma\vdash M(x)=t\Rightarrow\sigma,M\mapsto u\dashv\Delta}}{No-cycle}
+M\notin t\quad\dotmcontext{\Gamma}\backslash M\prune tx{\sigma}u\dashv\Delta\end{array}}{\dotmcontext{\Gamma}\vdash M(x)=t\Rightarrow\sigma,M\mapsto u\dashv\Delta}}{No-cycle}
 \]
 
 \end_inset
@@ -2517,7 +2610,7 @@ M\mapsto P(z)\dashv\Gamma[P:p]
 
 \begin_inset Formula 
 \[
-\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}
+\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}
 \]
 
 \end_inset
@@ -2689,9 +2782,9 @@ status open
 \begin_inset Formula 
 \[
 \dfrac{\begin{array}{c}
-\Gamma\vdash t=t'\Rightarrow\sigma_{1}\dashv\Delta_{1}\\
-\Gamma\vdash u[\sigma_{1}]=u'[\sigma_{2}]\Rightarrow\sigma_{2}\dashv\Delta_{2}
-\end{array}}{\Gamma\vdash t\ u=t'\ u'\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}
+\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma_{1}\dashv\Delta_{1}\\
+\dotmcontext{\Gamma}\vdash u[\sigma_{1}]=u'[\sigma_{2}]\Rightarrow\sigma_{2}\dashv\Delta_{2}
+\end{array}}{\dotmcontext{\Gamma}\vdash t\ u=t'\ u'\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}
 \]
 
 \end_inset
@@ -2778,7 +2871,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{\Gamma\vdash t=t'\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash\lambda t=\lambda t'\Rightarrow\sigma\dashv\Delta}
+\dfrac{\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash\lambda t=\lambda t'\Rightarrow\sigma\dashv\Delta}
 \]
 
 \end_inset
@@ -2878,7 +2971,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{i\neq j}{\Gamma\vdash\lcvar i=\lcvar j\Rightarrow\bang\dashv\bot}\qquad\dfrac{}{\Gamma\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\Gamma}
+\dfrac{i\neq j}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar j\Rightarrow\bang_{s}\dashv\bot}\qquad\dfrac{}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\dotmcontext{\Gamma}}
 \]
 
 \end_inset
@@ -2912,7 +3005,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50col%"
+width "40col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -2933,7 +3026,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%
+%%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -2963,7 +3056,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "45col%"
+width "60col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -2976,7 +3069,7 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Formula $\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\Gamma\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang\dashv\bot}$
+\begin_inset Formula $\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}\quad\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\dotmcontext{\Gamma}\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang_{s}\dashv\bot}$
 \end_inset
 
 
@@ -2991,6 +3084,10 @@ status open
 
 
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
 \begin_inset Box Boxed
@@ -3096,6 +3193,11 @@ status open
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Float figure
 wide false
@@ -3166,7 +3268,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%
+%%%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -3305,7 +3407,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\delta)}{\arg x}{\bang}{\bang}\dashv\bot}}{P-Rig-Fail}
+\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\dotmcontext{\Gamma}\prune{o(\delta)}{\arg x}{\bang_{s}}{\bang}\dashv\bot}}{P-Rig-Fail}
 \]
 
 \end_inset
@@ -3313,7 +3415,94 @@ status open
 
 \begin_inset Formula 
 \[
-\labellabelrule{\inferruletwo{\Gamma\prune{\delta}{x^{o'}}{\sigma}{\delta'}\dashv\Delta}{o=\rename{o'}x}{\Gamma\prune{o(\delta)}{\arg x}{\sigma}{o'(\delta')}\dashv\Delta}}{P-Rig}
+\labellabelrule{\inferruletwo{\dotmcontext{\Gamma}\prune{\delta}{x^{o'}}{\sigma}{\delta'}\dashv\Delta}{o=\rename{o'}x}{\dotmcontext{\Gamma}\prune{o(\delta)}{\arg x}{\sigma}{o'(\delta')}\dashv\Delta}}{P-Rig}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-fail}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}}{P-Fail}
 \]
 
 \end_inset
@@ -3670,7 +3859,7 @@ M\mapsto P(z)\dashv\Gamma[P:p]
 
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{Cycle}
+\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
 \]
 
 \end_inset
@@ -3793,7 +3982,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%
+%%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -3838,17 +4027,120 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\neq o'}{\Gamma\vdash o(\delta)=o'(\delta')\Rightarrow\bang\dashv\bot}}{Clash}
+\labellabelrule{\dfrac{o\neq o'}{\dotmcontext{\Gamma}\vdash o(\delta)=o'(\delta')\Rightarrow\bang_{s}\dashv\bot}}{Clash}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{\Gamma\vdash\delta=\delta'\Rightarrow\sigma\dashv\Delta}{\Gamma\vdash o(\delta)=o(\delta')\Rightarrow\sigma\dashv\Delta}}{U-Rig}
+\labellabelrule{\dfrac{\dotmcontext{\Gamma}\vdash\delta=\delta'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash o(\delta)=o(\delta')\Rightarrow\sigma\dashv\Delta}}{U-Rig}
 \]
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.2em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-fail}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "60col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Formula $\labellabelrule{\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}}{U-Fail}$
 \end_inset
 
 
@@ -3888,7 +4180,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%
+%%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -3927,7 +4219,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Formula 
@@ -3957,6 +4249,10 @@ status open
 
 
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
 \begin_inset Box Boxed
@@ -4049,6 +4345,11 @@ status open
 \[
 \labellabelrule{\dfrac{}{\bot\vdash\delta=\delta'\Rightarrow\bang\dashv\bot}}{P-Fail}
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -4363,7 +4664,7 @@ status open
 
 \begin_inset Formula 
 \[
-\dfrac{i\notin x}{\Gamma\prune{\lcvar i}x{\bang}{\bang}\dashv\bot}
+\dfrac{i\notin x}{\Gamma\prune{\lcvar i}x{\bang_{s}}{\bang}\dashv\bot}
 \]
 
 \end_inset
@@ -4557,7 +4858,7 @@ status open
 \color none
 \begin_inset Formula 
 \[
-\bot\prune tx{\bang}{\bang}\dashv\bot
+\bot\prune tx{\bang_{s}}{\bang}\dashv\bot
 \]
 
 \end_inset
@@ -4969,7 +5270,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{i\neq j}{\Gamma\vdash\lcvar i=\lcvar j\Rightarrow\bang\dashv\bot}\qquad\dfrac{}{\Gamma\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\Gamma}
+\dfrac{i\neq j}{\Gamma\vdash\lcvar i=\lcvar j\Rightarrow\bang_{s}\dashv\bot}\qquad\dfrac{}{\Gamma\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\Gamma}
 \]
 
 \end_inset
@@ -5056,7 +5357,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\Gamma\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang\dashv\bot}
+\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\Gamma\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang_{s}\dashv\bot}
 \]
 
 \end_inset
@@ -5134,7 +5435,7 @@ status open
 \color none
 \begin_inset Formula 
 \[
-\bot\vdash t=u\Rightarrow\bang\dashv\bot
+\bot\vdash t=u\Rightarrow\bang_{s}\dashv\bot
 \]
 
 \end_inset
@@ -5209,7 +5510,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -5356,7 +5657,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\delta)}{\arg x}{\bang}{\bang}\dashv\bot}}{P-Fail}
+\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\Gamma\prune{o(\delta)}{\arg x}{\bang_{s}}{\bang}\dashv\bot}}{P-Fail}
 \]
 
 \end_inset
@@ -6034,8 +6335,8 @@ noprefix "false"
 
 \end_inset
 
-, together with a more standard presenatation based on inductive rules generatin
-g the syntax.
+, together with a corresponding presentation as inductive rules generating
+ the syntax.
  We write 
 \begin_inset Formula $\Gamma;n\vdash t$
 \end_inset
@@ -6057,10 +6358,37 @@ g the syntax.
 
 \begin_layout Enumerate
 a metavariable context 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\begin_inset Formula $\Gamma$
 \end_inset
 
-, specifying metavariable symbols 
+, which is either a formal error context 
+\begin_inset Formula $\bot$
+\end_inset
+
+, or a 
+\emph on
+dotted
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This naming is motivated by a notational convention in the Agda code explained
+ below.
+\end_layout
+
+\end_inset
+
+
+\emph on
+ 
+\emph default
+context, as a list 
+\begin_inset Formula $(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\end_inset
+
+, of metavariable declarations specifying metavariable symbols 
 \begin_inset Formula $M_{i}$
 \end_inset
 
@@ -6068,7 +6396,7 @@ a metavariable context
 \begin_inset Formula $m_{i}$
 \end_inset
 
-, and 
+;
 \end_layout
 
 \begin_layout Enumerate
@@ -6077,12 +6405,134 @@ a variable context, which is a mere natural number indicating the highest
 \end_layout
 
 \begin_layout Standard
+The error metavariable context 
+\begin_inset Formula $\bot$
+\end_inset
+
+ will prove useful to handle failure in the unification algorithm, instead
+ of adopting a (perhaps more conventional) monadic implementation.
+ Our peculiar approach to failure is actually guided by the categorical
+ semantics (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:categorification"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ In the error context, exactly one (error) term 
+\begin_inset Formula $\bang$
+\end_inset
+
+ is available in any variable context.
+\end_layout
+
+\begin_layout Standard
+In the inductive rules, we use the bold face for any dotted metavariable
+ context.
+ In the Agda code, we adopt a nameless encoding of dotted metavariable contexts:
+ they are mere lists of metavariable arities, and metavariables are referred
+ to by their index in the list.
+ The type of metavariable contexts 
+\begin_inset Formula $\AgdaFunction{MetaContext}$
+\end_inset
+
+ is formally defined as 
+\begin_inset Formula $\AgdaDatatype{Maybe}\ (\AgdaDatatype{List}\ \mathbb{N})$
+\end_inset
+
+, where 
+\begin_inset Formula $\AgdaDatatype{Maybe}\ X$
+\end_inset
+
+ is an inductive type with an error constructor 
+\begin_inset Formula $\bot$
+\end_inset
+
+ and a success constructor 
+\begin_inset Formula $\lfloor-\rfloor$
+\end_inset
+
+ taking as argument an element of type 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+ typically translates into 
+\begin_inset Formula $\lfloor\Gamma\rfloor$
+\end_inset
+
+ in the implementation.
+ To alleviate notations, we also adopt a dotted convention in Agda to mean
+ that a successful metavariable context is involved.
+ For example, 
+\begin_inset Formula $\AgdaFunction{MetaContext\ensuremath{\cdot}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaFunction{Tm\ensuremath{\cdot}}\ \Gamma\ n$
+\end_inset
+
+ are respectively defined as 
+\begin_inset Formula $\AgdaDatatype{List}\ \mathbb{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaDatatype{Tm}\ \lfloor\Gamma\rfloor\ n$
+\end_inset
+
+.
+ In the same vein, the names of constructors of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus for application, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, and variables, are postfixed with a dot to indicate that they
+ live in a dotted metavariable context.
+ 
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:non-dotted-version"
+
+\end_inset
+
+
+\begin_inset Quotes eld
+\end_inset
+
+Undotted
+\begin_inset Quotes erd
+\end_inset
+
+ versions of those operations, available in any metavariable context, are
+ also implemented in the obvious way, coinciding with the constructors in
+ a dotted context, or returning 
+\begin_inset Formula $\bang$
+\end_inset
+
+ in the error context.
+\end_layout
+
+\begin_layout Standard
 Free variables are indexed from 
 \begin_inset Formula $1$
 \end_inset
 
  and we use the De Bruijn level convention: the variable bound in 
-\begin_inset Formula $\Gamma;n\vdash\lambda t$
+\begin_inset Formula $\dotmcontext{\Gamma};n\vdash\lambda t$
 \end_inset
 
  is 
@@ -6153,12 +6603,12 @@ status open
  index in the list.
  Let us focus on the last constructor building a metavariable application
  in the context 
-\begin_inset Formula $\Gamma;n$
+\begin_inset Formula $\dotmcontext{\Gamma};n$
 \end_inset
 
 .
  The argument of type 
-\begin_inset Formula $m\in\Gamma$
+\begin_inset Formula $m\in\dotmcontext{\Gamma}$
 \end_inset
 
  is an index of any element 
@@ -6166,7 +6616,7 @@ status open
 \end_inset
 
  in the list 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 .
@@ -6332,7 +6782,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "28col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -6360,6 +6810,60 @@ status open
 
 \backslash
 agdacode{lc-metacontext}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "53col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-decl}
 \end_layout
 
 \end_inset
@@ -6462,7 +6966,7 @@ status open
 
 
 \backslash
-agdacode{lc-syntax}
+agdacode{lc-syntax-ind}
 \end_layout
 
 \end_inset
@@ -6501,7 +7005,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{1\leq i\leq n}{\Gamma;n\vdash\lcvar i}\quad\dfrac{\Gamma;n\vdash t\quad\Gamma;n\vdash u}{\Gamma;n\vdash t\ u}\quad\dfrac{\Gamma;n+1\vdash t}{\Gamma;n\vdash\lambda t}
+\dfrac{1\leq i\leq n}{\dotmcontext{\Gamma};n\vdash\lcvar i}\quad\dfrac{\dotmcontext{\Gamma};n\vdash t\quad\dotmcontext{\Gamma};n\vdash u}{\dotmcontext{\Gamma};n\vdash t\ u}\quad\dfrac{\dotmcontext{\Gamma};n+1\vdash t}{\dotmcontext{\Gamma};n\vdash\lambda t}
 \]
 
 \end_inset
@@ -6512,8 +7016,328 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\dfrac{M:m\in\Gamma\quad\overbrace{x:m\Rightarrow n}^{x_{1},\mydots,x_{m}\in\{1,\mydots,n\}\text{ distinct}}}{\Gamma;n\vdash M(\var{x_{1}},\mydots,\var{x_{m}})}
+\dfrac{M:m\in\dotmcontext{\Gamma}\quad\overbrace{x:m\Rightarrow n}^{x_{1},\mydots,x_{m}\in\{1,\mydots,n\}\text{ distinct}}}{\dotmcontext{\Gamma};n\vdash M(\var{x_{1}},\mydots,\var{x_{m}})}
 \]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{}{\bot;n\vdash\bang}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "53col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-app-decl}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-app-def}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "53col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-lam-decl}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-lam-def}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "53col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-var-decl}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-var-def}
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -6555,10 +7379,6 @@ name "fig:syntax-lam"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -6605,7 +7425,7 @@ The Agda implementation of metavariable substitutions for
 \begin_inset Formula $\lambda$
 \end_inset
 
--caluclus is listed in the first box of 
+-calculus is listed in the first box of 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:subst-code"
@@ -6616,15 +7436,20 @@ noprefix "false"
 \end_inset
 
 .
+ There is only one (formal) metavariable substitution 
+\begin_inset Formula $1_{\bot}$
+\end_inset
+
+ from the error context, targeting itself: it is an identity substitution.
  A 
 \emph on
 metavariable substitution
 \emph default
  
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\Delta$
 \end_inset
 
- assigns to each metavariable 
+ from a dotted context assigns to each metavariable 
 \begin_inset Formula $M$
 \end_inset
 
@@ -6633,7 +7458,7 @@ metavariable substitution
 \end_inset
 
  in 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  a term 
@@ -6642,7 +7467,7 @@ metavariable substitution
 
 .
  In Agda, the type of substitutions between 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  and 
@@ -6722,6 +7547,19 @@ AgdaBound{Γ}
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+We call a substitution 
+\emph on
+successful
+\emph default
+ if it targets a dotted metavariable context, 
+\emph on
+dotted
+\emph default
+ if the domain is dotted.
+ Note that any successful substitution is dotted.
 \end_layout
 
 \begin_layout Standard
@@ -7203,6 +8041,13 @@ status open
 
 
 \backslash
+agdacode{dot-substitution-def}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
 agdacode{substitution-def}%
 \end_layout
 
@@ -7542,6 +8387,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Formula 
 \[
 \dfrac{\sigma:\Gamma_{1}\rightarrow\Gamma_{2}\quad\delta:\Gamma_{2}\rightarrow\Gamma_{3}}{\underbrace{\sigma[\delta]}_{M\mapsto\sigma_{M}[\delta]}:\Gamma_{1}\rightarrow\Gamma_{3}}
@@ -8248,7 +9097,7 @@ name "fig:building-blocks-subst"
 
 \begin_layout Standard
 This assignation extends (through a recursive definition) to any term 
-\begin_inset Formula $\Gamma;n\vdash t$
+\begin_inset Formula $\dotmcontext{\Gamma};n\vdash t$
 \end_inset
 
 , yielding a term 
@@ -8256,6 +9105,18 @@ This assignation extends (through a recursive definition) to any term
 \end_inset
 
 .
+ Note that the congruence cases involve undotted versions of the operations
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:non-dotted-version"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), as the target metavariable context may not be dotted.
  The base case is 
 \begin_inset Formula $M(x_{1},\dots,x_{m})[\sigma]=\rename{\sigma_{M}}x,$
 \end_inset
@@ -8309,7 +9170,7 @@ noprefix "false"
 
 \begin_layout Standard
 The identity substitution 
-\begin_inset Formula $1_{\Gamma}:\Gamma\rightarrow\Gamma$
+\begin_inset Formula $1_{\dotmcontext{\Gamma}}:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Gamma}$
 \end_inset
 
  is defined by the term 
@@ -8317,16 +9178,16 @@ The identity substitution
 \end_inset
 
  for each metavariable declaration 
-\begin_inset Formula $M:m\in\Gamma$
+\begin_inset Formula $M:m\in\dotmcontext{\Gamma}$
 \end_inset
 
 .
  The composition 
-\begin_inset Formula $\delta[\sigma]:\Gamma_{1}\rightarrow\Gamma_{3}$
+\begin_inset Formula $\delta[\sigma]:\dotmcontext{\Gamma_{1}}\rightarrow\Gamma_{3}$
 \end_inset
 
  of two substitutions 
-\begin_inset Formula $\delta:\Gamma_{1}\rightarrow\Gamma_{2}$
+\begin_inset Formula $\delta:\dotmcontext{\Gamma_{1}}\rightarrow\Gamma_{2}$
 \end_inset
 
  and 
@@ -8338,6 +9199,7 @@ The identity substitution
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
@@ -8385,9 +9247,9 @@ unifier
 .
  A 
 \emph on
-most general unifier
+most general unifier 
 \emph default
- of 
+(later abbreviated as mgu) of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -8412,22 +9274,133 @@ most general unifier
 \end_inset
 
 .
- We denote this situation by 
-\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+ 
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:terminal-unifier"
+
 \end_inset
 
-, leaving the variable context 
-\begin_inset Formula $n$
+Given a metavariable context 
+\begin_inset Formula $\Gamma$
 \end_inset
 
- implicit.
- Intuitively, the symbol 
-\begin_inset Formula $\Rightarrow$
+, there is a single 
+\emph on
+terminal
+\emph default
+ substitution 
+\begin_inset Formula $\bang_{s}:\Gamma\rightarrow\bot$
 \end_inset
 
- separates the input and the output of the unification algorithm, which
- either returns a most general unifier, or fails when there is no unifier
- at all (for example, when unifying 
+, which maps any metavariable to the only available term 
+\begin_inset Formula $\bang$
+\end_inset
+
+ if 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is dotted, or is the identity substitution 
+\begin_inset Formula $1_{\bot}$
+\end_inset
+
+ otherwise.
+ Any term substituted by 
+\begin_inset Formula $\bang_{s}$
+\end_inset
+
+ yields the error term 
+\begin_inset Formula $\bang$
+\end_inset
+
+, since it is the only one in the metavariable context 
+\begin_inset Formula $\bot$
+\end_inset
+
+.
+ As a consequence,
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\bang_{s}:\Gamma\rightarrow\bot$
+\end_inset
+
+ is uniquely factored by any other substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ as the composition of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ with 
+\begin_inset Formula $\bang_{s}:\Delta\rightarrow\bot$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bang_{s}$
+\end_inset
+
+ unifies any pair of terms.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:mgus-standard"
+
+\end_inset
+
+Because of the additional error context, our notion of unification differs
+ from the standard presentation, which is recovered by focusing only on
+ successful substitutions.
+ However, it follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:terminal-unifier"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ that mgus in the standard setting are still mgus in our setting.
+ Moreover, when there is no successful unifier, the terminal substitution
+ is a mgu.
+ 
+\end_layout
+
+\begin_layout Standard
+The main property of pattern unification is that the mgu of any pair of
+ terms exists as soon as there exists a unifier.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:mgus-standard"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ shows that we can actually get rid of the latter condition: the non-existence
+ of unifiers (for example, when unifying 
 \begin_inset Formula $t_{1}\ t_{2}$
 \end_inset
 
@@ -8435,9 +9408,56 @@ most general unifier
 \begin_inset Formula $\lambda u$
 \end_inset
 
-).
- Note that the type signature of our unification algorithm merely enforces
- that the output is an outgoing substitution:
+) is restated as 
+\begin_inset Formula $\bang_{s}$
+\end_inset
+
+ being the mgu.
+ Accordingly, our implementation does not explicitly fails.
+ Given two terms 
+\begin_inset Formula $\Gamma;n\vdash t,u$
+\end_inset
+
+ as input, the Agda function 
+\begin_inset Formula $\AgdaFunction{unify}$
+\end_inset
+
+ returns a context 
+\begin_inset Formula $\Delta$
+\end_inset
+
+, which is 
+\begin_inset Formula $\bot$
+\end_inset
+
+ in case there is no succesful unifier, and a substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+.
+ We denote such a situation by 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, leaving the variable context 
+\begin_inset Formula $n$
+\end_inset
+
+ implicit: the symbol 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ separates the input and the output of the unification algorithm, which
+ is the mgu of 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+, although this property of the output substitution is not explicit in the
+ type signature:
 \end_layout
 
 \begin_layout Standard
@@ -8446,6 +9466,11 @@ most general unifier
 \begin_layout Standard
 \begin_inset ERT
 status open
+
+\begin_layout Plain Layout
+
+%%%%%%%
+\end_layout
 
 \begin_layout Plain Layout
 
@@ -8463,27 +9488,7 @@ agdacode{lc-unifyprototype}
 
 \end_inset
 
-Here, 
-\begin_inset Formula $\AgdaDatatype{Maybe}\ X$
-\end_inset
-
- is an inductive type with an error constructor 
-\begin_inset Formula $\bot$
-\end_inset
-
- and a success constructor 
-\begin_inset Formula $\lfloor-\rfloor$
-\end_inset
-
- taking as argument an element of type 
-\begin_inset Formula $X$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The unification algorithm recursively inspects the structure of the given
+This unification function recursively inspects the structure of the given
  terms until reaching a metavariable at the top-level, as seen in the second
  box of 
 \begin_inset CommandInset ref
@@ -8496,17 +9501,58 @@ noprefix "false"
 \end_inset
 
 .
- We exploit the 
+ The last two cases handle unification of two error terms, and unification
+ of two different 
+\emph on
+rigid
+\emph default
+ term constructors (application, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, or variables), resulting in failure.
+\end_layout
+
+\begin_layout Remark
+We use the 
 \begin_inset Formula $\AgdaKeyword{do}$
 \end_inset
 
- notation to propagate failure.
- For example, the application case fails at the beginning if 
+ notation
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Agda supports let binding constructions, but their destructuring capabilities
+ are more limited.
+\end_layout
+
+\end_inset
+
+ to decompose intermediate outputs.
+ For example, in the application case, the second line decomposes the output
+ of 
 \begin_inset Formula $\AgdaFunction{unify}\ t\ t'$
 \end_inset
 
- does.
- Otherwise it continues with the success return values 
+ as 
+\begin_inset Formula $\Delta_{1}\blacktriangleleft\sigma_{1}$
+\end_inset
+
+.
+ The last line of a 
+\begin_inset Formula $\AgdaKeyword{do}$
+\end_inset
+
+ block is the final return value.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Otherwise it continues with the success return values 
 \begin_inset Formula $\Delta_{1}\blacktriangleleft\sigma_{1}$
 \end_inset
 
@@ -8543,15 +9589,15 @@ noprefix "false"
 
  in which the only term (in any variable context) is a formal error term
  
-\begin_inset Formula $!$
+\begin_inset Formula $\bang$
 \end_inset
 
 , inducing a unique substitution 
-\begin_inset Formula $!:\Gamma\rightarrow\bot$
+\begin_inset Formula $\bang_{s}:\Gamma\rightarrow\bot$
 \end_inset
 
 , satisfying 
-\begin_inset Formula $t[!]=\bang$
+\begin_inset Formula $t[\bang_{s}]=\bang$
 \end_inset
 
  for any term 
@@ -8580,10 +9626,15 @@ noprefix "false"
 
 .
  Formally, failure propagation is modelled by the rule 
-\begin_inset Formula $\bot\vdash t=u\Rightarrow\bang\dashv\bot$
+\begin_inset Formula $\bot\vdash t=u\Rightarrow\bang_{s}\dashv\bot$
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -9017,7 +10068,11 @@ When reaching a metavariable application
 \begin_inset Formula $M(x)$
 \end_inset
 
- at the top-level of either term, denoting by 
+ at the top-level of either term in a metavariable context 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+, denoting by 
 \begin_inset Formula $t$
 \end_inset
 
@@ -9087,7 +10142,7 @@ The
 \end_inset
 
  but considered in the context 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  without 
@@ -9095,7 +10150,7 @@ The
 \end_inset
 
 , denoted by 
-\begin_inset Formula $\Gamma\backslash M$
+\begin_inset Formula $\dotmcontext{\Gamma}\backslash M$
 \end_inset
 
 .
@@ -9268,7 +10323,7 @@ noprefix "false"
 \end_inset
 
  in the context 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 , and 
@@ -9386,7 +10441,7 @@ The corresponding rule
 \end_inset
 
  which has just been removed from the context 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 .
@@ -9399,7 +10454,7 @@ The corresponding rule
 \end_inset
 
 , resulting in a context denoted by 
-\begin_inset Formula $\Gamma[M:p]$
+\begin_inset Formula $\dotmcontext{\Gamma}[M:p]$
 \end_inset
 
 .
@@ -9626,7 +10681,7 @@ M\mapsto P(z)\dashv\Gamma[P:p]
 
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{Cycle}
+\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
 \]
 
 \end_inset
@@ -9821,7 +10876,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang\dashv\bot}}{Cycle}
+\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
 \]
 
 \end_inset
@@ -10012,7 +11067,7 @@ The last case described by the rule
 \end_inset
 
 , which we now describe.
- The motivation behind this pruning phase lies in the intuition that 
+ The intuition is that 
 \begin_inset Formula $M(x)$
 \end_inset
 
@@ -10117,7 +11172,48 @@ For this pruning phase, we use the notation
 \end_inset
 
 .
- Note that the data for a substitution from 
+ A priori, this only make sense if 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is dotted, but we can easily extend the meaning by defining
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+This is motivated by the fact that context extensions are characterised
+ as coproducts with singleton contexts in the category of metavariable contexts
+ and substitutions between them.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $M:m,\bot$
+\end_inset
+
+ as 
+\begin_inset Formula $\bot$
+\end_inset
+
+, and this metavariable application 
+\begin_inset Formula $M(x)$
+\end_inset
+
+ can still be defined in 
+\begin_inset Formula $M:m,\bot$
+\end_inset
+
+ as 
+\begin_inset Formula $\bang$
+\end_inset
+
+.
+ Even if 
+\begin_inset Formula $\Gamma=\bot$
+\end_inset
+
+, the data for a substitution from 
 \begin_inset Formula $M:m,\Gamma$
 \end_inset
 
@@ -10125,7 +11221,7 @@ For this pruning phase, we use the notation
 \begin_inset Formula $\Delta$
 \end_inset
 
- consists of a term 
+ is equivalently given by a term 
 \begin_inset Formula $\Delta;m\vdash t'$
 \end_inset
 
@@ -10146,11 +11242,8 @@ For this pruning phase, we use the notation
 \begin_inset Formula $t$
 \end_inset
 
- where the outbound variables have been pruned.
+ where the outbound variables have been pruned, in case of success.
  Accordingly, the type signature for the pruning phase is
-\end_layout
-
-\begin_layout Standard
 \begin_inset Preview
 
 \begin_layout Standard
@@ -10166,6 +11259,8 @@ status open
 
 
 \backslash
+agdacode{prune-type}
+\backslash
 agdacode{lc-prune-proto}
 \end_layout
 
@@ -10176,11 +11271,11 @@ agdacode{lc-prune-proto}
 
 \end_inset
 
+The 
+\begin_inset Formula $\AgdaFunction{prune}$
+\end_inset
 
-\end_layout
-
-\begin_layout Standard
-This function recursively inspects its argument.
+ function recursively inspects its argument.
  The base metavariable case corresponds to unification of 
 \begin_inset Formula $M(x)$
 \end_inset
@@ -10384,7 +11479,62 @@ The intuition for the application case is that if we want to unify
 \end_inset
 
 .
- The same intuition applies for 
+ Assume that those two unification problems yield 
+\begin_inset Formula $t'$
+\end_inset
+
+ and 
+\begin_inset Formula $u'$
+\end_inset
+
+ as replacements for 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+, as well as substitution 
+\begin_inset Formula $\sigma_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{2}$
+\end_inset
+
+, then 
+\begin_inset Formula $M$
+\end_inset
+
+ should be replaced accordingly with 
+\begin_inset Formula $t'[\sigma_{2}]\ u'$
+\end_inset
+
+.
+ Note that this really involves undotted application, taking into account
+ the following three subcases at once.
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\dotmcontext{\Delta_{1}}\\
+\dotmcontext{\Delta_{1}}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\dotmcontext{\Delta_{2}}
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\dotmcontext{\Delta_{2}}}\quad\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\dotmcontext{\Delta_{1}}\\
+\dotmcontext{\Delta_{1}}\prune{u[\sigma_{1}]}x{\bang_{s}}{\bang}\dashv\bot
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\bang_{s}}{\bang}\dashv\bot\\
+\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\bang_{s}}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The same intuition applies for 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -11835,11 +12985,7 @@ name "not:highlighted-cat-notations"
 
 \end_inset
 
-
-\begin_inset Formula $\highlighted{m\vdash x=y\Rightarrow z\dashv p}$
-\end_inset
-
- denotes an equaliser 
+We denote an equaliser 
 \begin_inset Formula $\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
 $
 \end_inset
@@ -11848,7 +12994,12 @@ $
 \begin_inset Formula ${\cal A}$
 \end_inset
 
-, while 
+ by 
+\begin_inset Formula $\highlighted{m\vdash x=y\Rightarrow z\dashv p}$
+\end_inset
+
+ denotes.
+ Similarly, 
 \begin_inset Formula $\highlighted{m\prunecat xy{r\dashv p}l{}}$
 \end_inset
 
@@ -12431,7 +13582,7 @@ Given a category
 
 \begin_layout Notation
 We denote by 
-\begin_inset Formula $\bang$
+\begin_inset Formula $\bang_{s}$
 \end_inset
 
  any terminal morphism to 
@@ -13492,6 +14643,58 @@ pattern-friendly
 .
 \end_layout
 
+\begin_layout Remark
+It follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:mcon-kleisli"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand citet
+before "Exercise VI.5.1"
+key "MacLane:cwm"
+literal "false"
+
+\end_inset
+
+ that 
+\begin_inset Formula $\Th S$
+\end_inset
+
+ fully faithfully embeds in the category of algebras of 
+\begin_inset Formula $T$
+\end_inset
+
+, by mapping a metavariable context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to the free algebra 
+\begin_inset Formula $T\underline{\Gamma}$
+\end_inset
+
+.
+ In fact, 
+\begin_inset Formula $\Thbot S$
+\end_inset
+
+ also fully faithfully embeds in the category of algebras by mapping 
+\begin_inset Formula $\bot$
+\end_inset
+
+ to the terminal algebra (its underlying functor maps any object of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ to the singleton set).
+\end_layout
+
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
@@ -14046,6 +15249,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Sequential unification (rule U-Split)
+\end_layout
+
+\end_inset
+
 Sequential unification (rule 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
@@ -14385,6 +15597,15 @@ We therefore get the rule
 \end_layout
 
 \begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Flex-Flex, same metavariable (rule Same-MVar)
+\end_layout
+
+\end_inset
+
 Flex-Flex, same metavariable (rule 
 \begin_inset Formula $\refrule{Same-MVar}$
 \end_inset
@@ -14651,6 +15872,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Flex-rigid, cyclic (rule Cycle)
+\end_layout
+
+\end_inset
+
 Flex-rigid, cyclic (rule 
 \begin_inset Formula $\refrule{Cycle}$
 \end_inset
@@ -15399,6 +16629,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Rigid (rules P-Rig and P-Rig-Fail)
+\end_layout
+
+\end_inset
+
 Rigid (rules 
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
@@ -15797,6 +17036,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Flex (rule P-Flex)
+\end_layout
+
+\end_inset
+
 Flex (rule 
 \begin_inset Formula $\refrule{P-Flex}$
 \end_inset
@@ -16146,13 +17394,27 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
+Termination and completeness
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:termination-completeness"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Termination
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:termination"
+name "subsec:termination"
 
 \end_inset
 
@@ -16508,14 +17770,14 @@ If there is a finite derivation tree of
  
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Completeness
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:completeness"
+name "subsec:completeness"
 
 \end_inset
 
@@ -16523,6 +17785,21 @@ name "sec:completeness"
 \end_layout
 
 \begin_layout Standard
+We have proved that the algorithm is sound and terminates.
+ To ensure completeness, we need to be check that the algorithm fails only
+ when it should fail.
+ We actually already cover thoses cases in the previous sections, but we
+ sum up the arguments in this section.
+ 
+\color red
+TODO
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 In this section, we explain why soundness (
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -16546,7 +17823,7 @@ noprefix "false"
 ) and termination (
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "sec:termination"
+reference "subsec:termination"
 plural "false"
 caps "true"
 noprefix "false"
@@ -16560,7 +17837,12 @@ noprefix "false"
  occurs when there is no unifier, as expected.
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
 Note that failure is treated as a free 
 \begin_inset Quotes eld
 \end_inset
@@ -16587,7 +17869,7 @@ noprefix "false"
 \begin_inset Formula $\Th S$
 \end_inset
 
- with a (dignified) error object 
+ with an error metavariable context 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -25136,8 +26418,7 @@ Conclusion
 We presented a generic unification algorithm for Miller's pattern fragment
  with its associated categorical semantics, parameterised by a new notion
  of signature for syntax with metavariables.
- In the future, we plan to a implement a reusable library based on this
- work.
+ In the future, we plan to provide fully mechanised proof of correctness.
  We also plan to see how this work applies to dependently-typed languages,
  going beyond polymorphic syntax.
  Finally, we are interesting in further extending the setting to cover unificati

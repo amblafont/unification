@@ -197,4 +197,8 @@
     \equal{#1}{commonValues} \OR
     \equal{#1}{equaliser} \OR
     \equal{#1}{pullback}
-  }{\highlighted{\textrm{\textcolor{black}{#1}}}}{{#2}}}
+  }{\highlighted{\textrm{\textcolor{black}{#1}}}}{%
+#2}}
+%     {\ifthenelse{\equal{#1}{Tm}}{\{#1}}%
+% {#2}%
+%   }}}

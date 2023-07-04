@@ -3,8 +3,8 @@ module lib where
 
 open import Agda.Builtin.Unit
 open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
-open import Data.Maybe.Base hiding (map) renaming (nothing to ⊥ ; just to ⌊_⌋)
-open import Data.List hiding (map)
+open import Data.Maybe.Base hiding (map ; _>>=_) renaming (nothing to ⊥ ; just to ⌊_⌋)
+open import Data.List hiding (map ; [_])
 open import Data.Product using (_,_; Σ; _×_)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 open import Relation.Binary using (Rel; IsEquivalence; Setoid)
@@ -13,6 +13,11 @@ open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Fin as Fin using (Fin)
 open import Relation.Nullary
 open import Agda.Builtin.Bool renaming (Bool to 𝔹)
+
+module IdentityDoNotation where
+  -- We use the do notation for efficient pattern matching
+  _>>=_ : ∀ {A B : Set} → A → (A → B) → B
+  m >>= f = f m
 
 
 
@@ -30,7 +35,6 @@ data _∈_ {A : Set} (a : A) : List A → Set where
 \end{code}
 %</membership>
 \begin{code}
-
 
 _[_∶_] : ∀ {A}(Γ : List A) {m} → m ∈ Γ → A → List A
 .(_ ∷ ℓ) [ Ο {ℓ} ∶ b ] = b ∷ ℓ
@@ -83,15 +87,21 @@ module VecList where
     [] : VecList B []
     _,_ : ∀ {a as} → B a → VecList B as → VecList B (a ∷ as)
 
+  [_] : ∀ {A}{B : A → Set}{a : A} → B a → VecList B (a ∷ []) 
+  [ b ] = b , []
 
   map : ∀ {A : Set}{B B' : A → Set}{l : List A} → (∀ a → B a → B' a) → VecList B l → VecList B' l
   map f [] = []
   map f (x , xs) = f _ x , map f xs
 
-
   nth : ∀ {A : Set}{B : A → Set}{l : List A}{a} → a ∈ l → VecList B l →  B a
   nth Ο (t , _) = t
   nth (1+ a∈) (_ , ts) = nth a∈ ts
+
+  init : ∀ {A : Set}{B : A → Set} → (∀ a → B a) → (ℓ : List A) → VecList B ℓ
+  init f [] = []
+  init f (x ∷ ℓ) = f x , init f ℓ
+
 
 open VecList.VecList public
 
