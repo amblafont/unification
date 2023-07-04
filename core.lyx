@@ -7024,7 +7024,7 @@ status open
 
 \begin_inset Formula 
 \[
-\dfrac{}{\bot;n\vdash\bang}
+\dfrac{}{\bot;a\vdash\bang}
 \]
 
 \end_inset
@@ -12102,12 +12102,14 @@ status open
 
 \begin_layout Plain Layout
 
-%%
+%%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
+\backslash
+agdacode{metacontext}
 \backslash
 agdacode{syntax}
 \end_layout
@@ -12146,7 +12148,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\in\Oop na\quad\overbrace{\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}^{"\alpha_{o}\xrightarrow{\vec{t}}\Gamma"}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}}{Rig}
+\labellabelrule{\dfrac{o\in\Oop na\quad\overbrace{\dotmcontext{\Gamma};\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}^{"\alpha_{o}\xrightarrow{\vec{t}}\Gamma"}}{\dotmcontext{\Gamma};a\vdash o(t_{1},\dots,t_{n})}}{Rig}
 \]
 
 \end_inset
@@ -12157,7 +12159,18 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{M:m\in\Gamma\quad x\in\hom_{{\cal A}}(m,a)}{\Gamma;a\vdash M(x)}}{Flex}
+\labellabelrule{\dfrac{M:m\in\dotmcontext{\Gamma}\quad x\in\hom_{{\cal A}}(m,a)}{\dotmcontext{\Gamma};a\vdash M(x)}}{Flex}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{}{\bot;n\vdash\bang}
 \]
 
 \end_inset
@@ -12298,7 +12311,7 @@ Recall that the Agda code uses a nameless convention for metavariable contexts:
 \end_inset
 
  in the context 
-\begin_inset Formula $\Gamma;a$
+\begin_inset Formula $\dotmcontext{\Gamma};a$
 \end_inset
 
  can be specified either as a metavariable substitution (defined in 
@@ -12316,7 +12329,7 @@ noprefix "false"
 \end_inset
 
  to 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 , as in the Agda code, or explicitly as a list of terms 
@@ -12324,7 +12337,7 @@ noprefix "false"
 \end_inset
 
  such that 
-\begin_inset Formula $\Gamma;\nthar oi\vdash t_{i}$
+\begin_inset Formula $\dotmcontext{\Gamma};\nthar oi\vdash t_{i}$
 \end_inset
 
 , as in the rule 
@@ -12601,11 +12614,11 @@ name "not:vector-renamings"
 \end_inset
 
 If 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  and 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\dotmcontext{\Delta}$
 \end_inset
 
  are two metavariable contexts 
@@ -12617,7 +12630,7 @@ If
 \end_inset
 
  of the same length, we write 
-\begin_inset Formula $\delta:\Gamma\Longrightarrow\Delta$
+\begin_inset Formula $\delta:\dotmcontext{\Gamma}\Longrightarrow\dotmcontext{\Delta}$
 \end_inset
 
  to mean that 
@@ -12633,11 +12646,11 @@ vector of renamings
 \end_inset
 
  between 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  and 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\dotmcontext{\Delta}$
 \end_inset
 
 , in the sense that each 
@@ -12693,15 +12706,15 @@ noprefix "false"
 
 ).
  We extend the renaming notation to substitutions: given 
-\begin_inset Formula $\delta:\Gamma\rightarrow\Delta$
+\begin_inset Formula $\delta:\Gamma\rightarrow\dotmcontext{\Delta}$
 \end_inset
 
  and 
-\begin_inset Formula $x:\Delta'\Longrightarrow\Delta$
+\begin_inset Formula $x:\dotmcontext{\Delta'}\Longrightarrow\dotmcontext{\Delta}$
 \end_inset
 
 , we define 
-\begin_inset Formula $\rename{\delta}x:\Gamma\rightarrow\Delta'$
+\begin_inset Formula $\rename{\delta}x:\Gamma\rightarrow\dotmcontext{\Delta'}$
 \end_inset
 
  as 
@@ -12725,12 +12738,12 @@ noprefix "false"
 \end_inset
 
 .
- Finally, a vector of renamings 
-\begin_inset Formula $\delta:\Gamma\Longrightarrow\Delta$
+ Note that a vector of renamings 
+\begin_inset Formula $\delta:\dotmcontext{\Gamma}\Longrightarrow\dotmcontext{\Delta}$
 \end_inset
 
  canonically induces a metavariable substitution 
-\begin_inset Formula $\substofrenamings{\delta}:\Delta\rightarrow\Gamma$
+\begin_inset Formula $\substofrenamings{\delta}:\dotmcontext{\Delta}\rightarrow\dotmcontext{\Gamma}$
 \end_inset
 
 , mapping 
@@ -12800,9 +12813,9 @@ noprefix "false"
 
 \begin_layout Standard
 We are similarly led to generalise unification of terms to unification of
- substitutions, and we extend accordingly the notation.
+ dotted substitutions, and we extend accordingly the notation.
  Given two substitutions 
-\begin_inset Formula $\delta_{1},\delta_{2}:\Gamma'\rightarrow\Gamma$
+\begin_inset Formula $\delta_{1},\delta_{2}:\dotmcontext{\Gamma'}\rightarrow\Gamma$
 \end_inset
 
 , we write 
@@ -12862,13 +12875,14 @@ agdacode{unifyprototype}
 
 \end_inset
 
- Similarly, we define pruning of terms mutually with pruning of substitutions.
+ Similarly, we define pruning of terms mutually with pruning of dotted substitut
+ions.
  We thus also extend the pruning notation: given a substitution 
-\begin_inset Formula $\delta:\Gamma'\rightarrow\Gamma$
+\begin_inset Formula $\delta:\dotmcontext{\Gamma'}\rightarrow\Gamma$
 \end_inset
 
  and a vector 
-\begin_inset Formula $x:\Gamma''\Longrightarrow\Gamma'$
+\begin_inset Formula $x:\dotmcontext{\Gamma''}\Longrightarrow\dotmcontext{\Gamma'}$
 \end_inset
 
  of renamings, the judgement 
@@ -12880,7 +12894,7 @@ agdacode{unifyprototype}
 \end_inset
 
  extended with 
-\begin_inset Formula $\delta':\Gamma''\rightarrow\Delta$
+\begin_inset Formula $\delta':\dotmcontext{\Gamma''}\rightarrow\Delta$
 \end_inset
 
  is the most general unifier of 
@@ -12892,7 +12906,7 @@ agdacode{unifyprototype}
 \end_inset
 
  as substitutions from 
-\begin_inset Formula $\Gamma,\Gamma'$
+\begin_inset Formula $\Gamma,\dotmcontext{\Gamma'}$
 \end_inset
 
  to 
@@ -13299,8 +13313,8 @@ literal "false"
 \end_layout
 
 \begin_layout Lemma
-Metavariable contexts and substitutions (with their composition) between
- them define a category 
+Dotted metavariable contexts and substitutions (with their composition)
+ between them define a category 
 \begin_inset Formula $\Th S$
 \end_inset
 
@@ -13371,7 +13385,7 @@ free
 
 \begin_layout Lemma
 The most general unifier of two parallel substitutions 
-\begin_inset Formula $\xymatrix{\Gamma'\coeqr{\delta_{1}}{\delta_{2}} & \Gamma}
+\begin_inset Formula $\xymatrix{\dotmcontext{\Gamma'}\coeqr{\delta_{1}}{\delta_{2}} & \dotmcontext{\Gamma}}
 $
 \end_inset
 
@@ -13392,9 +13406,12 @@ noprefix "false"
 
 , after explaining how failure is categorically handled.
  Indeed, pattern unification is typically stated as the existence of a coequalis
-er on the condition that there is a unifier.
- It turns out that we can get rid of this condition by considering the category
- 
+er on the condition that there is a unifier in this category 
+\begin_inset Formula $\Th S$
+\end_inset
+
+.
+ But we can get rid of this condition by considering the category 
 \begin_inset Formula $\Th S$
 \end_inset
 
@@ -13402,7 +13419,7 @@ er on the condition that there is a unifier.
 \begin_inset Formula $\bot$
 \end_inset
 
-, as we explain in the remaining of this section.
+, resulting in the full category of metavariable contexts and substitutions.
 \end_layout
 
 \begin_layout Standard
@@ -13596,8 +13613,29 @@ We denote by
 .
 \end_layout
 
+\begin_layout Lemma
+Metavariable contexts and substitutions between them define a category which
+ is isomorphic to 
+\begin_inset Formula $\Thbot S$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
-Adding a terminal object results in adding a terminal cocone to all diagrams.
+In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we already made sense of this extension.
+ Let us rephrase our explanations from a categorical perspective.
+ Adding a terminal object results in adding a terminal cocone to all diagrams.
  As a consequence, we have the following lemma.
 \end_layout
 
@@ -13646,21 +13684,79 @@ Straightforward, because a colimit is defined as an initial cocone.
 \end_layout
 
 \begin_layout Standard
-The following result is also useful.
+The following results are also useful.
 \end_layout
 
 \begin_layout Lemma
-Given a category 
+Let 
 \begin_inset Formula $\mathscr{B}$
 \end_inset
 
-, the canonical embedding functor 
+ be a category.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+label=(
+\backslash
+roman{enumi}), ref=
+\backslash
+thelemma.(
+\backslash
+roman{enumi})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The canonical embedding functor 
 \begin_inset Formula $\mathscr{B}\rightarrow\catbot{\mathscr{B}}$
 \end_inset
 
  creates colimits.
+ 
 \end_layout
 
+\begin_layout Enumerate
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:diag-bot"
+
+\end_inset
+
+Any diagram 
+\begin_inset Formula $J$
+\end_inset
+
+ in 
+\begin_inset Formula $\B_{\bot}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\bot$
+\end_inset
+
+ is in its image has a colimit given by the terminal cocone on 
+\begin_inset Formula $\bot$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 This ensures in particular that coproducts in 
 \begin_inset Formula $\Th S$
@@ -13672,7 +13768,16 @@ This ensures in particular that coproducts in
 \end_inset
 
 .
+ It also justifies defining the union of a dotted metavariable context with
  
+\begin_inset Formula $\bot$
+\end_inset
+
+ as 
+\begin_inset Formula $\bot$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -13763,7 +13868,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Categorically speaking, our pattern unification algorithm provides an explicit
+Categorically speaking, our pattern-unification algorithm provides an explicit
  proof of the following statement, where the conditions for a signature
  to be 
 \emph on
@@ -13792,6 +13897,20 @@ Given any pattern-friendly signature
 \end_inset
 
  has coequalisers.
+\end_layout
+
+\begin_layout Remark
+Strictly speaking, the function 
+\begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
+\end_inset
+
+ only addresses coequalisers of dotted substitutions.
+ However, there is only one undotted substitution: the identity morphism
+ on 
+\begin_inset Formula $\bot$
+\end_inset
+
+, so the generalisation is straightforward.
 \end_layout
 
 \begin_layout Standard
@@ -14359,7 +14478,7 @@ name "rem:functor-L-intuition"
 \end_inset
 
 A metavariable application 
-\begin_inset Formula $\Gamma;a\vdash M(x)$
+\begin_inset Formula $\dotmcontext{\Gamma};a\vdash M(x)$
 \end_inset
 
  corresponds to the composition 
@@ -14371,7 +14490,7 @@ A metavariable application
 \end_inset
 
  to 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 , where 
@@ -14379,7 +14498,7 @@ A metavariable application
 \end_inset
 
  is the coproduct injection 
-\begin_inset Formula $(X:m)\cong(M:m)\hookrightarrow\Gamma$
+\begin_inset Formula $(X:m)\cong(M:m)\hookrightarrow\dotmcontext{\Gamma}$
 \end_inset
 
  mapping 
@@ -14494,7 +14613,7 @@ name "lem:free-alg-syntax"
 
 \end_inset
 
-The syntax generated by a GB-signature (see 
+The dotted syntax generated by a GB-signature (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:sig-syntax"
@@ -14510,7 +14629,7 @@ noprefix "false"
 
 .
  More precisely, given a metavariable context 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\begin_inset Formula $\dotmcontext{\Gamma}=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
 \end_inset
 
 , 
@@ -14527,7 +14646,7 @@ T(\underline{\Gamma})_{a}\cong\{t\ |\ \Gamma;a\vdash t\}
 \begin_deeper
 \begin_layout Standard
 where 
-\begin_inset Formula $\underline{\Gamma}:{\cal A}\rightarrow\Set$
+\begin_inset Formula $\underline{\dotmcontext{\Gamma}}:{\cal A}\rightarrow\Set$
 \end_inset
 
  is defined as the coproduct of representable functors 
@@ -14544,7 +14663,7 @@ where
 
 .
  Moreover, the action of 
-\begin_inset Formula $T(\underline{\Gamma})$
+\begin_inset Formula $T(\underline{\dotmcontext{\Gamma}})$
 \end_inset
 
  on morphisms of 
@@ -14556,17 +14675,17 @@ where
 
 \end_deeper
 \begin_layout Notation
-Given a metavariable context 
-\begin_inset Formula $\Gamma$
+Given a dotted metavariable context 
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 .
  We sometimes denote 
-\begin_inset Formula $\underline{\Gamma}$
+\begin_inset Formula $\underline{\dotmcontext{\Gamma}}$
 \end_inset
 
  just by 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
 .
@@ -14574,7 +14693,7 @@ Given a metavariable context
 
 \begin_layout Standard
 If 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},...,M_{p}:m_{p})$
+\begin_inset Formula $\dotmcontext{\Gamma}=(M_{1}:m_{1},...,M_{p}:m_{p})$
 \end_inset
 
  and 
@@ -14582,17 +14701,17 @@ If
 \end_inset
 
  are metavariable contexts, a Kleisli morphism 
-\begin_inset Formula $\sigma:\Gamma\rightarrow T\Delta$
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow T\dotmcontext{\Delta}$
 \end_inset
 
  is equivalently given (by combining the above lemma, the Yoneda Lemma,
  and the universal property of coproducts) by a metavariable substitution
  from 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  to 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\dotmcontext{\Delta}$
 \end_inset
 
 .
@@ -14672,11 +14791,11 @@ literal "false"
 \end_inset
 
 , by mapping a metavariable context 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
  to the free algebra 
-\begin_inset Formula $T\underline{\Gamma}$
+\begin_inset Formula $T\dotmcontext{\Gamma}$
 \end_inset
 
 .
@@ -14688,11 +14807,11 @@ literal "false"
 \begin_inset Formula $\bot$
 \end_inset
 
- to the terminal algebra (its underlying functor maps any object of 
+ to the terminal algebra, whose underlying functor maps any object of 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- to the singleton set).
+ to a singleton set.
 \end_layout
 
 \begin_layout Lemma
@@ -15202,7 +15321,46 @@ noprefix "false"
 \end_inset
 
 .
- More specifically, we discuss the rule sequential rule 
+ 
+\end_layout
+
+\begin_layout Standard
+The failing rule 
+\begin_inset Formula $\refrule{U-Fail}$
+\end_inset
+
+ is justified by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:diag-bot"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ We already discussed the rule 
+\begin_inset Formula $\refrule{No-Cycle}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+: the premise and the conclusion deal with the same unification problem,
+ phrased differently.
+ In the next subsections, we discuss the rule sequential rules 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ and 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
 
@@ -15230,7 +15388,7 @@ noprefix "false"
 
 \end_inset
 
-), and the failing rule 
+), the failing rule 
 \begin_inset Formula $\refrule{Cycle}$
 \end_inset
 
@@ -15245,7 +15403,25 @@ noprefix "false"
 
 \end_inset
 
-).
+), and the rules 
+\begin_inset Formula $\refrule{Clash}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Rig}$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:rig-rig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) which handle unification of two rigid terms.
 \end_layout
 
 \begin_layout Subsection
@@ -15253,12 +15429,16 @@ noprefix "false"
 status open
 
 \begin_layout Plain Layout
-Sequential unification (rule U-Split)
+Sequential unification (rules U-Empty and U-Split)
 \end_layout
 
 \end_inset
 
-Sequential unification (rule 
+Sequential unification (rules 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ and 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
 
@@ -15272,6 +15452,27 @@ name "subsec:usplit"
 
 \end_inset
 
+The rule 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ is a direct application of the following general lemma.
+\end_layout
+
+\begin_layout Lemma
+If 
+\begin_inset Formula $A$
+\end_inset
+
+ is initial in a category, then any diagram of the shape 
+\begin_inset Formula $\xymatrix{A\coeqr{}{} & B\ar[r]^{1_{B}} & B}
+$
+\end_inset
+
+ is a coequaliser.
+\end_layout
+
+\begin_layout Standard
 The rule 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
@@ -15661,6 +15862,9 @@ noprefix "false"
 \end_inset
 
 .
+ 
+\color red
+TODO: more details
 \end_layout
 
 \begin_layout Lemma
@@ -15920,7 +16124,7 @@ The rule
 \end_inset
 
 .
- In this section, we show that indeed there is no unifier.
+ In this section, we show that indeed there is no successful unifier.
  More precisely, we prove 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -15976,7 +16180,7 @@ The size
 \begin_inset Formula $|t|\in\mathbb{N}$
 \end_inset
 
- of a term 
+ of a dotted term 
 \begin_inset Formula $t$
 \end_inset
 
@@ -15984,7 +16188,7 @@ The size
 \begin_inset Formula $|M(\arg x)|=0$
 \end_inset
 
- and 
+, and 
 \begin_inset Formula $|o(\vec{t})|=1+|\vec{t}|$
 \end_inset
 
@@ -16072,7 +16276,7 @@ name "lem:sizeM-factor"
 \end_inset
 
 For any term 
-\begin_inset Formula $\text{\ensuremath{\Gamma,M:m;a\vdash}}t$
+\begin_inset Formula $\text{\ensuremath{\dotmcontext{\Gamma};a\vdash}}t$
 \end_inset
 
 , if 
@@ -16080,12 +16284,12 @@ For any term
 \end_inset
 
 , then 
-\begin_inset Formula $\Gamma;a\vdash t$
+\begin_inset Formula $\dotmcontext{\Gamma}\backslash M;a\vdash t$
 \end_inset
 
 .
  Moreover, for any 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{n}:m_{n})$
+\begin_inset Formula $\dotmcontext{\Gamma}=(M_{1}:m_{1},\dots,M_{n}:m_{n})$
 \end_inset
 
 , well-formed term 
@@ -16093,11 +16297,11 @@ For any term
 \end_inset
 
  in context 
-\begin_inset Formula $\Gamma;a$
+\begin_inset Formula $\dotmcontext{\Gamma};a$
 \end_inset
 
-, and substitution 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+, and successful substitution 
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
 \end_inset
 
 , we have 
@@ -16126,11 +16330,15 @@ For any term
 \end_inset
 
  in context 
-\begin_inset Formula $\Gamma,M:m;a$
+\begin_inset Formula $\dotmcontext{\Gamma};a$
 \end_inset
 
-, substitution 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+ with 
+\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
+\end_inset
+
+, successful substitution 
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
 \end_inset
 
 , morphism 
@@ -16175,7 +16383,11 @@ Let
 \end_inset
 
  be a term in context 
-\begin_inset Formula $\Gamma,M:m;a$
+\begin_inset Formula $\dotmcontext{\Gamma};a$
+\end_inset
+
+ with 
+\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
 \end_inset
 
  and 
@@ -16183,7 +16395,7 @@ Let
 \end_inset
 
  such that 
-\begin_inset Formula $(\sigma,M\mapsto u):(\Gamma,M:m)\rightarrow\Delta$
+\begin_inset Formula $(M\mapsto u,\sigma):\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
 \end_inset
 
  unifies 
@@ -16204,7 +16416,7 @@ Let
 \end_inset
 
 , or 
-\begin_inset Formula $\Gamma;a\vdash t$
+\begin_inset Formula $\dotmcontext{\Gamma};a\vdash t$
 \end_inset
 
 .
@@ -16273,6 +16485,39 @@ noprefix "false"
 .
 \end_layout
 
+\begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Rigid-rigid (rules Clash and U-Rig)
+\end_layout
+
+\end_inset
+
+Rigid-rigid (rules 
+\begin_inset Formula $\refrule{Clash}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Rig}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:rig-rig"
+
+\end_inset
+
+
+\color red
+TODO
+\end_layout
+
 \begin_layout Section
 Soundness of the pruning phase
 \end_layout
@@ -16308,15 +16553,27 @@ noprefix "false"
 \end_inset
 
 , which handles unification of two substitutions 
-\begin_inset Formula $\delta:\Gamma'_{1}\rightarrow\Gamma$
+\begin_inset Formula $\delta:\dotmcontext{\Gamma'_{1}}\rightarrow\Gamma$
 \end_inset
 
  and 
-\begin_inset Formula $\substofrenamings x:\Gamma'_{1}\rightarrow\Gamma'_{2}$
+\begin_inset Formula $\substofrenamings x:\dotmcontext{\Gamma'_{1}}\rightarrow\dotmcontext{\Gamma'_{2}}$
 \end_inset
 
  in the extended context 
-\begin_inset Formula $\Gamma,\Gamma'_{2}$
+\begin_inset Formula $\dotmcontext{\Gamma'_{2}},\Gamma$
+\end_inset
+
+ as the coproduct of 
+\begin_inset Formula $\dotmcontext{\Gamma'_{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ in 
+\begin_inset Formula $\Thbot S$
 \end_inset
 
 , where 
@@ -16324,13 +16581,13 @@ noprefix "false"
 \end_inset
 
  is induced by a vector of renamings 
-\begin_inset Formula $x:\Gamma'_{2}\Longrightarrow\Gamma'_{1}$
+\begin_inset Formula $x:\dotmcontext{\Gamma'_{2}}\Longrightarrow\dotmcontext{\Gamma'_{1}}$
 \end_inset
 
 .
  Categorically speaking, we are looking at the following coequalising diagram
  in 
-\begin_inset Formula $\Th S$
+\begin_inset Formula $\Thbot S$
 \end_inset
 
 .
@@ -16347,18 +16604,12 @@ YADE DIAGRAM diagrams/pushout-coeq.json
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Preview
 
 \begin_layout Standard
 \begin_inset ERT
 status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\end_layout
 
 \begin_layout Plain Layout
 
@@ -16374,7 +16625,9 @@ t height=1.2ex, text depth=0.25ex}]
 \backslash
 node (0) at (2em, -3.3333333333333335em) {$
 \backslash
-Gamma'_1$} ; 
+boldsymbol{
+\backslash
+Gamma'_1}$} ; 
 \end_layout
 
 \begin_layout Plain Layout
@@ -16383,7 +16636,7 @@ Gamma'_1$} ;
 \backslash
 node (1) at (7.333333333333333em, -4.666666666666667em) {$
 \backslash
-Gamma'_2$} ; 
+Gamma$} ; 
 \end_layout
 
 \begin_layout Plain Layout
@@ -16392,7 +16645,9 @@ Gamma'_2$} ;
 \backslash
 node (2) at (7.333333333333333em, -2em) {$
 \backslash
-Gamma$} ; 
+boldsymbol{
+\backslash
+Gamma_2'}$} ; 
 \end_layout
 
 \begin_layout Plain Layout
@@ -16401,9 +16656,11 @@ Gamma$} ;
 \backslash
 node (3) at (12.666666666666666em, -3.3333333333333335em) {$
 \backslash
-Gamma,
+boldsymbol{
 \backslash
-Gamma'_2$} ; 
+Gamma'_2},
+\backslash
+Gamma$} ; 
 \end_layout
 
 \begin_layout Plain Layout
@@ -16455,8 +16712,7 @@ path[->]
 \backslash
 scriptstyle 
 \backslash
-overline{x}$"', pos=0.5, black,->, bend right={11.459155902616464}, ] (1)
- 
+delta$"', pos=0.5, black,->, bend right={11.459155902616464}, ] (1) 
 \end_layout
 
 \begin_layout Plain Layout
@@ -16465,7 +16721,8 @@ overline{x}$"', pos=0.5, black,->, bend right={11.459155902616464}, ] (1)
 \backslash
 scriptstyle 
 \backslash
-delta$", pos=0.5, black,->, bend right={-11.459155902616464}, ] (2) 
+overline{x}$", pos=0.5, black,->, bend right={-11.459155902616464}, ] (2)
+ 
 \end_layout
 
 \begin_layout Plain Layout
@@ -16496,13 +16753,6 @@ scriptstyle in_2$"', pos=0.5, black,->, bend right={11.459155902616464}, ]
 end{tikzpicture}
 \end_layout
 
-\begin_layout Plain Layout
-
-
-\backslash
-]
-\end_layout
-
 \end_inset
 
 
@@ -16514,15 +16764,38 @@ end{tikzpicture}
 \end_layout
 
 \begin_layout Standard
-The 
+The rules 
+\begin_inset Formula $\refrule{P-Empty}$
+\end_inset
+
+ and 
 \begin_inset Formula $\refrule{P-Split}$
 \end_inset
 
- rule is a straightforward adaption of the 
+ are straightforward adaptions of the rules 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ and 
 \begin_inset Formula $\refrule{U-Split}$
 \end_inset
 
  rule specialised to those specific coequaliser diagrams.
+ The failing rule 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+ is justified by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:diag-bot"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Remark
@@ -16533,7 +16806,7 @@ name "rem:cocone-pruning"
 \end_inset
 
 A unifier 
-\begin_inset Formula $\Gamma,\Gamma''\rightarrow\Delta$
+\begin_inset Formula $\dotmcontext{\Gamma'_{2}},\Gamma\rightarrow\Delta$
 \end_inset
 
  splits into two components: a substitution 
@@ -16545,7 +16818,7 @@ A unifier
 \end_inset
 
  from 
-\begin_inset Formula $\Gamma'_{2}$
+\begin_inset Formula $\dotmcontext{\Gamma'_{2}}$
 \end_inset
 
  to 
@@ -16557,18 +16830,18 @@ A unifier
 \end_inset
 
  for each 
-\begin_inset Formula $i\in\{1,\dots,|\Gamma'_{1}|\}$
+\begin_inset Formula $i\in\{1,\dots,|\dotmcontext{\Gamma'_{1}}|\}$
 \end_inset
 
 .
  Moreover, the coequaliser 
-\begin_inset Formula $\sigma,\sigma':\Gamma,\Gamma'_{2}\rightarrow\Delta$
+\begin_inset Formula $\sigma',\sigma:\dotmcontext{\Gamma'_{2}},\Gamma\rightarrow\Delta$
 \end_inset
 
  is equivalently characterised as a pushout
 \begin_inset Formula 
 \[
-\xymatrix{\Gamma'_{1}\ar[r]^{\substofrenamings x}\ar[d]_{\delta} & \Gamma'_{2}\ar[d]^{\sigma'}\\
+\xymatrix{\dotmcontext{\Gamma'_{1}}\ar[r]^{\substofrenamings x}\ar[d]_{\delta} & \dotmcontext{\Gamma'_{2}}\ar[d]^{\sigma'}\\
 \Gamma\ar[r]_{\sigma} & \Delta
 }
 \]
@@ -16604,7 +16877,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-In the following sections, we detail soundness of the rules for the rigid
+In the following subsections, we detail soundness of the rules for the rigid
  case (
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -16687,11 +16960,11 @@ The rules
 \end_inset
 
  with 
-\begin_inset Formula $\Gamma;a\vdash o(\delta)$
+\begin_inset Formula $\dotmcontext{\Gamma};a\vdash o(\delta)$
 \end_inset
 
  in the metavariable context 
-\begin_inset Formula $M:m,\Gamma$
+\begin_inset Formula $M:m,\dotmcontext{\Gamma}$
 \end_inset
 
  for some 
@@ -17085,6 +17358,8 @@ The rule
 
 .
  
+\color red
+TODO: more details
 \end_layout
 
 \begin_layout Standard
@@ -17499,14 +17774,18 @@ noprefix "false"
  recursive call, the inputs are strictly smaller than the inputs of the
  calling site.
  First, we define the size 
-\begin_inset Formula $|\Gamma|$
+\begin_inset Formula $|\dotmcontext{\Gamma}|$
 \end_inset
 
- of a metavariable context 
-\begin_inset Formula $\Gamma$
+ of a dotted metavariable context 
+\begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
- as its length.
+ as its length, while 
+\begin_inset Formula $|\bot|=0$
+\end_inset
+
+ by definition.
  
 \begin_inset Note Note
 status open
@@ -17550,7 +17829,7 @@ noprefix "false"
 \begin_inset Formula $||t||$
 \end_inset
 
- of a term 
+ of a dotted term 
 \begin_inset Formula $t$
 \end_inset
 
@@ -17595,12 +17874,12 @@ Let us first quickly justify termination of the pruning phase.
 \end_layout
 
 \begin_layout Lemma
-For any term 
-\begin_inset Formula $\Gamma;a\vdash t$
+For any dotted term 
+\begin_inset Formula $\dotmcontext{\Gamma};a\vdash t$
 \end_inset
 
- and substitution 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+ and succesful substitution 
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
 \end_inset
 
 , if 
@@ -17616,7 +17895,7 @@ metavariable renaming
 \end_inset
 
  is a metavariable application for any 
-\begin_inset Formula $M:m\in\Gamma$
+\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
 \end_inset
 
 , then 
@@ -17635,14 +17914,10 @@ metavariable renaming
 
 \begin_layout Lemma
 If there is a finite derivation tree of 
-\begin_inset Formula $\Gamma\prune{\vec{t}}x{\sigma}{\vec{w}}\dashv\Delta$
+\begin_inset Formula $\dotmcontext{\Gamma}\prune{\vec{t}}x{\sigma}{\vec{w}}\dashv\dotmcontext{\Delta}$
 \end_inset
 
- and 
-\begin_inset Formula $\Delta\neq\bot$
-\end_inset
-
-, 
+ 
 \begin_inset Note Note
 status open
 
@@ -17660,7 +17935,7 @@ status open
 \end_inset
 
  then 
-\begin_inset Formula $|\Gamma|=|\Delta|$
+\begin_inset Formula $|\dotmcontext{\Gamma}|=|\dotmcontext{\Delta}|$
 \end_inset
 
  and 
@@ -17747,22 +18022,22 @@ noprefix "false"
 
 \begin_layout Lemma
 If there is a finite derivation tree of 
-\begin_inset Formula $\Gamma\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta$
+\begin_inset Formula $\dotmcontext{\Gamma}\vdash\vec{t}=\vec{u}\Rightarrow\sigma\dashv\Delta$
 \end_inset
 
 , then 
-\begin_inset Formula $|\Gamma|\geq|\Delta|$
+\begin_inset Formula $|\dotmcontext{\Gamma}|\geq|\Delta|$
 \end_inset
 
 , and moreover if 
-\begin_inset Formula $|\Gamma|=|\Delta|$
+\begin_inset Formula $|\dotmcontext{\Gamma}|=|\Delta|$
 \end_inset
 
  and 
-\begin_inset Formula $\Delta\neq\bot$
+\begin_inset Formula $\Delta$
 \end_inset
 
-, then 
+ is dotted, then 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -17785,21 +18060,6 @@ name "subsec:completeness"
 \end_layout
 
 \begin_layout Standard
-We have proved that the algorithm is sound and terminates.
- To ensure completeness, we need to be check that the algorithm fails only
- when it should fail.
- We actually already cover thoses cases in the previous sections, but we
- sum up the arguments in this section.
- 
-\color red
-TODO
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 In this section, we explain why soundness (
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -17835,15 +18095,7 @@ noprefix "false"
  not.
  In fact, we already checked in the previous sections that failure only
  occurs when there is no unifier, as expected.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-Note that failure is treated as a free 
+ Indead, failure is treated as a free 
 \begin_inset Quotes eld
 \end_inset
 

@@ -78,23 +78,30 @@ module Tm (S : Signature) where
    infix 3 _·⟶_
    infix 3 _·⟶·_
 \end{code}
-%<*syntax>
+%<*metacontext>
 \begin{code}
    MetaContext· = List A
    MetaContext = Maybe MetaContext·
-
-   data Tm  : MetaContext → A → Set
+\end{code}
+%</metacontext>
+\begin{code}
+   _·⟶·_ : MetaContext· → MetaContext· → Set
    _·⟶_ : MetaContext· → MetaContext → Set
+\end{code}
+%<*syntax>
+\begin{code}
+   data Tm  : MetaContext → A → Set
 
-   _·⟶·_ = λ Γ Δ → Γ ·⟶ ⌊ Δ ⌋
+   Γ ·⟶ Δ = VecList (Tm Δ) Γ
+   Γ ·⟶· Δ = Γ ·⟶ ⌊ Δ ⌋
    Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
 
    data Tm where
-     Rigid· : ∀ {Γ a}(o : O a) → (α o ·⟶· Γ) → Tm· Γ a
-     _﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → m ⇒ a → Tm· Γ a
+     Rigid· : ∀ {Γ a}(o : O a) →
+           (α o ·⟶· Γ) → Tm· Γ a
+     _﹙_﹚ : ∀ {Γ a m} → m ∈ Γ →
+          m ⇒ a → Tm· Γ a
      ! : ∀ {a} → Tm ⊥ a
-
-   Γ ·⟶ Δ = VecList (Tm Δ) Γ
 \end{code}
 %</syntax>
 \begin{code}
@@ -228,7 +235,7 @@ Pruning
 
 
   prune : ∀ {Γ a m} → Tm Γ a → m ⇒ a → [ m ]∪ Γ ⟶?
-  prune-σ : ∀ {Γ Γₐ Γₘ} → (Γₐ ·⟶ Γ) → (Γₘ ⟹ Γₐ) → Γₘ ∪ Γ ⟶?
+  prune-σ : ∀ {Γ Γ' Γ''} → (Γ' ·⟶ Γ) → (Γ'' ⟹ Γ') → Γ'' ∪ Γ ⟶?
   \end{code}
   %</prune-proto>
   %<*prune-subst>

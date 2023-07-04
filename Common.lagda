@@ -26,15 +26,9 @@ open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 
 private
-\end{code}
-%<*metacontext>
-\begin{code}
   MetaContext· = List A
   MetaContext = Maybe MetaContext·
 
-\end{code}
-%</metacontext>
-\begin{code}
   Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
   infix 3 _·⟶_
   infix 3 _·⟶·_
