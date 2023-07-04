@@ -14,11 +14,6 @@ open import Data.Fin as Fin using (Fin)
 open import Relation.Nullary
 open import Agda.Builtin.Bool renaming (Bool to 𝔹)
 
-module IdentityDoNotation where
-  -- We use the do notation for efficient pattern matching
-  _>>=_ : ∀ {A B : Set} → A → (A → B) → B
-  m >>= f = f m
-
 
 
 -- ⌊ a ⌋ : Maybe-PreImage f b  means that b = f a
@@ -77,33 +72,5 @@ module _ {A} where
   1+ a∈ ⑊? 1+ a'∈ with a∈ ⑊? a'∈
   ... | ⌊ a∈ ⌋ = ⌊ 1+ a∈ ⌋
   ... | ⊥ = ⊥
-
-
-
-module VecList where
-
-  -- VecList B [l₀ ; .. ; lₙ] ≃ B l₀ × .. × B lₙ
-  data VecList {A : Set}(B : A → Set) : List A  → Set where
-    [] : VecList B []
-    _,_ : ∀ {a as} → B a → VecList B as → VecList B (a ∷ as)
-
-  [_] : ∀ {A}{B : A → Set}{a : A} → B a → VecList B (a ∷ []) 
-  [ b ] = b , []
-
-  map : ∀ {A : Set}{B B' : A → Set}{l : List A} → (∀ a → B a → B' a) → VecList B l → VecList B' l
-  map f [] = []
-  map f (x , xs) = f _ x , map f xs
-
-  nth : ∀ {A : Set}{B : A → Set}{l : List A}{a} → a ∈ l → VecList B l →  B a
-  nth Ο (t , _) = t
-  nth (1+ a∈) (_ , ts) = nth a∈ ts
-
-  init : ∀ {A : Set}{B : A → Set} → (∀ a → B a) → (ℓ : List A) → VecList B ℓ
-  init f [] = []
-  init f (x ∷ ℓ) = f x , init f ℓ
-
-
-open VecList.VecList public
-
 
 \end{code}

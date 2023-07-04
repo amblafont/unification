@@ -1,6 +1,4 @@
 \begin{code}
--- here, the terminal substitution is not primitive
--- different notations than ⌊ . ⌋
 {-# OPTIONS --type-in-type --no-termination-check #-}
 module main where
 
@@ -20,9 +18,6 @@ open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 
 open import lib
-open VecList using (VecList)
-
-
 
 \end{code}
 %<*signature-core>
@@ -69,14 +64,11 @@ record isFriendly (S : Signature) : Set where
      _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe-PreImage (_｛ x ｝) o
 \end{code}
 %</friendlysignature>
-
 \begin{code}
 module Tm (S : Signature) where
    open Signature S
    MetaContext : Set
    MetaContext· : Set
-   infix 3 _·⟶_
-   infix 3 _·⟶·_
 \end{code}
 %<*metacontext>
 \begin{code}
@@ -85,15 +77,14 @@ module Tm (S : Signature) where
 \end{code}
 %</metacontext>
 \begin{code}
-   _·⟶·_ : MetaContext· → MetaContext· → Set
-   _·⟶_ : MetaContext· → MetaContext → Set
 \end{code}
 %<*syntax>
 \begin{code}
    data Tm  : MetaContext → A → Set
+   import Common as C
+   module Common = C A _⇒_ id Tm
+   open Common.SubstitutionDef public
 
-   Γ ·⟶ Δ = VecList (Tm Δ) Γ
-   Γ ·⟶· Δ = Γ ·⟶ ⌊ Δ ⌋
    Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
 
    data Tm where
@@ -105,8 +96,6 @@ module Tm (S : Signature) where
 \end{code}
 %</syntax>
 \begin{code}
-   open import Common A _⇒_ id Tm _﹙_﹚ ! public
-
    Rigid : ∀ {Γ a}(o : O a) → ( α o ·⟶ Γ ) → Tm Γ a
    Rigid {⊥} o δ = !
    Rigid {⌊ Γ ⌋} o δ = Rigid· o δ
@@ -134,41 +123,31 @@ Weakening
 -------------------------- -}
    wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a
 
-   wkₛ : ∀{Γ Δ m}  → (Γ ·⟶· Δ) → (Γ ·⟶· m ∷ Δ)
-   wkₛ σ = VecList.map (λ _ → wkₜ) σ
-
+   open Common.wkₛ wkₜ public
 
    wkₜ (Rigid· o ts) = Rigid· o (wkₛ ts)
    wkₜ (M ﹙ x ﹚) = 1+ M ﹙ x ﹚
 
 
-
-
-   import Common as C
-   module Common = C A _⇒_ id Tm _﹙_﹚ !
-   -- import Common A _⇒_ id Tm _﹙_﹚ ! as Common public
 {- ----------------------
 
 Substitution
 
 -------------------------- -}
-   open Common.Substitution public
-\end{code}
-%<*gen-subst>
-\begin{code}
-   _[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a
-   _·[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ·⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ·⟶ Γ₃)
+   open Common.!ₛ ! public
 
-   Rigid· o δ [ σ ]t = Rigid o (δ ·[ σ ]s)  
-   M ﹙ x ﹚ [ ⌊ σ ⌋ ]t = VecList.nth M σ ❴ x ❵
+   _[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a
+
+   open Common.-[-]s _[_]t public
+
+   Rigid· o δ [ σ ]t = Rigid o (δ [ σ ]s)
+   M ﹙ x ﹚ [ σ ]t =  nth σ M ❴ x ❵
    ! [ 1⊥ ]t = !
 
 
-   δ ·[ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ
-\end{code}
-%</gen-subst>
-\begin{code}
-   open Common.MoreSubstitution wkₛ _·[_]s public
+   open Common.1ₛ wkₜ _﹙_﹚ public
+   open Common.Substitution wkₜ _﹙_﹚ public
+
 
 
 {- ----------------------
@@ -199,7 +178,7 @@ Occur check
        where open Data.Maybe.Base using (_>>=_)
    _⑊?ₛ_ [] M = ⌊ [] ⌋
 
-   open Common.OccurCheckType public
+   open Common.occur-cases public
 
    occur-check : ∀ {Γ m n} → (M : m ∈ Γ) → Tm· Γ n → occur-cases M n
    occur-check M (M' ﹙ x ﹚) with M' ⑊? M
@@ -208,11 +187,6 @@ Occur check
    occur-check M t with t ⑊?ₜ M
    ... | ⊥ = Cycle
    ... | ⌊ t' ⌋ = No-Cycle t'
-
-\end{code}
-% </occur-check>
-
-\begin{code}
 
 module Unification (S : Signature) (F : isFriendly S) where
   open Signature S
@@ -224,14 +198,15 @@ module Unification (S : Signature) (F : isFriendly S) where
 Pruning
 
 -------------------------- -}
-  open IdentityDoNotation
   open Common.PruneUnifyTypes
   \end{code}
   %<*prune-proto>
   \begin{code}
-  data _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext) : Set where
-    _◄_ : ∀ Δ → (Γ ·⟶ Δ) × (Γ' ⟶ Δ) → Γ ∪ Γ' ⟶?
-
+  record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext) : Set where
+    constructor _◄_
+    field
+      Δ : MetaContext
+      δ,σ : (Γ ·⟶ Δ) × (Γ' ⟶ Δ)
 
 
   prune : ∀ {Γ a m} → Tm Γ a → m ⇒ a → [ m ]∪ Γ ⟶?
@@ -241,31 +216,30 @@ Pruning
   %<*prune-subst>
   \begin{code}
   prune-σ {Γ} [] [] = Γ ◄ ([] , 1ₛ)
-  prune-σ (t , δ) (x₀ ∷ xs) = do
-        Δ₁ ◄ t' , σ₁ ← prune t x₀
-        Δ₂ ◄ δ' , σ₂ ← prune-σ (δ ·[ σ₁ ]s) xs
-        Δ₂ ◄  (t' [ σ₂ ]t , δ') , (σ₁ [ σ₂ ]s) 
+  prune-σ (t , δ) (x₀ ∷ xs) = 
+    let Δ₁ ◄ t' , σ₁ = prune t x₀
+        Δ₂ ◄ δ' , σ₂ = prune-σ (δ [  σ₁  ]s) xs
+    in  Δ₂ ◄  (t' [ σ₂ ]t , δ') , (σ₁ [ σ₂ ]s) 
   \end{code}
   %</prune-subst>
   %<*prune-rigid>
   \begin{code}
   prune (Rigid· o δ) x with o ｛ x ｝⁻¹
-  ... | ⊥ = ⊥ ◄  ! , !ₛ
-  ... | ⌊ o' ⌋ = do
-       Δ ◄ δ' , σ  ←  prune-σ δ  (x ^ o')
-       Δ ◄ Rigid o'  δ' , σ
+  ... | ⊥ = ⊥ ◄  ! ,  !ₛ 
+  ... | ⌊ o' ⌋ =
+   let Δ ◄ δ' , σ  =  prune-σ δ  (x ^ o')
+   in  Δ ◄ Rigid o'  δ' ,  σ
   \end{code}
   %</prune-rigid>
   %<*prune-flex>
   \begin{code}
   prune {⌊ Γ ⌋} (M ﹙ x ﹚) y =
      let p , r , l = pullback x y in
-     Γ [ M ∶ p ] ·◄ (M ∶ p) ﹙ l ﹚ ,· M ↦-﹙ r ﹚
+     Γ [ M ∶ p ] ·◄  (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
   \end{code}
   %</prune-flex>
   \begin{code}
-  prune ! y = ⊥ ◄ ! , !ₛ
-
+  prune ! y = ⊥ ◄ ! ,  !ₛ 
 
 
 {- ----------------------
@@ -282,11 +256,11 @@ Unification
   unify-flex-* {Γ} M x t with occur-check M t
   ... | Same-MVar y =
      let p , z = equaliser x y in
-     Γ [ M ∶ p ] ·◄· M ↦-﹙ z ﹚
+     Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
   ... | Cycle = ⊥ ◄ !ₛ
-  ... | No-Cycle t' = do
-            Δ ◄ u ,· σ ← prune t' x
-            Δ ◄· M ↦ u , σ
+  ... | No-Cycle t' = 
+        let Δ ◄ u , σ = prune t' x
+        in  Δ ◄ M ↦ u , σ
   \end{code}
 %</unify-flex-def>
   %<*unifyprototype>
@@ -298,10 +272,10 @@ Unification
   %<*unify-subst>
   \begin{code}
   unify-σ {Γ} [] [] = Γ ◄ 1ₛ
-  unify-σ (t₁ , δ₁) (t₂ , δ₂) = do
-      Δ ◄ σ ← unify t₁ t₂
-      Δ' ◄ σ' ← unify-σ (δ₁ ·[ σ ]s) (δ₂ ·[ σ ]s)
-      Δ' ◄ σ [ σ' ]s
+  unify-σ (t₁ , δ₁) (t₂ , δ₂) =
+   let Δ ◄ σ = unify t₁ t₂
+       Δ' ◄ σ' = unify-σ (δ₁ [ σ ]s) (δ₂ [ σ ]s)
+   in  Δ' ◄ σ [ σ' ]s
   \end{code}
   %</unify-subst>
   \begin{code}
@@ -321,3 +295,4 @@ Unification
   \end{code}
   %</unify-fail>
   \begin{code}
+

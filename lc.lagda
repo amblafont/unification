@@ -17,7 +17,6 @@ open import Relation.Binary using (Rel; IsEquivalence; Setoid)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 
 open import lib
-open VecList using (VecList)
 
 \end{code}
 %<*lc-renamings>
@@ -143,21 +142,10 @@ Var {⌊ Γ ⌋} i = Var· i
 \end{code}
 %</lc-syntax-var-def>
 \begin{code}
-infix 3 _·⟶_
-infix 3 _·⟶·_
 
-_·⟶_ : MetaContext· → MetaContext → Set
-\end{code}
-%<*dot-substitution-def>
-\begin{code}
-Γ ·⟶ Δ = VecList (Tm Δ) Γ
-\end{code}
-%</dot-substitution-def>
-\begin{code}
-_·⟶·_ = λ Γ Δ → Γ ·⟶ ⌊ Δ ⌋
-
-\end{code}
-\begin{code}
+import Common as C
+module Common = C ℕ _⇒_ id Tm
+open Common.SubstitutionDef public
 
 {- ----------------------
 
@@ -178,6 +166,7 @@ M ﹙ y ﹚ ❴ x ❵ = M ﹙ x ∘ y ﹚
 \end{code}
 %</lc-renaming>
 \begin{code}
+
 {- ----------------------
 
 Weakening
@@ -190,47 +179,25 @@ wkₜ (Lam· t) = Lam· (wkₜ t)
 wkₜ (Var· x) = Var· x
 wkₜ (M ﹙ x ﹚) = 1+ M ﹙ x ﹚
 
-import Common ℕ _⇒_ id Tm _﹙_﹚ ! as Common 
-\end{code}
-%<*wk-substitution>
-\begin{code}
-wkₛ : ∀{Γ Δ m}  → (Γ ·⟶· Δ) → (Γ ·⟶· m ∷ Δ)
-wkₛ σ = VecList.map (λ _ → wkₜ) σ
-\end{code}
-%</wk-substitution>
-\begin{code}
+open Common.wkₛ wkₜ
 
 {- ----------------------
 
 Substitution
 
 -------------------------- -}
-open Common.Substitution
+open Common.!ₛ ! public
 
-\end{code}
-%<*lc-substitution>
-\begin{code}
 _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
 App· t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
 Lam· t [ σ ]t = Lam (t [ σ ]t)
 Var· i [ σ ]t = Var i
-M ﹙ x ﹚ [ ⌊ σ ⌋ ]t = VecList.nth M σ ❴ x ❵ 
+M ﹙ x ﹚ [ σ ]t = nth σ M ❴ x ❵ 
 ! [ 1⊥ ]t = !
-\end{code}%
-%</lc-substitution>
-\begin{code}
--- to make the type signature of _·[_]s shorter
-module _ {Γ₁ : MetaContext·}{Γ₂ Γ₃ : MetaContext} where
-\end{code}
-%<*composesubst>
-\begin{code}
-  _·[_]s : (Γ₁ ·⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ·⟶ Γ₃)
-  δ ·[ σ ]s = VecList.map (λ _ t → t [ σ ]t) δ
-\end{code}
-%</composesubst>
-\begin{code}
 
-open Common.MoreSubstitution wkₛ _·[_]s public
+open Common.-[-]s _[_]t public
+open Common.1ₛ wkₜ _﹙_﹚ public
+open Common.Substitution wkₜ _﹙_﹚ public
 
 {- ----------------------
 
@@ -253,15 +220,13 @@ module _ where
   Lam· t ⑊?ₜ M = do
       t' ← t ⑊?ₜ M
       ⌊ Lam· t' ⌋
-  M' ﹙ y ﹚ ⑊?ₜ M with M' ⑊? M 
+  M' ﹙ y ﹚ ⑊?ₜ M with M' ⑊? M
   ... | ⊥ = ⊥
   ... | ⌊ M' ⌋ = ⌊ M' ﹙ y ﹚ ⌋
 
-
-open Common.OccurCheckType
-
+open Common.occur-cases public
 occur-check : ∀ {Γ m n} → (M : m ∈ Γ) → Tm· Γ n → occur-cases M n
-occur-check M (M' ﹙ x ﹚) with M' ⑊? M 
+occur-check M (M' ﹙ x ﹚) with M' ⑊? M
 ... | ⊥ = Same-MVar x
 ... | ⌊ M' ⌋ = No-Cycle (M' ﹙ x ﹚)
 occur-check M t with t ⑊?ₜ M
@@ -276,8 +241,7 @@ occur-check M t with t ⑊?ₜ M
 Pruning
 
 -------------------------- -}
-open IdentityDoNotation
-open Common.PruneUnifyTypes
+open Common.PruneUnifyTypes 
 {-# TERMINATING #-}
 \end{code}
 %<*lc-prune-proto>
@@ -287,17 +251,17 @@ prune : ∀ {Γ n m} → Tm Γ n → m ⇒ n → [ m ]∪ Γ ⟶?
 %</lc-prune-proto>
 %<*prune-app>
 \begin{code}
-prune (App· t u) x = do
-          Δ₁ ◄ t' , σ₁ ← prune t x
-          Δ₂ ◄ u' , σ₂ ← prune (u [ σ₁ ]t) x
-          Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s 
+prune (App· t u) x = 
+      let Δ₁ ◄ t' , σ₁ = prune t x
+          Δ₂ ◄ u' , σ₂ = prune (u [ σ₁ ]t) x
+      in  Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s 
 \end{code}
 %</prune-app>
 %<*prune-lam>
 \begin{code}
-prune (Lam· t) x = do
-          Δ ◄ t' , σ ← prune t (x ↑)
-          Δ ◄ Lam t' , σ
+prune (Lam· t) x =
+      let Δ ◄ t' , σ = prune t (x ↑)
+      in  Δ ◄ Lam t' , σ
 \end{code}
 %</prune-lam>
 %<*prune-var>
@@ -311,7 +275,7 @@ prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
 \begin{code}
 prune {⌊ Γ ⌋} (M ﹙ x ﹚) y =
    let p , r , l = commonValues x y in
-    Γ [ M ∶ p ] ·◄ (M ∶ p) ﹙ l ﹚ ,· M ↦-﹙ r ﹚
+    Γ [ M ∶ p ] ·◄ (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>
@@ -337,11 +301,11 @@ unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm· Γ n → Γ ·⟶?
 unify-flex-* {Γ} M x t with occur-check M t
 ... | Same-MVar y =
    let p , z = commonPositions x y in
-   Γ [ M ∶ p ] ·◄· M ↦-﹙ z ﹚
+   Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
 ... | Cycle = ⊥ ◄ !ₛ
-... | No-Cycle t' = do
-          Δ ◄ u ,· σ ← prune t' x
-          Δ ◄· M ↦ u , σ
+... | No-Cycle t' = 
+      let Δ ◄ u , σ = prune t' x
+      in  Δ ◄ M ↦ u , σ
 \end{code}
 %</lc-unify-flex-def>
 \begin{code}
@@ -362,10 +326,10 @@ unify (M ﹙ x ﹚) t = unify-flex-* M x t
 %</unify-flex>
 %<*unify-app>
 \begin{code}
-unify (App· t u) (App· t' u') = do
-  Δ₁ ◄ σ₁ ← unify t t'
-  Δ₂ ◄ σ₂ ← unify (u [ σ₁ ]t) (u' [ σ₁ ]t)
-  Δ₂ ◄ σ₁ [ σ₂ ]s
+unify (App· t u) (App· t' u') = 
+  let Δ₁ ◄ σ₁ = unify t t'
+      Δ₂ ◄ σ₂ = unify (u [ σ₁ ]t) (u' [ σ₁ ]t)
+  in  Δ₂ ◄ σ₁ [ σ₂ ]s
 \end{code}
 %</unify-app>
 %<*unify-lam>
