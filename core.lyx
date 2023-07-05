@@ -13831,6 +13831,13 @@ roman{enumi})
 
 \end_inset
 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:bot-creates"
+
+\end_inset
+
 The canonical embedding functor 
 \begin_inset Formula $\mathscr{B}\rightarrow\catbot{\mathscr{B}}$
 \end_inset
@@ -14423,7 +14430,7 @@ Let
 \end_inset
 
  be the functor 
-\begin_inset Formula $\op{{\cal A}}\xrightarrow{}\Th S$
+\begin_inset Formula $\op{{\cal A}}\xrightarrow{}\Thbot S$
 \end_inset
 
  mapping a morphism 
@@ -14449,7 +14456,7 @@ Let
 \end_inset
 
  to pushouts and coequalisers in 
-\begin_inset Formula $\Th S$
+\begin_inset Formula $\Thbot S$
 \end_inset
 
 .
@@ -15316,6 +15323,29 @@ status open
 
 \end_inset
 
+ Note that 
+\begin_inset Formula ${\cal L}$
+\end_inset
+
+ factors as 
+\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Thbot S$
+\end_inset
+
+, where the right embedding preserves colimits by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:bot-creates"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, so it is enough to show that 
+\begin_inset Formula ${\cal L}^{\bullet}$
+\end_inset
+
+ preserves finite connected colimits.
  Let 
 \begin_inset Formula $T_{|\C}$
 \end_inset
@@ -15363,11 +15393,11 @@ noprefix "false"
 
  also preserving those colimits.
  Since it factors as 
-\begin_inset Formula $\D\xrightarrow{{\cal L}}\Th S\hookrightarrow\Kl{T_{|\C}}$
+\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Kl{T_{|\C}}$
 \end_inset
 
 , where the right functor is full and faithful, 
-\begin_inset Formula ${\cal L}$
+\begin_inset Formula ${\cal L}^{\bullet}$
 \end_inset
 
  also preserves finite connected colimits.
@@ -15692,12 +15722,12 @@ The rules
 \begin_inset Formula $\dotmcontext{\Gamma};a\vdash o(\delta)$
 \end_inset
 
- in the metavariable context 
-\begin_inset Formula $M:m,\dotmcontext{\Gamma}$
-\end_inset
-
  for some 
 \begin_inset Formula $o\in\Oop na$
+\end_inset
+
+, where 
+\begin_inset Formula $M\notin\dotmcontext{\Gamma}$
 \end_inset
 
 .
@@ -16077,21 +16107,31 @@ The rule
 \begin_inset Formula $N(y)$
 \end_inset
 
- in the context 
-\begin_inset Formula $N:n,\Gamma;a$
-\end_inset
-
-, where 
+ where 
 \begin_inset Formula $M\neq N$
 \end_inset
 
+ in a variable context 
+\begin_inset Formula $a$
+\end_inset
+
 .
- 
-\color red
-TODO: more details
+ More explicitly, this is about computing the pushout of 
+\begin_inset Formula $(X:a)\xrightarrow{{\cal L}x}(X:m)\cong(M:m)\xhookrightarrow{in_{M}}\dotmcontext{\Gamma}$
+\end_inset
+
+ and 
+\begin_inset Formula $(X:a)\xrightarrow{{\cal L}x}(X:n)\cong(N:n)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Note that 
 \begin_inset Formula $N(y)$
 \end_inset
@@ -16123,13 +16163,38 @@ noprefix "false"
 \end_inset
 
 .
- Thanks to the following lemma, it is actually enough to compute the pushout
+ 
+\end_layout
+
+\end_inset
+
+Thanks to the following lemma, it is actually enough to compute the pushout
  of 
 \begin_inset Formula ${\cal L}\arg x$
 \end_inset
 
  and 
 \begin_inset Formula ${\cal L}\arg y$
+\end_inset
+
+, taking 
+\begin_inset Formula $A=(X:a)$
+\end_inset
+
+, 
+\begin_inset Formula $B=(X:m)$
+\end_inset
+
+, 
+\begin_inset Formula $C=(X:N)$
+\end_inset
+
+, 
+\begin_inset Formula $Y=\dotmcontext{\Gamma}\backslash M$
+\end_inset
+
+, so that 
+\begin_inset Formula $B+Y\cong\dotmcontext{\Gamma}$
 \end_inset
 
 .
@@ -16151,7 +16216,7 @@ YADE DIAGRAM diagrams/pushout-in.json
 \begin_layout Lemma
 In any category, 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Lemma
 denoting morphism composition by 
@@ -16210,7 +16275,7 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	X & Z
+	C & Z
 \end_layout
 
 \begin_layout Plain Layout
@@ -16275,7 +16340,7 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	X & Z 
+	C & Z 
 \backslash
 
 \backslash
@@ -16284,7 +16349,7 @@ begin{tikzcd}
 
 \begin_layout Plain Layout
 
-	{X+Y} & {Z+Y}
+	{C+Y} & {Z+Y}
 \end_layout
 
 \begin_layout Plain Layout
@@ -16463,27 +16528,53 @@ noprefix "false"
 \end_inset
 
 .
- We already discussed the rule 
-\begin_inset Formula $\refrule{No-Cycle}$
+ Both rules 
+\begin_inset Formula $\refrule{Clash}$
 \end_inset
 
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
+ and 
+\begin_inset Formula $\refrule{U-Rig}$
 \end_inset
 
- 
-\color red
-TODO
-\color inherit
-: the premise and the conclusion deal with the same unification problem,
- phrased differently.
- In the next subsections, we discuss the rule sequential rules 
+ handle unification of two rigid terms 
+\begin_inset Formula $o(\delta)$
+\end_inset
+
+ and 
+\begin_inset Formula $o'(\delta')$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $o\neq o'$
+\end_inset
+
+, they do not have any unifier: this is the rule 
+\begin_inset Formula $\refrule{Clash}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $o=o'$
+\end_inset
+
+, then a substitution is a unifier if and only if it unifies 
+\begin_inset Formula $\delta$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta'$
+\end_inset
+
+, thus justifying the 
+\begin_inset Formula $\refrule{U-Rig}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the next subsections, we discuss the rule sequential rules 
 \begin_inset Formula $\refrule{U-Empty}$
 \end_inset
 
@@ -16495,6 +16586,20 @@ TODO
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:u-sequential"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the rule 
+\begin_inset Formula $\refrule{No-Cycle}$
+\end_inset
+
+ transitioning to the pruning phase (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:no-cycle"
 plural "false"
 caps "true"
 noprefix "false"
@@ -16515,7 +16620,7 @@ noprefix "false"
 
 \end_inset
 
-), the failing rule 
+), and the failing rule 
 \begin_inset Formula $\refrule{Cycle}$
 \end_inset
 
@@ -16530,25 +16635,7 @@ noprefix "false"
 
 \end_inset
 
-), and the rules 
-\begin_inset Formula $\refrule{Clash}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{U-Rig}$
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:rig-rig"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-) which handle unification of two rigid terms.
+).
 \end_layout
 
 \begin_layout Subsection
@@ -17343,9 +17430,6 @@ noprefix "false"
 \end_inset
 
 .
- 
-\color red
-TODO: more details
 \end_layout
 
 \begin_layout Lemma
@@ -17964,39 +18048,6 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Rigid-rigid (rules Clash and U-Rig)
-\end_layout
-
-\end_inset
-
-Rigid-rigid (rules 
-\begin_inset Formula $\refrule{Clash}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{U-Rig}$
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:rig-rig"
-
-\end_inset
-
-
-\color red
-TODO
 \end_layout
 
 \begin_layout Section
