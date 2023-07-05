@@ -1769,9 +1769,18 @@ We show the most relevant parts of the Agda code; the interested reader
  for future work the task of mechanising the correctness proof of the algorithm,
  by investigating the formalisation of various concepts from category theory
  – a notorious challenge on its own – on which our proof relies on.
- Furthermore, we are not reluctant to using logically inconsistent features
- to make programming easier: the type hierachy is collapsed and the termination
- checker is disabled.
+ Furthermore, we disable the termination checker and provide instead a terminati
+on proof on paper in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:termination"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
  Despite those caveats, dependent types are still helpful in guiding the
  implementation, contrary to a preliminary ocaml version where the code
  was much less constrained by the typing discipline.
