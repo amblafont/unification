@@ -53,9 +53,9 @@ i ｛ x ｝⁻¹ = nth⁻¹ Fin._≟_ i x
 \end{code}
 %<*common-positions>
 \begin{code}
-commonPositions : ∀ {n m} → (x y : m ⇒ n) → Σ ℕ (λ p → p ⇒ m)
-commonPositions [] [] = 0 , []
-commonPositions (x₀ ∷ x) (y₀ ∷ y) with commonPositions x y | x₀ Fin.≟ y₀
+commonPositions : ∀ {n} m → (x y : m ⇒ n) → Σ ℕ (λ p → p ⇒ m)
+commonPositions m [] [] = 0 , []
+commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) with commonPositions m x y | x₀ Fin.≟ y₀
 ... | p , z | yes _ = p     , Vec.map Fin.suc z
 ... | p , z | no _  = 1 + p , Fin.zero ∷ Vec.map Fin.suc z
 \end{code}
@@ -66,9 +66,9 @@ commonPositions (x₀ ∷ x) (y₀ ∷ y) with commonPositions x y | x₀ Fin.�
 \end{code}
 %<*common-values>
 \begin{code}
-commonValues : ∀ {m m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
-commonValues [] y = 0 , [] , []
-commonValues (x₀ ∷ x) y with commonValues x y | x₀ ｛ y ｝⁻¹ 
+commonValues : ∀ m {m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
+commonValues m [] y = 0 , [] , []
+commonValues (ℕ.suc m ) (x₀ ∷ x) y with commonValues m x y | x₀ ｛ y ｝⁻¹ 
 ... | p , l , r | ⊥         = p     , Vec.map Fin.suc l            , r
 ... | p , l , r | ⌊ i ⌋  = 1 + p , Fin.zero ∷ Vec.map Fin.suc l , i ∷ r
 \end{code}
@@ -240,27 +240,30 @@ occur-check M t with t ⑊?ₜ M
 Pruning
 
 -------------------------- -}
+
 open Common.PruneUnifyTypes 
+pattern _∶_﹙_﹚ M m x = _﹙_﹚ {m = m} M x
+
 {-# TERMINATING #-}
 \end{code}
 %<*lc-prune-proto>
 \begin{code}
-prune : ∀ {Γ n m} → Tm Γ n → m ⇒ n → [ m ]∪ Γ ⟶?
+prune : ∀ {Γ m n} → Tm Γ n → m ⇒ n → [ m ]∪ Γ ⟶?
 \end{code}
 %</lc-prune-proto>
 %<*prune-app>
 \begin{code}
-prune (App· t u) x = 
-      let Δ₁ ◄ t' , σ₁ = prune t x
-          Δ₂ ◄ u' , σ₂ = prune (u [ σ₁ ]t) x
-      in  Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s 
+prune (App· t u) x =
+  let Δ₁ ◄ t' , σ₁ = prune t x
+      Δ₂ ◄ u' , σ₂ = prune (u [ σ₁ ]t) x
+  in  Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s 
 \end{code}
 %</prune-app>
 %<*prune-lam>
 \begin{code}
 prune (Lam· t) x =
-      let Δ ◄ t' , σ = prune t (x ↑)
-      in  Δ ◄ Lam t' , σ
+  let Δ ◄ t' , σ = prune t (x ↑)
+  in  Δ ◄ Lam t' , σ
 \end{code}
 %</prune-lam>
 %<*prune-var>
@@ -272,9 +275,9 @@ prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
 %</prune-var>
 %<*lc-prune-flex>
 \begin{code}
-prune {⌊ Γ ⌋} (M ﹙ x ﹚) y =
-   let p , r , l = commonValues x y in
-    Γ [ M ∶ p ] ·◄ (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
+prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
+  let p , r , l = commonValues m x y
+  in Γ [ M ∶ p ] ·◄ (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>
@@ -297,14 +300,15 @@ unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm· Γ n → Γ ·⟶?
 %</lc-unify-flex-proto>
 %<*lc-unify-flex-def>
 \begin{code}
-unify-flex-* {Γ} M x t with occur-check M t
+unify-flex-* {Γ} {m} M x t
+                  with occur-check M t
 ... | Same-MVar y =
-   let p , z = commonPositions x y in
-   Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
+  let p , z = commonPositions m x y
+  in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
 ... | Cycle = ⊥ ◄ !ₛ
 ... | No-Cycle t' = 
-      let Δ ◄ u , σ = prune t' x
-      in  Δ ◄ M ↦ u , σ
+  let Δ ◄ u , σ = prune t' x
+  in  Δ ◄ M ↦ u , σ
 \end{code}
 %</lc-unify-flex-def>
 \begin{code}

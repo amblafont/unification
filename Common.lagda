@@ -170,3 +170,4 @@ module PruneUnifyTypes where
 
   _·⟶? : MetaContext· → Set
   Γ ·⟶?  = ⌊ Γ ⌋ ⟶?
+

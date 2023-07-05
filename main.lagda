@@ -50,8 +50,8 @@ record Signature : Set where
 record isFriendly (S : Signature) : Set where
    open Signature S
    field
-     equaliser : ∀ {a m} → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
-     pullback : ∀ {m m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
+     equaliser : ∀ {a} m → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
+     pullback : ∀ m {m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
      _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe-PreImage (_｛ x ｝) o
 \end{code}
@@ -208,6 +208,7 @@ Pruning
 
 -------------------------- -}
   open Common.PruneUnifyTypes
+  pattern _∶_﹙_﹚ M m x = _﹙_﹚ {m = m} M x
   \end{code}
   %<*prune-proto>
   \begin{code}
@@ -236,15 +237,15 @@ Pruning
   prune (Rigid· o δ) x with o ｛ x ｝⁻¹
   ... | ⊥ = ⊥ ◄  ! ,  !ₛ 
   ... | ⌊ o' ⌋ =
-   let Δ ◄ δ' , σ  =  prune-σ δ  (x ^ o')
-   in  Δ ◄ Rigid o'  δ' ,  σ
+    let Δ ◄ δ' , σ  =  prune-σ δ  (x ^ o')
+    in  Δ ◄ Rigid o'  δ' ,  σ
   \end{code}
   %</prune-rigid>
   %<*prune-flex>
   \begin{code}
-  prune {⌊ Γ ⌋} (M ﹙ x ﹚) y =
-     let p , r , l = pullback x y in
-     Γ [ M ∶ p ] ·◄  (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
+  prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
+    let p , r , l = pullback m x y in
+    Γ [ M ∶ p ] ·◄  (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
   \end{code}
   %</prune-flex>
   \begin{code}
@@ -262,14 +263,15 @@ Unification
   \end{code}
 %<*unify-flex-def>
   \begin{code}
-  unify-flex-* {Γ} M x t with occur-check M t
+  unify-flex-* {Γ} {m} M x t
+                  with occur-check M t
   ... | Same-MVar y =
-     let p , z = equaliser x y in
-     Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
+    let p , z = equaliser m x y
+    in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
   ... | Cycle = ⊥ ◄ !ₛ
   ... | No-Cycle t' = 
-        let Δ ◄ u , σ = prune t' x
-        in  Δ ◄ M ↦ u , σ
+    let Δ ◄ u , σ = prune t' x
+    in  Δ ◄ M ↦ u , σ
   \end{code}
 %</unify-flex-def>
   %<*unifyprototype>
@@ -282,9 +284,9 @@ Unification
   \begin{code}
   unify-σ {Γ} [] [] = Γ ◄ 1ₛ
   unify-σ (t₁ , δ₁) (t₂ , δ₂) =
-   let Δ ◄ σ = unify t₁ t₂
-       Δ' ◄ σ' = unify-σ (δ₁ [ σ ]s) (δ₂ [ σ ]s)
-   in  Δ' ◄ σ [ σ' ]s
+    let Δ ◄ σ = unify t₁ t₂
+        Δ' ◄ σ' = unify-σ (δ₁ [ σ ]s) (δ₂ [ σ ]s)
+    in  Δ' ◄ σ [ σ' ]s
   unify-σ 1⊥ 1⊥ = ⊥ ◄ !ₛ
   \end{code}
   %</unify-subst>
