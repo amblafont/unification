@@ -16,7 +16,7 @@ private
   MetaContext· = List A
   MetaContext = Maybe MetaContext·
   -- we don't use directly Tm-parameter because the generated latex
-  -- is ugly for a module parameter
+  -- font is ugly for a module parameter
   Tm = Tm-parameter
   Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
 
@@ -75,7 +75,10 @@ module !ₛ (! : ∀ {a} → Tm ⊥ a) where
 module -[-]s
    (_[_]t-parameter : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a) where
 
-   _[_]t = _[_]t-parameter
+   private
+   -- we don't use directly Tm-parameter because the generated latex
+   -- font is ugly for a module parameter
+     _[_]t = _[_]t-parameter
 \end{code}
 %<*compose-substitution-proto>
 \begin{code}

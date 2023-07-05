@@ -69,24 +69,29 @@ module Tm (S : Signature) where
 \end{code}
 %</metacontext>
 \begin{code}
+   Tm· : MetaContext· → A → Set
 \end{code}
-%<*syntax>
+%<*syntax-decl>
 \begin{code}
    data Tm  : MetaContext → A → Set
+   Tm· Γ a = Tm ⌊ Γ ⌋ a
+\end{code}
+%</syntax-decl>
+\begin{code}
    import Common as C
    module Common = C A _⇒_ id Tm
    open Common.SubstitutionDef public
-
-   Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
-
+\end{code}
+%<*syntax-def>
+\begin{code}
    data Tm where
-     Rigid· : ∀ {Γ a}(o : O a) →
-           (α o ·⟶· Γ) → Tm· Γ a
-     _﹙_﹚ : ∀ {Γ a m} → m ∈ Γ →
-          m ⇒ a → Tm· Γ a
+     Rigid· : ∀ {Γ a}(o : O a) → (α o ·⟶· Γ)
+          → Tm· Γ a
+     _﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → m ⇒ a
+          → Tm· Γ a
      ! : ∀ {a} → Tm ⊥ a
 \end{code}
-%</syntax>
+%</syntax-def>
 \begin{code}
    Rigid : ∀ {Γ a}(o : O a) → ( α o ·⟶ Γ ) → Tm Γ a
    Rigid {⊥} o δ = !
