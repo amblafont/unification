@@ -3,16 +3,19 @@ open import Data.List as List hiding ([_])
 open import lib
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Data.Product using (_,_; Σ; _×_)
+open import Agda.Primitive
 
 
-module Common (A : Set) 
-     (_⇒_ : A → A → Set)
+-- k' is typically instantiated as i ⊔ j ⊔ k
+module Common {i}{j}{k}(A : Set i)
+     (_⇒_ : A → A → Set j)
      (id : ∀{a} → a ⇒ a)
-     (Tm-parameter : Maybe (List A) → A → Set)
+     (Tm-parameter : Maybe (List A) → A → Set (i ⊔ j ⊔ k))
   where
 
 
 private
+  k' = i ⊔ j ⊔ k
   MetaContext· = List A
   MetaContext = Maybe MetaContext·
   -- we don't use directly Tm-parameter because the generated latex
@@ -24,9 +27,9 @@ module SubstitutionDef where
   infix 3 _·⟶_
   infix 3 _·⟶·_
   infix 3 _⟶_
-  data _⟶_ : MetaContext → MetaContext → Set
-  _·⟶_ : MetaContext· → MetaContext → Set
-  _·⟶·_ : MetaContext· → MetaContext· → Set
+  data _⟶_ : MetaContext → MetaContext → Set k'
+  _·⟶_ : MetaContext· → MetaContext → Set k'
+  _·⟶·_ : MetaContext· → MetaContext· → Set k'
 
 \end{code}
 %<*dotted-substitution>
@@ -138,7 +141,7 @@ module occur-cases where
     {- ----------------------
     Occur check
     -------------------------- -}
-  data occur-cases {Γ m} (M : m ∈ Γ) a : Set where
+  data occur-cases {Γ m} (M : m ∈ Γ) a : Set k' where
        Same-MVar : m ⇒ a → occur-cases M a
        Cycle : occur-cases M a
        No-Cycle : Tm· (Γ ⑊ M) a → occur-cases M a
@@ -147,7 +150,7 @@ module PruneUnifyTypes where
 \end{code}
 %<*prune-type>
 \begin{code}
-  record [_]∪_⟶? m Γ : Set where
+  record [_]∪_⟶? m Γ : Set k' where
     constructor _◄_
     field
        Δ : MetaContext
@@ -156,7 +159,7 @@ module PruneUnifyTypes where
 %</prune-type>
 %<*substfrom>
 \begin{code}
-  record _⟶? Γ : Set where
+  record _⟶? Γ : Set k' where
     constructor _◄_
     field
         Δ : MetaContext
@@ -168,6 +171,6 @@ module PruneUnifyTypes where
   infix 3 _·◄_
   pattern _·◄_ Δ σ = ⌊ Δ ⌋ ◄ σ
 
-  _·⟶? : MetaContext· → Set
+  _·⟶? : MetaContext· → Set k'
   Γ ·⟶?  = ⌊ Γ ⌋ ⟶?
 

@@ -1,5 +1,5 @@
 \begin{code}
-{-# OPTIONS --type-in-type --no-termination-check #-}
+{-# OPTIONS --no-termination-check #-}
 module main where
 
 open import Relation.Nullary using (Dec ; yes ; no)
@@ -8,19 +8,20 @@ open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
 open import Data.Product using (_,_; Σ; _×_ )
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
+open import Agda.Primitive
 
 open import lib
 
 \end{code}
 %<*signature-core>
 \begin{code}
-record Signature : Set where
+record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
   field
-    A : Set
-    _⇒_ : A → A → Set
+    A : Set i
+    _⇒_ : A → A → Set j
     id  : ∀ {a} → (a ⇒ a)
     _∘_ : ∀ {a b c} → (b ⇒ c) → (a ⇒ b) → (a ⇒ c)
-    O : A → Set
+    O : A → Set k
     α : ∀ {a} → O a → List A
 \end{code}
 %</signature-core>
@@ -30,7 +31,7 @@ record Signature : Set where
 \end{code}
 %<*renaming-vectors>
 \begin{code}
-  _⟹_ : List A → List A → Set
+  _⟹_ : List A → List A → Set (i ⊔ j)
   as ⟹ bs = Pointwise _⇒_ as bs
 \end{code}
 %</renaming-vectors>
@@ -47,7 +48,7 @@ record Signature : Set where
 
 %<*friendlysignature>
 \begin{code}
-record isFriendly (S : Signature) : Set where
+record isFriendly {i j k}(S : Signature i j k) : Set (i ⊔ j ⊔ k) where
    open Signature S
    field
      equaliser : ∀ {a} m → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
@@ -57,10 +58,10 @@ record isFriendly (S : Signature) : Set where
 \end{code}
 %</friendlysignature>
 \begin{code}
-module Tm (S : Signature) where
+module Tm {i j k}(S : Signature i j k) where
    open Signature S
-   MetaContext : Set
-   MetaContext· : Set
+   MetaContext : Set i
+   MetaContext· : Set i
 \end{code}
 %<*metacontext>
 \begin{code}
@@ -69,17 +70,17 @@ module Tm (S : Signature) where
 \end{code}
 %</metacontext>
 \begin{code}
-   Tm· : MetaContext· → A → Set
+   Tm· : MetaContext· → A → Set (i ⊔ j ⊔ k)
 \end{code}
 %<*syntax-decl>
 \begin{code}
-   data Tm  : MetaContext → A → Set
+   data Tm  : MetaContext → A → Set (i ⊔ j ⊔ k)
    Tm· Γ a = Tm ⌊ Γ ⌋ a
 \end{code}
 %</syntax-decl>
 \begin{code}
    import Common as C
-   module Common = C A _⇒_ id Tm
+   module Common = C {k = k} A _⇒_ id Tm
    open Common.SubstitutionDef public
 \end{code}
 %<*syntax-def>
@@ -197,7 +198,7 @@ Occur check
    ... | ⊥ = Cycle
    ... | ⌊ t' ⌋ = No-Cycle t'
 
-module Unification (S : Signature) (F : isFriendly S) where
+module Unification {i j k}(S : Signature i j k) (F : isFriendly S) where
   open Signature S
   open Tm S
   open isFriendly F
@@ -212,7 +213,7 @@ Pruning
   \end{code}
   %<*prune-proto>
   \begin{code}
-  record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext) : Set where
+  record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext) : Set (i ⊔ j ⊔ k) where
     constructor _◄_
     field
       Δ : MetaContext
@@ -307,4 +308,3 @@ Unification
   \end{code}
   %</unify-fail>
   \begin{code}
-

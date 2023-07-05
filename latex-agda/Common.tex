@@ -33,15 +33,22 @@
 \AgdaRecord{Σ}\AgdaSymbol{;}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{\AgdaUnderscore{}×\AgdaUnderscore{}}}\AgdaSymbol{)}\<%
 \\
+\>[0]\AgdaKeyword{open}\AgdaSpace{}%
+\AgdaKeyword{import}\AgdaSpace{}%
+\AgdaModule{Agda.Primitive}\<%
+\\
 %
 \\[\AgdaEmptyExtraSkip]%
 %
 \\[\AgdaEmptyExtraSkip]%
+\>[0]\AgdaComment{--\ k'\ is\ typically\ instantiated\ as\ i\ ⊔\ j\ ⊔\ k}\<%
+\\
 \>[0]\AgdaKeyword{module}\AgdaSpace{}%
 \AgdaModule{Common}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{A}\AgdaSpace{}%
+\AgdaSymbol{\{}\AgdaBound{i}\AgdaSymbol{\}\{}\AgdaBound{j}\AgdaSymbol{\}\{}\AgdaBound{k}\AgdaSymbol{\}(}\AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
-\AgdaPrimitive{Set}\AgdaSymbol{)}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaBound{i}\AgdaSymbol{)}\<%
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[5]\AgdaSymbol{(}\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⇒\AgdaUnderscore{}}}\AgdaSpace{}%
@@ -50,7 +57,8 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\AgdaSymbol{)}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaBound{j}\AgdaSymbol{)}\<%
 \\
 %
 \>[5]\AgdaSymbol{(}\AgdaBound{id}\AgdaSpace{}%
@@ -70,7 +78,12 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{A}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\AgdaSymbol{)}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{i}\AgdaSpace{}%
+\AgdaOperator{\AgdaPrimitive{⊔}}\AgdaSpace{}%
+\AgdaBound{j}\AgdaSpace{}%
+\AgdaOperator{\AgdaPrimitive{⊔}}\AgdaSpace{}%
+\AgdaBound{k}\AgdaSymbol{))}\<%
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaKeyword{where}\<%
@@ -82,6 +95,15 @@
 \>[0]\AgdaKeyword{private}\<%
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
+\>[2]\AgdaFunction{k'}\AgdaSpace{}%
+\AgdaSymbol{=}\AgdaSpace{}%
+\AgdaBound{i}\AgdaSpace{}%
+\AgdaOperator{\AgdaPrimitive{⊔}}\AgdaSpace{}%
+\AgdaBound{j}\AgdaSpace{}%
+\AgdaOperator{\AgdaPrimitive{⊔}}\AgdaSpace{}%
+\AgdaBound{k}\<%
+\\
+%
 \>[2]\AgdaFunction{MetaContext·}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaDatatype{List}\AgdaSpace{}%
@@ -146,7 +168,8 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{MetaContext}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\<%
 \\
 %
 \>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}·⟶\AgdaUnderscore{}}}\AgdaSpace{}%
@@ -155,7 +178,8 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{MetaContext}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\<%
 \\
 %
 \>[2]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}·⟶·\AgdaUnderscore{}}}\AgdaSpace{}%
@@ -164,7 +188,8 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{MetaContext·}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\<%
 \\
 \>[0]\<%
 \end{code}
@@ -208,10 +233,10 @@
 \begin{code}%
 %
 \>[2]\AgdaKeyword{data}%
-\>[113I]\AgdaOperator{\AgdaDatatype{\AgdaUnderscore{}⟶\AgdaUnderscore{}}}\AgdaSpace{}%
+\>[131I]\AgdaOperator{\AgdaDatatype{\AgdaUnderscore{}⟶\AgdaUnderscore{}}}\AgdaSpace{}%
 \AgdaKeyword{where}\<%
 \\
-\>[.][@{}l@{}]\<[113I]%
+\>[.][@{}l@{}]\<[131I]%
 \>[7]\AgdaInductiveConstructor{[]}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
@@ -680,7 +705,7 @@
 %
 \>[3]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}↦\AgdaUnderscore{},\AgdaUnderscore{}}}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[425I]\AgdaSymbol{∀}\AgdaSpace{}%
+\>[443I]\AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{Δ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
@@ -695,7 +720,7 @@
 \AgdaBound{Δ}\AgdaSpace{}%
 \AgdaBound{m}\<%
 \\
-\>[425I][@{}l@{\AgdaIndent{0}}]%
+\>[443I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⑊}}\AgdaSpace{}%
@@ -741,7 +766,7 @@
 %
 \>[3]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}↦-﹙\AgdaUnderscore{}﹚}}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[472I]\AgdaSymbol{∀}\AgdaSpace{}%
+\>[490I]\AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{\}}\AgdaSpace{}%
@@ -756,7 +781,7 @@
 \AgdaOperator{\AgdaBound{⇒}}\AgdaSpace{}%
 \AgdaBound{m}\<%
 \\
-\>[.][@{}l@{}]\<[472I]%
+\>[.][@{}l@{}]\<[490I]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{·⟶·}}\AgdaSpace{}%
@@ -824,7 +849,7 @@
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaKeyword{data}%
-\>[521I]\AgdaDatatype{occur-cases}\AgdaSpace{}%
+\>[539I]\AgdaDatatype{occur-cases}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{M}\AgdaSpace{}%
@@ -835,9 +860,10 @@
 \AgdaBound{a}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\AgdaSpace{}%
 \AgdaKeyword{where}\<%
 \\
-\>[.][@{}l@{}]\<[521I]%
+\>[.][@{}l@{}]\<[539I]%
 \>[7]\AgdaInductiveConstructor{Same-MVar}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
@@ -883,6 +909,7 @@
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\AgdaSpace{}%
 \AgdaKeyword{where}\<%
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
@@ -917,6 +944,7 @@
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\AgdaSpace{}%
 \AgdaKeyword{where}\<%
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
@@ -946,7 +974,7 @@
 \AgdaOperator{\AgdaInductiveConstructor{\AgdaUnderscore{}◄\AgdaUnderscore{}}}\<%
 \\
 %
-\>[2]\AgdaKeyword{infix}\AgdaSpace{}%
+\>[2]\AgdaKeyword{inf}\AgdaKeyword{ix}\AgdaSpace{}%
 \AgdaNumber{3}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{\AgdaUnderscore{}·◄\AgdaUnderscore{}}}\<%
 \\
@@ -969,7 +997,8 @@
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaFunction{MetaContext·}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaPrimitive{Set}\<%
+\AgdaPrimitive{Set}\AgdaSpace{}%
+\AgdaFunction{k'}\<%
 \\
 %
 \>[2]\AgdaBound{Γ}\AgdaSpace{}%
@@ -979,3 +1008,5 @@
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⌋}}\AgdaSpace{}%
 \AgdaOperator{\AgdaRecord{⟶?}}\<%
+\\
+\>[0]\<%

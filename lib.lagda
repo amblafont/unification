@@ -10,37 +10,37 @@ open import Relation.Nullary
 
 
 -- ⌊ a ⌋ : Maybe-PreImage f b  means that b = f a
-data Maybe-PreImage {A B : Set}(f : A → B) : B → Set where
+data Maybe-PreImage {i j}{A : Set i}{B : Set j}(f : A → B) : B → Set i where
    ⌊_⌋ : ∀ a → Maybe-PreImage f (f a)
    ⊥ : ∀ {b} → Maybe-PreImage f b
 
 \end{code}
 %<*membership>
 \begin{code}
-data _∈_ {A : Set} (a : A) : List A → Set where
+data _∈_ {i}{A : Set i} (a : A) : List A → Set where
   Ο  : ∀ {ℓ} → a ∈ (a ∷ ℓ)
   1+ : ∀ {x ℓ}  → a ∈ ℓ → a ∈ (x ∷ ℓ)
 \end{code}
 %</membership>
 \begin{code}
 
-_[_∶_] : ∀ {A}(Γ : List A) {m} → m ∈ Γ → A → List A
+_[_∶_] : ∀ {i}{A : Set i}(Γ : List A) {m} → m ∈ Γ → A → List A
 .(_ ∷ ℓ) [ Ο {ℓ} ∶ b ] = b ∷ ℓ
 .(_ ∷ _) [ 1+ {x}{ℓ} a∈ ∶ b ] = x ∷ ℓ [ a∈ ∶ b ]
 
-_∶_ : ∀ {A}{Γ : List A} {m} → (M : m ∈ Γ) → (a : A) → a ∈ (Γ [ M ∶ a ])
+_∶_ : ∀ {i}{A : Set i}{Γ : List A} {m} → (M : m ∈ Γ) → (a : A) → a ∈ (Γ [ M ∶ a ])
 Ο ∶ a = Ο
 1+ M ∶ a = 1+ (M ∶ a)
 
 infixl 20 _⑊_
 
-_⑊_ : ∀ {A}(ℓ : List A){a}(a∈ : a ∈ ℓ) → List A
+_⑊_ : ∀ {i}{A : Set i}(ℓ : List A){a}(a∈ : a ∈ ℓ) → List A
 .(_ ∷ _) ⑊ Ο {ℓ} = ℓ
 .(_ ∷ _) ⑊ (1+ {x}{ℓ} a∈) = x ∷ ℓ ⑊ a∈
 
 
 
-module _ {A : Set}(_≟_ : Relation.Binary.Decidable (_≡_ {A = A})) where
+module _ {i}{A : Set i}(_≟_ : Relation.Binary.Decidable (_≡_ {A = A})) where
 
   nth⁻¹ : ∀ a {n} (l : Vec A n) → Maybe-PreImage (Vec.lookup l) a
   nth⁻¹ a [] = ⊥
@@ -52,7 +52,7 @@ module _ {A : Set}(_≟_ : Relation.Binary.Decidable (_≡_ {A = A})) where
 
 
 
-module _ {A} where
+module _ {i}{A : Set i} where
 
   data _Maybe-⑊_ {ℓ : List A}{a}(a∈ : a ∈ ℓ) : ∀ {a'} → a' ∈ ℓ → Set where
     ⊥ : a∈ Maybe-⑊ a∈
