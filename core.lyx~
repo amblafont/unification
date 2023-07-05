@@ -6420,16 +6420,10 @@ The error metavariable context
 \begin_inset Formula $\bot$
 \end_inset
 
- will prove useful to handle failure in the unification algorithm.
- The unification algorithm is fundamentally a partial one, since unifiers
- may not exist.
- Instead of modelling partiality with some kind of error monad, we instead
- make our unification algorithm total by adding a formal error, so that
- a metacontext is either a proper metacontext or a formal error metacontext,
- and the unification algorithm either returns a proper substitution or an
- error substitution.
- Our approach to failure is actually arises from the categorical semantics
- (see 
+ will prove useful to handle failure in the unification algorithm, instead
+ of adopting a (perhaps more conventional) monadic implementation.
+ Our peculiar approach to failure is actually guided by the categorical
+ semantics (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:categorification"
@@ -6440,7 +6434,11 @@ noprefix "false"
 \end_inset
 
 ).
- 
+ In the error context, exactly one (error) term 
+\begin_inset Formula $\bang$
+\end_inset
+
+ is available in any variable context.
 \end_layout
 
 \begin_layout Standard

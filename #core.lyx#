@@ -6425,9 +6425,9 @@ The error metavariable context
  may not exist.
  Instead of modelling partiality with some kind of error monad, we instead
  make our unification algorithm total by adding a formal error, so that
- a metacontext is either a proper metacontext or a formal error metacontext,
- and the unification algorithm either returns a proper substitution or an
- error substitution.
+ a context is either a proper context or a formal error context for each
+ variable context, and the unification algorithm either returns a proper
+ substitution or an error substitution.
  Our approach to failure is actually arises from the categorical semantics
  (see 
 \begin_inset CommandInset ref
