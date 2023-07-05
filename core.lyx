@@ -6444,8 +6444,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-In the inductive rules, we use the bold face for any dotted metavariable
- context.
+In the inductive rules, we use the bold face 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+ for any dotted metavariable context.
  In the Agda code, we adopt a nameless encoding of dotted metavariable contexts:
  they are mere lists of metavariable arities, and metavariables are referred
  to by their index in the list.
