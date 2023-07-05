@@ -1,20 +1,13 @@
 \begin{code}
 module lc where
 
-open import Agda.Builtin.Unit
-open import Agda.Builtin.Bool renaming (Bool to 𝔹)
 open import Data.Nat using (ℕ; _≟_ ; _+_)
 open import Data.Fin as Fin using (Fin)
-open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
-open import Relation.Nullary
-open import Data.List as List hiding (map ; [_])
+open import Relation.Nullary using (yes ; no)
+open import Data.List as List using (List ; [] ; _∷_) 
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
-open import Data.Product using (_,_; Σ; _×_) 
-open import Data.Maybe.Base hiding (map ; _>>=_) renaming (nothing to ⊥ ; just to ⌊_⌋)
-
-
-open import Relation.Binary using (Rel; IsEquivalence; Setoid)
-open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
+open import Data.Product using (_,_; Σ; _×_)
+open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 
 open import lib
 
@@ -188,12 +181,18 @@ Substitution
 -------------------------- -}
 open Common.!ₛ ! public
 
+\end{code}
+%<*lc-substitution>
+\begin{code}
 _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
 App· t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
 Lam· t [ σ ]t = Lam (t [ σ ]t)
 Var· i [ σ ]t = Var i
 M ﹙ x ﹚ [ σ ]t = nth σ M ❴ x ❵ 
 ! [ 1⊥ ]t = !
+\end{code}
+%</lc-substitution>
+\begin{code}
 
 open Common.-[-]s _[_]t public
 open Common.1ₛ wkₜ _﹙_﹚ public

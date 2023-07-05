@@ -1,19 +1,12 @@
 \begin{code}
 module lib where
 
-open import Agda.Builtin.Unit
-open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
-open import Data.Maybe.Base hiding (map ; _>>=_) renaming (nothing to ⊥ ; just to ⌊_⌋)
-open import Data.List hiding (map ; [_])
-open import Data.Product using (_,_; Σ; _×_)
+open import Data.List
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
-open import Relation.Binary using (Rel; IsEquivalence; Setoid)
-open import Data.Nat using (ℕ)
+import Relation.Binary
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Fin as Fin using (Fin)
 open import Relation.Nullary
-open import Agda.Builtin.Bool renaming (Bool to 𝔹)
-
 
 
 -- ⌊ a ⌋ : Maybe-PreImage f b  means that b = f a

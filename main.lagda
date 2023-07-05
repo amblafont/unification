@@ -2,19 +2,11 @@
 {-# OPTIONS --type-in-type --no-termination-check #-}
 module main where
 
-open import Agda.Builtin.Unit
-open import Agda.Builtin.Bool renaming (Bool to 𝔹)
-open import Data.Nat as ℕ using (ℕ; _+_)
-open import Data.Fin as Fin using (Fin)
-open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
-open import Relation.Nullary
+open import Relation.Nullary using (Dec ; yes ; no)
 open import Data.List as List hiding (map ; [_])
 open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
-open import Data.Vec.Base as Vec using (Vec; []; _∷_; toList)
-open import Data.Product using (_,_; Σ; _×_ ; uncurry) -- renaming (Σ[_∈_]_ to Σ[_∶_]_)
-open import Data.Maybe.Base hiding (map ; _>>=_) renaming (nothing to ⊥ ; just to ⌊_⌋)
-
-open import Relation.Binary using (Rel; IsEquivalence; Setoid)
+open import Data.Product using (_,_; Σ; _×_ )
+open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 
 open import lib
@@ -136,13 +128,25 @@ Substitution
 -------------------------- -}
    open Common.!ₛ ! public
 
+\end{code}
+%<*gen-substitution-proto>
+\begin{code}
    _[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a
+\end{code}
+%</gen-substitution-proto>
+\begin{code}
 
    open Common.-[-]s _[_]t public
 
+\end{code}
+%<*gen-substitution-def>
+\begin{code}
    Rigid· o δ [ σ ]t = Rigid o (δ [ σ ]s)
    M ﹙ x ﹚ [ σ ]t =  nth σ M ❴ x ❵
    ! [ 1⊥ ]t = !
+\end{code}
+%</gen-substitution-def>
+\begin{code}
 
 
    open Common.1ₛ wkₜ _﹙_﹚ public
@@ -266,7 +270,7 @@ Unification
   %<*unifyprototype>
   \begin{code}
   unify : ∀ {Γ a} → Tm Γ a → Tm Γ a → Γ ⟶?
-  unify-σ : ∀ {Γ Γ'} → (Γ' ·⟶ Γ) → (Γ' ·⟶ Γ) → (Γ ⟶?)
+  unify-σ : ∀ {Γ Γ'} → (Γ' ⟶ Γ) → (Γ' ⟶ Γ) → (Γ ⟶?)
   \end{code}
   %</unifyprototype>
   %<*unify-subst>
@@ -276,6 +280,7 @@ Unification
    let Δ ◄ σ = unify t₁ t₂
        Δ' ◄ σ' = unify-σ (δ₁ [ σ ]s) (δ₂ [ σ ]s)
    in  Δ' ◄ σ [ σ' ]s
+  unify-σ 1⊥ 1⊥ = ⊥ ◄ !ₛ
   \end{code}
   %</unify-subst>
   \begin{code}

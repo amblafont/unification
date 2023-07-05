@@ -1,29 +1,23 @@
 \begin{code}
-open import Data.List as List hiding (map ; [_])
+open import Data.List as List hiding ([_])
 open import lib
-open import Data.Maybe.Base hiding (map ; _>>=_) renaming (nothing to ⊥ ; just to ⌊_⌋)
+open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
+open import Data.Product using (_,_; Σ; _×_)
 
 
 module Common (A : Set) 
      (_⇒_ : A → A → Set)
      (id : ∀{a} → a ⇒ a)
-     (Tm : Maybe (List A) → A → Set)
+     (Tm-parameter : Maybe (List A) → A → Set)
   where
 
-open import Agda.Builtin.Unit
-open import Agda.Builtin.Bool renaming (Bool to 𝔹)
-open import Data.Nat using (ℕ; _≟_ ; _+_)
-open import Data.Fin as Fin using (Fin)
-open import Data.Sum.Base using () renaming (_⊎_ to _∨_ ; inj₁ to left ; inj₂ to right)
-open import Relation.Nullary
-open import Data.Vec.Base as Vec using (Vec; []; _∷_)
-open import Data.Product using (_,_; Σ; _×_)
 
-open import Relation.Binary using (Rel; IsEquivalence; Setoid)
-open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 private
   MetaContext· = List A
   MetaContext = Maybe MetaContext·
+  -- we don't use directly Tm-parameter because the generated latex
+  -- is ugly for a module parameter
+  Tm = Tm-parameter
   Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
 
 module SubstitutionDef where
@@ -33,15 +27,30 @@ module SubstitutionDef where
   data _⟶_ : MetaContext → MetaContext → Set
   _·⟶_ : MetaContext· → MetaContext → Set
   _·⟶·_ : MetaContext· → MetaContext· → Set
-  
+
+\end{code}
+%<*dotted-substitution>
+\begin{code}
+  -- Dotted substitutions
   Γ ·⟶ Δ = ⌊ Γ ⌋ ⟶ Δ
+\end{code}
+%</dotted-substitution>
+%<*successful-substitution>
+\begin{code}
+  -- Successful substitutions
   Γ ·⟶· Δ = ⌊ Γ ⌋ ⟶ ⌊ Δ ⌋
-  
+\end{code}
+%</successful-substitution>
+%<*substitution-def>
+\begin{code}
   data _⟶_ where
        [] : ∀ {Δ} → ([] ·⟶ Δ )
-       _,_ : ∀ {Γ Δ m} → Tm Δ m → (Γ ·⟶ Δ) → (m ∷ Γ) ·⟶ Δ
+       _,_ : ∀ {Γ Δ m} → Tm Δ m → (Γ ·⟶ Δ) → (m ∷ Γ ·⟶ Δ)
        1⊥ : ⊥ ⟶ ⊥
-  
+\end{code}
+%</substitution-def>
+\begin{code}
+
   nth : ∀ {Γ Δ m} → (Γ ·⟶ Δ) → m ∈ Γ → Tm Δ m
   nth (t , δ) Ο = t
   nth (t , δ) (1+ M) = nth δ M
@@ -64,13 +73,23 @@ module !ₛ (! : ∀ {a} → Tm ⊥ a) where
   !ₛ {⌊ m ∷ Γ ⌋} = ! , !ₛ
 
 module -[-]s
-   (_[_]t : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a) where
+   (_[_]t-parameter : ∀ {Γ a} → Tm Γ a → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ a) where
 
+   _[_]t = _[_]t-parameter
+\end{code}
+%<*compose-substitution-proto>
+\begin{code}
    _[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ⟶ Γ₃)
-
+\end{code}
+%</compose-substitution-proto>
+%<*compose-substitution-def>
+\begin{code}
    [] [ σ ]s = []
    (t , δ) [ σ ]s = t [ σ ]t , δ [ σ ]s
    1⊥ [ 1⊥ ]s = 1⊥
+\end{code}
+%</compose-substitution-def>
+\begin{code}
 
 module 1ₛ 
    (wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a)
@@ -120,13 +139,12 @@ module occur-cases where
        Same-MVar : m ⇒ a → occur-cases M a
        Cycle : occur-cases M a
        No-Cycle : Tm· (Γ ⑊ M) a → occur-cases M a
-  -- open occur-cases public
 
 module PruneUnifyTypes where
 \end{code}
 %<*prune-type>
 \begin{code}
-  record [_]∪_⟶? (m : A)(Γ : MetaContext) : Set where
+  record [_]∪_⟶? m Γ : Set where
     constructor _◄_
     field
        Δ : MetaContext
@@ -135,7 +153,7 @@ module PruneUnifyTypes where
 %</prune-type>
 %<*substfrom>
 \begin{code}
-  record _⟶? (Γ : MetaContext) : Set where
+  record _⟶? Γ : Set where
     constructor _◄_
     field
         Δ : MetaContext

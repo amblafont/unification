@@ -1045,7 +1045,7 @@ noprefix "false"
  We show correctness of the two phases of the unification algorithm in 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "sec:coequalising-phase"
+reference "sec:pruning-phase"
 plural "false"
 caps "true"
 noprefix "false"
@@ -1055,7 +1055,7 @@ noprefix "false"
  and 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "sec:pruning-phase"
+reference "sec:coequalising-phase"
 plural "false"
 caps "true"
 noprefix "false"
@@ -4219,7 +4219,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Formula 
@@ -4233,6 +4233,17 @@ status collapsed
 \begin_inset Formula 
 \[
 \labellabelrule{\unificationstepwisenovec}{U-Split}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{}{\bot\vdash1_{\bot}=1_{\bot}\Rightarrow\bang_{s}\dashv\bot}}{U-Id-Fail}
 \]
 
 \end_inset
@@ -7436,11 +7447,22 @@ noprefix "false"
 \end_inset
 
 .
- There is only one (formal) metavariable substitution 
+ We call a substitution 
+\emph on
+successful
+\emph default
+ if it targets a dotted metavariable context, 
+\emph on
+dotted
+\emph default
+ if the domain is dotted.
+ Note that any successful substitution is dotted because there is only one
+ metavariable substitution 
 \begin_inset Formula $1_{\bot}$
 \end_inset
 
- from the error context, targeting itself: it is an identity substitution.
+ from the error context: it is a formal identity substitution, targeting
+ itself.
  A 
 \emph on
 metavariable substitution
@@ -7466,100 +7488,6 @@ metavariable substitution
 \end_inset
 
 .
- In Agda, the type of substitutions between 
-\begin_inset Formula $\dotmcontext{\Gamma}$
-\end_inset
-
- and 
-\begin_inset Formula $\Delta$
-\end_inset
-
- is defined as 
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-AgdaFunction{VecList}
-\backslash
-AgdaSpace{}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AgdaSymbol{(}
-\backslash
-AgdaDatatype{Tm}
-\backslash
-AgdaSpace{}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AgdaBound{Δ}
-\backslash
-AgdaSymbol{)}
-\backslash
-AgdaSpace{}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AgdaBound{Γ}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-, where 
-\begin_inset Formula $\AgdaFunction{VecList.t}\ \AgdaSpace{}\AgdaFunction{X}\ \AgdaFunction{\ensuremath{\ell}}$
-\end_inset
-
- is (inductively) defined as the product type 
-\begin_inset Formula $X\ a_{1}\times\dots\times X\ a_{n}$
-\end_inset
-
- for any dependent type 
-\begin_inset Formula $X:A\rightarrow\AgdaPrimitive{Set}$
-\end_inset
-
- and list 
-\begin_inset Formula $\ell=[a_{1},\dots,a_{n}]$
-\end_inset
-
- of elements of 
-\begin_inset Formula $A$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-We call a substitution 
-\emph on
-successful
-\emph default
- if it targets a dotted metavariable context, 
-\emph on
-dotted
-\emph default
- if the domain is dotted.
- Note that any successful substitution is dotted.
 \end_layout
 
 \begin_layout Standard
@@ -8006,6 +7934,129 @@ name "fig:subst-code"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{dotted-substitution}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{successful-substitution}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-2em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -8034,21 +8085,14 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%%
+%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdacode{dot-substitution-def}%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{substitution-def}%
+agdacode{substitution-def}
 \end_layout
 
 \end_inset
@@ -8133,7 +8177,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%%%%%%%
+%%%%%%%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -8220,14 +8264,35 @@ status open
 
 \begin_layout Plain Layout
 
-%
+%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdacode{composesubst}%
+AgdaNoSpaceAroundCode{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{compose-substitution-proto}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{compose-substitution-def}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AgdaSpaceAroundCode{}
 \end_layout
 
 \end_inset
@@ -8336,14 +8401,49 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%%%%%
+%%%%%%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-agdacode{gen-subst}%
+AgdaNoSpaceAroundCode{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{gen-substitution-proto}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{compose-substitution-proto}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AgdaSpaceAroundCode{}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{gen-substitution-def}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{compose-substitution-def}%
 \end_layout
 
 \end_inset
@@ -9511,40 +9611,6 @@ rigid
 \end_inset
 
 -abstraction, or variables), resulting in failure.
-\end_layout
-
-\begin_layout Remark
-We use the 
-\begin_inset Formula $\AgdaKeyword{do}$
-\end_inset
-
- notation
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Agda supports let binding constructions, but their destructuring capabilities
- are more limited.
-\end_layout
-
-\end_inset
-
- to decompose intermediate outputs.
- For example, in the application case, the second line decomposes the output
- of 
-\begin_inset Formula $\AgdaFunction{unify}\ t\ t'$
-\end_inset
-
- as 
-\begin_inset Formula $\Delta_{1}\blacktriangleleft\sigma_{1}$
-\end_inset
-
-.
- The last line of a 
-\begin_inset Formula $\AgdaKeyword{do}$
-\end_inset
-
- block is the final return value.
 \end_layout
 
 \begin_layout Standard
@@ -11157,9 +11223,33 @@ For this pruning phase, we use the notation
 \begin_inset Formula $x$
 \end_inset
 
- is the argument of the metavariable whose arity is left implicit, as well
- as its (irrelevant) name.
- The output is the most general unifier of 
+ is the argument of the metavariable whose arity 
+\begin_inset Formula $m$
+\end_inset
+
+ is left implicit, as well as its (irrelevant) name.
+ The output is a metavariable context 
+\begin_inset Formula $\Delta$
+\end_inset
+
+, together with a term 
+\begin_inset Formula $t'$
+\end_inset
+
+ in context 
+\begin_inset Formula $\Delta;m$
+\end_inset
+
+, and a substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is dotted, this is precisely the data for the most general unifier of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -11172,7 +11262,20 @@ For this pruning phase, we use the notation
 \end_inset
 
 .
- A priori, this only make sense if 
+ Following the above pruning intuition, 
+\begin_inset Formula $t'$
+\end_inset
+
+ is the term 
+\begin_inset Formula $t$
+\end_inset
+
+ where the outbound variables have been pruned, in case of success.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+A priori, this only make sense if 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -11234,15 +11337,10 @@ This is motivated by the fact that context extensions are characterised
 \end_inset
 
 .
- Following the above pruning intuition, 
-\begin_inset Formula $t'$
+\end_layout
+
 \end_inset
 
- is the term 
-\begin_inset Formula $t$
-\end_inset
-
- where the outbound variables have been pruned, in case of success.
  Accordingly, the type signature for the pruning phase is
 \begin_inset Preview
 
@@ -11252,7 +11350,7 @@ status open
 
 \begin_layout Plain Layout
 
-%
+%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -13899,20 +13997,6 @@ Given any pattern-friendly signature
  has coequalisers.
 \end_layout
 
-\begin_layout Remark
-Strictly speaking, the function 
-\begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
-\end_inset
-
- only addresses coequalisers of dotted substitutions.
- However, there is only one undotted substitution: the identity morphism
- on 
-\begin_inset Formula $\bot$
-\end_inset
-
-, so the generalisation is straightforward.
-\end_layout
-
 \begin_layout Standard
 \begin_inset ERT
 status open
@@ -15279,1246 +15363,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Soundness of the unification phase
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:coequalising-phase"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this section, we assume a pattern-friendly GB-signature 
-\begin_inset Formula $S$
-\end_inset
-
- and discuss soundness of the main rules of the two mutually recursive functions
- 
-\begin_inset Formula $\AgdaFunction{unify}$
-\end_inset
-
- and 
-\begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
-\end_inset
-
- listed in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-full-gen"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, which compute coequalisers in 
-\begin_inset Formula $\Thbot S$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-The failing rule 
-\begin_inset Formula $\refrule{U-Fail}$
-\end_inset
-
- is justified by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:diag-bot"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- We already discussed the rule 
-\begin_inset Formula $\refrule{No-Cycle}$
-\end_inset
-
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-: the premise and the conclusion deal with the same unification problem,
- phrased differently.
- In the next subsections, we discuss the rule sequential rules 
-\begin_inset Formula $\refrule{U-Empty}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{U-Split}$
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:usplit"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), the rule 
-\begin_inset Formula $\refrule{Same-MVar}$
-\end_inset
-
- unifying metavariable with itself (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:flex-flex-same-metavar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), the failing rule 
-\begin_inset Formula $\refrule{Cycle}$
-\end_inset
-
- for cyclic unification of a metavariable with a term which includes it
- deeply (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:flex-rig-cyclic"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), and the rules 
-\begin_inset Formula $\refrule{Clash}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{U-Rig}$
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:rig-rig"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-) which handle unification of two rigid terms.
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Sequential unification (rules U-Empty and U-Split)
-\end_layout
-
-\end_inset
-
-Sequential unification (rules 
-\begin_inset Formula $\refrule{U-Empty}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{U-Split}$
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:usplit"
-
-\end_inset
-
-The rule 
-\begin_inset Formula $\refrule{U-Empty}$
-\end_inset
-
- is a direct application of the following general lemma.
-\end_layout
-
-\begin_layout Lemma
-If 
-\begin_inset Formula $A$
-\end_inset
-
- is initial in a category, then any diagram of the shape 
-\begin_inset Formula $\xymatrix{A\coeqr{}{} & B\ar[r]^{1_{B}} & B}
-$
-\end_inset
-
- is a coequaliser.
-\end_layout
-
-\begin_layout Standard
-The rule 
-\begin_inset Formula $\refrule{U-Split}$
-\end_inset
-
- is a direct application of a stepwise construction of coequalisers valid
- in any category, as noted by 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-cite[Theorem 9]{DBLP:books/daglib/0068768}
-\end_layout
-
-\end_inset
-
-: if the first two diagrams below are coequalisers, then the last one as
- well.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-YADE DIAGRAM diagrams/coeq-pointwise.json
-\end_layout
-
-\end_inset
-
-
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% https://q.uiver.app/?q=WzAsOCxbMCwxLCJBXzEiXSxbMSwxLCJcXEdhbW1hIl0sWzIsMSwiXFxEZ
-Wx0YV8xIl0sWzMsMSwiQV8yIl0sWzQsMCwiXFxHYW1tYSJdLFs1LDEsIlxcRGVsdGFfMSJdLFs0LDIsI
-lxcR2FtbWEiXSxbNiwxLCJcXERlbHRhXzIiXSxbMCwxLCJ0XzEiLDAseyJjdXJ2ZSI6LTF9XSxbMCwxL
-CJ1XzEiLDIseyJjdXJ2ZSI6MX1dLFsxLDIsIlxcc2lnbWFfMSIsMCx7InN0eWxlIjp7ImJvZHkiOnsib
-mFtZSI6ImRhc2hlZCJ9fX1dLFszLDQsInRfMiJdLFs0LDUsIlxcc2lnbWFfMSJdLFszLDYsInVfMiIsM
-l0sWzYsNSwiXFxzaWdtYV8xIiwyXSxbNSw3LCJcXHNpZ21hXzIiLDAseyJzdHlsZSI6eyJib2R5Ijp7I
-m5hbWUiOiJkYXNoZWQifX19XV0=
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd}[row sep=tiny]
-\end_layout
-
-\begin_layout Plain Layout
-
-	&&&&[-20pt] 
-\backslash
-Gamma 
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	{
-\backslash
-Gamma'_1} & 
-\backslash
-Gamma & {
-\backslash
-Delta_1} & {
-\backslash
-Gamma'_2} &&[-20pt] {
-\backslash
-Delta_1} & {
-\backslash
-Delta_2} 
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	&&&&[-10pt] 
-\backslash
-Gamma
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{t_1}", curve={height=-6pt}, from=2-1, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{u_1}"', curve={height=6pt}, from=2-1, to=2-2]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{
-\backslash
-sigma_1}", dashed, from=2-2, to=2-3]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{t_2}", from=2-4, to=1-5]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{
-\backslash
-sigma_1}", from=1-5, to=2-6]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{u_2}"', from=2-4, to=3-5]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{
-\backslash
-sigma_1}"', from=3-5, to=2-6]
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-arrow["{
-\backslash
-sigma_2}", dashed, from=2-6, to=2-7]
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\xymatrix{\Gamma'_{1}+\Gamma'_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Lemma
-\begin_inset Formula 
-\[
-\xymatrix{A_{1}+A_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Theorem 9, 
-\backslash
-cite{DBLP:books/daglib/0068768}]
-\end_layout
-
-\end_inset
-
-In any category, denoting morphism  composition 
-\begin_inset Formula $f\circ g$
-\end_inset
-
- by 
-\begin_inset Formula $g[f]$
-\end_inset
-
-, the following rule applies.
-\begin_inset Formula 
-\[
-\unificationstepwise{}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-% https://q.uiver.app/?q=WzAsMyxbMCwwLCJBXzErQV8yIl0sWzEsMCwiQiJdLFsyLDAsIkQiXSxbM
-CwxLCJmXzEsZl8yIiwwLHsiY3VydmUiOi0yfV0sWzAsMSwiZl8xJyxmXzInIiwyLHsiY3VydmUiOjJ9X
-SxbMSwyLCJ2XFxjaXJjIHUiXV0=
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	{A_1+A_2} & 
-\backslash
-Gamma & 
-\backslash
-Delta_2 	
-\backslash
-arrow["{t_1,t_2}"above, curve={height=-12pt}, from=1-1, to=1-2] 	
-\backslash
-arrow["{u_1,u_2}"', curve={height=12pt}, from=1-1, to=1-2] 	
-\backslash
-arrow["{
-\backslash
-sigma_2
-\backslash
-circ 
-\backslash
-sigma_1}", from=1-2, to=1-3, dashed] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-We therefore get the rule
-\begin_inset Formula 
-\[
-\unificationrigrig
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Flex-Flex, same metavariable (rule Same-MVar)
-\end_layout
-
-\end_inset
-
-Flex-Flex, same metavariable (rule 
-\begin_inset Formula $\refrule{Same-MVar}$
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:flex-flex-same-metavar"
-
-\end_inset
-
-Here we detail unification of 
-\begin_inset Formula $M(x)$
-\end_inset
-
- and 
-\begin_inset Formula $M(y)$
-\end_inset
-
-, for 
-\begin_inset Formula $x,y\in\hom_{{\cal A}}(m,a)$
-\end_inset
-
-.
- By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:functor-L-intuition"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset Formula $M(\arg x)={\cal L}\arg x[in_{M}]$
-\end_inset
-
- and 
-\begin_inset Formula $M(\arg y)={\cal L}\arg y[in_{M}]$
-\end_inset
-
-.
- We exploit the following lemma with 
-\begin_inset Formula $u={\cal L}\arg x$
-\end_inset
-
- and 
-\begin_inset Formula $v={\cal L}\arg y$
-\end_inset
-
-.
- 
-\color red
-TODO: more details
-\end_layout
-
-\begin_layout Lemma
-In any category, denoting morphism composition 
-\begin_inset Formula $g\circ f$
-\end_inset
-
- by 
-\begin_inset Formula $f[g]$
-\end_inset
-
- and coequalisers as in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "not:cat-coeq"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, the following rule applies:
-\begin_inset Formula 
-\[
-\dfrac{B\vdash u=v\Rightarrow h\dashv C}{B+D\dashv u[in_{B}]=v[in_{B}]\Rightarrow h+1_{D}\dashv C+D}
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-In other words, if the below left diagram is a coequaliser, then so is the
- below right diagram.
- 
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-xymatrix@R=2pt{A
-\backslash
-ar@<+.5ex>[r]^{u}
-\backslash
-ar@<-.5ex>[r]_{v} & B
-\backslash
-ar@{-->}[r]^{h} & C}
-\backslash
-quad
-\backslash
-begin{array}{c}
-\backslash
-xymatrix@C=1.5em@R=2pt{ & B
-\backslash
-ar[rd]^{in_{B}}
-\backslash
-
-\backslash
-A
-\backslash
-ar[ru]^{u}
-\backslash
-ar[rd]_{v} &  & B+D
-\backslash
-ar@{-->}[r]^{h+1_{D}} & C+D
-\backslash
-
-\backslash
- & B
-\backslash
-ar[ru]_{in_{B}}}
-\backslash
-end{array}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\xymatrix{A\ar@<+.5ex>[r]^{u}\ar@<-.5ex>[r]_{v} & B\ar@{-->}[r]^{h} & C}
-\qquad\begin{array}{c}
-\xymatrix{ & B\ar[rd]^{in_{B}}\\
-A\ar[ru]^{u}\ar[rd]_{v} &  & B+D\ar@{-->}[r]^{h+1_{D}} & C+D\\
- & B\ar[ru]_{in_{B}}
-}
-\end{array}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-It follows that it is enough to compute the coequaliser of 
-\begin_inset Formula ${\cal L}\arg x$
-\end_inset
-
- and 
-\begin_inset Formula ${\cal L}\arg y$
-\end_inset
-
-.
- Furthermore, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:L-finite-conncted"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, it is the image by 
-\begin_inset Formula ${\cal L}$
-\end_inset
-
- of the equaliser of 
-\begin_inset Formula $\arg x$
-\end_inset
-
- and 
-\begin_inset Formula $\arg y$
-\end_inset
-
-, thus justifying the rule 
-\begin_inset Formula $\refrule{Same-MVar}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Flex-rigid, cyclic (rule Cycle)
-\end_layout
-
-\end_inset
-
-Flex-rigid, cyclic (rule 
-\begin_inset Formula $\refrule{Cycle}$
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:flex-rig-cyclic"
-
-\end_inset
-
-The rule 
-\begin_inset Formula $\refrule{Cycle}$
-\end_inset
-
- handles unification of 
-\begin_inset Formula $M(\arg x)$
-\end_inset
-
- and a term 
-\begin_inset Formula $t$
-\end_inset
-
- such that 
-\begin_inset Formula $t$
-\end_inset
-
- is rigid and 
-\begin_inset Formula $M$
-\end_inset
-
- occurs in 
-\begin_inset Formula $t$
-\end_inset
-
-.
- In this section, we show that indeed there is no successful unifier.
- More precisely, we prove 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:occurcheck-final"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- below, stating that if there is a unifier of a term 
-\begin_inset Formula $t$
-\end_inset
-
- and a metavariable application 
-\begin_inset Formula $M(x)$
-\end_inset
-
-, then either 
-\begin_inset Formula $M$
-\end_inset
-
- occurs at top-level in 
-\begin_inset Formula $t$
-\end_inset
-
-, or it does not occur at all.
- The argument follows the basic intuition that 
-\begin_inset Formula $\sigma_{M}=t[M\mapsto\sigma_{M}]$
-\end_inset
-
- is impossible if 
-\begin_inset Formula $M$
-\end_inset
-
- occurs deeply in 
-\begin_inset Formula $u$
-\end_inset
-
- because the sizes of both hand sides can never match.
- To make this statement precise, we need some recursive definitions and
- properties of size.
-\end_layout
-
-\begin_layout Definition
-\begin_inset CommandInset label
-LatexCommand label
-name "def:size-occur-check"
-
-\end_inset
-
-The size 
-\begin_inset Formula $|t|\in\mathbb{N}$
-\end_inset
-
- of a dotted term 
-\begin_inset Formula $t$
-\end_inset
-
- is recursively defined by 
-\begin_inset Formula $|M(\arg x)|=0$
-\end_inset
-
-, and 
-\begin_inset Formula $|o(\vec{t})|=1+|\vec{t}|$
-\end_inset
-
-, with 
-\begin_inset Formula $|\vec{t}|=\sum_{i}t_{i}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We will also need to count the occurrences of a metavariables in a term.
-\end_layout
-
-\begin_layout Definition
-For any term 
-\begin_inset Formula $t$
-\end_inset
-
- we define 
-\begin_inset Formula $|t|_{M}$
-\end_inset
-
- recursively by 
-\begin_inset Formula $|M(\arg x)|_{M}=1$
-\end_inset
-
-, 
-\begin_inset Formula $|N(\arg x)|_{M}=0$
-\end_inset
-
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
- if 
-\begin_inset Formula $N\neq M$
-\end_inset
-
-, and
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- 
-\begin_inset Formula $|o(\vec{t})|_{M}=|\vec{t}|_{M}$
-\end_inset
-
- with the sum convention as above for 
-\begin_inset Formula $|\vec{t}|_{M}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:sizeM-factor"
-
-\end_inset
-
-For any term 
-\begin_inset Formula $\text{\ensuremath{\dotmcontext{\Gamma};a\vdash}}t$
-\end_inset
-
-, if 
-\begin_inset Formula $|t|_{M}=0$
-\end_inset
-
-, then 
-\begin_inset Formula $\dotmcontext{\Gamma}\backslash M;a\vdash t$
-\end_inset
-
-.
- Moreover, for any 
-\begin_inset Formula $\dotmcontext{\Gamma}=(M_{1}:m_{1},\dots,M_{n}:m_{n})$
-\end_inset
-
-, well-formed term 
-\begin_inset Formula $t$
-\end_inset
-
- in context 
-\begin_inset Formula $\dotmcontext{\Gamma};a$
-\end_inset
-
-, and successful substitution 
-\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
-\end_inset
-
-, we have 
-\begin_inset Formula $|t[\sigma]|=|t|+\sum_{i}|t|_{M_{i}}\times|\sigma_{i}|$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:size-consequences"
-
-\end_inset
-
-For any term 
-\begin_inset Formula $t$
-\end_inset
-
- in context 
-\begin_inset Formula $\dotmcontext{\Gamma};a$
-\end_inset
-
- with 
-\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
-\end_inset
-
-, successful substitution 
-\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
-\end_inset
-
-, morphism 
-\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
-\end_inset
-
- and 
-\begin_inset Formula $u$
-\end_inset
-
- in context 
-\begin_inset Formula $\Delta;u$
-\end_inset
-
-, we have 
-\begin_inset Formula $|t[\sigma,M\mapsto u]|\geq|t|+|u|\times|t|_{M}$
-\end_inset
-
- and 
-\begin_inset Formula $|M(x)[u]|=|u|$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:occurcheck-final"
-
-\end_inset
-
-Let 
-\begin_inset Formula $t$
-\end_inset
-
- be a term in context 
-\begin_inset Formula $\dotmcontext{\Gamma};a$
-\end_inset
-
- with 
-\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
-\end_inset
-
- and 
-\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
-\end_inset
-
- such that 
-\begin_inset Formula $(M\mapsto u,\sigma):\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
-\end_inset
-
- unifies 
-\begin_inset Formula $t$
-\end_inset
-
- and 
-\begin_inset Formula $M(x)$
-\end_inset
-
-.
- Then, either 
-\begin_inset Formula $t=M(y)$
-\end_inset
-
- for some 
-\begin_inset Formula $y\in\hom_{{\cal A}}(m,a)$
-\end_inset
-
-, or 
-\begin_inset Formula $\dotmcontext{\Gamma};a\vdash t$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-Since 
-\begin_inset Formula $t[\sigma,M\mapsto u]=M(x)[u]$
-\end_inset
-
-, we have 
-\begin_inset Formula $|t[\sigma,M\mapsto u]|=|M(x)[u]|$
-\end_inset
-
-.
- 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:size-consequences"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- implies 
-\begin_inset Formula $|u|\geq|t|+|u|\times|t|_{M}$
-\end_inset
-
-.
- Therefore, either 
-\begin_inset Formula $|t|_{M}=0$
-\end_inset
-
- and we conclude by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:sizeM-factor"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, or 
-\begin_inset Formula $|t|_{M}>0$
-\end_inset
-
- and 
-\begin_inset Formula $|t|=0$
-\end_inset
-
-, so that 
-\begin_inset Formula $t$
-\end_inset
-
- is 
-\begin_inset Formula $M(\arg y)$
-\end_inset
-
- for some 
-\begin_inset Formula $y$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Rigid-rigid (rules Clash and U-Rig)
-\end_layout
-
-\end_inset
-
-Rigid-rigid (rules 
-\begin_inset Formula $\refrule{Clash}$
-\end_inset
-
- and 
-\begin_inset Formula $\refrule{U-Rig}$
-\end_inset
-
-)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:rig-rig"
-
-\end_inset
-
-
-\color red
-TODO
-\end_layout
-
-\begin_layout Section
 Soundness of the pruning phase
 \end_layout
 
@@ -16560,23 +15404,7 @@ noprefix "false"
 \begin_inset Formula $\substofrenamings x:\dotmcontext{\Gamma'_{1}}\rightarrow\dotmcontext{\Gamma'_{2}}$
 \end_inset
 
- in the extended context 
-\begin_inset Formula $\dotmcontext{\Gamma'_{2}},\Gamma$
-\end_inset
-
- as the coproduct of 
-\begin_inset Formula $\dotmcontext{\Gamma'_{2}}$
-\end_inset
-
- and 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- in 
-\begin_inset Formula $\Thbot S$
-\end_inset
-
-, where 
+ where 
 \begin_inset Formula $\substofrenamings x$
 \end_inset
 
@@ -16585,217 +15413,35 @@ noprefix "false"
 \end_inset
 
 .
- Categorically speaking, we are looking at the following coequalising diagram
- in 
-\begin_inset Formula $\Thbot S$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-YADE DIAGRAM diagrams/pushout-coeq.json
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzpicture}[every node/.style={inner sep=5pt,outer sep=0pt,anchor=base,tex
-t height=1.2ex, text depth=0.25ex}] 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-node (0) at (2em, -3.3333333333333335em) {$
-\backslash
-boldsymbol{
-\backslash
-Gamma'_1}$} ; 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-node (1) at (7.333333333333333em, -4.666666666666667em) {$
-\backslash
-Gamma$} ; 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-node (2) at (7.333333333333333em, -2em) {$
-\backslash
-boldsymbol{
-\backslash
-Gamma_2'}$} ; 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-node (3) at (12.666666666666666em, -3.3333333333333335em) {$
-\backslash
-boldsymbol{
-\backslash
-Gamma'_2},
-\backslash
-Gamma$} ; 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-path 
-\end_layout
-
-\begin_layout Plain Layout
-
-(0) to[black,->, bend right={11.459155902616464}, ] node[coordinate](4){}
- (1) 
-\end_layout
-
-\begin_layout Plain Layout
-
-(0) to[black,->, bend right={-11.459155902616464}, ] node[coordinate](5){}
- (2) 
-\end_layout
-
-\begin_layout Plain Layout
-
-(2) to[black,->, bend right={-11.459155902616464}, ] node[coordinate](6){}
- (3) 
-\end_layout
-
-\begin_layout Plain Layout
-
-(1) to[black,->, bend right={11.459155902616464}, ] node[coordinate](7){}
- (3) 
-\end_layout
-
-\begin_layout Plain Layout
-
-; 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-path[->] 
-\end_layout
-
-\begin_layout Plain Layout
-
-(0) edge["$
-\backslash
-scriptstyle 
-\backslash
-delta$"', pos=0.5, black,->, bend right={11.459155902616464}, ] (1) 
-\end_layout
-
-\begin_layout Plain Layout
-
-(0) edge["$
-\backslash
-scriptstyle 
-\backslash
-overline{x}$", pos=0.5, black,->, bend right={-11.459155902616464}, ] (2)
+ Strictly speaking, this is not unification as we introduced it because
  
-\end_layout
-
-\begin_layout Plain Layout
-
-(2) edge["$
-\backslash
-scriptstyle in_1$", pos=0.5, black,->, bend right={-11.459155902616464}, ]
- (3) 
-\end_layout
-
-\begin_layout Plain Layout
-
-(1) edge["$
-\backslash
-scriptstyle in_2$"', pos=0.5, black,->, bend right={11.459155902616464}, ]
- (3) 
-\end_layout
-
-\begin_layout Plain Layout
-
-; 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzpicture}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The rules 
-\begin_inset Formula $\refrule{P-Empty}$
+\begin_inset Formula $\delta$
 \end_inset
 
  and 
-\begin_inset Formula $\refrule{P-Split}$
+\begin_inset Formula $\substofrenamings x$
 \end_inset
 
- are straightforward adaptions of the rules 
-\begin_inset Formula $\refrule{U-Empty}$
+ do not target the same context, but it is straightforward to adapt the
+ definition: a unifier is given by two substitutions 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
 \end_inset
 
  and 
-\begin_inset Formula $\refrule{U-Split}$
+\begin_inset Formula $\sigma':\dotmcontext{\Gamma'_{2}}\rightarrow\Delta$
 \end_inset
 
- rule specialised to those specific coequaliser diagrams.
- The failing rule 
-\begin_inset Formula $\refrule{P-Fail}$
-\end_inset
-
- is justified by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:diag-bot"
-plural "false"
-caps "true"
-noprefix "false"
+ such that the following equation holds
+\begin_inset Formula 
+\begin{equation}
+\delta[\sigma]=\substofrenamings x[\sigma']\label{eq:unif-pruning}
+\end{equation}
 
 \end_inset
 
-.
+As usual, the mgu is defined as the unifier uniquely factoring any other
+ unifier.
+ 
 \end_layout
 
 \begin_layout Remark
@@ -16805,40 +15451,66 @@ name "rem:cocone-pruning"
 
 \end_inset
 
-A unifier 
-\begin_inset Formula $\dotmcontext{\Gamma'_{2}},\Gamma\rightarrow\Delta$
+The right handside 
+\begin_inset Formula $\substofrenamings x[\sigma']$
 \end_inset
 
- splits into two components: a substitution 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+ in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:unif-pruning"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- and a substitution 
-\begin_inset Formula $\sigma'$
-\end_inset
-
- from 
-\begin_inset Formula $\dotmcontext{\Gamma'_{2}}$
-\end_inset
-
- to 
-\begin_inset Formula $\Delta$
-\end_inset
-
- such that 
-\begin_inset Formula $\delta_{i}[\sigma]=\rename{\sigma_{i}'}{x_{i}}$
-\end_inset
-
- for each 
-\begin_inset Formula $i\in\{1,\dots,|\dotmcontext{\Gamma'_{1}}|\}$
+ is actually equal to 
+\begin_inset Formula $\rename{\sigma'}x$
 \end_inset
 
 .
- Moreover, the coequaliser 
-\begin_inset Formula $\sigma',\sigma:\dotmcontext{\Gamma'_{2}},\Gamma\rightarrow\Delta$
+ Indeed, 
+\begin_inset Formula $\substofrenamings x=(\dots,M_{i}(x_{i}),\dots)$
 \end_inset
 
- is equivalently characterised as a pushout
+ and 
+\begin_inset Formula $M_{i}(x_{i})[\sigma']=\rename{\sigma'_{i}}{x_{i}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+From a categorical point of view, such a mgu is characterised as a pushout.
+\end_layout
+
+\begin_layout Notation
+Given 
+\begin_inset Formula $\delta:\dotmcontext{\Gamma'_{1}}\rightarrow\Gamma$
+\end_inset
+
+, 
+\begin_inset Formula $x:\dotmcontext{\Gamma'_{2}}\Longrightarrow\dotmcontext{\Gamma'_{1}}$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+, and 
+\begin_inset Formula $\sigma':\dotmcontext{\Gamma'_{2}}\rightarrow\Delta$
+\end_inset
+
+, the notation 
+\begin_inset Formula $\Gamma\prunecat{\delta}x{\sigma}{\sigma'}{}\dashv\Delta$
+\end_inset
+
+ means that following square is a pushout in 
+\begin_inset Formula $\Thbot S$
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \xymatrix{\dotmcontext{\Gamma'_{1}}\ar[r]^{\substofrenamings x}\ar[d]_{\delta} & \dotmcontext{\Gamma'_{2}}\ar[d]^{\sigma'}\\
@@ -16899,6 +15571,52 @@ noprefix "false"
 \end_inset
 
 ).
+\end_layout
+
+\begin_layout Standard
+The rules 
+\begin_inset Formula $\refrule{P-Empty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{P-Split}$
+\end_inset
+
+ are straightforward adaptions specialised to those specific unification
+ problems of the rules 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+ described later in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:u-sequential"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ The failing rule 
+\begin_inset Formula $\refrule{P-Fail}$
+\end_inset
+
+ is justified by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:diag-bot"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -17666,6 +16384,1588 @@ noprefix "false"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Section
+Soundness of the unification phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:coequalising-phase"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we assume a pattern-friendly GB-signature 
+\begin_inset Formula $S$
+\end_inset
+
+ and discuss soundness of the main rules of the two mutually recursive functions
+ 
+\begin_inset Formula $\AgdaFunction{unify}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
+\end_inset
+
+ listed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-gen"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, which compute coequalisers in 
+\begin_inset Formula $\Thbot S$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The failing rules 
+\begin_inset Formula $\refrule{U-Fail}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Id-Fail}$
+\end_inset
+
+ are justified by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:diag-bot"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ We already discussed the rule 
+\begin_inset Formula $\refrule{No-Cycle}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ 
+\color red
+TODO
+\color inherit
+: the premise and the conclusion deal with the same unification problem,
+ phrased differently.
+ In the next subsections, we discuss the rule sequential rules 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:u-sequential"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), the rule 
+\begin_inset Formula $\refrule{Same-MVar}$
+\end_inset
+
+ unifying metavariable with itself (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:flex-flex-same-metavar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), the failing rule 
+\begin_inset Formula $\refrule{Cycle}$
+\end_inset
+
+ for cyclic unification of a metavariable with a term which includes it
+ deeply (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:flex-rig-cyclic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), and the rules 
+\begin_inset Formula $\refrule{Clash}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Rig}$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:rig-rig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) which handle unification of two rigid terms.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Sequential unification (rules U-Empty and U-Split)
+\end_layout
+
+\end_inset
+
+Sequential unification (rules 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:u-sequential"
+
+\end_inset
+
+The rule 
+\begin_inset Formula $\refrule{U-Empty}$
+\end_inset
+
+ is a direct application of the following general lemma.
+\end_layout
+
+\begin_layout Lemma
+If 
+\begin_inset Formula $A$
+\end_inset
+
+ is initial in a category, then any diagram of the shape 
+\begin_inset Formula $\xymatrix{A\coeqr{}{} & B\ar[r]^{1_{B}} & B}
+$
+\end_inset
+
+ is a coequaliser.
+\end_layout
+
+\begin_layout Standard
+The rule 
+\begin_inset Formula $\refrule{U-Split}$
+\end_inset
+
+ is a direct application of a stepwise construction of coequalisers valid
+ in any category, as noted by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+cite[Theorem 9]{DBLP:books/daglib/0068768}
+\end_layout
+
+\end_inset
+
+: if the first two diagrams below are coequalisers, then the last one as
+ well.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+YADE DIAGRAM diagrams/coeq-pointwise.json
+\end_layout
+
+\end_inset
+
+
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% https://q.uiver.app/?q=WzAsOCxbMCwxLCJBXzEiXSxbMSwxLCJcXEdhbW1hIl0sWzIsMSwiXFxEZ
+Wx0YV8xIl0sWzMsMSwiQV8yIl0sWzQsMCwiXFxHYW1tYSJdLFs1LDEsIlxcRGVsdGFfMSJdLFs0LDIsI
+lxcR2FtbWEiXSxbNiwxLCJcXERlbHRhXzIiXSxbMCwxLCJ0XzEiLDAseyJjdXJ2ZSI6LTF9XSxbMCwxL
+CJ1XzEiLDIseyJjdXJ2ZSI6MX1dLFsxLDIsIlxcc2lnbWFfMSIsMCx7InN0eWxlIjp7ImJvZHkiOnsib
+mFtZSI6ImRhc2hlZCJ9fX1dLFszLDQsInRfMiJdLFs0LDUsIlxcc2lnbWFfMSJdLFszLDYsInVfMiIsM
+l0sWzYsNSwiXFxzaWdtYV8xIiwyXSxbNSw3LCJcXHNpZ21hXzIiLDAseyJzdHlsZSI6eyJib2R5Ijp7I
+m5hbWUiOiJkYXNoZWQifX19XV0=
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\backslash
+begin{tikzcd}[row sep=tiny]
+\end_layout
+
+\begin_layout Plain Layout
+
+	&&&&[-20pt] 
+\backslash
+Gamma 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	{
+\backslash
+Gamma'_1} & 
+\backslash
+Gamma & {
+\backslash
+Delta_1} & {
+\backslash
+Gamma'_2} &&[-20pt] {
+\backslash
+Delta_1} & {
+\backslash
+Delta_2} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+	&&&&[-10pt] 
+\backslash
+Gamma
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{t_1}", curve={height=-6pt}, from=2-1, to=2-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{u_1}"', curve={height=6pt}, from=2-1, to=2-2]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_1}", dashed, from=2-2, to=2-3]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{t_2}", from=2-4, to=1-5]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_1}", from=1-5, to=2-6]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{u_2}"', from=2-4, to=3-5]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_1}"', from=3-5, to=2-6]
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+arrow["{
+\backslash
+sigma_2}", dashed, from=2-6, to=2-7]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzcd}
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\xymatrix{\Gamma'_{1}+\Gamma'_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Lemma
+\begin_inset Formula 
+\[
+\xymatrix{A_{1}+A_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Theorem 9, 
+\backslash
+cite{DBLP:books/daglib/0068768}]
+\end_layout
+
+\end_inset
+
+In any category, denoting morphism  composition 
+\begin_inset Formula $f\circ g$
+\end_inset
+
+ by 
+\begin_inset Formula $g[f]$
+\end_inset
+
+, the following rule applies.
+\begin_inset Formula 
+\[
+\unificationstepwise{}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+% https://q.uiver.app/?q=WzAsMyxbMCwwLCJBXzErQV8yIl0sWzEsMCwiQiJdLFsyLDAsIkQiXSxbM
+CwxLCJmXzEsZl8yIiwwLHsiY3VydmUiOi0yfV0sWzAsMSwiZl8xJyxmXzInIiwyLHsiY3VydmUiOjJ9X
+SxbMSwyLCJ2XFxjaXJjIHUiXV0=
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\backslash
+begin{tikzcd} 	{A_1+A_2} & 
+\backslash
+Gamma & 
+\backslash
+Delta_2 	
+\backslash
+arrow["{t_1,t_2}"above, curve={height=-12pt}, from=1-1, to=1-2] 	
+\backslash
+arrow["{u_1,u_2}"', curve={height=12pt}, from=1-1, to=1-2] 	
+\backslash
+arrow["{
+\backslash
+sigma_2
+\backslash
+circ 
+\backslash
+sigma_1}", from=1-2, to=1-3, dashed] 
+\backslash
+end{tikzcd}
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+We therefore get the rule
+\begin_inset Formula 
+\[
+\unificationrigrig
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Flex-Rig, no cycle (rule No-Cycle)
+\end_layout
+
+\end_inset
+
+Flex-Flex, no cycle (rule 
+\begin_inset Formula $\refrule{No-Cycle}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:no-cycle"
+
+\end_inset
+
+The rule 
+\begin_inset Formula $\refrule{No-Cycle}$
+\end_inset
+
+ transitions from unification to pruning.
+ While unification is a coequaliser construction, in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:pruning-phase"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we explained that pruning is a pushout construction.
+ The rule is justified by the well-known connection between those two notions.
+\end_layout
+
+\begin_layout Lemma
+Consider a commuting square in any category, as below left.
+ If the coproduct 
+\begin_inset Formula $B+C$
+\end_inset
+
+ of 
+\begin_inset Formula $B$
+\end_inset
+
+ and 
+\begin_inset Formula $C$
+\end_inset
+
+ exists, then this square is a pushout if and only if the diagram below
+ right is a coequaliser.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+YADE DIAGRAM diagrams/pushout-coeq-simpl.json
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[every node/.style={inner sep=5pt,outer sep=0pt,anchor=base,tex
+t height=1.2ex, text depth=0.25ex}] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (0) at (12.666666666666666em, -3.3333333333333335em) {$A$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (1) at (18em, -4.666666666666667em) {$C$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (2) at (18em, -2em) {$B$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (3) at (23.333333333333332em, -3.3333333333333335em) {$B+C$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (4) at (3.3333333333333335em, -2em) {$A$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (5) at (7.333333333333333em, -2em) {$B$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (6) at (7.333333333333333em, -6em) {$D$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (7) at (3.3333333333333335em, -6em) {$C$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (8) at (28.666666666666668em, -3.3333333333333335em) {$D$} ; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path 
+\end_layout
+
+\begin_layout Plain Layout
+
+(0) to[black,->, bend right={11.459155902616464}, ] node[coordinate](9){}
+ (1) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(0) to[black,->, bend right={-11.459155902616464}, ] node[coordinate](10){}
+ (2) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(2) to[black,->, bend right={-11.459155902616464}, ] node[coordinate](11){}
+ (3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) to[black,->, bend right={11.459155902616464}, ] node[coordinate](12){}
+ (3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) to[black,->, ] node[coordinate](13){} (5) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(5) to[black,->, ] node[coordinate](14){} (6) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) to[black,->, ] node[coordinate](15){} (7) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(7) to[black,->, ] node[coordinate](16){} (6) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(3) to[black,->, ] node[coordinate](17){} (8) 
+\end_layout
+
+\begin_layout Plain Layout
+
+; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[->] 
+\end_layout
+
+\begin_layout Plain Layout
+
+(0) edge["$
+\backslash
+scriptstyle $"', pos=0.5, black,->, bend right={11.459155902616464}, ] (1)
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+(0) edge["$
+\backslash
+scriptstyle $", pos=0.5, black,->, bend right={-11.459155902616464}, ] (2)
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+(2) edge["$
+\backslash
+scriptstyle in_1$", pos=0.5, black,->, bend right={-11.459155902616464}, ]
+ (3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(1) edge["$
+\backslash
+scriptstyle in_2$"', pos=0.5, black,->, bend right={11.459155902616464}, ]
+ (3) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) edge["$
+\backslash
+scriptstyle $", pos=0.5, black,->, ] (5) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(5) edge["$
+\backslash
+scriptstyle f$", pos=0.5, black,->, ] (6) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(4) edge["$
+\backslash
+scriptstyle $", pos=0.5, black,->, ] (7) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(7) edge["$
+\backslash
+scriptstyle g$"', pos=0.5, black,->, ] (6) 
+\end_layout
+
+\begin_layout Plain Layout
+
+(3) edge["$
+\backslash
+scriptstyle f{,}g$", pos=0.5, black,->, ] (8) 
+\end_layout
+
+\begin_layout Plain Layout
+
+; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\xymatrix{A\ar[r]\ar[d] & B\ar[d]^{f}\\
+C\ar[r]_{g} & D
+}
+\qquad
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Note that coproducts of dotted metavariable contexts correspond to union
+ of contexts.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Flex-Flex, same metavariable (rule Same-MVar)
+\end_layout
+
+\end_inset
+
+Flex-Flex, same metavariable (rule 
+\begin_inset Formula $\refrule{Same-MVar}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:flex-flex-same-metavar"
+
+\end_inset
+
+Here we detail unification of 
+\begin_inset Formula $M(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $M(y)$
+\end_inset
+
+, for 
+\begin_inset Formula $x,y\in\hom_{{\cal A}}(m,a)$
+\end_inset
+
+.
+ By 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:functor-L-intuition"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $M(\arg x)={\cal L}\arg x[in_{M}]$
+\end_inset
+
+ and 
+\begin_inset Formula $M(\arg y)={\cal L}\arg y[in_{M}]$
+\end_inset
+
+.
+ We exploit the following lemma with 
+\begin_inset Formula $u={\cal L}\arg x$
+\end_inset
+
+ and 
+\begin_inset Formula $v={\cal L}\arg y$
+\end_inset
+
+.
+ 
+\color red
+TODO: more details
+\end_layout
+
+\begin_layout Lemma
+In any category, denoting morphism composition 
+\begin_inset Formula $g\circ f$
+\end_inset
+
+ by 
+\begin_inset Formula $f[g]$
+\end_inset
+
+ and coequalisers as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "not:cat-coeq"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, the following rule applies:
+\begin_inset Formula 
+\[
+\dfrac{B\vdash u=v\Rightarrow h\dashv C}{B+D\dashv u[in_{B}]=v[in_{B}]\Rightarrow h+1_{D}\dashv C+D}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+In other words, if the below left diagram is a coequaliser, then so is the
+ below right diagram.
+ 
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+xymatrix@R=2pt{A
+\backslash
+ar@<+.5ex>[r]^{u}
+\backslash
+ar@<-.5ex>[r]_{v} & B
+\backslash
+ar@{-->}[r]^{h} & C}
+\backslash
+quad
+\backslash
+begin{array}{c}
+\backslash
+xymatrix@C=1.5em@R=2pt{ & B
+\backslash
+ar[rd]^{in_{B}}
+\backslash
+
+\backslash
+A
+\backslash
+ar[ru]^{u}
+\backslash
+ar[rd]_{v} &  & B+D
+\backslash
+ar@{-->}[r]^{h+1_{D}} & C+D
+\backslash
+
+\backslash
+ & B
+\backslash
+ar[ru]_{in_{B}}}
+\backslash
+end{array}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\xymatrix{A\ar@<+.5ex>[r]^{u}\ar@<-.5ex>[r]_{v} & B\ar@{-->}[r]^{h} & C}
+\qquad\begin{array}{c}
+\xymatrix{ & B\ar[rd]^{in_{B}}\\
+A\ar[ru]^{u}\ar[rd]_{v} &  & B+D\ar@{-->}[r]^{h+1_{D}} & C+D\\
+ & B\ar[ru]_{in_{B}}
+}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It follows that it is enough to compute the coequaliser of 
+\begin_inset Formula ${\cal L}\arg x$
+\end_inset
+
+ and 
+\begin_inset Formula ${\cal L}\arg y$
+\end_inset
+
+.
+ Furthermore, by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:L-finite-conncted"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, it is the image by 
+\begin_inset Formula ${\cal L}$
+\end_inset
+
+ of the equaliser of 
+\begin_inset Formula $\arg x$
+\end_inset
+
+ and 
+\begin_inset Formula $\arg y$
+\end_inset
+
+, thus justifying the rule 
+\begin_inset Formula $\refrule{Same-MVar}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Flex-rigid, cyclic (rule Cycle)
+\end_layout
+
+\end_inset
+
+Flex-rigid, cyclic (rule 
+\begin_inset Formula $\refrule{Cycle}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:flex-rig-cyclic"
+
+\end_inset
+
+The rule 
+\begin_inset Formula $\refrule{Cycle}$
+\end_inset
+
+ handles unification of 
+\begin_inset Formula $M(\arg x)$
+\end_inset
+
+ and a term 
+\begin_inset Formula $t$
+\end_inset
+
+ such that 
+\begin_inset Formula $t$
+\end_inset
+
+ is rigid and 
+\begin_inset Formula $M$
+\end_inset
+
+ occurs in 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ In this section, we show that indeed there is no successful unifier.
+ More precisely, we prove 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:occurcheck-final"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ below, stating that if there is a unifier of a term 
+\begin_inset Formula $t$
+\end_inset
+
+ and a metavariable application 
+\begin_inset Formula $M(x)$
+\end_inset
+
+, then either 
+\begin_inset Formula $M$
+\end_inset
+
+ occurs at top-level in 
+\begin_inset Formula $t$
+\end_inset
+
+, or it does not occur at all.
+ The argument follows the basic intuition that 
+\begin_inset Formula $\sigma_{M}=t[M\mapsto\sigma_{M}]$
+\end_inset
+
+ is impossible if 
+\begin_inset Formula $M$
+\end_inset
+
+ occurs deeply in 
+\begin_inset Formula $u$
+\end_inset
+
+ because the sizes of both hand sides can never match.
+ To make this statement precise, we need some recursive definitions and
+ properties of size.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:size-occur-check"
+
+\end_inset
+
+The size 
+\begin_inset Formula $|t|\in\mathbb{N}$
+\end_inset
+
+ of a dotted term 
+\begin_inset Formula $t$
+\end_inset
+
+ is recursively defined by 
+\begin_inset Formula $|M(\arg x)|=0$
+\end_inset
+
+, and 
+\begin_inset Formula $|o(\vec{t})|=1+|\vec{t}|$
+\end_inset
+
+, with 
+\begin_inset Formula $|\vec{t}|=\sum_{i}t_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We will also need to count the occurrences of a metavariables in a term.
+\end_layout
+
+\begin_layout Definition
+For any term 
+\begin_inset Formula $t$
+\end_inset
+
+ we define 
+\begin_inset Formula $|t|_{M}$
+\end_inset
+
+ recursively by 
+\begin_inset Formula $|M(\arg x)|_{M}=1$
+\end_inset
+
+, 
+\begin_inset Formula $|N(\arg x)|_{M}=0$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ if 
+\begin_inset Formula $N\neq M$
+\end_inset
+
+, and
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $|o(\vec{t})|_{M}=|\vec{t}|_{M}$
+\end_inset
+
+ with the sum convention as above for 
+\begin_inset Formula $|\vec{t}|_{M}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:sizeM-factor"
+
+\end_inset
+
+For any term 
+\begin_inset Formula $\text{\ensuremath{\dotmcontext{\Gamma};a\vdash}}t$
+\end_inset
+
+, if 
+\begin_inset Formula $|t|_{M}=0$
+\end_inset
+
+, then 
+\begin_inset Formula $\dotmcontext{\Gamma}\backslash M;a\vdash t$
+\end_inset
+
+.
+ Moreover, for any 
+\begin_inset Formula $\dotmcontext{\Gamma}=(M_{1}:m_{1},\dots,M_{n}:m_{n})$
+\end_inset
+
+, well-formed term 
+\begin_inset Formula $t$
+\end_inset
+
+ in context 
+\begin_inset Formula $\dotmcontext{\Gamma};a$
+\end_inset
+
+, and successful substitution 
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
+\end_inset
+
+, we have 
+\begin_inset Formula $|t[\sigma]|=|t|+\sum_{i}|t|_{M_{i}}\times|\sigma_{i}|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:size-consequences"
+
+\end_inset
+
+For any term 
+\begin_inset Formula $t$
+\end_inset
+
+ in context 
+\begin_inset Formula $\dotmcontext{\Gamma};a$
+\end_inset
+
+ with 
+\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
+\end_inset
+
+, successful substitution 
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
+\end_inset
+
+, morphism 
+\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ in context 
+\begin_inset Formula $\Delta;u$
+\end_inset
+
+, we have 
+\begin_inset Formula $|t[\sigma,M\mapsto u]|\geq|t|+|u|\times|t|_{M}$
+\end_inset
+
+ and 
+\begin_inset Formula $|M(x)[u]|=|u|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:occurcheck-final"
+
+\end_inset
+
+Let 
+\begin_inset Formula $t$
+\end_inset
+
+ be a term in context 
+\begin_inset Formula $\dotmcontext{\Gamma};a$
+\end_inset
+
+ with 
+\begin_inset Formula $(M:m)\in\dotmcontext{\Gamma}$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in\hom_{{\cal A}}(m,a)$
+\end_inset
+
+ such that 
+\begin_inset Formula $(M\mapsto u,\sigma):\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
+\end_inset
+
+ unifies 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $M(x)$
+\end_inset
+
+.
+ Then, either 
+\begin_inset Formula $t=M(y)$
+\end_inset
+
+ for some 
+\begin_inset Formula $y\in\hom_{{\cal A}}(m,a)$
+\end_inset
+
+, or 
+\begin_inset Formula $\dotmcontext{\Gamma};a\vdash t$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $t[\sigma,M\mapsto u]=M(x)[u]$
+\end_inset
+
+, we have 
+\begin_inset Formula $|t[\sigma,M\mapsto u]|=|M(x)[u]|$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:size-consequences"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ implies 
+\begin_inset Formula $|u|\geq|t|+|u|\times|t|_{M}$
+\end_inset
+
+.
+ Therefore, either 
+\begin_inset Formula $|t|_{M}=0$
+\end_inset
+
+ and we conclude by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:sizeM-factor"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, or 
+\begin_inset Formula $|t|_{M}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $|t|=0$
+\end_inset
+
+, so that 
+\begin_inset Formula $t$
+\end_inset
+
+ is 
+\begin_inset Formula $M(\arg y)$
+\end_inset
+
+ for some 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Rigid-rigid (rules Clash and U-Rig)
+\end_layout
+
+\end_inset
+
+Rigid-rigid (rules 
+\begin_inset Formula $\refrule{Clash}$
+\end_inset
+
+ and 
+\begin_inset Formula $\refrule{U-Rig}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:rig-rig"
+
+\end_inset
+
+
+\color red
+TODO
 \end_layout
 
 \begin_layout Section
