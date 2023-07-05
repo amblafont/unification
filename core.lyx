@@ -2545,7 +2545,7 @@ vspace{0.2em}
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{\begin{array}{c}
-M\notin t\quad\dotmcontext{\Gamma}\backslash M\prune tx{\sigma}u\dashv\Delta\end{array}}{\dotmcontext{\Gamma}\vdash M(x)=t\Rightarrow\sigma,M\mapsto u\dashv\Delta}}{No-cycle}
+M\notin t\quad\dotmcontext{\Gamma}\backslash M\prune tx{\sigma}{t'}\dashv\Delta\end{array}}{\dotmcontext{\Gamma}\vdash M(x)=t\Rightarrow M\mapsto t',\sigma\dashv\Delta}}{No-cycle}
 \]
 
 \end_inset
@@ -16953,7 +16953,32 @@ noprefix "false"
 \end_inset
 
 , we explained that pruning is a pushout construction.
- The rule is justified by the well-known connection between those two notions.
+ The rule is justified by the following well-known connection between those
+ two notions, taking 
+\begin_inset Formula $B$
+\end_inset
+
+ to be 
+\begin_inset Formula $\dotmcontext{\Gamma}\backslash M$
+\end_inset
+
+ and 
+\begin_inset Formula $C$
+\end_inset
+
+ to be the singleton context 
+\begin_inset Formula $M:m$
+\end_inset
+
+, so that the coproduct of those two contexts in 
+\begin_inset Formula $\Thbot S$
+\end_inset
+
+ is their disjoint union 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -17242,11 +17267,6 @@ C\ar[r]_{g} & D
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-Note that coproducts of dotted metavariable contexts correspond to union
- of contexts.
-\end_layout
-
 \begin_layout Subsection
 \begin_inset Argument 1
 status open
