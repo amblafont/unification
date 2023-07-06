@@ -41,7 +41,7 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 %<*signature-functoriality>
 \begin{code}
     -- Functoriality components
-    _｛_｝  : ∀ {a} → O a → ∀ {b} (x : a ⇒ b) → O b
+    _｛_｝  : ∀ {a b} → O a → (a ⇒ b) → O b
     _^_ : ∀ {a b}(x : a ⇒ b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
 \end{code}
 %</signature-functoriality>

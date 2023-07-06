@@ -303,6 +303,21 @@ status open
 \end_inset
 
 
+\begin_inset FormulaMacro
+\newcommand{\indexedO}{{\cal O}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Oby}[1]{\indexedO_{#1}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Oop}[2]{\Oby{#1}(#2)}
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -342,11 +357,6 @@ status open
 
 \begin_inset FormulaMacro
 \newcommand{\nthaar}[2]{\alpha'_{#1,#2}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\Oop}[2]{O_{#1}(#2)}
 \end_inset
 
 
@@ -11810,20 +11820,8 @@ literal "false"
 
 \end_inset
 
-: the latter consist in a set of 
-\begin_inset Formula $n$
-\end_inset
-
--ary operation symbols 
-\begin_inset Formula $O_{n}$
-\end_inset
-
- for each natural number 
-\begin_inset Formula $n$
-\end_inset
-
-, and for each 
-\begin_inset Formula $o\in O_{n}$
+: the latter consist in a set of operation symbols, and for each 
+\begin_inset Formula $o\in O$
 \end_inset
 
 , an arity 
@@ -11837,27 +11835,15 @@ literal "false"
 \end_inset
 
 -calculus is specified by 
-\begin_inset Formula $O_{1}=\{lam\}$
+\begin_inset Formula $O=\{lam,app\}$
 \end_inset
 
-, 
-\begin_inset Formula $O_{2}=\{app\}$
-\end_inset
-
-, 
+, with 
 \begin_inset Formula $\ntharvec{app}=(0,0)$
 \end_inset
 
 , 
 \begin_inset Formula $\ntharvec{lam}=(1)$
-\end_inset
-
-, and 
-\begin_inset Formula $O_{n}=\emptyset$
-\end_inset
-
- for any natural number 
-\begin_inset Formula $n\notin\{1,2\}$
 \end_inset
 
 .
@@ -11899,16 +11885,8 @@ for each variable context
 \begin_inset Formula $a$
 \end_inset
 
- and natural number 
-\begin_inset Formula $n$
-\end_inset
-
-, a set of 
-\begin_inset Formula $n$
-\end_inset
-
--ary operation symbols 
-\begin_inset Formula $\Oop na$
+, a set of operation symbols 
+\begin_inset Formula $O(a)$
 \end_inset
 
 ;
@@ -11916,7 +11894,7 @@ for each variable context
 
 \begin_layout Itemize
 for each operation symbol 
-\begin_inset Formula $o\in\Oop na$
+\begin_inset Formula $o\in O(a)$
 \end_inset
 
 , a list of variable contexts 
@@ -11970,19 +11948,15 @@ We will call an element of
 \end_inset
 
 Intuitively, 
-\begin_inset Formula $\Oop na$
+\begin_inset Formula $O(a)$
 \end_inset
 
- is the set of 
-\begin_inset Formula $n$
-\end_inset
-
--ary operation symbols available in the variable context 
+ is the set of operation symbols available in the variable context 
 \begin_inset Formula $a$
 \end_inset
 
 .
- Regarding the implementation implemented listed in 
+ The Agda implementation in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:sig-agda"
@@ -11992,27 +11966,8 @@ noprefix "false"
 
 \end_inset
 
-, 
-\begin_inset Formula $O$
-\end_inset
-
- is not indexed by natural numbers.
- Instead, for each variable context 
-\begin_inset Formula $a$
-\end_inset
-
-, the type 
-\begin_inset Formula $O\ a$
-\end_inset
-
- which gathers all the available operation symbols in the variable context
- 
-\begin_inset Formula $a$
-\end_inset
-
-, whatever their arities are.
- Moreover, the Agda definition doesn't include properties such as associativity
- of morphism composition, although they are assumed in the proof of correctness.
+ does not include properties such as associativity of morphism composition,
+ although they are assumed in the proof of correctness.
  For example, the latter associativity property ensures that composition
  of metavariable substitutions is associative.
 \end_layout
@@ -12271,7 +12226,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{o\in\Oop na\quad\overbrace{\dotmcontext{\Gamma};\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}^{"\alpha_{o}\xrightarrow{\vec{t}}\Gamma"}}{\dotmcontext{\Gamma};a\vdash o(t_{1},\dots,t_{n})}}{Rig}
+\labellabelrule{\dfrac{o\in O(a)\quad\overbrace{\dotmcontext{\Gamma};\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}^{"\alpha_{o}\xrightarrow{\vec{t}}\Gamma"}}{\dotmcontext{\Gamma};a\vdash o(t_{1},\dots,t_{n})}}{Rig}
 \]
 
 \end_inset
@@ -12539,7 +12494,7 @@ Binding signatures can be compiled into GB-signatures.
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $O'_{n}(p)=\{\lcvar 1,\dots,\lcvar p\}\sqcup\{o_{p}|o\in O_{n}\}$
+\begin_inset Formula $O'(p)=\{\lcvar 1,\dots,\lcvar p\}\sqcup\{o_{p}|o\in O\}$
 \end_inset
 
 ;
@@ -12554,7 +12509,15 @@ Binding signatures can be compiled into GB-signatures.
 \end_inset
 
  for any 
-\begin_inset Formula $i,p,n\in\mathbb{N},o\in O_{n}$
+\begin_inset Formula $i,p\in\mathbb{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbol 
+\begin_inset Formula $o\in O$
 \end_inset
 
 .
@@ -12688,8 +12651,12 @@ noprefix "false"
 
 \begin_deeper
 \begin_layout Enumerate
-an operation symbol 
-\begin_inset Formula $\rename ox\in\Oop nb$
+a 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbol 
+\begin_inset Formula $\rename ox\in O(b)$
 \end_inset
 
 ;
@@ -14189,7 +14156,7 @@ generalised binding signature
 GB-signature, 
 \emph default
 is a tuple 
-\begin_inset Formula $({\cal A},O,\ntharvecfunct)$
+\begin_inset Formula $({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
  consisting of
@@ -14206,7 +14173,7 @@ a small category
 
 \begin_layout Itemize
 a functor 
-\begin_inset Formula $O_{-}(-):\mathbb{N}\times{\cal A}\rightarrow\Set$
+\begin_inset Formula $\Oop --:\mathbb{N}\times{\cal A}\rightarrow\Set$
 \end_inset
 
  of operation symbols;
@@ -14290,13 +14257,61 @@ a morphism between
 \end_inset
 
  by the function 
-\begin_inset Formula $O_{n}(f):O_{n}(a)\rightarrow O_{n}(a')$
+\begin_inset Formula $\Oop nf:\Oop na\rightarrow\Oop n{a'}$
 \end_inset
 
 .
 \end_layout
 
 \end_deeper
+\begin_layout Remark
+This definition of GB-signatures superficially differs from the one we informall
+y introduced in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, in the sense that the set of operation symbols 
+\begin_inset Formula $O(a)$
+\end_inset
+
+ in a variable context 
+\begin_inset Formula $a$
+\end_inset
+
+ was not indexed by natural numbers.
+ The two descriptions are equivalent: 
+\begin_inset Formula $\Oop na$
+\end_inset
+
+ is recovered as the subset of 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbols in 
+\begin_inset Formula $O(a)$
+\end_inset
+
+, and conversely, 
+\begin_inset Formula $O(a)$
+\end_inset
+
+ is recovered as the union of all the 
+\begin_inset Formula $\Oop na$
+\end_inset
+
+ for every natural number 
+\begin_inset Formula $n$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 We now introduce our conditions for the generic unification algorithm to
  be correct.
@@ -14310,7 +14325,7 @@ name "def:pattern-friendly"
 \end_inset
 
 A GB-signature 
-\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
  is said 
@@ -14338,7 +14353,7 @@ all morphisms in
 
 \begin_layout Enumerate
 each 
-\begin_inset Formula $O_{n}(-):{\cal A}\rightarrow\Set$
+\begin_inset Formula $\Oop n-:{\cal A}\rightarrow\Set$
 \end_inset
 
  preserves finite connected limits;
@@ -14410,7 +14425,7 @@ name "assu:O-mono"
 \end_inset
 
 The action of 
-\begin_inset Formula $O_{n}:{\cal A}\rightarrow\Set$
+\begin_inset Formula $\Oby n:{\cal A}\rightarrow\Set$
 \end_inset
 
  on any renaming is an injection: given any 
@@ -14479,7 +14494,7 @@ Let
 \end_deeper
 \begin_layout Proof
 (i) Since 
-\begin_inset Formula $O_{n}$
+\begin_inset Formula $\Oby n$
 \end_inset
 
  preserves finite connected limits, it preserves monomorphisms because a
@@ -14647,7 +14662,7 @@ noprefix "false"
 
 \begin_layout Standard
 Any GB-signature 
-\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
 , generates an endofunctor 
@@ -14938,7 +14953,7 @@ name "lem:res-F"
 \end_inset
 
 Given a GB-signature 
-\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
  such that 
@@ -14987,7 +15002,7 @@ noprefix "false"
 
 \begin_layout Standard
 We now assume given a pattern-friendly signature 
-\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
 .
@@ -25178,7 +25193,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $O_{n}(\vec{\sigma}\arSep\tau)=\mydots+$
+\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
 \end_inset
 
 
@@ -25454,7 +25469,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $O_{n}(\vec{\sigma}\Fsep\vec{\omega}\arSep\tau)=\mydots+$
+\begin_inset Formula $O(\vec{\sigma}\Fsep\vec{\omega}\arSep\tau)=\mydots+$
 \end_inset
 
 
@@ -25839,7 +25854,7 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $O_{n}(p|\vec{\sigma}\vdash\tau)=\mydots+$
+\begin_inset Formula $O(p|\vec{\sigma}\vdash\tau)=\mydots+$
 \end_inset
 
 
@@ -27231,7 +27246,7 @@ name "lem:F-restricts-simpl"
 \end_inset
 
 Given a GB-signature 
-\begin_inset Formula $S=({\cal A},O,\ntharvecfunct)$
+\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
  such that 
@@ -27252,7 +27267,7 @@ Given a GB-signature
 
  consisting of functors preserving finite connected limits if and only if
  each 
-\begin_inset Formula $O_{n}\in\C$
+\begin_inset Formula $\Oby n\in\C$
 \end_inset
 
 , and 
@@ -27325,7 +27340,7 @@ Assume
 \end_inset
 
  preserves finite connected limits if and only if each 
-\begin_inset Formula $O_{n}:{\cal A\rightarrow\Set}$
+\begin_inset Formula $\Oby n:{\cal A\rightarrow\Set}$
 \end_inset
 
  does.
@@ -27340,7 +27355,7 @@ Assume
 
 \begin_layout Proof
 This follows from 
-\begin_inset Formula $\int J\cong\coprod_{n\in\mathbb{N}}\coprod_{j\in\{1,\dots,n\}}\int O_{n}$
+\begin_inset Formula $\int J\cong\coprod_{n\in\mathbb{N}}\coprod_{j\in\{1,\dots,n\}}\int\Oby n$
 \end_inset
 
 .
@@ -27690,7 +27705,7 @@ Assuming that
 \end_inset
 
  has finite connected limits and each 
-\begin_inset Formula $O_{n}$
+\begin_inset Formula $\Oby n$
 \end_inset
 
  preserves finite connected limits, the finite limit preservation on 
@@ -27886,7 +27901,7 @@ Now, let us prove the only if statement first.
 \end_inset
 
  and each 
-\begin_inset Formula $O_{n}$
+\begin_inset Formula $\Oby n$
 \end_inset
 
  preserves finite connected limits.
@@ -27897,7 +27912,7 @@ Now, let us prove the only if statement first.
 \begin_inset Formula 
 \begin{align*}
 \int_{i}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{O_{n}}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{\Oby n}}\\
  & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By Corollary \prettyref{cor:can-iso-app}}\\
  & =F(X)_{\lim d}
 \end{align*}
@@ -27918,7 +27933,7 @@ Conversely, let us assume that
 
 .
  Then, 
-\begin_inset Formula $F(1)=\coprod_{n}O_{n}$
+\begin_inset Formula $F(1)=\coprod_{n}\Oby n$
 \end_inset
 
  preserves finite connected limits.
@@ -27933,7 +27948,7 @@ noprefix "false"
 \end_inset
 
 , each 
-\begin_inset Formula $O_{n}$
+\begin_inset Formula $\Oby n$
 \end_inset
 
  preserves finite connected limits.
@@ -27989,7 +28004,7 @@ On the other hand,
 \begin_inset Formula 
 \begin{align*}
 \int_{i:I}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
- & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{O_{n}} preserves finite connected limits}
+ & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{\Oby n} preserves finite connected limits}
 \end{align*}
 
 \end_inset

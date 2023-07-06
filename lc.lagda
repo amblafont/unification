@@ -83,10 +83,13 @@ MetaContext· = List ℕ
 MetaContext = Maybe MetaContext·
 \end{code}
 %</lc-metacontext>
+\begin{code}
+Tm· : MetaContext· → ℕ → Set
+\end{code}
 %<*lc-syntax-decl>
 \begin{code}
 data Tm  : MetaContext → ℕ → Set
-Tm· = λ Γ a → Tm ⌊ Γ ⌋ a
+Tm· Γ n = Tm ⌊ Γ ⌋ n
 \end{code}
 %</lc-syntax-decl>
 \begin{code}
