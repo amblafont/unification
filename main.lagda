@@ -9,6 +9,7 @@ open import Data.Product using (_,_; Σ; _×_ )
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 open import Agda.Primitive
+open import Data.List.Membership.Propositional 
 
 open import lib
 

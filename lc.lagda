@@ -5,6 +5,7 @@ open import Data.Nat using (ℕ; _≟_ ; _+_)
 open import Data.Fin as Fin using (Fin)
 open import Relation.Nullary using (yes ; no)
 open import Data.List as List using (List ; [] ; _∷_) 
+open import Data.List.Membership.Propositional 
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Product using (_,_; Σ; _×_)
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)

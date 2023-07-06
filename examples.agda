@@ -1,4 +1,4 @@
-{-# OPTIONS --no-termination-check #-}
+{-# OPTIONS --no-termination-check --type-in-type #-}
 module examples where
 
 open import Relation.Nullary using (Dec ; yes ; no)
@@ -6,18 +6,27 @@ open import Data.List as List hiding (map ; [_])
 open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
 open import Data.Product using (_,_; Σ; _×_ )
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
-open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
+open import Relation.Binary.PropositionalEquality as ≡ using (_≡_) renaming (refl to 1ₑ)
 open import Agda.Primitive
+open import Relation.Binary hiding (_⇒_)
+open import Data.List.Membership.Propositional 
+open import Data.List.Membership.Propositional.Properties using (∈-map⁺)
+-- open import Data.List.Relation.Unary.Any.Properties using (gmap)
+import Data.List.Relation.Unary.Any as Any
 
 open import Agda.Builtin.Unit
 open import lib
 open import main
 open import Data.Fin as Fin using (Fin)
-open import Data.Nat using (ℕ; _≟_ ; _+_)
+open import Data.Nat as ℕ using (ℕ; _+_) 
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Sum.Base hiding (map)
 
-postulate ∈-map : ∀ {i j}{A : Set i}{B : Set j}{a l} → (f : A → B) → a ∈ l → f a ∈ List.map f l
+
+-- ∈-map' : ∀ {i j}{A : Set i}{B : Set j}{a l} → (f : A → B) → a ∈ l → f a ∈ List.map f l
+-- ∈-map' f a∈ = ∈-map⁺ f a∈
+-- gmap (λ {1ₑ → 1ₑ}) a∈  
+-- ∈-map⁺
 
 module VecList where
 
@@ -67,6 +76,11 @@ module System-F where
  idᵣ {n} = Vec.allFin n
  -- end of copying
 
+ wkᵣ : ∀ {n} → n ⇒ᵣ (1 + n)
+ wkᵣ {n} = Vec.map Fin.inject₁ idᵣ
+ -- wkᵣ {ℕ.zero} = []
+ -- wkᵣ {ℕ.suc n} = Fin.zero ∷ {!!}
+
 
  _❴_❵ : ∀ {n m} → Ty n → n ⇒ᵣ m → Ty m
  Var x ❴ r ❵ = Var (Vec.lookup r x)
@@ -76,12 +90,40 @@ module System-F where
  _❴_❵s : ∀ {n m} → List (Ty n) → n ⇒ᵣ m → List (Ty m)
  σ ❴ r ❵s = List.map (_❴ r ❵) σ
 
+-- prop
+ _❴idᵣ❵ : ∀ {n} → (A : Ty n) → A ❴ idᵣ ❵ ≡ A
+ Var x ❴idᵣ❵ = {!!}
+ (A ⇒T B) ❴idᵣ❵ rewrite A ❴idᵣ❵ | B ❴idᵣ❵ = 1ₑ
+ -- rewrite A ❴idᵣ❵ | B ❴idᵣ❵ = {!1ₑ!}
+ ∀T A ❴idᵣ❵ = {!!}
+
+ _❴idᵣ❵s : ∀ {n} → (l : List (Ty n)) → l ❴ idᵣ ❵s ≡ l 
+ [] ❴idᵣ❵s = 1ₑ
+ (x ∷ l) ❴idᵣ❵s rewrite x ❴idᵣ❵ | l ❴idᵣ❵s = 1ₑ
+
+-- weakening
+ wkT : ∀ {n} → Ty n → Ty (1 + n)
+ wkT T = T ❴ wkᵣ ❵
+
+ wkC : ∀ {n} → List (Ty n) → List (Ty (1 + n))
+ wkC = List.map wkT
+ -- wkT (Var x) = Var (Fin.inject₁ x)
+ -- wkT (T ⇒T U) = wkT T ⇒T wkT U
+ -- wkT (∀T T) = {!∀T!}
 
 -- unary substitution
+ _[_↦_] : ∀ {n} → Ty (1 + n) → Fin (1 + n) → Ty n → Ty n
+ Var j [ i ↦ T' ] with i Fin.≟ j
+ ... | yes _ = T'
+ ... | no e = Var (Fin.punchOut e)
+ (T ⇒T U) [ n ↦ T' ] = T [ n ↦ T' ] ⇒T U [ n ↦ T' ]
+ ∀T T [ n ↦ T' ] = ∀T (T [ Fin.inject₁ n ↦ wkT T' ])
+
  _[_] : ∀ {n} → Ty (1 + n) → Ty n → Ty n
- Var x [ u ] = {!!}
- (t ⇒T t') [ u ] = (t [ u ]) ⇒T (t' [ u ])
- ∀T t [ u ] = ∀T (t [ {!!} ])
+ t [ u ] = t [ Fin.fromℕ _ ↦ u ]
+ -- Var x [ u ] = {!!}
+ -- (t ⇒T t') [ u ] = (t [ u ]) ⇒T (t' [ u ])
+ -- ∀T t [ u ] = ∀T (t [ {!!} ])
 
  infix 19 _∣_⟶_
  record A : Set where
@@ -102,53 +144,119 @@ module System-F where
 
  _❴_❵l : ∀ {n m}{σ σ' : List (Ty n)} → σ ⇒ₗ σ' → (r : n ⇒ᵣ m) → (σ ❴ r ❵s) ⇒ₗ (σ' ❴ r ❵s)
  [] ❴ r ❵l = []
- (x , f) ❴ r ❵l = ∈-map _❴ r ❵ x , (f ❴ r ❵l)
+ (x , f) ❴ r ❵l = ∈-map⁺ _❴ r ❵ x , (f ❴ r ❵l)
 
  idₗ : ∀ {B}{l : List B} → l ⇒ₗ l
  idₗ {l = []} = []
  idₗ {l = x ∷ l} = Ο , VecList.map (λ a → 1+) (idₗ {l = l})
 
+ wkl : ∀ {n}{σ σ' : List (Ty n)} → σ ⇒ₗ σ' → wkC σ ⇒ₗ wkC σ'
+ wkl r = {!!}
+
  data _⇒_ : A → A → Set where
     Hom : ∀ {n n' σ σ' τ σ❴η❵ τ'} 
                 (η : n ⇒ᵣ n') →
                 σ❴η❵ ⇒ₗ σ' →
-                σ❴η❵ ≡ σ ❴ η ❵s →
-                τ' ≡ τ ❴ η ❵ →
+                -- σ❴η❵ ≡ σ ❴ η ❵s →
+                σ ❴ η ❵s ≡ σ❴η❵ →
+                τ ❴ η ❵ ≡ τ' →
                 (n ∣ σ ⟶ τ) ⇒ (n' ∣ σ' ⟶ τ')
 
+ pattern Hom= t u = Hom t u 1ₑ 1ₑ
+
  id : ∀ {a} → a ⇒ a
- id {n ∣ σ ⟶ τ} = Hom (idᵣ {n}) idₗ {!!} {!!}
+ id {n ∣ σ ⟶ τ} = Hom (idᵣ {n}) idₗ (σ ❴idᵣ❵s) (τ ❴idᵣ❵)
 
  _∘_ : ∀ {a b c : A} → b ⇒ c → a ⇒ b → a ⇒ c
- Hom η x ≡.refl ≡.refl ∘ Hom η' x' ≡.refl ≡.refl = Hom (η ∘ᵣ η') (x ∘ₗ (x' ❴ η ❵l)) {!!} {!!}
+ Hom= η x ∘ Hom= η' x' = Hom (η ∘ᵣ η') (x ∘ₗ (x' ❴ η ❵l)) {!!} {!!}
 
- module _ n (Γ : List (Ty n)) (τ : Ty n) where
-  data O' : Set where
-   Var : τ ∈ Γ → O'
-   App : Ty n → O'
-   Lam : ∀ τ₁ τ₂ → τ ≡ τ₁ ⇒T τ₂ → O'
-   TApp : ∀ (τ₁ : Ty (1 + n))(τ₂ : Ty n) → τ ≡ τ₁ [ τ₂ ] → O' 
-   TLam : ∀ τ' → τ ≡ ∀T τ' → O'
+ data O' n Γ τ : Set where
+   Var : τ ∈ Γ → O' n Γ τ
+   App : Ty n → O' n Γ τ
+   Lam : ∀ τ₁ τ₂ → τ ≡ τ₁ ⇒T τ₂ → O' n Γ τ
+   TApp : ∀ (τ₁ : Ty (1 + n))(τ₂ : Ty n) → τ ≡ τ₁ [ τ₂ ] → O'  n Γ τ
+   TLam : ∀ τ' → τ ≡ ∀T τ' → O' n Γ τ
+ module EqO' {n Γ τ} where
+   _≟_ : ∀  (o o' : O' n Γ τ) → Dec (o ≡ o')
+
+   Var x ≟ Var x' = {!!}
+   -- with x Fin.≟ x'
+   -- ... | yes 1ₑ = {!!}
+   -- ... | no p = ?
+   App t ≟ App t' = {!!}
+   -- ... | yes 1ᵣ = ?
+   -- ... | no p = {!!}
+   Lam τ u x ≟ Lam τ' u' x' = {!!}
+   TApp τ₁ τ₂ e ≟ TApp τ₁' τ₂' e' = {!!}
+   TLam τ₂ e ≟ TLam τ₂' e' = {!!}
+
+   Var _ ≟ App _ = no (λ ())
+   Var x ≟ Lam τ₁ τ₂ x₁ = no (λ ())
+   Var x ≟ TApp τ₁ τ₂ x₁ = no (λ ())
+   Var x ≟ TLam τ' x₁ = no (λ ())
+   App x ≟ Var x₁ = no (λ ())
+   App x ≟ Lam τ₁ τ₂ x₁ = no (λ ())
+   App x ≟ TApp τ₁ τ₂ x₁ = no (λ ())
+   App x ≟ TLam τ' x₁ = no (λ ())
+   Lam τ₁ τ₂ x ≟ Var x₁ = no (λ ())
+   Lam τ₁ τ₂ x ≟ App x₁ = no λ ()
+   Lam τ₁ τ₂ x ≟ TApp τ₃ τ₄ x₁ = no (λ ())
+   Lam τ₁ τ₂ x ≟ TLam τ' x₁ = no (λ ())
+   TApp τ₁ τ₂ x ≟ Var x₁ = no (λ ())
+   TApp τ₁ τ₂ x ≟ App x₁ = no (λ ())
+   TApp τ₁ τ₂ x ≟ Lam τ₃ τ₄ x₁ = no (λ ())
+   TApp τ₁ τ₂ x ≟ TLam τ' x₁ = no (λ ())
+   TLam τ' x ≟ Var x₁ = no (λ ())
+   TLam τ' x ≟ App x₁ = no (λ ())
+   TLam τ' x ≟ Lam τ₁ τ₂ x₁ = no (λ ())
+   TLam τ' x ≟ TApp τ₁ τ₂ x₁ = no (λ ())
+
+
+
  module _ {n Γ τ} where
   α' : O' n Γ τ → List A
   α' (Var x) = []
   α' (App τ') = (n ∣ Γ ⟶ (τ' ⇒T τ)) ∷ (n ∣ Γ ⟶ τ') ∷ []
   α' (Lam τ₁ τ₂ x) = n ∣ (τ₁ ∷ Γ) ⟶ τ₂ ∷ []
   α' (TApp τ₁ τ₂ x) = n ∣ Γ ⟶ (∀T τ₁) ∷ []
-  α' (TLam τ' x) = (1 + n) ∣ {!Γ!} ⟶ τ' ∷ []
+  α' (TLam τ' x) = (1 + n) ∣ wkC Γ ⟶ τ' ∷ []
  module RenSymbol {n Γ τ n' Γ' τ'} where
   _｛_｝ : O' n Γ τ → (n ∣ Γ ⟶ τ) ⇒ (n' ∣ Γ' ⟶ τ') → O' n' Γ' τ'
-  -- o ｛ Hom η x e1 e2 ｝ = {!!}
-  Var τ∈ ｛ Hom η x e1 e2 ｝ = {!Var τ∈ !}
-  App x₁ ｛ Hom η x e1 e2 ｝ = {!Var!}
-  Lam τ₁ τ₂ x₁ ｛ Hom η x e1 e2 ｝ = {!!}
-  TApp τ₁ τ₂ x₁ ｛ Hom η x e1 e2 ｝ = {!!}
-  TLam τ' x₁ ｛ Hom η x e1 e2 ｝ = {!!}
-  -- Var x ｛ r ｝ = {!!}
-  -- App x ｛ r ｝ = {!!}
-  -- Lam τ₁ τ₂ x ｛ r ｝ = {!!}
-  -- TApp τ₁ τ₂ x ｛ r ｝ = {!!}
-  -- TLam τ' x ｛ r ｝ = {!!}
+  -- o ｛ Hom η x e1 e2 ｝ = {!o!}
+  Var i ｛ Hom= η x ｝ = 
+       Var ( VecList.nth (∈-map⁺ _❴ η ❵ i) x )
+  App τ₂ ｛ Hom= η x ｝ = App (τ₂ ❴ η ❵)
+  Lam τ₁ τ₂ 1ₑ ｛ Hom= η x ｝ = Lam (τ₁ ❴ η ❵) (τ₂ ❴ η ❵) 1ₑ
+  TApp τ₁ τ₂ 1ₑ ｛ Hom= η x ｝ = TApp (τ₁ ❴ η ↑ ❵) (τ₂ ❴ η ❵) {!e!}
+  TLam τ' 1ₑ ｛ Hom= η x ｝ = TLam (τ' ❴ η ↑ ❵) 1ₑ
+
+  _^_ : (r : (n ∣ Γ ⟶ τ) ⇒ (n' ∣ Γ' ⟶ τ')) → (o : O' n Γ τ) → 
+            Pointwise _⇒_ (α' o) (α' (o ｛ r ｝))
+  Hom= η x ^ Var i = []
+  Hom= η x ^ App _ =
+     Hom= η x ∷
+     Hom= η x ∷ []
+  Hom= η x ^ Lam τ₁ τ₂ 1ₑ =
+     Hom η (Ο , VecList.map (λ a x₁ → 1+ x₁) x) 1ₑ 1ₑ ∷ []
+  Hom= η x ^ TApp τ₁ τ₂ 1ₑ = 
+    Hom= η x ∷ []
+     
+  Hom= η x ^ TLam τ' 1ₑ =
+    Hom (η ↑) (wkl x) {!!} 1ₑ
+     ∷ []
+
+  _｛_｝⁻¹ : ∀  (o : O' n' Γ' τ') (x : (n ∣ Γ ⟶ τ) ⇒ (n' ∣ Γ' ⟶ τ')) →
+      Maybe-PreImage (_｛ x ｝) o
+  Var i ｛ Hom= η x ｝⁻¹ with {! nth⁻¹ Fin._≟_  !}
+  ... | e = {!
+  Var ( nth⁻¹ Fin._≟_ i x)
+
+  !}
+  App t ｛ Hom= η x ｝⁻¹ = {!!}
+  Lam τ₁ τ₂ x₁ ｛ Hom= η x ｝⁻¹ = {!!}
+  TApp τ₁ τ₂ x₁ ｛ Hom= η x ｝⁻¹ = {!!}
+  TLam τ' x₁ ｛ Hom= η x ｝⁻¹ = {!!}
+
  
  data O : A → Set where
    op : ∀ {n Γ τ} → O' n Γ τ → O (n ∣ Γ ⟶ τ)
@@ -156,55 +264,10 @@ module System-F where
 
  α : {a : A} → O a → List A
  α (op o) = α' o
- -- α {.(n ∣ Γ ⟶ τ)} (Var n Γ τ x) = []
- -- α {.(n ∣ Γ ⟶ τ)} (App n Γ τ τ') = (n ∣ Γ ⟶ (τ' ⇒T τ)) ∷ (n ∣ Γ ⟶ τ') ∷ []
- -- α {.(n ∣ Γ ⟶ (τ₁ ⇒T τ₂))} (Lam n Γ τ₁ τ₂) = n ∣ (τ₁ ∷ Γ) ⟶ τ₂ ∷ []
- -- α {.(n ∣ Γ ⟶ (τ₁ [ τ₂ ]))} (TApp n Γ τ₁ τ₂) = n ∣ Γ ⟶ (∀T τ₁) ∷ []
- -- α {.(n ∣ Γ ⟶ ∀T τ')} (TLam n Γ τ') = (1 + n) ∣ {!Γ!} ⟶ τ' ∷ []
-
-   {- 
- data O : A → Set where
-   Var : ∀ n Γ τ → τ ∈ Γ → O (n ∣ Γ ⟶ τ)
-   App : ∀ n Γ τ  → Ty n → O (n ∣ Γ ⟶ τ)
-   Lam : ∀ n Γ τ₁ τ₂  → O (n ∣ Γ ⟶ (τ₁ ⇒T τ₂))
-   TApp : ∀ n Γ (τ₁ : Ty (1 + n))(τ₂ : Ty n) → O (n ∣ Γ ⟶ (τ₁ [ τ₂ ]))
-   TLam : ∀ n Γ τ' → O (n ∣ Γ ⟶ ∀T τ')
-
- α : {a : A} → O a → List A
- α {.(n ∣ Γ ⟶ τ)} (Var n Γ τ x) = []
- α {.(n ∣ Γ ⟶ τ)} (App n Γ τ τ') = (n ∣ Γ ⟶ (τ' ⇒T τ)) ∷ (n ∣ Γ ⟶ τ') ∷ []
- α {.(n ∣ Γ ⟶ (τ₁ ⇒T τ₂))} (Lam n Γ τ₁ τ₂) = n ∣ (τ₁ ∷ Γ) ⟶ τ₂ ∷ []
- α {.(n ∣ Γ ⟶ (τ₁ [ τ₂ ]))} (TApp n Γ τ₁ τ₂) = n ∣ Γ ⟶ (∀T τ₁) ∷ []
- α {.(n ∣ Γ ⟶ ∀T τ')} (TLam n Γ τ') = (1 + n) ∣ {!Γ!} ⟶ τ' ∷ []
-
  _｛_｝ : {a b : A} → O a → a ⇒ b → O b
- o ｛ r ｝ = o ❴ _ ◄ r ❵
-
- _❴_◄_❵ : ∀ {a} → O a → ∀ b → a ⇒ b → O b
- -- o ❴ n' ∣ Γ' ⟶ .(_ ❴ η ❵) ◄ Hom η x ≡.refl ≡.refl ❵ = {!!}
- Var _ _ _ τ∈ ❴ n' ∣ Γ' ⟶ .(_ ❴ η ❵) ◄ Hom η x ≡.refl ≡.refl ❵ =
-     Var _ _ _ ( VecList.nth (∈-map _❴ η ❵ τ∈) x )
- App _ _ τ τ' ❴ n' ∣ Γ' ⟶ .(_ ❴ η ❵) ◄ Hom η x ≡.refl ≡.refl ❵ = App _ _ _ (τ' ❴ η ❵)
- -- Lam Γ n τ₁ τ₂ ❴ n' ∣ Γ' ⟶ τ'  ◄ Hom η x e1 e2 ❵ = {! Lam _ _ (τ₁ ❴ η ❵) (τ₂ ❴ η ❵) !}
- Lam _ _ τ₁ τ₂ ❴ n' ∣ Γ' ⟶ .((τ₁ ⇒T τ₂) ❴ η ❵) ◄ Hom η x ≡.refl ≡.refl ❵ =  Lam _ _ (τ₁ ❴ η ❵) (τ₂ ❴ η ❵) 
- TApp _ _ τ₁ τ₂ ❴ n' ∣ Γ' ⟶ .((τ₁ [ τ₂ ]) ❴ η ❵) ◄ Hom η x ≡.refl ≡.refl ❵ = {! TApp _ _ (τ₁ ❴ η ↑ ❵) (τ₂ ❴ η ❵) !}
- TLam _ _ τ' ❴ n' ∣ Γ' ⟶ .(∀T τ' ❴ η ❵) ◄ Hom η x ≡.refl ≡.refl ❵ = TLam _ _ (τ' ❴ η ↑ ❵)
- 
- _｛_｝ : {a b : A} → O a → a ⇒ b → O b
- o ｛ r ｝ = o ❴ _ ◄ r ❵
-  
-
+ _｛_｝ {n ∣ σ ⟶ τ} {n₁ ∣ σ₁ ⟶ τ₁} (op o) r = op (RenSymbol._｛_｝ o r)
  _^_ : {a b : A} (x : a ⇒ b) (o : O a) → Pointwise _⇒_ (α o) (α (o ｛ x ｝))
- _^_ {.(_ ∣ _ ⟶ _)} {.(_ ∣ _ ⟶ (_ ❴ η ❵))} (Hom η x ≡.refl ≡.refl) (Var _ _ _ x₁) = []
- _^_ {.(_ ∣ _ ⟶ _)} {.(_ ∣ _ ⟶ (_ ❴ η ❵))} (Hom η x ≡.refl ≡.refl) (App _ _ _ x₁) =
-     Hom η x ≡.refl ≡.refl ∷ Hom η x ≡.refl ≡.refl ∷ []
- _^_ {.(_ ∣ _ ⟶ (τ₁ ⇒T τ₂))} {.(_ ∣ _ ⟶ ((τ₁ ⇒T τ₂) ❴ η ❵))} (Hom η x ≡.refl ≡.refl) (Lam _ _ τ₁ τ₂)
-      = Hom η (Ο , VecList.map (λ a x₁ → 1+ x₁) x) ≡.refl ≡.refl ∷ []
- _^_ {.(_ ∣ _ ⟶ (τ₁ [ τ₂ ]))} {.(_ ∣ _ ⟶ ((τ₁ [ τ₂ ]) ❴ η ❵))} (Hom η x ≡.refl ≡.refl) (TApp _ _ τ₁ τ₂)
-     = {!!}
- _^_ {.(_ ∣ _ ⟶ ∀T τ')} {.(_ ∣ _ ⟶ (∀T τ' ❴ η ❵))} (Hom η x ≡.refl ≡.refl) (TLam _ _ τ')
-     = Hom (η ↑ ) {!!} {!!} {!!} ∷ []
-
+ _^_  {n ∣ σ ⟶ τ} {n₁ ∣ σ₁ ⟶ τ₁} r (op o)= RenSymbol._^_ r o
 
 system-F-sig : Signature lzero lzero lzero
 system-F-sig = record
@@ -213,6 +276,4 @@ system-F-sig = record
 
 system-F-friendly : isFriendly system-F-sig
 system-F-friendly = record { equaliser = {!!} ; pullback = {!!} ; _≟_ = {!!} ; _｛_｝⁻¹ = {!!} }
-
-
--}
+   where open System-F

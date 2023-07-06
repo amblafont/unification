@@ -1,4 +1,4 @@
-Generic pattern unification implemented in Agda (tested with v2.6.3).
+Generic pattern unification implemented in Agda (tested with v2.6.3, with standard library v1.4).
 
 Contents:
 - lib.lagda: some general definitions

@@ -44,6 +44,10 @@
 \\
 \>[0]\AgdaKeyword{open}\AgdaSpace{}%
 \AgdaKeyword{import}\AgdaSpace{}%
+\AgdaModule{Data.List.Membership.Propositional}\<%
+\\
+\>[0]\AgdaKeyword{open}\AgdaSpace{}%
+\AgdaKeyword{import}\AgdaSpace{}%
 \AgdaModule{Data.Vec.Base}\AgdaSpace{}%
 \AgdaSymbol{as}\AgdaSpace{}%
 \AgdaModule{Vec}\AgdaSpace{}%
@@ -192,12 +196,12 @@
 \AgdaSymbol{\{}\AgdaBound{p}\AgdaSymbol{\}\{}\AgdaBound{q}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaSymbol{=}%
-\>[134I]\AgdaFunction{Vec.insert}\AgdaSpace{}%
+\>[136I]\AgdaFunction{Vec.insert}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{Vec.map}\AgdaSpace{}%
 \AgdaFunction{Fin.inject₁}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSymbol{)}\<%
 \\
-\>[134I][@{}l@{\AgdaIndent{0}}]%
+\>[136I][@{}l@{\AgdaIndent{0}}]%
 \>[20]\AgdaSymbol{(}\AgdaFunction{Fin.fromℕ}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaFunction{Fin.fromℕ}\AgdaSpace{}%
@@ -590,7 +594,7 @@
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{∈}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{∈}}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
@@ -1093,7 +1097,7 @@
 \AgdaSymbol{(}\AgdaBound{M}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{∈}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{∈}}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaDatatype{Maybe}\AgdaSpace{}%
@@ -1214,7 +1218,7 @@
 \AgdaSymbol{(}\AgdaBound{M}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{∈}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{∈}}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{Tm·}\AgdaSpace{}%
@@ -1351,7 +1355,7 @@
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaKeyword{let}%
-\>[928I]\AgdaBound{Δ₁}\AgdaSpace{}%
+\>[930I]\AgdaBound{Δ₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{t'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
@@ -1361,7 +1365,7 @@
 \AgdaBound{t}\AgdaSpace{}%
 \AgdaBound{x}\<%
 \\
-\>[.][@{}l@{}]\<[928I]%
+\>[.][@{}l@{}]\<[930I]%
 \>[6]\AgdaBound{Δ₂}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{u'}\AgdaSpace{}%
@@ -1541,7 +1545,7 @@ Unification
 \AgdaBound{n}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
-\AgdaOperator{\AgdaDatatype{∈}}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{∈}}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
@@ -1560,12 +1564,12 @@ Unification
 \begin{code}%
 \>[0]\AgdaFunction{unify-flex-*}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSymbol{\}}%
-\>[1075I]\AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
+\>[1077I]\AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaBound{M}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaBound{t}\<%
 \\
-\>[1075I][@{}l@{\AgdaIndent{0}}]%
+\>[1077I][@{}l@{\AgdaIndent{0}}]%
 \>[18]\AgdaKeyword{with}\AgdaSpace{}%
 \AgdaFunction{occur-check}\AgdaSpace{}%
 \AgdaBound{M}\AgdaSpace{}%
@@ -1708,7 +1712,7 @@ Unification
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaKeyword{let}%
-\>[1173I]\AgdaBound{Δ₁}\AgdaSpace{}%
+\>[1175I]\AgdaBound{Δ₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{σ₁}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -1716,7 +1720,7 @@ Unification
 \AgdaBound{t}\AgdaSpace{}%
 \AgdaBound{t'}\<%
 \\
-\>[.][@{}l@{}]\<[1173I]%
+\>[.][@{}l@{}]\<[1175I]%
 \>[6]\AgdaBound{Δ₂}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{σ₂}\AgdaSpace{}%
