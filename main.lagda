@@ -5,6 +5,7 @@ module main where
 open import Relation.Nullary using (Dec ; yes ; no)
 open import Data.List as List hiding (map ; [_])
 open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
+open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
 open import Data.Product using (_,_; Σ; _×_ )
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)

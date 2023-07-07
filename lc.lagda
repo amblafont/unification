@@ -2,6 +2,7 @@
 module lc where
 
 open import Data.Nat using (ℕ; _≟_ ; _+_)
+open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
 open import Data.Fin as Fin using (Fin)
 open import Relation.Nullary using (yes ; no)
 open import Data.List as List using (List ; [] ; _∷_) 
