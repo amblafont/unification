@@ -56,7 +56,7 @@ record isFriendly {i j k}(S : Signature i j k) : Set (i ⊔ j ⊔ k) where
      equaliser : ∀ {a} m → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
      pullback : ∀ m {m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
-     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe-PreImage (_｛ x ｝) o
+     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe (pre-image (_｛ x ｝) o)
 \end{code}
 %</friendlysignature>
 \begin{code}
@@ -239,7 +239,7 @@ Pruning
   \begin{code}
   prune (Rigid· o δ) x with o ｛ x ｝⁻¹
   ... | ⊥ = ⊥ ◄  ! ,  !ₛ 
-  ... | ⌊ o' ⌋ =
+  ... | ⌊ PreImage o' ⌋ =
     let Δ ◄ δ' , σ  =  prune-σ δ  (x ^ o')
     in  Δ ◄ Rigid o'  δ' ,  σ
   \end{code}

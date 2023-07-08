@@ -4,12 +4,15 @@ module lc where
 open import Data.Nat using (ℕ; _≟_ ; _+_)
 open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
 open import Data.Fin as Fin using (Fin)
-open import Relation.Nullary using (yes ; no)
+open import Relation.Nullary using (yes ; no ; does)
 open import Data.List as List using (List ; [] ; _∷_) 
 open import Data.List.Membership.Propositional 
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Product using (_,_; Σ; _×_)
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
+open import Data.Bool.Base
+open import Data.Empty using (⊥-elim)
+open import Relation.Binary.PropositionalEquality as ≡ using (_≡_ ) renaming (refl to 1ₑ)
 
 open import lib
 
@@ -49,7 +52,7 @@ _↑ {p}{q} x = Vec.insert (Vec.map Fin.inject₁ x)
 _｛_｝ : ∀ {n p} → Fin n → (n ⇒ p) → Fin p
 i ｛ x ｝ = Vec.lookup x i
 
-_｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : n ⇒ p) → Maybe-PreImage (_｛ f ｝) x
+_｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : n ⇒ p) → Maybe (pre-image (_｛ f ｝) x)
 i ｛ x ｝⁻¹ = nth⁻¹ Fin._≟_ i x
 
 \end{code}
@@ -57,13 +60,30 @@ i ｛ x ｝⁻¹ = nth⁻¹ Fin._≟_ i x
 \begin{code}
 commonPositions : ∀ {n} m → (x y : m ⇒ n) → Σ ℕ (λ p → p ⇒ m)
 commonPositions m [] [] = 0 , []
-commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) with commonPositions m x y | x₀ Fin.≟ y₀
-... | p , z | yes _ = p     , Vec.map Fin.suc z
-... | p , z | no _  = 1 + p , Fin.zero ∷ Vec.map Fin.suc z
+commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
+   let p , z = commonPositions m x y in
+   let z' = Vec.map Fin.suc z in
+   if does (x₀ Fin.≟ y₀) then
+     1 + p , Fin.zero ∷ z'
+   else
+     p , z'
 \end{code}
 %</common-positions>
 \begin{code}
 
+-- sanity check (not used later): any common position must be in the vector of common positions z
+module _ where
+  open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_ )
+  open import Data.Vec.Relation.Unary.Any as Any using (here ; there)
+  open import Data.Vec.Membership.Propositional.Properties using (∈-map⁺)
+  commonPositions-property : ∀ {n m i} → (x y : m ⇒ n) → Vec.lookup x i ≡ Vec.lookup y i → 
+          let (p , z) = commonPositions m x y in
+          i ∈̬ z
+  commonPositions-property {i = i}(x ∷ xs) (y ∷ ys) e' with i | x Fin.≟ y
+  ... | Fin.zero | no e = ⊥-elim (e e')
+  ... | Fin.suc j | no e = ∈-map⁺ Fin.suc (commonPositions-property xs ys e')
+  ... | Fin.zero | yes e = here 1ₑ
+  ... | Fin.suc j | yes 1ₑ = there (∈-map⁺ Fin.suc (commonPositions-property xs ys e'))
 
 \end{code}
 %<*common-values>
@@ -71,8 +91,8 @@ commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) with commonPositions m x y
 commonValues : ∀ m {m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
 commonValues m [] y = 0 , [] , []
 commonValues (ℕ.suc m ) (x₀ ∷ x) y with commonValues m x y | x₀ ｛ y ｝⁻¹ 
-... | p , l , r | ⊥         = p     , Vec.map Fin.suc l            , r
-... | p , l , r | ⌊ i ⌋  = 1 + p , Fin.zero ∷ Vec.map Fin.suc l , i ∷ r
+... | p , l , r | ⊥     = p     , Vec.map Fin.suc l            , r
+... | p , l , r | ⌊ PreImage i ⌋  = 1 + p , Fin.zero ∷ Vec.map Fin.suc l , i ∷ r
 \end{code}
 %</common-values>
 \begin{code}
@@ -275,7 +295,7 @@ prune (Lam· t) x =
 \begin{code}
 prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
 ... | ⊥ = ⊥ ◄ ! , !ₛ
-... | ⌊ j ⌋ = Γ ◄ Var j , 1ₛ
+... | ⌊ PreImage j ⌋ = Γ ◄ Var j , 1ₛ
 \end{code}
 %</prune-var>
 %<*lc-prune-flex>
