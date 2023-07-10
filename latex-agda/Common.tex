@@ -13,6 +13,15 @@
 \\
 \>[0]\AgdaKeyword{open}\AgdaSpace{}%
 \AgdaKeyword{import}\AgdaSpace{}%
+\AgdaModule{Data.List.Relation.Unary.Any}\AgdaSpace{}%
+\AgdaKeyword{renaming}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}─\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaSymbol{to}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}⑊\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaKeyword{open}\AgdaSpace{}%
+\AgdaKeyword{import}\AgdaSpace{}%
 \AgdaModule{lib}\<%
 \\
 \>[0]\AgdaKeyword{open}\AgdaSpace{}%
@@ -237,10 +246,10 @@
 \begin{code}%
 %
 \>[2]\AgdaKeyword{data}%
-\>[133I]\AgdaOperator{\AgdaDatatype{\AgdaUnderscore{}⟶\AgdaUnderscore{}}}\AgdaSpace{}%
+\>[140I]\AgdaOperator{\AgdaDatatype{\AgdaUnderscore{}⟶\AgdaUnderscore{}}}\AgdaSpace{}%
 \AgdaKeyword{where}\<%
 \\
-\>[.][@{}l@{}]\<[133I]%
+\>[.][@{}l@{}]\<[140I]%
 \>[7]\AgdaInductiveConstructor{[]}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
@@ -709,7 +718,7 @@
 %
 \>[3]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}↦\AgdaUnderscore{},\AgdaUnderscore{}}}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[445I]\AgdaSymbol{∀}\AgdaSpace{}%
+\>[452I]\AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{Δ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
@@ -724,7 +733,7 @@
 \AgdaBound{Δ}\AgdaSpace{}%
 \AgdaBound{m}\<%
 \\
-\>[445I][@{}l@{\AgdaIndent{0}}]%
+\>[452I][@{}l@{\AgdaIndent{0}}]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⑊}}\AgdaSpace{}%
@@ -770,7 +779,7 @@
 %
 \>[3]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}↦-﹙\AgdaUnderscore{}﹚}}\AgdaSpace{}%
 \AgdaSymbol{:}%
-\>[492I]\AgdaSymbol{∀}\AgdaSpace{}%
+\>[499I]\AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{\}}\AgdaSpace{}%
@@ -785,7 +794,7 @@
 \AgdaOperator{\AgdaBound{⇒}}\AgdaSpace{}%
 \AgdaBound{m}\<%
 \\
-\>[.][@{}l@{}]\<[492I]%
+\>[.][@{}l@{}]\<[499I]%
 \>[12]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{·⟶·}}\AgdaSpace{}%
@@ -853,7 +862,7 @@
 \\
 \>[0][@{}l@{\AgdaIndent{0}}]%
 \>[2]\AgdaKeyword{data}%
-\>[541I]\AgdaDatatype{occur-cases}\AgdaSpace{}%
+\>[548I]\AgdaDatatype{occur-cases}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{M}\AgdaSpace{}%
@@ -867,7 +876,7 @@
 \AgdaFunction{k'}\AgdaSpace{}%
 \AgdaKeyword{where}\<%
 \\
-\>[.][@{}l@{}]\<[541I]%
+\>[.][@{}l@{}]\<[548I]%
 \>[7]\AgdaInductiveConstructor{Same-MVar}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaBound{m}\AgdaSpace{}%

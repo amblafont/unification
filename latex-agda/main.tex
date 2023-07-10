@@ -42,6 +42,15 @@
 \\
 \>[0]\AgdaKeyword{open}\AgdaSpace{}%
 \AgdaKeyword{import}\AgdaSpace{}%
+\AgdaModule{Data.List.Relation.Unary.Any}\AgdaSpace{}%
+\AgdaKeyword{renaming}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}─\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaSymbol{to}\AgdaSpace{}%
+\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}⑊\AgdaUnderscore{}}}\AgdaSpace{}%
+\AgdaSymbol{)}\<%
+\\
+\>[0]\AgdaKeyword{open}\AgdaSpace{}%
+\AgdaKeyword{import}\AgdaSpace{}%
 \AgdaModule{Data.Product}\AgdaSpace{}%
 \AgdaKeyword{using}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaInductiveConstructor{\AgdaUnderscore{},\AgdaUnderscore{}}}\AgdaSymbol{;}\AgdaSpace{}%
@@ -376,11 +385,12 @@
 \AgdaOperator{\AgdaFunction{⇒}}\AgdaSpace{}%
 \AgdaBound{a}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{→}\AgdaSpace{}%
-\AgdaDatatype{Maybe-PreImage}\AgdaSpace{}%
+\AgdaDatatype{Maybe}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaFunction{pre-image}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}｛}}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{｝}}\AgdaSymbol{)}\AgdaSpace{}%
-\AgdaBound{o}\<%
+\AgdaBound{o}\AgdaSymbol{)}\<%
 \end{code}
 %</friendlysignature>
 \begin{code}%
@@ -527,7 +537,7 @@
 \\
 %
 \>[5]\AgdaOperator{\AgdaInductiveConstructor{\AgdaUnderscore{}﹙\AgdaUnderscore{}﹚}}%
-\>[357I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[365I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{a}\AgdaSpace{}%
@@ -541,7 +551,7 @@
 \AgdaOperator{\AgdaField{⇒}}\AgdaSpace{}%
 \AgdaBound{a}\<%
 \\
-\>[.][@{}l@{}]\<[357I]%
+\>[.][@{}l@{}]\<[365I]%
 \>[10]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaFunction{Tm·}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
@@ -634,7 +644,7 @@
 \\
 %
 \>[3]\AgdaOperator{\AgdaFunction{\AgdaUnderscore{}❴\AgdaUnderscore{}❵s}}%
-\>[429I]\AgdaSymbol{:}\AgdaSpace{}%
+\>[437I]\AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaBound{Γ'}\AgdaSpace{}%
@@ -644,7 +654,7 @@
 \AgdaOperator{\AgdaFunction{·⟶}}\AgdaSpace{}%
 \AgdaBound{Δ}\<%
 \\
-\>[.][@{}l@{}]\<[429I]%
+\>[.][@{}l@{}]\<[437I]%
 \>[9]\AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{⟹}}\AgdaSpace{}%
@@ -1371,7 +1381,7 @@
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaKeyword{let}%
-\>[888I]\AgdaBound{Δ₁}\AgdaSpace{}%
+\>[896I]\AgdaBound{Δ₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{t'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
@@ -1381,7 +1391,7 @@
 \AgdaBound{t}\AgdaSpace{}%
 \AgdaBound{x₀}\<%
 \\
-\>[.][@{}l@{}]\<[888I]%
+\>[.][@{}l@{}]\<[896I]%
 \>[8]\AgdaBound{Δ₂}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{δ'}\AgdaSpace{}%
@@ -1441,6 +1451,7 @@
 \>[2]\AgdaSymbol{...}\AgdaSpace{}%
 \AgdaSymbol{|}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⌊}}\AgdaSpace{}%
+\AgdaInductiveConstructor{PreImage}\AgdaSpace{}%
 \AgdaBound{o'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{⌋}}\AgdaSpace{}%
 \AgdaSymbol{=}\<%
@@ -1578,13 +1589,13 @@
   \begin{code}%
 %
 \>[2]\AgdaFunction{unify-flex-*}%
-\>[1014I]\AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
+\>[1023I]\AgdaSymbol{\{}\AgdaBound{Γ}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaSymbol{\{}\AgdaBound{m}\AgdaSymbol{\}}\AgdaSpace{}%
 \AgdaBound{M}\AgdaSpace{}%
 \AgdaBound{x}\AgdaSpace{}%
 \AgdaBound{t}\<%
 \\
-\>[1014I][@{}l@{\AgdaIndent{0}}]%
+\>[1023I][@{}l@{\AgdaIndent{0}}]%
 \>[18]\AgdaKeyword{with}\AgdaSpace{}%
 \AgdaFunction{occur-check}\AgdaSpace{}%
 \AgdaBound{M}\AgdaSpace{}%
@@ -1724,7 +1735,7 @@
 \\
 \>[2][@{}l@{\AgdaIndent{0}}]%
 \>[4]\AgdaKeyword{let}%
-\>[1113I]\AgdaBound{Δ}\AgdaSpace{}%
+\>[1122I]\AgdaBound{Δ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{σ}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
@@ -1732,7 +1743,7 @@
 \AgdaBound{t₁}\AgdaSpace{}%
 \AgdaBound{t₂}\<%
 \\
-\>[.][@{}l@{}]\<[1113I]%
+\>[.][@{}l@{}]\<[1122I]%
 \>[8]\AgdaBound{Δ'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
 \AgdaBound{σ'}\AgdaSpace{}%
