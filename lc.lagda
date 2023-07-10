@@ -1,18 +1,23 @@
 \begin{code}
 module lc where
 
-open import Data.Nat using (ℕ; _≟_ ; _+_)
-open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
-open import Data.Fin as Fin using (Fin)
-open import Relation.Nullary using (yes ; no ; does)
+open import Data.Vec.Base as Vec using (Vec; []; _∷_)
+open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_ )
+open import Data.Vec.Membership.Propositional.Properties as VecProp
+open import Data.Vec.Relation.Unary.Any as VecAny using (here ; there)
+open import Data.Vec.Relation.Unary.Any.Properties as VecProp hiding (map-id)
 open import Data.List as List using (List ; [] ; _∷_) 
 open import Data.List.Membership.Propositional 
-open import Data.Vec.Base as Vec using (Vec; []; _∷_)
-open import Data.Product using (_,_; Σ; _×_)
+open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
+open import Data.Fin as Fin using (Fin)
+open import Data.Nat using (ℕ; _≟_ ; _+_)
+open import Data.Product as Product using (_,_; Σ; _×_)
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Data.Bool.Base
 open import Data.Empty using (⊥-elim)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_ ) renaming (refl to 1ₑ)
+import Relation.Unary
+open import Relation.Nullary using (yes ; no ; does)
 
 open import lib
 
@@ -30,8 +35,7 @@ m ⇒ n = Vec (Fin n) m
 %<*compose-renamings>
 \begin{code}
 _∘_ : ∀ {p q r} → (q ⇒ r) → (p ⇒ q) → (p ⇒ r)
-xs ∘ [] = []
-xs ∘ (y ∷ ys) = Vec.lookup xs y ∷ (xs ∘ ys)
+xs ∘ ys = Vec.map (Vec.lookup xs) ys
 \end{code}
 %</compose-renamings>
 %<*id-renaming>
@@ -53,8 +57,13 @@ _｛_｝ : ∀ {n p} → Fin n → (n ⇒ p) → Fin p
 i ｛ x ｝ = Vec.lookup x i
 
 _｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : n ⇒ p) → Maybe (pre-image (_｛ f ｝) x)
-i ｛ x ｝⁻¹ = nth⁻¹ Fin._≟_ i x
+i ｛ x ｝⁻¹ = MoreVec.lookup⁻¹ Fin._≟_ i x
 
+{- ----------------------
+
+Common positions
+
+-------------------------- -}
 \end{code}
 %<*common-positions>
 \begin{code}
@@ -71,32 +80,90 @@ commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
 %</common-positions>
 \begin{code}
 
--- sanity check (not used later): any common position must be in the vector of common positions z
-module _ where
-  open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_ )
-  open import Data.Vec.Relation.Unary.Any as Any using (here ; there)
-  open import Data.Vec.Membership.Propositional.Properties using (∈-map⁺)
-  commonPositions-property : ∀ {n m i} → (x y : m ⇒ n) → Vec.lookup x i ≡ Vec.lookup y i → 
-          let (p , z) = commonPositions m x y in
-          i ∈̬ z
-  commonPositions-property {i = i}(x ∷ xs) (y ∷ ys) e' with i | x Fin.≟ y
-  ... | Fin.zero | no e = ⊥-elim (e e')
-  ... | Fin.suc j | no e = ∈-map⁺ Fin.suc (commonPositions-property xs ys e')
-  ... | Fin.zero | yes e = here 1ₑ
-  ... | Fin.suc j | yes 1ₑ = there (∈-map⁺ Fin.suc (commonPositions-property xs ys e'))
+-- sanity check: any common position must be in the vector of common positions 
+commonPositions-property : ∀ {n m i} → (x y : m ⇒ n) → Vec.lookup x i ≡ Vec.lookup y i →
+        let (p , z) = commonPositions m x y in
+        i ∈̬ z
+commonPositions-property {i = i}(x ∷ xs) (y ∷ ys) e' with i | x Fin.≟ y
+... | Fin.zero | no e = ⊥-elim (e e')
+... | Fin.suc j | no e = VecProp.∈-map⁺ Fin.suc (commonPositions-property xs ys e')
+... | Fin.zero | yes e = here 1ₑ
+... | Fin.suc j | yes 1ₑ = there (∈-map⁺ Fin.suc (commonPositions-property xs ys e'))
+
+
+
+{- ----------------------
+
+Common values
+
+-------------------------- -}
+
 
 \end{code}
 %<*common-values>
 \begin{code}
 commonValues : ∀ m {m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
 commonValues m [] y = 0 , [] , []
-commonValues (ℕ.suc m ) (x₀ ∷ x) y with commonValues m x y | x₀ ｛ y ｝⁻¹ 
-... | p , l , r | ⊥     = p     , Vec.map Fin.suc l            , r
-... | p , l , r | ⌊ PreImage i ⌋  = 1 + p , Fin.zero ∷ Vec.map Fin.suc l , i ∷ r
+commonValues (ℕ.suc m ) (x₀ ∷ x) y =
+   let p , l , r = commonValues m x y in
+   let indices = MoreVec.find-indices (λ x' → x' Fin.≟ x₀) y in
+   -- count is at most 1 for injective renamings
+   let count = List.length indices in
+   count + p ,
+       Vec.replicate Fin.zero Vec.++ Vec.map Fin.suc l ,
+       Vec.fromList indices Vec.++ r
 \end{code}
 %</common-values>
 \begin{code}
 
+-- sanity check: any common value must be in the vectors of common value positions
+module _ where
+  open import Data.Vec.Properties using (lookup-zip ; lookup-replicate ; map-zip ; map-id)
+
+  commonValues-property : ∀ {m m' n v} → (x : m ⇒ n) (y : m' ⇒ n) → (vx : v ∈̬ x) → (vy : v ∈̬ y) →
+          let p , l , r = commonValues _ x y in
+         (VecAny.index vx , VecAny.index vy) ∈̬ Vec.zip l r
+  commonValues-property .(x ∷ xs) ys (here {x = x} {xs = xs} px) vy
+      with p , l , r ← commonValues _ xs ys
+      | indices ←  (MoreVec.find-indices (Fin._≟ x) ys)
+      | indice∈ ← MoreVec.find-indices-∈ (Fin._≟ x) vy px
+      = let count = List.length indices in
+         let vindices = Vec.fromList indices in
+         ≡.subst₂ (λ a → a ∈̬_ ) eq
+           (≡.sym  (MoreVec.zip-++ (Vec.replicate Fin.zero) (Vec.map Fin.suc l) vindices r))
+         (
+           ∈-++⁺ˡ {xs = Vec.zip (Vec.replicate Fin.zero) vindices}
+              (VecProp.∈-lookup (VecAny.index (VecProp.∈-fromList⁺ indice∈)) _)
+            )
+            where
+              eq : Vec.lookup (Vec.zip (Vec.replicate Fin.zero) (Vec.fromList indices) )
+                    (VecAny.index (VecProp.∈-fromList⁺ indice∈))
+                   ≡ (Fin.zero , VecAny.index vy)
+              -- eq rewrite MoreVec.index-∈-fromList⁺ indice∈ =  ≡.trans
+              eq =  ≡.trans
+                     ( lookup-zip (VecAny.index (VecProp.∈-fromList⁺ indice∈)) (Vec.replicate Fin.zero) (Vec.fromList indices) )
+                     (≡.cong₂ _,_
+                     (≡.trans
+                        ( ≡.cong (Vec.lookup (Vec.replicate Fin.zero)) (MoreVec.index-∈-fromList⁺ indice∈) )
+                        (lookup-replicate (index indice∈) Fin.zero))
+                        (≡.sym (VecProp.lookup-index (VecProp.∈-fromList⁺ indice∈))))
+
+  commonValues-property .(_ ∷ _) ys (there {x = x}{xs = xs} vx) vy with
+        p , l , r ← commonValues _ xs ys
+      | indices ←  MoreVec.find-indices (Fin._≟ x) ys 
+      | rec ← commonValues-property xs ys vx vy
+      rewrite MoreVec.zip-++ (Vec.replicate Fin.zero) (Vec.map Fin.suc l) (Vec.fromList indices) r =
+        ∈-++⁺ʳ (Vec.zip (Vec.replicate Fin.zero) (Vec.fromList indices))
+         ( ≡.subst (_ ∈̬_)
+           (≡.trans (map-zip Fin.suc (λ m → m) _ _) (≡.cong (Vec.zip _) (map-id r))) 
+         (∈-map⁺ (Product.map Fin.suc (λ m → m)) rec) )
+
+
+{- ----------------------
+
+Syntax
+
+-------------------------- -}
 
 \end{code}
 %<*lc-metacontext>
@@ -213,7 +280,7 @@ _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
 App· t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
 Lam· t [ σ ]t = Lam (t [ σ ]t)
 Var· i [ σ ]t = Var i
-M ﹙ x ﹚ [ σ ]t = nth σ M ❴ x ❵ 
+M ﹙ x ﹚ [ σ ]t = nth σ M  ❴ x ❵ 
 ! [ 1⊥ ]t = !
 \end{code}
 %</lc-substitution>
