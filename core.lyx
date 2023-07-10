@@ -1106,6 +1106,7 @@ noprefix "false"
 \end_inset
 
 .
+ The appendices can be found in the supplemental material.
 \end_layout
 
 \begin_layout Subsection*
@@ -1767,10 +1768,7 @@ noprefix "false"
 \end_inset
 
 ).
-\end_layout
-
-\begin_layout Standard
-We show the most relevant parts of the Agda code; the interested reader
+ We show the most relevant parts of the Agda code; the interested reader
  can check the full implementation in the supplemental material.
  We tend to use Agda as a programming language rather than as a theorem
  prover.
@@ -7515,6 +7513,10 @@ metavariable substitution
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -7918,6 +7920,11 @@ noprefix "false"
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:ren-lambda"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -9248,17 +9255,7 @@ noprefix "false"
 \begin_inset Formula $\rename -x$
 \end_inset
 
- is variable renaming, defined by recursion (see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:ren-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
+ is variable renaming, defined by recursion (see the supplemental material).
  Renaming a 
 \begin_inset Formula $\lambda$
 \end_inset
@@ -9275,7 +9272,7 @@ noprefix "false"
 \begin_inset Formula $\lcvar{p+1}$
 \end_inset
 
- which is renamed to 
+, which is renamed to 
 \begin_inset Formula $\lcvar{q+1}$
 \end_inset
 
@@ -9289,6 +9286,8 @@ noprefix "false"
 \end_inset
 
 .
+ While metavariable substitutions change the metavariable context of the
+ substituted term, renamings change the variable context.
 \end_layout
 
 \begin_layout Standard
@@ -18628,7 +18627,7 @@ noprefix "false"
 
 \end_inset
 
-.
+, whose signature is implemented in Agda (see the supplemental material).
  
 \begin_inset Note Note
 status open
@@ -26530,7 +26529,12 @@ literal "false"
 \end_inset
 
 .
- The syntax of types in type variable context 
+ The Agda implementation of the following friendly GB-signature can be found
+ in the supplemental material.
+\end_layout
+
+\begin_layout Standard
+The syntax of types in type variable context 
 \begin_inset Formula $n$
 \end_inset
 
@@ -26714,7 +26718,35 @@ noprefix "false"
 
 \end_inset
 
- the proof of the following statement.
+ the proof 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+shortfull{
+\end_layout
+
+\end_inset
+
+that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+ of the following statement.
 \end_layout
 
 \begin_layout Lemma
@@ -26732,6 +26764,16 @@ name "lem:A-finite-connected"
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
 Pullbacks and equalisers in 
 \begin_inset Formula ${\cal A}$
 \end_inset
