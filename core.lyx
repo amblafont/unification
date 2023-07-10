@@ -1106,7 +1106,31 @@ noprefix "false"
 \end_inset
 
 .
- The appendices can be found in the supplemental material.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+fullshort{}{
+\end_layout
+
+\end_inset
+
+The appendices can be found in the supplemental material.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
@@ -15993,6 +16017,10 @@ end{full}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -16005,26 +16033,7 @@ shortfull{
 
 \end_inset
 
-Note that there is at most one 
-\begin_inset Formula $o'$
-\end_inset
 
- such that 
-\begin_inset Formula $o=\rename{o'}x$
-\end_inset
-
-, by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:O-mono"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- In this case,
 \begin_inset ERT
 status open
 
@@ -16050,7 +16059,31 @@ status open
 
 \end_inset
 
- a unifier is equivalently given by substitutions 
+
+\end_layout
+
+\end_inset
+
+Note that there is at most one 
+\begin_inset Formula $o'$
+\end_inset
+
+ such that 
+\begin_inset Formula $o=\rename{o'}x$
+\end_inset
+
+, by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:O-mono"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ In this case, a unifier is equivalently given by substitutions 
 \begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
 \end_inset
 
@@ -28069,6 +28102,36 @@ It follows from those two chains of isomorphisms that each function
 
 \end_deeper
 \begin_layout Appendix
+Proof that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits (Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:system-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ on system F)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Proof of Lemma
 \begin_inset ERT
 status open
@@ -28087,6 +28150,11 @@ reference "lem:A-finite-connected"
 plural "false"
 caps "true"
 noprefix "false"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -28279,14 +28347,18 @@ We are now ready to prove that
  has finite connected limits.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_layout Lemma
+\begin_inset Formula ${\cal A}$
 \end_inset
 
-
+ has finite connected limits.
 \end_layout
 
 \begin_layout Proof
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -28297,9 +28369,20 @@ status open
 
 \end_inset
 
-Proof of 
+Proof of Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset ref
-LatexCommand formatted
+LatexCommand ref
 reference "lem:A-finite-connected"
 plural "false"
 caps "true"
@@ -28314,6 +28397,11 @@ status open
 \begin_layout Plain Layout
 
 ]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
