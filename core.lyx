@@ -675,7 +675,167 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Unification consists in finding a 
+Unification is one of the basic algorithms of type inference.
+ It takes two terms 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+, each containing some metavariables, and returns a substitution 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ which assigns a term to each metavariable, such that 
+\begin_inset Formula $t[\sigma]=u[\sigma]$
+\end_inset
+
+.
+ This substitution is typically the most general one, in the sense that
+ that every other unifier for these two terms factors through it.
+ That is, given any other unifier 
+\begin_inset Formula $\delta$
+\end_inset
+
+, there exists a unique 
+\begin_inset Formula $\delta'$
+\end_inset
+
+ such that 
+\begin_inset Formula $\delta=\sigma[\delta']$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Unification is useful in type inference because it offers a convenient way
+ of handling the instantiation of quantifiers: whenever a polymorphic type
+ of the form 
+\begin_inset Formula $\forall a.$
+\end_inset
+
+ is eliminated, a fresh metavariable can be substituted for the quantified
+ variable 
+\begin_inset Formula $a$
+\end_inset
+
+, and then unification can be used to incrementally deduce what the instantiatio
+n should have been, thereby sparing the programmer from having to instantiate
+ quantifiers manually.
+ 
+\end_layout
+
+\begin_layout Standard
+However, while recent results in type inference, such as Dunfield and Krishnaswa
+mi
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/pacmpl/DunfieldK19"
+literal "false"
+
+\end_inset
+
+, or Jinxu et.
+ al
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/pacmpl/ZhaoOS19"
+literal "false"
+
+\end_inset
+
+, make heavy use of unification in their algorithms, they do not do so in
+ a well-abstracted way.
+ They present a set of rules (i.e., a first-order functional program) which
+ explicitly re-implement unification, and as a result their correctness
+ proofs have to re-establish many of the fundamental results of unification
+ theory individually.
+ Almost no lemmas in the proof of the one algorithm can be re-used in the
+ other, which is particularly problematic given the sizes of the proofs
+ involved: DK comes with a 190 page appendix, and Zhao et al's Coq proof
+ is many thousands of lines long.
+\end_layout
+
+\begin_layout Standard
+Worse still, if any modifications to the unification algorithm were needed,
+ then the entire metatheory would need to be redone.
+ For example, both of these systems make use of first-order unification
+ (i.e., for types without binders in them), by retaining the ML-style monotype/pol
+ytype distinction.
+ Something as simple as innocuous as the addition of a monomorphic type
+ with a binder (for example, a recursive type 
+\begin_inset Formula $\mu a.A[a]$
+\end_inset
+
+) would require moving from first-order unification to something like Miller
+ pattern unification
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/logcom/Miller91"
+literal "false"
+
+\end_inset
+
+, which would in turn require completely redoing all of the proofs in the
+ two systems.
+ Type inference for dependent types also uses Miller patterns, of course,
+ but the example of recursive types shows that this issue arises long before
+ we reach the most sophisticated type theories.
+\end_layout
+
+\begin_layout Standard
+Fixing this problem would require doing two things.
+ First, these type inference algorithms need to be rephrased in such a way
+ that they invoke unification as a subroutine, which would enable us to
+ make use of generic results about unification theory.
+ Second, the unification algorithm needs to be formulated generically enough
+ that it can be plugged into multiple contexts without needing substantial
+ modifications to the guts of the proof.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+(old intro)Unification consists in finding a 
 \emph on
 unifier 
 \emph default
@@ -802,7 +962,7 @@ metavariables are allowed to take distinct variables as arguments.
  there is no unifier, or computes the most general unifier.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Recent results in type inference, Dunfield-Krishnaswami
 \begin_inset ERT
 status open
@@ -859,7 +1019,7 @@ literal "false"
  statement of the invariants the algorithmic typing rules had to maintain.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The present work is a first step towards a general solution to this problem.
  Our generic unification algorithm implemented in Agda is parameterised
  by a new notion of signature for syntax with metavariables, whose scope
@@ -895,6 +1055,11 @@ literal "false"
 
 ) as well as for rich type systems like dependent types.
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1022,6 +1187,75 @@ noprefix "false"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection*
+Contributions
+\end_layout
+
+\begin_layout Standard
+In this paper, we take a first step towards addressing the modularity problem
+ in the theory of type inference, by showing how to formulate Miller pattern
+ unification in a generic, abstract style.
+ Like many prior developments
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+key "10.1007/978-3-540-45220-1_41"
+literal "false"
+
+\end_inset
+
+, we parameterise the algorithm over a binding signature.
+ However, the notion of signature is considerably more general than the
+ ones used in prior formulations of pattern unification.
+ It has a customisable notion of context, which makes it possible to handle
+ examples such as simply-typed second-order syntax, ordered lambda calculi,
+ and intrinsic polymorphic syntax (such as System F).
+ This lets us derive several new unification algorithms simply as instantiations
+ of our framework.
+ 
+\end_layout
+
+\begin_layout Standard
+Furthermore, our notion of signature can be axiomatised in a categorical
+ style, which leads to an almost purely categorical proof of the correctness
+ of our algorithm -- each of the rules of our pattern unification algorithm
+ end up corresponding to some standard categorical construction, and each
+ part of our proof essentially just shows that the construction actually
+ has the expected properties.
+ This is similar to Rydeheard and Burstall's similar reconstruction of first-ode
+r unification
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:books/daglib/0068768"
+literal "false"
+
+\end_inset
+
+, and serves as evidence that we have correctly factored the unification
+ algorithm.
 \end_layout
 
 \begin_layout Subsection*
@@ -9607,6 +9841,26 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Preview
 
 \begin_layout Standard
@@ -9615,7 +9869,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%%%
+%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -9623,6 +9877,50 @@ status open
 
 \backslash
 agdacode{substfrom}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "60col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
 agdacode{lc-unifyprototype}
 \end_layout
@@ -9632,6 +9930,15 @@ agdacode{lc-unifyprototype}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
 \end_inset
 
 This unification function recursively inspects the structure of the given
@@ -11388,6 +11695,29 @@ This is motivated by the fact that context extensions are characterised
 \end_inset
 
  Accordingly, the type signature for the pruning phase is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Preview
 
 \begin_layout Standard
@@ -11404,6 +11734,50 @@ status open
 
 \backslash
 agdacode{prune-type}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "60col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
 \backslash
 agdacode{lc-prune-proto}
 \end_layout
@@ -11413,6 +11787,15 @@ agdacode{lc-prune-proto}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
 \end_inset
 
 The 
@@ -14595,7 +14978,17 @@ end{tikzcd}
 \end_layout
 
 \begin_layout Proof
-(ii) The proof is deferred to the end of this section.
+(ii) The proof can be found in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "app:proof-L-preserves"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -14667,9 +15060,8 @@ A metavariable application
 \end_layout
 
 \begin_layout Standard
-The rest of this section can be safely skipped at first reading: we provide
- Initial Algebra Semantics for the generated syntax that we exploit to prove
- 
+The rest of this section, we provide Initial Algebra Semantics for the generated
+ syntax (this is used in the proof of 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "assu:L-finite-conncted"
@@ -14679,7 +15071,7 @@ noprefix "false"
 
 \end_inset
 
-.
+).
  
 \end_layout
 
@@ -14851,7 +15243,7 @@ If
 \end_inset
 
  and 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\dotmcontext{\Delta}$
 \end_inset
 
  are metavariable contexts, a Kleisli morphism 
@@ -14908,8 +15300,8 @@ The category
 \end_layout
 
 \begin_layout Standard
-We will exploit this characterisation to prove various properties of this
- category when the signature is 
+We exploit this characterisation to prove various properties of this category
+ when the signature is 
 \emph on
 pattern-friendly
 \emph default
@@ -15166,293 +15558,6 @@ The result follows from the construction of
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-We now turn to the proof of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:L-finite-conncted"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-By right continuity of the homset bifunctor, any representable functor is
- in 
-\begin_inset Formula $\C$
-\end_inset
-
- and thus the embedding 
-\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- factors the Yoneda embedding 
-\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:K-finite-connected"
-
-\end_inset
-
-Let 
-\begin_inset Formula $\D$
-\end_inset
-
- denote the opposite category of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- and 
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- the factorisation of 
-\begin_inset Formula $\C\rightarrow[{\cal A},\Set]$
-\end_inset
-
- by the Yoneda embedding.
- Then, 
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Proof
-This essentially follows from the fact functors in 
-\begin_inset Formula $\C$
-\end_inset
-
- preserves finite connected limits.
- Let us detail the argument: let 
-\begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- denote the Yoneda embedding and 
-\begin_inset Formula $J:\C\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- denote the canonical embedding, so that 
-\begin_inset Formula 
-\begin{equation}
-y=J\circ K.\label{eq:def-y-1}
-\end{equation}
-
-\end_inset
-
-Now consider a finite connected limit 
-\begin_inset Formula $\lim F$
-\end_inset
-
- in 
-\begin_inset Formula $\mathcal{A}$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula 
-\begin{align*}
-\C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
- & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By Equation \prettyref{eq:def-y-1}}\\
- & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
- & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
- & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
- & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By Equation \prettyref{eq:def-y-1}}\\
- & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
- & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
-\end{align*}
-
-\end_inset
-
-These isomorphisms are natural in 
-\begin_inset Formula $X$
-\end_inset
-
- and thus 
-\begin_inset Formula $K\lim F\cong\colim KF$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Unification of two metavariables as pullbacks or equalisers in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- crucially relies on 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, which holds because we restrict to functors preserving finite connected
- limits.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-As anticipated in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:res-monad"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, it is crucial to consider the monad 
-\begin_inset Formula $T$
-\end_inset
-
- restricted to 
-\begin_inset Formula $\C$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Proof of 
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:L-finite-conncted"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
- Note that 
-\begin_inset Formula ${\cal L}$
-\end_inset
-
- factors as 
-\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Thbot S$
-\end_inset
-
-, where the right embedding preserves colimits by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:bot-creates"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, so it is enough to show that 
-\begin_inset Formula ${\cal L}^{\bullet}$
-\end_inset
-
- preserves finite connected colimits.
- Let 
-\begin_inset Formula $T_{|\C}$
-\end_inset
-
- be the monad 
-\begin_inset Formula $T$
-\end_inset
-
- restricted to 
-\begin_inset Formula $\C$
-\end_inset
-
-, following 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:-T-res"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Since 
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- preserves finite connected colimits (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), composing it with the left adjoint 
-\begin_inset Formula $\C\rightarrow\Kl{T_{|\C}}$
-\end_inset
-
- yields a functor 
-\begin_inset Formula $\D\rightarrow\Kl{T_{|\C}}$
-\end_inset
-
- also preserving those colimits.
- Since it factors as 
-\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Kl{T_{|\C}}$
-\end_inset
-
-, where the right functor is full and faithful, 
-\begin_inset Formula ${\cal L}^{\bullet}$
-\end_inset
-
- also preserves finite connected colimits.
 \end_layout
 
 \begin_layout Section
@@ -16778,6 +16883,9 @@ YADE DIAGRAM diagrams/coeq-pointwise.json
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Preview
 
 \begin_layout Standard
@@ -16797,9 +16905,7 @@ m5hbWUiOiJkYXNoZWQifX19XV0=
 
 \begin_layout Plain Layout
 
-
-\backslash
-[
+$
 \backslash
 begin{tikzcd}[row sep=tiny]
 \end_layout
@@ -16912,8 +17018,11 @@ sigma_2}", dashed, from=2-6, to=2-7]
 
 \backslash
 end{tikzcd}
-\backslash
-]
+\end_layout
+
+\begin_layout Plain Layout
+
+$
 \end_layout
 
 \end_inset
@@ -16924,14 +17033,8 @@ end{tikzcd}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\xymatrix{\Gamma'_{1}+\Gamma'_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
-\]
-
+\begin_inset Formula $\qquad\xymatrix{\Gamma'_{1}+\Gamma'_{2}\coeqr{t_{1},t_{2}}{u_{1},u_{2}} & \Gamma\ar@{-->}[r]^{\sigma_{2}\circ\sigma_{1}} & \Delta_{2}}
+$
 \end_inset
 
 
@@ -26955,7 +27058,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citet
 after "Section 9.7"
 key "DBLP:books/daglib/0068768,Goguen89whatis,10.5555/92134"
 literal "false"
@@ -27179,6 +27282,13 @@ options "ACM-Reference-Format"
 \begin_layout Standard
 \begin_inset ERT
 status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
 
 \begin_layout Plain Layout
 
@@ -28101,6 +28211,328 @@ It follows from those two chains of isomorphisms that each function
 \end_layout
 
 \end_deeper
+\begin_layout Appendix
+Proof of Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:L-finite-conncted"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:proof-L-preserves"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We use the notations and definitions of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:GB-sig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By right continuity of the homset bifunctor, any representable functor is
+ in 
+\begin_inset Formula $\C$
+\end_inset
+
+ and thus the embedding 
+\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ factors the Yoneda embedding 
+\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:K-finite-connected"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\D$
+\end_inset
+
+ denote the opposite category of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ and 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ the factorisation of 
+\begin_inset Formula $\C\rightarrow[{\cal A},\Set]$
+\end_inset
+
+ by the Yoneda embedding.
+ Then, 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ preserves finite connected colimits.
+\end_layout
+
+\begin_layout Proof
+This essentially follows from the fact functors in 
+\begin_inset Formula $\C$
+\end_inset
+
+ preserves finite connected limits.
+ Let us detail the argument: let 
+\begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ denote the Yoneda embedding and 
+\begin_inset Formula $J:\C\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ denote the canonical embedding, so that 
+\begin_inset Formula 
+\begin{equation}
+y=J\circ K.\label{eq:def-y-1}
+\end{equation}
+
+\end_inset
+
+Now consider a finite connected limit 
+\begin_inset Formula $\lim F$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\begin{align*}
+\C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
+ & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By Equation \prettyref{eq:def-y-1}}\\
+ & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
+ & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
+ & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
+ & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By Equation \prettyref{eq:def-y-1}}\\
+ & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
+ & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
+\end{align*}
+
+\end_inset
+
+These isomorphisms are natural in 
+\begin_inset Formula $X$
+\end_inset
+
+ and thus 
+\begin_inset Formula $K\lim F\cong\colim KF$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Unification of two metavariables as pullbacks or equalisers in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ crucially relies on 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:K-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, which holds because we restrict to functors preserving finite connected
+ limits.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+As anticipated in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:res-monad"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, it is crucial to consider the monad 
+\begin_inset Formula $T$
+\end_inset
+
+ restricted to 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:L-finite-conncted"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+]
+\end_layout
+
+\end_inset
+
+ Note that 
+\begin_inset Formula ${\cal L}$
+\end_inset
+
+ factors as 
+\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Thbot S$
+\end_inset
+
+, where the right embedding preserves colimits by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:bot-creates"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, so it is enough to show that 
+\begin_inset Formula ${\cal L}^{\bullet}$
+\end_inset
+
+ preserves finite connected colimits.
+ Let 
+\begin_inset Formula $T_{|\C}$
+\end_inset
+
+ be the monad 
+\begin_inset Formula $T$
+\end_inset
+
+ restricted to 
+\begin_inset Formula $\C$
+\end_inset
+
+, following 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:-T-res"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ preserves finite connected colimits (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:K-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), composing it with the left adjoint 
+\begin_inset Formula $\C\rightarrow\Kl{T_{|\C}}$
+\end_inset
+
+ yields a functor 
+\begin_inset Formula $\D\rightarrow\Kl{T_{|\C}}$
+\end_inset
+
+ also preserving those colimits.
+ Since it factors as 
+\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Kl{T_{|\C}}$
+\end_inset
+
+, where the right functor is full and faithful, 
+\begin_inset Formula ${\cal L}^{\bullet}$
+\end_inset
+
+ also preserves finite connected colimits.
+\end_layout
+
 \begin_layout Appendix
 Proof that 
 \begin_inset Formula ${\cal A}$
