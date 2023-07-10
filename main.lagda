@@ -230,29 +230,29 @@ Pruning
   \begin{code}
   prune-σ {Γ} [] [] = Γ ◄ ([] , 1ₛ)
   prune-σ (t , δ) (x₀ ∷ xs) = 
-    let Δ₁ ◄ t' , σ₁ = prune t x₀
-        Δ₂ ◄ δ' , σ₂ = prune-σ (δ [  σ₁  ]s) xs
-    in  Δ₂ ◄  (t' [ σ₂ ]t , δ') , (σ₁ [ σ₂ ]s) 
+    let Δ₁ ◄ (t' , σ₁) = prune t x₀
+        Δ₂ ◄ (δ' , σ₂) = prune-σ (δ [  σ₁  ]s) xs
+    in  Δ₂ ◄ ( (t' [ σ₂ ]t , δ') , (σ₁ [ σ₂ ]s) )
   \end{code}
   %</prune-subst>
   %<*prune-rigid>
   \begin{code}
   prune (Rigid· o δ) x with o ｛ x ｝⁻¹
-  ... | ⊥ = ⊥ ◄  ! ,  !ₛ 
+  ... | ⊥ = ⊥ ◄  (! , !ₛ) 
   ... | ⌊ PreImage o' ⌋ =
-    let Δ ◄ δ' , σ  =  prune-σ δ  (x ^ o')
-    in  Δ ◄ Rigid o'  δ' ,  σ
+    let Δ ◄ (δ' , σ)  =  prune-σ δ  (x ^ o')
+    in  Δ ◄ (Rigid o'  δ' ,  σ)
   \end{code}
   %</prune-rigid>
   %<*prune-flex>
   \begin{code}
   prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
     let p , r , l = pullback m x y in
-    Γ [ M ∶ p ] ·◄  (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
+    Γ [ M ∶ p ] ·◄  ((M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚)
   \end{code}
   %</prune-flex>
   \begin{code}
-  prune ! y = ⊥ ◄ ! ,  !ₛ 
+  prune ! y = ⊥ ◄ (! ,  !ₛ)
 
 
 {- ----------------------
@@ -272,8 +272,8 @@ Unification
     let p , z = equaliser m x y
     in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
   ... | Cycle = ⊥ ◄ !ₛ
-  ... | No-Cycle t' = 
-    let Δ ◄ u , σ = prune t' x
+  ... | No-Cycle t' =
+    let Δ ◄ (u , σ) = prune t' x
     in  Δ ◄ M ↦ u , σ
   \end{code}
 %</unify-flex-def>

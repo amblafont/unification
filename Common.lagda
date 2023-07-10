@@ -169,8 +169,8 @@ module PruneUnifyTypes where
 \end{code}
 %</substfrom>
 \begin{code}
-  infix 3 _◄_
-  infix 3 _·◄_
+  infix 19 _◄_
+  infix 19 _·◄_
   pattern _·◄_ Δ σ = ⌊ Δ ⌋ ◄ σ
 
   _·⟶? : MetaContext· → Set k'

@@ -1932,9 +1932,9 @@
 \>[2]\AgdaKeyword{let}%
 \>[1284I]\AgdaBound{Δ₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaBound{t'}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{t'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{σ₁}\AgdaSpace{}%
+\AgdaBound{σ₁}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{prune}\AgdaSpace{}%
 \AgdaBound{t}\AgdaSpace{}%
@@ -1943,9 +1943,9 @@
 \>[.][@{}l@{}]\<[1284I]%
 \>[6]\AgdaBound{Δ₂}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaBound{u'}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{u'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{σ₂}\AgdaSpace{}%
+\AgdaBound{σ₂}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{prune}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{u}\AgdaSpace{}%
@@ -1958,7 +1958,7 @@
 \>[2]\AgdaKeyword{in}%
 \>[6]\AgdaBound{Δ₂}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaFunction{App}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaFunction{App}\AgdaSpace{}%
 \AgdaSymbol{(}\AgdaBound{t'}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{[}}\AgdaSpace{}%
 \AgdaBound{σ₂}\AgdaSpace{}%
@@ -1968,7 +1968,7 @@
 \AgdaBound{σ₁}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{[}}\AgdaSpace{}%
 \AgdaBound{σ₂}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{]s}}\<%
+\AgdaOperator{\AgdaFunction{]s}}\AgdaSymbol{)}\<%
 \end{code}
 %</prune-app>
 %<*prune-lam>
@@ -1983,9 +1983,9 @@
 \>[2]\AgdaKeyword{let}\AgdaSpace{}%
 \AgdaBound{Δ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaBound{t'}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{t'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{σ}\AgdaSpace{}%
+\AgdaBound{σ}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{prune}\AgdaSpace{}%
 \AgdaBound{t}\AgdaSpace{}%
@@ -1996,10 +1996,10 @@
 \>[2]\AgdaKeyword{in}%
 \>[6]\AgdaBound{Δ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaFunction{Lam}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaFunction{Lam}\AgdaSpace{}%
 \AgdaBound{t'}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{σ}\<%
+\AgdaBound{σ}\AgdaSymbol{)}\<%
 \end{code}
 %</prune-lam>
 %<*prune-var>
@@ -2021,9 +2021,9 @@
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaInductiveConstructor{⊥}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaInductiveConstructor{!}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaInductiveConstructor{!}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaFunction{!ₛ}\<%
+\AgdaFunction{!ₛ}\AgdaSymbol{)}\<%
 \\
 \>[0]\AgdaSymbol{...}\AgdaSpace{}%
 \AgdaSymbol{|}\AgdaSpace{}%
@@ -2034,10 +2034,10 @@
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaFunction{Var}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaFunction{Var}\AgdaSpace{}%
 \AgdaBound{j}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaFunction{1ₛ}\<%
+\AgdaFunction{1ₛ}\AgdaSymbol{)}\<%
 \end{code}
 %</prune-var>
 %<*lc-prune-flex>
@@ -2077,7 +2077,7 @@
 \AgdaBound{p}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{]}}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{·◄}}\AgdaSpace{}%
-\AgdaSymbol{(}\AgdaBound{M}\AgdaSpace{}%
+\AgdaSymbol{((}\AgdaBound{M}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{∶}}\AgdaSpace{}%
 \AgdaBound{p}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{﹙}}\AgdaSpace{}%
@@ -2087,7 +2087,7 @@
 \AgdaBound{M}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{↦-﹙}}\AgdaSpace{}%
 \AgdaBound{r}\AgdaSpace{}%
-\AgdaOperator{\AgdaFunction{﹚}}\<%
+\AgdaOperator{\AgdaFunction{﹚}}\AgdaSymbol{)}\<%
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>
@@ -2098,9 +2098,9 @@
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaInductiveConstructor{⊥}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaInductiveConstructor{!}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaInductiveConstructor{!}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaFunction{!ₛ}\<%
+\AgdaFunction{!ₛ}\AgdaSymbol{)}\<%
 \end{code}
 %</prune-fail>
 
@@ -2200,9 +2200,9 @@ Unification
 \>[2]\AgdaKeyword{let}\AgdaSpace{}%
 \AgdaBound{Δ}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{◄}}\AgdaSpace{}%
-\AgdaBound{u}\AgdaSpace{}%
+\AgdaSymbol{(}\AgdaBound{u}\AgdaSpace{}%
 \AgdaOperator{\AgdaInductiveConstructor{,}}\AgdaSpace{}%
-\AgdaBound{σ}\AgdaSpace{}%
+\AgdaBound{σ}\AgdaSymbol{)}\AgdaSpace{}%
 \AgdaSymbol{=}\AgdaSpace{}%
 \AgdaFunction{prune}\AgdaSpace{}%
 \AgdaBound{t'}\AgdaSpace{}%

@@ -346,35 +346,35 @@ prune : ∀ {Γ m n} → Tm Γ n → m ⇒ n → [ m ]∪ Γ ⟶?
 %<*prune-app>
 \begin{code}
 prune (App· t u) x =
-  let Δ₁ ◄ t' , σ₁ = prune t x
-      Δ₂ ◄ u' , σ₂ = prune (u [ σ₁ ]t) x
-  in  Δ₂ ◄ App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s 
+  let Δ₁ ◄ (t' , σ₁) = prune t x
+      Δ₂ ◄ (u' , σ₂) = prune (u [ σ₁ ]t) x
+  in  Δ₂ ◄ (App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s) 
 \end{code}
 %</prune-app>
 %<*prune-lam>
 \begin{code}
 prune (Lam· t) x =
-  let Δ ◄ t' , σ = prune t (x ↑)
-  in  Δ ◄ Lam t' , σ
+  let Δ ◄ (t' , σ) = prune t (x ↑)
+  in  Δ ◄ (Lam t' , σ)
 \end{code}
 %</prune-lam>
 %<*prune-var>
 \begin{code}
 prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
-... | ⊥ = ⊥ ◄ ! , !ₛ
-... | ⌊ PreImage j ⌋ = Γ ◄ Var j , 1ₛ
+... | ⊥ = ⊥ ◄ (! , !ₛ)
+... | ⌊ PreImage j ⌋ = Γ ◄ (Var j , 1ₛ)
 \end{code}
 %</prune-var>
 %<*lc-prune-flex>
 \begin{code}
 prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
   let p , r , l = commonValues m x y
-  in Γ [ M ∶ p ] ·◄ (M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚
+  in Γ [ M ∶ p ] ·◄ ((M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚)
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>
 \begin{code}
-prune ! y = ⊥ ◄ ! , !ₛ
+prune ! y = ⊥ ◄ (! , !ₛ)
 \end{code}
 %</prune-fail>
 
@@ -399,7 +399,7 @@ unify-flex-* {Γ} {m} M x t
   in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
 ... | Cycle = ⊥ ◄ !ₛ
 ... | No-Cycle t' = 
-  let Δ ◄ u , σ = prune t' x
+  let Δ ◄ (u , σ) = prune t' x
   in  Δ ◄ M ↦ u , σ
 \end{code}
 %</lc-unify-flex-def>

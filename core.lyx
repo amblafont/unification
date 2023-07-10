@@ -1217,7 +1217,7 @@ literal "false"
 \end_inset
 
 , we parameterise the algorithm over a binding signature.
- However, the notion of signature is considerably more general than the
+ However, our notion of signature is considerably more general than the
  ones used in prior formulations of pattern unification.
  It has a customisable notion of context, which makes it possible to handle
  examples such as simply-typed second-order syntax, ordered lambda calculi,
@@ -1234,8 +1234,8 @@ Furthermore, our notion of signature can be axiomatised in a categorical
  end up corresponding to some standard categorical construction, and each
  part of our proof essentially just shows that the construction actually
  has the expected properties.
- This is similar to Rydeheard and Burstall's similar reconstruction of first-ode
-r unification
+ This is similar to Rydeheard and Burstall's similar reconstruction of first-ord
+er unification
 \begin_inset ERT
 status open
 
