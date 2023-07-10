@@ -2032,11 +2032,10 @@ noprefix "false"
  prover.
  This means that the definitions of our data structures typically do not
  mention the properties (such as associativity for a category), and we leave
- for future work the task of mechanising the correctness proof of the algorithm,
- by investigating the formalisation of various concepts from category theory
- – a notorious challenge on its own – on which our proof relies on.
- Furthermore, we disable the termination checker and provide instead a terminati
-on proof on paper in 
+ for future work the task of mechanising the correctness proof of the algorithm.
+ (The proper formalisation of category theory in proof assistants remains
+ a significant challenge in its own right.) Furthermore, we disable the terminati
+on checker and provide instead a termination proof on paper in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:termination"
@@ -2047,9 +2046,10 @@ noprefix "false"
 \end_inset
 
 .
- Despite those caveats, dependent types are still helpful in guiding the
- implementation, contrary to a preliminary ocaml version where the code
- was much less constrained by the typing discipline.
+ Even used purely as a programming language, dependent types are very helpful
+ in structuring the implementation.
+ The Agda code is much simpler than an earlier, less-strongly typed, version
+ written in Ocaml.
 \end_layout
 
 \begin_layout Standard
@@ -6610,7 +6610,7 @@ Consider the syntax of pure
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus extended with metavariables satisfying the pattern restriction.
+-calculus extended with pattern metavariables.
  We list the Agda code in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -6653,22 +6653,7 @@ a metavariable context
 
 , or a 
 \emph on
-dotted
-\emph default
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-This naming is motivated by a notational convention in the Agda code explained
- below.
-\end_layout
-
-\end_inset
-
-
-\emph on
- 
+proper 
 \emph default
 context, as a list 
 \begin_inset Formula $(M_{1}:m_{1},\dots,M_{p}:m_{p})$
@@ -6723,8 +6708,8 @@ In the inductive rules, we use the bold face
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
- for any dotted metavariable context.
- In the Agda code, we adopt a nameless encoding of dotted metavariable contexts:
+ for any proper metavariable context.
+ In the Agda code, we adopt a nameless encoding of proper metavariable contexts:
  they are mere lists of metavariable arities, and metavariables are referred
  to by their index in the list.
  The type of metavariable contexts 
@@ -6789,8 +6774,12 @@ In the inductive rules, we use the bold face
 \end_inset
 
 -abstraction, and variables, are postfixed with a dot to indicate that they
- live in a dotted metavariable context.
- 
+ live in a proper metavariable context.
+ We also call a term 
+\emph on
+proper
+\emph default
+ if it lives in a proper metavariable context.
 \end_layout
 
 \begin_layout Remark
@@ -6804,13 +6793,13 @@ name "rem:non-dotted-version"
 \begin_inset Quotes eld
 \end_inset
 
-Undotted
+Improper
 \begin_inset Quotes erd
 \end_inset
 
  versions of those operations, available in any metavariable context, are
  also implemented in the obvious way, coinciding with the constructors in
- a dotted context, or returning 
+ a proper context, or returning 
 \begin_inset Formula $\bang$
 \end_inset
 
@@ -7731,12 +7720,12 @@ noprefix "false"
 \emph on
 successful
 \emph default
- if it targets a dotted metavariable context, 
+ if it targets a proper metavariable context, 
 \emph on
-dotted
+proper
 \emph default
- if the domain is dotted.
- Note that any successful substitution is dotted because there is only one
+ if the domain is proper.
+ Note that any successful substitution is proper because there is only one
  metavariable substitution 
 \begin_inset Formula $1_{\bot}$
 \end_inset
@@ -7751,7 +7740,7 @@ metavariable substitution
 \begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\Delta$
 \end_inset
 
- from a dotted context assigns to each metavariable 
+ from a proper context assigns to each metavariable 
 \begin_inset Formula $M$
 \end_inset
 
@@ -9493,7 +9482,7 @@ This assignation extends (through a recursive definition) to any term
 \end_inset
 
 .
- Note that the congruence cases involve undotted versions of the operations
+ Note that the congruence cases involve improper versions of the operations
  (
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -9504,7 +9493,7 @@ noprefix "false"
 
 \end_inset
 
-), as the target metavariable context may not be dotted.
+), as the target metavariable context may not be proper.
  The base case is 
 \begin_inset Formula $M(x_{1},\dots,x_{m})[\sigma]=\rename{\sigma_{M}}x,$
 \end_inset
@@ -9684,7 +9673,7 @@ terminal
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is dotted, or is the identity substitution 
+ is proper, or is the identity substitution 
 \begin_inset Formula $1_{\bot}$
 \end_inset
 
@@ -11602,7 +11591,7 @@ For this pruning phase, we use the notation
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is dotted, this is precisely the data for the most general unifier of 
+ is proper, this is precisely the data for the most general unifier of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -12039,7 +12028,7 @@ The intuition for the application case is that if we want to unify
 \end_inset
 
 .
- Note that this really involves undotted application, taking into account
+ Note that this really involves improper application, taking into account
  the following three subcases at once.
 \begin_inset Formula 
 \[
@@ -13309,7 +13298,7 @@ noprefix "false"
 
 \begin_layout Standard
 We are similarly led to generalise unification of terms to unification of
- dotted substitutions, and we extend accordingly the notation.
+ proper substitutions, and we extend accordingly the notation.
  Given two substitutions 
 \begin_inset Formula $\delta_{1},\delta_{2}:\dotmcontext{\Gamma'}\rightarrow\Gamma$
 \end_inset
@@ -13371,7 +13360,7 @@ agdacode{unifyprototype}
 
 \end_inset
 
- Similarly, we define pruning of terms mutually with pruning of dotted substitut
+ Similarly, we define pruning of terms mutually with pruning of proper substitut
 ions.
  We thus also extend the pruning notation: given a substitution 
 \begin_inset Formula $\delta:\dotmcontext{\Gamma'}\rightarrow\Gamma$
@@ -13809,7 +13798,7 @@ literal "false"
 \end_layout
 
 \begin_layout Lemma
-Dotted metavariable contexts and substitutions (with their composition)
+Proper metavariable contexts and substitutions (with their composition)
  between them define a category 
 \begin_inset Formula $\Th S$
 \end_inset
@@ -14271,7 +14260,7 @@ This ensures in particular that coproducts in
 \end_inset
 
 .
- It also justifies defining the union of a dotted metavariable context with
+ It also justifies defining the union of a proper metavariable context with
  
 \begin_inset Formula $\bot$
 \end_inset
@@ -15159,7 +15148,7 @@ name "lem:free-alg-syntax"
 
 \end_inset
 
-The dotted syntax generated by a GB-signature (see 
+The proper syntax generated by a GB-signature (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:sig-syntax"
@@ -15221,7 +15210,7 @@ where
 
 \end_deeper
 \begin_layout Notation
-Given a dotted metavariable context 
+Given a proper metavariable context 
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
@@ -17909,7 +17898,7 @@ The size
 \begin_inset Formula $|t|\in\mathbb{N}$
 \end_inset
 
- of a dotted term 
+ of a proper term 
 \begin_inset Formula $t$
 \end_inset
 
@@ -18323,7 +18312,7 @@ noprefix "false"
 \begin_inset Formula $|\dotmcontext{\Gamma}|$
 \end_inset
 
- of a dotted metavariable context 
+ of a proper metavariable context 
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
@@ -18375,7 +18364,7 @@ noprefix "false"
 \begin_inset Formula $||t||$
 \end_inset
 
- of a dotted term 
+ of a proper term 
 \begin_inset Formula $t$
 \end_inset
 
@@ -18420,7 +18409,7 @@ Let us first quickly justify termination of the pruning phase.
 \end_layout
 
 \begin_layout Lemma
-For any dotted term 
+For any proper term 
 \begin_inset Formula $\dotmcontext{\Gamma};a\vdash t$
 \end_inset
 
@@ -18583,7 +18572,7 @@ If there is a finite derivation tree of
 \begin_inset Formula $\Delta$
 \end_inset
 
- is dotted, then 
+ is proper, then 
 \begin_inset Formula $\sigma$
 \end_inset
 
