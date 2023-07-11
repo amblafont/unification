@@ -6778,7 +6778,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Enumerate
-a metavariable context 
+a metavariable context (or 
+\emph on
+metacontext
+\emph default
+) 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -6811,7 +6815,7 @@ a variable context, which is a mere natural number indicating the highest
 \end_layout
 
 \begin_layout Standard
-The error metavariable context 
+The error metacontext 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -6843,11 +6847,11 @@ In the inductive rules, we use the bold face
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
- for any proper metavariable context.
- In the Agda code, we adopt a nameless encoding of proper metavariable contexts:
+ for any proper metacontext.
+ In the Agda code, we adopt a nameless encoding of proper metacontexts:
  they are mere lists of metavariable arities, and metavariables are referred
  to by their index in the list.
- The type of metavariable contexts 
+ The type of metacontexts 
 \begin_inset Formula $\AgdaFunction{MetaContext}$
 \end_inset
 
@@ -6882,7 +6886,7 @@ In the inductive rules, we use the bold face
 
  in the implementation.
  To alleviate notations, we also adopt a dotted convention in Agda to mean
- that a successful metavariable context is involved.
+ that a successful metacontext is involved.
  For example, 
 \begin_inset Formula $\AgdaFunction{MetaContext\ensuremath{\cdot}}$
 \end_inset
@@ -6922,8 +6926,8 @@ error
 \emph on
  Proper 
 \emph default
-terms, i.e., terms well-formed in a proper metavariable context, are built
- from application, 
+terms, i.e., terms well-formed in a proper metacontext, are built from application
+, 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -6955,7 +6959,7 @@ name "rem:non-dotted-version"
 \end_inset
 
 -abstraction, and variables, are dotted to indicate that they are only available
- in a proper metavariable context.
+ in a proper metacontext.
  
 \begin_inset Quotes eld
 \end_inset
@@ -6964,8 +6968,8 @@ Improper
 \begin_inset Quotes erd
 \end_inset
 
- versions of those, defined in any metavariable context, are also implemented
- in the obvious way, coinciding with the constructors in a proper context,
+ versions of those, defined in any metacontext, are also implemented in
+ the obvious way, coinciding with the constructors in a proper context,
  or returning 
 \begin_inset Formula $\bang$
 \end_inset
@@ -7045,9 +7049,9 @@ status open
 \end_inset
 
 .
- We also use a nameless encoding of metavariable contexts: they are mere
- lists of metavariable arities, and metavariables are referred to by their
- index in the list.
+ We also use a nameless encoding of metacontexts: they are mere lists of
+ metavariable arities, and metavariables are referred to by their index
+ in the list.
  Let us focus on the last constructor building a metavariable application
  in the context 
 \begin_inset Formula $\dotmcontext{\Gamma};n$
@@ -7884,7 +7888,7 @@ noprefix "false"
 \emph on
 successful
 \emph default
- if it targets a proper metavariable context, 
+ if it targets a proper metacontext, 
 \emph on
 proper
 \emph default
@@ -9657,7 +9661,7 @@ noprefix "false"
 
 \end_inset
 
-), as the target metavariable context may not be proper.
+), as the target metacontext may not be proper.
  The base case is 
 \begin_inset Formula $M(x_{1},\dots,x_{m})[\sigma]=\rename{\sigma_{M}}x,$
 \end_inset
@@ -9697,8 +9701,8 @@ noprefix "false"
 \end_inset
 
 .
- While metavariable substitutions change the metavariable context of the
- substituted term, renamings change the variable context.
+ While metavariable substitutions change the metacontext of the substituted
+ term, renamings change the variable context.
 \end_layout
 
 \begin_layout Standard
@@ -9817,7 +9821,7 @@ name "rem:terminal-unifier"
 
 \end_inset
 
-Given a metavariable context 
+Given a metacontext 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -9850,7 +9854,7 @@ terminal
 \begin_inset Formula $\bang$
 \end_inset
 
-, since it is the only one in the metavariable context 
+, since it is the only one in the metacontext 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -10130,7 +10134,7 @@ Otherwise it continues with the success return values
 
 .
  From a mathematical point of view, we will argue that it is more convenient
- to handle failure by considering a formal error metavariable context
+ to handle failure by considering a formal error metacontext
 \begin_inset Foot
 status open
 
@@ -10149,8 +10153,8 @@ noprefix "false"
 \begin_inset Formula $\bot$
 \end_inset
 
- as a terminal object freely added to the category of metavariable contexts
- and substitutions between them.
+ as a terminal object freely added to the category of metacontexts and substitut
+ions between them.
 \end_layout
 
 \end_inset
@@ -10640,7 +10644,7 @@ When reaching a metavariable application
 \begin_inset Formula $M(x)$
 \end_inset
 
- at the top-level of either term in a metavariable context 
+ at the top-level of either term in a metacontext 
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
@@ -10801,7 +10805,7 @@ Assume that
 \begin_inset Formula $\Gamma\backslash M$
 \end_inset
 
- denotes the metavariable context 
+ denotes the metacontext 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -11544,7 +11548,7 @@ noprefix "false"
 \begin_inset Formula $M$
 \end_inset
 
- can be removed from the metavariable context in which 
+ can be removed from the metacontext in which 
 \begin_inset Formula $u$
 \end_inset
 
@@ -11728,7 +11732,7 @@ For this pruning phase, we use the notation
 \begin_inset Formula $t$
 \end_inset
 
- is a term in the metavariable context 
+ is a term in the metacontext 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -11741,7 +11745,7 @@ For this pruning phase, we use the notation
 \end_inset
 
  is left implicit, as well as its (irrelevant) name.
- The output is a metavariable context 
+ The output is a metacontext 
 \begin_inset Formula $\Delta$
 \end_inset
 
@@ -11770,7 +11774,7 @@ For this pruning phase, we use the notation
 \begin_inset Formula $M(x)$
 \end_inset
 
-, considered in the extended metavariable context 
+, considered in the extended metacontext 
 \begin_inset Formula $M:m,\Gamma$
 \end_inset
 
@@ -11798,8 +11802,8 @@ status open
 
 \begin_layout Plain Layout
 This is motivated by the fact that context extensions are characterised
- as coproducts with singleton contexts in the category of metavariable contexts
- and substitutions between them.
+ as coproducts with singleton contexts in the category of metacontexts and
+ substitutions between them.
 \end_layout
 
 \end_inset
@@ -12917,8 +12921,8 @@ name "rem:arg-op-subst"
 
 \end_inset
 
-Recall that the Agda code uses a nameless convention for metavariable contexts:
- they are just lists of variable contexts.
+Recall that the Agda code uses a nameless convention for metacontexts: they
+ are just lists of variable contexts.
  Therefore, the arity 
 \family roman
 \series medium
@@ -12953,7 +12957,7 @@ Recall that the Agda code uses a nameless convention for metavariable contexts:
 \begin_inset Formula $o$
 \end_inset
 
- can be considered as a metavariable context.
+ can be considered as a metacontext.
  It follows that the argument of an operation 
 \begin_inset Formula $o$
 \end_inset
@@ -13004,8 +13008,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Remark
-The syntax in the empty metavariable context does not depend on the morphisms
- in 
+The syntax in the empty metacontext does not depend on the morphisms in
+ 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
@@ -13281,7 +13285,7 @@ If
 \begin_inset Formula $\dotmcontext{\Delta}$
 \end_inset
 
- are two metavariable contexts 
+ are two metacontexts 
 \begin_inset Formula $M_{1}:m_{1},\dots,M_{p}:m_{p}$
 \end_inset
 
@@ -13354,7 +13358,7 @@ noprefix "false"
 
 \end_inset
 
-, considering operation arities as nameless metavariable contexts (
+, considering operation arities as nameless metacontexts (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "rem:arg-op-subst"
@@ -13960,8 +13964,8 @@ literal "false"
 \end_inset
 
 .
- We furthermore provide a formal justification for the error metavariable
- context 
+ We furthermore provide a formal justification for the error metacontext
+ 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -13969,8 +13973,8 @@ literal "false"
 \end_layout
 
 \begin_layout Lemma
-Proper metavariable contexts and substitutions (with their composition)
- between them define a category 
+Proper metacontexts and substitutions (with their composition) between them
+ define a category 
 \begin_inset Formula $\Th S$
 \end_inset
 
@@ -14075,7 +14079,7 @@ er on the condition that there is a unifier in this category
 \begin_inset Formula $\bot$
 \end_inset
 
-, resulting in the full category of metavariable contexts and substitutions.
+, resulting in the full category of metacontexts and substitutions.
 \end_layout
 
 \begin_layout Standard
@@ -14270,8 +14274,8 @@ We denote by
 \end_layout
 
 \begin_layout Lemma
-Metavariable contexts and substitutions between them define a category which
- is isomorphic to 
+metacontexts and substitutions between them define a category which is isomorphi
+c to 
 \begin_inset Formula $\Thbot S$
 \end_inset
 
@@ -14425,14 +14429,12 @@ This ensures in particular that coproducts in
 \begin_inset Formula $\Th S$
 \end_inset
 
-, which are computed as union of metavariable contexts, are also coproducts
- in 
+, which are computed as union of metacontexts, are also coproducts in 
 \begin_inset Formula $\Thbot S$
 \end_inset
 
 .
- It also justifies defining the union of a proper metavariable context with
- 
+ It also justifies defining the union of a proper metacontext with 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -14590,7 +14592,7 @@ name "rem:res-monad"
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- is that given any metavariable context 
+ is that given any metacontext 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -14603,8 +14605,8 @@ name "rem:res-monad"
 \end_inset
 
 .
- In fact, the argument works not only in the category of metavariable contexts
- and substitutions, but also in the (larger) category of objects of 
+ In fact, the argument works not only in the category of metacontexts and
+ substitutions, but also in the (larger) category of objects of 
 \begin_inset Formula $\C$
 \end_inset
 
@@ -15334,7 +15336,7 @@ noprefix "false"
 \end_inset
 
 .
- More precisely, given a metavariable context 
+ More precisely, given a metacontext 
 \begin_inset Formula $\dotmcontext{\Gamma}=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
 \end_inset
 
@@ -15381,7 +15383,7 @@ where
 
 \end_deeper
 \begin_layout Notation
-Given a proper metavariable context 
+Given a proper metacontext 
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
@@ -15406,7 +15408,7 @@ If
 \begin_inset Formula $\dotmcontext{\Delta}$
 \end_inset
 
- are metavariable contexts, a Kleisli morphism 
+ are metacontexts, a Kleisli morphism 
 \begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow T\dotmcontext{\Delta}$
 \end_inset
 
@@ -15422,8 +15424,7 @@ If
 
 .
  Moreover, Kleisli composition corresponds to composition of substitutions.
- This provides a formal link between the category of metavariable contexts
- 
+ This provides a formal link between the category of metacontexts 
 \begin_inset Formula $\Th S$
 \end_inset
 
@@ -15496,7 +15497,7 @@ literal "false"
 \begin_inset Formula $T$
 \end_inset
 
-, by mapping a metavariable context 
+, by mapping a metacontext 
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
@@ -18484,7 +18485,7 @@ noprefix "false"
 \begin_inset Formula $|\dotmcontext{\Gamma}|$
 \end_inset
 
- of a proper metavariable context 
+ of a proper metacontext 
 \begin_inset Formula $\dotmcontext{\Gamma}$
 \end_inset
 
@@ -18683,7 +18684,7 @@ The size invariance in the above lemma is actually used in the termination
 \begin_inset Formula $\vec{t}$
 \end_inset
 
- in the metavariable context 
+ in the metacontext 
 \begin_inset Formula $\Gamma$
 \end_inset
 
@@ -18828,7 +18829,7 @@ noprefix "false"
 \begin_inset Formula $\Th S$
 \end_inset
 
- with an error metavariable context 
+ with an error metacontext 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -19496,8 +19497,8 @@ A metavariable arity, as an object of
 \end_inset
 
 .
- A metavariable is said pure if its arity is, and a metavariable context
- is said pure if each metavariable is.
+ A metavariable is said pure if its arity is, and a metacontext is said
+ pure if each metavariable is.
  
 \end_layout
 
@@ -19515,7 +19516,7 @@ The pure metavariables are the ones mentioned at the beginning of this section.
 ) produces a new pure metavariable whose arity is the intersection of the
  input metavariable arities.
  Exploiting this observation, an easy induction shows that the most general
- unifier targets a pure metavariable context.
+ unifier targets a pure metacontext.
 \end_layout
 
 \begin_layout Lemma
