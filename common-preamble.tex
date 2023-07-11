@@ -1,5 +1,6 @@
+% \usepackage{subcaption}
 % for subfigures/subtables
-\usepackage[caption=false,font=footnotesize]{subfig}
+%\usepackage[caption=false,font=footnotesize]{subfig}
 \usepackage{tikz-cd}
 \usepackage{adjustbox}
 \usepackage{quiver}
@@ -175,6 +176,11 @@
 
 \newcommand{\cal}[1]{\mathcal{#1}}
 \usepackage{agda}
+%% vskip breaks the latex when occuring in subfigure
+%% with the belwo redefinition, it works by prefexing by AgdaNoSpaceAroundCode
+% \renewcommand{\Agda@NewlineWithVerticalSpace}[1]{\parskip=0pt\parindent=0pt\par%
+%   \ifthenelse{\equal{#1}{0pt}}{}{\vskip #1}%
+%   \noindent}
 \usepackage{catchfilebetweentags}
 \usepackage{ebutf8}
 % \usepackage{newunicodechar}

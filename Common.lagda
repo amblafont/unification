@@ -36,7 +36,7 @@ module SubstitutionDef where
 \end{code}
 %<*dotted-substitution>
 \begin{code}
-  -- Dotted substitutions
+  -- Proper substitutions
   Γ ·⟶ Δ = ⌊ Γ ⌋ ⟶ Δ
 \end{code}
 %</dotted-substitution>

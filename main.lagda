@@ -213,19 +213,25 @@ Pruning
   open Common.PruneUnifyTypes
   pattern _∶_﹙_﹚ M m x = _﹙_﹚ {m = m} M x
   \end{code}
-  %<*prune-proto>
+  %<*prune-sigma-return-type>
   \begin{code}
   record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext) : Set (i ⊔ j ⊔ k) where
     constructor _◄_
     field
       Δ : MetaContext
       δ,σ : (Γ ·⟶ Δ) × (Γ' ⟶ Δ)
-
-
+  \end{code}
+  %</prune-sigma-return-type>
+  %<*prune-proto>
+  \begin{code}
   prune : ∀ {Γ a m} → Tm Γ a → m ⇒ a → [ m ]∪ Γ ⟶?
-  prune-σ : ∀ {Γ Γ' Γ''} → (Γ' ·⟶ Γ) → (Γ'' ⟹ Γ') → Γ'' ∪ Γ ⟶?
   \end{code}
   %</prune-proto>
+  %<*prune-sigma-proto>
+  \begin{code}
+  prune-σ : ∀ {Γ Γ' Γ''} → (Γ' ·⟶ Γ) → (Γ'' ⟹ Γ') → Γ'' ∪ Γ ⟶?
+  \end{code}
+  %</prune-sigma-proto>
   %<*prune-subst>
   \begin{code}
   prune-σ {Γ} [] [] = Γ ◄ ([] , 1ₛ)
@@ -262,8 +268,12 @@ Unification
 -------------------------- -}
 
 
+  \end{code}
+%<*unify-flex-prototype>
+  \begin{code}
   unify-flex-* : ∀ {Γ m a} → m ∈ Γ → m ⇒ a → Tm· Γ a → Γ ·⟶?
   \end{code}
+%</unify-flex-prototype>
 %<*unify-flex-def>
   \begin{code}
   unify-flex-* {Γ} {m} M x t
@@ -280,9 +290,13 @@ Unification
   %<*unifyprototype>
   \begin{code}
   unify : ∀ {Γ a} → Tm Γ a → Tm Γ a → Γ ⟶?
+  \end{code}
+%</unifyprototype>
+  %<*unify-sigma-prototype>
+  \begin{code}
   unify-σ : ∀ {Γ Γ'} → (Γ' ⟶ Γ) → (Γ' ⟶ Γ) → (Γ ⟶?)
   \end{code}
-  %</unifyprototype>
+  %</unify-sigma-prototype>
   %<*unify-subst>
   \begin{code}
   unify-σ {Γ} [] [] = Γ ◄ 1ₛ

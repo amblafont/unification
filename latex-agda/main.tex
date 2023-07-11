@@ -1265,7 +1265,7 @@
 \AgdaBound{M}\AgdaSpace{}%
 \AgdaBound{x}\<%
 \end{code}
-  %<*prune-proto>
+  %<*prune-sigma-return-type>
   \begin{code}%
 %
 \>[2]\AgdaKeyword{record}\AgdaSpace{}%
@@ -1306,11 +1306,10 @@
 \AgdaSymbol{(}\AgdaBound{Γ'}\AgdaSpace{}%
 \AgdaOperator{\AgdaDatatype{⟶}}\AgdaSpace{}%
 \AgdaField{Δ}\AgdaSymbol{)}\<%
-\\
-%
-\\[\AgdaEmptyExtraSkip]%
-%
-\\[\AgdaEmptyExtraSkip]%
+\end{code}
+  %</prune-sigma-return-type>
+  %<*prune-proto>
+  \begin{code}%
 %
 \>[2]\AgdaFunction{prune}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -1332,7 +1331,10 @@
 \AgdaOperator{\AgdaRecord{]∪}}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaRecord{⟶?}}\<%
-\\
+\end{code}
+  %</prune-proto>
+  %<*prune-sigma-proto>
+  \begin{code}%
 %
 \>[2]\AgdaFunction{prune-σ}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -1354,7 +1356,7 @@
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaRecord{⟶?}}\<%
 \end{code}
-  %</prune-proto>
+  %</prune-sigma-proto>
   %<*prune-subst>
   \begin{code}%
 %
@@ -1562,9 +1564,11 @@
 \\
 %
 \\[\AgdaEmptyExtraSkip]%
-%
-\\[\AgdaEmptyExtraSkip]%
-\>[0][@{}l@{\AgdaIndent{0}}]%
+\>[0]\<%
+\end{code}
+%<*unify-flex-prototype>
+  \begin{code}%
+\>[0][@{}l@{\AgdaIndent{1}}]%
 \>[2]\AgdaFunction{unify-flex-*}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
 \AgdaSymbol{∀}\AgdaSpace{}%
@@ -1587,6 +1591,7 @@
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaFunction{·⟶?}}\<%
 \end{code}
+%</unify-flex-prototype>
 %<*unify-flex-def>
   \begin{code}%
 %
@@ -1693,7 +1698,10 @@
 \AgdaSymbol{→}\AgdaSpace{}%
 \AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaRecord{⟶?}}\<%
-\\
+\end{code}
+%</unifyprototype>
+  %<*unify-sigma-prototype>
+  \begin{code}%
 %
 \>[2]\AgdaFunction{unify-σ}\AgdaSpace{}%
 \AgdaSymbol{:}\AgdaSpace{}%
@@ -1712,7 +1720,7 @@
 \AgdaSymbol{(}\AgdaBound{Γ}\AgdaSpace{}%
 \AgdaOperator{\AgdaRecord{⟶?}}\AgdaSymbol{)}\<%
 \end{code}
-  %</unifyprototype>
+  %</unify-sigma-prototype>
   %<*unify-subst>
   \begin{code}%
 %
