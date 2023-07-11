@@ -2087,2709 +2087,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Type signatures of the functions implemented in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-full-gen"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:type-signatures"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-AgdaNoSpaceAroundCode{}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{0.2em}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-proto}%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-sigma-proto}%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-flex-prototype}%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unifyprototype}%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-sigma-prototype}%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-AgdaSpaceAroundCode{}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Our generic pattern unification algorithm 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:unif-full-gen"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-flex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-Same as the rule 
-\begin_inset Formula $\refrule{P-Flex}$
-\end_inset
-
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-full-lam"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "49col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-rigid}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\dotmcontext{\Gamma}\prune{o(\delta)}{\arg x}{\bang_{s}}{\bang}\dashv\bot}}{P-Rig-Fail}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\inferruletwo{\dotmcontext{\Gamma}\prune{\delta}{x^{o'}}{\sigma}{\delta'}\dashv\Delta}{o=\rename{o'}x}{\dotmcontext{\Gamma}\prune{o(\delta)}{\arg x}{\sigma}{o'(\delta')}\dashv\Delta}}{P-Rig}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-fail}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}}{P-Fail}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "49col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-subst}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{}{\pruningemptyconcl}}{P-Empty}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\begin{array}{c}
-\Gamma\prune t{x_{0}}{\sigma_{1}}{t'}\dashv\Delta_{1}\\
-\Delta_{1}\prune{\delta[\sigma_{1}]}x{\sigma_{2}\dashv\Delta_{2}}{\delta'}
-\end{array}}{\begin{array}{r}
-\Gamma\vdash t,\delta:>x_{0},x\Rightarrow\quad\\
-t'[\sigma_{2}],\delta';\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}
-\end{array}}}{\textsc{P-Split}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\inferruletwo{\Gamma\prune t{M_{0}(x_{0})}{\sigma_{1}}{t'}\dashv\Delta_{1}}{\Delta_{1}\prune{\delta[\sigma_{1}]}{\overrightarrow{M(x)}}{\sigma_{2}\dashv\Delta_{2}}{\delta'}}{\begin{array}{c}
-\Gamma\vdash t,\delta:>M_{0}(x_{0}),\overrightarrow{M(x)}\Rightarrow\\
-t'[\sigma_{2}],\delta';\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}
-\end{array}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula $\Gamma\prune{t,\delta}{M_{0}(x_{0}),\overrightarrow{M(x)}}{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}],\delta'}\dashv\Delta_{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula $\AgdaFunction{unify-flex-*}$
-\end_inset
-
- is defined as in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-full-lam"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, replacing 
-\begin_inset Formula $\AgdaFunction{commonPositions}$
-\end_inset
-
- with 
-\begin_inset Formula $\AgdaFunction{equaliser}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-% 
-\backslash
-agdacode{unify-flex-def}
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-flex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "40col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-See the rules 
-\begin_inset Formula $\refrule{Same-MVar}$
-\end_inset
-
-, 
-\begin_inset Formula $\refrule{Cycle}$
-\end_inset
-
-, and 
-\begin_inset Formula $\refrule{No-Cycle}$
-\end_inset
-
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-full-lam"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
-\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
-M\mapsto P(z)\dashv\Gamma[P:p]
-\end{array}}}{Same-MVar}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\begin{array}{c}
-M\notin u\quad u\neq M(\dots)\\
-\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta
-\end{array}}{\Gamma\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{No-cycle}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-See 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-flex"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "49col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-rigid}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{o\neq o'}{\dotmcontext{\Gamma}\vdash o(\delta)=o'(\delta')\Rightarrow\bang_{s}\dashv\bot}}{Clash}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\dotmcontext{\Gamma}\vdash\delta=\delta'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash o(\delta)=o(\delta')\Rightarrow\sigma\dashv\Delta}}{U-Rig}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{0.2em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "40col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-fail}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "60col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Formula $\labellabelrule{\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}}{U-Fail}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "49col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-subst}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labellabelrule{\unificationempty}{U-Empty}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\unificationstepwisenovec}{U-Split}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{}{\bot\vdash1_{\bot}=1_{\bot}\Rightarrow\bang_{s}\dashv\bot}}{U-Id-Fail}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-Failure propagation (
-\begin_inset Formula $\AgdaKeyword{do}$
-\end_inset
-
- notation)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align center
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset Formula $\labellabelrule{\dfrac{}{\bot\prune{\delta}x{\bang}{\bang}\dashv\bot}}{U-Fail}$
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{}{\bot\vdash\delta=\delta'\Rightarrow\bang\dashv\bot}}{P-Fail}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Pattern unification for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-) 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:unif-full-lam"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-prune-flex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}}{\begin{array}{r}
-\dotmcontext{\Gamma}[M:m]\vdash M(x):>y\Rightarrow\qquad\\
-P(y');M\mapsto P(x')\dashv\dotmcontext{\Gamma}[P:p]
-\end{array}}}{P-Flex}
-\]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{\highlighted{m\prunecat xy{r\dashv p}l{}}}{\begin{array}{r}
-\Gamma[M:m]\vdash M(x):>y\Rightarrow\qquad\\
-P(l);M\mapsto P(r)\dashv\Gamma[P:p]
-\end{array}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-app}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\Delta_{1}\\
-\Delta_{1}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\Delta_{2}
-\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\Delta_{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-lam}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{\dotmcontext{\Gamma}\prune t{x\uparrow\ }{\sigma}{t'}\dashv\Delta}{\dotmcontext{\Gamma}\prune{\lambda t}x{\sigma}{\lambda t'}\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-var}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{i\notin x}{\dotmcontext{\Gamma}\prune{\lcvar i}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{i=x_{j}}{\dotmcontext{\Gamma}\prune{\lcvar i}x{1_{\dotmcontext{\Gamma}}}{\lcvar j}\dashv\dotmcontext{\Gamma}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-fail}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%%%%%%%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-unify-flex-def}
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1.5em}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-flex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
-\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
-M\mapsto P(z)\dashv\Gamma[P:p]
-\end{array}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-M\notin u\quad\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta\end{array}}{\Gamma\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
-\dotmcontext{\Gamma}[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
-M\mapsto P(z)\dashv\dotmcontext{\Gamma}[P:p]
-\end{array}}}{Same-MVar}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{M\in t\qquad t\neq M(\dots)}{\dotmcontext{\Gamma},M:m\vdash M(x)=t\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{0.2em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\labellabelrule{\dfrac{\begin{array}{c}
-M\notin t\quad\dotmcontext{\Gamma}\backslash M\prune tx{\sigma}{t'}\dashv\Delta\end{array}}{\dotmcontext{\Gamma}\vdash M(x)=t\Rightarrow M\mapsto t',\sigma\dashv\Delta}}{No-cycle}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-(+ symmetric rules)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
-\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
-M\mapsto P(z)\dashv\Gamma[P:p]
-\end{array}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-M\notin u\quad\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta\end{array}}{\Gamma\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-+ symmetric rules
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-See 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-flex"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1.5em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-app}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma_{1}\dashv\Delta_{1}\\
-\dotmcontext{\Gamma}\vdash u[\sigma_{1}]=u'[\sigma_{2}]\Rightarrow\sigma_{2}\dashv\Delta_{2}
-\end{array}}{\dotmcontext{\Gamma}\vdash t\ u=t'\ u'\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-lam}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash\lambda t=\lambda t'\Rightarrow\sigma\dashv\Delta}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-var}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{i\neq j}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar j\Rightarrow\bang_{s}\dashv\bot}\qquad\dfrac{}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\dotmcontext{\Gamma}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "40col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-last}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "60col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Formula $\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}\quad\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\dotmcontext{\Gamma}\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang_{s}\dashv\bot}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-Failure propagation (
-\begin_inset Formula $\AgdaKeyword{do}$
-\end_inset
-
- notation)
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align center
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset Formula $\bot\prune tx{\bang}{\bang}\dashv\bot\quad\bot\vdash t=u\Rightarrow\bang\dashv\bot$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -6741,388 +4038,6 @@ name "subsec:example-lambda"
 \end_layout
 
 \begin_layout Standard
-Consider the syntax of pure 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus extended with pattern metavariables.
- We list the Agda code in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:syntax-lam"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, together with a corresponding presentation as inductive rules generating
- the syntax.
- We write 
-\begin_inset Formula $\Gamma;n\vdash t$
-\end_inset
-
- to mean 
-\begin_inset Formula $t$
-\end_inset
-
- is a well-formed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--term in the context 
-\begin_inset Formula $\Gamma;n$
-\end_inset
-
-, consisting of two parts:
-\end_layout
-
-\begin_layout Enumerate
-a metavariable context (or 
-\emph on
-metacontext
-\emph default
-) 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-, which is either a formal error context 
-\begin_inset Formula $\bot$
-\end_inset
-
-, or a 
-\emph on
-proper 
-\emph default
-context, as a list 
-\begin_inset Formula $(M_{1}:m_{1},\dots,M_{p}:m_{p})$
-\end_inset
-
-, of metavariable declarations specifying metavariable symbols 
-\begin_inset Formula $M_{i}$
-\end_inset
-
- together with their arities, i.e, their number of arguments 
-\begin_inset Formula $m_{i}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-a variable context, which is a mere natural number indicating the highest
- possible free variable.
-\end_layout
-
-\begin_layout Standard
-The error metacontext 
-\begin_inset Formula $\bot$
-\end_inset
-
- will prove useful to handle failure in the unification algorithm.
- The unification algorithm is fundamentally a partial one, since unifiers
- may not exist.
- Instead of modelling partiality with some kind of error monad, we instead
- make our unification algorithm total by adding a formal error, so that
- a metacontext is either a proper metacontext or a formal error metacontext,
- and the unification algorithm either returns a proper substitution or an
- error substitution.
- Our approach to failure is actually arises from the categorical semantics
- (see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:categorification"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
- 
-\end_layout
-
-\begin_layout Standard
-In the inductive rules, we use the bold face 
-\begin_inset Formula $\dotmcontext{\Gamma}$
-\end_inset
-
- for any proper metacontext.
- In the Agda code, we adopt a nameless encoding of proper metacontexts:
- they are mere lists of metavariable arities, and metavariables are referred
- to by their index in the list.
- The type of metacontexts 
-\begin_inset Formula $\AgdaFunction{MetaContext}$
-\end_inset
-
- is formally defined as 
-\begin_inset Formula $\AgdaDatatype{Maybe}\ (\AgdaDatatype{List}\ \mathbb{N})$
-\end_inset
-
-, where 
-\begin_inset Formula $\AgdaDatatype{Maybe}\ X$
-\end_inset
-
- is an inductive type with an error constructor 
-\begin_inset Formula $\bot$
-\end_inset
-
- and a success constructor 
-\begin_inset Formula $\lfloor-\rfloor$
-\end_inset
-
- taking as argument an element of type 
-\begin_inset Formula $X$
-\end_inset
-
-.
- Therefore, 
-\begin_inset Formula $\dotmcontext{\Gamma}$
-\end_inset
-
- typically translates into 
-\begin_inset Formula $\lfloor\Gamma\rfloor$
-\end_inset
-
- in the implementation.
- To alleviate notations, we also adopt a dotted convention in Agda to mean
- that a successful metacontext is involved.
- For example, 
-\begin_inset Formula $\AgdaFunction{MetaContext\ensuremath{\cdot}}$
-\end_inset
-
- and 
-\begin_inset Formula $\AgdaFunction{Tm\ensuremath{\cdot}}\ \Gamma\ n$
-\end_inset
-
- are respectively defined as 
-\begin_inset Formula $\AgdaDatatype{List}\ \mathbb{N}$
-\end_inset
-
- and 
-\begin_inset Formula $\AgdaDatatype{Tm}\ \lfloor\Gamma\rfloor\ n$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-The last term constructor 
-\begin_inset Formula $\bang$
-\end_inset
-
- builds a well-formed term in any error context 
-\begin_inset Formula $\bot;n$
-\end_inset
-
-.
- We call it an 
-\emph on
-error
-\emph default
- term: it is the only one available in such contexts.
-
-\emph on
- Proper 
-\emph default
-terms, i.e., terms well-formed in a proper metacontext, are built from application
-, 
-\begin_inset Formula $\lambda$
-\end_inset
-
--abstraction and variables: they generate the (proper) syntax of 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus.
- Note that 
-\begin_inset Formula $\bang$
-\end_inset
-
- cannot occur as a sub-term of a proper term.
-\end_layout
-
-\begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:non-dotted-version"
-
-\end_inset
-
- The names of constructors of 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus for application, 
-\begin_inset Formula $\lambda$
-\end_inset
-
--abstraction, and variables, are dotted to indicate that they are only available
- in a proper metacontext.
- 
-\begin_inset Quotes eld
-\end_inset
-
-Improper
-\begin_inset Quotes erd
-\end_inset
-
- versions of those, defined in any metacontext, are also implemented in
- the obvious way, coinciding with the constructors in a proper context,
- or returning 
-\begin_inset Formula $\bang$
-\end_inset
-
- in the error context.
-\end_layout
-
-\begin_layout Standard
-Free variables are indexed from 
-\begin_inset Formula $1$
-\end_inset
-
- and we use the De Bruijn level convention: the variable bound in 
-\begin_inset Formula $\dotmcontext{\Gamma};n\vdash\lambda t$
-\end_inset
-
- is 
-\begin_inset Formula $\var n+1$
-\end_inset
-
-, not 
-\begin_inset Formula $0$
-\end_inset
-
-, as it would be using De Bruijn indices
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "DB"
-literal "false"
-
-\end_inset
-
-.
- In Agda, variables in the variable context 
-\begin_inset Formula $n$
-\end_inset
-
- consist of elements of 
-\begin_inset Formula $\AgdaDatatype{Fin}\ n$
-\end_inset
-
-, the type of natural numbers between
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula $\AgdaDatatype{Fin}\ n$
-\end_inset
-
- is actually defined in the standard library as an inductive type designed
- to be (canonically) isomorphic with 
-\begin_inset Formula $\{0,\dots,n-1\}$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $1$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
-.
- We also use a nameless encoding of metacontexts: they are mere lists of
- metavariable arities, and metavariables are referred to by their index
- in the list.
- Let us focus on the last constructor building a metavariable application
- in the context 
-\begin_inset Formula $\dotmcontext{\Gamma};n$
-\end_inset
-
-.
- The argument of type 
-\begin_inset Formula $m\in\dotmcontext{\Gamma}$
-\end_inset
-
- is an index of any element 
-\begin_inset Formula $m$
-\end_inset
-
- in the list 
-\begin_inset Formula $\dotmcontext{\Gamma}$
-\end_inset
-
-.
- The constructor also takes an argument of type 
-\begin_inset Formula $m\Rightarrow n$
-\end_inset
-
-, which unfolds as 
-\begin_inset Formula $\AgdaDatatype{Vec}\ \AgdaSymbol{(}\AgdaDatatype{Fin}\ \AgdaBound{n}\AgdaSymbol{)}\ \AgdaBound{m}$
-\end_inset
-
-: this is the type of lists of size 
-\begin_inset Formula $m$
-\end_inset
-
- consisting of elements of 
-\begin_inset Formula $\AgdaFunction{Fin}\ n$
-\end_inset
-
-, that is, natural numbers between 
-\begin_inset Formula $1$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
-.
- Note this does not fully enforce the pattern restriction: metavariable
- arguments are not required to be distinct.
- However, our unification algorithm is guaranteed to produce correct outputs
- only if this constraint is satisfied in the inputs.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{M:m\in\Gamma\quad1\leq i_{1},\dots,i_{m}\leq n\quad i_{1},\dots i_{m}\text{ distinct}}{\Gamma;n\vdash M(v_{i_{1}},\dots,v_{i_{m}})}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -7832,6 +4747,3215 @@ agdacode{lc-syntax-var-def}
 
 \end_inset
 
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Type signatures of the functions implemented in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-gen"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:type-signatures"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{substfrom}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-type}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-sigma-return-type}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AgdaNoSpaceAroundCode{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-proto}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-sigma-proto}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-flex-prototype}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unifyprototype}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-sigma-prototype}%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AgdaSpaceAroundCode{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pattern unification for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:unif-full-lam"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-prune-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}}{\begin{array}{r}
+\dotmcontext{\Gamma}[M:m]\vdash M(x):>y\Rightarrow\qquad\\
+P(y');M\mapsto P(x')\dashv\dotmcontext{\Gamma}[P:p]
+\end{array}}}{P-Flex}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\highlighted{m\prunecat xy{r\dashv p}l{}}}{\begin{array}{r}
+\Gamma[M:m]\vdash M(x):>y\Rightarrow\qquad\\
+P(l);M\mapsto P(r)\dashv\Gamma[P:p]
+\end{array}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-app}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\Delta_{1}\\
+\Delta_{1}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\Delta_{2}
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-lam}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\dotmcontext{\Gamma}\prune t{x\uparrow\ }{\sigma}{t'}\dashv\Delta}{\dotmcontext{\Gamma}\prune{\lambda t}x{\sigma}{\lambda t'}\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-var}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{i\notin x}{\dotmcontext{\Gamma}\prune{\lcvar i}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{i=x_{j}}{\dotmcontext{\Gamma}\prune{\lcvar i}x{1_{\dotmcontext{\Gamma}}}{\lcvar j}\dashv\dotmcontext{\Gamma}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-fail}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-unify-flex-def}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1.5em}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
+\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
+M\mapsto P(z)\dashv\Gamma[P:p]
+\end{array}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+M\notin u\quad\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta\end{array}}{\Gamma\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
+\dotmcontext{\Gamma}[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
+M\mapsto P(z)\dashv\dotmcontext{\Gamma}[P:p]
+\end{array}}}{Same-MVar}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\in t\qquad t\neq M(\dots)}{\dotmcontext{\Gamma},M:m\vdash M(x)=t\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.2em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\begin{array}{c}
+M\notin t\quad\dotmcontext{\Gamma}\backslash M\prune tx{\sigma}{t'}\dashv\Delta\end{array}}{\dotmcontext{\Gamma}\vdash M(x)=t\Rightarrow M\mapsto t',\sigma\dashv\Delta}}{No-cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+(+ symmetric rules)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
+\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
+M\mapsto P(z)\dashv\Gamma[P:p]
+\end{array}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+M\notin u\quad\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta\end{array}}{\Gamma\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
++ symmetric rules
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+See 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-flex"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-app}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma_{1}\dashv\Delta_{1}\\
+\dotmcontext{\Gamma}\vdash u[\sigma_{1}]=u'[\sigma_{2}]\Rightarrow\sigma_{2}\dashv\Delta_{2}
+\end{array}}{\dotmcontext{\Gamma}\vdash t\ u=t'\ u'\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-lam}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash\lambda t=\lambda t'\Rightarrow\sigma\dashv\Delta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-var}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{i\neq j}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar j\Rightarrow\bang_{s}\dashv\bot}\qquad\dfrac{}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\dotmcontext{\Gamma}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-last}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "60col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Formula $\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}\quad\dfrac{o\neq o'\ \text{(\emph{rigid} term constructors)}}{\dotmcontext{\Gamma}\vdash o(\vec{t})=o'(\vec{t'})\Rightarrow\bang_{s}\dashv\bot}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+Failure propagation (
+\begin_inset Formula $\AgdaKeyword{do}$
+\end_inset
+
+ notation)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\bot\prune tx{\bang}{\bang}\dashv\bot\quad\bot\vdash t=u\Rightarrow\bang\dashv\bot$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Our generic pattern unification algorithm 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:unif-full-gen"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+Same as the rule 
+\begin_inset Formula $\refrule{P-Flex}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-rigid}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{o\neq\rename{\dots}x}{\dotmcontext{\Gamma}\prune{o(\delta)}{\arg x}{\bang_{s}}{\bang}\dashv\bot}}{P-Rig-Fail}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\inferruletwo{\dotmcontext{\Gamma}\prune{\delta}{x^{o'}}{\sigma}{\delta'}\dashv\Delta}{o=\rename{o'}x}{\dotmcontext{\Gamma}\prune{o(\delta)}{\arg x}{\sigma}{o'(\delta')}\dashv\Delta}}{P-Rig}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-fail}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}}{P-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{prune-subst}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{}{\pruningemptyconcl}}{P-Empty}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\begin{array}{c}
+\Gamma\prune t{x_{0}}{\sigma_{1}}{t'}\dashv\Delta_{1}\\
+\Delta_{1}\prune{\delta[\sigma_{1}]}x{\sigma_{2}\dashv\Delta_{2}}{\delta'}
+\end{array}}{\begin{array}{r}
+\Gamma\vdash t,\delta:>x_{0},x\Rightarrow\quad\\
+t'[\sigma_{2}],\delta';\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}
+\end{array}}}{\textsc{P-Split}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\inferruletwo{\Gamma\prune t{M_{0}(x_{0})}{\sigma_{1}}{t'}\dashv\Delta_{1}}{\Delta_{1}\prune{\delta[\sigma_{1}]}{\overrightarrow{M(x)}}{\sigma_{2}\dashv\Delta_{2}}{\delta'}}{\begin{array}{c}
+\Gamma\vdash t,\delta:>M_{0}(x_{0}),\overrightarrow{M(x)}\Rightarrow\\
+t'[\sigma_{2}],\delta';\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}
+\end{array}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\Gamma\prune{t,\delta}{M_{0}(x_{0}),\overrightarrow{M(x)}}{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}],\delta'}\dashv\Delta_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula $\AgdaFunction{unify-flex-*}$
+\end_inset
+
+ is defined as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, replacing 
+\begin_inset Formula $\AgdaFunction{commonPositions}$
+\end_inset
+
+ with 
+\begin_inset Formula $\AgdaFunction{equaliser}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+agdacode{unify-flex-def}
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-flex}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+See the rules 
+\begin_inset Formula $\refrule{Same-MVar}$
+\end_inset
+
+, 
+\begin_inset Formula $\refrule{Cycle}$
+\end_inset
+
+, and 
+\begin_inset Formula $\refrule{No-Cycle}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\highlighted{m\vdash x=y\Rightarrow z\dashv p}}{\begin{array}{r}
+\Gamma[M:m]\vdash M(x)=M(y)\Rightarrow\qquad\\
+M\mapsto P(z)\dashv\Gamma[P:p]
+\end{array}}}{Same-MVar}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{M\in u\qquad u\neq M(\dots)}{\Gamma,M:m\vdash M(x)=u\Rightarrow\bang_{s}\dashv\bot}}{Cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\begin{array}{c}
+M\notin u\quad u\neq M(\dots)\\
+\Gamma\backslash M\prune ux{\sigma}w\dashv\Delta
+\end{array}}{\Gamma\vdash M(x)=u\Rightarrow\sigma,M\mapsto w\dashv\Delta}}{No-cycle}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+See 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-flex"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-rigid}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{o\neq o'}{\dotmcontext{\Gamma}\vdash o(\delta)=o'(\delta')\Rightarrow\bang_{s}\dashv\bot}}{Clash}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{\dotmcontext{\Gamma}\vdash\delta=\delta'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash o(\delta)=o(\delta')\Rightarrow\sigma\dashv\Delta}}{U-Rig}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.2em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "40col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-fail}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "60col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Formula $\labellabelrule{\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}}{U-Fail}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-subst}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationempty}{U-Empty}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\unificationstepwisenovec}{U-Split}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{}{\bot\vdash1_{\bot}=1_{\bot}\Rightarrow\bang_{s}\dashv\bot}}{U-Id-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+Failure propagation (
+\begin_inset Formula $\AgdaKeyword{do}$
+\end_inset
+
+ notation)
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $\labellabelrule{\dfrac{}{\bot\prune{\delta}x{\bang}{\bang}\dashv\bot}}{U-Fail}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\labellabelrule{\dfrac{}{\bot\vdash\delta=\delta'\Rightarrow\bang\dashv\bot}}{P-Fail}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Consider the syntax of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus extended with pattern metavariables.
+ We list the Agda code in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:syntax-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, together with a corresponding presentation as inductive rules generating
+ the syntax.
+ We write 
+\begin_inset Formula $\Gamma;n\vdash t$
+\end_inset
+
+ to mean 
+\begin_inset Formula $t$
+\end_inset
+
+ is a well-formed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-term in the context 
+\begin_inset Formula $\Gamma;n$
+\end_inset
+
+, consisting of two parts:
+\end_layout
+
+\begin_layout Enumerate
+a metavariable context (or 
+\emph on
+metacontext
+\emph default
+) 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, which is either a formal error context 
+\begin_inset Formula $\bot$
+\end_inset
+
+, or a 
+\emph on
+proper 
+\emph default
+context, as a list 
+\begin_inset Formula $(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\end_inset
+
+, of metavariable declarations specifying metavariable symbols 
+\begin_inset Formula $M_{i}$
+\end_inset
+
+ together with their arities, i.e, their number of arguments 
+\begin_inset Formula $m_{i}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+a variable context, which is a mere natural number indicating the highest
+ possible free variable.
+\end_layout
+
+\begin_layout Standard
+The error metacontext 
+\begin_inset Formula $\bot$
+\end_inset
+
+ will prove useful to handle failure in the unification algorithm.
+ The unification algorithm is fundamentally a partial one, since unifiers
+ may not exist.
+ Instead of modelling partiality with some kind of error monad, we instead
+ make our unification algorithm total by adding a formal error, so that
+ a metacontext is either a proper metacontext or a formal error metacontext,
+ and the unification algorithm either returns a proper substitution or an
+ error substitution.
+ Our approach to failure is actually arises from the categorical semantics
+ (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:categorification"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+In the inductive rules, we use the bold face 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+ for any proper metacontext.
+ In the Agda code, we adopt a nameless encoding of proper metacontexts:
+ they are mere lists of metavariable arities, and metavariables are referred
+ to by their index in the list.
+ The type of metacontexts 
+\begin_inset Formula $\AgdaFunction{MetaContext}$
+\end_inset
+
+ is formally defined as 
+\begin_inset Formula $\AgdaDatatype{Maybe}\ (\AgdaDatatype{List}\ \mathbb{N})$
+\end_inset
+
+, where 
+\begin_inset Formula $\AgdaDatatype{Maybe}\ X$
+\end_inset
+
+ is an inductive type with an error constructor 
+\begin_inset Formula $\bot$
+\end_inset
+
+ and a success constructor 
+\begin_inset Formula $\lfloor-\rfloor$
+\end_inset
+
+ taking as argument an element of type 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+ typically translates into 
+\begin_inset Formula $\lfloor\Gamma\rfloor$
+\end_inset
+
+ in the implementation.
+ To alleviate notations, we also adopt a dotted convention in Agda to mean
+ that a successful metacontext is involved.
+ For example, 
+\begin_inset Formula $\AgdaFunction{MetaContext\ensuremath{\cdot}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaFunction{Tm\ensuremath{\cdot}}\ \Gamma\ n$
+\end_inset
+
+ are respectively defined as 
+\begin_inset Formula $\AgdaDatatype{List}\ \mathbb{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\AgdaDatatype{Tm}\ \lfloor\Gamma\rfloor\ n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The last term constructor 
+\begin_inset Formula $\bang$
+\end_inset
+
+ builds a well-formed term in any error context 
+\begin_inset Formula $\bot;n$
+\end_inset
+
+.
+ We call it an 
+\emph on
+error
+\emph default
+ term: it is the only one available in such contexts.
+
+\emph on
+ Proper 
+\emph default
+terms, i.e., terms well-formed in a proper metacontext, are built from application
+, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction and variables: they generate the (proper) syntax of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ Note that 
+\begin_inset Formula $\bang$
+\end_inset
+
+ cannot occur as a sub-term of a proper term.
+\end_layout
+
+\begin_layout Remark
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:non-dotted-version"
+
+\end_inset
+
+ The names of constructors of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus for application, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, and variables, are dotted to indicate that they are only available
+ in a proper metacontext.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Improper
+\begin_inset Quotes erd
+\end_inset
+
+ versions of those, defined in any metacontext, are also implemented in
+ the obvious way, coinciding with the constructors in a proper context,
+ or returning 
+\begin_inset Formula $\bang$
+\end_inset
+
+ in the error context.
+\end_layout
+
+\begin_layout Standard
+Free variables are indexed from 
+\begin_inset Formula $1$
+\end_inset
+
+ and we use the De Bruijn level convention: the variable bound in 
+\begin_inset Formula $\dotmcontext{\Gamma};n\vdash\lambda t$
+\end_inset
+
+ is 
+\begin_inset Formula $\var n+1$
+\end_inset
+
+, not 
+\begin_inset Formula $0$
+\end_inset
+
+, as it would be using De Bruijn indices
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DB"
+literal "false"
+
+\end_inset
+
+.
+ In Agda, variables in the variable context 
+\begin_inset Formula $n$
+\end_inset
+
+ consist of elements of 
+\begin_inset Formula $\AgdaDatatype{Fin}\ n$
+\end_inset
+
+, the type of natural numbers between
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\AgdaDatatype{Fin}\ n$
+\end_inset
+
+ is actually defined in the standard library as an inductive type designed
+ to be (canonically) isomorphic with 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $1$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ We also use a nameless encoding of metacontexts: they are mere lists of
+ metavariable arities, and metavariables are referred to by their index
+ in the list.
+ Let us focus on the last constructor building a metavariable application
+ in the context 
+\begin_inset Formula $\dotmcontext{\Gamma};n$
+\end_inset
+
+.
+ The argument of type 
+\begin_inset Formula $m\in\dotmcontext{\Gamma}$
+\end_inset
+
+ is an index of any element 
+\begin_inset Formula $m$
+\end_inset
+
+ in the list 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+.
+ The constructor also takes an argument of type 
+\begin_inset Formula $m\Rightarrow n$
+\end_inset
+
+, which unfolds as 
+\begin_inset Formula $\AgdaDatatype{Vec}\ \AgdaSymbol{(}\AgdaDatatype{Fin}\ \AgdaBound{n}\AgdaSymbol{)}\ \AgdaBound{m}$
+\end_inset
+
+: this is the type of lists of size 
+\begin_inset Formula $m$
+\end_inset
+
+ consisting of elements of 
+\begin_inset Formula $\AgdaFunction{Fin}\ n$
+\end_inset
+
+, that is, natural numbers between 
+\begin_inset Formula $1$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ Note this does not fully enforce the pattern restriction: metavariable
+ arguments are not required to be distinct.
+ However, our unification algorithm is guaranteed to produce correct outputs
+ only if this constraint is satisfied in the inputs.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{M:m\in\Gamma\quad1\leq i_{1},\dots,i_{m}\leq n\quad i_{1},\dots i_{m}\text{ distinct}}{\Gamma;n\vdash M(v_{i_{1}},\dots,v_{i_{m}})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
  
 \begin_inset Note Note
 status open
@@ -9994,10 +10118,24 @@ noprefix "false"
 \end_inset
 
 , although this property of the output substitution is not explicit in the
- type signature:
+ type signature (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:type-signatures"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -10095,7 +10233,8 @@ agdacode{lc-unifyprototype}
 \end_inset
 
 
-\begin_inset space \hfill{}
+\end_layout
+
 \end_inset
 
 This unification function recursively inspects the structure of the given
@@ -11858,115 +11997,22 @@ This is motivated by the fact that context extensions are characterised
 
 \end_inset
 
- Accordingly, the type signature for the pruning phase is
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "40col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{prune-type}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "60col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-prune-proto}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset space \hfill{}
-\end_inset
-
-The 
+ This justifies the type signature of the 
 \begin_inset Formula $\AgdaFunction{prune}$
 \end_inset
 
- function recursively inspects its argument.
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:type-signatures"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ This function recursively inspects its argument.
  The base metavariable case corresponds to unification of 
 \begin_inset Formula $M(x)$
 \end_inset
@@ -13570,14 +13616,29 @@ ions.
 \end_inset
 
 .
- Accordingly, the return type of 
+ This justifies the return type of 
 \begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
 \end_inset
 
- is defined as follows.
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:type-signatures"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
+\align left
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 \align left
 \begin_inset Preview
 
@@ -13595,6 +13656,11 @@ status open
 
 \backslash
 agdacode{prune-sigma-return-type}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset

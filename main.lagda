@@ -224,7 +224,7 @@ Pruning
   %</prune-sigma-return-type>
   %<*prune-proto>
   \begin{code}
-  prune : ∀ {Γ a m} → Tm Γ a → m ⇒ a → [ m ]∪ Γ ⟶?
+  prune : ∀ {Γ a m} → Tm Γ a → (m ⇒ a) → [ m ]∪ Γ ⟶?
   \end{code}
   %</prune-proto>
   %<*prune-sigma-proto>
@@ -271,7 +271,7 @@ Unification
   \end{code}
 %<*unify-flex-prototype>
   \begin{code}
-  unify-flex-* : ∀ {Γ m a} → m ∈ Γ → m ⇒ a → Tm· Γ a → Γ ·⟶?
+  unify-flex-* : ∀ {Γ m a} → m ∈ Γ → (m ⇒ a) → Tm· Γ a → Γ ·⟶?
   \end{code}
 %</unify-flex-prototype>
 %<*unify-flex-def>
