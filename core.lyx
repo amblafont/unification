@@ -6898,21 +6898,43 @@ In the inductive rules, we use the bold face
 \end_inset
 
 .
- In the same vein, the names of constructors of 
-\begin_inset Formula $\lambda$
+ 
+\end_layout
+
+\begin_layout Standard
+The last term constructor 
+\begin_inset Formula $\bang$
 \end_inset
 
--calculus for application, 
-\begin_inset Formula $\lambda$
+ builds a well-formed term in any error context 
+\begin_inset Formula $\bot;n$
 \end_inset
 
--abstraction, and variables, are postfixed with a dot to indicate that they
- live in a proper metavariable context.
- We also call a term 
+.
+ We call it an 
 \emph on
-proper
+error
 \emph default
- if it lives in a proper metavariable context.
+ term: it is the only one available in such contexts.
+
+\emph on
+ Proper 
+\emph default
+terms, i.e., terms well-formed in a proper metavariable context, are built
+ from application, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction and variables: they generate the (proper) syntax of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ Note that 
+\begin_inset Formula $\bang$
+\end_inset
+
+ cannot occur as a subterm of a proper term.
 \end_layout
 
 \begin_layout Remark
@@ -6922,7 +6944,17 @@ name "rem:non-dotted-version"
 
 \end_inset
 
+ The names of constructors of 
+\begin_inset Formula $\lambda$
+\end_inset
 
+-calculus for application, 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstraction, and variables, are dotted to indicate that they are only available
+ in a proper metavariable context.
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -6930,9 +6962,9 @@ Improper
 \begin_inset Quotes erd
 \end_inset
 
- versions of those operations, available in any metavariable context, are
- also implemented in the obvious way, coinciding with the constructors in
- a proper context, or returning 
+ versions of those, defined in any metavariable context, are also implemented
+ in the obvious way, coinciding with the constructors in a proper context,
+ or returning 
 \begin_inset Formula $\bang$
 \end_inset
 
@@ -9603,7 +9635,7 @@ name "fig:building-blocks-subst"
 \end_layout
 
 \begin_layout Standard
-This assignation extends (through a recursive definition) to any term 
+This assignment extends (through a recursive definition) to any term 
 \begin_inset Formula $\dotmcontext{\Gamma};n\vdash t$
 \end_inset
 
@@ -9912,7 +9944,7 @@ noprefix "false"
 \end_inset
 
  being the mgu.
- Accordingly, our implementation does not explicitly fails.
+ Accordingly, our implementation does not explicitly fail.
  Given two terms 
 \begin_inset Formula $\Gamma;n\vdash t,u$
 \end_inset
