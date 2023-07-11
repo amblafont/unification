@@ -1144,6 +1144,8 @@ The present paper can be thought of as a generalisation of their work.
 \end_layout
 
 \begin_layout Personal Question
+
+\lang french
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Chapter 9"
@@ -1152,7 +1154,7 @@ literal "false"
 
 \end_inset
 
- propose une generalisation interessante, avec le lemme sur les epis.
+ propose une generalisation intéressante, avec le lemme sur les epis.
  (Theorem 10).
  Est-ce qu'on pourrait encore generaliser encore notre business?
 \end_layout
@@ -6764,7 +6766,7 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
- is a wellformed 
+ is a well-formed 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -6934,7 +6936,7 @@ terms, i.e., terms well-formed in a proper metavariable context, are built
 \begin_inset Formula $\bang$
 \end_inset
 
- cannot occur as a subterm of a proper term.
+ cannot occur as a sub-term of a proper term.
 \end_layout
 
 \begin_layout Remark
@@ -9793,10 +9795,10 @@ most general unifier
 \end_inset
 
  that uniquely factors any other unifier 
-\begin_inset Formula $\delta:\Gamma\rightarrow\Delta$
+\begin_inset Formula $\delta:\Gamma\rightarrow\Delta'$
 \end_inset
 
-', in the sense that there exists a unique 
+, in the sense that there exists a unique 
 \begin_inset Formula $\delta':\Delta\rightarrow\Delta'$
 \end_inset
 
@@ -9961,7 +9963,7 @@ noprefix "false"
 \begin_inset Formula $\bot$
 \end_inset
 
- in case there is no succesful unifier, and a substitution 
+ in case there is no successful unifier, and a substitution 
 \begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
 \end_inset
 
@@ -13618,7 +13620,7 @@ noprefix "false"
 
 ), unification of two metavariable applications requires computing the vector
  of common positions or value positions of their arguments, depending on
- wether the involved metavariables are identical.
+ whether the involved metavariables are identical.
  Both vectors are characterised as equalisers or pullbacks in the category
  
 \begin_inset Formula $\mathbb{F}_{m}$
@@ -13890,7 +13892,7 @@ To prove that the algorithm is correct, we show in the next sections that
 \end_inset
 
  is sound on the condition that the output of the conclusion is a most general
- unfier whenever the output of the premises are most general unifiers.
+ unifier whenever the output of the premises are most general unifiers.
  We rely on the categorical semantics of pattern unification that we introduce
  in this section.
  In 
@@ -15807,7 +15809,7 @@ name "rem:cocone-pruning"
 
 \end_inset
 
-The right handside 
+The right hand-side 
 \begin_inset Formula $\substofrenamings x[\sigma']$
 \end_inset
 
@@ -18454,8 +18456,8 @@ noprefix "false"
 \end_inset
 
 .
- Indeed, it involves three recursive calls in the pruning phase (cf the
- rules 
+ Indeed, it involves three recursive calls in the pruning phase (cf.
+ the rules 
 \begin_inset Formula $\refrule{P-Rig}$
 \end_inset
 
@@ -18463,7 +18465,8 @@ noprefix "false"
 \begin_inset Formula $\refrule{P-Split}$
 \end_inset
 
-), as well as in the main unification phase (cf the rules 
+), as well as in the main unification phase (cf.
+ the rules 
 \begin_inset Formula $\refrule{U-Rig}$
 \end_inset
 
@@ -18582,7 +18585,7 @@ For any proper term
 \begin_inset Formula $\dotmcontext{\Gamma};a\vdash t$
 \end_inset
 
- and succesful substitution 
+ and successful substitution 
 \begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\dotmcontext{\Delta}$
 \end_inset
 
@@ -18629,7 +18632,7 @@ status open
 \begin_inset Formula $\bot$
 \end_inset
 
- n'est pas connexe car 
+ is not connected because 
 \begin_inset Formula $\bot+\bot=\bot$
 \end_inset
 
@@ -18799,7 +18802,7 @@ noprefix "false"
  not.
  In fact, we already checked in the previous sections that failure only
  occurs when there is no unifier, as expected.
- Indead, failure is treated as a free 
+ Indeed, failure is treated as a free 
 \begin_inset Quotes eld
 \end_inset
 
