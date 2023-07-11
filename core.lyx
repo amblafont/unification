@@ -436,8 +436,26 @@ status open
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\highlighted}[1]{\colorbox{blue!10}{\ensuremath{#1}}}
+\newcommand{\highlighted}[1]{\texHighlighted{\ensuremath{#1}}}
 {{\color{blue}#1}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\HighlightedAgdaFunction}[1]{\texHighlightedFunction{\#1}}
+{\highlighted{\textrm{#1}}}
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -2142,7 +2160,7 @@ agdacode{prune-sigma-proto}%
 
 
 \backslash
-agdacode{unify-flex-proto}%
+agdacode{unify-flex-prototype}%
 \end_layout
 
 \begin_layout Plain Layout
@@ -3352,7 +3370,7 @@ status open
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -3432,7 +3450,7 @@ status open
 
 \begin_layout Plain Layout
 
-%
+%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -3477,9 +3495,9 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\labellabelrule{\dfrac{\highlighted{m\prunecat xy{r\dashv p}l{}}}{\begin{array}{r}
+\labellabelrule{\dfrac{\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}}{\begin{array}{r}
 \dotmcontext{\Gamma}[M:m]\vdash M(x):>y\Rightarrow\qquad\\
-P(l);M\mapsto P(r)\dashv\dotmcontext{\Gamma}[P:p]
+P(y');M\mapsto P(x')\dashv\dotmcontext{\Gamma}[P:p]
 \end{array}}}{P-Flex}
 \]
 
@@ -3972,7 +3990,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%%%
+%%%%%%%%%%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -10675,6 +10693,9 @@ The
 
 .
  
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -10783,7 +10804,11 @@ Assume that
 \end_layout
 
 \begin_layout Standard
-In the first case, we need to consider the 
+In the first case, the line 
+\begin_inset Formula $\AgdaKeyword{let}\ p,z=\AgdaFunction{commonPositions}\ m\ x\ y$
+\end_inset
+
+ computes the 
 \emph on
 vector of common positions 
 \emph default
@@ -11921,16 +11946,20 @@ The
 \end_inset
 
  are distinct metavariables.
- In this case, we need to consider the vectors of 
+ In this case, the line 
+\begin_inset Formula $\AgdaKeyword{let}\ p,x',y'=\AgdaFunction{commonValues}\ m\ x\ y$
+\end_inset
+
+ computes the vectors of 
 \emph on
 common value positions 
 \emph default
 
-\begin_inset Formula $(l_{1},\dots,l_{p})$
+\begin_inset Formula $(x_{1}',\dots,x_{p}')$
 \end_inset
 
  and 
-\begin_inset Formula $(r_{1},\dots,r_{p})$
+\begin_inset Formula $(y_{1}',\dots,y'_{p})$
 \end_inset
 
  between 
@@ -11942,11 +11971,11 @@ common value positions
 \end_inset
 
 , i.e., the pair of maximal lists 
-\begin_inset Formula $(\vec{l},\vec{r})$
+\begin_inset Formula $(\vec{x'},\vec{y'})$
 \end_inset
 
  of distinct positions such that 
-\begin_inset Formula $x_{\vec{l}}=y_{\vec{r}}$
+\begin_inset Formula $x_{\vec{x'}}=y_{\vec{y'}}$
 \end_inset
 
 .
@@ -11972,7 +12001,7 @@ noprefix "false"
 \end_inset
 
  such a situation by 
-\begin_inset Formula $\highlighted{m\prunecat xy{r\dashv p}l{}}$
+\begin_inset Formula $\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}$
 \end_inset
 
 .
@@ -12004,7 +12033,7 @@ noprefix "false"
 \end_inset
 
  to 
-\begin_inset Formula $P(l)$
+\begin_inset Formula $P(x')$
 \end_inset
 
  and 
@@ -12012,7 +12041,7 @@ noprefix "false"
 \end_inset
 
  to 
-\begin_inset Formula $P(r)$
+\begin_inset Formula $P(y')$
 \end_inset
 
 .
@@ -13579,7 +13608,7 @@ noprefix "false"
 \end_inset
 
  and 
-\begin_inset Formula $\highlighted{m\prunecat xy{r\dashv p}l{}}$
+\begin_inset Formula $\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}$
 \end_inset
 
  and as equalisers and pullbacks.
@@ -13605,9 +13634,9 @@ $
 \begin_inset Formula $\highlighted{m\vdash x=y\Rightarrow z\dashv p}$
 \end_inset
 
- denotes.
+.
  Similarly, 
-\begin_inset Formula $\highlighted{m\prunecat xy{r\dashv p}l{}}$
+\begin_inset Formula $\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}$
 \end_inset
 
  denotes a pullback in 
@@ -13618,7 +13647,7 @@ $
 \begin_inset Formula 
 \[
 \begin{array}{c}
-\xymatrix{p\ar[r]^{l}\ar[d]_{r} & m\ar[d]^{x}\\
+\xymatrix{p\ar[r]^{x'}\ar[d]_{y'} & m\ar[d]^{x}\\
 \dots\ar[r]_{y} & \dots
 }
 \end{array}

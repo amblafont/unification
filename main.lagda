@@ -253,8 +253,8 @@ Pruning
   %<*prune-flex>
   \begin{code}
   prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
-    let p , r , l = pullback m x y in
-    Γ [ M ∶ p ] ·◄  ((M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚)
+    let p , x' , y' = pullback m x y in
+    Γ [ M ∶ p ] ·◄  ((M ∶ p) ﹙ y' ﹚ , M ↦-﹙ x' ﹚)
   \end{code}
   %</prune-flex>
   \begin{code}

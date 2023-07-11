@@ -368,8 +368,8 @@ prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
 %<*lc-prune-flex>
 \begin{code}
 prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
-  let p , r , l = commonValues m x y
-  in Γ [ M ∶ p ] ·◄ ((M ∶ p) ﹙ l ﹚ , M ↦-﹙ r ﹚)
+  let p , x' , y' = commonValues m x y
+  in Γ [ M ∶ p ] ·◄ ((M ∶ p) ﹙ y' ﹚ , M ↦-﹙ x' ﹚)
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>
