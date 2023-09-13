@@ -1,3 +1,116 @@
+We would like to thank the authors for their thorough reviews. 
+
+# Revew A 
+# Revew B
+# Revew C 
+# Revew D
+
+This review highlights four major areas of concern: 
+
+1. The novelty of the contribution
+
+This concern observes that the pattern unification algorithm is not
+especially novel, and asks if the ideas in our categorical semantics
+also exist in the literature.
+
+We agree that the core steps of our algorithm are essentially the same
+as in other papers: pattern unification algorithm is pattern
+unification, regardless of the details of how it is presented.
+
+However, our semantics for metavariables does differ in a critical way
+from prior semantics of metavariables (such as that of Hsu et al, as
+well as those Fiore's and Hamana's). Those models permit interpreting
+*general* metavariables -- i.e., a metavariable can be instantiated
+with a full substitution of arbitrary terms. A consequence of this is
+that they contain the semantic analogues of problems outside the
+pattern fragment, such as `M x x ?= N x x`. Since problems like this
+do not have most general unifiers, the more general categories in the
+literature correspondingly do not always have suitable equalisers. 
+
+However, the pattern fragment is much more restrictive: a metavariable
+can only be instantiated with a disjoint collection of free variables,
+ensuring that mgu's can be found (if they exist). Our semantics has
+been engineered so that it can *only* interpret metavariable
+instantiations in the pattern fragment, and cannot interpret full
+metavariable instantiations. [TODO: does one of the reviewers mention
+this?]
+
+This restriction gives our model much stronger properties, enabling us
+to characterise each part of the pattern unification algorithm in
+terms of universal properties. This lets us extend Rydeheard and
+Burstall's proof to the pattern case. No prior semantics can be used
+for this purpose. 
+
+2. Are arities just vectors of variables without type information?
+   How can this possibly extend to dependent types?
+
+This concern is whether our notion of arity is too limited, as a
+vector of variables without type information.
+
+Our notion of arity is **not** limited to a vector of variables
+without type information. As reviewer A notes, in section 7 we give
+examples which show that our notion of arity includes the sorts of the
+inputs and the output of the result. As a result, we are performing
+unification on intrinsically well-sorted terms, and our correctness
+theorem ensures that the result of unification is always a well-typed 
+subsitution whose application results in well-typed terms. 
+
+For example, the instance of our unification algorithn for System 
+F will never confuse type and term variables, nor will it produce
+ill-typed terms or substitutions. Likewise, the example of ordered
+unification will never produce substitutions which require exchange
+or any other structural rule. 
+
+As we say in the paper, extending our approach to fully
+dependently-sorted theories is future work. However, the fact that our
+approach works for System F (which permits a light dependency on
+types) makes us hopeful.
+
+3. Can our approach handle equations such as beta/eta-laws?
+
+Finally, the last question in this concern asks whether our algorithm
+supports unification modulo equational laws like the β- and η-laws of
+the lambda calculus. 
+
+Our algorithm is generic over a notion of signature, and so does not
+"know" anything about the lambda calculus. Since our definition of
+GB-signatures does not carry an equational theory with it, the core
+algorithm works only on terms modulo α-equivalence, and works the same
+regardless of the signature, whether λ-calculus, π-calculus, or
+anything else.
+
+However, in the specific case of the lambda calculus, every typed
+lambda term has a normal form, and furthermore, the syntax of the
+normal forms can be specified by a GB-signature. As a result, we can
+do unification modulo βη by pre-normalising the terms and doing
+unification on normal forms, along the lines of Vezzosi and
+Abel[1]. (This is also similar to the approach of Abel and Pientka.)
+In the final version of the paper, we will give this as an extended
+example.
+
+[1] A Categorical Perspective on Pattern Unification, Vezzosi-Abel, RISC-Linz 2014
+
+4. Motivation -- is LF-style unification already enough?
+
+This concern asks if pattern unification for LF-style type theories
+can already be used to emulate our results with a suitable choice of
+LF signature. The answer to this question is no, it cannot. In fact,
+LF signatures and GB-signatures are strictly incomparable in power.
+
+LF-style signatures already handle type dependency (which is future
+work for us), but there are also GB-signatures which cannot be encoded
+with an LF signature. For example, GB-signatures allow us to express
+pattern unification for ordered lambda terms. This is (to our
+knowledge) completely novel -- even Schack-Nielsen and Schürman's
+pattern unification algorithm for linear types assumes the
+admissibility of exchange.
+
+
+
+
+
+
+
 POPL 2024 Paper #265 Reviews and Comments
 ===========================================================================
 Paper #265 Generic pattern unification
