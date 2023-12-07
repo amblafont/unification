@@ -78,7 +78,8 @@ module Tm {i j k}(S : Signature i j k) where
 \end{code}
 %<*syntax-decl>
 \begin{code}
-   data Tm  : MetaContext → A → Set (i ⊔ j ⊔ k)
+   data Tm : MetaContext → A 
+            → Set (i ⊔ j ⊔ k)
    Tm· Γ a = Tm ⌊ Γ ⌋ a
 \end{code}
 %</syntax-decl>
