@@ -21831,6 +21831,89 @@ latable.
 \end_layout
 
 \begin_layout Standard
+Pattern unification has also been studied from the viewpoint of logical
+ frameworks
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+key "pientka2003tabled,DBLP:conf/icfp/NanevskiPP03,DBLP:journals/tocl/NanevskiPP08,DBLP:conf/tlca/AbelP11"
+literal "false"
+
+\end_inset
+
+ using contextual types to characterise metavariables.
+ LF-style signatures handle type dependency (which is future work for us),
+ but there are also GB-signatures which cannot be encoded with an LF signature.
+ For example, GB-signatures allow us to express pattern unification for
+ ordered lambda terms (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ordered-calculus"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Finally, let us mention our semantics for metavariables does differ in a
+ critical way from prior semantics of metavariables (e.g., 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/tocl/HuPS22"
+literal "false"
+
+\end_inset
+
+ or 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:conf/aplas/Hamana04"
+literal "false"
+
+\end_inset
+
+).
+ Those models permit interpreting general metavariables -- i.e., a metavariable
+ can be instantiated with a full substitution of arbitrary terms.
+ A consequence of this is that they contain the semantic analogues of problems
+ outside the pattern fragment, such as 
+\begin_inset Formula $M(x,x)\stackrel{?}{=}N(x,x)$
+\end_inset
+
+ .
+ Since problems like this do not have most general unifiers, the more general
+ categories in the literature correspondingly do not always have suitable
+ coequalisers.
+ However, the pattern fragment is much more restrictive: a metavariable
+ can only be instantiated with a disjoint collection of free variables,
+ ensuring that mgu's can be found (if they exist).
+ Our semantics has been engineered so that it can 
+\emph on
+only
+\emph default
+ interpret metavariable instantiations in the pattern fragment, and cannot
+ interpret full metavariable instantiations.
+ This restriction gives our model much stronger properties, enabling us
+ to characterise each part of the pattern unification algorithm in terms
+ of universal properties.
+ This lets us extend Rydeheard and Burstall's proof to the pattern case.
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -31225,6 +31308,28 @@ literal "false"
 
 .
  In this section we detail this specific example.
+ Note that this does not fit into Schack-Nielsen and Schürman's pattern
+ unification algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/corr/abs-1009-2795"
+literal "false"
+
+\end_inset
+
+ for linear types where exchange is allowed (the order of their variables
+ does not matter).
 \end_layout
 
 \begin_layout Standard
