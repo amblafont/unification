@@ -87,7 +87,7 @@ module -[-]s
 \end{code}
 %<*compose-substitution-proto>
 \begin{code}
-   _[_]s : ∀ {Γ₁ Γ₂ Γ₃} → (Γ₁ ⟶ Γ₂) → (Γ₂ ⟶ Γ₃) → (Γ₁ ⟶ Γ₃)
+   _[_]s : ∀ {Γ Δ E} → (Γ ⟶ Δ) → (Δ ⟶ E) → (Γ ⟶ E)
 \end{code}
 %</compose-substitution-proto>
 %<*compose-substitution-def>

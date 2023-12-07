@@ -26,7 +26,7 @@
 % LICS
 % \newcommand{\keywords}[1]{\begin{IEEEkeywords}#1\end{IEEEkeywords}}
 \end_preamble
-\options acmsmall,review,screen
+\options sigconf,review,anonymous
 \use_default_options false
 \begin_modules
 enumitem

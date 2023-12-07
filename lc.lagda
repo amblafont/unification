@@ -393,7 +393,7 @@ unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm· Γ n → Γ ·⟶?
 %<*lc-unify-flex-def>
 \begin{code}
 unify-flex-* {Γ} {m} M x t
-                  with occur-check M t
+        with occur-check M t
 ... | Same-MVar y =
   let p , z = commonPositions m x y
   in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
@@ -439,9 +439,13 @@ unify {Γ} (Var· i) (Var· j) with i Fin.≟ j
 ... | yes _ = Γ ◄ 1ₛ
 \end{code}
 %</unify-var>
-%<*unify-last>
+%<*unify-bot>
 \begin{code}
 unify ! ! = ⊥ ◄ !ₛ
+\end{code}
+%</unify-bot>
+%<*unify-last>
+\begin{code}
 unify _ _ = ⊥ ◄ !ₛ
 \end{code}
 %</unify-last>

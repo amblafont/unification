@@ -54,9 +54,11 @@ record isFriendly {i j k}(S : Signature i j k) : Set (i ⊔ j ⊔ k) where
    open Signature S
    field
      equaliser : ∀ {a} m → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
-     pullback : ∀ m {m' a} → (x : m ⇒ a) → (y : m' ⇒ a) → Σ A (λ p → p ⇒ m × p ⇒ m')
+     pullback : ∀ m {m' a} → (x : m ⇒ a) → (y : m' ⇒ a)
+                  → Σ A (λ p → p ⇒ m × p ⇒ m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
-     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a) → Maybe (pre-image (_｛ x ｝) o)
+     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a)
+                  → Maybe (pre-image (_｛ x ｝) o)
 \end{code}
 %</friendlysignature>
 \begin{code}
@@ -215,7 +217,8 @@ Pruning
   \end{code}
   %<*prune-sigma-return-type>
   \begin{code}
-  record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext) : Set (i ⊔ j ⊔ k) where
+  record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext)
+      : Set (i ⊔ j ⊔ k) where
     constructor _◄_
     field
       Δ : MetaContext

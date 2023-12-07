@@ -104,12 +104,13 @@ module MoreFin where
   inject₁-≢-fromℕ (Fin.suc i) = λ e → inject₁-≢-fromℕ i (suc-injective e)
 
 module MoreList where
+-- done
  map-replicate : ∀ {i j}{A : Set i}{B : Set j}(f : A → B) n a →
     List.map f (List.replicate n a) ≡ List.replicate n (f a)
  map-replicate f Nat.zero a = 1ₑ
  map-replicate f (Nat.suc n) a = ≡.cong (_ ∷_) (map-replicate f n a)
  module _ {i}{A : Set i} where
-  -- like first-index-injective
+  -- done
   index-injective : ∀ {x₁ x₂ : A}{xs} (x₁∈xs : x₁ ∈ xs) (x₂∈xs : x₂ ∈ xs) →
           ListAny.index x₁∈xs ≡ ListAny.index x₂∈xs → x₁ ≡ x₂
   index-injective (here e1) (here e2) e = ≡.trans e1 (≡.sym e2)
@@ -152,6 +153,7 @@ module MoreVec where
     ... | no _ = ⊥
     ... | yes a∈ rewrite VecProp.lookup-index a∈ = ⌊ PreImage (index a∈) ⌋
 
+  -- done
   map-insert : ∀ {i j n}{A : Set i}{B : Set j}(f : A → B) k a
          (l : Vec A n) → Vec.map f (Vec.insert l k a) ≡ Vec.insert (Vec.map f l) k (f a)
   map-insert f Fin.zero a [] = 1ₑ
@@ -169,28 +171,33 @@ module MoreVec where
   insert-last-++ [] ys a = 1ₑ
   insert-last-++ (x ∷ xs) ys a = ≡.cong (x ∷_) (insert-last-++ xs ys a)
 
+-- done
   toList-++ : ∀ {i }{A : Set i} {n m}
          (xs : Vec A n)(ys : Vec A m) →
          Vec.toList (xs Vec.++ ys) ≡ Vec.toList xs ++ Vec.toList ys
   toList-++ [] ys = 1ₑ
   toList-++ (x ∷ xs) ys = ≡.cong (x ∷_) (toList-++ xs ys)
 
+  -- done
   toList-map : ∀ {i j}{A : Set i}{B : Set j}(f : A → B) {n}
          (xs : Vec A n) →
          Vec.toList (Vec.map f xs) ≡ List.map f (Vec.toList xs)
   toList-map f [] = 1ₑ
   toList-map f (x ∷ xs) = ≡.cong (f x ∷_) (toList-map f xs)
 
+  --done
   toList-replicate : ∀ {i}{A : Set i} n (a : A) →
      Vec.toList (Vec.replicate {n = n} a) ≡ List.replicate n a
   toList-replicate Nat.zero a = 1ₑ
   toList-replicate (Nat.suc n) a = ≡.cong (_ ∷_) (toList-replicate n a) 
 
+--done
   zip-++ : ∀ {i}{j}{A : Set i}{B : Set j}{n m}(xs : Vec A n)(ys : Vec A m)(xs' : Vec B n)(ys' : Vec B m) →
        Vec.zip (xs Vec.++ ys) (xs' Vec.++ ys') ≡ Vec.zip xs xs' Vec.++ Vec.zip ys ys'
   zip-++ [] ys [] ys' = 1ₑ
   zip-++ (x ∷ xs) ys (x' ∷ xs') ys' = ≡.cong (_ ∷_) (zip-++ xs ys xs' ys') 
 
+ --done
   index-∈-fromList⁺ : ∀ {i}{A : Set i}{v : A} {xs} → (v∈ : v ∈ xs) →
        VecAny.index (VecProp.∈-fromList⁺ v∈) ≡ ListAny.index v∈
   index-∈-fromList⁺ Ο = 1ₑ
