@@ -30659,6 +30659,194 @@ vspace{1em}
 \begin_inset Text
 
 \begin_layout Plain Layout
+Simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus modulo 
+\begin_inset Formula $\beta\eta$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\vec{\tau}'\Rightarrow\tau\in\Gamma\quad\tau\text{ is a base type}\quad\Gamma\vdash\vec{t}:\vec{\tau}'}{\Gamma\vdash x\vec{t}:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{i,\tau'_{1},\dots,\tau'_{n}}|i\in|\vec{\sigma}|_{\vec{\tau}'\Rightarrow\tau}\text{ and \ensuremath{\tau} is a base type}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{c}
+\vec{\sigma}\arSep\tau'_{1}\\
+\dots\\
+\vec{\sigma}\arSep\tau'_{n}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 Ordered 
 \begin_inset Formula $\lambda$
 \end_inset
@@ -31403,6 +31591,44 @@ name "subsec:normalised-lc"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Higher-order pattern unification originally focuses on unifying a pair of
+ closed simply-typed lambda-terms with metavariables applied to distinct
+ variables.
+ Lambda-terms are considered in 
+\begin_inset Formula $\beta$
+\end_inset
+
+-short 
+\begin_inset Formula $\eta$
+\end_inset
+
+-long normal forms.
+ Although we do not explicitly cover equations, the syntax of those normal
+ formas is equation free and can be specified by a GB-signature: we take
+ the same category of arities as in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:simply-typed-so"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, and we consider the operations as specified in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:all-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
