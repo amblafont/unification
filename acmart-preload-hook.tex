@@ -1,0 +1,5 @@
+\let\LoadClassOrig\LoadClass
+\renewcommand\LoadClass[2][]{%
+ \RequirePackage{refstyle}
+  \LoadClassOrig[#1]{#2}%
+}
