@@ -22054,6 +22054,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Finally, let us mention our semantics for metavariables does differ in a
  critical way from prior semantics of metavariables (e.g., 
 \begin_inset CommandInset citation
@@ -22086,12 +22090,37 @@ literal "false"
  However, the pattern fragment is much more restrictive: a metavariable
  can only be instantiated with a disjoint collection of free variables,
  ensuring that mgu's can be found (if they exist).
- Our semantics has been engineered so that it can 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our semantics for metavariables has been engineered so that it can 
 \emph on
 only
 \emph default
  interpret metavariable instantiations in the pattern fragment, and cannot
- interpret full metavariable instantiations.
+ interpret full metavariable instantiations, contrary to prior semantics
+ of metavariables (e.g., 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/tocl/HuPS22"
+literal "false"
+
+\end_inset
+
+ or 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:conf/aplas/Hamana04"
+literal "false"
+
+\end_inset
+
+).
  This restriction gives our model much stronger properties, enabling us
  to characterise each part of the pattern unification algorithm in terms
  of universal properties.
@@ -31604,9 +31633,8 @@ name "subsec:normalised-lc"
 \end_layout
 
 \begin_layout Standard
-Higher-order pattern unification originally focuses on unifying a pair of
- closed simply-typed lambda-terms with metavariables applied to distinct
- variables.
+Higher-order pattern unification was originally introduced for closed simply-typ
+ed lambda-terms with metavariables applied to distinct variables.
  Lambda-terms are considered in 
 \begin_inset Formula $\beta$
 \end_inset

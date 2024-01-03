@@ -1,0 +1,105 @@
+%% LyX 2.3.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[sigconf,review,anonymous]{acmart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{color}
+\usepackage{prettyref}
+\usepackage{refstyle}
+\usepackage{calc}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{amsbsy}
+\usepackage[all]{xy}
+\ifx\hypersetup\undefined
+  \AtBeginDocument{%
+    \hypersetup{unicode=true,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false,pdftitle={Your Title},
+ pdfauthor={Your Name},
+ pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false}
+  }
+\else
+  \hypersetup{unicode=true,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=1,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false,pdftitle={Your Title},
+ pdfauthor={Your Name},
+ pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false}
+\fi
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+
+\AtBeginDocument{\providecommand\secref[1]{\ref{sec:#1}}}
+\AtBeginDocument{\providecommand\Secref[1]{\ref{Sec:#1}}}
+\AtBeginDocument{\providecommand\Figref[1]{\ref{Fig:#1}}}
+\AtBeginDocument{\providecommand\Subsecref[1]{\ref{Subsec:#1}}}
+\AtBeginDocument{\providecommand\Remref[1]{\ref{Rem:#1}}}
+\AtBeginDocument{\providecommand\Defref[1]{\ref{Def:#1}}}
+\AtBeginDocument{\providecommand\Appref[1]{\ref{App:#1}}}
+\AtBeginDocument{\providecommand\Notref[1]{\ref{Not:#1}}}
+\AtBeginDocument{\providecommand\Exref[1]{\ref{Ex:#1}}}
+\AtBeginDocument{\providecommand\subsecref[1]{\ref{subsec:#1}}}
+\AtBeginDocument{\providecommand\Lemref[1]{\ref{Lem:#1}}}
+\AtBeginDocument{\providecommand\Assuref[1]{\ref{Assu:#1}}}
+\AtBeginDocument{\providecommand\Eqref[1]{\ref{Eq:#1}}}
+\AtBeginDocument{\providecommand\Corref[1]{\ref{Cor:#1}}}
+\AtBeginDocument{\providecommand\Tabref[1]{\ref{Tab:#1}}}
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+\RS@ifundefined{subsecref}
+  {\newref{subsec}{name = \RSsectxt}}
+  {}
+\RS@ifundefined{thmref}
+  {\def\RSthmtxt{theorem~}\newref{thm}{name = \RSthmtxt}}
+  {}
+\RS@ifundefined{lemref}
+  {\def\RSlemtxt{lemma~}\newref{lem}{name = \RSlemtxt}}
+  {}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newlength{\lyxlabelwidth}      % auxiliary length 
+\AtEndPreamble{%
+\theoremstyle{acmdefinition}
+\newtheorem{remark}[theorem]{Remark}}
+\AtEndPreamble{%
+\theoremstyle{acmdefinition}
+\newtheorem{notation}[theorem]{Notation}}
+\newenvironment{longproof}{\shortfull{\comment}{\begin{proof}}}{\shortfull{\endcomment}{\end{proof}}}
+\AtEndPreamble{%
+\theoremstyle{acmdefinition}
+\newtheorem{property}[theorem]{Property}}
+%\newenvironment{personalquestion}{\shortfull{\comment}{\begin{question}\color{red}(personal)}}{\shortfull{\endcomment}{\end{question}}}
+\newenvironment{personalquestion}{\comment}{\endcomment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\input{common-preamble}
+%\newenvironment{remark}{\begin{rem}}{\end{rem}}
+%\newenvironment{lemma}{\begin{lem}}{\end{lem}}
+%\newenvironment{proposition}{\begin{prop}}{\end{prop}}
+%\newenvironment{corollary}{\begin{cor}}{\end{cor}}
+%\newenvironment{definition}{\begin{defn}}{\end{defn}}
+%\newenvironment{theorem}{\begin{thm}}{\end{thm}}
+\newcommand{\theproposition}{\thethm}
+
+\setboolean{fullpaper}{false}
+
+\newcommand{\startappendix}{\appendix}
+%\newcommand{\startappendix}{\appendices}
+%\newcommand{\secappendix}[1]{\appendix[#1]}
+\newcommand{\secappendix}[1]{\section{#1}}
+
+
+% LICS
+% \newcommand{\keywords}[1]{\begin{IEEEkeywords}#1\end{IEEEkeywords}}
+
+\makeatother
+
+\begin{document}
+\input{core.tex}
+\end{document}
