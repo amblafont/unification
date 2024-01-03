@@ -10827,7 +10827,7 @@ name "fig:ren-lambda"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -10964,7 +10964,7 @@ status open
 
 
 \backslash
-vspace{-2em}
+vspace{-1em}
 \end_layout
 
 \end_inset
@@ -11276,7 +11276,7 @@ vspace{0.3em}
 \align left
 \begin_inset Formula 
 \[
-\dfrac{\delta:\Gamma\rightarrow\Delta\quad\sigma:\Delta\rightarrow E}{\underbrace{\delta[\sigma]}_{M\mapsto\sigma_{M}[\sigma]}:\Gamma\rightarrow E}
+\dfrac{\delta:\Gamma\rightarrow\Delta\quad\sigma:\Delta\rightarrow E}{\underbrace{\delta[\sigma]}_{M\mapsto\delta_{M}[\sigma]}:\Gamma\rightarrow E}
 \]
 
 \end_inset
@@ -11315,7 +11315,17 @@ status open
 
 \begin_layout Plain Layout
 \align center
-Generic syntax
+Generic syntax (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
 \end_layout
 
 \begin_layout Plain Layout
@@ -11549,7 +11559,7 @@ status open
 \align left
 \begin_inset Formula 
 \[
-\dfrac{\delta:\Gamma\rightarrow\Delta\quad\sigma:\Delta\rightarrow E}{\underbrace{\delta[\sigma]}_{M\mapsto\sigma_{M}[\sigma]}:\Gamma\rightarrow E}
+\dfrac{\delta:\Gamma\rightarrow\Delta\quad\sigma:\Delta\rightarrow E}{\underbrace{\delta[\sigma]}_{M\mapsto\delta_{M}[\sigma]}:\Gamma\rightarrow E}
 \]
 
 \end_inset
@@ -22140,7 +22150,7 @@ end{full}
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintCited"
-bibfiles "biblio,bib"
+bibfiles "bib"
 options "ACM-Reference-Format"
 
 \end_inset
