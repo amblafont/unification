@@ -756,19 +756,7 @@ n should have been, thereby sparing the programmer from having to instantiate
 \end_layout
 
 \begin_layout Standard
-However, while recent results in type inference, such as Dunfield and Krishnaswa
-mi
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+However, while recent results in type inference, such as 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DBLP:journals/pacmpl/DunfieldK19"
@@ -776,19 +764,7 @@ literal "false"
 
 \end_inset
 
-, or Jinxu et.
- al
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, or 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "DBLP:journals/pacmpl/ZhaoOS19"
@@ -804,8 +780,16 @@ literal "false"
  theory individually.
  Almost no lemmas in the proof of the one algorithm can be re-used in the
  other, which is particularly problematic given the sizes of the proofs
- involved: DK comes with a 190 page appendix, and Zhao et al's Coq proof
- is many thousands of lines long.
+ involved: 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:journals/pacmpl/DunfieldK19"
+literal "false"
+
+\end_inset
+
+ comes with a 190 page appendix, and Zhao et al's Coq proof is many thousands
+ of lines long.
 \end_layout
 
 \begin_layout Standard
@@ -833,9 +817,9 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 key "DBLP:journals/logcom/Miller91"
-literal "false"
+literal "true"
 
 \end_inset
 
@@ -1239,7 +1223,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand citet
+LatexCommand citep
 key "10.1007/978-3-540-45220-1_41"
 literal "false"
 
@@ -1277,7 +1261,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand citet
+LatexCommand citep
 key "DBLP:books/daglib/0068768"
 literal "false"
 
@@ -21797,18 +21781,7 @@ name "sec:related-work"
 
 \begin_layout Standard
 First-order unification has been explained from a lattice-theoretic point
- of view by Plotkin
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+ of view by 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "plotkinunification"
@@ -21816,18 +21789,7 @@ literal "false"
 
 \end_inset
 
-, and later categorically analysed in
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
+, and later categorically analysed by 
 \begin_inset CommandInset citation
 LatexCommand citet
 after "Section 9.7"
@@ -21932,7 +21894,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 key "fiore:presheaf"
 literal "false"
 
@@ -21951,7 +21913,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 key "PittsAM:newaas"
 literal "false"
 
@@ -21975,7 +21937,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 key "10.1007/978-3-540-45220-1_41"
 literal "false"
 
@@ -21994,18 +21956,6 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Cheney
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
 \begin_inset CommandInset citation
 LatexCommand cite
 key "cheney2005relating"
@@ -22037,7 +21987,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand citet
+LatexCommand citep
 key "pientka2003tabled,DBLP:conf/icfp/NanevskiPP03,DBLP:journals/tocl/NanevskiPP08,DBLP:conf/tlca/AbelP11"
 literal "false"
 
