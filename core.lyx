@@ -222,7 +222,7 @@ It is well-known that first-order unification corresponds to the construction
 \end_inset
 
 -calculus, (intrinsic) polymorphic syntax such as System F, and of course
- Miller's original example, normalised simply-typed 
+ Miller's original application, normalised simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -9471,7 +9471,7 @@ status open
 
 
 \backslash
-vspace{-1em}
+vspace{-1.8em}
 \end_layout
 
 \end_inset
@@ -9583,7 +9583,7 @@ status open
 
 
 \backslash
-vspace{0.2em}
+vspace{-0em}
 \end_layout
 
 \end_inset
@@ -9715,6 +9715,13 @@ status open
 \begin_layout Plain Layout
 
 %%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.5em}
 \end_layout
 
 \begin_layout Plain Layout
