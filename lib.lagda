@@ -21,7 +21,7 @@ open import Data.Product.Properties using (,-injective)
 import Data.Nat as Nat
 open import Data.Bool.Base
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
-open import Relation.Nullary
+open import Relation.Nullary hiding (⌊_⌋)
 open import Relation.Nullary.Decidable using (dec-true ; dec-false)
 import Relation.Binary
 import Relation.Unary
@@ -104,17 +104,8 @@ module MoreFin where
   inject₁-≢-fromℕ (Fin.suc i) = λ e → inject₁-≢-fromℕ i (suc-injective e)
 
 module MoreList where
--- done
- map-replicate : ∀ {i j}{A : Set i}{B : Set j}(f : A → B) n a →
-    List.map f (List.replicate n a) ≡ List.replicate n (f a)
- map-replicate f Nat.zero a = 1ₑ
- map-replicate f (Nat.suc n) a = ≡.cong (_ ∷_) (map-replicate f n a)
+
  module _ {i}{A : Set i} where
-  -- done
-  index-injective : ∀ {x₁ x₂ : A}{xs} (x₁∈xs : x₁ ∈ xs) (x₂∈xs : x₂ ∈ xs) →
-          ListAny.index x₁∈xs ≡ ListAny.index x₂∈xs → x₁ ≡ x₂
-  index-injective (here e1) (here e2) e = ≡.trans e1 (≡.sym e2)
-  index-injective (there x₁∈xs) (there x₂∈xs) e = index-injective x₁∈xs x₂∈xs (suc-injective e)
 
   _≟∈_ : ∀ {l}{a : A}(a∈ a∈' : a ∈ l) → Dec (a∈ ≡ a∈')
   Ο ≟∈ Ο = yes 1ₑ
@@ -153,57 +144,22 @@ module MoreVec where
     ... | no _ = ⊥
     ... | yes a∈ rewrite VecProp.lookup-index a∈ = ⌊ PreImage (index a∈) ⌋
 
-  -- done
-  map-insert : ∀ {i j n}{A : Set i}{B : Set j}(f : A → B) k a
-         (l : Vec A n) → Vec.map f (Vec.insert l k a) ≡ Vec.insert (Vec.map f l) k (f a)
-  map-insert f Fin.zero a [] = 1ₑ
-  map-insert f Fin.zero a (x ∷ l) = 1ₑ
-  map-insert f (Fin.suc k) a (x ∷ l) rewrite map-insert f k a l = 1ₑ
-
   insert-lookup-last< : ∀ {i}{A : Set i}{n} k a (l : Vec A n)
-     → Vec.lookup (Vec.insert l (Fin.fromℕ n) a) (Fin.inject₁ k) ≡ Vec.lookup l k
+     → Vec.lookup (Vec.insertAt l (Fin.fromℕ n) a) (Fin.inject₁ k) ≡ Vec.lookup l k
   insert-lookup-last< Fin.zero a (x ∷ l) = 1ₑ
   insert-lookup-last< (Fin.suc k) a (x ∷ l) = insert-lookup-last< k a l
 
   insert-last-++ : ∀ {i}{A : Set i}{n m}(xs : Vec A n)(ys : Vec A m) a →
-      Vec.toList (Vec.insert (xs Vec.++ ys) (Fin.fromℕ _) a) ≡
-      Vec.toList (xs Vec.++ (Vec.insert ys (Fin.fromℕ _) a))
+      Vec.toList (Vec.insertAt (xs Vec.++ ys) (Fin.fromℕ _) a) ≡
+      Vec.toList (xs Vec.++ (Vec.insertAt ys (Fin.fromℕ _) a))
   insert-last-++ [] ys a = 1ₑ
   insert-last-++ (x ∷ xs) ys a = ≡.cong (x ∷_) (insert-last-++ xs ys a)
 
--- done
-  toList-++ : ∀ {i }{A : Set i} {n m}
-         (xs : Vec A n)(ys : Vec A m) →
-         Vec.toList (xs Vec.++ ys) ≡ Vec.toList xs ++ Vec.toList ys
-  toList-++ [] ys = 1ₑ
-  toList-++ (x ∷ xs) ys = ≡.cong (x ∷_) (toList-++ xs ys)
-
-  -- done
-  toList-map : ∀ {i j}{A : Set i}{B : Set j}(f : A → B) {n}
-         (xs : Vec A n) →
-         Vec.toList (Vec.map f xs) ≡ List.map f (Vec.toList xs)
-  toList-map f [] = 1ₑ
-  toList-map f (x ∷ xs) = ≡.cong (f x ∷_) (toList-map f xs)
-
-  --done
+  --done mais avec erreur
   toList-replicate : ∀ {i}{A : Set i} n (a : A) →
-     Vec.toList (Vec.replicate {n = n} a) ≡ List.replicate n a
+     Vec.toList (Vec.replicate n a) ≡ List.replicate n a
   toList-replicate Nat.zero a = 1ₑ
   toList-replicate (Nat.suc n) a = ≡.cong (_ ∷_) (toList-replicate n a) 
-
---done
-  zip-++ : ∀ {i}{j}{A : Set i}{B : Set j}{n m}(xs : Vec A n)(ys : Vec A m)(xs' : Vec B n)(ys' : Vec B m) →
-       Vec.zip (xs Vec.++ ys) (xs' Vec.++ ys') ≡ Vec.zip xs xs' Vec.++ Vec.zip ys ys'
-  zip-++ [] ys [] ys' = 1ₑ
-  zip-++ (x ∷ xs) ys (x' ∷ xs') ys' = ≡.cong (_ ∷_) (zip-++ xs ys xs' ys') 
-
- --done
-  index-∈-fromList⁺ : ∀ {i}{A : Set i}{v : A} {xs} → (v∈ : v ∈ xs) →
-       VecAny.index (VecProp.∈-fromList⁺ v∈) ≡ ListAny.index v∈
-  index-∈-fromList⁺ Ο = 1ₑ
-  index-∈-fromList⁺ (1+ v∈) = ≡.cong Fin.suc (index-∈-fromList⁺ v∈)
-
-
 
   module _ {i}{j}{A : Set i}{P : A → Set j}(P? : Relation.Unary.Decidable P) where
     -- return the list of indices that satfies P
@@ -225,36 +181,36 @@ module MoreVec where
     ... | false = rec
 
     find-indices-insert-last : ∀ {n} → (xs : Vec A n) → ∀ {a} → P a → 
-        find-indices (Vec.insert xs (Fin.fromℕ n) a) ≡
+        find-indices (Vec.insertAt xs (Fin.fromℕ n) a) ≡
              List.map Fin.inject₁ (find-indices xs) ++ (Fin.fromℕ n ∷ [])
     find-indices-insert-last [] Pa rewrite dec-true (P? _) Pa = 1ₑ
     find-indices-insert-last (x ∷ xs) Pa rewrite find-indices-insert-last xs Pa
        with P? x
     ... | yes p rewrite
-            ListProp.map-++-commute Fin.suc (List.map Fin.inject₁ (find-indices xs) ) (Fin.fromℕ _ ∷ [])
-          | ≡.sym (ListProp.map-compose {g = Fin.suc}{Fin.inject₁}(find-indices xs))
-          | ≡.sym (ListProp.map-compose {g = Fin.inject₁}{Fin.suc}(find-indices xs))
+            ListProp.map-++ Fin.suc (List.map Fin.inject₁ (find-indices xs) ) (Fin.fromℕ _ ∷ [])
+          | ≡.sym (ListProp.map-∘ {g = Fin.suc}{Fin.inject₁}(find-indices xs))
+          | ≡.sym (ListProp.map-∘ {g = Fin.inject₁}{Fin.suc}(find-indices xs))
          = 1ₑ
 
 
     ... | no p rewrite
-            ListProp.map-++-commute Fin.suc (List.map Fin.inject₁ (find-indices xs) ) (Fin.fromℕ _ ∷ [])
-         | ≡.sym (ListProp.map-compose {g = Fin.suc}{Fin.inject₁}(find-indices xs))
-         | ≡.sym (ListProp.map-compose {g = Fin.inject₁}{Fin.suc}(find-indices xs))
+            ListProp.map-++ Fin.suc (List.map Fin.inject₁ (find-indices xs) ) (Fin.fromℕ _ ∷ [])
+         | ≡.sym (ListProp.map-∘ {g = Fin.suc}{Fin.inject₁}(find-indices xs))
+         | ≡.sym (ListProp.map-∘ {g = Fin.inject₁}{Fin.suc}(find-indices xs))
       = 1ₑ
 
     find-indices-insert-last-⊥ : ∀ {n} → (xs : Vec A n) → ∀ {a} → ¬ P a → 
-        find-indices (Vec.insert xs (Fin.fromℕ n) a) ≡
+        find-indices (Vec.insertAt xs (Fin.fromℕ n) a) ≡
              List.map Fin.inject₁ (find-indices xs) 
     find-indices-insert-last-⊥ [] Pa rewrite dec-false (P? _) Pa = 1ₑ
     find-indices-insert-last-⊥ (x ∷ xs) Pa rewrite find-indices-insert-last-⊥ xs Pa
-        | ≡.sym (ListProp.map-compose {g = Fin.suc}{Fin.inject₁}(find-indices xs))
+        | ≡.sym (ListProp.map-∘ {g = Fin.suc}{Fin.inject₁}(find-indices xs))
         with P? x
     ... | yes p
-        rewrite  ≡.sym (ListProp.map-compose {g = Fin.inject₁}{Fin.suc}(find-indices xs))
+        rewrite  ≡.sym (ListProp.map-∘ {g = Fin.inject₁}{Fin.suc}(find-indices xs))
           = 1ₑ
     ... | no p
-        rewrite  ≡.sym (ListProp.map-compose {g = Fin.inject₁}{Fin.suc}(find-indices xs))
+        rewrite  ≡.sym (ListProp.map-∘ {g = Fin.inject₁}{Fin.suc}(find-indices xs))
           = 1ₑ
 
 

@@ -19,6 +19,7 @@ open import Data.Product.Properties using (,-injective)
 open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_)
 import Data.Vec.Membership.Propositional as VecProp
 import Data.Vec.Membership.Propositional.Properties as VecProp
+import Data.Vec.Properties as VecProp
 open import Data.List.Relation.Unary.Any as Any using (index ; here ; there) renaming (_─_ to _⑊_ )
 open import Data.Vec.Relation.Unary.Any using () renaming (index to index̬)
 open import Data.Vec.Relation.Unary.Any.Properties using () renaming (lookup-index to lookup-index̬)
@@ -36,7 +37,8 @@ open import Data.Nat as ℕ using (ℕ; _+_)
 open import Data.Nat.Properties using (+-identityʳ ; +-suc)
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 import Data.Vec.Properties as VecProp
-import Data.Vec.Relation.Binary.Equality.Setoid as VecProp
+import Data.Vec.Relation.Binary.Equality.Setoid as VecProp hiding (map-++)
+open import Data.List.Membership.Setoid.Properties using (index-injective)
 open import Data.Sum.Base as Sum hiding (map)
 open import Data.Bool.Base
 import Function.Base
@@ -132,7 +134,7 @@ Syntax of types
  n ⇒ₛ m = Vec (Ty m) n
 
  _⇑ : ∀ {n m} → n ⇒ₛ m → (1 + n) ⇒ₛ (1 + m)
- σ ⇑ = Vec.insert (Vec.map (_❴ Vec.tabulate Fin.inject₁ ❵) σ) (Fin.fromℕ _) (Var (Fin.fromℕ _))
+ σ ⇑ = Vec.insertAt (Vec.map (_❴ Vec.tabulate Fin.inject₁ ❵) σ) (Fin.fromℕ _) (Var (Fin.fromℕ _))
 
 
  _⟦_⟧ : ∀ {n m} → Ty n → n ⇒ₛ m → Ty m
@@ -160,30 +162,30 @@ Various substitution properties
     (
     begin
 
-    Vec.insert
+    Vec.insertAt
       (Vec.map Fin.inject₁
        (Vec.tabulate Fin.suc))
       (Fin.fromℕ n) (Fin.suc (Fin.fromℕ n))
 
-     ≡⟨ cong (λ x → Vec.insert x (Fin.fromℕ n) (Fin.suc (Fin.fromℕ n)))
+     ≡⟨ cong (λ x → Vec.insertAt x (Fin.fromℕ n) (Fin.suc (Fin.fromℕ n)))
         (≡.trans
          (≡.sym (tabulate-∘ Fin.inject₁ Fin.suc))
          (tabulate-∘ Fin.suc Fin.inject₁)) ⟩
 
-     Vec.insert (Vec.map Fin.suc (Vec.tabulate Fin.inject₁))
+     Vec.insertAt (Vec.map Fin.suc (Vec.tabulate Fin.inject₁))
       (Fin.fromℕ n) (Fin.suc (Fin.fromℕ n))
 
-     ≡⟨ ≡.sym (MoreVec.map-insert Fin.suc (Fin.fromℕ n) (Fin.fromℕ n) (Vec.tabulate Fin.inject₁)) ⟩
+     ≡⟨ ≡.sym (VecProp.map-insertAt Fin.suc (Fin.fromℕ n) (Vec.tabulate Fin.inject₁) (Fin.fromℕ n)) ⟩
 
      Vec.map Fin.suc
-       (Vec.insert (Vec.tabulate Fin.inject₁)
+       (Vec.insertAt (Vec.tabulate Fin.inject₁)
         (Fin.fromℕ n) (Fin.fromℕ n))
 
-     ≡⟨ cong (λ x → Vec.map Fin.suc (Vec.insert x (Fin.fromℕ n) (Fin.fromℕ n)))
+     ≡⟨ cong (λ x → Vec.map Fin.suc (Vec.insertAt x (Fin.fromℕ n) (Fin.fromℕ n)))
          (tabulate-allFin Fin.inject₁) ⟩
 
      Vec.map Fin.suc
-       (Vec.insert (Vec.map Fin.inject₁ idᵣ)
+       (Vec.insertAt (Vec.map Fin.inject₁ idᵣ)
         (Fin.fromℕ n) (Fin.fromℕ n))
 
      ≡⟨ cong (Vec.map Fin.suc) (idᵣ↑ {n}) ⟩
@@ -208,7 +210,7 @@ Various substitution properties
 
 
  ∘ᵣ↑ : ∀ {p q r} → (x : p ⇒ᵣ q)(y : q ⇒ᵣ r) → (y ∘ᵣ x) ↑ ≡ ((y ↑) ∘ᵣ (x ↑) )
- ∘ᵣ↑ [] y = cong (_∷ []) (≡.sym (VecProp.insert-lookup (Vec.map Fin.inject₁ y) (Fin.fromℕ _) (Fin.fromℕ _)))
+ ∘ᵣ↑ [] y = cong (_∷ []) (≡.sym (VecProp.insertAt-lookup (Vec.map Fin.inject₁ y) (Fin.fromℕ _) (Fin.fromℕ _)))
  ∘ᵣ↑ (x ∷ xs) y rewrite ∘ᵣ↑ xs y = cong (_∷ _)
       (≡.trans (≡.sym (lookup-map x Fin.inject₁ y)) (≡.sym ( MoreVec.insert-lookup-last< x _ _ ))) 
 
@@ -219,7 +221,7 @@ Various substitution properties
      (cong (τ ❴_❵) (≡.sym (∘ᵣ↑ x y))))
 
  ❴❵❴❵s : ∀ {p q r} σ (x : p ⇒ᵣ q)(y : q ⇒ᵣ r) → (σ ❴ x ❵s) ❴ y ❵s ≡ σ ❴ y ∘ᵣ x ❵s
- ❴❵❴❵s σ x y = ≡.trans (≡.sym ( map-compose σ ))
+ ❴❵❴❵s σ x y = ≡.trans (≡.sym ( ListProp.map-∘ σ ))
       (ListProp.map-cong (λ τ → ❴❵❴❵ τ x y) σ) 
 
  ↑∘ᵣinject₁ : ∀ {m p} (η : m ⇒ᵣ p) →
@@ -236,11 +238,11 @@ Various substitution properties
  ❴❵⇑ : ∀ {n m p} (η : m ⇒ᵣ p) (σ : n ⇒ₛ m)
       → ((σ ❴ η ❵σ) ⇑)  ≡ ((σ ⇑) ❴ η ↑ ❵σ)
  ❴❵⇑ {n}{m}{p} η σ
-   rewrite MoreVec.map-insert (_❴ η ↑ ❵) (Fin.fromℕ n)(Var (Fin.fromℕ m)) (σ ❴ Vec.tabulate Fin.inject₁ ❵σ)
-   | VecProp.insert-lookup (Vec.map Fin.inject₁ η) (Fin.fromℕ _)(Fin.fromℕ _)
+   rewrite VecProp.map-insertAt (_❴ η ↑ ❵) (Var (Fin.fromℕ m)) (σ ❴ Vec.tabulate Fin.inject₁ ❵σ) (Fin.fromℕ n)
+   | VecProp.insertAt-lookup (Vec.map Fin.inject₁ η) (Fin.fromℕ _)(Fin.fromℕ _)
    | ≡.sym (VecProp.map-∘ (_❴ η ↑ ❵)(_❴ Vec.tabulate Fin.inject₁ ❵) σ)
    | ≡.sym (VecProp.map-∘ (_❴ Vec.tabulate Fin.inject₁ ❵)(_❴ η ❵) σ)
-   = cong (λ xi → Vec.insert xi (Fin.fromℕ _) _)
+   = cong (λ xi → Vec.insertAt xi (Fin.fromℕ _) _)
      (VecProp.map-cong (λ x → ≡.trans (❴❵❴❵ x η _)
        (≡.sym (≡.trans (❴❵❴❵ x _ _)
        (cong (x ❴_❵) (↑∘ᵣinject₁ η))))) σ)
@@ -249,12 +251,12 @@ Various substitution properties
       → 
     ((η ⟦ σ ⟧ᵣ) ⇑) ≡ ((η ↑) ⟦ σ ⇑ ⟧ᵣ)
  ⟦⟧⇑ {n}{m}{p} η σ
-   rewrite MoreVec.map-insert (Vec.lookup (σ ⇑)) (Fin.fromℕ _)(Fin.fromℕ _) (Vec.map Fin.inject₁ η)  
-   | VecProp.insert-lookup (σ ❴ Vec.tabulate Fin.inject₁ ❵σ) (Fin.fromℕ _)(Var (Fin.fromℕ p))
+   rewrite VecProp.map-insertAt (Vec.lookup (σ ⇑)) (Fin.fromℕ _) (Vec.map Fin.inject₁ η) (Fin.fromℕ _)
+   | VecProp.insertAt-lookup (σ ❴ Vec.tabulate Fin.inject₁ ❵σ) (Fin.fromℕ _)(Var (Fin.fromℕ p))
    | ≡.sym (VecProp.map-∘ (Vec.lookup (σ ⇑)) Fin.inject₁ η)
    | VecProp.map-cong  (λ x → MoreVec.insert-lookup-last< x (Var (Fin.fromℕ _)) (σ ❴ Vec.tabulate Fin.inject₁ ❵σ)) η
    | ≡.sym (VecProp.map-∘ _❴ Vec.tabulate Fin.inject₁ ❵ (Vec.lookup σ) η)
-   = cong (λ xi → Vec.insert xi (Fin.fromℕ _) _)
+   = cong (λ xi → Vec.insertAt xi (Fin.fromℕ _) _)
       (VecProp.map-cong (λ x → ≡.sym (VecProp.lookup-map x (_❴ Vec.tabulate Fin.inject₁ ❵) σ)) η)
 
  ⟦⟧❴❵ : ∀ {n m p} → (τ : Ty n) → (σ : n ⇒ₛ m) → (η : m ⇒ᵣ p)
@@ -271,7 +273,7 @@ Various substitution properties
 
  -- replace the last variable with the given argument, living the other untouched
  last↦_ : ∀ {n } → Ty n → (1 + n) ⇒ₛ n
- last↦ τ = Vec.insert (Vec.tabulate Var) (Fin.fromℕ _) τ
+ last↦ τ = Vec.insertAt (Vec.tabulate Var) (Fin.fromℕ _) τ
 
  -- unary substitution
  _[_] : ∀ {n} → Ty (1 + n) → Ty n → Ty n
@@ -286,11 +288,11 @@ Various substitution properties
  last↦❴❵ : ∀ {n n'} (τ₂ : Ty n) (η : n ⇒ᵣ n')
         → ((last↦ τ₂) ❴ η ❵σ) ≡ ((η ↑) ⟦ last↦ (τ₂ ❴ η ❵) ⟧ᵣ)
  last↦❴❵ τ₂ η
-    rewrite MoreVec.map-insert _❴ η ❵ (Fin.fromℕ _) τ₂ (Vec.tabulate Var)
+    rewrite VecProp.map-insertAt _❴ η ❵ τ₂ (Vec.tabulate Var) (Fin.fromℕ _)
       | ≡.sym (tabulate-∘ _❴ η ❵ Var )
-      | MoreVec.map-insert (Vec.lookup (last↦ (τ₂ ❴ η ❵))) (Fin.fromℕ _) (Fin.fromℕ _) (Vec.map Fin.inject₁ η)
+      | VecProp.map-insertAt (Vec.lookup (last↦ (τ₂ ❴ η ❵))) (Fin.fromℕ _) (Vec.map Fin.inject₁ η) (Fin.fromℕ _)
       | ≡.sym (VecProp.map-∘ (Vec.lookup (last↦ (τ₂ ❴ η ❵))) Fin.inject₁ η)
-      | VecProp.insert-lookup (Vec.tabulate Var) (Fin.fromℕ _) (τ₂ ❴ η ❵)
+      | VecProp.insertAt-lookup (Vec.tabulate Var) (Fin.fromℕ _) (τ₂ ❴ η ❵)
       | VecProp.map-cong {f = λ xi → Vec.lookup (last↦ (τ₂ ❴ η ❵)) (Fin.inject₁ xi) }{g = Var}
            (λ x → lookup-last↦-inject₁ τ₂ η x)
 
@@ -324,8 +326,8 @@ Various substitution properties
 
  wkᵣ∘ᵣ η = ≡.trans (≡.trans (≡.trans
             (VecProp.map-cong (λ x → lookup-map _ Fin.inject₁ idᵣ ) _)
-           (≡.trans (≡.trans (map-∘ Fin.inject₁ (Vec.lookup idᵣ) _)
-            (≡.sym ((≡.trans (map-∘ Fin.inject₁ (Vec.lookup η) _)
+           (≡.trans (≡.trans (VecProp.map-∘ Fin.inject₁ (Vec.lookup idᵣ) _)
+            (≡.sym ((≡.trans (VecProp.map-∘ Fin.inject₁ (Vec.lookup η) _)
                  (cong (Vec.map Fin.inject₁) (≡.trans (∘ᵣidᵣ η) (≡.sym (idᵣ∘ᵣ η))))))))
            (VecProp.map-cong (λ x → ≡.sym (lookup-map x Fin.inject₁ η)) idᵣ)))
            (VecProp.map-cong (λ x → ≡.sym (MoreVec.insert-lookup-last< x _ _)) _))
@@ -336,13 +338,13 @@ Various substitution properties
 
  ❴❵-wkC : ∀ {n n'}(Γ : List (Ty n)) (η : n ⇒ᵣ n') →
        (wkC Γ ❴ η ↑ ❵s) ≡ wkC (Γ ❴ η ❵s)
- ❴❵-wkC Γ η = ≡.trans (≡.sym (map-compose Γ))
+ ❴❵-wkC Γ η = ≡.trans (≡.sym (ListProp.map-∘ Γ))
             (≡.trans
             (ListProp.map-cong (λ τ →
                ≡.trans (❴❵❴❵ τ _ _)
                (≡.trans (cong (τ ❴_❵) (≡.sym (wkᵣ∘ᵣ η))) (≡.sym (❴❵❴❵ τ _ _))))
             _)
-            (map-compose Γ)
+            (ListProp.map-∘ Γ)
             )
 
 {- ----------------------
@@ -542,15 +544,15 @@ Equalisers (based on commonPositions)
  commonPositions↑ (x ∷ xs) (y ∷ ys) rewrite commonPositions↑ xs ys with x Fin.≟ y
  ... | yes e rewrite dec-true (Fin.inject₁ x Fin.≟ Fin.inject₁ y) (cong Fin.inject₁ e)
        = let p , _ = commonPositions _ xs ys in
-         cong (_ ,_) (cong (_ ∷_) (≡.trans (MoreVec.map-insert Fin.suc _ _ _)
-         ((cong (λ x → Vec.insert x (Fin.fromℕ p) _)
-           (≡.trans (≡.sym (map-∘ _ _ _)) (map-∘ _ _ _)))
+         cong (_ ,_) (cong (_ ∷_) (≡.trans (VecProp.map-insertAt Fin.suc _ _ _)
+         ((cong (λ x → Vec.insertAt x (Fin.fromℕ p) _)
+           (≡.trans (≡.sym (VecProp.map-∘ _ _ _)) (VecProp.map-∘ _ _ _)))
          )))
  ... | no e rewrite dec-false (Fin.inject₁ x Fin.≟ Fin.inject₁ y) (contraposition inject₁-injective e)
    = let p , _ = commonPositions _ xs ys in
-     cong (_ ,_) (≡.trans (MoreVec.map-insert Fin.suc _ _ _)
-         ((cong (λ x → Vec.insert x (Fin.fromℕ p) _)
-           (≡.trans (≡.sym (map-∘ _ _ _)) (map-∘ _ _ _)))
+     cong (_ ,_) (≡.trans (VecProp.map-insertAt Fin.suc _ _ _)
+         ((cong (λ x → Vec.insertAt x (Fin.fromℕ p) _)
+           (≡.trans (≡.sym (VecProp.map-∘ _ _ _)) (VecProp.map-∘ _ _ _)))
          ))
 
  equaliser-Ty : ∀ {n m} (x y : m ⇒ᵣ n) → (let p , z = commonPositions _ x y)
@@ -578,7 +580,7 @@ Equalisers (based on commonPositions)
  equaliser-context {Γ = m ∷ Γ} x y (t  , ts) (u , us) with
      equaliser-context x y ts us | index t Fin.≟ index u
  ... | Δ , s | yes q 
-       with PreImage j  ← equaliser-Ty x y m ( MoreList.index-injective _ _ q)
+       with PreImage j  ← equaliser-Ty x y m (index-injective (setoid _) _ _ q)
        = j ∷ Δ , Ο , wkl' s
  ... | Δ , s | no q = Δ ,  wkl' s
  equaliser : {a : A} (m : A) → m ⇒ a → m ⇒ a → Σ A (λ p → p ⇒ m)
@@ -632,15 +634,16 @@ Pullbacks (based on commonValues)
    with p , l , r ← commonValues _ xs ys
    with indices ← (MoreVec.find-indices (Fin._≟ x) ys) in eq_indices
    with vindices ← Vec.fromList indices in eq_vindices
-   with zeros1 ← (Vec.replicate {n = List.length (List.map Fin.inject₁ (MoreVec.find-indices (Fin._≟ Fin.inject₁ x) (Vec.map Fin.inject₁ ys)))} (Fin.zero {n = 1 + m})) in eq_zeros1
-   with zeros2 ← (Vec.replicate {n = List.length indices} (Fin.zero {n = m})) in eq_zeros2
-   rewrite Pointwise-≡⇒≡  (VecProp.map-++-commute (setoid _) Fin.inject₁ zeros2 {Vec.map Fin.suc l})
-   |       Pointwise-≡⇒≡  (VecProp.map-++-commute (setoid _) Fin.inject₁ vindices {r})
-   |      MoreVec.map-insert Fin.suc (Fin.fromℕ p) (Fin.fromℕ m)(Vec.map Fin.inject₁ l)
-   |   ≡.sym (   map-∘ Fin.suc Fin.inject₁ l)
+   with zeros1 ← (Vec.replicate (List.length (List.map Fin.inject₁ (MoreVec.find-indices (Fin._≟ Fin.inject₁ x) (Vec.map Fin.inject₁ ys)))) (Fin.zero {n = 1 + m})) in eq_zeros1
+   with zeros2 ← (Vec.replicate (List.length indices) (Fin.zero {n = m})) in eq_zeros2
+    rewrite  (VecProp.map-++ Fin.inject₁ zeros2 (Vec.map Fin.suc l))
+   |         (VecProp.map-++ Fin.inject₁ vindices r)
+   -- ptet faut echanger la
+   |      VecProp.map-insertAt Fin.suc (Fin.fromℕ m)(Vec.map Fin.inject₁ l) (Fin.fromℕ p)
+   |   ≡.sym (   VecProp.map-∘ Fin.suc Fin.inject₁ l)
    with zeros2' ← Vec.map Fin.inject₁ zeros2 in eq_zeros2'
    = helper-≡ _ _
-      (≡.trans
+       (≡.trans
         (helper2 zeros1 zeros2'
           (≡.trans (≡.sym (cong Vec.toList eq_zeros1))
           (≡.trans (
@@ -648,15 +651,15 @@ Pullbacks (based on commonValues)
           (≡.trans (≡.trans (cong (λ xi → replicate xi _)
             (≡.trans (cong (λ xi → length (List.map Fin.inject₁ xi)) eq-aux)
             ( ListProp.length-map Fin.inject₁ indices )))
-          (≡.sym (MoreList.map-replicate _ _ _)))
+          (≡.sym (ListProp.map-replicate _ _ _)))
           (≡.sym (≡.cong (List.map _) (MoreVec.toList-replicate _ _))))
           )
-          (≡.sym (MoreVec.toList-map _ _))
+          (≡.sym (VecProp.toList-map _ _))
           )
           (cong Vec.toList (≡.trans (≡.cong (Vec.map _) eq_zeros2) eq_zeros2')))
           )
-          (cong (λ xi → Vec.toList (Vec.insert xi _ _))
-             (map-∘ Fin.inject₁ Fin.suc l)))
+          (cong (λ xi → Vec.toList (Vec.insertAt xi _ _))
+             (VecProp.map-∘ Fin.inject₁ Fin.suc l)))
         (≡.sym (MoreVec.insert-last-++ zeros2' (Vec.map Fin.inject₁ (Vec.map Fin.suc l)) (Fin.fromℕ _))))
       (≡.trans
         (helper2
@@ -669,11 +672,12 @@ Pullbacks (based on commonValues)
           (≡.trans (cong (List.map _)
           (≡.trans (≡.trans eq-aux
             (≡.sym (VecProp.toList∘fromList indices))) (cong Vec.toList eq_vindices)))
-          (≡.sym (MoreVec.toList-map Fin.inject₁ vindices)))
+          (≡.sym (VecProp.toList-map Fin.inject₁ vindices)))
           )
           1ₑ)
         (≡.sym (MoreVec.insert-last-++ (Vec.map Fin.inject₁ vindices) (Vec.map Fin.inject₁ r) (Fin.fromℕ _) ))
-        )
+        
+              )
     where
       eq-aux : MoreVec.find-indices (Fin._≟ Fin.inject₁ x)
           (Vec.map Fin.inject₁ ys) ≡ indices

@@ -47,7 +47,7 @@ id {n} = Vec.allFin n
 %<*wk-renamings>
 \begin{code}
 _↑ : ∀ {p q} → p ⇒ q → (1 + p) ⇒ (1 + q)
-_↑ {p}{q} x = Vec.insert (Vec.map Fin.inject₁ x)
+_↑ {p}{q} x = Vec.insertAt (Vec.map Fin.inject₁ x)
                     (Fin.fromℕ p) (Fin.fromℕ q)
 \end{code}
 %</wk-renamings>
@@ -110,7 +110,7 @@ commonValues (ℕ.suc m ) (x₀ ∷ x) y =
    -- count is at most 1 for injective renamings
    let count = List.length indices in
    count + p ,
-       Vec.replicate Fin.zero Vec.++ Vec.map Fin.suc l ,
+       Vec.replicate _ Fin.zero Vec.++ Vec.map Fin.suc l ,
        Vec.fromList indices Vec.++ r
 \end{code}
 %</common-values>
@@ -130,21 +130,21 @@ module _ where
       = let count = List.length indices in
          let vindices = Vec.fromList indices in
          ≡.subst₂ (λ a → a ∈̬_ ) eq
-           (≡.sym  (MoreVec.zip-++ (Vec.replicate Fin.zero) (Vec.map Fin.suc l) vindices r))
+           (≡.sym  (Data.Vec.Properties.zipWith-++ _,_ (Vec.replicate _ Fin.zero) (Vec.map Fin.suc l) vindices r))
          (
-           ∈-++⁺ˡ {xs = Vec.zip (Vec.replicate Fin.zero) vindices}
+           ∈-++⁺ˡ {xs = Vec.zip (Vec.replicate _ Fin.zero) vindices}
               (VecProp.∈-lookup (VecAny.index (VecProp.∈-fromList⁺ indice∈)) _)
             )
             where
-              eq : Vec.lookup (Vec.zip (Vec.replicate Fin.zero) (Vec.fromList indices) )
+              eq : Vec.lookup (Vec.zip (Vec.replicate _ Fin.zero) (Vec.fromList indices) )
                     (VecAny.index (VecProp.∈-fromList⁺ indice∈))
                    ≡ (Fin.zero , VecAny.index vy)
               -- eq rewrite MoreVec.index-∈-fromList⁺ indice∈ =  ≡.trans
               eq =  ≡.trans
-                     ( lookup-zip (VecAny.index (VecProp.∈-fromList⁺ indice∈)) (Vec.replicate Fin.zero) (Vec.fromList indices) )
+                     ( lookup-zip (VecAny.index (VecProp.∈-fromList⁺ indice∈)) (Vec.replicate _ Fin.zero) (Vec.fromList indices) )
                      (≡.cong₂ _,_
                      (≡.trans
-                        ( ≡.cong (Vec.lookup (Vec.replicate Fin.zero)) (MoreVec.index-∈-fromList⁺ indice∈) )
+                        ( ≡.cong (Vec.lookup (Vec.replicate _ Fin.zero)) (VecProp.index-∈-fromList⁺ indice∈) )
                         (lookup-replicate (index indice∈) Fin.zero))
                         (≡.sym (VecProp.lookup-index (VecProp.∈-fromList⁺ indice∈))))
 
@@ -152,8 +152,8 @@ module _ where
         p , l , r ← commonValues _ xs ys
       | indices ←  MoreVec.find-indices (Fin._≟ x) ys 
       | rec ← commonValues-property xs ys vx vy
-      rewrite MoreVec.zip-++ (Vec.replicate Fin.zero) (Vec.map Fin.suc l) (Vec.fromList indices) r =
-        ∈-++⁺ʳ (Vec.zip (Vec.replicate Fin.zero) (Vec.fromList indices))
+      rewrite Data.Vec.Properties.zipWith-++ _,_ (Vec.replicate _ Fin.zero) (Vec.map Fin.suc l) (Vec.fromList indices) r =
+        ∈-++⁺ʳ (Vec.zip (Vec.replicate _ Fin.zero) (Vec.fromList indices))
          ( ≡.subst (_ ∈̬_)
            (≡.trans (map-zip Fin.suc (λ m → m) _ _) (≡.cong (Vec.zip _) (map-id r))) 
          (∈-map⁺ (Product.map Fin.suc (λ m → m)) rec) )
