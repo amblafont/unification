@@ -2017,7 +2017,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-We show the most relevant parts of the Agda code.
+We show the most relevant parts of the Agda code; the interested reader
+ can check the full implementation in the supplemental material.
  
 \begin_inset ERT
 status open
