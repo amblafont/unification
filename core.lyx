@@ -23425,7 +23425,86 @@ Given functors
 \end_layout
 
 \begin_layout Proof
-It is straightforward to check that both sets share the same universal property.
+The domain consists of a family 
+\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
+\end_inset
+
+ where 
+\begin_inset Formula $x_{i}\in Ki$
+\end_inset
+
+ and 
+\begin_inset Formula $g_{i}\in G(i,x_{i})$
+\end_inset
+
+, such that for each morphism 
+\begin_inset Formula $i\xrightarrow{u}j$
+\end_inset
+
+ in 
+\begin_inset Formula $I$
+\end_inset
+
+, we have 
+\begin_inset Formula $Ku(x_{i})=x_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $(Gu)(g_{i})=g_{j}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The codomain consists of a family 
+\begin_inset Formula $(\alpha_{i})_{i\in I}$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha_{i}\in K_{i}$
+\end_inset
+
+ together with a family 
+\begin_inset Formula $(g_{i})_{i\in I}$
+\end_inset
+
+ where 
+\begin_inset Formula $g_{i}\in G(i,\alpha_{i})$
+\end_inset
+
+, such that that for each morphism 
+\begin_inset Formula $i\xrightarrow{u}j$
+\end_inset
+
+ in 
+\begin_inset Formula $I$
+\end_inset
+
+, we have  
+\begin_inset Formula $Ku(\alpha_{i})=\alpha_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $(Gu)(g_{i})=g_{j}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The canonical morphism maps a family 
+\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
+\end_inset
+
+ to the pair of families 
+\begin_inset Formula $((x_{i})_{i\in I},(g_{i})_{i\in I})$
+\end_inset
+
+.
+ It is clearly a bijection.
 \end_layout
 
 \begin_layout Standard
