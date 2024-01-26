@@ -23400,7 +23400,7 @@ Given functors
 , the following canonical morphism is an isomorphism
 \begin_inset Formula 
 \[
-\int_{i:I}\coprod_{x\in Ki}G(i,x)\rightarrow\coprod_{\alpha\in\lim K}\int_{i:I}G(i,p_{i}(\alpha))
+\coprod_{\alpha\in\lim K}\int_{i:I}G(i,p_{i}(\alpha))\rightarrow\int_{i:I}\coprod_{x\in Ki}G(i,x)
 \]
 
 \end_inset
@@ -23410,39 +23410,6 @@ Given functors
 
 \begin_layout Proof
 The domain consists of a family 
-\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
-\end_inset
-
- where 
-\begin_inset Formula $x_{i}\in Ki$
-\end_inset
-
- and 
-\begin_inset Formula $g_{i}\in G(i,x_{i})$
-\end_inset
-
-, such that for each morphism 
-\begin_inset Formula $i\xrightarrow{u}j$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
-, we have 
-\begin_inset Formula $Ku(x_{i})=x_{j}$
-\end_inset
-
- and 
-\begin_inset Formula $(Gu)(g_{i})=g_{j}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-The codomain consists of a family 
 \begin_inset Formula $(\alpha_{i})_{i\in I}$
 \end_inset
 
@@ -23479,12 +23446,45 @@ The codomain consists of a family
 \end_layout
 
 \begin_layout Proof
-The canonical morphism maps a family 
+The codomain consists of a family 
 \begin_inset Formula $(x_{i},g_{i})_{i\in I}$
 \end_inset
 
- to the pair of families 
+ where 
+\begin_inset Formula $x_{i}\in Ki$
+\end_inset
+
+ and 
+\begin_inset Formula $g_{i}\in G(i,x_{i})$
+\end_inset
+
+, such that for each morphism 
+\begin_inset Formula $i\xrightarrow{u}j$
+\end_inset
+
+ in 
+\begin_inset Formula $I$
+\end_inset
+
+, we have 
+\begin_inset Formula $Ku(x_{i})=x_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $(Gu)(g_{i})=g_{j}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The canonical morphism maps 
 \begin_inset Formula $((x_{i})_{i\in I},(g_{i})_{i\in I})$
+\end_inset
+
+ to the family 
+\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
 \end_inset
 
 .
