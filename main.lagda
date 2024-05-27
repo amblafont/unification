@@ -20,9 +20,9 @@ open import lib
 record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
   field
     A : Set i
-    _⇒_ : A → A → Set j
-    id  : ∀ {a} → (a ⇒ a)
-    _∘_ : ∀ {a b c} → (b ⇒ c) → (a ⇒ b) → (a ⇒ c)
+    hom : A → A → Set j
+    id  : ∀ {a} → hom a a
+    _∘_ : ∀ {a b c} → hom b c → hom a b → hom a c
     O : A → Set k
     α : ∀ {a} → O a → List A
 \end{code}
@@ -34,7 +34,7 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 %<*renaming-vectors>
 \begin{code}
   _⟹_ : List A → List A → Set (i ⊔ j)
-  as ⟹ bs = Pointwise _⇒_ as bs
+  as ⟹ bs = Pointwise hom as bs
 \end{code}
 %</renaming-vectors>
 \begin{code}
@@ -43,8 +43,8 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 %<*signature-functoriality>
 \begin{code}
     -- Functoriality components
-    _｛_｝  : ∀ {a b} → O a → (a ⇒ b) → O b
-    _^_ : ∀ {a b}(x : a ⇒ b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
+    _｛_｝  : ∀ {a b} → O a → hom a b → O b
+    _^_ : ∀ {a b}(x : hom a b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
 \end{code}
 %</signature-functoriality>
 
@@ -53,11 +53,11 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 record isFriendly {i j k}(S : Signature i j k) : Set (i ⊔ j ⊔ k) where
    open Signature S
    field
-     equaliser : ∀ {a} m → (x y : m ⇒ a) → Σ A (λ p → p ⇒ m)
-     pullback : ∀ m {m' a} → (x : m ⇒ a) → (y : m' ⇒ a)
-                  → Σ A (λ p → p ⇒ m × p ⇒ m')
+     equaliser : ∀ {a} m → (x y : hom m a) → Σ A (λ p → hom p m)
+     pullback : ∀ m {m' a} → (x : hom m a) → (y : hom m' a)
+                  → Σ A (λ p → hom p m × hom p m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
-     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : b ⇒ a)
+     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : hom b a)
                   → Maybe (pre-image (_｛ x ｝) o)
 \end{code}
 %</friendlysignature>
@@ -85,7 +85,7 @@ module Tm {i j k}(S : Signature i j k) where
 %</syntax-decl>
 \begin{code}
    import Common as C
-   module Common = C {k = k} A _⇒_ id Tm
+   module Common = C {k = k} A hom id Tm
    open Common.SubstitutionDef public
 \end{code}
 %<*syntax-def>
@@ -93,7 +93,7 @@ module Tm {i j k}(S : Signature i j k) where
    data Tm where
      Rigid· : ∀ {Γ a}(o : O a) → (α o ·⟶· Γ)
           → Tm· Γ a
-     _﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → m ⇒ a
+     _﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → hom m a
           → Tm· Γ a
      ! : ∀ {a} → Tm ⊥ a
 \end{code}
@@ -108,7 +108,7 @@ module Tm {i j k}(S : Signature i j k) where
 Renaming
 
 -------------------------- -}
-   _❴_❵ : ∀ {Γ a b} → Tm Γ a → a ⇒ b → Tm Γ b
+   _❴_❵ : ∀ {Γ a b} → Tm Γ a → hom a b → Tm Γ b
    _❴_❵s : ∀ {Γ Γ' Δ} → Γ ·⟶ Δ
          → Γ ⟹ Γ' → Γ' ·⟶ Δ
 
@@ -228,7 +228,7 @@ Pruning
   %</prune-sigma-return-type>
   %<*prune-proto>
   \begin{code}
-  prune : ∀ {Γ a m} → Tm Γ a → (m ⇒ a) → [ m ]∪ Γ ⟶?
+  prune : ∀ {Γ a m} → Tm Γ a → hom m a → [ m ]∪ Γ ⟶?
   \end{code}
   %</prune-proto>
   %<*prune-sigma-proto>
@@ -275,7 +275,7 @@ Unification
   \end{code}
 %<*unify-flex-prototype>
   \begin{code}
-  unify-flex-* : ∀ {Γ m a} → m ∈ Γ → (m ⇒ a) → Tm· Γ a → Γ ·⟶?
+  unify-flex-* : ∀ {Γ m a} → m ∈ Γ → hom m a → Tm· Γ a → Γ ·⟶?
   \end{code}
 %</unify-flex-prototype>
 %<*unify-flex-def>

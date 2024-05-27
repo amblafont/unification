@@ -4367,7 +4367,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\dfrac{M:m\in\dotmcontext{\Gamma}\quad\overbrace{x:m\Rightarrow n}^{x_{1},\mydots,x_{m}\in\{1,\mydots,n\}\text{ distinct}}}{\dotmcontext{\Gamma};n\vdash M(\var{x_{1}},\mydots,\var{x_{m}})}
+\dfrac{M:m\in\dotmcontext{\Gamma}\quad\overbrace{x:\hom\ m\ n}^{x_{1},\mydots,x_{m}\in\{1,\mydots,n\}\text{ distinct}}}{\dotmcontext{\Gamma};n\vdash M(\var{x_{1}},\mydots,\var{x_{m}})}
 \]
 
 \end_inset
@@ -5161,7 +5161,7 @@ Let us focus on the last constructor building a metavariable application
 
 .
  The constructor also takes an argument of type 
-\begin_inset Formula $m\Rightarrow n$
+\begin_inset Formula $\AgdaFunction{hom}\ m\ n$
 \end_inset
 
 , which unfolds as 
@@ -7210,11 +7210,11 @@ noprefix "false"
 \end_inset
 
 -abstraction requires extending the renaming 
-\begin_inset Formula $x:p\Rightarrow q$
+\begin_inset Formula $x:\AgdaFunction{hom}\ p\ q$
 \end_inset
 
  to 
-\begin_inset Formula $x\uparrow\ :p+1\Rightarrow q+1$
+\begin_inset Formula $x\uparrow\ :\AgdaFunction{hom}\ (p+1)\ (q+1)$
 \end_inset
 
  to take into account the additional bound variable 

@@ -24,8 +24,8 @@ open import lib
 \end{code}
 %<*lc-renamings>
 \begin{code}
-_⇒_ : ℕ → ℕ → Set
-m ⇒ n = Vec (Fin n) m
+hom : ℕ → ℕ → Set
+hom m n = Vec (Fin n) m
 \end{code}
 %</lc-renamings>
 \begin{code}
@@ -34,29 +34,29 @@ m ⇒ n = Vec (Fin n) m
 \end{code}
 %<*compose-renamings>
 \begin{code}
-_∘_ : ∀ {p q r} → (q ⇒ r) → (p ⇒ q) → (p ⇒ r)
+_∘_ : ∀ {p q r} → hom q r → hom p q → hom p r
 xs ∘ ys = Vec.map (Vec.lookup xs) ys
 \end{code}
 %</compose-renamings>
 %<*id-renaming>
 \begin{code}
-id : ∀{n} → n ⇒ n
+id : ∀{n} → hom n n
 id {n} = Vec.allFin n
 \end{code}
 %</id-renaming>
 %<*wk-renamings>
 \begin{code}
-_↑ : ∀ {p q} → p ⇒ q → (1 + p) ⇒ (1 + q)
+_↑ : ∀ {p q} → hom p q → hom (1 + p) (1 + q)
 _↑ {p}{q} x = Vec.insertAt (Vec.map Fin.inject₁ x)
                     (Fin.fromℕ p) (Fin.fromℕ q)
 \end{code}
 %</wk-renamings>
 \begin{code}
 
-_｛_｝ : ∀ {n p} → Fin n → (n ⇒ p) → Fin p
+_｛_｝ : ∀ {n p} → Fin n → hom n p → Fin p
 i ｛ x ｝ = Vec.lookup x i
 
-_｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : n ⇒ p) → Maybe (pre-image (_｛ f ｝) x)
+_｛_｝⁻¹ : ∀ {n p}(x : Fin p) → ∀ (f : hom n p) → Maybe (pre-image (_｛ f ｝) x)
 i ｛ x ｝⁻¹ = MoreVec.lookup⁻¹ Fin._≟_ i x
 
 {- ----------------------
@@ -67,7 +67,7 @@ Common positions
 \end{code}
 %<*common-positions>
 \begin{code}
-commonPositions : ∀ {n} m → (x y : m ⇒ n) → Σ ℕ (λ p → p ⇒ m)
+commonPositions : ∀ {n} m → (x y : hom m n) → Σ ℕ (λ p → hom p m)
 commonPositions m [] [] = 0 , []
 commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
    let p , z = commonPositions m x y in
@@ -81,7 +81,7 @@ commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
 \begin{code}
 
 -- sanity check: any common position must be in the vector of common positions 
-commonPositions-property : ∀ {n m i} → (x y : m ⇒ n) → Vec.lookup x i ≡ Vec.lookup y i →
+commonPositions-property : ∀ {n m i} → (x y : hom m n) → Vec.lookup x i ≡ Vec.lookup y i →
         let (p , z) = commonPositions m x y in
         i ∈̬ z
 commonPositions-property {i = i}(x ∷ xs) (y ∷ ys) e' with i | x Fin.≟ y
@@ -102,7 +102,7 @@ Common values
 \end{code}
 %<*common-values>
 \begin{code}
-commonValues : ∀ m {m' n} → (x : m ⇒ n) → (y : m' ⇒ n) → Σ ℕ (λ p → p ⇒ m × p ⇒ m')
+commonValues : ∀ m {m' n} → (x : hom m n) → (y : hom m' n) → Σ ℕ (λ p → hom p m × hom p m')
 commonValues m [] y = 0 , [] , []
 commonValues (ℕ.suc m ) (x₀ ∷ x) y =
    let p , l , r = commonValues m x y in
@@ -120,7 +120,7 @@ commonValues (ℕ.suc m ) (x₀ ∷ x) y =
 module _ where
   open import Data.Vec.Properties using (lookup-zip ; lookup-replicate ; map-zip ; map-id)
 
-  commonValues-property : ∀ {m m' n v} → (x : m ⇒ n) (y : m' ⇒ n) → (vx : v ∈̬ x) → (vy : v ∈̬ y) →
+  commonValues-property : ∀ {m m' n v} → (x : hom m n) (y : hom m' n) → (vx : v ∈̬ x) → (vy : v ∈̬ y) →
           let p , l , r = commonValues _ x y in
          (VecAny.index vx , VecAny.index vy) ∈̬ Vec.zip l r
   commonValues-property .(x ∷ xs) ys (here {x = x} {xs = xs} px) vy
@@ -189,7 +189,7 @@ data Tm where
    App· : ∀ {Γ n} → Tm· Γ n → Tm· Γ n → Tm· Γ n
    Lam· : ∀ {Γ n} → Tm· Γ (1 + n) → Tm· Γ n
    Var· : ∀ {Γ n} → Fin n → Tm· Γ n
-   _﹙_﹚ : ∀ {Γ n m} → m ∈ Γ → m ⇒ n → Tm· Γ n
+   _﹙_﹚ : ∀ {Γ n m} → m ∈ Γ → hom m n → Tm· Γ n
    ! : ∀ {n} → Tm ⊥ n
 \end{code}
 %</lc-syntax-ind>
@@ -229,7 +229,7 @@ Var {⌊ Γ ⌋} i = Var· i
 \begin{code}
 
 import Common as C
-module Common = C ℕ _⇒_ id Tm
+module Common = C ℕ hom id Tm
 open Common.SubstitutionDef public
 
 {- ----------------------
@@ -241,7 +241,7 @@ Renaming
 \end{code}
 %<*lc-renaming>
 \begin{code}
-_❴_❵ : ∀ {Γ n p} → Tm Γ n → n ⇒ p → Tm Γ p
+_❴_❵ : ∀ {Γ n p} → Tm Γ n → hom n p → Tm Γ p
 
 (App· t u) ❴ x ❵ = App· (t ❴ x ❵) (u ❴ x ❵)
 Lam· t ❴ x ❵ = Lam· (t ❴ x ↑ ❵)
@@ -340,7 +340,7 @@ pattern _∶_﹙_﹚ M m x = _﹙_﹚ {m = m} M x
 \end{code}
 %<*lc-prune-proto>
 \begin{code}
-prune : ∀ {Γ m n} → Tm Γ n → m ⇒ n → [ m ]∪ Γ ⟶?
+prune : ∀ {Γ m n} → Tm Γ n → hom m n → [ m ]∪ Γ ⟶?
 \end{code}
 %</lc-prune-proto>
 %<*prune-app>
@@ -387,7 +387,7 @@ Unification
 \end{code}
 %<*lc-unify-flex-proto>
 \begin{code}
-unify-flex-* : ∀ {Γ m n} → m ∈ Γ → m ⇒ n → Tm· Γ n → Γ ·⟶?
+unify-flex-* : ∀ {Γ m n} → m ∈ Γ → hom m n → Tm· Γ n → Γ ·⟶?
 \end{code}
 %</lc-unify-flex-proto>
 %<*lc-unify-flex-def>

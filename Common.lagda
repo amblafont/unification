@@ -10,8 +10,8 @@ open import Agda.Primitive
 
 -- k' is typically instantiated as i ⊔ j ⊔ k
 module Common {i}{j}{k}(A : Set i)
-     (_⇒_ : A → A → Set j)
-     (id : ∀{a} → a ⇒ a)
+     (hom : A → A → Set j)
+     (id : ∀{a} → hom a a)
      (Tm-parameter : Maybe (List A) → A → Set (i ⊔ j ⊔ k))
   where
 
@@ -101,7 +101,7 @@ module -[-]s
 
 module 1ₛ 
    (wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a)
-   (_﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → m ⇒ a → Tm ⌊ Γ ⌋ a)
+   (_﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → hom m a → Tm ⌊ Γ ⌋ a)
  where
      open wkₛ wkₜ
    \end{code}
@@ -116,7 +116,7 @@ module 1ₛ
      \begin{code}
 module Substitution 
      (wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a)
-     (_﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → m ⇒ a → Tm ⌊ Γ ⌋ a)
+     (_﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → hom m a → Tm ⌊ Γ ⌋ a)
    where
    open wkₛ wkₜ
    open 1ₛ wkₜ _﹙_﹚
@@ -126,7 +126,7 @@ module Substitution
    Ο ↦ t , σ = t , σ
    1+ M ↦ t , (u , σ) = u , M ↦ t , σ
 
-   _↦-﹙_﹚ : ∀ {Γ m p} → (M : m ∈ Γ) → p ⇒ m
+   _↦-﹙_﹚ : ∀ {Γ m p} → (M : m ∈ Γ) → hom p m
             → Γ ·⟶· Γ [ M ∶ p ]
    Ο ↦-﹙ x ﹚ = Ο ﹙ x ﹚ , wkₛ 1ₛ
    1+ M ↦-﹙ x ﹚ = Ο ﹙ id ﹚ ,  wkₛ (M ↦-﹙ x ﹚) 
@@ -144,7 +144,7 @@ module occur-cases where
     Occur check
     -------------------------- -}
   data occur-cases {Γ m} (M : m ∈ Γ) a : Set k' where
-       Same-MVar : m ⇒ a → occur-cases M a
+       Same-MVar : hom m a → occur-cases M a
        Cycle : occur-cases M a
        No-Cycle : Tm· (Γ ⑊ M) a → occur-cases M a
 
