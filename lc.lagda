@@ -243,7 +243,7 @@ Renaming
 \begin{code}
 _❴_❵ : ∀ {Γ n p} → Tm Γ n → n ⇒ p → Tm Γ p
 
-App· t u ❴ x ❵ = App· (t ❴ x ❵) (u ❴ x ❵)
+(App· t u) ❴ x ❵ = App· (t ❴ x ❵) (u ❴ x ❵)
 Lam· t ❴ x ❵ = Lam· (t ❴ x ↑ ❵)
 Var· i ❴ x ❵ = Var· (i ｛ x ｝)
 M ﹙ y ﹚ ❴ x ❵ = M ﹙ x ∘ y ﹚
@@ -277,7 +277,7 @@ open Common.!ₛ ! public
 %<*lc-substitution>
 \begin{code}
 _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
-App· t u [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
+(App· t u) [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
 Lam· t [ σ ]t = Lam (t [ σ ]t)
 Var· i [ σ ]t = Var i
 M ﹙ x ﹚ [ σ ]t = nth σ M  ❴ x ❵ 

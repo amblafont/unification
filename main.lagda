@@ -112,7 +112,7 @@ Renaming
    _❴_❵s : ∀ {Γ Γ' Δ} → Γ ·⟶ Δ
          → Γ ⟹ Γ' → Γ' ·⟶ Δ
 
-   Rigid· o ts ❴ x ❵ = Rigid· (o ｛ x ｝) (ts ❴ x ^ o ❵s)
+   (Rigid· o ts) ❴ x ❵ = Rigid· (o ｛ x ｝) (ts ❴ x ^ o ❵s)
    M ﹙ y ﹚ ❴ x ❵ = M ﹙ x ∘ y ﹚
    ! ❴ f ❵ = !
 
@@ -152,7 +152,7 @@ Substitution
 \end{code}
 %<*gen-substitution-def>
 \begin{code}
-   Rigid· o δ [ σ ]t = Rigid o (δ [ σ ]s)
+   (Rigid· o δ) [ σ ]t = Rigid o (δ [ σ ]s)
    M ﹙ x ﹚ [ σ ]t =  nth σ M ❴ x ❵
    ! [ 1⊥ ]t = !
 \end{code}

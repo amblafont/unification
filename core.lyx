@@ -253,7 +253,7 @@ Semantics of pattern unification
 
 
 \begin_inset FormulaMacro
-\newcommand{\Thbot}[1]{\mathrm{MCon_{\bot}}(#1)}
+\newcommand{\Thbot}[1]{\mathrm{MCon}(#1)_{\bot}}
 \end_inset
 
 
@@ -800,8 +800,8 @@ Worse still, if any modifications to the unification algorithm were needed,
  For example, both of these systems make use of first-order unification
  (i.e., for types without binders in them), by retaining the ML-style monotype/pol
 ytype distinction.
- Something as simple as innocuous as the addition of a monomorphic type
- with a binder (for example, a recursive type 
+ Something as innocuous as the addition of a monomorphic type with a binder
+ (for example, a recursive type 
 \begin_inset Formula $\mu a.A[a]$
 \end_inset
 
@@ -4903,6 +4903,81 @@ a variable context, which is a mere natural number indicating the highest
 \end_layout
 
 \begin_layout Standard
+Free variables are indexed from 
+\begin_inset Formula $1$
+\end_inset
+
+ and we use the De Bruijn level convention: the variable bound in 
+\begin_inset Formula $\dotmcontext{\Gamma};n\vdash\lambda t$
+\end_inset
+
+ is 
+\begin_inset Formula $\var n+1$
+\end_inset
+
+, not 
+\begin_inset Formula $0$
+\end_inset
+
+, as it would be using De Bruijn indices
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "DB"
+literal "false"
+
+\end_inset
+
+.
+ In Agda, variables in the variable context 
+\begin_inset Formula $n$
+\end_inset
+
+ consist of elements of 
+\begin_inset Formula $\AgdaDatatype{Fin}\ n$
+\end_inset
+
+, the type of natural numbers between
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\AgdaDatatype{Fin}\ n$
+\end_inset
+
+ is actually defined in the standard library as an inductive type designed
+ to be (canonically) isomorphic with 
+\begin_inset Formula $\{0,\dots,n-1\}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $1$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
 The error metacontext 
 \begin_inset Formula $\bot$
 \end_inset
@@ -5066,78 +5141,7 @@ Improper
 \end_layout
 
 \begin_layout Standard
-Free variables are indexed from 
-\begin_inset Formula $1$
-\end_inset
-
- and we use the De Bruijn level convention: the variable bound in 
-\begin_inset Formula $\dotmcontext{\Gamma};n\vdash\lambda t$
-\end_inset
-
- is 
-\begin_inset Formula $\var n+1$
-\end_inset
-
-, not 
-\begin_inset Formula $0$
-\end_inset
-
-, as it would be using De Bruijn indices
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "DB"
-literal "false"
-
-\end_inset
-
-.
- In Agda, variables in the variable context 
-\begin_inset Formula $n$
-\end_inset
-
- consist of elements of 
-\begin_inset Formula $\AgdaDatatype{Fin}\ n$
-\end_inset
-
-, the type of natural numbers between
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula $\AgdaDatatype{Fin}\ n$
-\end_inset
-
- is actually defined in the standard library as an inductive type designed
- to be (canonically) isomorphic with 
-\begin_inset Formula $\{0,\dots,n-1\}$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $1$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
-.
- Let us focus on the last constructor building a metavariable application
+Let us focus on the last constructor building a metavariable application
  in the context 
 \begin_inset Formula $\dotmcontext{\Gamma};n$
 \end_inset
@@ -16156,8 +16160,8 @@ noprefix "false"
 
 \end_inset
 
-, it is more convenient define operations on terms mutually with the correspondi
-ng operations on substitutions.
+, it is more convenient to define operations on terms mutually with the
+ corresponding operations on substitutions.
  For example, composition of substitutions is defined mutually with substitution
  of terms in the second box of 
 \begin_inset CommandInset ref
@@ -16984,7 +16988,7 @@ We denote by
 \end_layout
 
 \begin_layout Lemma
-metacontexts and substitutions between them define a category which is isomorphi
+Metacontexts and substitutions between them define a category which is isomorphi
 c to 
 \begin_inset Formula $\Thbot S$
 \end_inset
@@ -17638,7 +17642,7 @@ A GB-signature
 \begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
 \end_inset
 
- is said 
+ is said to be 
 \emph on
 pattern-friendly 
 \emph default
@@ -18165,7 +18169,7 @@ If
 \begin_inset Formula $T$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Lemma
@@ -21920,17 +21924,28 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+Nominal unification and pattern unification problems are inter-translatable
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset citation
-LatexCommand cite
-key "cheney2005relating"
+LatexCommand citep
+key "cheney2005relating,DBLP:journals/tocl/LevyV12"
 literal "false"
 
 \end_inset
 
- shows that nominal unification and pattern unification problems are inter-trans
-latable.
- As he notes, this result indirectly provides semantic foundations for pattern
- unification based on the nominal approach.
+.
+ As Cheney notes, this result indirectly provides semantic foundations for
+ pattern unification based on the nominal approach.
  In this respect, the present work provides a more direct semantic analysis
  of pattern unification, leading us to the generic algorithm we present,
  parameterised by a general notion of signature for the syntax.
@@ -32711,7 +32726,7 @@ Note that
 
  We can now apply 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 after "Corollary 4.3"
 key "grayfib"
 literal "false"
@@ -32842,7 +32857,7 @@ Now, the 2-category of small categories with finite connected limits and
  functors preserving those between them is the category of algebras for
  a 2-monad on the category of small categories 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 key "BLACKWELL19891"
 literal "false"
 
@@ -32860,7 +32875,7 @@ literal "false"
 
  is a fibration, and thus an isofibration, by 
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citep
 key "JoyalStreetPullbacks"
 literal "false"
 
