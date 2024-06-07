@@ -2005,7 +2005,12 @@ noprefix "false"
 \end_inset
 
 ).
- The type signatures of the implemented functions are listed in 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The type signatures of the implemented functions are listed in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:type-signatures"
@@ -2016,6 +2021,11 @@ noprefix "false"
 \end_inset
 
  and will be explained in the following subsections.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4367,7 +4377,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\dfrac{M:m\in\dotmcontext{\Gamma}\quad\overbrace{x:\hom\ m\ n}^{x_{1},\mydots,x_{m}\in\{1,\mydots,n\}\text{ distinct}}}{\dotmcontext{\Gamma};n\vdash M(\var{x_{1}},\mydots,\var{x_{m}})}
+\dfrac{M:m\in\dotmcontext{\Gamma}\quad\overbrace{x\in\hom(m,n)}^{x_{1},\mydots,x_{m}\in\{1,\mydots,n\}\text{ distinct}}}{\dotmcontext{\Gamma};n\vdash M(\var{x_{1}},\mydots,\var{x_{m}})}
 \]
 
 \end_inset
@@ -5141,7 +5151,7 @@ Improper
 \end_layout
 
 \begin_layout Standard
-Let us focus on the last constructor building a metavariable application
+Let us focus on the penultimate constructor, building a metavariable application
  in the context 
 \begin_inset Formula $\dotmcontext{\Gamma};n$
 \end_inset
@@ -5160,11 +5170,43 @@ Let us focus on the last constructor building a metavariable application
 \end_inset
 
 .
- The constructor also takes an argument of type 
+ In the pattern fragment, a metavariable of arity 
+\begin_inset Formula $m$
+\end_inset
+
+ can be applied to a list of size 
+\begin_inset Formula $m$
+\end_inset
+
+ consisting of distinct variables in the variable context 
+\begin_inset Formula $n$
+\end_inset
+
+, that is, natural numbers between 
+\begin_inset Formula $1$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ We denote by 
+\begin_inset Formula $\hom(m,n)$
+\end_inset
+
+ this set of lists.
+ To make the Agda implementation easier, we did not enforce the uniqueness
+ restriction in the definition of 
 \begin_inset Formula $\AgdaFunction{hom}\ m\ n$
 \end_inset
 
-, which unfolds as 
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+which unfolds as 
 \begin_inset Formula $\AgdaDatatype{Vec}\ \AgdaSymbol{(}\AgdaDatatype{Fin}\ \AgdaBound{n}\AgdaSymbol{)}\ \AgdaBound{m}$
 \end_inset
 
@@ -5187,6 +5229,10 @@ Let us focus on the last constructor building a metavariable application
 .
  Note this does not fully enforce the pattern restriction: metavariable
  arguments are not required to be distinct.
+\end_layout
+
+\end_inset
+
  However, our unification algorithm is guaranteed to produce correct outputs
  only if this constraint is satisfied in the inputs.
 \end_layout
@@ -7489,11 +7535,11 @@ noprefix "false"
 \begin_inset Formula $\Gamma;n\vdash t,u$
 \end_inset
 
- as input, the Agda function 
+ as input, the return type of the 
 \begin_inset Formula $\AgdaFunction{unify}$
 \end_inset
 
- returns a context 
+ is a record with two fields: a context 
 \begin_inset Formula $\Delta$
 \end_inset
 
@@ -7505,21 +7551,7 @@ noprefix "false"
 \begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
 \end_inset
 
-.
- We denote such a situation by 
-\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
-\end_inset
-
-, leaving the variable context 
-\begin_inset Formula $n$
-\end_inset
-
- implicit: the symbol 
-\begin_inset Formula $\Rightarrow$
-\end_inset
-
- separates the input and the output of the unification algorithm, which
- is the mgu of 
+, which is the mgu of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -7527,8 +7559,8 @@ noprefix "false"
 \begin_inset Formula $u$
 \end_inset
 
-, although this property of the output substitution is not explicit in the
- type signature (see 
+ (the latter property is however not explicitly enforced by the type signature
+ in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:type-signatures"
@@ -7539,6 +7571,19 @@ noprefix "false"
 \end_inset
 
 ).
+ We denote such a situation by 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, leaving the variable context 
+\begin_inset Formula $n$
+\end_inset
+
+ implicit to alleviate the notation: the symbol 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ separates the input and the output of the unification algorithm.
 \end_layout
 
 \begin_layout Standard
@@ -15498,28 +15543,9 @@ noprefix "false"
 
  below).
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-We will call an element of 
-\begin_inset Formula $\{1,\dots,n\}$
-\end_inset
-
- an 
-\emph on
-
-\begin_inset Formula $o$
-\end_inset
-
--index.
-
-\emph default
- 
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 Intuitively, 
 \begin_inset Formula $O(a)$
 \end_inset
@@ -15543,6 +15569,165 @@ noprefix "false"
  although they are assumed in the proof of correctness.
  For example, the latter associativity property ensures that composition
  of metavariable substitutions is associative.
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "ex:gbsig-bsig"
+
+\end_inset
+
+Binding signatures can be compiled into GB-signatures.
+ More specifically, a syntax specified by a binding signature 
+\begin_inset Formula $(O,\alpha)$
+\end_inset
+
+ is also generated by the GB-signature 
+\begin_inset Formula $(\mathbb{F}_{m},O',\nthaarvecfunct$
+\end_inset
+
+), where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ is the category of finite cardinals and injections between them;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $O'(p)=\{\lcvar 1,\dots,\lcvar p\}\sqcup\{o_{p}|o\in O\}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\nthaarvec{\lcvar i}=()$
+\end_inset
+
+ and 
+\begin_inset Formula $\nthaarvec{o_{p}}=(p+\nthar o1,\dots,p+\nthar on)$
+\end_inset
+
+ for any 
+\begin_inset Formula $i,p\in\mathbb{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+-ary operation symbol 
+\begin_inset Formula $o\in O$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that, contrary to binding signatures, variables 
+\begin_inset Formula $\lcvar i$
+\end_inset
+
+ are explicitly specified as nullary operations
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+and thus do not require a dedicated generating rule, contrary to what happens
+ with binding signatures
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The choice of renamings (i.e., morphisms in the category of arities) is motivated
+ by the 
+\begin_inset Formula $\refrule{Flex}$
+\end_inset
+
+ rule.
+ Indeed, if 
+\begin_inset Formula $M$
+\end_inset
+
+ has arity 
+\begin_inset Formula $m\in\mathbb{N}$
+\end_inset
+
+, then a choice of arguments in the variable context 
+\begin_inset Formula $a\in\mathbb{N}$
+\end_inset
+
+ consists of a list of distinct variables in the variable context 
+\begin_inset Formula $a$
+\end_inset
+
+, or equivalently, an injection between the cardinal sets 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $a$
+\end_inset
+
+, that is, a morphism in 
+\begin_inset Formula $\mathbb{F}_{m}$
+\end_inset
+
+ between 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We will call an element of 
+\begin_inset Formula $\{1,\dots,n\}$
+\end_inset
+
+ an 
+\emph on
+
+\begin_inset Formula $o$
+\end_inset
+
+-index.
+
+\emph default
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15584,7 +15769,40 @@ noprefix "false"
 \end_inset
 
  instead of natural numbers.
- We call a term 
+ We indeed recover the syntax of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:syntax-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ by considering the GB-signature generated by the binding signature of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "ex:gbsig-bsig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+We call a term 
 \emph on
 rigid 
 \emph default
@@ -15729,116 +15947,6 @@ literal "false"
  generating the same syntax without metavariables.
 \end_layout
 
-\begin_layout Example
-\begin_inset CommandInset label
-LatexCommand label
-name "ex:gbsig-bsig"
-
-\end_inset
-
-Binding signatures can be compiled into GB-signatures.
- More specifically, a syntax specified by a binding signature 
-\begin_inset Formula $(O,\alpha)$
-\end_inset
-
- is also generated by the GB-signature 
-\begin_inset Formula $(\mathbb{F}_{m},O',\nthaarvecfunct$
-\end_inset
-
-), where
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
- is the category of finite cardinals and injections between them;
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $O'(p)=\{\lcvar 1,\dots,\lcvar p\}\sqcup\{o_{p}|o\in O\}$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\nthaarvec{\lcvar i}=()$
-\end_inset
-
- and 
-\begin_inset Formula $\nthaarvec{o_{p}}=(p+\nthar o1,\dots,p+\nthar on)$
-\end_inset
-
- for any 
-\begin_inset Formula $i,p\in\mathbb{N}$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
--ary operation symbol 
-\begin_inset Formula $o\in O$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Note that variables 
-\begin_inset Formula $\lcvar i$
-\end_inset
-
- are explicitly specified as nullary operations and thus do not require
- a dedicated generating rule, contrary to what happens with binding signatures.
- Moreover, the choice of renamings (i.e., morphisms in the category of arities)
- is motivated by the 
-\begin_inset Formula $\refrule{Flex}$
-\end_inset
-
- rule.
- Indeed, if 
-\begin_inset Formula $M$
-\end_inset
-
- has arity 
-\begin_inset Formula $m\in\mathbb{N}$
-\end_inset
-
-, then a choice of arguments in the variable context 
-\begin_inset Formula $a\in\mathbb{N}$
-\end_inset
-
- consists of a list of distinct variables in the variable context 
-\begin_inset Formula $a$
-\end_inset
-
-, or equivalently, an injection between the cardinal sets 
-\begin_inset Formula $m$
-\end_inset
-
- and 
-\begin_inset Formula $a$
-\end_inset
-
-, that is, a morphism in 
-\begin_inset Formula $\mathbb{F}_{m}$
-\end_inset
-
- between 
-\begin_inset Formula $m$
-\end_inset
-
- and 
-\begin_inset Formula $a$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
 \begin_layout Example
 GB-signatures capture multi-sorted binding signatures such as simply-typed
  
@@ -16243,17 +16351,7 @@ We are similarly led to generalise unification of terms to unification of
 \begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
 \end_inset
 
- for substitutions as seen in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:type-signatures"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
+ for substitutions.
  Similarly, we define pruning of terms mutually with pruning of proper substitut
 ions.
  We thus also extend the pruning notation: given a substitution 
@@ -16293,11 +16391,15 @@ ions.
 \end_inset
 
 .
- This justifies the return type of 
+ The outputs of 
+\begin_inset Formula $\AgdaFunction{unify}$
+\end_inset
+
+ and 
 \begin_inset Formula $\AgdaFunction{unify-\ensuremath{\sigma}}$
 \end_inset
 
- in 
+ are gathered as fields of record types (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:type-signatures"
@@ -16307,7 +16409,7 @@ noprefix "false"
 
 \end_inset
 
-.
+).
 \end_layout
 
 \begin_layout Standard
