@@ -1333,7 +1333,17 @@ noprefix "false"
 \end_inset
 
 .
- Related work is finally discussed in 
+ Examples of generalised binding signatures are given in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, and related work is finally discussed in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:related-work"
@@ -16370,7 +16380,7 @@ GB-signatures capture multi-sorted binding signatures such as simply-typed
 -calculus, or polymorphic syntax such as System F (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "app:applications"
+reference "sec:applications"
 plural "false"
 caps "true"
 noprefix "false"
@@ -22250,2151 +22260,28 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Related work
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:related-work"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-First-order unification has been explained from a lattice-theoretic point
- of view by 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "plotkinunification"
-literal "false"
-
-\end_inset
-
-, and later categorically analysed by 
-\begin_inset CommandInset citation
-LatexCommand citet
-after "Section 9.7"
-key "DBLP:books/daglib/0068768,Goguen89whatis,10.5555/92134"
-literal "false"
-
-\end_inset
-
- as coequalisers.
- However, there is little work on understanding pattern unification algebraicall
-y, with the notable exception of 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "vezzosi2014categorical"
-literal "false"
-
-\end_inset
-
-, working with normalised terms of simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus.
- The present paper
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ifshort{
-\end_layout
-
-\end_inset
-
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-An expanded version of this work can be found in
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "longgenericunif"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- can be thought of as a generalisation of their work.
-\end_layout
-
-\begin_layout Standard
-Although our notion of signature has a broader scope since we are not specifical
-ly focusing on syntax where variables can be substituted, our work is closer
- in spirit to the presheaf approach
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "fiore:presheaf"
-literal "false"
-
-\end_inset
-
- to binding signatures than to the nominal approach
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "PittsAM:newaas"
-literal "false"
-
-\end_inset
-
- in that everything is explicitly scoped: terms come with their support,
- metavariables always appear with their scope of allowed variables.
-\end_layout
-
-\begin_layout Standard
-Nominal unification
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "10.1007/978-3-540-45220-1_41"
-literal "false"
-
-\end_inset
-
- is an alternative to pattern unification where metavariables are not supplied
- with the list of allowed variables.
- Instead, substitution can capture variables.
- Nominal unification explicitly deals with 
-\begin_inset Formula $\alpha$
-\end_inset
-
--equivalence as an external relation on the syntax, and as a consequence
- deals with freshness problems in addition to unification problems.
- 
-\end_layout
-
-\begin_layout Standard
-Nominal unification and pattern unification problems are inter-translatable
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "cheney2005relating,DBLP:journals/tocl/LevyV12"
-literal "false"
-
-\end_inset
-
-.
- As Cheney notes, this result indirectly provides semantic foundations for
- pattern unification based on the nominal approach.
- In this respect, the present work provides a more direct semantic analysis
- of pattern unification, leading us to the generic algorithm we present,
- parameterised by a general notion of signature for the syntax.
-\end_layout
-
-\begin_layout Standard
-Pattern unification has also been studied from the viewpoint of logical
- frameworks
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "pientka2003tabled,DBLP:conf/icfp/NanevskiPP03,DBLP:journals/tocl/NanevskiPP08,DBLP:conf/tlca/AbelP11"
-literal "false"
-
-\end_inset
-
- using contextual types to characterise metavariables.
- LF-style signatures handle type dependency (which is future work for us),
- but there are also GB-signatures which cannot be encoded with an LF signature.
- For example, GB-signatures allow us to express pattern unification for
- ordered lambda terms (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:ordered-calculus"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Finally, let us mention our semantics for metavariables does differ in a
- critical way from prior semantics of metavariables (e.g., 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "DBLP:journals/tocl/HuPS22"
-literal "false"
-
-\end_inset
-
- or 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "DBLP:conf/aplas/Hamana04"
-literal "false"
-
-\end_inset
-
-).
- Those models permit interpreting general metavariables -- i.e., a metavariable
- can be instantiated with a full substitution of arbitrary terms.
- A consequence of this is that they contain the semantic analogues of problems
- outside the pattern fragment, such as 
-\begin_inset Formula $M(x,x)\stackrel{?}{=}N(x,x)$
-\end_inset
-
- .
- Since problems like this do not have most general unifiers, the more general
- categories in the literature correspondingly do not always have suitable
- coequalisers.
- However, the pattern fragment is much more restrictive: a metavariable
- can only be instantiated with a disjoint collection of free variables,
- ensuring that mgu's can be found (if they exist).
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Our semantics for metavariables has been engineered so that it can 
-\emph on
-only
-\emph default
- interpret metavariable instantiations in the pattern fragment, and cannot
- interpret full metavariable instantiations, contrary to prior semantics
- of metavariables (e.g., 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "DBLP:journals/tocl/HuPS22"
-literal "false"
-
-\end_inset
-
- or 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "DBLP:conf/aplas/Hamana04"
-literal "false"
-
-\end_inset
-
-).
- This restriction gives our model much stronger properties, enabling us
- to characterise each part of the pattern unification algorithm in terms
- of universal properties.
- This lets us extend Rydeheard and Burstall's proof to the pattern case.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Conclusion
-\end_layout
-
-\begin_layout Standard
-We presented a generic unification algorithm for Miller's pattern fragment
- with its associated categorical semantics, parameterised by a new notion
- of signature for syntax with metavariables.
- In the future, we plan to provide fully mechanised proof of correctness.
- We also plan to see how this work applies to dependently-typed languages,
- going beyond polymorphic syntax.
- Finally, we are interesting in further extending the setting to cover unificati
-on modulo equations, or linear syntax without restriction on the order the
- variables are used.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset bibtex
-LatexCommand bibtex
-btprint "btPrintCited"
-bibfiles "bib"
-options "ACM-Reference-Format"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-newpage
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-startappendix
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-secappendix{
-\end_layout
-
-\end_inset
-
-Proof of
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Appendix
-Proofs of statements in Section
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:GB-sig"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "app:proof-statements"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "assu:main-properties"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "app:proof-L-preserves"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We use the notations and definitions of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:GB-sig"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let us first prove the first item.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Proof of Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "assu:O-mono"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We show that given any 
-\begin_inset Formula $o\in\Oop nb$
-\end_inset
-
- and renaming 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
-
-, there is at most one 
-\begin_inset Formula $o'\in\Oop na$
-\end_inset
-
- such that 
-\begin_inset Formula $o=\rename{o'}f$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-Since 
-\begin_inset Formula $\Oby n$
-\end_inset
-
- preserves finite connected limits, it preserves monomorphisms because a
- morphism 
-\begin_inset Formula $f:a\rightarrow b$
-\end_inset
-
- is monomorphic if and only if the following square is a pullback 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-the pullback of 
-\begin_inset Formula $a\xrightarrow{f}b\xleftarrow{f}a$
-\end_inset
-
- is the identity cone 
-\begin_inset Formula $a\leftarrow a\rightarrow a$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-(see 
-\begin_inset CommandInset citation
-LatexCommand citep
-after "Exercise III.4.4"
-key "MacLane:cwm"
-literal "false"
-
-\end_inset
-
-).
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-[
-\backslash
-begin{tikzcd} 	A & A 
-\backslash
-
-\backslash
- 	A & B 	
-\backslash
-arrow["f", from=1-2, to=2-2] 	
-\backslash
-arrow[equal, from=1-1, to=1-2] 	
-\backslash
-arrow["f"', from=2-1, to=2-2] 	
-\backslash
-arrow[Rightarrow, no head, from=1-1, to=2-1] 
-\backslash
-end{tikzcd}
-\backslash
-]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The rest of this section is devoted to the proof of Property
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "assu:L-finite-conncted"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-By right continuity of the homset bifunctor, any representable functor is
- in 
-\begin_inset Formula $\C$
-\end_inset
-
- and thus the embedding 
-\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- factors the Yoneda embedding 
-\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:K-finite-connected"
-
-\end_inset
-
-Let 
-\begin_inset Formula $\D$
-\end_inset
-
- denote the opposite category of 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- and 
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- the factorisation of 
-\begin_inset Formula $\C\rightarrow[{\cal A},\Set]$
-\end_inset
-
- by the Yoneda embedding.
- Then, 
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- preserves finite connected colimits.
-\end_layout
-
-\begin_layout Proof
-This essentially follows from the fact functors in 
-\begin_inset Formula $\C$
-\end_inset
-
- preserves finite connected limits.
- Let us detail the argument: let 
-\begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- denote the Yoneda embedding and 
-\begin_inset Formula $J:\C\rightarrow[\mathcal{A},\Set]$
-\end_inset
-
- denote the canonical embedding, so that 
-\begin_inset Formula 
-\begin{equation}
-y=J\circ K.\label{eq:def-y-1}
-\end{equation}
-
-\end_inset
-
-Now consider a finite connected limit 
-\begin_inset Formula $\lim F$
-\end_inset
-
- in 
-\begin_inset Formula $\mathcal{A}$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula 
-\begin{align*}
-\C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
- & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By Equation \prettyref{eq:def-y-1}}\\
- & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
- & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
- & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
- & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By Equation \prettyref{eq:def-y-1}}\\
- & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
- & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
-\end{align*}
-
-\end_inset
-
-These isomorphisms are natural in 
-\begin_inset Formula $X$
-\end_inset
-
- and thus 
-\begin_inset Formula $K\lim F\cong\colim KF$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Unification of two metavariables as pullbacks or equalisers in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- crucially relies on 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, which holds because we restrict to functors preserving finite connected
- limits.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-As anticipated in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:res-monad"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, it is crucial to consider the monad 
-\begin_inset Formula $T$
-\end_inset
-
- restricted to 
-\begin_inset Formula $\C$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Proof of 
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "assu:L-finite-conncted"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
- Note that 
-\begin_inset Formula ${\cal L}$
-\end_inset
-
- factors as 
-\begin_inset Formula 
-\[
-\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Thbot S,
-\]
-
-\end_inset
-
-where the right embedding preserves colimits by 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:bot-creates"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, so it is enough to show that 
-\begin_inset Formula ${\cal L}^{\bullet}$
-\end_inset
-
- preserves finite connected colimits.
- Let 
-\begin_inset Formula $T_{|\C}$
-\end_inset
-
- be the monad 
-\begin_inset Formula $T$
-\end_inset
-
- restricted to 
-\begin_inset Formula $\C$
-\end_inset
-
-, following 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:-T-res"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Since 
-\begin_inset Formula $K:\D\rightarrow\C$
-\end_inset
-
- preserves finite connected colimits (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), composing it with the left adjoint 
-\begin_inset Formula $\C\rightarrow\Kl{T_{|\C}}$
-\end_inset
-
- yields a functor 
-\begin_inset Formula $\D\rightarrow\Kl{T_{|\C}}$
-\end_inset
-
- also preserving those colimits.
- Since it factors as 
-\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Kl{T_{|\C}}$
-\end_inset
-
-, where the right functor is full and faithful, 
-\begin_inset Formula ${\cal L}^{\bullet}$
-\end_inset
-
- also preserves finite connected colimits.
-\end_layout
-
-\begin_layout Subsection
-Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:F-finitary"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "app:F-finitary"
-
-\end_inset
-
-
-\begin_inset Formula $F$
-\end_inset
-
- is finitary because filtered colimits commute with finite limits 
-\begin_inset CommandInset citation
-LatexCommand citep
-after "Theorem IX.2.1"
-key "MacLane:cwm"
-literal "false"
-
-\end_inset
-
- and colimits.
- The free monad construction is due to 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Reiterman"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:res-F"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "app:resF-direct"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Notation
-Given a functor 
-\begin_inset Formula $F:I\rightarrow\B$
-\end_inset
-
-, we denote the limit (resp.
- colimit) of 
-\begin_inset Formula $F$
-\end_inset
-
- by 
-\begin_inset Formula $\int_{i:I}F(i)$
-\end_inset
-
- or 
-\begin_inset Formula $\lim F$
-\end_inset
-
- (resp.
- 
-\begin_inset Formula $\int^{i:I}F(i)$
-\end_inset
-
- or 
-\begin_inset Formula $\colim F$
-\end_inset
-
-) and the canonical projection 
-\begin_inset Formula $\lim F\rightarrow Fi$
-\end_inset
-
- by 
-\begin_inset Formula $p_{i}$
-\end_inset
-
- for any object 
-\begin_inset Formula $i$
-\end_inset
-
- of 
-\begin_inset Formula $I$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-This section is dedicated to the proof of the following lemma.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:F-restricts-simpl"
-
-\end_inset
-
-Given a GB-signature 
-\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
-\end_inset
-
- such that 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits, 
-\begin_inset Formula $F_{S}$
-\end_inset
-
- restricts as an endofunctor on the full subcategory 
-\begin_inset Formula $\C$
-\end_inset
-
- of 
-\begin_inset Formula $[{\cal A},\Set]$
-\end_inset
-
- consisting of functors preserving finite connected limits if and only if
- each 
-\begin_inset Formula $\Oby n\in\C$
-\end_inset
-
-, and 
-\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
-\end_inset
-
- preserves finite limits.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We first introduce a bunch of intermediate lemmas.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:coprod-filtered"
-
-\end_inset
-
-If 
-\begin_inset Formula $\B$
-\end_inset
-
- is a small category with finite connected limits, then a functor 
-\begin_inset Formula $G:\B\rightarrow\Set$
-\end_inset
-
- preserves those limits if and only if 
-\begin_inset Formula $\int\B$
-\end_inset
-
- is a coproduct of filtered categories.
-\end_layout
-
-\begin_layout Proof
-This is a direct application of 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Theorem 2.4 and Example 2.3.(iii)"
-key "classificationaccessible"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:J-preserve"
-
-\end_inset
-
-Assume 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits.
- Then 
-\begin_inset Formula $J:\mathbb{N}\times\mathcal{A}\rightarrow{\cal \Set}$
-\end_inset
-
- preserves finite connected limits if and only if each 
-\begin_inset Formula $\Oby n:{\cal A\rightarrow\Set}$
-\end_inset
-
- does.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-This follows from 
-\begin_inset Formula $\int J\cong\coprod_{n\in\mathbb{N}}\coprod_{j\in\{1,\dots,n\}}\int\Oby n$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:data-functor-elt"
-
-\end_inset
-
-Let 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- be a functor.
- For any functor 
-\begin_inset Formula $G:I\rightarrow\int F$
-\end_inset
-
-, denoting by 
-\begin_inset Formula $H$
-\end_inset
-
- the composite functor 
-\begin_inset Formula $I\xrightarrow{G}\int F\rightarrow\B$
-\end_inset
-
-, there exists a unique 
-\begin_inset Formula $x\in\lim(F\circ H)$
-\end_inset
-
- such that 
-\begin_inset Formula $Gi=(Hi,p_{i}(x))$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula $\int F$
-\end_inset
-
- is isomorphic to the opposite of the comma category 
-\begin_inset Formula $y/F$
-\end_inset
-
-, where 
-\begin_inset Formula $y:\op{\B}\rightarrow[\B,\Set]$
-\end_inset
-
- is the Yoneda embedding.
- The statement follows from the universal property of a comma category.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:lim-elt"
-
-\end_inset
-
-Let 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- and 
-\begin_inset Formula $G:I\rightarrow\int F$
-\end_inset
-
- such that 
-\begin_inset Formula $F$
-\end_inset
-
- preserves the limit of 
-\begin_inset Formula $H:I\xrightarrow{G}\int F\xrightarrow{}\B$
-\end_inset
-
-.
- Then, there exists a unique 
-\begin_inset Formula $x\in F\lim H$
-\end_inset
-
- such that 
-\begin_inset Formula $Gi=(Hi,Fp_{i}(x))$
-\end_inset
-
- and moreover, 
-\begin_inset Formula $(\lim H,x)$
-\end_inset
-
- is the limit of 
-\begin_inset Formula $G$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-Let 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- preserving a limit 
-\begin_inset Formula $\lim G$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $x\in F\lim G$
-\end_inset
-
-, thus inducing a functor 
-\begin_inset Formula $G_{x}:D\rightarrow\int F$
-\end_inset
-
- by the previous lemma.
- Then, the limit of 
-\begin_inset Formula $G_{x}$
-\end_inset
-
- is 
-\begin_inset Formula $(\lim D,x)$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The unique existence of 
-\begin_inset Formula $x\in F\lim H$
-\end_inset
-
- such that 
-\begin_inset Formula $Gi=(Hi,Fp_{i}(x))$
-\end_inset
-
- follows from 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:data-functor-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and the fact that 
-\begin_inset Formula $F$
-\end_inset
-
- preserves 
-\begin_inset Formula $\lim H$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $\C$
-\end_inset
-
- denote the full subcategory of 
-\begin_inset Formula $[\B,\Set]$
-\end_inset
-
- of functors preserving 
-\begin_inset Formula $\lim G$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula $\int F$
-\end_inset
-
- is isomorphic to the opposite of the comma category 
-\begin_inset Formula $K/F$
-\end_inset
-
-, where 
-\begin_inset Formula $K:\op{\B}\rightarrow\C$
-\end_inset
-
- is the Yoneda embedding, which preserves 
-\begin_inset Formula $\colim G$
-\end_inset
-
-, by an argument similar to the proof of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:K-finite-connected"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- We conclude from the fact that the forgetful functor from a comma category
- 
-\begin_inset Formula $L/R$
-\end_inset
-
- to the product of the categories creates colimits that 
-\begin_inset Formula $L$
-\end_inset
-
- preserve.
- 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:preserves-elt"
-
-\end_inset
-
-Let 
-\begin_inset Formula $I$
-\end_inset
-
- be a small category, 
-\begin_inset Formula $\B$
-\end_inset
-
- and 
-\begin_inset Formula $\B'$
-\end_inset
-
- be categories with 
-\begin_inset Formula $I$
-\end_inset
-
--limits (i.e., limits of any diagram over 
-\begin_inset Formula $I$
-\end_inset
-
-).
- Let 
-\begin_inset Formula $F:\B\rightarrow\Set$
-\end_inset
-
- be a functor preserving those colimits.
- Then, 
-\begin_inset Formula $\int F$
-\end_inset
-
- has 
-\begin_inset Formula $I$
-\end_inset
-
--limits, preserved by the projection 
-\begin_inset Formula $\int F\rightarrow\B$
-\end_inset
-
-.
- Moreover, a functor 
-\begin_inset Formula $G:\int F\rightarrow\B'$
-\end_inset
-
- preserves them if and only if for any 
-\begin_inset Formula $d:I\rightarrow\B$
-\end_inset
-
- and 
-\begin_inset Formula $x\in F\lim d$
-\end_inset
-
-, the canonical morphism 
-\begin_inset Formula $G(\lim d,x)\rightarrow\int_{i:I}G(d_{i},Fp_{i}(x))$
-\end_inset
-
- is an isomorphism.
-\end_layout
-
-\begin_layout Proof
-By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:lim-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, a diagram 
-\begin_inset Formula $d':I\rightarrow\int F$
-\end_inset
-
- is equivalently given by 
-\begin_inset Formula $d:I\rightarrow\B$
-\end_inset
-
- and 
-\begin_inset Formula $x\in F\lim d$
-\end_inset
-
-, recovering 
-\begin_inset Formula $d'$
-\end_inset
-
- as 
-\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
-\end_inset
-
-, and moreover 
-\begin_inset Formula $\lim d'=(\lim d,x)$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Corollary
-\begin_inset CommandInset label
-LatexCommand label
-name "cor:can-iso-app"
-
-\end_inset
-
-Assuming that 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has finite connected limits and each 
-\begin_inset Formula $\Oby n$
-\end_inset
-
- preserves finite connected limits, the finite limit preservation on 
-\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
-\end_inset
-
- of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-simpl"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- can be reformulated as follows: given a finite connected diagram 
-\begin_inset Formula $d:D\rightarrow{\cal A}$
-\end_inset
-
- and element 
-\begin_inset Formula $o\in\Oop n{\lim d}$
-\end_inset
-
-, the following canonical morphism is an isomorphism
-\begin_inset Formula 
-\[
-\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j
-\]
-
-\end_inset
-
-for any 
-\begin_inset Formula $j\in\{1,\dots,n\}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-This is a direct application of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:preserves-elt"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:J-preserve"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Limits commute with dependent pairs]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:lim-commute-dependent-pairs"
-
-\end_inset
-
-Given functors 
-\begin_inset Formula $K:I\rightarrow\Set$
-\end_inset
-
- and 
-\begin_inset Formula $G:\int K\rightarrow\Set$
-\end_inset
-
-, the following canonical morphism is an isomorphism
-\begin_inset Formula 
-\[
-\coprod_{\alpha\in\lim K}\int_{i:I}G(i,p_{i}(\alpha))\rightarrow\int_{i:I}\coprod_{x\in Ki}G(i,x)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The domain consists of a family 
-\begin_inset Formula $(\alpha_{i})_{i\in I}$
-\end_inset
-
- where 
-\begin_inset Formula $\alpha_{i}\in K_{i}$
-\end_inset
-
- together with a family 
-\begin_inset Formula $(g_{i})_{i\in I}$
-\end_inset
-
- where 
-\begin_inset Formula $g_{i}\in G(i,\alpha_{i})$
-\end_inset
-
-, such that that for each morphism 
-\begin_inset Formula $i\xrightarrow{u}j$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
-, we have  
-\begin_inset Formula $Ku(\alpha_{i})=\alpha_{j}$
-\end_inset
-
- and 
-\begin_inset Formula $(Gu)(g_{i})=g_{j}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-The codomain consists of a family 
-\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
-\end_inset
-
- where 
-\begin_inset Formula $x_{i}\in Ki$
-\end_inset
-
- and 
-\begin_inset Formula $g_{i}\in G(i,x_{i})$
-\end_inset
-
-, such that for each morphism 
-\begin_inset Formula $i\xrightarrow{u}j$
-\end_inset
-
- in 
-\begin_inset Formula $I$
-\end_inset
-
-, we have 
-\begin_inset Formula $Ku(x_{i})=x_{j}$
-\end_inset
-
- and 
-\begin_inset Formula $(Gu)(g_{i})=g_{j}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-The canonical morphism maps 
-\begin_inset Formula $((x_{i})_{i\in I},(g_{i})_{i\in I})$
-\end_inset
-
- to the family 
-\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
-\end_inset
-
-.
- It is clearly a bijection.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Proof of 
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-restricts-simpl"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
-\end_layout
-
-\end_inset
-
-Let 
-\begin_inset Formula $d:I\rightarrow{\cal A}$
-\end_inset
-
- be a finite connected diagram and 
-\begin_inset Formula $X$
-\end_inset
-
- be a functor preserving finite connected limits.
- Then,
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula 
-\begin{align*}
-\int_{i:I}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
- & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
- & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times X_{\nthar{p_{i}(o)}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
- & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times\int_{i:I}X_{\nthar{p_{i}(o)}n}\tag{By commutation of limits}
-\end{align*}
-
-\end_inset
-
-Thus, since 
-\begin_inset Formula $X$
-\end_inset
-
- preserves finite connected limits by assumption,
-\begin_inset Formula 
-\begin{align}
-\int_{i}F(X)_{d_{i}} & =\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\label{eq:F-restrict-1}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Now, let us prove the only if statement first.
- Assuming that 
-\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
-\end_inset
-
- and each 
-\begin_inset Formula $\Oby n$
-\end_inset
-
- preserves finite connected limits.
- Then,
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula 
-\begin{align*}
-\int_{i}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{\Oby n}}\\
- & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By Corollary \prettyref{cor:can-iso-app}}\\
- & =F(X)_{\lim d}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Conversely, let us assume that 
-\begin_inset Formula $F$
-\end_inset
-
- restricts to an endofunctor on 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula $F(1)=\coprod_{n}\Oby n$
-\end_inset
-
- preserves finite connected limits.
- By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:coprod-filtered"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, each 
-\begin_inset Formula $\Oby n$
-\end_inset
-
- preserves finite connected limits.
- By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "cor:can-iso-app"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, it is enough to prove that given a finite connected diagram 
-\begin_inset Formula $d:D\rightarrow{\cal A}$
-\end_inset
-
- and element 
-\begin_inset Formula $o\in\Oop n{\lim d}$
-\end_inset
-
-, the following canonical morphism is an isomorphism
-\begin_inset Formula 
-\[
-\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
-Now, we have
-\begin_inset Formula 
-\begin{align*}
-\int_{i:I}F(X)_{d_{i}} & \cong F(X)_{\lim d}\tag{By assumption}\\
- & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-On the other hand,
-\begin_inset Formula 
-\begin{align*}
-\int_{i:I}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
- & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{\Oby n} preserves finite connected limits}
-\end{align*}
-
-\end_inset
-
-It follows from those two chains of isomorphisms that each function 
-\begin_inset Formula $X_{\nthar oj}\rightarrow X_{\int_{i:I}\nthar{\rename o{p_{i}}}j}$
-\end_inset
-
- is a bijection, or equivalently (by the Yoneda Lemma), that 
-\begin_inset Formula $\C(K\nthar oj,X)\rightarrow\C(K\int_{i:I}\nthar{\rename o{p_{i}}}j,X)$
-\end_inset
-
- is an isomorphism.
- Since the Yoneda embedding is fully faithful, 
-\begin_inset Formula $\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j$
-\end_inset
-
- is an isomorphism.
-\end_layout
-
-\end_deeper
-\begin_layout Subsection
-Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:lims-coprod-pw"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "app:lims-coprod-pw"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Cocompleteness follows from 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Remark 1.56"
-key "Adamek"
-literal "false"
-
-\end_inset
-
-, since 
-\begin_inset Formula $\C$
-\end_inset
-
- is the category of models of a limit sketch, and is thus locally presentable,
- by
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Proposition 1.51"
-key "Adamek"
-literal "false"
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-For the claimed closure property, all we have to check is that limits, coproduct
-s, and filtered colimits of functors preserving finite connected limits
- still preserve finite connected limits.
- The case of limits is clear, since limits commute with limits.
- Coproducts and filtered colimits also commute with finite connected limits
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-after "Example 1.3.(vi)"
-key "classificationaccessible"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "cor:-T-res"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "app:T-res"
-
-\end_inset
-
-The result follows from the construction of 
-\begin_inset Formula $T$
-\end_inset
-
- using colimits of initial chains, thanks to the closure properties of 
-\begin_inset Formula $\C$
-\end_inset
-
-.
- More specifically, 
-\begin_inset Formula $TX$
-\end_inset
-
- can be constructed as the colimit of the chain 
-\begin_inset Formula $\emptyset\rightarrow H\emptyset\rightarrow HH\emptyset\rightarrow\dots$
-\end_inset
-
-, where 
-\begin_inset Formula $\emptyset$
-\end_inset
-
- denotes the constant functor mapping anything to the empty set, and 
-\begin_inset Formula $HZ=FZ+X$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Appendix
 Applications
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "app:applications"
+name "sec:applications"
 
 \end_inset
 
-In this section, we present various examples of pattern-friendly signatures.
+In this section, we present various examples of pattern-friendly signatures
+ summarised in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:all-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
  We start in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -32701,34 +30588,8 @@ literal "false"
 \end_inset
 
 .
- 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{full}
-\end_layout
-
-\end_inset
-
-The Agda implementation of the following friendly GB-signature can be found
- in the supplemental material.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
-\end_inset
-
-
+ The Agda implementation of the friendly GB-signature can be found in the
+ supplemental material.
 \end_layout
 
 \begin_layout Standard
@@ -33067,6 +30928,2140 @@ noprefix "false"
 
  and 
 \begin_inset Formula $\vec{\sigma}'=\text{\ensuremath{\sigma_{\vec{q}}}}[p_{i}\mapsto i]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Related work
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:related-work"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First-order unification has been explained from a lattice-theoretic point
+ of view by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "plotkinunification"
+literal "false"
+
+\end_inset
+
+, and later categorically analysed by 
+\begin_inset CommandInset citation
+LatexCommand citet
+after "Section 9.7"
+key "DBLP:books/daglib/0068768,Goguen89whatis,10.5555/92134"
+literal "false"
+
+\end_inset
+
+ as coequalisers.
+ However, there is little work on understanding pattern unification algebraicall
+y, with the notable exception of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vezzosi2014categorical"
+literal "false"
+
+\end_inset
+
+, working with normalised terms of simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus.
+ The present paper
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ifshort{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+An expanded version of this work can be found in
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "longgenericunif"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ can be thought of as a generalisation of their work.
+\end_layout
+
+\begin_layout Standard
+Although our notion of signature has a broader scope since we are not specifical
+ly focusing on syntax where variables can be substituted, our work is closer
+ in spirit to the presheaf approach
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "fiore:presheaf"
+literal "false"
+
+\end_inset
+
+ to binding signatures than to the nominal approach
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "PittsAM:newaas"
+literal "false"
+
+\end_inset
+
+ in that everything is explicitly scoped: terms come with their support,
+ metavariables always appear with their scope of allowed variables.
+\end_layout
+
+\begin_layout Standard
+Nominal unification
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "10.1007/978-3-540-45220-1_41"
+literal "false"
+
+\end_inset
+
+ is an alternative to pattern unification where metavariables are not supplied
+ with the list of allowed variables.
+ Instead, substitution can capture variables.
+ Nominal unification explicitly deals with 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-equivalence as an external relation on the syntax, and as a consequence
+ deals with freshness problems in addition to unification problems.
+ 
+\end_layout
+
+\begin_layout Standard
+Nominal unification and pattern unification problems are inter-translatable
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "cheney2005relating,DBLP:journals/tocl/LevyV12"
+literal "false"
+
+\end_inset
+
+.
+ As Cheney notes, this result indirectly provides semantic foundations for
+ pattern unification based on the nominal approach.
+ In this respect, the present work provides a more direct semantic analysis
+ of pattern unification, leading us to the generic algorithm we present,
+ parameterised by a general notion of signature for the syntax.
+\end_layout
+
+\begin_layout Standard
+Pattern unification has also been studied from the viewpoint of logical
+ frameworks
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "pientka2003tabled,DBLP:conf/icfp/NanevskiPP03,DBLP:journals/tocl/NanevskiPP08,DBLP:conf/tlca/AbelP11"
+literal "false"
+
+\end_inset
+
+ using contextual types to characterise metavariables.
+ LF-style signatures handle type dependency (which is future work for us),
+ but there are also GB-signatures which cannot be encoded with an LF signature.
+ For example, GB-signatures allow us to express pattern unification for
+ ordered lambda terms (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ordered-calculus"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Finally, let us mention our semantics for metavariables does differ in a
+ critical way from prior semantics of metavariables (e.g., 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/tocl/HuPS22"
+literal "false"
+
+\end_inset
+
+ or 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:conf/aplas/Hamana04"
+literal "false"
+
+\end_inset
+
+).
+ Those models permit interpreting general metavariables -- i.e., a metavariable
+ can be instantiated with a full substitution of arbitrary terms.
+ A consequence of this is that they contain the semantic analogues of problems
+ outside the pattern fragment, such as 
+\begin_inset Formula $M(x,x)\stackrel{?}{=}N(x,x)$
+\end_inset
+
+ .
+ Since problems like this do not have most general unifiers, the more general
+ categories in the literature correspondingly do not always have suitable
+ coequalisers.
+ However, the pattern fragment is much more restrictive: a metavariable
+ can only be instantiated with a disjoint collection of free variables,
+ ensuring that mgu's can be found (if they exist).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our semantics for metavariables has been engineered so that it can 
+\emph on
+only
+\emph default
+ interpret metavariable instantiations in the pattern fragment, and cannot
+ interpret full metavariable instantiations, contrary to prior semantics
+ of metavariables (e.g., 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/tocl/HuPS22"
+literal "false"
+
+\end_inset
+
+ or 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:conf/aplas/Hamana04"
+literal "false"
+
+\end_inset
+
+).
+ This restriction gives our model much stronger properties, enabling us
+ to characterise each part of the pattern unification algorithm in terms
+ of universal properties.
+ This lets us extend Rydeheard and Burstall's proof to the pattern case.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusion
+\end_layout
+
+\begin_layout Standard
+We presented a generic unification algorithm for Miller's pattern fragment
+ with its associated categorical semantics, parameterised by a new notion
+ of signature for syntax with metavariables.
+ In the future, we plan to provide fully mechanised proof of correctness.
+ We also plan to see how this work applies to dependently-typed languages,
+ going beyond polymorphic syntax.
+ Finally, we are interesting in further extending the setting to cover unificati
+on modulo equations, or linear syntax without restriction on the order the
+ variables are used.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "bib"
+options "ACM-Reference-Format"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+newpage
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+startappendix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+secappendix{
+\end_layout
+
+\end_inset
+
+Proof of
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Appendix
+Proofs of statements in Section
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:GB-sig"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:proof-statements"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:main-properties"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:proof-L-preserves"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We use the notations and definitions of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:GB-sig"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us first prove the first item.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:O-mono"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We show that given any 
+\begin_inset Formula $o\in\Oop nb$
+\end_inset
+
+ and renaming 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+, there is at most one 
+\begin_inset Formula $o'\in\Oop na$
+\end_inset
+
+ such that 
+\begin_inset Formula $o=\rename{o'}f$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $\Oby n$
+\end_inset
+
+ preserves finite connected limits, it preserves monomorphisms because a
+ morphism 
+\begin_inset Formula $f:a\rightarrow b$
+\end_inset
+
+ is monomorphic if and only if the following square is a pullback 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+the pullback of 
+\begin_inset Formula $a\xrightarrow{f}b\xleftarrow{f}a$
+\end_inset
+
+ is the identity cone 
+\begin_inset Formula $a\leftarrow a\rightarrow a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+(see 
+\begin_inset CommandInset citation
+LatexCommand citep
+after "Exercise III.4.4"
+key "MacLane:cwm"
+literal "false"
+
+\end_inset
+
+).
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+[
+\backslash
+begin{tikzcd} 	A & A 
+\backslash
+
+\backslash
+ 	A & B 	
+\backslash
+arrow["f", from=1-2, to=2-2] 	
+\backslash
+arrow[equal, from=1-1, to=1-2] 	
+\backslash
+arrow["f"', from=2-1, to=2-2] 	
+\backslash
+arrow[Rightarrow, no head, from=1-1, to=2-1] 
+\backslash
+end{tikzcd}
+\backslash
+]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The rest of this section is devoted to the proof of Property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "assu:L-finite-conncted"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By right continuity of the homset bifunctor, any representable functor is
+ in 
+\begin_inset Formula $\C$
+\end_inset
+
+ and thus the embedding 
+\begin_inset Formula $\C\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ factors the Yoneda embedding 
+\begin_inset Formula $\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:K-finite-connected"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\D$
+\end_inset
+
+ denote the opposite category of 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ and 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ the factorisation of 
+\begin_inset Formula $\C\rightarrow[{\cal A},\Set]$
+\end_inset
+
+ by the Yoneda embedding.
+ Then, 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ preserves finite connected colimits.
+\end_layout
+
+\begin_layout Proof
+This essentially follows from the fact functors in 
+\begin_inset Formula $\C$
+\end_inset
+
+ preserves finite connected limits.
+ Let us detail the argument: let 
+\begin_inset Formula $y:\op{\mathcal{A}}\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ denote the Yoneda embedding and 
+\begin_inset Formula $J:\C\rightarrow[\mathcal{A},\Set]$
+\end_inset
+
+ denote the canonical embedding, so that 
+\begin_inset Formula 
+\begin{equation}
+y=J\circ K.\label{eq:def-y-1}
+\end{equation}
+
+\end_inset
+
+Now consider a finite connected limit 
+\begin_inset Formula $\lim F$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\begin{align*}
+\C(K\lim F,X) & \cong[{\cal A},\Set](JK\lim F,JX)\tag{\ensuremath{J} is fully faithful}\\
+ & \cong[\mathcal{A},\Set](y\lim F,JX)\tag{By Equation \prettyref{eq:def-y-1}}\\
+ & \cong JX(\lim F)\tag{By the Yoneda Lemma.}\\
+ & \cong\lim(JX\circ F)\tag{\ensuremath{X} preserves finite connected limits}\\
+ & \cong\lim([\mathcal{A},\Set](yF-,JX)]\tag{By the Yoneda Lemma}\\
+ & \cong\lim([\mathcal{A},\Set](JKF-,JX)]\tag{By Equation \prettyref{eq:def-y-1}}\\
+ & \cong\lim\C(KF-,X)\tag{\ensuremath{J} is full and faithful}\\
+ & \cong\C(\colim KF,X)\tag{By left continuity of the hom-set bifunctor}
+\end{align*}
+
+\end_inset
+
+These isomorphisms are natural in 
+\begin_inset Formula $X$
+\end_inset
+
+ and thus 
+\begin_inset Formula $K\lim F\cong\colim KF$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Unification of two metavariables as pullbacks or equalisers in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ crucially relies on 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:K-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, which holds because we restrict to functors preserving finite connected
+ limits.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+As anticipated in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:res-monad"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, it is crucial to consider the monad 
+\begin_inset Formula $T$
+\end_inset
+
+ restricted to 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "assu:L-finite-conncted"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+]
+\end_layout
+
+\end_inset
+
+ Note that 
+\begin_inset Formula ${\cal L}$
+\end_inset
+
+ factors as 
+\begin_inset Formula 
+\[
+\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Thbot S,
+\]
+
+\end_inset
+
+where the right embedding preserves colimits by 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:bot-creates"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, so it is enough to show that 
+\begin_inset Formula ${\cal L}^{\bullet}$
+\end_inset
+
+ preserves finite connected colimits.
+ Let 
+\begin_inset Formula $T_{|\C}$
+\end_inset
+
+ be the monad 
+\begin_inset Formula $T$
+\end_inset
+
+ restricted to 
+\begin_inset Formula $\C$
+\end_inset
+
+, following 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:-T-res"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $K:\D\rightarrow\C$
+\end_inset
+
+ preserves finite connected colimits (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:K-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+), composing it with the left adjoint 
+\begin_inset Formula $\C\rightarrow\Kl{T_{|\C}}$
+\end_inset
+
+ yields a functor 
+\begin_inset Formula $\D\rightarrow\Kl{T_{|\C}}$
+\end_inset
+
+ also preserving those colimits.
+ Since it factors as 
+\begin_inset Formula $\D\xrightarrow{{\cal L}^{\bullet}}\Th S\hookrightarrow\Kl{T_{|\C}}$
+\end_inset
+
+, where the right functor is full and faithful, 
+\begin_inset Formula ${\cal L}^{\bullet}$
+\end_inset
+
+ also preserves finite connected colimits.
+\end_layout
+
+\begin_layout Subsection
+Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:F-finitary"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:F-finitary"
+
+\end_inset
+
+
+\begin_inset Formula $F$
+\end_inset
+
+ is finitary because filtered colimits commute with finite limits 
+\begin_inset CommandInset citation
+LatexCommand citep
+after "Theorem IX.2.1"
+key "MacLane:cwm"
+literal "false"
+
+\end_inset
+
+ and colimits.
+ The free monad construction is due to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Reiterman"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:res-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:resF-direct"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+Given a functor 
+\begin_inset Formula $F:I\rightarrow\B$
+\end_inset
+
+, we denote the limit (resp.
+ colimit) of 
+\begin_inset Formula $F$
+\end_inset
+
+ by 
+\begin_inset Formula $\int_{i:I}F(i)$
+\end_inset
+
+ or 
+\begin_inset Formula $\lim F$
+\end_inset
+
+ (resp.
+ 
+\begin_inset Formula $\int^{i:I}F(i)$
+\end_inset
+
+ or 
+\begin_inset Formula $\colim F$
+\end_inset
+
+) and the canonical projection 
+\begin_inset Formula $\lim F\rightarrow Fi$
+\end_inset
+
+ by 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ for any object 
+\begin_inset Formula $i$
+\end_inset
+
+ of 
+\begin_inset Formula $I$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This section is dedicated to the proof of the following lemma.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:F-restricts-simpl"
+
+\end_inset
+
+Given a GB-signature 
+\begin_inset Formula $S=({\cal A},\indexedO,\ntharvecfunct)$
+\end_inset
+
+ such that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits, 
+\begin_inset Formula $F_{S}$
+\end_inset
+
+ restricts as an endofunctor on the full subcategory 
+\begin_inset Formula $\C$
+\end_inset
+
+ of 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+ consisting of functors preserving finite connected limits if and only if
+ each 
+\begin_inset Formula $\Oby n\in\C$
+\end_inset
+
+, and 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
+\end_inset
+
+ preserves finite limits.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We first introduce a bunch of intermediate lemmas.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:coprod-filtered"
+
+\end_inset
+
+If 
+\begin_inset Formula $\B$
+\end_inset
+
+ is a small category with finite connected limits, then a functor 
+\begin_inset Formula $G:\B\rightarrow\Set$
+\end_inset
+
+ preserves those limits if and only if 
+\begin_inset Formula $\int\B$
+\end_inset
+
+ is a coproduct of filtered categories.
+\end_layout
+
+\begin_layout Proof
+This is a direct application of 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 2.4 and Example 2.3.(iii)"
+key "classificationaccessible"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:J-preserve"
+
+\end_inset
+
+Assume 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits.
+ Then 
+\begin_inset Formula $J:\mathbb{N}\times\mathcal{A}\rightarrow{\cal \Set}$
+\end_inset
+
+ preserves finite connected limits if and only if each 
+\begin_inset Formula $\Oby n:{\cal A\rightarrow\Set}$
+\end_inset
+
+ does.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This follows from 
+\begin_inset Formula $\int J\cong\coprod_{n\in\mathbb{N}}\coprod_{j\in\{1,\dots,n\}}\int\Oby n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:data-functor-elt"
+
+\end_inset
+
+Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ be a functor.
+ For any functor 
+\begin_inset Formula $G:I\rightarrow\int F$
+\end_inset
+
+, denoting by 
+\begin_inset Formula $H$
+\end_inset
+
+ the composite functor 
+\begin_inset Formula $I\xrightarrow{G}\int F\rightarrow\B$
+\end_inset
+
+, there exists a unique 
+\begin_inset Formula $x\in\lim(F\circ H)$
+\end_inset
+
+ such that 
+\begin_inset Formula $Gi=(Hi,p_{i}(x))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\int F$
+\end_inset
+
+ is isomorphic to the opposite of the comma category 
+\begin_inset Formula $y/F$
+\end_inset
+
+, where 
+\begin_inset Formula $y:\op{\B}\rightarrow[\B,\Set]$
+\end_inset
+
+ is the Yoneda embedding.
+ The statement follows from the universal property of a comma category.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:lim-elt"
+
+\end_inset
+
+Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ and 
+\begin_inset Formula $G:I\rightarrow\int F$
+\end_inset
+
+ such that 
+\begin_inset Formula $F$
+\end_inset
+
+ preserves the limit of 
+\begin_inset Formula $H:I\xrightarrow{G}\int F\xrightarrow{}\B$
+\end_inset
+
+.
+ Then, there exists a unique 
+\begin_inset Formula $x\in F\lim H$
+\end_inset
+
+ such that 
+\begin_inset Formula $Gi=(Hi,Fp_{i}(x))$
+\end_inset
+
+ and moreover, 
+\begin_inset Formula $(\lim H,x)$
+\end_inset
+
+ is the limit of 
+\begin_inset Formula $G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ preserving a limit 
+\begin_inset Formula $\lim G$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $x\in F\lim G$
+\end_inset
+
+, thus inducing a functor 
+\begin_inset Formula $G_{x}:D\rightarrow\int F$
+\end_inset
+
+ by the previous lemma.
+ Then, the limit of 
+\begin_inset Formula $G_{x}$
+\end_inset
+
+ is 
+\begin_inset Formula $(\lim D,x)$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The unique existence of 
+\begin_inset Formula $x\in F\lim H$
+\end_inset
+
+ such that 
+\begin_inset Formula $Gi=(Hi,Fp_{i}(x))$
+\end_inset
+
+ follows from 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:data-functor-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and the fact that 
+\begin_inset Formula $F$
+\end_inset
+
+ preserves 
+\begin_inset Formula $\lim H$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\C$
+\end_inset
+
+ denote the full subcategory of 
+\begin_inset Formula $[\B,\Set]$
+\end_inset
+
+ of functors preserving 
+\begin_inset Formula $\lim G$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\int F$
+\end_inset
+
+ is isomorphic to the opposite of the comma category 
+\begin_inset Formula $K/F$
+\end_inset
+
+, where 
+\begin_inset Formula $K:\op{\B}\rightarrow\C$
+\end_inset
+
+ is the Yoneda embedding, which preserves 
+\begin_inset Formula $\colim G$
+\end_inset
+
+, by an argument similar to the proof of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:K-finite-connected"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ We conclude from the fact that the forgetful functor from a comma category
+ 
+\begin_inset Formula $L/R$
+\end_inset
+
+ to the product of the categories creates colimits that 
+\begin_inset Formula $L$
+\end_inset
+
+ preserve.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:preserves-elt"
+
+\end_inset
+
+Let 
+\begin_inset Formula $I$
+\end_inset
+
+ be a small category, 
+\begin_inset Formula $\B$
+\end_inset
+
+ and 
+\begin_inset Formula $\B'$
+\end_inset
+
+ be categories with 
+\begin_inset Formula $I$
+\end_inset
+
+-limits (i.e., limits of any diagram over 
+\begin_inset Formula $I$
+\end_inset
+
+).
+ Let 
+\begin_inset Formula $F:\B\rightarrow\Set$
+\end_inset
+
+ be a functor preserving those colimits.
+ Then, 
+\begin_inset Formula $\int F$
+\end_inset
+
+ has 
+\begin_inset Formula $I$
+\end_inset
+
+-limits, preserved by the projection 
+\begin_inset Formula $\int F\rightarrow\B$
+\end_inset
+
+.
+ Moreover, a functor 
+\begin_inset Formula $G:\int F\rightarrow\B'$
+\end_inset
+
+ preserves them if and only if for any 
+\begin_inset Formula $d:I\rightarrow\B$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in F\lim d$
+\end_inset
+
+, the canonical morphism 
+\begin_inset Formula $G(\lim d,x)\rightarrow\int_{i:I}G(d_{i},Fp_{i}(x))$
+\end_inset
+
+ is an isomorphism.
+\end_layout
+
+\begin_layout Proof
+By 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:lim-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, a diagram 
+\begin_inset Formula $d':I\rightarrow\int F$
+\end_inset
+
+ is equivalently given by 
+\begin_inset Formula $d:I\rightarrow\B$
+\end_inset
+
+ and 
+\begin_inset Formula $x\in F\lim d$
+\end_inset
+
+, recovering 
+\begin_inset Formula $d'$
+\end_inset
+
+ as 
+\begin_inset Formula $d'_{i}=(d_{i},Fp_{i}(x))$
+\end_inset
+
+, and moreover 
+\begin_inset Formula $\lim d'=(\lim d,x)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:can-iso-app"
+
+\end_inset
+
+Assuming that 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has finite connected limits and each 
+\begin_inset Formula $\Oby n$
+\end_inset
+
+ preserves finite connected limits, the finite limit preservation on 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ can be reformulated as follows: given a finite connected diagram 
+\begin_inset Formula $d:D\rightarrow{\cal A}$
+\end_inset
+
+ and element 
+\begin_inset Formula $o\in\Oop n{\lim d}$
+\end_inset
+
+, the following canonical morphism is an isomorphism
+\begin_inset Formula 
+\[
+\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j
+\]
+
+\end_inset
+
+for any 
+\begin_inset Formula $j\in\{1,\dots,n\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+This is a direct application of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:preserves-elt"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:J-preserve"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Limits commute with dependent pairs]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:lim-commute-dependent-pairs"
+
+\end_inset
+
+Given functors 
+\begin_inset Formula $K:I\rightarrow\Set$
+\end_inset
+
+ and 
+\begin_inset Formula $G:\int K\rightarrow\Set$
+\end_inset
+
+, the following canonical morphism is an isomorphism
+\begin_inset Formula 
+\[
+\coprod_{\alpha\in\lim K}\int_{i:I}G(i,p_{i}(\alpha))\rightarrow\int_{i:I}\coprod_{x\in Ki}G(i,x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The domain consists of a family 
+\begin_inset Formula $(\alpha_{i})_{i\in I}$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha_{i}\in K_{i}$
+\end_inset
+
+ together with a family 
+\begin_inset Formula $(g_{i})_{i\in I}$
+\end_inset
+
+ where 
+\begin_inset Formula $g_{i}\in G(i,\alpha_{i})$
+\end_inset
+
+, such that that for each morphism 
+\begin_inset Formula $i\xrightarrow{u}j$
+\end_inset
+
+ in 
+\begin_inset Formula $I$
+\end_inset
+
+, we have  
+\begin_inset Formula $Ku(\alpha_{i})=\alpha_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $(Gu)(g_{i})=g_{j}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The codomain consists of a family 
+\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
+\end_inset
+
+ where 
+\begin_inset Formula $x_{i}\in Ki$
+\end_inset
+
+ and 
+\begin_inset Formula $g_{i}\in G(i,x_{i})$
+\end_inset
+
+, such that for each morphism 
+\begin_inset Formula $i\xrightarrow{u}j$
+\end_inset
+
+ in 
+\begin_inset Formula $I$
+\end_inset
+
+, we have 
+\begin_inset Formula $Ku(x_{i})=x_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $(Gu)(g_{i})=g_{j}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The canonical morphism maps 
+\begin_inset Formula $((x_{i})_{i\in I},(g_{i})_{i\in I})$
+\end_inset
+
+ to the family 
+\begin_inset Formula $(x_{i},g_{i})_{i\in I}$
+\end_inset
+
+.
+ It is clearly a bijection.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Proof of 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-restricts-simpl"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+]
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $d:I\rightarrow{\cal A}$
+\end_inset
+
+ be a finite connected diagram and 
+\begin_inset Formula $X$
+\end_inset
+
+ be a functor preserving finite connected limits.
+ Then,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\int_{i:I}F(X)_{d_{i}} & =\int_{i:I}\coprod_{n}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\\
+ & \cong\coprod_{n}\int_{i:I}\coprod_{o\in\Oop n{d_{i}}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{Coproducts commute with connected limits}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times X_{\nthar{p_{i}(o)}n}\tag{By \prettyref{lem:lim-commute-dependent-pairs}}\\
+ & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}\int_{i:I}X_{\nthar{p_{i}(o)}1}\times\dots\times\int_{i:I}X_{\nthar{p_{i}(o)}n}\tag{By commutation of limits}
+\end{align*}
+
+\end_inset
+
+Thus, since 
+\begin_inset Formula $X$
+\end_inset
+
+ preserves finite connected limits by assumption,
+\begin_inset Formula 
+\begin{align}
+\int_{i}F(X)_{d_{i}} & =\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\label{eq:F-restrict-1}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, let us prove the only if statement first.
+ Assuming that 
+\begin_inset Formula $\alpha:\int J\rightarrow{\cal A}$
+\end_inset
+
+ and each 
+\begin_inset Formula $\Oby n$
+\end_inset
+
+ preserves finite connected limits.
+ Then,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\int_{i}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{By assumption on \ensuremath{\Oby n}}\\
+ & \cong\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}\tag{By Corollary \prettyref{cor:can-iso-app}}\\
+ & =F(X)_{\lim d}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Conversely, let us assume that 
+\begin_inset Formula $F$
+\end_inset
+
+ restricts to an endofunctor on 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $F(1)=\coprod_{n}\Oby n$
+\end_inset
+
+ preserves finite connected limits.
+ By 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:coprod-filtered"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, each 
+\begin_inset Formula $\Oby n$
+\end_inset
+
+ preserves finite connected limits.
+ By 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "cor:can-iso-app"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, it is enough to prove that given a finite connected diagram 
+\begin_inset Formula $d:D\rightarrow{\cal A}$
+\end_inset
+
+ and element 
+\begin_inset Formula $o\in\Oop n{\lim d}$
+\end_inset
+
+, the following canonical morphism is an isomorphism
+\begin_inset Formula 
+\[
+\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+Now, we have
+\begin_inset Formula 
+\begin{align*}
+\int_{i:I}F(X)_{d_{i}} & \cong F(X)_{\lim d}\tag{By assumption}\\
+ & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\nthar o1}\times\dots\times X_{\nthar on}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On the other hand,
+\begin_inset Formula 
+\begin{align*}
+\int_{i:I}F(X)_{d_{i}} & \cong\coprod_{n}\coprod_{o\in\int_{i}\Oop n{d_{i}}}X_{\int_{i:I}\nthar{p_{i}(o)}1}\times\dots\times X_{\int_{i:I}\nthar{p_{i}(o)}n}\tag{By Equation \prettyref{eq:F-restrict-1}}\\
+ & =\coprod_{n}\coprod_{o\in\Oop n{\lim d}}X_{\int_{i:I}\nthar{\rename o{p_{i}}}1}\times\dots\times X_{\int_{i:I}\nthar{\rename o{p_{i}}}n}\tag{\ensuremath{\Oby n} preserves finite connected limits}
+\end{align*}
+
+\end_inset
+
+It follows from those two chains of isomorphisms that each function 
+\begin_inset Formula $X_{\nthar oj}\rightarrow X_{\int_{i:I}\nthar{\rename o{p_{i}}}j}$
+\end_inset
+
+ is a bijection, or equivalently (by the Yoneda Lemma), that 
+\begin_inset Formula $\C(K\nthar oj,X)\rightarrow\C(K\int_{i:I}\nthar{\rename o{p_{i}}}j,X)$
+\end_inset
+
+ is an isomorphism.
+ Since the Yoneda embedding is fully faithful, 
+\begin_inset Formula $\nthar oj\rightarrow\int_{i:D}\nthar{\rename o{p_{i}}}j$
+\end_inset
+
+ is an isomorphism.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:lims-coprod-pw"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:lims-coprod-pw"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cocompleteness follows from 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Remark 1.56"
+key "Adamek"
+literal "false"
+
+\end_inset
+
+, since 
+\begin_inset Formula $\C$
+\end_inset
+
+ is the category of models of a limit sketch, and is thus locally presentable,
+ by
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Proposition 1.51"
+key "Adamek"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+For the claimed closure property, all we have to check is that limits, coproduct
+s, and filtered colimits of functors preserving finite connected limits
+ still preserve finite connected limits.
+ The case of limits is clear, since limits commute with limits.
+ Coproducts and filtered colimits also commute with finite connected limits
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Example 1.3.(vi)"
+key "classificationaccessible"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cor:-T-res"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "app:T-res"
+
+\end_inset
+
+The result follows from the construction of 
+\begin_inset Formula $T$
+\end_inset
+
+ using colimits of initial chains, thanks to the closure properties of 
+\begin_inset Formula $\C$
+\end_inset
+
+.
+ More specifically, 
+\begin_inset Formula $TX$
+\end_inset
+
+ can be constructed as the colimit of the chain 
+\begin_inset Formula $\emptyset\rightarrow H\emptyset\rightarrow HH\emptyset\rightarrow\dots$
+\end_inset
+
+, where 
+\begin_inset Formula $\emptyset$
+\end_inset
+
+ denotes the constant functor mapping anything to the empty set, and 
+\begin_inset Formula $HZ=FZ+X$
 \end_inset
 
 .
