@@ -177,7 +177,7 @@ Tm· : MetaContext· → ℕ → Set
 \end{code}
 %<*lc-syntax-decl>
 \begin{code}
-data Tm  : MetaContext → ℕ → Set
+data Tm : MetaContext → ℕ → Set
 Tm· Γ n = Tm ⌊ Γ ⌋ n
 \end{code}
 %</lc-syntax-decl>
@@ -195,17 +195,20 @@ data Tm where
 %</lc-syntax-ind>
 %<*lc-syntax-app-decl>
 \begin{code}
-App : ∀ {Γ n} → Tm Γ n → Tm Γ n → Tm Γ n
+App : ∀ {Γ n} → Tm Γ n →
+       Tm Γ n → Tm Γ n
 \end{code}
 %</lc-syntax-app-decl>
 %<*lc-syntax-lam-decl>
 \begin{code}
-Lam : ∀ {Γ n} → Tm Γ (1 + n) → Tm Γ n
+Lam : ∀ {Γ n} → Tm Γ (1 + n) →
+      Tm Γ n
 \end{code}
 %</lc-syntax-lam-decl>
 %<*lc-syntax-var-decl>
 \begin{code}
-Var : ∀ {Γ n} → Fin n → Tm Γ n
+Var : ∀ {Γ n} → Fin n →
+      Tm Γ n
 \end{code}
 %</lc-syntax-var-decl>
 %<*lc-syntax-app-def>

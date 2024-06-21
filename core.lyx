@@ -4140,6 +4140,11 @@ name "fig:syntax-lam"
 
 \begin_layout Plain Layout
 \align left
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Box Frameless
 position "b"
 hor_pos "c"
@@ -4147,7 +4152,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "40text%"
+width "32text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -4190,6 +4195,11 @@ agdacode{lc-syntax-decl}
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "b"
 hor_pos "c"
@@ -4197,7 +4207,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "33text%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -4300,7 +4310,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "40text%"
+width "54text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -4321,6 +4331,13 @@ status open
 \begin_layout Plain Layout
 
 %%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-syntax-decl}
 \end_layout
 
 \begin_layout Plain Layout
@@ -4407,7 +4424,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "40text%"
+width "35text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -4478,7 +4495,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "33text%"
+width "40text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -9792,7 +9809,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "28text%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -9887,6 +9904,10 @@ agdacode{prune-type}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -9943,7 +9964,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "100text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -10003,6 +10024,22 @@ AgdaSpaceAroundCode{}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.5em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "t"
 hor_pos "c"
@@ -10010,7 +10047,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "100text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -11442,15 +11479,7 @@ vspace{-0em}
 \end_inset
 
 
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
+\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -11460,7 +11489,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "35col%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -11504,12 +11533,23 @@ agdacode{lc-prune-flex}
 \end_inset
 
 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
 \begin_layout Plain Layout
 \begin_inset Formula $\labellabelrule{\dfrac{\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}}{\begin{array}{r}
@@ -11522,9 +11562,9 @@ P(y');M\mapsto P(x')\dashv\dotmcontext{\Gamma}[P:p]
 \end_layout
 
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
+
+
+\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -11534,7 +11574,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "30col%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -11546,7 +11586,7 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-\align center
+\align left
 \begin_inset Preview
 
 \begin_layout Standard
@@ -11555,7 +11595,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%
+%%
 \end_layout
 
 \begin_layout Plain Layout
@@ -11573,19 +11613,30 @@ agdacode{prune-fail}
 \end_inset
 
 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
 \end_layout
 
 \end_inset
 
 
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \labellabelrule{\dfrac{}{\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot}}{P-Fail}
@@ -11595,16 +11646,6 @@ vspace{-1em}
 
 
 \end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
 
 \end_inset
 
@@ -11694,17 +11735,6 @@ vspace{-0em}
 \end_inset
 
 
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -11712,7 +11742,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "30col%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -11724,7 +11754,7 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-\align center
+\align left
 \begin_inset Preview
 
 \begin_layout Standard
@@ -11756,14 +11786,6 @@ agdacode{prune-app}
 \end_inset
 
 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -11771,7 +11793,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "28col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -11783,7 +11805,41 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-\align center
+\begin_inset Formula $\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\Delta_{1}\\
+\Delta_{1}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\Delta_{2}
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\Delta_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Preview
 
 \begin_layout Standard
@@ -11815,14 +11871,6 @@ agdacode{prune-lam}
 \end_inset
 
 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -11830,7 +11878,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "25col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -11842,7 +11890,38 @@ backgroundcolor "none"
 status open
 
 \begin_layout Plain Layout
-\align center
+\begin_inset Formula $\dfrac{\dotmcontext{\Gamma}\prune t{x\uparrow\ }{\sigma}{t'}\dashv\Delta}{\dotmcontext{\Gamma}\prune{\lambda t}x{\sigma}{\lambda t'}\dashv\Delta}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Preview
 
 \begin_layout Standard
@@ -11851,7 +11930,7 @@ status open
 
 \begin_layout Plain Layout
 
-%%%
+%
 \end_layout
 
 \begin_layout Plain Layout
@@ -11874,41 +11953,23 @@ agdacode{prune-var}
 \end_inset
 
 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{\begin{array}{c}
-\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\Delta_{1}\\
-\Delta_{1}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\Delta_{2}
-\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\Delta_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{\dotmcontext{\Gamma}\prune t{x\uparrow\ }{\sigma}{t'}\dashv\Delta}{\dotmcontext{\Gamma}\prune{\lambda t}x{\sigma}{\lambda t'}\dashv\Delta}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
 \begin_layout Plain Layout
 \begin_inset Formula $\dfrac{i\notin x}{\dotmcontext{\Gamma}\prune{\lcvar i}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{i=x_{j}}{\dotmcontext{\Gamma}\prune{\lcvar i}x{1_{\dotmcontext{\Gamma}}}{\lcvar j}\dashv\dotmcontext{\Gamma}}$
@@ -11918,13 +11979,11 @@ agdacode{prune-var}
 \end_layout
 
 \end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Note Note
 status open
 
@@ -12139,7 +12198,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align left
@@ -12150,7 +12209,7 @@ status open
 
 
 \backslash
-vspace{-0.5em}
+vspace{-0.8em}
 \end_layout
 
 \end_inset
@@ -12336,6 +12395,23 @@ agdacode{unify-bot}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.5em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "t"
 hor_pos "c"
@@ -12343,7 +12419,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "30col%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -12399,7 +12475,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "30col%"
+width "30text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -12412,6 +12488,19 @@ status open
 
 \begin_layout Plain Layout
 \align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-1em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
 status collapsed
 
@@ -12523,6 +12612,286 @@ vspace{1em}
 
 
 \end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "49text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Preview
+
+\begin_layout Standard
+\align left
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-app}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma_{1}\dashv\Delta_{1}\\
+\Delta_{1}\vdash u[\sigma_{1}]=u'[\sigma_{2}]\Rightarrow\sigma_{2}\dashv\Delta_{2}
+\end{array}}{\dotmcontext{\Gamma}\vdash t\ u=t'\ u'\Rightarrow\sigma_{1}[\sigma_{2}]\dashv\Delta_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-lam}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\dotmcontext{\Gamma}\vdash t=t'\Rightarrow\sigma\dashv\Delta}{\dotmcontext{\Gamma}\vdash\lambda t=\lambda t'\Rightarrow\sigma\dashv\Delta}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.5em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-var}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{i\neq j}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar j\Rightarrow\bang_{s}\dashv\bot}\qquad\dfrac{}{\dotmcontext{\Gamma}\vdash\lcvar i=\lcvar i\Rightarrow1_{\Gamma}\dashv\dotmcontext{\Gamma}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
 
 \begin_layout Plain Layout
 \begin_inset Tabular
@@ -12776,6 +13145,11 @@ agdacode{unify-var}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Plain Layout
 \begin_inset Note Note
 status collapsed
@@ -12982,7 +13356,7 @@ status open
 
 
 \backslash
-vspace{1em}
+vspace{-1em}
 \end_layout
 
 \end_inset
@@ -12993,15 +13367,12 @@ vspace{1em}
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="5">
+<lyxtabular version="3" rows="2" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13012,7 +13383,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "15col%"
+width "20col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -13057,28 +13428,6 @@ agdacode{unify-bot}
 \end_inset
 
 
-\begin_inset Formula $\text{\ensuremath{\labellabelrule{\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}}{U-Fail}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
 \end_layout
 
 \end_inset
@@ -13094,7 +13443,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "15col%"
+width "20col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -13137,6 +13486,20 @@ agdacode{unify-last}%
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\text{\ensuremath{\labellabelrule{\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}}{U-Fail}}}$
 \end_inset
 
 
@@ -13518,9 +13881,8 @@ noprefix "false"
 
 \begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="3">
+<lyxtabular version="3" rows="2" columns="2">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
@@ -13528,6 +13890,19 @@ noprefix "false"
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace{-0.6em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -13535,7 +13910,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "35col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -13576,37 +13951,30 @@ agdacode{prune-flex}
 
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" rightline="true" usebox="none">
-\begin_inset Text
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
 
 \begin_layout Plain Layout
-Same as the rule 
-\begin_inset Formula $\refrule{P-Flex}$
-\end_inset
 
- in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:unif-full-lam"
-plural "false"
-caps "true"
-noprefix "false"
+
+\backslash
+vspace{-0em}
+\end_layout
 
 \end_inset
 
-.
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13617,7 +13985,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "30col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -13656,20 +14024,42 @@ agdacode{prune-fail}
 \end_inset
 
 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
 \end_layout
 
 \end_inset
 
 
 \end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Same as the rule 
+\begin_inset Formula $\refrule{P-Flex}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:unif-full-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
 
 \begin_layout Plain Layout
 Same as the rule 
@@ -13690,11 +14080,6 @@ noprefix "false"
 \end_layout
 
 \end_inset
-
-
-\end_layout
-
-\end_inset
 </cell>
 </row>
 </lyxtabular>
@@ -13705,6 +14090,19 @@ noprefix "false"
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -14169,7 +14567,7 @@ status open
 
 
 \backslash
-vspace{-1em}
+vspace{-0em}
 \end_layout
 
 \end_inset
@@ -14324,7 +14722,7 @@ status open
 
 
 \backslash
-vspace{-1.8em}
+vspace{-0.5em}
 \end_layout
 
 \end_inset
@@ -14620,6 +15018,22 @@ status open
 \[
 \labellabelrule{\unificationempty}{U-Empty}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{0.2em}
+\end_layout
 
 \end_inset
 
@@ -15114,7 +15528,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "65col%"
+width "50col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -30550,7 +30964,7 @@ The induced signature is pattern-friendly and so the generic pattern unification
 
 \begin_layout Standard
 \begin_inset Float table
-wide true
+wide false
 sideways false
 status open
 
@@ -30906,7 +31320,10 @@ Typing rule
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\{a_{i,\tau'_{1},\dots,\tau'_{n}}|i\in|\vec{\sigma}|_{\vec{\tau}'\Rightarrow\tau}\text{ and \ensuremath{\tau} is a base type}\}$
+\begin_inset Formula $\begin{array}{c}
+\{a_{i,\tau'_{1},\dots,\tau'_{n}}|i\in|\vec{\sigma}|_{\vec{\tau}'\Rightarrow\tau}\\
+\text{ and \ensuremath{\tau} is a base type}\}
+\end{array}$
 \end_inset
 
 
@@ -31386,6 +31803,45 @@ vspace{1em}
 \end_layout
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ContinuedFloat
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="1" columns="1">
@@ -31474,8 +31930,8 @@ noprefix "false"
 
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
+<features islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
@@ -31707,14 +32163,6 @@ n\Fsep\vec{\sigma}\arSep\tau'
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
