@@ -44,7 +44,7 @@ open import Data.Bool.Base
 import Function.Base
 
 open import lc using (_↑ ; commonPositions ; commonPositions-property ; commonValues ; commonValues-property)
-      renaming (_⇒_ to _⇒ᵣ_ ; _∘_ to _∘ᵣ_ ; id to idᵣ)
+      renaming (hom to _⇒ᵣ_ ; _∘_ to _∘ᵣ_ ; id to idᵣ)
 
 
 
