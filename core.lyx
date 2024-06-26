@@ -9494,277 +9494,7 @@ noprefix "false"
 \end_inset
 
 .
- This function recursively inspects its argument.
- The base metavariable case corresponds to unification of 
-\begin_inset Formula $M(x)$
-\end_inset
-
- and 
-\begin_inset Formula $M'(y)$
-\end_inset
-
- where 
-\begin_inset Formula $M$
-\end_inset
-
- and 
-\begin_inset Formula $M'$
-\end_inset
-
- are distinct metavariables.
- In this case, the line 
-\begin_inset Formula $\AgdaKeyword{let}\ p,x',y'=\AgdaFunction{commonValues}\ m\ x\ y$
-\end_inset
-
- computes the vectors of 
-\emph on
-common value positions 
-\emph default
-
-\begin_inset Formula $(x_{1}',\dots,x_{p}')$
-\end_inset
-
- and 
-\begin_inset Formula $(y_{1}',\dots,y'_{p})$
-\end_inset
-
- between 
-\begin_inset Formula $x_{1},\dots,x_{m}$
-\end_inset
-
- and 
-\begin_inset Formula $y_{1},\dots,y_{m'}$
-\end_inset
-
-, i.e., the pair of maximal lists 
-\begin_inset Formula $(\vec{x'},\vec{y'})$
-\end_inset
-
- of distinct positions such that 
-\begin_inset Formula $x_{\vec{x'}}=y_{\vec{y'}}$
-\end_inset
-
-.
- We denote
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-The similarity with the notation for the pruning phase is no coincidence:
- both can be interpreted as pullbacks (or pushouts), as we will see in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:pushout-notation"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- such a situation by 
-\begin_inset Formula $\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}$
-\end_inset
-
-.
- The most general unifier 
-\begin_inset Formula $\sigma$
-\end_inset
-
- coincides with the identity substitution except that the metavariables
  
-\begin_inset Formula $M$
-\end_inset
-
- and 
-\begin_inset Formula $M'$
-\end_inset
-
- are removed from the context and replaced by a single metavariable declaration
- 
-\begin_inset Formula $P:p$
-\end_inset
-
-.
- Then, 
-\begin_inset Formula $\sigma$
-\end_inset
-
- maps 
-\begin_inset Formula $M$
-\end_inset
-
- to 
-\begin_inset Formula $P(x')$
-\end_inset
-
- and 
-\begin_inset Formula $M'$
-\end_inset
-
- to 
-\begin_inset Formula $P(y')$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Example
-Let 
-\begin_inset Formula $x,y,z$
-\end_inset
-
- be three distinct variables.
- The most general unifier of 
-\begin_inset Formula $M(x,y)$
-\end_inset
-
- and 
-\begin_inset Formula $N(z,x)$
-\end_inset
-
- is 
-\begin_inset Formula $M\mapsto N'(\var 1),N\mapsto N'(\var 2)$
-\end_inset
-
-.
- The most general unifier of 
-\begin_inset Formula $M(x,y)$
-\end_inset
-
- and 
-\begin_inset Formula $N(z)$
-\end_inset
-
- is 
-\begin_inset Formula $M\mapsto N',N\mapsto N'$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-As for the rule 
-\begin_inset Formula $\refrule{Same-Var}$
-\end_inset
-
-, the corresponding rule 
-\begin_inset Formula $\refrule{P-Flex}$
-\end_inset
-
- does not stipulate how to generate the fresh metavariable symbol 
-\begin_inset Formula $P$
-\end_inset
-
-, although the implementation makes an obvious choice, reusing the name
- 
-\begin_inset Formula $M$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The intuition for the application case is that if we want to unify 
-\begin_inset Formula $M(x)$
-\end_inset
-
- with 
-\begin_inset Formula $t\ u$
-\end_inset
-
-, we can refine 
-\begin_inset Formula $M(x)$
-\end_inset
-
- to be 
-\begin_inset Formula $M_{1}(x)\ M_{2}(x)$
-\end_inset
-
-, where 
-\begin_inset Formula $M_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $M_{2}$
-\end_inset
-
- are two fresh metavariables to be unified with 
-\begin_inset Formula $t$
-\end_inset
-
- and 
-\begin_inset Formula $u$
-\end_inset
-
-.
- Assume that those two unification problems yield 
-\begin_inset Formula $t'$
-\end_inset
-
- and 
-\begin_inset Formula $u'$
-\end_inset
-
- as replacements for 
-\begin_inset Formula $t$
-\end_inset
-
- and 
-\begin_inset Formula $u$
-\end_inset
-
-, as well as substitution 
-\begin_inset Formula $\sigma_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $\sigma_{2}$
-\end_inset
-
-, then 
-\begin_inset Formula $M$
-\end_inset
-
- should be replaced accordingly with 
-\begin_inset Formula $t'[\sigma_{2}]\ u'$
-\end_inset
-
-.
- Note that this really involves improper application, taking into account
- the following three subcases at once.
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\dotmcontext{\Delta_{1}}\\
-\dotmcontext{\Delta_{1}}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\dotmcontext{\Delta_{2}}
-\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\dotmcontext{\Delta_{2}}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{\begin{array}{c}
-\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\dotmcontext{\Delta_{1}}\\
-\dotmcontext{\Delta_{1}}\prune{u[\sigma_{1}]}x{\bang_{s}}{\bang}\dashv\bot
-\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{\begin{array}{c}
-\dotmcontext{\Gamma}\prune tx{\bang_{s}}{\bang}\dashv\bot\\
-\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot
-\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\bang_{s}}{\bang}\dashv\bot}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide true
 sideways false
@@ -10128,11 +9858,185 @@ AgdaSpaceAroundCode{}
 
 \end_inset
 
+ This function recursively inspects its argument.
+ The base metavariable case corresponds to unification of 
+\begin_inset Formula $M(x)$
+\end_inset
 
+ and 
+\begin_inset Formula $M'(y)$
+\end_inset
+
+ where 
+\begin_inset Formula $M$
+\end_inset
+
+ and 
+\begin_inset Formula $M'$
+\end_inset
+
+ are distinct metavariables.
+ In this case, the line 
+\begin_inset Formula $\AgdaKeyword{let}\ p,x',y'=\AgdaFunction{commonValues}\ m\ x\ y$
+\end_inset
+
+ computes the vectors of 
+\emph on
+common value positions 
+\emph default
+
+\begin_inset Formula $(x_{1}',\dots,x_{p}')$
+\end_inset
+
+ and 
+\begin_inset Formula $(y_{1}',\dots,y'_{p})$
+\end_inset
+
+ between 
+\begin_inset Formula $x_{1},\dots,x_{m}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{1},\dots,y_{m'}$
+\end_inset
+
+, i.e., the pair of maximal lists 
+\begin_inset Formula $(\vec{x'},\vec{y'})$
+\end_inset
+
+ of distinct positions such that 
+\begin_inset Formula $x_{\vec{x'}}=y_{\vec{y'}}$
+\end_inset
+
+.
+ We denote
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The similarity with the notation for the pruning phase is no coincidence:
+ both can be interpreted as pullbacks (or pushouts), as we will see in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "rem:pushout-notation"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ such a situation by 
+\begin_inset Formula $\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}$
+\end_inset
+
+.
+ The most general unifier 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ coincides with the identity substitution except that the metavariables
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ and 
+\begin_inset Formula $M'$
+\end_inset
+
+ are removed from the context and replaced by a single metavariable declaration
+ 
+\begin_inset Formula $P:p$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ maps 
+\begin_inset Formula $M$
+\end_inset
+
+ to 
+\begin_inset Formula $P(x')$
+\end_inset
+
+ and 
+\begin_inset Formula $M'$
+\end_inset
+
+ to 
+\begin_inset Formula $P(y')$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Let 
+\begin_inset Formula $x,y,z$
+\end_inset
+
+ be three distinct variables.
+ The most general unifier of 
+\begin_inset Formula $M(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $N(z,x)$
+\end_inset
+
+ is 
+\begin_inset Formula $M\mapsto N'(\var 1),N\mapsto N'(\var 2)$
+\end_inset
+
+.
+ The most general unifier of 
+\begin_inset Formula $M(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $N(z)$
+\end_inset
+
+ is 
+\begin_inset Formula $M\mapsto N',N\mapsto N'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As for the rule 
+\begin_inset Formula $\refrule{Same-Var}$
+\end_inset
+
+, the corresponding rule 
+\begin_inset Formula $\refrule{P-Flex}$
+\end_inset
+
+ does not stipulate how to generate the fresh metavariable symbol 
+\begin_inset Formula $P$
+\end_inset
+
+, although the implementation makes an obvious choice, reusing the name
+ 
+\begin_inset Formula $M$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide true
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -13748,7 +13652,7 @@ status open
 \begin_inset Float figure
 wide true
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -15197,7 +15101,102 @@ status open
 
 \end_inset
 
+The intuition for the application case is that if we want to unify 
+\begin_inset Formula $M(x)$
+\end_inset
 
+ with 
+\begin_inset Formula $t\ u$
+\end_inset
+
+, we can refine 
+\begin_inset Formula $M(x)$
+\end_inset
+
+ to be 
+\begin_inset Formula $M_{1}(x)\ M_{2}(x)$
+\end_inset
+
+, where 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ are two fresh metavariables to be unified with 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Assume that those two unification problems yield 
+\begin_inset Formula $t'$
+\end_inset
+
+ and 
+\begin_inset Formula $u'$
+\end_inset
+
+ as replacements for 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+, as well as substitution 
+\begin_inset Formula $\sigma_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{2}$
+\end_inset
+
+, then 
+\begin_inset Formula $M$
+\end_inset
+
+ should be replaced accordingly with 
+\begin_inset Formula $t'[\sigma_{2}]\ u'$
+\end_inset
+
+.
+ Note that this really involves improper application, taking into account
+ the following three subcases at once.
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\dotmcontext{\Delta_{1}}\\
+\dotmcontext{\Delta_{1}}\prune{u[\sigma_{1}]}x{\sigma_{2}}{u'}\dashv\dotmcontext{\Delta_{2}}
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\sigma_{1}[\sigma_{2}]}{t'[\sigma_{2}]\ u'}\dashv\dotmcontext{\Delta_{2}}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\sigma_{1}}{t'}\dashv\dotmcontext{\Delta_{1}}\\
+\dotmcontext{\Delta_{1}}\prune{u[\sigma_{1}]}x{\bang_{s}}{\bang}\dashv\bot
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\bang_{s}}{\bang}\dashv\bot}\quad\dfrac{\begin{array}{c}
+\dotmcontext{\Gamma}\prune tx{\bang_{s}}{\bang}\dashv\bot\\
+\bot\prune{\bang}x{\bang_{s}}{\bang}\dashv\bot
+\end{array}}{\dotmcontext{\Gamma}\prune{t\ u}x{\bang_{s}}{\bang}\dashv\bot}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
