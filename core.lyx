@@ -715,9 +715,18 @@ enriched
 \emph default
  terms, the goal is to find the most general unifier, that is, the most
  general instantiation of those metavariables that makes the two terms equal.
- In higher-order unification, metavariables are functional in the sense
- that they take arguments: this is especially useful for languages with
- variable binding, so that metavariables can depend on bound variables.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In higher-order unification, metavariables are functional in the sense that
+ they take arguments:
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -731,6 +740,8 @@ a decidable fragment of higher-order unification where in the enriched syntax,
 pattern
 \emph default
 s, that is, to lists of distinct variables.
+ This is especially useful for languages with variable binding, so that
+ metavariables can depend on bound variables.
  
 \begin_inset Note Note
 status collapsed
