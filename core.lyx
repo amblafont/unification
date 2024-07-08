@@ -1017,11 +1017,11 @@ literal "false"
 \begin_inset Formula $\eta$
 \end_inset
 
--equation by working on the syntax of normalised 
+-equations by working on the syntax of normalised 
 \begin_inset Formula $\lambda$
 \end_inset
 
--terms (which is notably equation-free).
+-terms (which is notably equation free).
  In their conclusion they sketched a track to extend their work for a suitable
  class of languages:
 \end_layout
@@ -1036,9 +1036,12 @@ Instead of [the category of patterns] we can consider a generic category
 \end_inset
 
  having all the pullbacks and equalisers and whose arrows are monomorphisms.
- And instead of the grammar of STLC we can use an arbitrary one defined
- by a family of operators [...] as long as they are functorial with respect
- to 
+ And instead of the grammar of [normal forms of simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus] we can use an arbitrary one defined by a family of operators
+ [...] as long as they are functorial with respect to 
 \begin_inset Formula $Ctx$
 \end_inset
 
@@ -1101,7 +1104,7 @@ inversion of the functorial action
 \begin_inset Formula $x$
 \end_inset
 
-? Thi
+? 
 \end_layout
 
 \begin_layout Plain Layout
@@ -1131,7 +1134,7 @@ In their work, inversion of the functorial action is indeed crucially involved
 \end_layout
 
 \begin_layout Standard
-The present work proposes a generalisation as envisionned by Vezzosi-Abel
+The present work proposes a generalisation as envisioned by Vezzosi-Abel
 \begin_inset Note Note
 status collapsed
 
@@ -1192,7 +1195,7 @@ a functorial assignment
 \end_layout
 
 \begin_layout Itemize
-a functorial assignement 
+a functorial assignment 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -1524,6 +1527,61 @@ Let us explain how unification is stated in our setting.
  is that either the mgu exists, or there is no unifier.
  Moreover, there is a recursive procedure which computes the mgu or detects
  the impossibility of unification.
+ 
+\end_layout
+
+\begin_layout Standard
+We bring a slight change of perspective with respect to the traditional
+ presentation of unification as a partial algorithm that computes the mgu.
+\end_layout
+
+\begin_layout Standard
+A slight change of perspective allows us to get rid of this partiality:
+ we add a formal error metavariable context 
+\begin_inset Formula $\bot$
+\end_inset
+
+ and a single formal term 
+\begin_inset Formula $\bot;a\vdash!$
+\end_inset
+
+ for all environments 
+\begin_inset Formula $a$
+\end_inset
+
+, so that we get a unique metavariable substitution 
+\begin_inset Formula $!_{\Gamma}$
+\end_inset
+
+ from any metacontext 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to 
+\begin_inset Formula $\bot$
+\end_inset
+
+ which unifies any pair of terms.
+ If two terms are not unifiable in the traditional sense, 
+\begin_inset Formula $!$
+\end_inset
+
+ is the mgu.
+ If 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ is the mgu in the traditional sense, then it is still the mgu in this extended
+ setting, because 
+\begin_inset Formula $!_{\Gamma}$
+\end_inset
+
+ uniquely factors as 
+\begin_inset Formula $\bang_{\Delta}\circ\sigma$
+\end_inset
+
+.
+ From this, it follows that the unification algorithm is total.
 \end_layout
 
 \begin_layout Paragraph
@@ -1531,9 +1589,16 @@ Comparison with Vezzosi-Abel's vision
 \end_layout
 
 \begin_layout Standard
-The key additional ingredient that we introduce is the preservation of equaliser
-s and pullbacks.
- This is crucial to ensure that the above main point is true (see 
+We mentioned above our implicit treatment of types and failure that makes
+ our abstract setting simpler.
+ On top of that, the key additional ingredient that we introduce is the
+ preservation of equalisers and pullbacks.
+ This is crucial to ensure that the above main point is true.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "rem:counter-example"
@@ -1547,19 +1612,27 @@ noprefix "false"
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-Another innocuous difference, due to our treatment of types, is that their
- category of patterns differs from ours: their objects are object context
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, which allows us to work with a simple well-formed judgement.
+ We also handle partiality in a different manner.
+ Indeed, unification is traditionally presented as a partial algorithm that
+ computes the mgu, and fails when this is not possible, that is, when there
+ is no unifier.
  
-\begin_inset Formula $\vec{\sigma}$
+\end_layout
+
 \end_inset
 
-, while ours are environments 
-\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
-\end_inset
 
-.
- As a consequence, the abstract setting is uniform and simpler.
 \end_layout
 
 \begin_layout Paragraph
@@ -1657,8 +1730,8 @@ noprefix "false"
 \end_inset
 
 .
- Following Vezzosi-Abel's analysis, a pattern, as a morphism between environemen
-ts, 
+ Following Vezzosi-Abel's analysis, a pattern, as a morphism between environment
+s, 
 \begin_inset Formula $n$
 \end_inset
 
@@ -1716,7 +1789,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Our class of languages also account for languages where terms bind type
+Our class of languages also accounts for languages where terms bind type
  variables, such as system F (
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -1825,7 +1898,7 @@ noprefix "false"
 \end_inset
 
 , we present our generic pattern unification algorithm, parameterised by
- our generalised notion of binding signature.
+ our notion of specification.
  We introduce categorical semantics of pattern unification in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -1869,7 +1942,7 @@ noprefix "false"
 \end_inset
 
 .
- Examples of generalised binding signatures are given in 
+ Examples of specifications are given in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:applications"
@@ -2119,7 +2192,7 @@ Pure
 \begin_inset Formula $\eta$
 \end_inset
 
- equation) fits into this scheme: using De Bruijn encoding, a variable context
+ equation) fits into this scheme: using De Bruijn encoding, an environment
  is a natural number indicating the number of available free variables,
  and a variable is then just an index.
 \begin_inset Formula 
@@ -2242,7 +2315,7 @@ for the metavariable
 \begin_inset Formula $m$
 \end_inset
 
- in a variable context 
+ in an environment 
 \begin_inset Formula $n$
 \end_inset
 
@@ -2250,7 +2323,7 @@ for the metavariable
 \begin_inset Formula $m$
 \end_inset
 
- distinct variables in the variable context 
+ distinct variables in the environment 
 \begin_inset Formula $n$
 \end_inset
 
@@ -2458,7 +2531,7 @@ Here we adopt the De Bruijn level convention where the variable bound by
 \begin_inset Formula $\lambda$
 \end_inset
 
--abstraction is not 0 but the biggest free variable in the variable context.
+-abstraction is not 0 but the biggest free variable in the environment.
 \end_layout
 
 \end_inset
@@ -3311,7 +3384,7 @@ name "sec:summary-algo"
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -3756,8 +3829,17 @@ name "fig:generic-algo"
 \end_layout
 
 \begin_layout Standard
-In this section, we start by describing a pattern unification algorithm
- for pure 
+In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, we start by describing a pattern unification algorithm for pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -3772,7 +3854,19 @@ noprefix "false"
 \end_inset
 
 .
- Then we present our generic algorithm (
+ We claim no originality here; minor variants of the algorithm can be found
+ in the litterature: it serves mainly as an introduction to the generic
+ algorithm presented in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ and summarised in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:unif-full-gen"
@@ -3782,11 +3876,8 @@ noprefix "false"
 
 \end_inset
 
-).
- We claim no originality here; minor variants of the algorithm can be found
- in the litterature.
- This section serves mainly as an introduction to the generic algorithm
- parameterised by a GB-signature presented in the next section.
+.
+ 
 \begin_inset Note Note
 status open
 
@@ -6679,8 +6770,8 @@ context, as a list
 \end_layout
 
 \begin_layout Enumerate
-a variable context, which is a mere natural number indicating the highest
- possible free variable.
+an environment, which is a mere natural number indicating the highest possible
+ free variable.
 \end_layout
 
 \begin_layout Standard
@@ -6720,7 +6811,7 @@ literal "false"
 \end_inset
 
 .
- In Agda, variables in the variable context 
+ In Agda, variables in the environment 
 \begin_inset Formula $n$
 \end_inset
 
@@ -6764,7 +6855,7 @@ The error metacontext
 \end_inset
 
  will prove useful to handle failure in the unification algorithm.
- The unification algorithm is fundamentally a partial one, since unifiers
+ Traditionally, unification is presented as a partial algorithm, since unifiers
  may not exist.
  Instead of modelling partiality with some kind of error monad, we instead
  make our unification algorithm total by adding a formal error, so that
@@ -6953,7 +7044,7 @@ Let us focus on the penultimate constructor, building a metavariable application
 \begin_inset Formula $m$
 \end_inset
 
- consisting of distinct variables in the variable context 
+ consisting of distinct variables in the environment 
 \begin_inset Formula $n$
 \end_inset
 
@@ -7061,7 +7152,7 @@ The benefit is that there is no need to shift free variables under a
 \end_inset
 
 , making substitution simpler.
- Whether a variable is bound or not depends on the variable context.
+ Whether a variable is bound or not depends on the environment.
 \end_layout
 
 \end_inset
@@ -9057,7 +9148,7 @@ noprefix "false"
 
 .
  While metavariable substitutions change the metacontext of the substituted
- term, renamings change the variable context.
+ term, renamings change the environment.
 \end_layout
 
 \begin_layout Standard
@@ -9350,7 +9441,7 @@ noprefix "false"
 \begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
 \end_inset
 
-, leaving the variable context 
+, leaving the environment 
 \begin_inset Formula $n$
 \end_inset
 
@@ -17657,7 +17748,7 @@ arities
 \emph on
 or
 \emph default
- variable contexts
+ environments
 \emph on
 ,
 \shape default
@@ -17686,7 +17777,7 @@ for each operation symbol
 \begin_inset Formula $o\in O(a)$
 \end_inset
 
-, a list of variable contexts 
+, a list of environments 
 \begin_inset Formula $\ntharvec o=(\nthar o1,\dots,\nthar on)$
 \end_inset
 
@@ -17721,7 +17812,7 @@ Intuitively,
 \begin_inset Formula $O(a)$
 \end_inset
 
- is the set of operation symbols available in the variable context 
+ is the set of operation symbols available in the environment 
 \begin_inset Formula $a$
 \end_inset
 
@@ -17839,11 +17930,11 @@ The choice of renamings (i.e., morphisms in the category of arities) is motivate
 \begin_inset Formula $m\in\mathbb{N}$
 \end_inset
 
-, then a choice of arguments in the variable context 
+, then a choice of arguments in the environment 
 \begin_inset Formula $a\in\mathbb{N}$
 \end_inset
 
- consists of a list of distinct variables in the variable context 
+ consists of a list of distinct variables in the environment 
 \begin_inset Formula $a$
 \end_inset
 
@@ -18000,7 +18091,7 @@ name "rem:arg-op-subst"
 \end_inset
 
 Recall that the Agda code uses a nameless convention for metacontexts: they
- are just lists of variable contexts.
+ are just lists of environments.
  Therefore, the arity 
 \family roman
 \series medium
@@ -19866,7 +19957,7 @@ noprefix "false"
 \begin_inset Formula $O(a)$
 \end_inset
 
- in a variable context 
+ in an environment 
 \begin_inset Formula $a$
 \end_inset
 
@@ -19979,16 +20070,7 @@ The first condition is equivalent to the existence of equalisers and pullbacks
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{full}
-\end_layout
-
+\begin_inset Separator plain
 \end_inset
 
 
@@ -20029,6 +20111,22 @@ As a counter-example, take
 \end_inset
 
  has two unifiers but no most general unifier.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -21519,7 +21617,7 @@ The rule
 \begin_inset Formula $M\neq N$
 \end_inset
 
- in a variable context 
+ in an environment 
 \begin_inset Formula $a$
 \end_inset
 
@@ -24515,7 +24613,7 @@ In the rule
 \begin_inset Formula $n$
 \end_inset
 
- is the variable context of 
+ is the environment of 
 \begin_inset Formula $o(\vec{t})$
 \end_inset
 
@@ -24898,7 +24996,7 @@ We can adapt the specification of pure
 
 .
  Let us describe inductively the syntax.
- A variable context 
+ an environment 
 \begin_inset Formula $C$
 \end_inset
 
@@ -24934,7 +25032,7 @@ Note that a metavariable
 \begin_inset Formula $\{0\}$
 \end_inset
 
- can be used either at top level in the variable context 
+ can be used either at top level in the environment 
 \begin_inset Formula $\{0\}$
 \end_inset
 
@@ -30475,7 +30573,7 @@ Let
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- of arities, or variable contexts, and renamings between them.
+ of arities, or environments, and renamings between them.
  An arity 
 \begin_inset Formula $\vec{\sigma}\arSep\tau$
 \end_inset
@@ -30497,7 +30595,7 @@ Let
 \begin_inset Formula $\vec{\sigma}\arSep\tau$
 \end_inset
 
- considered as a variable context is intuitively a well-typed term 
+ considered as an environment is intuitively a well-typed term 
 \begin_inset Formula $t$
 \end_inset
 
@@ -30514,7 +30612,7 @@ Let
 \begin_inset Formula $M:(\vec{\sigma}\arSep\tau)$
 \end_inset
 
- in variable context 
+ in environment 
 \begin_inset Formula $\vec{\sigma}'\arSep\tau'$
 \end_inset
 
@@ -30650,7 +30748,7 @@ The induced signature is pattern-friendly and so the generic pattern unification
 \begin_inset Formula $P(\vec{z})$
 \end_inset
 
- is a valid term in the variable context 
+ is a valid term in the environment 
 \begin_inset Formula $\vec{\sigma}\arSep\tau$
 \end_inset
 
@@ -31973,7 +32071,7 @@ Our setting handles linear ordered
 \begin_inset Formula $m\in\mathbb{N}$
 \end_inset
 
- can only be used in the variable context 
+ can only be used in the environment 
 \begin_inset Formula $m$
 \end_inset
 
@@ -31989,8 +32087,8 @@ n, since all the variables must be used, in order.
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus as a multi-sorted Lawvere theory where the sorts are the variable
- contexts, and the syntax is generated by operations 
+-calculus as a multi-sorted Lawvere theory where the sorts are the environments,
+ and the syntax is generated by operations 
 \begin_inset Formula $L_{n}\times L_{m}\rightarrow L_{n+m}$
 \end_inset
 
@@ -32126,7 +32224,7 @@ The set
 \begin_inset Formula $M(\vec{x})$
 \end_inset
 
- in the variable context 
+ in the environment 
 \begin_inset Formula $\vec{\sigma}'\Fsep\vec{\omega}'\arSep\tau'$
 \end_inset
 
@@ -32409,7 +32507,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The syntax of types in type variable context 
+The syntax of types in type environment 
 \begin_inset Formula $n$
 \end_inset
 
@@ -32485,8 +32583,7 @@ Let
 \begin_inset Formula $n\Fsep\vec{\sigma}\arSep\tau$
 \end_inset
 
- considered as a variable context is intuitively a well-typed term of type
- 
+ considered as an environment is intuitively a well-typed term of type 
 \begin_inset Formula $\tau$
 \end_inset
 
@@ -32506,7 +32603,7 @@ A metavariable
 \begin_inset Formula $M:(n\Fsep\sigma_{1},\dots,\sigma_{p}\arSep\tau)$
 \end_inset
 
- in the variable context 
+ in the environment 
 \begin_inset Formula $n'\Fsep\vec{\sigma}'\arSep\tau'$
 \end_inset
 
@@ -32726,7 +32823,7 @@ noprefix "false"
 \begin_inset Formula $P(\vec{p}|\vec{q})$
 \end_inset
 
- to be well-formed in the variable context 
+ to be well-formed in the environment 
 \begin_inset Formula $m\Fsep\vec{\sigma}\arSep\tau$
 \end_inset
 
