@@ -1690,12 +1690,8 @@ ts,
 \end_layout
 
 \begin_layout Standard
-Our languages go beyond syntaxes with 
-\emph on
-object substitution
-\emph default
-, where variables can be substituted with terms (as is the case with multi-sorte
-d binding signatures).
+Our class of languages also includes syntaxes that do not support substitution
+ of object variables with terms.
  This is in particular the case of the syntax of normalised simply-typed
  
 \begin_inset Formula $\lambda$
@@ -1712,11 +1708,11 @@ noprefix "false"
 \end_inset
 
 , and taken as a starting point by Vezzosi-Abel.
- Indeed, only variables can be applied; replacing a variable with a 
+ Indeed, replacing an applied variable with a 
 \begin_inset Formula $\lambda$
 \end_inset
 
--abstracted term may not yield a normal form.
+-abstracted term does not yield a normal form.
 \end_layout
 
 \begin_layout Standard
