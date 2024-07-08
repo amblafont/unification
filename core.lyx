@@ -715,7 +715,9 @@ enriched
 \emph default
  terms, the goal is to find the most general unifier, that is, the most
  general instantiation of those metavariables that makes the two terms equal.
- 
+ In higher-order unification, metavariables are functional in the sense
+ that they take arguments: this is especially useful for languages with
+ variable binding, so that metavariables can depend on bound variables.
 \end_layout
 
 \begin_layout Standard
@@ -728,7 +730,7 @@ a decidable fragment of higher-order unification where in the enriched syntax,
 \emph on
 pattern
 \emph default
-s, that is, to lists of distinct ordinary variables.
+s, that is, to lists of distinct variables.
  
 \begin_inset Note Note
 status collapsed
@@ -1416,7 +1418,7 @@ Let us explain how typed languages are accounted, although our notion of
 \end_inset
 
 , an object context 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\vec{\sigma}$
 \end_inset
 
  which is a list of simple types (one for each available free variable),
@@ -1430,7 +1432,7 @@ Let us explain how typed languages are accounted, although our notion of
 
 .
  We can handle this type system by merging the context 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\vec{\sigma}$
 \end_inset
 
  and the type 
@@ -1438,16 +1440,16 @@ Let us explain how typed languages are accounted, although our notion of
 \end_inset
 
  into a single entity 
-\begin_inset Formula $\Delta\rightarrow\tau$
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
 \end_inset
 
 , which we call an environment.
  In other words, in our setting, 
-\begin_inset Formula $\Gamma;\Delta\vdash t:\tau$
+\begin_inset Formula $\Gamma;\vec{\sigma}\vdash t:\tau$
 \end_inset
 
  would be denoted by 
-\begin_inset Formula $\Gamma;\Delta\rightarrow\tau\vdash t$
+\begin_inset Formula $\Gamma;\vec{\sigma}\rightarrow\tau\vdash t$
 \end_inset
 
 , see 
@@ -1486,11 +1488,11 @@ Let us explain how unification is stated in our setting.
 \end_inset
 
  is a metavariable context 
-\begin_inset Formula $\Gamma'$
+\begin_inset Formula $\Delta$
 \end_inset
 
  and a metavariable substitution 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Gamma'$
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
 \end_inset
 
  such that 
@@ -1538,11 +1540,11 @@ noprefix "false"
 Another innocuous difference, due to our treatment of types, is that their
  category of patterns differs from ours: their objects are object context
  
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\vec{\sigma}$
 \end_inset
 
 , while ours are environments 
-\begin_inset Formula $\Delta\rightarrow\tau$
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
 \end_inset
 
 .
@@ -1607,22 +1609,7 @@ noprefix "false"
 \end_inset
 
 .
- Note that the syntax of normalised simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--terms in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- is beyond the scope of multi-sorted binding signatures.
- We now discuss a simple example, leaving the above mentioned issue of types
+ Let us discuss a simple example, leaving the above mentioned issue of types
  aside for simplicity: pure 
 \begin_inset Formula $\lambda$
 \end_inset
@@ -1689,6 +1676,36 @@ ts,
 
 -calculus but are equally possible for any multi-sorted binding signature.
  
+\end_layout
+
+\begin_layout Standard
+Our languages go beyond syntaxes with 
+\emph on
+object substitution
+\emph default
+, where variables can be substituted with terms (as is the case with multi-sorte
+d binding signatures).
+ This is in particular the case of the syntax of normalised simply-typed
+ 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-terms, detailed in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, and taken as a starting point by Vezzosi-Abel.
+ Indeed, only variables can be applied; replacing a variable with a 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-abstracted term may not yield a normal form.
 \end_layout
 
 \begin_layout Standard
