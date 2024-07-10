@@ -224,8 +224,7 @@ fragment of second-order unification can be interpreted similarly; the involved
 \end_inset
 
 -calculus, (intrinsic) polymorphic syntax such as System F.
- Although we do not explicitly equations, we can still tackle Miller's original
- application, simply-typed 
+ Although we do not explicitly equations, we also tackle simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -233,11 +232,12 @@ fragment of second-order unification can be interpreted similarly; the involved
 \begin_inset Formula $\beta$
 \end_inset
 
- and 
+- and 
 \begin_inset Formula $\eta$
 \end_inset
 
- equation, by working on the syntax of normal forms.
+-equations (Miller's original setting) by working on the syntax of normal
+ forms.
  
 \end_layout
 
@@ -731,9 +731,9 @@ most general unifier
 instantiation
 \emph default
  (of the metavariables therein) that makes the two terms equal.
- There are different standard versions of unification, each of which comes
- with its own notion of metavariable enrichment, notably first-order unification
-, and second-order unification.
+ There are different standard versions of unification, notably first-order
+ or second-order unification, each of which comes with its own notion of
+ metavariable enrichment.
  Pattern unification is an intermediate variant, introduced by 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -743,9 +743,8 @@ literal "true"
 \end_inset
 
  as a decidable fragment of second-order unification.
- To illustrate this three variants, let us consider the example of a de
- Bruijn-encoded untyped syntax with a well-formedness judgement of the shape
- 
+ To illustrate this diversity, let us consider the example of a de Bruijn-encode
+d untyped syntax with a well-formedness judgement of the shape 
 \begin_inset Formula $\Gamma;n\vdash t$
 \end_inset
 
@@ -793,12 +792,13 @@ metatypes
 \emph default
 , which are scopes.
  We list below three variants of unification, which differ by the introduction
- rule for metavariables which enriches the syntax: 
+ rule for metavariables enriching the syntax.
+ 
 \begin_inset Formula 
 \[
 \begin{array}{ccccc}
  &  & \text{First-order} & \text{Second-order} & \text{Pattern}\\
-\forall(M:m)\in\Gamma &  & \dfrac{n=m}{\Gamma;n\vdash M} & \dfrac{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}{\Gamma;n\vdash M(\vec{t})} & \dfrac{\overbrace{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}^{(t_{1},\dots,t_{m})\text{ distinct variables}}}{\Gamma;n\vdash M(\vec{t})}
+\forall(M:m)\in\Gamma &  & \dfrac{n=m}{\Gamma;n\vdash M} & \dfrac{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}{\Gamma;n\vdash M(\vec{t})} & \dfrac{\overbrace{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}^{(t_{1},\dots,t_{m})\text{ is a \emph{pattern}, i.e., a list of distinct variables}}}{\Gamma;n\vdash M(\vec{t})}
 \end{array}
 \]
 
@@ -808,7 +808,7 @@ metatypes
 \end_layout
 
 \begin_layout Standard
-In all cases, a 
+In all of these situations, a 
 \emph on
 metavariable substitution 
 \emph default
@@ -824,7 +824,7 @@ metavariable substitution
 \begin_inset Formula $\Delta$
 \end_inset
 
- is defined as mapping each metavariable declaration 
+ is defined the same way: it maps each metavariable declaration 
 \begin_inset Formula $M:m$
 \end_inset
 
@@ -832,7 +832,7 @@ metavariable substitution
 \begin_inset Formula $\Delta;m\vdash\sigma_{M}$
 \end_inset
 
-, the latter eventually depending on the enriched syntax.
+.
  Given a term 
 \begin_inset Formula $\Gamma;n\vdash t$
 \end_inset
@@ -842,14 +842,50 @@ metavariable substitution
 \end_inset
 
 .
- Metavariable substitution compose so that we get three categories of metacontex
-ts and substitutions (one for each variant).
+ Then, composition of metavariable substitutions can be defined as 
+\begin_inset Formula $(\sigma\circ\delta)_{M}=\delta_{M}[\sigma]$
+\end_inset
+
+, so that we get three categories
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+These categories induce multi-sorted Lawvere theories.
+ Conversely, from any Lawvere theory, we can recover a well-formedness judgement
+ and corresponding sets of terms.
+\end_layout
+
+\end_inset
+
+ of metacontexts and substitutions (one for each variant).
  
 \end_layout
 
 \begin_layout Standard
-Unification can be formulated at the level of these categories.
- Indeed, the set of terms in the extended context 
+It is well-known that unification can be formulated at the level of the
+ category of substitutions
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Goguen89whatis"
+literal "true"
+
+\end_inset
+
+.
+ Let us see how it works in our example.
+ The set of terms in the environment 
 \begin_inset Formula $\Gamma;n$
 \end_inset
 
@@ -873,7 +909,8 @@ Unification can be formulated at the level of these categories.
  such that the composition with either of the two terms (interpreted as
  morphisms) are equal.
  The mgu is characterised as the coequaliser.
- Note that unification makes sense for two finite families of terms 
+ Note that unification also makes sense for two finite families of terms
+ 
 \begin_inset Formula $(\Gamma;n_{i}\vdash t_{i},u_{i})_{i\in\{1,\dots,p\}}$
 \end_inset
 
@@ -905,8 +942,11 @@ Our first contribution is a notion of
 \emph on
 generalised binding signature
 \emph default
- (abbreviated as GB-signature) that specifies a syntax with metavariables
- accounting for the pattern enrichment.
+ (abbreviated as GB-signature) that specifies a syntax with 
+\emph on
+pattern metavariables
+\emph default
+, providing a setting for unification.
  A GB-signature consists of the following data: 
 \end_layout
 
@@ -941,9 +981,9 @@ an endofunctor
 
  of the shape 
 \begin_inset Formula 
-\[
-F(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\times X_{\nthar on}
-\]
+\begin{equation}
+F(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\times X_{\nthar on}\label{eq:F-shape}
+\end{equation}
 
 \end_inset
 
@@ -953,16 +993,26 @@ F(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\t
 \begin_layout Standard
 Our second key contribution is a generalisation of Miller's pattern unification
  algorithm for a subclass of GB-signatures satisfying additional properties,
- namely that patterns are monomorphic, 
+ essentially that patterns are monomorphic, 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- has equalisers and pullbacks, and 
+ has finite connected limits (i.e., equalisers and pullbacks), and some additional
+ conditions about 
 \begin_inset Formula $F$
 \end_inset
 
- preserves them.
- 
+ related to those limits (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:pattern-friendly"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Paragraph
@@ -1517,7 +1567,35 @@ Let us detail how we account for Miller's original setting: simply-typed
 \end_inset
 
 -equations.
- We take Vezzosi-Abel's presentation
+ Like 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "vezzosi2014categorical"
+literal "true"
+
+\end_inset
+
+, we consider the set of the simple types as inductively generated by a
+ single construction 
+\begin_inset Formula $\vec{\sigma}\Rightarrow\iota$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ is a list of types, and 
+\begin_inset Formula $\iota$
+\end_inset
+
+ is a base type.
+ We also adopt the De Bruijn convention to label variables: a base context
+ is just a list of simple types and a variable is just a natural number
+ smaller than the size of the base context.
+\end_layout
+
+\begin_layout Standard
+We follow Cheney's presentation
 \begin_inset ERT
 status open
 
@@ -1531,39 +1609,13 @@ status open
 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "vezzosi2014categorical"
+after "Section 2.2"
+key "cheney2005relating"
 literal "false"
 
 \end_inset
 
- as a starting point, which has the following features:
-\end_layout
-
-\begin_layout Itemize
-Given a set of base types, the simple types are inductively generated by
- a single construction 
-\begin_inset Formula $\vec{\sigma}\Rightarrow\iota$
-\end_inset
-
-, where 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- is a list of types, and 
-\begin_inset Formula $\iota$
-\end_inset
-
- is a base type;
-\end_layout
-
-\begin_layout Itemize
-We adopting the De Bruijn convention to label variables: a base context
- is just a list of simple types and a variable is just a natural number
- smaller than the size of the base context;
-\end_layout
-
-\begin_layout Itemize
-We restrict to the equation-free syntax of 
+ of the equation-free syntax of 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -1571,11 +1623,8 @@ We restrict to the equation-free syntax of
 \begin_inset Formula $\eta$
 \end_inset
 
--long normal forms.
-\end_layout
-
-\begin_layout Standard
-Let us first describe the base syntax, i.e., the syntax without metavariables.
+-long normal forms, enriched with metavariables.
+ Let us first describe the base syntax.
  The typing judgement is of the shape 
 \begin_inset Formula $\vec{\sigma}\vdash t:\tau$
 \end_inset
@@ -1621,24 +1670,31 @@ Let us first describe the base syntax, i.e., the syntax without metavariables.
 
 .
  We keep the former notation for simplicity.
- The base syntax is generated by the following rule
-\begin_inset Foot
+ The base syntax is generated by the following rule, which combines application
+ and abstraction in a single construction.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-This rule departs from Vezzosi-Abel's presentation, where application and
- abstraction have their own dedicated rules.
+\begin_inset Formula 
+\[
+\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\vec{\tau_{1}}\Rightarrow\iota_{1},\dots,\vec{\tau_{n}}\Rightarrow\iota_{n})\Rightarrow\iota\quad\forall j,\vec{\sigma},\vec{\delta},\vec{\tau_{i}}\vdash t_{j}:\iota_{j}'}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
 
-.
-\end_layout
 
-\begin_layout Standard
 \begin_inset Formula 
 \[
-\dfrac{\vec{(\sigma,\delta)}_{i}=(\vec{\tau_{1}}\Rightarrow\iota_{1},\dots,\vec{\tau_{n}}\Rightarrow\iota_{n})\Rightarrow\iota\quad\forall j,\vec{\sigma},\vec{\delta},\vec{\tau_{i}}\vdash t_{j}:\iota_{j}'}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
+\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\Rightarrow\iota\quad\forall j\in\{1,\dots n\},\ \vec{\sigma},\vec{\delta}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
 \]
 
 \end_inset
@@ -1686,9 +1742,19 @@ literal "false"
 
 \end_inset
 
-.
+, but it does fit into our format (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 , but it does not pose any significant challenge to provide a specification
@@ -1761,15 +1827,15 @@ To see how this complies with our format, let us describe the set of morphisms
 \begin_inset Formula $\vec{\tau}'\Rightarrow\iota'$
 \end_inset
 
- induced by the scope: it is empty if 
+ induced by those scopes: it is empty if 
 \begin_inset Formula $\iota\neq\iota$
 \end_inset
 
-'; otherwise, it consists of injective compatible reindexings from 
+'; otherwise, it consists of a list of distinct variables of type 
 \begin_inset Formula $\vec{\tau}$
 \end_inset
 
- to 
+ in the context 
 \begin_inset Formula $\vec{\tau}'$
 \end_inset
 
@@ -1782,57 +1848,7 @@ To see how this complies with our format, let us describe the set of morphisms
 \begin_inset Formula $\vec{\sigma},\vec{\tau}'\Rightarrow\iota$
 \end_inset
 
-.
- Therefore, a valid pattern for the metavariable 
-\begin_inset Formula $M$
-\end_inset
-
- in this scope consists of an injective renaming from 
-\begin_inset Formula $\vec{\tau}$
-\end_inset
-
- to 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-
-\begin_inset Formula $\ensuremath{\vec{\sigma},\vec{\tau}'}$
-\end_inset
-
-
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-, as expected.
- See 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- for more details.
+, so that we retrieve the expected notion of patterns.
 \end_layout
 
 \begin_layout Standard
@@ -2046,7 +2062,31 @@ noprefix "false"
 
  equations.
  Using De Bruijn encoding, a scope is a natural number indicating the number
- of available free variables.
+ of available free variables and we can take 
+\begin_inset Formula ${\cal A}=\mathbb{F}_{m}$
+\end_inset
+
+ to get the expected notion of metavariables.
+ We take as endofunctor 
+\begin_inset Formula $F(X)_{n}=X_{n}\times X_{n}+X_{n+1}+\{1,\dots n\}$
+\end_inset
+
+.
+ Let us put it more explicitly in the format of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:F-shape"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, by working out the different sets 
+\begin_inset Formula $\Oop nm$
+\end_inset
+
+ of operation symbols.
  In the scope 
 \begin_inset Formula $n$
 \end_inset
@@ -2056,18 +2096,33 @@ noprefix "false"
 \end_inset
 
  nullary available operation symbols – one for each variable – so that 
-\begin_inset Formula $O_{0}(n)=\{1,\dots,n\}$
+\begin_inset Formula $\Oop 0n=\{1,\dots,n\}$
 \end_inset
 
 , one unary operation 
-\begin_inset Formula $O_{1}(n)=\{abs_{n}\}$
+\begin_inset Formula $O_{1}(n)=\{\lambda^{n}\}$
 \end_inset
 
  and one binary operation 
-\begin_inset Formula $O_{2}(n)=\{app_{n}\}$
+\begin_inset Formula $O_{2}(n)=\{a^{n}\}$
 \end_inset
 
  with associated arities 
+\begin_inset Formula $\nthar{\lambda^{n}}1=n+1$
+\end_inset
+
+ and 
+\begin_inset Formula $\nthar{a^{n}}1=\nthar{a^{n}}2=n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Formula $\alpha_{app_{n}}=(n,n)$
 \end_inset
 
@@ -2171,14 +2226,52 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Standard
-Note that there is another way to embed a pure 
-\begin_inset Formula $\lambda$
 \end_inset
 
--calculus into our class of languages, by choosing a more restrictive choice
- of notion of patterns: we could require that the injective map is monotone,
- or equivalently, that a morphism from 
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We have not yet defined the morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
+ Following Vezzosi-Abel's analysis, a pattern, as a morphism between scopes,
+ 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ is defined as an injective map from 
+\begin_inset Formula $\{\underline{1},\dots,\underline{n}\}$
+\end_inset
+
+ and 
+\begin_inset Formula $\{1,\dots,m\}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that we have another choice for 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+, by choosing a more restrictive choice of notion of patterns: we could
+ require that the injective map is monotone, or equivalently, that a morphism
+ from 
 \begin_inset Formula $n$
 \end_inset
 
@@ -2196,7 +2289,8 @@ Note that there is another way to embed a pure
 
 .
  The two choices yield two valid different languages, that share the same
- base syntax (forgetting about the functoriality).
+ base syntax and both satisfy the additional conditions required to replay
+ Miller's unification algorithm.
  Those alternatives are not specific to pure 
 \begin_inset Formula $\lambda$
 \end_inset
@@ -2358,6 +2452,7 @@ noprefix "false"
 \end_inset
 
 .
+ The appendices can be found in the supplemental material.
 \end_layout
 
 \begin_layout Subsection*
@@ -33296,6 +33391,109 @@ noprefix "false"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\begin{array}{c}
+x:(\tau_{1},\dots,\tau_{n})\Rightarrow\iota_{0}\in(\Gamma,\vec{y}:\vec{\tau}_{0})\\
+\forall i\in\{1,\dots,n\}\ \Gamma,\vec{y}:\vec{\tau}\vdash t_{i}:\tau_{i}
+\end{array}}{\Gamma\vdash\lambda\vec{y}.x\vec{t}:\vec{\tau}_{0}\Rightarrow\iota_{0}}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\{a_{j,\tau_{1},\dots,\vec{\tau}_{0},\iota_{0}}|\tau=\vec{\tau}_{0}\Rightarrow\iota_{0},\\
+j\in|\vec{\sigma}|_{\vec{\tau}\Rightarrow\iota_{0}}\}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{c}
+\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{1}\\
+\dots\\
+\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{n}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
 <lyxtabular version="3" rows="3" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
@@ -33420,6 +33618,11 @@ Typing rule
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -34231,6 +34434,34 @@ name "subsec:normalised-lc"
 \end_layout
 
 \begin_layout Standard
+We already sketched in the introduction how to handle simply-typed lambda-terms
+ modulo 
+\begin_inset Formula $\beta$
+\end_inset
+
+- and 
+\begin_inset Formula $\eta$
+\end_inset
+
+-equations.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:all-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ shows more explicitly how the syntax fits into our setting.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Higher-order pattern unification was originally introduced for closed simply-typ
 ed lambda-terms with metavariables applied to distinct variables.
  Lambda-terms are considered in 
@@ -34243,7 +34474,7 @@ ed lambda-terms with metavariables applied to distinct variables.
 
 -long normal forms.
  Although we do not explicitly cover equations, the syntax of those normal
- formas is equation free and can be specified by a GB-signature: we take
+ forms is equation free and can be specified by a GB-signature: we take
  the same category of arities as in 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -34265,6 +34496,11 @@ noprefix "false"
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -35188,7 +35424,18 @@ status open
 
 \end_inset
 
- can be thought of as a generalisation of their work.
+ can be thought of as a generalisation of their work as sketched in their
+ conclusion, although our treatment of their case study differs (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -35232,8 +35479,8 @@ literal "false"
 
 \end_inset
 
- in that everything is explicitly scoped: terms come with their support,
- metavariables always appear with their scope of allowed variables.
+ in that everything is explicitly scoped: terms come with their scope, metavaria
+bles always appear with their patterns.
 \end_layout
 
 \begin_layout Standard

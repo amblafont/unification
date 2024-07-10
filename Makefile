@@ -23,7 +23,7 @@ $(long_paper).pdf: draft.pdf
 	cp $< $@
 # 
 $(popl_paper).pdf: draft.pdf
-	pdftk $< cat 1-26 output $@
+	pdftk $< cat 1-27 output $@
 # 
 supplemental-material.zip: $(long_paper).pdf $(agda_files) README.md
 # supplemental-material.zip: $(agda_files) README.md
