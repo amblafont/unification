@@ -713,37 +713,154 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Unification deals with a syntax with 
+Unification deals with languages with 
 \emph on
 metavariables
 \emph default
-: it comes with a notion of metavariable arity, determining what are the
- possible arguments for a metavariable in a given context, and a notion
- of instantiation, determining which data is necessary to substitute a metavaria
-ble.
- Given two terms, the goal is to find a 
-\emph on
-most general unifier
-\emph default
-, that is, a most general 
-\emph on
-instantiation
-\emph default
- (of the metavariables therein) that makes the two terms equal.
- There are different standard versions of unification, notably first-order
- or second-order unification, which can share the same base syntax without
- metavariables.
- Pattern unification is an intermediate variant, introduced by 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "DBLP:journals/logcom/Miller91"
-literal "true"
-
+.
+ To clear things up, let us assume that a language comes with a well-formedness
+ judgement of the shape 
+\begin_inset Formula $\Gamma;a\vdash t$
 \end_inset
 
- as a decidable fragment of second-order unification.
- To illustrate this diversity, let us consider the example of a de Bruijn-encode
-d untyped syntax specified by a binding signature
+, meaning that the term 
+\begin_inset Formula $t$
+\end_inset
+
+ is well-formed in the 
+\emph on
+metavariable context 
+\emph default
+
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and the
+\emph on
+ scope 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ 
+\emph default
+What we call a scope depends on the language of interest: it can be a mere
+ natural number for De Bruijn-encoded untyped syntax, or a pair of a list
+ of types 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and a type 
+\begin_inset Formula $\tau$
+\end_inset
+
+ to mean that 
+\begin_inset Formula $t$
+\end_inset
+
+ has type 
+\begin_inset Formula $a$
+\end_inset
+
+ in the base context 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+.
+ A 
+\emph on
+metavariable context,
+\emph default
+ or 
+\emph on
+metacontext
+\emph default
+, is typically a list of metavariable symbols with their associated 
+\emph on
+arities
+\emph default
+.
+ Metavariable contexts should form a category whose morphisms are called
+ 
+\emph on
+metavariable substitutions
+\emph default
+.
+ A metavariable substitution 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ between 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ should also induce a mapping 
+\begin_inset Formula $t\mapsto t[\sigma]$
+\end_inset
+
+ between terms well-formed in the metacontext 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ and scope 
+\begin_inset Formula $a$
+\end_inset
+
+ to terms well-formed in the metacontext 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ and same scope 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A unification problem consists of a pair of terms 
+\begin_inset Formula $\Gamma;a\vdash t,u$
+\end_inset
+
+.
+ A unifier is a metavariable substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ such that 
+\begin_inset Formula $t[\sigma]=u[\sigma]$
+\end_inset
+
+, and a most general unifier (abbreviated as mgu) is a unifier 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ such that given any other unifier 
+\begin_inset Formula $\delta$
+\end_inset
+
+, there exists a unique 
+\begin_inset Formula $\sigma'$
+\end_inset
+
+ such that 
+\begin_inset Formula $\delta=\sigma'\circ\sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Example: first-order/second-order/pattern unification for an untyped syntax
+\end_layout
+
+\begin_layout Standard
+Let us illustrate different standard versions of unification for the example
+ of a de Bruijn-encoded untyped syntax specified by a binding signature
 \begin_inset ERT
 status open
 
@@ -763,7 +880,13 @@ literal "false"
 \end_inset
 
 .
- The well-formedness judgement is of the shape 
+ A scope is just a natural number, and similarly, a metavariable arity is
+ a natural number.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+The well-formedness judgement is of the shape 
 \begin_inset Formula $\Gamma;n\vdash t$
 \end_inset
 
@@ -805,9 +928,13 @@ That is,
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is a list of distinct metavariable symbols with their associated scopes.
+ is a list of distinct metavariable symbols with their associated scopes
+\end_layout
+
+\end_inset
+
  We list below three variants of unification, which differ by the introduction
- rule for metavariables enriching the syntax.
+ rule for metavariables.
 \begin_inset Formula 
 \[
 \begin{array}{ccccc}
@@ -818,12 +945,20 @@ That is,
 
 \end_inset
 
+The third 
+\emph on
+pattern 
+\emph default
+variant was introduced by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/logcom/Miller91"
+literal "true"
 
-\end_layout
+\end_inset
 
-\begin_layout Standard
-In this way, we can think of pattern unification as a fragment of second-order
- unification where a metavariable can only be applied to a 
+ as a decidable fragment of second-order unification: contrary to the latter
+ case, a metavariable can only be applied to a 
 \emph on
 pattern
 \emph default
@@ -869,7 +1004,7 @@ metavariable substitution
 \end_inset
 
 .
- Then, composition of metavariable substitutions can be defined as 
+ Then, composition of metavariable substitutions is defined as 
 \begin_inset Formula $(\sigma\circ\delta)_{M}=\delta_{M}[\sigma]$
 \end_inset
 
@@ -877,6 +1012,10 @@ metavariable substitution
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Now, a unification problem consists of a pair of terms 
 \begin_inset Formula $\Gamma;n\vdash t,u$
 \end_inset
@@ -907,6 +1046,42 @@ Now, a unification problem consists of a pair of terms
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Plain Layout
+a most general 
+\emph on
+instantiation
+\emph default
+ (of the metavariables therein) that makes the two terms equal.
+\end_layout
+
+\begin_layout Plain Layout
+and a notion of instantiation, determining which data is necessary to substitute
+ a metavariable.
+ Given two terms, the goal is to find a 
+\emph on
+most general unifier
+\emph default
+, that is, Pattern unification is an intermediate variant, introduced by
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "DBLP:journals/logcom/Miller91"
+literal "true"
+
+\end_inset
+
+ as a decidable fragment of second-order unification.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+First contribution: a class of languages with metavariables
 \end_layout
 
 \begin_layout Standard
@@ -951,9 +1126,6 @@ a well-formedness judgement and corresponding sets of enriched terms.
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -1032,10 +1204,6 @@ literal "true"
 
 \end_layout
 
-\begin_layout Paragraph
-Contributions
-\end_layout
-
 \begin_layout Standard
 Our first contribution is a class of languages with
 \emph on
@@ -1053,6 +1221,32 @@ a small category
  of 
 \emph on
 scopes 
+\emph default
+or 
+\emph on
+(metavariable) arities
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The fact that the notions of scopes and metavariable arities coincide (as
+ in the previous example) allows us to see terms as substitutions and mgus
+ as coequalisers, as we will see.
+ This is not the case in Vezzosi-Abel's presentation of Miller's original
+ setting 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "vezzosi2014categorical"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+, 
 \emph default
 and 
 \emph on
@@ -1075,63 +1269,6 @@ an endofunctor
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Our second key contribution consists in working out some conditions which
- ensures the main features of Miller's pattern unification: 
-\end_layout
-
-\begin_layout Itemize
-given two terms, either the mgu exists, or there is no unifier;
-\end_layout
-
-\begin_layout Itemize
-moreover, there is a recursive procedure (much similar to Miller's original
- algorithm) which computes the mgu or detects the absence of any unifier.
- 
-\end_layout
-
-\begin_layout Standard
-Those conditions are essentially that renamings are monomorphic, 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- has equalisers and pullbacks, and some additional properties about 
-\begin_inset Formula $F$
-\end_inset
-
- related to those limits (see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "def:pattern-friendly"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
- We call a language 
-\emph on
-pattern-friendly
-\emph default
- when it satisfies those properties.
- In 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "sec:applications"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- we illustrate how to show that some specific languages is pattern-friendly.
-\end_layout
-
-\begin_layout Paragraph
-Syntax generated by a specification
 \end_layout
 
 \begin_layout Standard
@@ -1159,6 +1296,10 @@ The base syntax is generated by the following single rule, where
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 Typed syntaxes with typing judgements of the shape 
 \begin_inset Formula $C\vdash t:\tau$
 \end_inset
@@ -1176,6 +1317,11 @@ Typed syntaxes with typing judgements of the shape
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1227,20 +1373,9 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The syntax with metavariables involves a well-formedness judgement of the
- shape 
-\begin_inset Formula $\Gamma;a\vdash t$
-\end_inset
-
-, where 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- is a 
-\emph on
-metavariable context
-\emph default
-, a list of metavariable symbols with their associated scopes.
+We now present the full syntax with metavariables.
+ Again, a metavariable context is a list of metavariable symbols with their
+ associated arities (or scopes).
  The syntax is generated by two rules, one for operations, and one for metavaria
 bles.
 \end_layout
@@ -1248,7 +1383,7 @@ bles.
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\forall\Gamma\forall o\in\Oop na\dfrac{\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}\qquad\dfrac{M:m\in\Gamma\quad x\in\hom(m,n)}{\Gamma;n\vdash M(x)}
+\forall\Gamma\forall o\in\Oop na\dfrac{\Gamma;\nthar o1\vdash t_{1}\quad\dots\quad\Gamma;\nthar on\vdash t_{n}}{\Gamma;a\vdash o(t_{1},\dots,t_{n})}\qquad\dfrac{M:m\in\Gamma\quad x\in\hom_{{\cal A}}(m,n)}{\Gamma;n\vdash M(x)}
 \]
 
 \end_inset
@@ -1259,11 +1394,7 @@ Let us explain how the right rule instantiates to the metavariable introduction
 \end_inset
 
  for pattern unification that we mentioned earlier.
- We call a
-\emph on
- pattern
-\emph default
-, that is, a list of distinct variables 
+ A list of distinct variables 
 \begin_inset Formula $(x_{1},\dots,x_{m})$
 \end_inset
 
@@ -1280,7 +1411,7 @@ Let us explain how the right rule instantiates to the metavariable introduction
 \end_inset
 
 .
- Therefore, we take for 
+ Therefore, by taking for 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
@@ -1288,7 +1419,7 @@ Let us explain how the right rule instantiates to the metavariable introduction
 \begin_inset Formula $\mathbb{F}_{m}$
 \end_inset
 
- which has natural numbers as objects and a morphism from 
+ whose objects are natural numbers and whose morphisms from 
 \begin_inset Formula $n$
 \end_inset
 
@@ -1296,7 +1427,11 @@ Let us explain how the right rule instantiates to the metavariable introduction
 \begin_inset Formula $m$
 \end_inset
 
- is an injective map as above.
+ consist of injective maps as above, we recover the rule 
+\begin_inset Formula $\refrule{Pat}$
+\end_inset
+
+.
  Note that contrary to the traditional definition of pattern unification,
  where the notion of 
 \emph on
@@ -1351,7 +1486,7 @@ on rule
 \end_inset
 
 .
- The metavariable introduction 
+ The metavariable introduction rule 
 \begin_inset Formula $\refrule{So}$
 \end_inset
 
@@ -1360,8 +1495,8 @@ on rule
 status collapsed
 
 \begin_layout Plain Layout
-Essentially, this is because the syntax does not come from a free monad
- on a presheaf category (see
+Essentially, this is because the syntax for second-order unification does
+ not come from a free monad on a presheaf category (see
 \begin_inset ERT
 status open
 
@@ -1511,7 +1646,7 @@ such that
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The enriched syntax is functorial with respect to the category of renamings
@@ -1570,7 +1705,7 @@ The enriched syntax is functorial with respect to the category of renamings
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Paragraph
 Category of metacontexts and substitutions
@@ -1631,98 +1766,7 @@ The category of metacontexts and substitutions can be described either starting
 \end_layout
 
 \begin_layout Paragraph
-Unification algorithm
-\end_layout
-
-\begin_layout Standard
-The main feature of pattern unification that holds for our pattern-friendly
- languages is that either the mgu exists, or there is no unifier.
- Moreover, there is a recursive procedure which computes the mgu or detects
- the impossibility of unification.
- 
-\end_layout
-
-\begin_layout Standard
-We use a small trick to avoid this traditional way of presenting unification
- as a partial algorithm computing mgus.
- We add a formal error metavariable context 
-\begin_inset Formula $\bot$
-\end_inset
-
- and a single formal term 
-\begin_inset Formula $\bot;a\vdash!$
-\end_inset
-
- for all scopes 
-\begin_inset Formula $a$
-\end_inset
-
-, so that we get a unique metavariable substitution 
-\begin_inset Formula $!_{\Gamma}$
-\end_inset
-
- from any metacontext 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- to 
-\begin_inset Formula $\bot$
-\end_inset
-
-.
- This substitution obviously unifies any pair of terms.
- If two terms are not unifiable in the traditional sense, 
-\begin_inset Formula $!$
-\end_inset
-
- is the mgu.
- If 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
-\end_inset
-
- is the mgu in the traditional sense, then it is still the mgu in this extended
- setting, because 
-\begin_inset Formula $!_{\Gamma}$
-\end_inset
-
- uniquely factors as 
-\begin_inset Formula $\bang_{\Delta}\circ\sigma$
-\end_inset
-
-.
- In this way, unification can then be seen as a total algorithm that always
- computes the mgu.
-\end_layout
-
-\begin_layout Standard
-We implemented our generic unification algorithm (without mechanisation
- of the correctness proof) in Agda.
- The interested reader can check the full implementation in the supplemental
- material.
- We tend to use Agda as a programming language rather than as a theorem
- prover.
- This means that the definitions of our data structures typically do not
- mention the properties (such as associativity for a category), and we leave
- for future work the task of mechanising the correctness proof of the algorithm.
- (The proper formalisation of category theory in proof assistants remains
- a significant challenge in its own right.) Furthermore, we disable the terminati
-on checker and provide instead a termination proof on paper in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:termination"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- Even used purely as a programming language, dependent types are very helpful
- in structuring the implementation
-\end_layout
-
-\begin_layout Paragraph
-Scope of pattern-friendly languages
+Scope of our class of our languages
 \end_layout
 
 \begin_layout Standard
@@ -1806,7 +1850,7 @@ The first thing to note is that the syntax of normal forms for simply-typed
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus is a pattern-friendly language (see 
+-calculus fits into our class of languages (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:normalised-lc"
@@ -1816,12 +1860,11 @@ noprefix "false"
 
 \end_inset
 
-: this allows us to recover Miller's original example).
+), so that we handle Miller's original setting.
 \end_layout
 
 \begin_layout Standard
-Our class of languages includes any syntax specified by a multi-sorted binding
- signature
+We also account for any syntax specified by a multi-sorted binding signature
 \begin_inset ERT
 status open
 
@@ -1882,7 +1925,7 @@ noprefix "false"
 
 \end_inset
 
- Let us discuss a simple example
+ Let us discuss the simpler case
 \begin_inset Note Note
 status collapsed
 
@@ -1892,26 +1935,16 @@ status collapsed
 
 \end_inset
 
-: pure 
+ of pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus, without 
-\begin_inset Formula $\beta$
-\end_inset
-
-- or 
-\begin_inset Formula $\eta$
-\end_inset
-
--equations.
- Using De Bruijn encoding, a scope is a natural number indicating the number
- of available free variables and we can take 
+-calculus.
+ We choose 
 \begin_inset Formula ${\cal A}=\mathbb{F}_{m}$
 \end_inset
 
- to get the expected notion of metavariables.
- We take as endofunctor 
+, and take as endofunctor 
 \begin_inset Formula $F(X)_{n}=X_{n}\times X_{n}+X_{n+1}+\{1,\dots n\}$
 \end_inset
 
@@ -2104,7 +2137,6 @@ We have not yet defined the morphisms in
 \end_inset
 
 .
- 
 \end_layout
 
 \end_inset
@@ -2118,14 +2150,14 @@ This alternative is not specific to pure
 \end_layout
 
 \begin_layout Standard
-Pattern-friendly languages are more expressive than binding signatures.
+Our notion of specification is more expressive than binding signatures.
  We already mentioned the syntax of normal forms for simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
 -calculus.
- They also include languages where terms bind type variables (which are
- registered in the scope), such as system F (
+ Our class also include languages where terms bind type variables (which
+ are registered in the scope) such as system F (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:system-F"
@@ -2185,8 +2217,170 @@ noprefix "false"
  our notion of specification.
 \end_layout
 
+\begin_layout Subsection*
+Second contribution: a unification algorithm for 
+\emph on
+pattern-friendly 
+\emph default
+languages
+\end_layout
+
+\begin_layout Standard
+Our second key contribution consists in working out some conditions ensuring
+ that the main features of Miller's pattern unification still hold: 
+\end_layout
+
+\begin_layout Itemize
+given two terms, either the mgu exists, or there is no unifier;
+\end_layout
+
+\begin_layout Itemize
+moreover, there is a recursive procedure (much similar to Miller's original
+ algorithm) which computes the mgu or detects the absence of any unifier.
+ 
+\end_layout
+
+\begin_layout Standard
+Those conditions are essentially that renamings are monomorphic, 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ has equalisers and pullbacks, and some additional properties about 
+\begin_inset Formula $F$
+\end_inset
+
+ related to those limits (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:pattern-friendly"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+ We call a language 
+\emph on
+pattern-friendly
+\emph default
+ when it satisfies those properties.
+ All the examples of languages that we already mentioned are pattern-friendly.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ we illustrate how to show that some specific languages are pattern-friendly.
+\end_layout
+
 \begin_layout Paragraph
-Categorical perspective on unification
+Agda implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+The main feature of pattern unification that holds for our pattern-friendly
+ languages is that either the mgu exists, or there is no unifier.
+ Moreover, there is a recursive procedure which computes the mgu or detects
+ the impossibility of unification.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We implemented our generic unification algorithm (without mechanisation
+ of the correctness proof) in Agda.
+ The interested reader can check the full implementation in the supplemental
+ material.
+ We tend to use Agda as a programming language rather than as a theorem
+ prover.
+ This means that the definitions of our data structures typically do not
+ mention the properties (such as associativity for a category), and we leave
+ for future work the task of mechanising the correctness proof of the algorithm.
+ (The proper formalisation of category theory in proof assistants remains
+ a significant challenge in its own right.) Furthermore, we disable the terminati
+on checker and provide instead a termination proof on paper in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:termination"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ Even used purely as a programming language, dependent types are very helpful
+ in structuring the implementation
+\end_layout
+
+\begin_layout Standard
+We use a small trick to avoid the traditional presentation of unification
+ as a partial algorithm computing mgus.
+ We add a formal error metavariable context 
+\begin_inset Formula $\bot$
+\end_inset
+
+ and a single formal term 
+\begin_inset Formula $\bot;a\vdash!$
+\end_inset
+
+ for all scopes 
+\begin_inset Formula $a$
+\end_inset
+
+, so that we get a unique metavariable substitution 
+\begin_inset Formula $!_{\Gamma}$
+\end_inset
+
+ from any metacontext 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to 
+\begin_inset Formula $\bot$
+\end_inset
+
+.
+ This substitution obviously unifies any pair of terms.
+ If two terms are not unifiable in the traditional sense, 
+\begin_inset Formula $!$
+\end_inset
+
+ is the mgu.
+ If 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ is the mgu in the traditional sense, then it is still the mgu in this extended
+ setting, because 
+\begin_inset Formula $!_{\Gamma}$
+\end_inset
+
+ uniquely factors as 
+\begin_inset Formula $\bang_{\Delta}\circ\sigma$
+\end_inset
+
+.
+ In this way, unification can then be seen as a total algorithm that always
+ computes the mgu.
+\end_layout
+
+\begin_layout Subsection*
+Most general unifiers as coequalisers
 \end_layout
 
 \begin_layout Standard
@@ -2225,7 +2419,7 @@ literal "true"
 
 .
  With this in mind, a unifier of two terms 
-\begin_inset Formula $\Gamma;n\vdash t,u$
+\begin_inset Formula $\Gamma;a\vdash t,u$
 \end_inset
 
  can be interpreted as a cocone, that is, a morphism 
@@ -36254,9 +36448,8 @@ We presented a generic unification algorithm for Miller's pattern fragment
  of signature for syntax with metavariables.
  Our setting does not handle type dependency, which notably implies that
  we do not deal with type metavariables (even in our system F example).
- An interesting question is to which extent this work could be adapted to
- provide semantics of higher-order pattern unification for dependently-typed
- languages.
+ A natural question to ask is to which extent this work could be adapted
+ to dependently-typed languages.
 \end_layout
 
 \begin_layout Standard
