@@ -1360,7 +1360,7 @@ on rule
 status collapsed
 
 \begin_layout Plain Layout
-Essentially, this is because the syntax does not come frome a free monad
+Essentially, this is because the syntax does not come from a free monad
  on a presheaf category (see
 \begin_inset ERT
 status open
@@ -1644,7 +1644,7 @@ The main feature of pattern unification that holds for our pattern-friendly
 
 \begin_layout Standard
 We use a small trick to avoid this traditional way of presenting unification
- as a partial algorithm computings mgus.
+ as a partial algorithm computing mgus.
  We add a formal error metavariable context 
 \begin_inset Formula $\bot$
 \end_inset
