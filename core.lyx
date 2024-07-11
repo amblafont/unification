@@ -744,7 +744,27 @@ literal "true"
 
  as a decidable fragment of second-order unification.
  To illustrate this diversity, let us consider the example of a de Bruijn-encode
-d untyped syntax with a well-formedness judgement of the shape 
+d untyped syntax specified by a binding signature
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "aczel2016general"
+literal "false"
+
+\end_inset
+
+.
+ The well-formedness judgement is of the shape 
 \begin_inset Formula $\Gamma;n\vdash t$
 \end_inset
 
@@ -786,25 +806,29 @@ That is,
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is a list of distinct metavariable symbols with their associated 
-\emph on
-metatypes
-\emph default
-, which are scopes.
+ is a list of distinct metavariable symbols with their associated scopes.
  We list below three variants of unification, which differ by the introduction
  rule for metavariables enriching the syntax.
- 
 \begin_inset Formula 
 \[
 \begin{array}{ccccc}
  &  & \text{First-order} & \text{Second-order} & \text{Pattern}\\
-\forall(M:m)\in\Gamma &  & \dfrac{n=m}{\Gamma;n\vdash M} & \dfrac{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}{\Gamma;n\vdash M(\vec{t})} & \dfrac{\overbrace{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}^{(t_{1},\dots,t_{m})\text{ is a \emph{pattern}, i.e., a list of distinct variables}}}{\Gamma;n\vdash M(\vec{t})}
+\forall(M:m)\in\Gamma &  & \labelrule{\dfrac{n=m}{\Gamma;n\vdash M}\textsc{Fo}}{Fo} & \labellabelrule{\dfrac{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}{\Gamma;n\vdash M(\vec{t})}}{So} & \labellabelrule{\dfrac{\overbrace{\Gamma;n\vdash t_{1}\ \dots\ \Gamma;n\vdash t_{m}}^{(t_{1},\dots,t_{m})\text{ = list of distinct variables}}}{\Gamma;n\vdash M(\vec{t})}}{Pat}
 \end{array}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In this way, we can think of pattern unification as a fragment of second-order
+ unification where a metavariable can only be applied to a 
+\emph on
+pattern
+\emph default
+, that is, to a list of distinct variables.
 \end_layout
 
 \begin_layout Standard
@@ -847,13 +871,31 @@ metavariable substitution
 \end_inset
 
 , so that we get three categories
-\begin_inset Foot
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
 These categories induce multi-sorted Lawvere theories.
- Conversely, from any Lawvere theory, we can recover a well-formedness judgement
- and corresponding sets of terms.
+ Conversely, from any Lawvere theory, we can recover an enriched syntax.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+a well-formedness judgement and corresponding sets of enriched terms.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -863,8 +905,7 @@ These categories induce multi-sorted Lawvere theories.
 \end_layout
 
 \begin_layout Standard
-It is well-known that unification can be formulated at the level of the
- category of substitutions
+It is well-known that unification can be formulated categorically
 \begin_inset ERT
 status open
 
@@ -884,13 +925,13 @@ literal "true"
 \end_inset
 
 .
- Let us see how it works in our example.
+ Let us make this formulation explicit for our three categories of substitutions.
  The set of terms in the environment 
 \begin_inset Formula $\Gamma;n$
 \end_inset
 
  is recovered as the set of morphisms from the singleton metacontext 
-\begin_inset Formula $N:n$
+\begin_inset Formula $(N:n)$
 \end_inset
 
  to 
@@ -906,15 +947,15 @@ literal "true"
 \begin_inset Formula $\Gamma\rightarrow\Delta$
 \end_inset
 
- such that the composition with either of the two terms (interpreted as
+ such that its composition with either of the two terms (interpreted as
  morphisms) are equal.
  The mgu is characterised as the coequaliser.
- Note that unification also makes sense for two finite families of terms
- 
+ Note that unification also makes sense for finite families of pairs of
+ terms 
 \begin_inset Formula $(\Gamma;n_{i}\vdash t_{i},u_{i})_{i\in\{1,\dots,p\}}$
 \end_inset
 
-; we get a similar categorical formulation by viewing 
+; we get a similar categorical formulation by interpreting 
 \begin_inset Formula $\vec{t}$
 \end_inset
 
@@ -922,8 +963,8 @@ literal "true"
 \begin_inset Formula $\vec{u}$
 \end_inset
 
- as parallel morphisms from 
-\begin_inset Formula $N_{1}:n_{1},\dots,N_{p}:n_{p}$
+ as two parallel morphisms from 
+\begin_inset Formula $(N_{1}:n_{1},\dots,N_{p}:n_{p})$
 \end_inset
 
  to 
@@ -942,11 +983,11 @@ Our first contribution is a notion of
 \emph on
 generalised binding signature
 \emph default
- (abbreviated as GB-signature) that specifies a syntax with 
+ (abbreviated as GB-signature) that specifies a syntax with
 \emph on
-pattern metavariables
+ 
 \emph default
-, providing a setting for unification.
+metavariables, for which unification problems can be stated.
  A GB-signature consists of the following data: 
 \end_layout
 
@@ -991,14 +1032,74 @@ F(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\t
 \end_layout
 
 \begin_layout Standard
-Our second key contribution is a generalisation of Miller's pattern unification
- algorithm for a subclass of GB-signatures satisfying additional properties,
- essentially that patterns are monomorphic, 
+Let us give a quick definition of the induced category of metacontexts and
+ substitutions (a more down-to-earth syntactic version is given later).
+ A metavariable context is again a list of metavariable symbols with their
+ associated scopes.
+ To each metavariable context 
+\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\end_inset
+
+, we associate a functor 
+\begin_inset Formula $\underline{\Gamma}:{\cal A}\rightarrow\Set$
+\end_inset
+
+ defined by 
+\begin_inset Formula $ym_{1}+\dots+ym_{p}$
+\end_inset
+
+ where 
+\begin_inset Formula $y$
+\end_inset
+
+ is the Yoneda embedding.
+ By 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-finitary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+, the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ generates a free monad on 
+\begin_inset Formula $[{\cal A},\Set]$
+\end_inset
+
+.
+ A metavariable substitution from 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is a Kleisli morphism 
+\begin_inset Formula $\underline{\Gamma}\rightarrow T\underline{\Delta}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Our second key contribution consists in working out some conditions on the
+ GB-signature which ensures the main feature of Miller's pattern unification:
+ given two terms, either the mgu exists, or there is no unifier.
+ Moreover, there is a recursive procedure (much similar to Miller's original
+ algorithm) which computes the mgu or detects the absence of any unifier.
+ Those conditions are essentially that patterns are monomorphic, 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
  has finite connected limits (i.e., equalisers and pullbacks), and some additional
- conditions about 
+ properties about 
 \begin_inset Formula $F$
 \end_inset
 
@@ -1020,7 +1121,32 @@ Syntax generated by a GB-signature
 \end_layout
 
 \begin_layout Standard
-The base syntax is generated by the following single rule, where 
+The category of metavariable contexts determines the syntax generated by
+ a GB-signature; let us make it explicit, starting with the base syntax.
+ We have a well-formedness judgement of the shape 
+\begin_inset Formula $a\vdash t$
+\end_inset
+
+, where 
+\begin_inset Formula $a$
+\end_inset
+
+ is a scope and 
+\begin_inset Formula $t$
+\end_inset
+
+ is a term.
+ The set of terms of scope 
+\begin_inset Formula $a$
+\end_inset
+
+ is retrieved as the set of metavariable morphisms from the singleton metavariab
+le context 
+\begin_inset Formula $(A:a)$
+\end_inset
+
+ to the empty metavariable context.
+ More explicitly, it is generated by the following single rule, where 
 \begin_inset Formula $a\vdash t$
 \end_inset
 
@@ -1040,6 +1166,79 @@ The base syntax is generated by the following single rule, where
 
 \end_inset
 
+ Typed syntaxes with typing judgements of the shape 
+\begin_inset Formula $C\vdash t:\tau$
+\end_inset
+
+ can be accounted by merging the context 
+\begin_inset Formula $C$
+\end_inset
+
+ and the type 
+\begin_inset Formula $\tau$
+\end_inset
+
+ into a single entity 
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
+\end_inset
+
+, which we call a scope.
+\end_layout
+
+\begin_layout Standard
+Note that even in the case where scopes are natural numbers as in our introducto
+ry example, this rule goes beyond what is possible to specify with binding
+ arities
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "aczel2016general"
+literal "false"
+
+\end_inset
+
+.
+ The same hold for the simply-typed variant: this is crucial to handle Miller's
+ original setting of simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus modulo 
+\begin_inset Formula $\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $\eta$
+\end_inset
+
+-equations (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 The syntax is functorial in the sense that given any pattern 
 \begin_inset Formula $f\in\hom(a,b)$
 \end_inset
@@ -1067,8 +1266,13 @@ The syntax is functorial in the sense that given any pattern
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-The enriched syntax with metavariables involves a well-formed judgement
+The enriched syntax with metavariables involves a well-formedness judgement
  of the shape 
 \begin_inset Formula $\Gamma;a\vdash t$
 \end_inset
@@ -1083,18 +1287,25 @@ metavariable context
 \emph default
  that keeps track of the 
 \emph on
-metatypes 
+scopes 
 \emph default
-of metavariables, which are just scopes.
- A metavariable context 
+of metavariables.
+ The set of terms in environment 
+\begin_inset Formula $\Gamma;a$
+\end_inset
+
+ is retrieve as the set of morphisms from the singleton metavariable context
+ 
+\begin_inset Formula $(A:a)$
+\end_inset
+
+ to 
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is a list of metavariable symbols with their associated metatypes, or alternati
-vely, if we adopt a De Bruijn encoding for metavariables, just a list of
- scopes.
- The enriched syntax is generated by two rules, one for operations, and
- one for metavariables.
+.
+ More explicitly, the enriched syntax is generated by two rules, one for
+ operations, and one for metavariables.
 \end_layout
 
 \begin_layout Standard
@@ -1105,30 +1316,34 @@ vely, if we adopt a De Bruijn encoding for metavariables, just a list of
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Note that contrary to the traditional definition of the pattern fragment,
- where the notion of pattern is derived from the notion of variable, in
- our setting, patterns are built-in (they are morphisms in 
-\begin_inset Formula ${\cal A}$
+Let us explain how the right rule instantiates to the metavariable introduction
+ rule 
+\begin_inset Formula $\refrule{Pat}$
 \end_inset
 
-) and there is no built-in notion of 
-\begin_inset Quotes eld
+ for pattern unification that we mentioned earlier.
+ We call a
+\emph on
+ pattern
+\emph default
+, that is, a list of distinct variables 
+\begin_inset Formula $(x_{1},\dots,x_{m})$
 \end_inset
 
-variables
-\begin_inset Quotes erd
+ in the scope 
+\begin_inset Formula $n$
+\end_inset
+
+ is equivalently given by an injective map from 
+\begin_inset Formula $\{1,\dots,n\}$
+\end_inset
+
+ to 
+\begin_inset Formula $\{1,\dots,m\}$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Let us illustrate these rules with our above example of syntax.
- We take for 
+ Therefore, we take for 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
@@ -1144,11 +1359,71 @@ Let us illustrate these rules with our above example of syntax.
 \begin_inset Formula $m$
 \end_inset
 
- is an injective renaming.
- As a consequence, the above right rule recovers the introduction for metavariab
-les in the pattern fragment.
- The shape of the above left rule is quite general and goes beyond what
- is possible to specify with (multi-sorted) binding arities
+ is an injective map as above.
+ Note that contrary to the traditional definition of pattern unification,
+ where the notion of 
+\emph on
+pattern 
+\emph default
+is derived from the notion of variable, in our setting, patterns are built-in
+ (they are morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+) and there is no built-in notion of 
+\begin_inset Quotes eld
+\end_inset
+
+variables
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Our setting allows us to see first-order unification as a special case of
+ pattern unification: this is so when 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ is a discrete category.
+ Continuing the same example, if we take for 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ the discrete category 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+, whose objects are natural numbers, then we recover the metavariable introducti
+on rule 
+\begin_inset Formula $\refrule{Fo}$
+\end_inset
+
+ in the first-order case, because a morphism from 
+\begin_inset Formula $m$
+\end_inset
+
+ to 
+\begin_inset Formula $n$
+\end_inset
+
+ is nothing but the assertion that 
+\begin_inset Formula $m=n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+As a side note, the metavariable introduction 
+\begin_inset Formula $\refrule{So}$
+\end_inset
+
+ for second-order unification does not fit into our format, essentially
+ because it does not come frome a free monad on a presheaf category (see
 \begin_inset ERT
 status open
 
@@ -1162,44 +1437,15 @@ status open
 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "FioreHur"
+key "DBLP:conf/aplas/Hamana04"
 literal "false"
 
 \end_inset
 
-, and this is crucial to handle Miller's original setting of simply-typed
- 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus modulo 
-\begin_inset Formula $\beta$
-\end_inset
-
- and 
-\begin_inset Formula $\eta$
-\end_inset
-
--equations, as shall see below.
+ for more details about the corresponding monad).
 \end_layout
 
 \begin_layout Standard
-Our setting allows us to see first-order unification as a special case of
- pattern unification: this is so when 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- is a discrete category.
- An indeed, in our example of syntax, if we take for 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- the discrete category 
-\begin_inset Formula $\mathbb{N}$
-\end_inset
-
-, whose objects are natural numbers, then we recover the introduction rule
- for metavariables in the first-order case.
 \begin_inset Note Note
 status collapsed
 
@@ -1315,9 +1561,6 @@ such that
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -1378,7 +1621,7 @@ The enriched syntax is functorial with respect to the category of renamings
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Paragraph
 Category of metacontexts and substitutions
@@ -1439,7 +1682,7 @@ The category of metacontexts and substitutions can be described either starting
 \end_layout
 
 \begin_layout Paragraph
-Unification for a GB-signature
+Unification algorithm
 \end_layout
 
 \begin_layout Standard
@@ -1505,8 +1748,9 @@ We use a small trick to avoid this traditional way of presenting unification
 
 \begin_layout Standard
 We implemented our generic unification algorithm (without mechanisation
- of the correctness proof) in Agda the interested reader can check the full
- implementation in the supplemental material.
+ of the correctness proof) in Agda.
+ The interested reader can check the full implementation in the supplemental
+ material.
  We tend to use Agda as a programming language rather than as a theorem
  prover.
  This means that the definitions of our data structures typically do not
@@ -1527,424 +1771,6 @@ noprefix "false"
 .
  Even used purely as a programming language, dependent types are very helpful
  in structuring the implementation
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-Simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus modulo modulo 
-\begin_inset Formula $\beta$
-\end_inset
-
-- and 
-\begin_inset Formula $\eta$
-\end_inset
-
--equations
-\end_layout
-
-\begin_layout Standard
-Let us detail how we account for Miller's original setting: simply-typed
- 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus modulo 
-\begin_inset Formula $\beta$
-\end_inset
-
- and 
-\begin_inset Formula $\eta$
-\end_inset
-
--equations.
- Like 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "vezzosi2014categorical"
-literal "true"
-
-\end_inset
-
-, we consider the set of the simple types as inductively generated by a
- single construction 
-\begin_inset Formula $\vec{\sigma}\Rightarrow\iota$
-\end_inset
-
-, where 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- is a list of types, and 
-\begin_inset Formula $\iota$
-\end_inset
-
- is a base type.
- We also adopt the De Bruijn convention to label variables: a base context
- is just a list of simple types and a variable is just a natural number
- smaller than the size of the base context.
-\end_layout
-
-\begin_layout Standard
-We follow Cheney's presentation
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-after "Section 2.2"
-key "cheney2005relating"
-literal "false"
-
-\end_inset
-
- of the equation-free syntax of 
-\begin_inset Formula $\beta$
-\end_inset
-
--short 
-\begin_inset Formula $\eta$
-\end_inset
-
--long normal forms, enriched with metavariables.
- Let us first describe the base syntax.
- The typing judgement is of the shape 
-\begin_inset Formula $\vec{\sigma}\vdash t:\tau$
-\end_inset
-
-, where 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- is a base context, 
-\begin_inset Formula $t$
-\end_inset
-
- is a term, and 
-\begin_inset Formula $\tau$
-\end_inset
-
- is a simple type.
- This differs from our well-formedness judgement which are of the shape
- 
-\begin_inset Formula $a\vdash t$
-\end_inset
-
-, but we can handle it by merging the context 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
- and the type 
-\begin_inset Formula $\tau$
-\end_inset
-
- into a single entity 
-\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
-\end_inset
-
-, which we call a scope.
- In other words, in our setting, 
-\begin_inset Formula $\vec{\sigma}\vdash t:\tau$
-\end_inset
-
- would be denoted by 
-\begin_inset Formula $\vec{\sigma}\rightarrow\tau\vdash t$
-\end_inset
-
-.
- We keep the former notation for simplicity.
- The base syntax is generated by the following rule, which combines application
- and abstraction in a single construction.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\vec{\tau_{1}}\Rightarrow\iota_{1},\dots,\vec{\tau_{n}}\Rightarrow\iota_{n})\Rightarrow\iota\quad\forall j,\vec{\sigma},\vec{\delta},\vec{\tau_{i}}\vdash t_{j}:\iota_{j}'}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\Rightarrow\iota\quad\forall j\in\{1,\dots n\},\ \vec{\sigma},\vec{\delta}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\dfrac{\sigma_{i}=(\vec{\tau_{1}}\Rightarrow,\dots,\tau_{n})\Rightarrow\tau\quad\forall j,\vec{\sigma}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\underline{i}\vec{t}:\Rightarrow\tau}\qquad\dfrac{\vec{\sigma},\tau_{1}\vdash t:\vec{\delta}\Rightarrow\tau_{2}}{\vec{\sigma}\vdash\lambda t:\tau_{1},\vec{\delta}\Rightarrow\tau_{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-Note that this rule cannot be specified by a (multi-sorted) 
-\emph on
-binding arit
-\emph default
-y
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "FioreHur"
-literal "false"
-
-\end_inset
-
-, but it does fit into our format (see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-, but it does not pose any significant challenge to provide a specification
- of operation symbols, see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- for more details.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Let us now describe the enriched syntax.
- First, each scope 
-\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}\Rightarrow\iota)$
-\end_inset
-
- induces a type 
-\begin_inset Formula $\vec{\sigma},\vec{\tau}\Rightarrow\iota$
-\end_inset
-
-.
- We write 
-\begin_inset Formula $M::\vec{\tau}\Rightarrow\iota\in\Gamma$
-\end_inset
-
- to mean that the type induced by the metatype of 
-\begin_inset Formula $M$
-\end_inset
-
- declared in 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- is 
-\begin_inset Formula $\vec{\tau}\Rightarrow\iota$
-\end_inset
-
-.
- The introduction rule for metavariables is the following.
-\begin_inset Formula 
-\[
-\dfrac{M::(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\in\Gamma\qquad(x_{1},\dots,x_{n})\text{ are distinct variables in \ensuremath{\vec{\sigma},\vec{\tau}'} of type \ensuremath{\vec{\tau}}}}{\Gamma;\vec{\sigma}\vdash\lambda_{\vec{\tau'}}M(\vec{x)}:\vec{\tau}'\Rightarrow\iota}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To see how this complies with our format, let us describe the set of morphisms
- between two scopes.
- In fact, this set depends only on the types 
-\begin_inset Formula $\vec{\tau}\Rightarrow\iota$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{\tau}'\Rightarrow\iota'$
-\end_inset
-
- induced by those scopes: it is empty if 
-\begin_inset Formula $\iota\neq\iota$
-\end_inset
-
-'; otherwise, it consists of a list of distinct variables of type 
-\begin_inset Formula $\vec{\tau}$
-\end_inset
-
- in the context 
-\begin_inset Formula $\vec{\tau}'$
-\end_inset
-
-.
- In the rule above, the scope is 
-\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}'\Rightarrow\iota)$
-\end_inset
-
-, which induces the type 
-\begin_inset Formula $\vec{\sigma},\vec{\tau}'\Rightarrow\iota$
-\end_inset
-
-, so that we retrieve the expected notion of patterns.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Finally, it is worth noting that the notion of metatypes that is automatically
- derived by our setting is more liberal than Vezzosi-Abel's: their metatypes
- are types rather tha scopes.
- This restriction prevented them from describing terms as morphisms and
- mgus as coequalisers.
- Another consequence is that our unification problems are 
-\begin_inset Quotes eld
-\end_inset
-
-harder
-\begin_inset Quotes erd
-\end_inset
-
- since we have more metavariable substitutions.
- It is easy to check that given a restricted unification problem, the mgu
- computed by our algorithm fits into their restricted fragment (see 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Paragraph
-Comparison with Vezzosi-Abel's envisioned generalisation
-\end_layout
-
-\begin_layout Plain Layout
-In their conclusion, 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "vezzosi2014categorical"
-literal "false"
-
-\end_inset
-
- sketched a track to extend their work for a suitable class of languages:
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Quotes eld
-\end_inset
-
-Instead of [the category of patterns] we can consider a generic category
- 
-\begin_inset Formula $Ctx$
-\end_inset
-
- having all the pullbacks and equalisers and whose arrows are monomorphisms.
- And instead of the grammar of [normal forms of simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus] we can use an arbitrary one defined by a family of operators
- [...] as long as they are functorial with respect to 
-\begin_inset Formula $Ctx$
-\end_inset
-
-.
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-The key additional ingredient that we introduce is the preservation of equaliser
-s and pullbacks by the operation symbols and their arities.
- This is crucial to ensure that given two terms, either there is a mgu,
- either there is no unifier.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Paragraph
@@ -1977,6 +1803,55 @@ noprefix "false"
 \end_inset
 
 -abstracted term does not yield a normal form.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Typed syntaxes with typing judgements of the shape 
+\begin_inset Formula $\Delta\vdash t:\tau$
+\end_inset
+
+ can be accounted by We can handle this type system by merging the context
+ 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and the type 
+\begin_inset Formula $\tau$
+\end_inset
+
+ into a single entity 
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
+\end_inset
+
+, which we call a scope.
+ In other words, in our setting, 
+\begin_inset Formula $\Gamma;\vec{\sigma}\vdash t:\tau$
+\end_inset
+
+ would be denoted by 
+\begin_inset Formula $\Gamma;\vec{\sigma}\rightarrow\tau\vdash t$
+\end_inset
+
+, see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ for more details.
 \end_layout
 
 \end_inset
@@ -2297,6 +2172,25 @@ Note that we have another choice for
 
 -calculus but are equally possible for any multi-sorted binding signature.
  
+\end_layout
+
+\begin_layout Standard
+As mentioned above, GB-signatures are more expressive than binding signatures:
+ we give in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ the syntax of normal forms for simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus as an example.
 \end_layout
 
 \begin_layout Standard
@@ -22785,6 +22679,13 @@ name "lem:F-finitary"
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
@@ -34427,6 +34328,423 @@ Simply-typed
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:normalised-lc"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus modulo modulo 
+\begin_inset Formula $\beta$
+\end_inset
+
+- and 
+\begin_inset Formula $\eta$
+\end_inset
+
+-equations
+\end_layout
+
+\begin_layout Standard
+Let us detail how we account for Miller's original setting: simply-typed
+ 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus modulo 
+\begin_inset Formula $\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $\eta$
+\end_inset
+
+-equations.
+ Like 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "vezzosi2014categorical"
+literal "true"
+
+\end_inset
+
+, we consider the set of the simple types as inductively generated by a
+ single construction 
+\begin_inset Formula $\vec{\sigma}\Rightarrow\iota$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ is a list of types, and 
+\begin_inset Formula $\iota$
+\end_inset
+
+ is a base type.
+ We also adopt the De Bruijn convention to label variables: a base context
+ is just a list of simple types and a variable is just a natural number
+ smaller than the size of the base context.
+\end_layout
+
+\begin_layout Standard
+We follow Cheney's presentation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+after "Section 2.2"
+key "cheney2005relating"
+literal "false"
+
+\end_inset
+
+ of the equation-free syntax of 
+\begin_inset Formula $\beta$
+\end_inset
+
+-short 
+\begin_inset Formula $\eta$
+\end_inset
+
+-long normal forms, enriched with metavariables.
+ Let us first describe the base syntax.
+ The typing judgement is of the shape 
+\begin_inset Formula $\vec{\sigma}\vdash t:\tau$
+\end_inset
+
+, where 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ is a base context, 
+\begin_inset Formula $t$
+\end_inset
+
+ is a term, and 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is a simple type.
+ This differs from our well-formedness judgement which are of the shape
+ 
+\begin_inset Formula $a\vdash t$
+\end_inset
+
+, but we can handle it by merging the context 
+\begin_inset Formula $\vec{\sigma}$
+\end_inset
+
+ and the type 
+\begin_inset Formula $\tau$
+\end_inset
+
+ into a single entity 
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau$
+\end_inset
+
+, which we call a scope.
+ In other words, in our setting, 
+\begin_inset Formula $\vec{\sigma}\vdash t:\tau$
+\end_inset
+
+ would be denoted by 
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau\vdash t$
+\end_inset
+
+.
+ We keep the former notation for simplicity.
+ The base syntax is generated by the following rule, which combines application
+ and abstraction in a single construction.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\vec{\tau_{1}}\Rightarrow\iota_{1},\dots,\vec{\tau_{n}}\Rightarrow\iota_{n})\Rightarrow\iota\quad\forall j,\vec{\sigma},\vec{\delta},\vec{\tau_{i}}\vdash t_{j}:\iota_{j}'}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\Rightarrow\iota\quad\forall j\in\{1,\dots n\},\ \vec{\sigma},\vec{\delta}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\dfrac{\sigma_{i}=(\vec{\tau_{1}}\Rightarrow,\dots,\tau_{n})\Rightarrow\tau\quad\forall j,\vec{\sigma}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\underline{i}\vec{t}:\Rightarrow\tau}\qquad\dfrac{\vec{\sigma},\tau_{1}\vdash t:\vec{\delta}\Rightarrow\tau_{2}}{\vec{\sigma}\vdash\lambda t:\tau_{1},\vec{\delta}\Rightarrow\tau_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Note that this rule cannot be specified by a (multi-sorted) 
+\emph on
+binding arit
+\emph default
+y
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "FioreHur"
+literal "false"
+
+\end_inset
+
+, but it does fit into our format (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, but it does not pose any significant challenge to provide a specification
+ of operation symbols, see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ for more details.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us now describe the enriched syntax.
+ First, each scope 
+\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}\Rightarrow\iota)$
+\end_inset
+
+ induces a type 
+\begin_inset Formula $\vec{\sigma},\vec{\tau}\Rightarrow\iota$
+\end_inset
+
+.
+ We write 
+\begin_inset Formula $M::\vec{\tau}\Rightarrow\iota\in\Gamma$
+\end_inset
+
+ to mean that the type induced by the scope of 
+\begin_inset Formula $M$
+\end_inset
+
+ declared in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is 
+\begin_inset Formula $\vec{\tau}\Rightarrow\iota$
+\end_inset
+
+.
+ The introduction rule for metavariables is the following.
+\begin_inset Formula 
+\[
+\dfrac{M::(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\in\Gamma\qquad(x_{1},\dots,x_{n})\text{ are distinct variables in \ensuremath{\vec{\sigma},\vec{\tau}'} of type \ensuremath{\vec{\tau}}}}{\Gamma;\vec{\sigma}\vdash\lambda_{\vec{\tau'}}M(\vec{x)}:\vec{\tau}'\Rightarrow\iota}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To see how this complies with our format, let us describe the set of morphisms
+ between two scopes.
+ In fact, this set depends only on the types 
+\begin_inset Formula $\vec{\tau}\Rightarrow\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\tau}'\Rightarrow\iota'$
+\end_inset
+
+ induced by those scopes: it is empty if 
+\begin_inset Formula $\iota\neq\iota$
+\end_inset
+
+'; otherwise, it consists of a list of distinct variables of type 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ in the context 
+\begin_inset Formula $\vec{\tau}'$
+\end_inset
+
+.
+ In the rule above, the scope is 
+\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}'\Rightarrow\iota)$
+\end_inset
+
+, which induces the type 
+\begin_inset Formula $\vec{\sigma},\vec{\tau}'\Rightarrow\iota$
+\end_inset
+
+, so that we retrieve the expected notion of patterns.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Finally, it is worth noting that the notion of metatypes that is automatically
+ derived by our setting is more liberal than Vezzosi-Abel's: their metatypes
+ are types rather tha scopes.
+ This restriction prevented them from describing terms as morphisms and
+ mgus as coequalisers.
+ Another consequence is that our unification problems are 
+\begin_inset Quotes eld
+\end_inset
+
+harder
+\begin_inset Quotes erd
+\end_inset
+
+ since we have more metavariable substitutions.
+ It is easy to check that given a restricted unification problem, the mgu
+ computed by our algorithm fits into their restricted fragment (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Paragraph
+Comparison with Vezzosi-Abel's envisioned generalisation
+\end_layout
+
+\begin_layout Plain Layout
+In their conclusion, 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "vezzosi2014categorical"
+literal "false"
+
+\end_inset
+
+ sketched a track to extend their work for a suitable class of languages:
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+Instead of [the category of patterns] we can consider a generic category
+ 
+\begin_inset Formula $Ctx$
+\end_inset
+
+ having all the pullbacks and equalisers and whose arrows are monomorphisms.
+ And instead of the grammar of [normal forms of simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus] we can use an arbitrary one defined by a family of operators
+ [...] as long as they are functorial with respect to 
+\begin_inset Formula $Ctx$
+\end_inset
+
+.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The key additional ingredient that we introduce is the preservation of equaliser
+s and pullbacks by the operation symbols and their arities.
+ This is crucial to ensure that given two terms, either there is a mgu,
+ either there is no unifier.
+\end_layout
 
 \end_inset
 
