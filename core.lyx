@@ -713,16 +713,15 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Unification deals with a base syntax enriched with 
+Unification deals with a syntax with 
 \emph on
 metavariables
 \emph default
-.
- Given two 
-\emph on
-enriched
-\emph default
- terms, the goal is to find a 
+: it comes with a notion of metavariable arity, determining what are the
+ possible arguments for a metavariable in a given context, and a notion
+ of instantiation, determining which data is necessary to substitute a metavaria
+ble.
+ Given two terms, the goal is to find a 
 \emph on
 most general unifier
 \emph default
@@ -732,8 +731,8 @@ instantiation
 \emph default
  (of the metavariables therein) that makes the two terms equal.
  There are different standard versions of unification, notably first-order
- or second-order unification, each of which comes with its own notion of
- metavariable enrichment.
+ or second-order unification, which can share the same base syntax without
+ metavariables.
  Pattern unification is an intermediate variant, introduced by 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -852,6 +851,10 @@ metavariable substitution
 \begin_inset Formula $M:m$
 \end_inset
 
+ in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
  to a term 
 \begin_inset Formula $\Delta;m\vdash\sigma_{M}$
 \end_inset
@@ -870,6 +873,47 @@ metavariable substitution
 \begin_inset Formula $(\sigma\circ\delta)_{M}=\delta_{M}[\sigma]$
 \end_inset
 
+.
+\end_layout
+
+\begin_layout Standard
+Now, a unification problem consists of a pair of terms 
+\begin_inset Formula $\Gamma;n\vdash t,u$
+\end_inset
+
+.
+ A unifier is a metavariable substitution 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ such that 
+\begin_inset Formula $t[\sigma]=u[\sigma]$
+\end_inset
+
+, and a most general unifier (abbreviated as mgu) is a unifier 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ such that given any other unifier 
+\begin_inset Formula $\delta$
+\end_inset
+
+, there exists a unique 
+\begin_inset Formula $\sigma'$
+\end_inset
+
+ such that 
+\begin_inset Formula $\delta=\sigma'\circ\sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 , so that we get three categories
 \begin_inset Note Note
 status open
@@ -904,7 +948,16 @@ a well-formedness judgement and corresponding sets of enriched terms.
  
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 It is well-known that unification can be formulated categorically
 \begin_inset ERT
 status open
@@ -974,21 +1027,22 @@ literal "true"
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Paragraph
 Contributions
 \end_layout
 
 \begin_layout Standard
-Our first contribution is a notion of 
-\emph on
-generalised binding signature
-\emph default
- (abbreviated as GB-signature) that specifies a syntax with
+Our first contribution is a class of languages with
 \emph on
  
 \emph default
 metavariables, for which unification problems can be stated.
- A GB-signature consists of the following data: 
+ Such a language is specified by the following data: 
 \end_layout
 
 \begin_layout Itemize
@@ -1004,10 +1058,6 @@ and
 \emph on
 renamings 
 \emph default
-or 
-\emph on
-patterns 
-\emph default
 between them,
 \end_layout
 
@@ -1021,85 +1071,33 @@ an endofunctor
 \end_inset
 
  of the shape 
-\begin_inset Formula 
-\begin{equation}
-F(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\times X_{\nthar on}\label{eq:F-shape}
-\end{equation}
-
+\begin_inset Formula $F(X)_{a}=\coprod_{n\in\mathbb{N}}\coprod_{o\in\Oop na}X_{\nthar o1}\times\dots\times X_{\nthar on}$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
-Let us give a quick definition of the induced category of metacontexts and
- substitutions (a more down-to-earth syntactic version is given later).
- A metavariable context is again a list of metavariable symbols with their
- associated scopes.
- To each metavariable context 
-\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
-\end_inset
+Our second key contribution consists in working out some conditions which
+ ensures the main features of Miller's pattern unification: 
+\end_layout
 
-, we associate a functor 
-\begin_inset Formula $\underline{\Gamma}:{\cal A}\rightarrow\Set$
-\end_inset
+\begin_layout Itemize
+given two terms, either the mgu exists, or there is no unifier;
+\end_layout
 
- defined by 
-\begin_inset Formula $ym_{1}+\dots+ym_{p}$
-\end_inset
-
- where 
-\begin_inset Formula $y$
-\end_inset
-
- is the Yoneda embedding.
- By 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "lem:F-finitary"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, the endofunctor 
-\begin_inset Formula $F$
-\end_inset
-
- generates a free monad on 
-\begin_inset Formula $[{\cal A},\Set]$
-\end_inset
-
-.
- A metavariable substitution from 
-\begin_inset Formula $\Gamma$
-\end_inset
-
- to 
-\begin_inset Formula $\Delta$
-\end_inset
-
- is a Kleisli morphism 
-\begin_inset Formula $\underline{\Gamma}\rightarrow T\underline{\Delta}$
-\end_inset
-
-.
+\begin_layout Itemize
+moreover, there is a recursive procedure (much similar to Miller's original
+ algorithm) which computes the mgu or detects the absence of any unifier.
  
 \end_layout
 
 \begin_layout Standard
-Our second key contribution consists in working out some conditions on the
- GB-signature which ensures the main feature of Miller's pattern unification:
- given two terms, either the mgu exists, or there is no unifier.
- Moreover, there is a recursive procedure (much similar to Miller's original
- algorithm) which computes the mgu or detects the absence of any unifier.
- Those conditions are essentially that patterns are monomorphic, 
+Those conditions are essentially that renamings are monomorphic, 
 \begin_inset Formula ${\cal A}$
 \end_inset
 
- has finite connected limits (i.e., equalisers and pullbacks), and some additional
- properties about 
+ has equalisers and pullbacks, and some additional properties about 
 \begin_inset Formula $F$
 \end_inset
 
@@ -1114,39 +1112,30 @@ noprefix "false"
 \end_inset
 
 ).
+ We call a language 
+\emph on
+pattern-friendly
+\emph default
+ when it satisfies those properties.
+ In 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "sec:applications"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ we illustrate how to show that some specific languages is pattern-friendly.
 \end_layout
 
 \begin_layout Paragraph
-Syntax generated by a GB-signature
+Syntax generated by a specification
 \end_layout
 
 \begin_layout Standard
-The category of metavariable contexts determines the syntax generated by
- a GB-signature; let us make it explicit, starting with the base syntax.
- We have a well-formedness judgement of the shape 
-\begin_inset Formula $a\vdash t$
-\end_inset
-
-, where 
-\begin_inset Formula $a$
-\end_inset
-
- is a scope and 
-\begin_inset Formula $t$
-\end_inset
-
- is a term.
- The set of terms of scope 
-\begin_inset Formula $a$
-\end_inset
-
- is retrieved as the set of metavariable morphisms from the singleton metavariab
-le context 
-\begin_inset Formula $(A:a)$
-\end_inset
-
- to the empty metavariable context.
- More explicitly, it is generated by the following single rule, where 
+The base syntax is generated by the following single rule, where 
 \begin_inset Formula $a\vdash t$
 \end_inset
 
@@ -1166,7 +1155,11 @@ le context
 
 \end_inset
 
- Typed syntaxes with typing judgements of the shape 
+
+\end_layout
+
+\begin_layout Standard
+Typed syntaxes with typing judgements of the shape 
 \begin_inset Formula $C\vdash t:\tau$
 \end_inset
 
@@ -1178,17 +1171,16 @@ le context
 \begin_inset Formula $\tau$
 \end_inset
 
- into a single entity 
+ into a single scope 
 \begin_inset Formula $\vec{\sigma}\rightarrow\tau$
 \end_inset
 
-, which we call a scope.
+.
 \end_layout
 
 \begin_layout Standard
-Note that even in the case where scopes are natural numbers as in our introducto
-ry example, this rule goes beyond what is possible to specify with binding
- arities
+Note that even in the case where scopes are natural numbers, this rule goes
+ beyond what is possible to specify with binding arities
 \begin_inset ERT
 status open
 
@@ -1208,8 +1200,8 @@ literal "false"
 \end_inset
 
 .
- The same hold for the simply-typed variant: this is crucial to handle Miller's
- original setting of simply-typed 
+ The same hold for the simply-typed variant, and this is crucial to handle
+ Miller's original setting of simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -1235,45 +1227,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-The syntax is functorial in the sense that given any pattern 
-\begin_inset Formula $f\in\hom(a,b)$
-\end_inset
-
- and term 
-\begin_inset Formula $a\vdash t$
-\end_inset
-
-, we define by recursion on the structure of 
-\begin_inset Formula $t$
-\end_inset
-
- a term 
-\begin_inset Formula $b\vdash t\{f\}$
-\end_inset
-
-, such that 
-\begin_inset Formula $t\{f\}\{g\}=t\{g\circ f\}$
-\end_inset
-
- and 
-\begin_inset Formula $t\{id_{a}\}=t$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The enriched syntax with metavariables involves a well-formedness judgement
- of the shape 
+The syntax with metavariables involves a well-formedness judgement of the
+ shape 
 \begin_inset Formula $\Gamma;a\vdash t$
 \end_inset
 
@@ -1285,27 +1240,9 @@ The enriched syntax with metavariables involves a well-formedness judgement
 \emph on
 metavariable context
 \emph default
- that keeps track of the 
-\emph on
-scopes 
-\emph default
-of metavariables.
- The set of terms in environment 
-\begin_inset Formula $\Gamma;a$
-\end_inset
-
- is retrieve as the set of morphisms from the singleton metavariable context
- 
-\begin_inset Formula $(A:a)$
-\end_inset
-
- to 
-\begin_inset Formula $\Gamma$
-\end_inset
-
-.
- More explicitly, the enriched syntax is generated by two rules, one for
- operations, and one for metavariables.
+, a list of metavariable symbols with their associated scopes.
+ The syntax is generated by two rules, one for operations, and one for metavaria
+bles.
 \end_layout
 
 \begin_layout Standard
@@ -1414,16 +1351,17 @@ on rule
 \end_inset
 
 .
- 
-\end_layout
-
-\begin_layout Standard
-As a side note, the metavariable introduction 
+ The metavariable introduction 
 \begin_inset Formula $\refrule{So}$
 \end_inset
 
- for second-order unification does not fit into our format, essentially
- because it does not come frome a free monad on a presheaf category (see
+ for second-order unification, however, does not fit into our format
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Essentially, this is because the syntax does not come frome a free monad
+ on a presheaf category (see
 \begin_inset ERT
 status open
 
@@ -1443,6 +1381,17 @@ literal "false"
 \end_inset
 
  for more details about the corresponding monad).
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Following the path sketched for the introductory example, we can define
+ metavariable substitutions, their action on terms, and their compositions:
+ unification problems can then be stated.
 \end_layout
 
 \begin_layout Standard
@@ -1562,7 +1511,7 @@ such that
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 The enriched syntax is functorial with respect to the category of renamings
@@ -1686,9 +1635,8 @@ Unification algorithm
 \end_layout
 
 \begin_layout Standard
-The main feature of pattern unification (that still holds for our GB-signatures,
- under the above mentioned additional assumptions) is that either the mgu
- exists, or there is no unifier.
+The main feature of pattern unification that holds for our pattern-friendly
+ languages is that either the mgu exists, or there is no unifier.
  Moreover, there is a recursive procedure which computes the mgu or detects
  the impossibility of unification.
  
@@ -1774,12 +1722,12 @@ noprefix "false"
 \end_layout
 
 \begin_layout Paragraph
-Scope of our class of languages
+Scope of pattern-friendly languages
 \end_layout
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Our class of languages obviously includes the case of the syntax of normalised
@@ -1808,11 +1756,8 @@ noprefix "false"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Typed syntaxes with typing judgements of the shape 
@@ -1856,7 +1801,22 @@ noprefix "false"
 
 \end_inset
 
+The first thing to note is that the syntax of normal forms for simply-typed
+ 
+\begin_inset Formula $\lambda$
+\end_inset
 
+-calculus is a pattern-friendly language (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+: this allows us to recover Miller's original example).
 \end_layout
 
 \begin_layout Standard
@@ -1888,11 +1848,11 @@ literal "false"
 \begin_inset Formula $\beta$
 \end_inset
 
- and 
+- and 
 \begin_inset Formula $\eta$
 \end_inset
 
--equation) in 
+-equations) in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:simply-typed-so"
@@ -1904,7 +1864,7 @@ noprefix "false"
 
 .
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 , and the case of mono-sorted binding signatures is explained in 
@@ -1922,8 +1882,17 @@ noprefix "false"
 
 \end_inset
 
- Let us discuss a simple example, leaving the above mentioned issue of types
- aside for simplicity: pure 
+ Let us discuss a simple example
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+, leaving the above mentioned issue of types aside for simplicity
+\end_layout
+
+\end_inset
+
+: pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -1931,11 +1900,11 @@ noprefix "false"
 \begin_inset Formula $\beta$
 \end_inset
 
- or 
+- or 
 \begin_inset Formula $\eta$
 \end_inset
 
- equations.
+-equations.
  Using De Bruijn encoding, a scope is a natural number indicating the number
  of available free variables and we can take 
 \begin_inset Formula ${\cal A}=\mathbb{F}_{m}$
@@ -1947,17 +1916,7 @@ noprefix "false"
 \end_inset
 
 .
- Let us put it more explicitly in the format of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "eq:F-shape"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-, by working out the different sets 
+ Let us be more explicit and give the different sets 
 \begin_inset Formula $\Oop nm$
 \end_inset
 
@@ -1983,17 +1942,31 @@ noprefix "false"
 \end_inset
 
  with associated arities 
-\begin_inset Formula $\nthar{\lambda^{n}}1=n+1$
+\begin_inset Formula $\nthar{\lambda_{1}^{n}}{}=n+1$
 \end_inset
 
  and 
-\begin_inset Formula $\nthar{a^{n}}1=\nthar{a^{n}}2=n$
+\begin_inset Formula $\nthar{a_{1}^{n}}{}=\nthar{a_{2}^{n}}{}=n$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
+The previous description recovers the standard introduction rule 
+\begin_inset Formula $\refrule{Pat}$
+\end_inset
+
+ but we can equally account for the following variant by restricting to
+ monotone renamings.
+\begin_inset Formula 
+\[
+\forall M:m\in\Gamma,\qquad\dfrac{\text{\ensuremath{X} is a \ensuremath{m}-sized set of distinct variables in scope \ensuremath{n}}}{\Gamma;n\vdash M(X)}
+\]
+
+\end_inset
+
+
 \begin_inset Note Note
 status collapsed
 
@@ -2105,7 +2078,7 @@ status collapsed
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 We have not yet defined the morphisms in 
@@ -2136,37 +2109,7 @@ We have not yet defined the morphisms in
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Note that we have another choice for 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-, by choosing a more restrictive choice of notion of patterns: we could
- require that the injective map is monotone, or equivalently, that a morphism
- from 
-\begin_inset Formula $n$
-\end_inset
-
- to 
-\begin_inset Formula $m$
-\end_inset
-
- is subset of 
-\begin_inset Formula $m$
-\end_inset
-
- of size 
-\begin_inset Formula $n$
-\end_inset
-
-.
- The two choices yield two valid different languages, that share the same
- base syntax and both satisfy the additional conditions required to replay
- Miller's unification algorithm.
- Those alternatives are not specific to pure 
+This alternative is not specific to pure 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -2175,27 +2118,14 @@ Note that we have another choice for
 \end_layout
 
 \begin_layout Standard
-As mentioned above, GB-signatures are more expressive than binding signatures:
- we give in 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
- the syntax of normal forms for simply-typed 
+Pattern-friendly languages are more expressive than binding signatures.
+ We already mentioned the syntax of normal forms for simply-typed 
 \begin_inset Formula $\lambda$
 \end_inset
 
--calculus as an example.
-\end_layout
-
-\begin_layout Standard
-Our class of languages also accounts for languages where terms bind type
- variables, such as system F (
+-calculus.
+ They also include languages where terms bind type variables (which are
+ registered in the scope), such as system F (
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "subsec:system-F"
@@ -2225,9 +2155,9 @@ literal "false"
 
 \end_inset
 
-, where the context is split in two parts, one of which includes variables
- that must occur exactly once and in the same order as they occur in that
- context.
+: their notion of context consists of two components, one of which includes
+ variables that must occur exactly once and in the same order as they occur
+ in that context.
 \end_layout
 
 \begin_layout Standard
@@ -2253,6 +2183,187 @@ noprefix "false"
 
 , where the traditional presentation of each calculus is translated into
  our notion of specification.
+\end_layout
+
+\begin_layout Paragraph
+Categorical perspective on unification
+\end_layout
+
+\begin_layout Standard
+It is well-known that unification can be formulated categorically
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Goguen89whatis"
+literal "true"
+
+\end_inset
+
+.
+ Let us make this formulation explicit in our setting.
+ The set of terms in the environment 
+\begin_inset Formula $\Gamma;a$
+\end_inset
+
+ is recovered as the set of morphisms from the singleton metacontext 
+\begin_inset Formula $(A:a)$
+\end_inset
+
+ to 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ With this in mind, a unifier of two terms 
+\begin_inset Formula $\Gamma;n\vdash t,u$
+\end_inset
+
+ can be interpreted as a cocone, that is, a morphism 
+\begin_inset Formula $\Gamma\rightarrow\Delta$
+\end_inset
+
+ such that its composition with either of the two terms (interpreted as
+ morphisms) are equal.
+ A mgu is then a coequaliser: this is the characterisation that we use to
+ prove correctness of our unification algorithm.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Note that unification also makes sense for finite families of pairs of terms
+ 
+\begin_inset Formula $(\Gamma;a_{i}\vdash t_{i},u_{i})_{i\in\{1,\dots,p\}}$
+\end_inset
+
+; we get a similar categorical formulation by interpreting 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ as two parallel morphisms from 
+\begin_inset Formula $(A_{1}:n_{1},\dots,A_{p}:a_{p})$
+\end_inset
+
+ to 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us finally mention that given a specification, we can provide a direct
+ characterisation of the category of metacontexts and substitutions as a
+ full subcategory of the Kleisli category of the monad 
+\begin_inset Formula $T$
+\end_inset
+
+ freely generated by the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+ (see 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:mcon-kleisli"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To each metavariable context 
+\begin_inset Formula $\Gamma=(M_{1}:m_{1},\dots,M_{p}:m_{p})$
+\end_inset
+
+, we associate a functor 
+\begin_inset Formula $\underline{\Gamma}:{\cal A}\rightarrow\Set$
+\end_inset
+
+ defined by 
+\begin_inset Formula $ym_{1}+\dots+ym_{p}$
+\end_inset
+
+ where 
+\begin_inset Formula $y$
+\end_inset
+
+ is the Yoneda embedding.
+ A metavariable substitution from 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ to 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is a Kleisli morphism 
+\begin_inset Formula $\underline{\Gamma}\rightarrow T\underline{\Delta}$
+\end_inset
+
+, where 
+\begin_inset Formula $T$
+\end_inset
+
+ is the free monad generated by the endofunctor 
+\begin_inset Formula $F$
+\end_inset
+
+.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "lem:F-finitary"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
@@ -2335,13 +2446,23 @@ noprefix "false"
 
 \end_inset
 
- before the conclusion, in 
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+before the conclusion, in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:Conclusion"
 plural "false"
 caps "true"
 noprefix "false"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -26524,7 +26645,7 @@ end{full}
 
  
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 In the examples, we motivate the definition of the category 
@@ -26602,7 +26723,7 @@ rqshape}
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Subsection
 Binding signatures
@@ -26942,6 +27063,1308 @@ we propose an interpretation of typing rules to define the endofunctor
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Examples of (pattern-friendly) GB-signatures (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "def:GB-signature"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:all-syntax"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:simply-typed-so"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $()$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\vdash t:\tau'\Rightarrow\tau\quad\Gamma\vdash u:\tau'}{\Gamma\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+\vec{\sigma}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
+\vec{\sigma}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simply-typed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus modulo 
+\begin_inset Formula $\beta\eta$
+\end_inset
+
+ (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\begin{array}{c}
+x:(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\in(\Gamma,\vec{y}:\vec{\tau}_{0})\\
+\forall i\in\{1,\dots,n\}\ \Gamma,\vec{y}:\vec{\tau}\vdash t_{i}:\tau_{i}
+\end{array}}{\Gamma\vdash\lambda\vec{y}.x\vec{t}:\vec{\tau}_{0}\Rightarrow\iota}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\{a_{j,\tau_{1},\dots,\vec{\tau}_{0},\iota_{0}}|\tau=\vec{\tau}_{0}\Rightarrow\iota,\\
+j\in|\vec{\sigma}|_{\vec{\tau}\Rightarrow\iota}\}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{c}
+\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{1}\\
+\dots\\
+\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{n}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\vec{\tau}'\Rightarrow\tau\in\Gamma\quad\tau\text{ is a base type}\quad\Gamma\vdash\vec{t}:\vec{\tau}'}{\Gamma\vdash x\vec{t}:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\{a_{i,\tau'_{1},\dots,\tau'_{n}}|i\in|\vec{\sigma}|_{\vec{\tau}'\Rightarrow\tau}\\
+\text{ and \ensuremath{\tau} is a base type}\}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{c}
+\vec{\sigma}\arSep\tau'_{1}\\
+\dots\\
+\vec{\sigma}\arSep\tau'_{n}
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ordered-calculus"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ordered 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:ordered-calculus"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(\vec{\sigma}\Fsep\vec{\omega}\arSep\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\Fsep\cdot\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\text{\text{ and }\ensuremath{\vec{\omega}=()}}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $()$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{}{\Gamma\Fsep x:\tau\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v^{>}|\text{\ensuremath{\vec{\omega}=()}}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $()$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega\vdash t:\tau'\Rightarrow\tau\quad\Gamma\Fsep\cdot\vdash u:\tau'}{\Gamma\Fsep\Omega\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+\vec{\sigma}\Fsep\vec{\omega}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
+\vec{\sigma}\Fsep()\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega_{1}\vdash t:\tau'\twoheadrightarrow\tau\quad\Gamma\Fsep\Omega_{2}\vdash u:\tau'}{\Gamma\Fsep\Omega_{1},\Omega_{2}\vdash t^{>}\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}^{\vec{\omega}_{1},\vec{\omega}_{2}}|\tau'\in T\text{ and }\text{\ensuremath{\vec{\omega}=\vec{\omega}_{1},\vec{\omega}_{2}}}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+\vec{\sigma}\Fsep\vec{\omega}_{1}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
+\vec{\sigma}\Fsep\vec{\omega}_{2}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\Fsep\Omega\vdash t:\tau_{2}}{\Gamma\Fsep\Omega\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\Fsep\vec{\omega}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\Fsep\Omega\vdash\lambda^{>}x.t:\tau_{1}\twoheadrightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}^{>}|\tau=(\tau_{1}\twoheadrightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\vec{\sigma},\tau_{1}\Fsep\vec{\omega}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{1em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ContinuedFloat
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+System F (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:system-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+System F
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:system-F"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Typing rule
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $O(p|\vec{\sigma}\rightarrow\tau)=\mydots+$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha_{o}=(\mydots)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{n\Fsep\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+()
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma\vdash t:\tau'\Rightarrow\tau\quad n\Fsep\Gamma\vdash u:\tau'}{n\Fsep\Gamma\vdash t\ u:\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{a_{\tau'}|\tau'\in S_{n}\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(\begin{array}{l}
+n\Fsep\vec{\sigma}\arSep\tau'\Rightarrow\ensuremath{\tau}\\
+n\Fsep\vec{\sigma}\arSep\tau'
+\end{array}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{n\Fsep\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n\Fsep\vec{\sigma},\tau_{1}\arSep\tau_{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n\Fsep\Gamma\vdash t:\forall\tau_{1}\quad\tau_{2}\in S_{n}}{n\Fsep\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{A_{\tau_{1},\tau_{2}}|\tau=\tau_{1}[\tau_{2}]\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n\Fsep\vec{\sigma}\arSep\forall\tau_{1})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{n+1\Fsep wk(\Gamma)\vdash t:\tau}{n\Fsep\Gamma\vdash\Lambda t:\forall\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\forall\tau'\}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(n+1\Fsep wk(\vec{\sigma})\arSep\tau')$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
 
 \end_inset
 
@@ -27341,7 +28764,7 @@ end{full}
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Subsection
 \begin_inset Formula $\lambda$
@@ -32743,6 +34166,22 @@ entail N:A }
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-10em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Simply-typed 
 \begin_inset Formula $\lambda$
@@ -32791,8 +34230,8 @@ Let
 \begin_inset Formula $T$
 \end_inset
 
- denote the set of simple types generated by a set of atomic types and a
- binary arrow type construction 
+ denote the set of simple types generated by a set of base types and a binary
+ arrow type construction 
 \begin_inset Formula $-\Rightarrow-$
 \end_inset
 
@@ -32991,1323 +34430,6 @@ The induced signature is pattern-friendly and so the generic pattern unification
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Examples of (pattern-friendly) GB-signatures (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "def:GB-signature"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:all-syntax"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:simply-typed-so"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="4" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\alpha_{o}=(\mydots)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $()$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\vdash t:\tau'\Rightarrow\tau\quad\Gamma\vdash u:\tau'}{\Gamma\vdash t\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left(\begin{array}{l}
-\vec{\sigma}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
-\vec{\sigma}\arSep\tau'
-\end{array}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(\vec{\sigma},\tau_{1}\arSep\tau_{2})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus modulo 
-\begin_inset Formula $\beta\eta$
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:normalised-lc"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\alpha_{o}=(\mydots)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{\begin{array}{c}
-x:(\tau_{1},\dots,\tau_{n})\Rightarrow\iota_{0}\in(\Gamma,\vec{y}:\vec{\tau}_{0})\\
-\forall i\in\{1,\dots,n\}\ \Gamma,\vec{y}:\vec{\tau}\vdash t_{i}:\tau_{i}
-\end{array}}{\Gamma\vdash\lambda\vec{y}.x\vec{t}:\vec{\tau}_{0}\Rightarrow\iota_{0}}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{c}
-\{a_{j,\tau_{1},\dots,\vec{\tau}_{0},\iota_{0}}|\tau=\vec{\tau}_{0}\Rightarrow\iota_{0},\\
-j\in|\vec{\sigma}|_{\vec{\tau}\Rightarrow\iota_{0}}\}
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left(\begin{array}{c}
-\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{1}\\
-\dots\\
-\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{n}
-\end{array}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O(\vec{\sigma}\arSep\tau)=\mydots+$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\alpha_{o}=(\mydots)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\vec{\tau}'\Rightarrow\tau\in\Gamma\quad\tau\text{ is a base type}\quad\Gamma\vdash\vec{t}:\vec{\tau}'}{\Gamma\vdash x\vec{t}:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\begin{array}{c}
-\{a_{i,\tau'_{1},\dots,\tau'_{n}}|i\in|\vec{\sigma}|_{\vec{\tau}'\Rightarrow\tau}\\
-\text{ and \ensuremath{\tau} is a base type}\}
-\end{array}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left(\begin{array}{c}
-\vec{\sigma}\arSep\tau'_{1}\\
-\dots\\
-\vec{\sigma}\arSep\tau'_{n}
-\end{array}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(\vec{\sigma},\tau_{1}\arSep\tau_{2})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Ordered 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:ordered-calculus"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Ordered 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-(
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:ordered-calculus"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O(\vec{\sigma}\Fsep\vec{\omega}\arSep\tau)=\mydots+$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\alpha_{o}=(\mydots)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{\Gamma\Fsep\cdot\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\text{\text{ and }\ensuremath{\vec{\omega}=()}}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $()$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{}{\Gamma\Fsep x:\tau\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v^{>}|\text{\ensuremath{\vec{\omega}=()}}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $()$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega\vdash t:\tau'\Rightarrow\tau\quad\Gamma\Fsep\cdot\vdash u:\tau'}{\Gamma\Fsep\Omega\vdash t\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}|\tau'\in T\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left(\begin{array}{l}
-\vec{\sigma}\Fsep\vec{\omega}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
-\vec{\sigma}\Fsep()\arSep\tau'
-\end{array}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega_{1}\vdash t:\tau'\twoheadrightarrow\tau\quad\Gamma\Fsep\Omega_{2}\vdash u:\tau'}{\Gamma\Fsep\Omega_{1},\Omega_{2}\vdash t^{>}\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}^{\vec{\omega}_{1},\vec{\omega}_{2}}|\tau'\in T\text{ and }\text{\ensuremath{\vec{\omega}=\vec{\omega}_{1},\vec{\omega}_{2}}}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left(\begin{array}{l}
-\vec{\sigma}\Fsep\vec{\omega}_{1}\arSep(\tau'\Rightarrow\ensuremath{\tau})\\
-\vec{\sigma}\Fsep\vec{\omega}_{2}\arSep\tau'
-\end{array}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma,x:\tau_{1}\Fsep\Omega\vdash t:\tau_{2}}{\Gamma\Fsep\Omega\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(\vec{\sigma},\tau_{1}\Fsep\vec{\omega}\arSep\tau_{2})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{\Gamma\Fsep\Omega,x:\tau_{1}\vdash t:\tau_{2}}{\Gamma\Fsep\Omega\vdash\lambda^{>}x.t:\tau_{1}\twoheadrightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}^{>}|\tau=(\tau_{1}\twoheadrightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(\vec{\sigma},\tau_{1}\Fsep\vec{\omega}\arSep\tau_{2})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{1em}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-ContinuedFloat
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-System F (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:system-F"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-System F
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-(
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:system-F"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="3">
-<features islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top" width="0pt">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Typing rule
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $O(p|\vec{\sigma}\rightarrow\tau)=\mydots+$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\alpha_{o}=(\mydots)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{x:\tau\in\Gamma}{n\Fsep\Gamma\vdash x:\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{v_{i}|i\in|\vec{\sigma}|_{\tau}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-()
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma\vdash t:\tau'\Rightarrow\tau\quad n\Fsep\Gamma\vdash u:\tau'}{n\Fsep\Gamma\vdash t\ u:\tau}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{a_{\tau'}|\tau'\in S_{n}\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left(\begin{array}{l}
-n\Fsep\vec{\sigma}\arSep\tau'\Rightarrow\ensuremath{\tau}\\
-n\Fsep\vec{\sigma}\arSep\tau'
-\end{array}\right)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}\dfrac{n\Fsep\Gamma,x:\tau_{1}\vdash t:\tau_{2}}{n\Fsep\Gamma\vdash\lambda x.t:\tau_{1}\Rightarrow\tau_{2}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{l_{\tau_{1},\tau_{2}}|\tau=(\tau_{1}\Rightarrow\tau_{2})\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(n\Fsep\vec{\sigma},\tau_{1}\arSep\tau_{2})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n\Fsep\Gamma\vdash t:\forall\tau_{1}\quad\tau_{2}\in S_{n}}{n\Fsep\Gamma\vdash t\cdot\tau_{2}:\tau_{1}[\tau_{2}]}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{A_{\tau_{1},\tau_{2}}|\tau=\tau_{1}[\tau_{2}]\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(n\Fsep\vec{\sigma}\arSep\forall\tau_{1})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\dfrac{n+1\Fsep wk(\Gamma)\vdash t:\tau}{n\Fsep\Gamma\vdash\Lambda t:\forall\tau}\vphantom{\dfrac{\dfrac{}{}}{\dfrac{}{}}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\{\Lambda_{\tau'}|\tau=\forall\tau'\}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(n+1\Fsep wk(\vec{\sigma})\arSep\tau')$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Simply-typed 
 \begin_inset Formula $\lambda$
@@ -34335,30 +34457,7 @@ name "subsec:normalised-lc"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-Simply-typed 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus modulo modulo 
-\begin_inset Formula $\beta$
-\end_inset
-
-- and 
-\begin_inset Formula $\eta$
-\end_inset
-
--equations
-\end_layout
-
-\begin_layout Standard
-Let us detail how we account for Miller's original setting: simply-typed
+Let us explain how we account for Miller's original setting: simply-typed
  
 \begin_inset Formula $\lambda$
 \end_inset
@@ -34372,7 +34471,108 @@ Let us detail how we account for Miller's original setting: simply-typed
 \end_inset
 
 -equations.
- Like 
+ Let us denote a type 
+\begin_inset Formula $\sigma_{1}\Rightarrow\dots\Rightarrow\sigma_{n}\Rightarrow\iota$
+\end_inset
+
+ by 
+\begin_inset Formula $\vec{\sigma}\Rightarrow\iota$
+\end_inset
+
+, where 
+\begin_inset Formula $\iota$
+\end_inset
+
+ is a base type.
+ Note that any type can be written in this way.
+ We consider the same set of scopes as in the previous section, but with
+ different morphisms as we explain now.
+ The key point is that any scope 
+\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}\Rightarrow\iota)$
+\end_inset
+
+, which induces a type 
+\begin_inset Formula $\vec{\sigma},\vec{\tau}\Rightarrow\iota$
+\end_inset
+
+.
+ A morphism between two scopes respectively inducing the types 
+\begin_inset Formula $\vec{\tau}\Rightarrow\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\tau}'\Rightarrow\iota'$
+\end_inset
+
+ is a morphism between the scopes 
+\begin_inset Formula $\vec{\tau}\rightarrow\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{\tau}'\rightarrow\iota'$
+\end_inset
+
+ in the sense of the previous section.
+ As a consequence, our category of scopes is equivalent to 
+\begin_inset Formula $\mathbb{F}_{m}[T]\times B$
+\end_inset
+
+ where 
+\begin_inset Formula $B$
+\end_inset
+
+ is the set of base types, which have equalisers and pullbacks for the same
+ reasons.
+\end_layout
+
+\begin_layout Standard
+We follow Cheney's presentation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+after "Section 2.2"
+key "cheney2005relating"
+literal "false"
+
+\end_inset
+
+ of the equation-free syntax of 
+\begin_inset Formula $\beta$
+\end_inset
+
+-short 
+\begin_inset Formula $\eta$
+\end_inset
+
+-long normal forms with metavariables.
+ 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "tab:all-syntax"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+ shows the base syntax which is generated by a single rule combining application
+ and abstraction.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Like 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "vezzosi2014categorical"
@@ -34399,7 +34599,13 @@ literal "true"
  smaller than the size of the base context.
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 We follow Cheney's presentation
 \begin_inset ERT
 status open
@@ -34479,9 +34685,11 @@ literal "false"
  and abstraction in a single construction.
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Formula 
@@ -34497,9 +34705,13 @@ status open
 \end_inset
 
 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\Rightarrow\iota\quad\forall j\in\{1,\dots n\},\ \vec{\sigma},\vec{\delta}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
+\dfrac{\overrightarrow{(\sigma,\delta)}_{i}=(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\quad\forall j\in\{1,\dots n\},\ \vec{\sigma},\vec{\delta}\vdash t_{j}:\tau_{j}}{\vec{\sigma}\vdash\lambda_{\vec{\delta}}.i\vec{t}:\vec{\delta}\Rightarrow\iota}
 \]
 
 \end_inset
@@ -34507,7 +34719,9 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
 \begin_inset Note Note
 status collapsed
 
@@ -34524,6 +34738,11 @@ status collapsed
 
 \end_inset
 
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 Note that this rule cannot be specified by a (multi-sorted) 
 \emph on
 binding arit
@@ -34558,8 +34777,13 @@ noprefix "false"
 \end_inset
 
 ).
+\end_layout
+
+\end_inset
+
+
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 , but it does not pose any significant challenge to provide a specification
@@ -34617,12 +34841,45 @@ Let us now describe the enriched syntax.
 
 \end_inset
 
+Thanks to our modified notion of scope morphism, this rule indeed complies
+ with our introduction rule for metavariables, in the sense that it requires
+ the same data.
+ Let us note that the metavariable arities 
+\begin_inset Formula $\vec{\sigma}\rightarrow\tau\Rightarrow\tau'$
+\end_inset
 
+ and 
+\begin_inset Formula $\vec{\sigma},\tau\rightarrow\tau'$
+\end_inset
+
+ are equivalent in the sense that they share the same metavariable introduction
+ rule.
 \end_layout
 
 \begin_layout Standard
-To see how this complies with our format, let us describe the set of morphisms
- between two scopes.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+In the rule above, the scope is 
+\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}'\Rightarrow\iota)$
+\end_inset
+
+, which induces the type 
+\begin_inset Formula $\vec{\sigma},\vec{\tau}'\Rightarrow\iota$
+\end_inset
+
+, so that we retrieve the expected notion of patterns.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+, let us describe the set of morphisms between two scopes.
  In fact, this set depends only on the types 
 \begin_inset Formula $\vec{\tau}\Rightarrow\iota$
 \end_inset
@@ -34644,15 +34901,11 @@ To see how this complies with our format, let us describe the set of morphisms
 \end_inset
 
 .
- In the rule above, the scope is 
-\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}'\Rightarrow\iota)$
+\end_layout
+
 \end_inset
 
-, which induces the type 
-\begin_inset Formula $\vec{\sigma},\vec{\tau}'\Rightarrow\iota$
-\end_inset
 
-, so that we retrieve the expected notion of patterns.
 \end_layout
 
 \begin_layout Standard
@@ -34691,9 +34944,6 @@ noprefix "false"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -34749,9 +34999,10 @@ s and pullbacks by the operation symbols and their arities.
 \end_inset
 
 
-\end_layout
+\begin_inset Note Note
+status collapsed
 
-\begin_layout Standard
+\begin_layout Plain Layout
 We already sketched in the introduction how to handle simply-typed lambda-terms
  modulo 
 \begin_inset Formula $\beta$
@@ -34775,9 +35026,11 @@ noprefix "false"
  shows more explicitly how the syntax fits into our setting.
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Higher-order pattern unification was originally introduced for closed simply-typ
@@ -35393,11 +35646,7 @@ A metavariable
 \begin_inset Formula $n'\Fsep\vec{\sigma}'\arSep\tau'$
 \end_inset
 
- must be supplied with
-\end_layout
-
-\begin_layout Itemize
-a choice 
+ must be supplied with a choice 
 \begin_inset Formula $(\eta_{1},\dots,\eta_{n})$
 \end_inset
 
@@ -35409,15 +35658,11 @@ a choice
 \begin_inset Formula $\{1,\dots n'\}$
 \end_inset
 
-, such that 
+ such that 
 \begin_inset Formula $\tau[\vec{\eta}]=\tau'$
 \end_inset
 
-, and 
-\end_layout
-
-\begin_layout Itemize
-an injective renaming 
+, as well as an injective renaming 
 \begin_inset Formula $\vec{\sigma}[\vec{\eta}]\rightarrow\vec{\sigma}'$
 \end_inset
 
@@ -35973,6 +36218,22 @@ literal "false"
  This lets us extend Rydeheard and Burstall's proof to the pattern case.
 \end_layout
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{full}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusion
 \end_layout
@@ -35996,7 +36257,22 @@ We presented a generic unification algorithm for Miller's pattern fragment
  An interesting question is to which extent this work could be adapted to
  provide semantics of higher-order pattern unification for dependently-typed
  languages.
- 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{full}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
