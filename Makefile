@@ -1,5 +1,5 @@
 agda_latex_dir = latex-agda
-agda_files = Common.lagda lib.lagda lc.lagda main.lagda systemF.agda
+agda_files = Common.lagda lib.lagda lc.lagda main.lagda systemF.agda lcsig.agda
 agda_latex_files= $(agda_files:%.lagda=$(agda_latex_dir)/%.tex)
 long_paper = paper-with-appendices
 popl_paper = popl-paper
