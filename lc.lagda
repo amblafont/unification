@@ -186,10 +186,13 @@ Tm· Γ n = Tm ⌊ Γ ⌋ n
 %<*lc-syntax-ind>
 \begin{code}
 data Tm where
-   App· : ∀ {Γ n} → Tm· Γ n → Tm· Γ n → Tm· Γ n
-   Lam· : ∀ {Γ n} → Tm· Γ (1 + n) → Tm· Γ n
+   App· : ∀ {Γ n} → Tm· Γ n → Tm· Γ n
+          → Tm· Γ n
+   Lam· : ∀ {Γ n} → Tm· Γ (1 + n) 
+          → Tm· Γ n
    Var· : ∀ {Γ n} → Fin n → Tm· Γ n
-   _﹙_﹚ : ∀ {Γ n m} → m ∈ Γ → hom m n → Tm· Γ n
+   _﹙_﹚ : ∀ {Γ n m} → m ∈ Γ → hom m n
+          → Tm· Γ n
    ! : ∀ {n} → Tm ⊥ n
 \end{code}
 %</lc-syntax-ind>
@@ -201,14 +204,14 @@ App : ∀ {Γ n} → Tm Γ n →
 %</lc-syntax-app-decl>
 %<*lc-syntax-lam-decl>
 \begin{code}
-Lam : ∀ {Γ n} → Tm Γ (1 + n) →
-      Tm Γ n
+Lam : ∀ {Γ n} → Tm Γ (1 + n)
+      → Tm Γ n
 \end{code}
 %</lc-syntax-lam-decl>
 %<*lc-syntax-var-decl>
 \begin{code}
-Var : ∀ {Γ n} → Fin n →
-      Tm Γ n
+Var : ∀ {Γ n} → Fin n
+      → Tm Γ n
 \end{code}
 %</lc-syntax-var-decl>
 %<*lc-syntax-app-def>
@@ -371,8 +374,8 @@ prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
 %<*lc-prune-flex>
 \begin{code}
 prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
-  let p , x' , y' = commonValues m x y
-  in Γ [ M ∶ p ] ·◄ ((M ∶ p) ﹙ y' ﹚ , M ↦-﹙ x' ﹚)
+  let p , x' , y' = commonValues m x y in
+  Γ [ M ∶ p ] ·◄ ((M ∶ p) ﹙ y' ﹚ , M ↦-﹙ x' ﹚)
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>

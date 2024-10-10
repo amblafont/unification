@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass acmart
+\textclass jfp
 \begin_preamble
 \input{common-preamble}
 \end_preamble
@@ -701,7 +701,9 @@ status open
 
 
 \backslash
-keywords{Unification, Category theory, Syntax}
+begin{keywords}Unification, Category theory, Syntax 
+\backslash
+end{keywords}
 \end_layout
 
 \end_inset
@@ -8559,7 +8561,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "54text%"
+width "50text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -8616,7 +8618,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "45text%"
+width "49text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -13931,7 +13933,7 @@ notation propagates the error.
 \begin_inset Float figure
 wide true
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -13965,7 +13967,7 @@ name "fig:unif-full-lam"
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Box Boxed
@@ -15298,7 +15300,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "54text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -15718,7 +15720,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "47text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -15794,7 +15796,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -16018,203 +16020,6 @@ status open
 
 
 \backslash
-vspace{-0.8em}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%%%%%%%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-unify-flex-def}
-\end_layout
-
-\begin_layout Plain Layout
-
-%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1.5em}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-flex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "35col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%%%%%%%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-flex}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{4em}
-\end_layout
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{unify-bot}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $\text{\labellabelrule{\dfrac{}{\bot\vdash\bang=\bang\Rightarrow\bang_{s}\dashv\bot}}{U-Fail}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
 vspace{-0.5em}
 \end_layout
 
@@ -16228,7 +16033,7 @@ has_inner_box 1
 inner_pos "t"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "43text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -16249,7 +16054,18 @@ status open
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\begin_layout Plain Layout
+
 %%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{unify-flex}
 \end_layout
 
 \begin_layout Plain Layout
@@ -16297,21 +16113,8 @@ status open
 
 \begin_layout Plain Layout
 \align center
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-vspace{-1em}
-\end_layout
-
-\end_inset
-
-
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Formula 
@@ -16423,6 +16226,19 @@ vspace{1em}
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-2em}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -16430,7 +16246,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "49text%"
+width "51text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -16700,7 +16516,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Tabular
@@ -16961,7 +16777,7 @@ agdacode{unify-var}
 
 \begin_layout Plain Layout
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -17338,7 +17154,7 @@ agdacode{unify-last}%
 
 \begin_layout Plain Layout
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -17435,7 +17251,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Box Boxed
@@ -17547,7 +17363,7 @@ status open
 \begin_inset Float figure
 wide true
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align left
@@ -17719,7 +17535,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50col%"
+width "53col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -18410,7 +18226,7 @@ noprefix "false"
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -18753,7 +18569,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "49col%"
+width "51col%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -27350,7 +27166,7 @@ we propose an interpretation of typing rules to define the endofunctor
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -28300,7 +28116,7 @@ vspace{1em}
 \begin_inset Float table
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -28354,57 +28170,6 @@ noprefix "false"
 
 \begin_layout Plain Layout
 \align center
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="1">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-System F
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-(
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:system-F"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="3">
 <features islongtable="true" longtabularalignment="center">
@@ -34740,7 +34505,7 @@ Let us explain how we account for Miller's original setting: simply-typed
 \end_inset
 
  is a base type.
- Note that any type can be written in this way.
+ Note that any type can be written in this way, uniquely.
  We consider the same set of scopes as in the previous section, but with
  different morphisms as we explain now.
  As a preliminary remark, note that any scope 
@@ -35416,7 +35181,7 @@ status open
 
 
 \begin_inset CommandInset citation
-LatexCommand citet
+LatexCommand citep
 key "DBLP:journals/corr/abs-1009-2795"
 literal "false"
 
@@ -35758,6 +35523,10 @@ linear lambda calculus, quantum lambda calculus
 
 \begin_layout Subsection
 Intrinsic polymorphic syntax
+\end_layout
+
+\begin_layout Subsubsection
+Syntactic system F
 \end_layout
 
 \begin_layout Standard
@@ -36127,6 +35896,331 @@ noprefix "false"
 .
 \end_layout
 
+\begin_layout Subsubsection
+System F modulo 
+\begin_inset Formula $\beta\eta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This section combines the ideas of the previous section and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:normalised-lc"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To make things simpler and more consistent with our treatment of syntactic
+ system F, we restrict to normalised types, that is, to types of the shape
+ 
+\begin_inset Formula $\forall^{p}\vec{\sigma}\Rightarrow\iota$
+\end_inset
+
+, where 
+\begin_inset Formula $\iota$
+\end_inset
+
+ is a type variable and each 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+ can of course include 
+\begin_inset Formula $\forall$
+\end_inset
+
+.
+ In other words, we consider types up to the reduction relation 
+\begin_inset Formula $\sigma\Rightarrow\forall\tau\sim\forall(wk\sigma\Rightarrow\tau)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We consider the same set of scopes as in the previous section, but with
+ different morphisms as we explain now.
+ As a preliminary remark, note that any scope 
+\begin_inset Formula $m|\vec{\sigma}\rightarrow(\forall^{p}\vec{\tau}\Rightarrow\iota)$
+\end_inset
+
+, induces a type 
+\begin_inset Formula $\forall^{m+p}wk^{p}\vec{\sigma},\overrightarrow{\tau}\Rightarrow\iota$
+\end_inset
+
+.
+ A morphism between two scopes respectively inducing the types 
+\begin_inset Formula $\forall^{p}\vec{\sigma}\Rightarrow\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $\forall^{p'}\vec{\sigma}'\Rightarrow\iota'$
+\end_inset
+
+ is a morphism between the scopes 
+\begin_inset Formula $p|\vec{\sigma}\rightarrow\iota$
+\end_inset
+
+ and 
+\begin_inset Formula $p'|\vec{\sigma}'\rightarrow\iota'$
+\end_inset
+
+ in the sense of the previous section.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+type equality does not preserve term equalities, ah mais je m'en fous je
+ fais que des formes normales.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+As a consequence, our category of scopes is equivalent to 
+\begin_inset Formula $\mathbb{F}_{m}[T]\times B$
+\end_inset
+
+ where 
+\begin_inset Formula $B$
+\end_inset
+
+ is the set of base types.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The base syntax is generated by the following rule.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dfrac{\begin{array}{c}
+x:\forall^{p}\vec{\tau}\Rightarrow\iota\in(m+p'|\Gamma,\vec{y}:\vec{\sigma})\\
+\forall i\in\{1,\dots,p\}\ m+p'\vdash w_{i}\text{ type}\\
+(\vec{\tau}\Rightarrow\iota)[\vec{w}]=\forall^{p'}(\tau_{1}',\dots,\tau_{n}')\Rightarrow\iota'\\
+\forall i\in\{1,\dots,n\}\ m+p'|wk^{p}\Gamma,\vec{y}:\vec{\sigma}[\vec{w}]\vdash t_{i}:\tau_{i}
+\end{array}}{m|\Gamma\vdash\Lambda^{p'}\lambda\vec{y}.x\vec{w}\vec{t}:\forall^{p'}\vec{\tau}_{0}\Rightarrow\iota}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us now describe the enriched syntax.
+ We write 
+\begin_inset Formula $M::\forall^{p}\vec{\tau}\Rightarrow\iota\in\Gamma$
+\end_inset
+
+ to mean that the type induced by the scope of 
+\begin_inset Formula $M$
+\end_inset
+
+ declared in 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is 
+\begin_inset Formula $\forall^{p}\vec{\tau}\Rightarrow\iota$
+\end_inset
+
+.
+ The introduction rule for metavariables is the following.
+\begin_inset Formula 
+\[
+\dfrac{M::\forall^{p}(\tau_{1},\dots,\tau_{n})\Rightarrow\iota\in\Gamma\qquad\begin{array}{c}
+(x_{1},\dots,x_{n})\text{ are distinct term variables in \ensuremath{\vec{\sigma},\vec{\tau}'} of type \ensuremath{\vec{\tau}}}\\
+(w_{1},\dots,w_{p})\text{ are distinct type variables in \ensuremath{m+p'}}
+\end{array}}{\Gamma;m|\vec{\sigma}\vdash\Lambda^{p'}\lambda_{\vec{\tau'}}M(\vec{w}|\vec{x)}:\forall^{p'}\vec{\tau}'\Rightarrow w_{\iota}}
+\]
+
+\end_inset
+
+Thanks to our modified notion of scope morphism, this rule indeed complies
+ with our introduction rule for metavariables, in the sense that it requires
+ the same data.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagebreak{}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+System F modulo 
+\begin_inset Formula $\beta\eta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To make our treatment more uniform, in this section we see System F as a
+ dependent type theory, with a universe 
+\begin_inset Formula $U$
+\end_inset
+
+ of type.
+ We write 
+\begin_inset Formula $u,v$
+\end_inset
+
+ to mean a type or the symbol 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ A context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ is a list of variable declarations 
+\begin_inset Formula $x_{1}:u_{1},\dots x_{n}:u_{n}$
+\end_inset
+
+.
+ The variable 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is said to be a type variable if 
+\begin_inset Formula $u_{i}=U$
+\end_inset
+
+, otherwise it is a term variable.
+ We write 
+\begin_inset Formula $\Gamma\vdash t:u$
+\end_inset
+
+ to mean that 
+\begin_inset Formula $t$
+\end_inset
+
+ is a well-formed type in context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ in case 
+\begin_inset Formula $u=U$
+\end_inset
+
+, or a well-formed term of type 
+\begin_inset Formula $u$
+\end_inset
+
+ in context 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The notation 
+\begin_inset Formula $\prod(\alpha:u).\tau_{2}$
+\end_inset
+
+ , where 
+\begin_inset Formula $\tau_{2}$
+\end_inset
+
+ may depend on 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, is to be interpreted as 
+\begin_inset Formula $\forall\alpha.\tau_{2}$
+\end_inset
+
+ in case 
+\begin_inset Formula $u=U$
+\end_inset
+
+, or 
+\begin_inset Formula $u\Rightarrow\tau_{2}$
+\end_inset
+
+ otherwise (in the latter case,
+\begin_inset Formula $\tau_{2}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $\alpha$
+\end_inset
+
+).
+ We do not make the syntactic distinction between type and term abstractions.
+ We denote by 
+\begin_inset Formula $\iota$
+\end_inset
+
+ a base type or a type variable.
+\end_layout
+
+\begin_layout Standard
+The base syntax of normal forms is generated by the following rules.
+ 
+\begin_inset Formula 
+\[
+\dfrac{\Gamma,\vec{y}:\vec{u}\vdash x:\iota}{\Gamma\vdash\lambda\vec{y}.x:\prod(\vec{y}:\vec{u}).\iota}\qquad\dfrac{\begin{array}{cc}
+ & \Gamma,\vec{y}:\vec{u}\vdash x:\prod(\alpha_{1}:v_{1}).\tau_{1}\\
+\Gamma,\vec{y}:\vec{u}\vdash t_{1}:v_{1} & \tau_{1}[\alpha_{1}\mapsto t_{1}]=\prod(\alpha_{2}:v_{2}).\tau_{2}\\
+\Gamma,\vec{y}:\vec{u}\vdash t_{2}:v_{2} & \tau_{2}[\alpha_{2}\mapsto t_{2}]=\prod(\alpha_{3}:v_{3}).\tau_{3}\\
+\dots & \tau_{n}[\alpha_{n}\mapsto t_{n}]=\iota
+\end{array}}{\Gamma\vdash\lambda\vec{y}.x\vec{t}:\prod(\vec{y}:\vec{u}).\iota}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Related work
 \end_layout
@@ -36445,7 +36539,7 @@ only
 \emph default
  interpret metavariable instantiations in the pattern fragment, and cannot
  interpret full metavariable instantiations, contrary to prior semantics
- of metavariables (e.g., 
+ of metavariables, e.g., 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "DBLP:journals/tocl/HuPS22"
@@ -36461,7 +36555,7 @@ literal "false"
 
 \end_inset
 
-).
+.
  This restriction gives our model much stronger properties, enabling us
  to characterise each part of the pattern unification algorithm in terms
  of universal properties.
@@ -36567,7 +36661,7 @@ on modulo equations, or linear syntax without restriction on the order the
 LatexCommand bibtex
 btprint "btPrintCited"
 bibfiles "bib"
-options "ACM-Reference-Format"
+options "jfplike"
 
 \end_inset
 
@@ -37965,12 +38059,16 @@ The canonical morphism maps
 \end_layout
 
 \begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[Proof of 
+Proof of 
 \end_layout
 
 \end_inset
@@ -37986,12 +38084,6 @@ noprefix "false"
 \end_inset
 
 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-]
 \end_layout
 
 \end_inset

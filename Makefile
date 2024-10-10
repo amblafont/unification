@@ -13,7 +13,7 @@ $(agda_latex_dir)/%.tex: %.lagda
 all: draft.pdf
 agdatex: $(agda_latex_files)
 
-draft.pdf: draft.lyx core.lyx common-preamble.tex ebutf8.sty $(agda_latex_files)
+draft.pdf: draft.lyx core.lyx jfp.layout common-preamble.tex ebutf8.sty $(agda_latex_files)
 	lyx --export pdf2 draft.lyx
 
 draft.tex: draft.lyx core.lyx common-preamble.tex ebutf8.sty $(agda_latex_files)

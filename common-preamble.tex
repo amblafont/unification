@@ -10,6 +10,13 @@
 \usepackage{color}
 \usepackage{caption}
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
 % to comment for the short version
 \setboolean{fullpaper}{true}
 
@@ -157,20 +164,30 @@
 \newcommand\mydots{\makebox[1em][c]{.\hfil.\hfil.}}
 
 
+
+%%%%%% this was for popl
+%%%%%%%
+
 %% acmart
 %% Journal information
 %% Supplied to authors by publisher for camera-ready submission;
 %% use defaults for review submission.
-\acmJournal{PACMPL}
-\acmVolume{1}
-\acmNumber{POPL} % CONF = POPL or ICFP or OOPSLA
-\acmArticle{1}
-\acmYear{2025}
-\acmMonth{1}
-\acmDOI{} % \acmDOI{10.1145/nnnnnnn.nnnnnnn}
-\startPage{1}
 
-\setcopyright{none}
+% \acmJournal{PACMPL}
+% \acmVolume{1}
+% \acmNumber{POPL} % CONF = POPL or ICFP or OOPSLA
+% \acmArticle{1}
+% \acmYear{2025}
+% \acmMonth{1}
+% \acmDOI{} % \acmDOI{10.1145/nnnnnnn.nnnnnnn}
+% \startPage{1}
+
+% \setcopyright{none}
+
+%%%%%%%
+%%%%%%%%%%
+
+
 % \setcopyright{acmcopyright}
 % \copyrightyear{2024}
 
@@ -231,3 +248,5 @@
 %     {\ifthenelse{\equal{#1}{Tm}}{\{#1}}%
 % {#2}%
 %   }}}
+% \begin{proof}[Alternative text] does not work with jfp
+\newenvironment{proofWithAlternative}[1][Proof]{\par\addvspace{6pt}\noindent\textbf{#1}\hskip5.5pt}{\hfill$\blacksquare$\par\addvspace{6pt}}

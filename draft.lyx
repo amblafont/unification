@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass acmart
+\textclass jfp
 \begin_preamble
 \input{common-preamble}
 %\newenvironment{remark}{\begin{rem}}{\end{rem}}
@@ -13,7 +13,7 @@
 %\newenvironment{corollary}{\begin{cor}}{\end{cor}}
 %\newenvironment{definition}{\begin{defn}}{\end{defn}}
 %\newenvironment{theorem}{\begin{thm}}{\end{thm}}
-\newcommand{\theproposition}{\thethm}
+%\newcommand{\theproposition}{\thethm}
 
 \setboolean{fullpaper}{false}
 
@@ -26,7 +26,6 @@
 % LICS
 % \newcommand{\keywords}[1]{\begin{IEEEkeywords}#1\end{IEEEkeywords}}
 \end_preamble
-\options acmsmall,review,anonymous
 \use_default_options false
 \begin_modules
 enumitem
@@ -199,6 +198,176 @@ End
 \end_header
 
 \begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+% JFP
+\end_layout
+
+\begin_layout Plain Layout
+
+%%%%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+journaltitle{JFP}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cpr{Cambridge University Press}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+doival{10.1017/xxxxx}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+lefttitle{Semantics of pattern unification}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+righttitle{Journal of Functional Programming}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+totalpg{
+\backslash
+pageref{lastpage01}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+jnlDoiYr{2022}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{authgrp}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+author{Ambroise Lafont}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+affiliation{Ecole Polytechnique, Palaiseau, France
+\end_layout
+
+\begin_layout Plain Layout
+
+          (
+\backslash
+email{ambroise.lafont@polytechnique.edu})}
+\end_layout
+
+\begin_layout Plain Layout
+
+          
+\backslash
+author{Neel Krishnaswami}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+affiliation{University of Cambridge, Cambridge, UK
+\end_layout
+
+\begin_layout Plain Layout
+
+          (
+\backslash
+email{nk480@cl.cam.ac.uk})}
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+end{authgrp}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+%%%%%%%%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+% End of JFP
+\end_layout
+
+\begin_layout Plain Layout
+
+%%%%%%%%%%%%%
+\end_layout
+
+\end_inset
+
+
+\end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include

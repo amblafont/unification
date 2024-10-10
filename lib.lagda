@@ -155,11 +155,6 @@ module MoreVec where
   insert-last-++ [] ys a = 1ₑ
   insert-last-++ (x ∷ xs) ys a = ≡.cong (x ∷_) (insert-last-++ xs ys a)
 
-  --done mais avec erreur
-  toList-replicate : ∀ {i}{A : Set i} n (a : A) →
-     Vec.toList (Vec.replicate n a) ≡ List.replicate n a
-  toList-replicate Nat.zero a = 1ₑ
-  toList-replicate (Nat.suc n) a = ≡.cong (_ ∷_) (toList-replicate n a) 
 
   module _ {i}{j}{A : Set i}{P : A → Set j}(P? : Relation.Unary.Decidable P) where
     -- return the list of indices that satfies P
