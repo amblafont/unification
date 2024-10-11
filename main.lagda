@@ -308,6 +308,7 @@ Unification
     let Δ ◄ σ = unify t₁ t₂
         Δ' ◄ σ' = unify-σ (δ₁ [ σ ]s) (δ₂ [ σ ]s)
     in  Δ' ◄ σ [ σ' ]s
+
   unify-σ 1⊥ 1⊥ = ⊥ ◄ !ₛ
   \end{code}
   %</unify-subst>

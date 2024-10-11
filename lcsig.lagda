@@ -1,3 +1,4 @@
+\begin{code}
 module lcsig where 
     
 open import lib 
@@ -10,7 +11,9 @@ open import Data.List as List hiding (map ; [_] ; lookup)
 open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
 import lc
 open import lc using (hom ; _↑)
-
+\end{code}
+%<*lc-sig>
+\begin{code}
 data O n : Set where
    Var : Fin n → O n
    App : O n
@@ -26,12 +29,15 @@ Var x ｛ s ｝ = Var (Vec.lookup s x)
 App ｛ s ｝ = App
 Lam ｛ s ｝ = Lam
 
-_^_ : {a b : ℕ} (x : hom a b) (o : O a) →
-      Pointwise hom (α o) (α (o ｛ x ｝))
+-- Pointwise hom [a₁, ⋯, aₙ] [b₁, ⋯, bₙ] is the type of the
+-- lists of the shape [c₁, ⋯, cₙ] with c­ᵢ : hom aᵢ bᵢ
+_^_ : {a b : ℕ} (x : hom a b) (o : O a) → Pointwise hom (α o) (α (o ｛ x ｝))
 x ^ Var y = []
 x ^ App = x ∷ x ∷ []
 x ^ Lam = (x ↑) ∷ []
-
+\end{code}
+%</lc-sig>
+\begin{code}
 signature : Signature lzero lzero lzero
 signature = record { A = ℕ; 
                     hom = hom; 
@@ -41,3 +47,4 @@ signature = record { A = ℕ;
                     α = α;    
                     _｛_｝ = _｛_｝; 
                     _^_ = _^_}
+\end{code}
