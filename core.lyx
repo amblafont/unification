@@ -37081,7 +37081,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-In the dependently-typed setting, it is worth mentioning that 
+In the dependently-typed setting, 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "DBLP:conf/lics/Pfenning91"
@@ -37089,8 +37089,21 @@ literal "false"
 
 \end_inset
 
- also provides unification and antiunification algorithms in the pattern
- fragment for the calculus of constructions.
+ provides unification and antiunification algorithms in the pattern fragment
+ for the calculus of constructions.
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+after "Chapter 4"
+key "DBLP:phd/ethos/Gundry13"
+literal "false"
+
+\end_inset
+
+ presents a pattern unification algorithm for a dependent type theory, as
+ a component of his type inference algorithm.
+ It actually implements "dynamic pattern unification", which addresses unificati
+on problems that do not necessarily fit into the pattern fragment at first.
 \end_layout
 
 \begin_layout Standard
