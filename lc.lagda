@@ -286,6 +286,8 @@ _[_]t : ∀ {Γ n} → Tm Γ n → ∀ {Δ} → (Γ ⟶ Δ) → Tm Δ n
 (App· t u) [ σ ]t = App (t [ σ ]t) (u [ σ ]t)
 Lam· t [ σ ]t = Lam (t [ σ ]t)
 Var· i [ σ ]t = Var i
+-- _❴_❵ : Tm Γ n → hom n p → Tm Γ p
+-- is renaming (code omitted)
 M ﹙ x ﹚ [ σ ]t = nth σ M  ❴ x ❵ 
 ! [ 1⊥ ]t = !
 \end{code}
