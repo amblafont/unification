@@ -39206,6 +39206,15 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+
+\series bold
+Conflicts of interest.
+
+\series default
+ Ambroise Lafont is part of the INRIA team PARTOUT.
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 

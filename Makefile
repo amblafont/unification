@@ -24,9 +24,13 @@ $(long_paper).pdf: draft.pdf
 # 
 $(popl_paper).pdf: draft.pdf
 	pdftk $< cat 1-26 output $@
+
+index.html: README.md
+	pandoc -f markdown $< > $@
 # 
-supplemental-material.zip: $(long_paper).pdf $(agda_files) README.md
+supplemental-material.zip: $(agda_files) index.html
 # supplemental-material.zip: $(agda_files) README.md
+	rm -f $@
 	zip $@ $^
 
 	
