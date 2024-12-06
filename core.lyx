@@ -30385,7 +30385,7 @@ name "tab:GB-sig-systemF"
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="3">
-<features islongtable="true" longtabularalignment="center">
+<features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
