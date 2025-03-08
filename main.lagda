@@ -10,7 +10,7 @@ open import Data.Product using (_,_; Σ; _×_ )
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
 open import Relation.Binary.PropositionalEquality as ≡ using (_≡_)
 open import Agda.Primitive
-open import Data.List.Membership.Propositional 
+open import Data.List.Membership.Propositional
 
 open import lib
 
@@ -78,7 +78,7 @@ module Tm {i j k}(S : Signature i j k) where
 \end{code}
 %<*syntax-decl>
 \begin{code}
-   data Tm : MetaContext → A 
+   data Tm : MetaContext → A
             → Set (i ⊔ j ⊔ k)
    Tm· Γ a = Tm ⌊ Γ ⌋ a
 \end{code}
@@ -239,7 +239,7 @@ Pruning
   %<*prune-subst>
   \begin{code}
   prune-σ {Γ} [] [] = Γ ◄ ([] , 1ₛ)
-  prune-σ (t , δ) (x₀ ∷ xs) = 
+  prune-σ (t , δ) (x₀ ∷ xs) =
     let Δ₁ ◄ (t' , σ₁) = prune t x₀
         Δ₂ ◄ (δ' , σ₂) = prune-σ (δ [  σ₁  ]s) xs
     in  Δ₂ ◄ ( (t' [ σ₂ ]t , δ') , (σ₁ [ σ₂ ]s) )
@@ -248,7 +248,7 @@ Pruning
   %<*prune-rigid>
   \begin{code}
   prune (Rigid· o δ) x with o ｛ x ｝⁻¹
-  ... | ⊥ = ⊥ ◄  (! , !ₛ) 
+  ... | ⊥ = ⊥ ◄  (! , !ₛ)
   ... | ⌊ PreImage o' ⌋ =
     let Δ ◄ (δ' , σ)  =  prune-σ δ  (x ^ o')
     in  Δ ◄ (Rigid o'  δ' ,  σ)

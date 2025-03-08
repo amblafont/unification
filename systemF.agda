@@ -11,7 +11,7 @@ open import Relation.Binary.PropositionalEquality as ≡ using (_≡_ ; _≢_ ; 
 open import Relation.Binary.PropositionalEquality.WithK
 open import Agda.Primitive
 open import Relation.Binary hiding (_⇒_)
-open import Data.List.Membership.Propositional 
+open import Data.List.Membership.Propositional
 import Data.List.Membership.Propositional.Properties as ListProp
 open import Data.List.Membership.Propositional.Properties using (∈-map⁺ ; ∈-map⁻)
 open import Data.Vec.Properties using (lookup-allFin ; map-∘ ; map-cong ; lookup-map ; tabulate-∘ ; tabulate-allFin)
@@ -29,11 +29,11 @@ open import Agda.Builtin.Unit
 open import Relation.Nullary using (¬_ ; Dec ; yes ; no ; does)
 open import Relation.Nullary.Decidable using (dec-yes-irr ; dec-true ; dec-false ; dec-no)
 open import Relation.Nullary.Negation.Core using (contraposition)
-open import lib 
+open import lib
 open import main using (Signature ; isFriendly)
 open import Data.Fin as Fin using (Fin)
 open import Data.Fin.Properties using (inject₁-injective ; suc-injective)
-open import Data.Nat as ℕ using (ℕ; _+_) 
+open import Data.Nat as ℕ using (ℕ; _+_)
 open import Data.Nat.Properties using (+-identityʳ ; +-suc)
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 import Data.Vec.Properties as VecProp
@@ -68,7 +68,7 @@ Syntax of types
 
  ∀T-injective : ∀ {n}{T U : Ty (1 + n)} → (∀T T ≡ ∀T U) → T ≡ U
  ∀T-injective 1ₑ = 1ₑ
- 
+
  Var-injective : ∀ {n}{i j : Fin n} → (Var i ≡ Var j) → i ≡ j
  Var-injective 1ₑ = 1ₑ
 
@@ -93,7 +93,7 @@ Syntax of types
  ∀T T₁ ≟T Var x = no (λ ())
  ∀T T₁ ≟T (T' ⇒T T'') = no (λ ())
 
-   
+
 
 
 
@@ -104,7 +104,7 @@ Syntax of types
 
  module _ where
   open Data.Maybe.Base using (_>>=_)
-    
+
   _❴_❵⁻¹ : ∀ {n m} → (t : Ty m) → (x : n ⇒ᵣ m) → Maybe (pre-image (_❴ x ❵) t)
   Var x ❴ r ❵⁻¹ = do
        PreImage x' ← MoreVec.lookup⁻¹ Fin._≟_ x r
@@ -129,7 +129,7 @@ Syntax of types
 
  wkC : ∀ {n} → List (Ty n) → List (Ty (1 + n))
  wkC = List.map wkT
- 
+
  _⇒ₛ_ : ℕ → ℕ → Set
  n ⇒ₛ m = Vec (Ty m) n
 
@@ -204,7 +204,7 @@ Various substitution properties
  (A ⇒T B) ❴idᵣ❵ = cong₂ _⇒T_ (A ❴idᵣ❵) (B ❴idᵣ❵)
  ∀T A ❴idᵣ❵ = cong ∀T (≡.trans (cong (A ❴_❵) idᵣ↑) (A ❴idᵣ❵))
 
- _❴idᵣ❵s : ∀ {n} → (l : List (Ty n)) → l ❴ idᵣ ❵s ≡ l 
+ _❴idᵣ❵s : ∀ {n} → (l : List (Ty n)) → l ❴ idᵣ ❵s ≡ l
  [] ❴idᵣ❵s = 1ₑ
  (x ∷ l) ❴idᵣ❵s = cong₂ _∷_ (x ❴idᵣ❵) (l ❴idᵣ❵s)
 
@@ -212,7 +212,7 @@ Various substitution properties
  ∘ᵣ↑ : ∀ {p q r} → (x : p ⇒ᵣ q)(y : q ⇒ᵣ r) → (y ∘ᵣ x) ↑ ≡ ((y ↑) ∘ᵣ (x ↑) )
  ∘ᵣ↑ [] y = cong (_∷ []) (≡.sym (VecProp.insertAt-lookup (Vec.map Fin.inject₁ y) (Fin.fromℕ _) (Fin.fromℕ _)))
  ∘ᵣ↑ (x ∷ xs) y rewrite ∘ᵣ↑ xs y = cong (_∷ _)
-      (≡.trans (≡.sym (lookup-map x Fin.inject₁ y)) (≡.sym ( MoreVec.insert-lookup-last< x _ _ ))) 
+      (≡.trans (≡.sym (lookup-map x Fin.inject₁ y)) (≡.sym ( MoreVec.insert-lookup-last< x _ _ )))
 
  ❴❵❴❵ : ∀ {p q r} τ (x : p ⇒ᵣ q)(y : q ⇒ᵣ r) → τ ❴ x ❵ ❴ y ❵ ≡ τ ❴ y ∘ᵣ x ❵
  ❴❵❴❵ (Var i) x y = cong Var (≡.sym (lookup-map i (Vec.lookup y) x ))
@@ -222,7 +222,7 @@ Various substitution properties
 
  ❴❵❴❵s : ∀ {p q r} σ (x : p ⇒ᵣ q)(y : q ⇒ᵣ r) → (σ ❴ x ❵s) ❴ y ❵s ≡ σ ❴ y ∘ᵣ x ❵s
  ❴❵❴❵s σ x y = ≡.trans (≡.sym ( ListProp.map-∘ σ ))
-      (ListProp.map-cong (λ τ → ❴❵❴❵ τ x y) σ) 
+      (ListProp.map-cong (λ τ → ❴❵❴❵ τ x y) σ)
 
  ↑∘ᵣinject₁ : ∀ {m p} (η : m ⇒ᵣ p) →
       (η ↑) ∘ᵣ (Vec.tabulate Fin.inject₁) ≡ (Vec.tabulate Fin.inject₁ ∘ᵣ η)
@@ -248,7 +248,7 @@ Various substitution properties
        (cong (x ❴_❵) (↑∘ᵣinject₁ η))))) σ)
 
  ⟦⟧⇑ : ∀ {n m p} (η : n ⇒ᵣ m) (σ : m ⇒ₛ p)
-      → 
+      →
     ((η ⟦ σ ⟧ᵣ) ⇑) ≡ ((η ↑) ⟦ σ ⇑ ⟧ᵣ)
  ⟦⟧⇑ {n}{m}{p} η σ
    rewrite VecProp.map-insertAt (Vec.lookup (σ ⇑)) (Fin.fromℕ _) (Vec.map Fin.inject₁ η) (Fin.fromℕ _)
@@ -283,7 +283,7 @@ Various substitution properties
     → Vec.lookup (last↦ (τ₂ ❴ η ❵)) (Fin.inject₁ x) ≡ Var x
  lookup-last↦-inject₁ τ₂ η x rewrite MoreVec.insert-lookup-last< x (τ₂ ❴ η ❵) (Vec.tabulate Var)
       = VecProp.lookup∘tabulate Var x
- 
+
 
  last↦❴❵ : ∀ {n n'} (τ₂ : Ty n) (η : n ⇒ᵣ n')
         → ((last↦ τ₂) ❴ η ❵σ) ≡ ((η ↑) ⟦ last↦ (τ₂ ❴ η ❵) ⟧ᵣ)
@@ -301,7 +301,7 @@ Various substitution properties
       | VecProp.tabulate∘lookup η
      = 1ₑ
 
- []❴❵ : ∀ {n n'} (τ₁ : Ty (1 + n))(τ₂ : Ty n) (η  : n ⇒ᵣ n') → 
+ []❴❵ : ∀ {n n'} (τ₁ : Ty (1 + n))(τ₂ : Ty n) (η  : n ⇒ᵣ n') →
           ((τ₁ [ τ₂ ]) ❴ η ❵) ≡ ((τ₁ ❴ η ↑ ❵) [ τ₂ ❴ η ❵ ])
  []❴❵ τ₁ τ₂ η =
     ≡.trans (⟦⟧❴❵ τ₁ (last↦ τ₂) η )
@@ -309,16 +309,16 @@ Various substitution properties
     (≡.sym (❴❵⟦⟧ τ₁ (η ↑) (last↦ (τ₂ ❴ η ❵)) )))
 
  ❴❵-wkT : ∀ {n n'} (T : Ty n)(η : n ⇒ᵣ n') → wkT (T ❴ η ❵) ≡ ((wkT T) ❴ η ↑ ❵)
- wkᵣ∘ᵣ : ∀ {n n'} (η : n ⇒ᵣ n') → wkᵣ ∘ᵣ η ≡ (η ↑ ) ∘ᵣ wkᵣ 
+ wkᵣ∘ᵣ : ∀ {n n'} (η : n ⇒ᵣ n') → wkᵣ ∘ᵣ η ≡ (η ↑ ) ∘ᵣ wkᵣ
 
  ❴❵-wkT T η = ≡.trans (❴❵❴❵ T η wkᵣ) (≡.trans (cong (T ❴_❵) (wkᵣ∘ᵣ η)) (≡.sym (❴❵❴❵ T wkᵣ (η ↑))))
 
 
 
- 
+
 
  ∘ᵣidᵣ : ∀ {n n'} (η : n ⇒ᵣ n') → η ∘ᵣ idᵣ ≡ η
- ∘ᵣidᵣ η = VecProp.map-lookup-allFin η 
+ ∘ᵣidᵣ η = VecProp.map-lookup-allFin η
 
  idᵣ∘ᵣ : ∀ {n n'} (η : n ⇒ᵣ n') → idᵣ ∘ᵣ η ≡ η
  idᵣ∘ᵣ η = ≡.trans (VecProp.map-cong (λ x → VecProp.lookup∘tabulate _ x ) _)
@@ -331,7 +331,7 @@ Various substitution properties
                  (cong (Vec.map Fin.inject₁) (≡.trans (∘ᵣidᵣ η) (≡.sym (idᵣ∘ᵣ η))))))))
            (VecProp.map-cong (λ x → ≡.sym (lookup-map x Fin.inject₁ η)) idᵣ)))
            (VecProp.map-cong (λ x → ≡.sym (MoreVec.insert-lookup-last< x _ _)) _))
-           -- tabulate-allFin      -- 
+           -- tabulate-allFin      --
          (VecProp.map-∘ _ Fin.inject₁ idᵣ )
 
 
@@ -387,7 +387,7 @@ The category of arities
  wkl' r = VecList.map (λ _ → 1+) r
 
  data _⇒_ : A → A → Set where
-    Hom : ∀ {n n' σ σ' τ σ❴η❵ τ'} 
+    Hom : ∀ {n n' σ σ' τ σ❴η❵ τ'}
                 (η : n ⇒ᵣ n') →
                 σ❴η❵ ⇒ₗ σ' →
                 -- σ❴η❵ ≡ σ ❴ η ❵s →
@@ -429,8 +429,8 @@ Indexed set of symbols with their arities
  module _ {n Γ τ n' Γ' τ'} where
   _｛_｝ : O' n Γ τ → (n ∣ Γ ⟶ τ) ⇒ (n' ∣ Γ' ⟶ τ') → O' n' Γ' τ'
   -- o ｛ Hom η x e1 e2 ｝ = {!o!}
-  Var i ｛ Hom= η x ｝ = 
-        Var ( VecList.lookup x (∈-map⁺ _❴ η ❵ i) ) 
+  Var i ｛ Hom= η x ｝ =
+        Var ( VecList.lookup x (∈-map⁺ _❴ η ❵ i) )
   App τ₂ ｛ Hom= η x ｝ = App (τ₂ ❴ η ❵)
   Lam τ₁ τ₂ e ｛ Hom= η x ｝ = Lam (τ₁ ❴ η ❵) (τ₂ ❴ η ❵) (cong (_❴ η ❵) e)
   TApp τ₁ τ₂ e ｛ Hom= η x ｝ = TApp (τ₁ ❴ η ↑ ❵) (τ₂ ❴ η ❵) e'
@@ -439,7 +439,7 @@ Indexed set of symbols with their arities
        e' = ≡.trans (cong _❴ η ❵ e) ([]❴❵ τ₁ τ₂ η)
   TLam τ' 1ₑ ｛ Hom= η x ｝ = TLam (τ' ❴ η ↑ ❵) 1ₑ
 
-  _^_ : (r : (n ∣ Γ ⟶ τ) ⇒ (n' ∣ Γ' ⟶ τ')) → (o : O' n Γ τ) → 
+  _^_ : (r : (n ∣ Γ ⟶ τ) ⇒ (n' ∣ Γ' ⟶ τ')) → (o : O' n Γ τ) →
             Pointwise _⇒_ (α o) (α (o ｛ r ｝))
   Hom= η x ^ Var i = []
   Hom= η x ^ App _ =
@@ -447,9 +447,9 @@ Indexed set of symbols with their arities
      Hom= η x ∷ []
   Hom= η x ^ Lam τ₁ τ₂ 1ₑ =
      Hom η (Ο , VecList.map (λ a x₁ → 1+ x₁) x) 1ₑ 1ₑ ∷ []
-  Hom= η x ^ TApp τ₁ τ₂ 1ₑ = 
+  Hom= η x ^ TApp τ₁ τ₂ 1ₑ =
     Hom= η x ∷ []
-     
+
   Hom= η x ^ TLam τ' 1ₑ =
     Hom (η ↑) (wkl x) (❴❵-wkC _ η) 1ₑ
      ∷ []
@@ -461,7 +461,7 @@ Indexed set of symbols with their arities
       Maybe (pre-image (_｛ x ｝) o)
   τ ◄ Var i ｛ Hom= η x ｝⁻¹ with VecList.lookup⁻¹ _≟T_ MoreList._≟∈_ i x
   ... | ⊥ = ⊥
-  ... | ⌊ PreImage i' ⌋ with ∈-map⁻ _❴ η ❵ i' | MoreList.∈-map⁺-map⁻ {ℓ' = lzero} _❴ η ❵ i' 
+  ... | ⌊ PreImage i' ⌋ with ∈-map⁻ _❴ η ❵ i' | MoreList.∈-map⁺-map⁻ {ℓ' = lzero} _❴ η ❵ i'
   ... | τ' , i'' , e | e' with τ' ≟T τ | e | e'
        -- if we restrict to an injective renaming η,
        -- they should always be equal because
@@ -470,7 +470,7 @@ Indexed set of symbols with their arities
   ... | yes 1ₑ | 1ₑ | 1ₑ = ⌊ Var i'' , 1ₑ ⌋
   τ ◄ App t ｛ Hom= η x ｝⁻¹ = do
          PreImage t' ← t ❴ η ❵⁻¹
-         ⌊ PreImage (App t') ⌋  
+         ⌊ PreImage (App t') ⌋
   (τ₁ ⇒T τ₂) ◄ Lam ._ ._ 1ₑ ｛ Hom= η x ｝⁻¹ =
      ⌊  PreImage (Lam τ₁ τ₂ 1ₑ) ⌋
   ∀T τ ◄ TLam ._ 1ₑ ｛ Hom= η x ｝⁻¹ = ⌊ PreImage (TLam τ 1ₑ) ⌋
@@ -571,15 +571,15 @@ Equalisers (based on commonPositions)
  ... | U , p rewrite commonPositions↑ x y  = (∀T U) , cong ∀T p
 
  equaliser-context : ∀ {n m Γ Γ'} (x y : m ⇒ᵣ n) → (Γ ❴ x ❵s ⇒ₗ Γ')
-    → (Γ ❴ y ❵s ⇒ₗ Γ') → 
+    → (Γ ❴ y ❵s ⇒ₗ Γ') →
     (let p , z = commonPositions _ x y) →
     Σ (List (Ty p)) λ Δ → Δ ❴ z ❵s ⇒ₗ Γ
-    
+
  equaliser-context {Γ = []} x y [] [] = [] , []
  -- mimicking the definition of commonPosition
  equaliser-context {Γ = m ∷ Γ} x y (t  , ts) (u , us) with
      equaliser-context x y ts us | index t Fin.≟ index u
- ... | Δ , s | yes q 
+ ... | Δ , s | yes q
        with PreImage j  ← equaliser-Ty x y m (index-injective (setoid _) _ _ q)
        = j ∷ Δ , Ο , wkl' s
  ... | Δ , s | no q = Δ ,  wkl' s
@@ -596,7 +596,7 @@ Pullbacks (based on commonValues)
 
 -------------------------- -}
 
-    
+
 
  private
 
@@ -608,8 +608,8 @@ Pullbacks (based on commonValues)
      → abc ≡ abc'
   helper-≡ (.ℕ.zero , [] , []) (.ℕ.zero , [] , []) = λ x x₁ → 1ₑ
   helper-≡ (.(ℕ.suc _) , b0 ∷ b , c) (.ℕ.zero , [] , c') () e'
-  helper-≡ (.(ℕ.suc _) , b0 ∷ b , c0 ∷ c) (.(ℕ.suc _) , b0' ∷ b' , c0' ∷ c') e e' 
-     with helper-≡ (_ , b , c) (_ , b' , c') (∷-injectiveʳ e) (∷-injectiveʳ e')  
+  helper-≡ (.(ℕ.suc _) , b0 ∷ b , c0 ∷ c) (.(ℕ.suc _) , b0' ∷ b' , c0' ∷ c') e e'
+     with helper-≡ (_ , b , c) (_ , b' , c') (∷-injectiveʳ e) (∷-injectiveʳ e')
   ... | 1ₑ rewrite ∷-injectiveˡ e | ∷-injectiveˡ e' = 1ₑ
   helper2 :  ∀ {i}{A : Set i}{n n' m m'}(xs : Vec A n)(xs' : Vec A n'){ys : Vec A m}{ys' : Vec A m'} →
                         Vec.toList xs ≡ Vec.toList xs'
@@ -676,7 +676,7 @@ Pullbacks (based on commonValues)
           )
           1ₑ)
         (≡.sym (MoreVec.insert-last-++ (Vec.map Fin.inject₁ vindices) (Vec.map Fin.inject₁ r) (Fin.fromℕ _) ))
-        
+
               )
     where
       eq-aux : MoreVec.find-indices (Fin._≟ Fin.inject₁ x)
@@ -696,7 +696,7 @@ Pullbacks (based on commonValues)
     let p , l , r = commonValues _ x y in
     let e = ≡.trans (VecAnyProp.lookup-index ∈2) (VecProp.lookup-zip (index̬ ∈2 ) l r) in
     let p1 , p2 = ,-injective (≡.sym e) in
-    Var (index̬ ∈2) , 
+    Var (index̬ ∈2) ,
                cong₂ (λ x y → Var x , Var y) (≡.trans p1 aux)
                (≡.trans p2 (VecProp.index-∈-lookup x₂ y))
       where
@@ -727,7 +727,7 @@ Pullbacks (based on commonValues)
 
 
  pullback-context : ∀ {n m m' Γ₁ Γ₂ Γ'} (x : m ⇒ᵣ n)(y : m' ⇒ᵣ n) → (Γ₁ ❴ x ❵s ⇒ₗ Γ')
-     → (Γ₂ ❴ y ❵s ⇒ₗ Γ') → 
+     → (Γ₂ ❴ y ❵s ⇒ₗ Γ') →
      (let p , l , r = commonValues _ x y) →
      Σ (List (Ty p)) λ Δ → (Δ ❴ l ❵s ⇒ₗ Γ₁ × Δ ❴ r ❵s ⇒ₗ Γ₂ )
  pullback-context {Γ₁ = []} x y [] us = [] , [] , []
@@ -737,9 +737,9 @@ Pullbacks (based on commonValues)
      pullback-context x y ts us
  ... | Δ , s₁ , s₂ with s₁' ← VecList.map (λ _ → 1+) s₁ | VecList.lookup⁻¹  _≟T_ MoreList._≟∈_ t us
  ... | ⊥ = Δ , s₁' , s₂
- ... | ⌊ u , e ⌋ 
+ ... | ⌊ u , e ⌋
      with j , j∈Γ₂ , ej ← ∈-map⁻ _ u
-     with PreImage xi ← pullback-Ty x y γ j ej 
+     with PreImage xi ← pullback-Ty x y γ j ej
        = (xi ∷ Δ) , (Ο , s₁') , (j∈Γ₂ , s₂)
 
 

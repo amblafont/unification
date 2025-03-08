@@ -1,11 +1,11 @@
 \begin{code}
-module lcsig where 
-    
-open import lib 
+module lcsig where
+
+open import lib
 open import Agda.Primitive
 open import main using (Signature ; isFriendly)
 open import Data.Vec.Base as Vec using (Vec)
-open import Data.Nat as ℕ using (ℕ; _+_) 
+open import Data.Nat as ℕ using (ℕ; _+_)
 open import Data.Fin as Fin using (Fin)
 open import Data.List as List hiding (map ; [_] ; lookup)
 open import Data.List.Relation.Binary.Pointwise using (Pointwise ; [] ; _∷_)
@@ -39,12 +39,12 @@ x ^ Lam = (x ↑) ∷ []
 %</lc-sig>
 \begin{code}
 signature : Signature lzero lzero lzero
-signature = record { A = ℕ; 
-                    hom = hom; 
-                    id = lc.id; 
-                    _∘_ = lc._∘_; 
-                    O = O; 
-                    α = α;    
-                    _｛_｝ = _｛_｝; 
+signature = record { A = ℕ;
+                    hom = hom;
+                    id = lc.id;
+                    _∘_ = lc._∘_;
+                    O = O;
+                    α = α;
+                    _｛_｝ = _｛_｝;
                     _^_ = _^_}
 \end{code}

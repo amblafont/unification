@@ -1,6 +1,6 @@
 \begin{code}
 open import Data.List as List hiding ([_])
-open import Data.List.Membership.Propositional 
+open import Data.List.Membership.Propositional
 open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
 open import lib
 open import Data.Maybe.Base using (Maybe) renaming (nothing to ⊥ ; just to ⌊_⌋)
@@ -62,7 +62,7 @@ module SubstitutionDef where
 
 open SubstitutionDef
 
-module wkₛ 
+module wkₛ
    (wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a)
    where
 
@@ -99,7 +99,7 @@ module -[-]s
 %</compose-substitution-def>
 \begin{code}
 
-module 1ₛ 
+module 1ₛ
    (wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a)
    (_﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → hom m a → Tm ⌊ Γ ⌋ a)
  where
@@ -114,13 +114,13 @@ module 1ₛ
      \end{code}
      %</id-subst>
      \begin{code}
-module Substitution 
+module Substitution
      (wkₜ : ∀ {Γ a m} → Tm· Γ a → Tm· (m ∷ Γ) a)
      (_﹙_﹚ : ∀ {Γ a m} → m ∈ Γ → hom m a → Tm ⌊ Γ ⌋ a)
    where
    open wkₛ wkₜ
    open 1ₛ wkₜ _﹙_﹚
-   
+
    _↦_,_ : ∀ {Γ Δ m} → (M : m ∈ Γ) → Tm Δ m
             → (Γ ⑊ M ·⟶ Δ) → (Γ ·⟶ Δ)
    Ο ↦ t , σ = t , σ
@@ -129,7 +129,7 @@ module Substitution
    _↦-﹙_﹚ : ∀ {Γ m p} → (M : m ∈ Γ) → hom p m
             → Γ ·⟶· Γ [ M ∶ p ]
    Ο ↦-﹙ x ﹚ = Ο ﹙ x ﹚ , wkₛ 1ₛ
-   1+ M ↦-﹙ x ﹚ = Ο ﹙ id ﹚ ,  wkₛ (M ↦-﹙ x ﹚) 
+   1+ M ↦-﹙ x ﹚ = Ο ﹙ id ﹚ ,  wkₛ (M ↦-﹙ x ﹚)
 
 -- precedence below _∷_, which is 4
 \end{code}

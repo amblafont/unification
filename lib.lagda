@@ -84,7 +84,7 @@ module VecList where
       ... | no p = no λ { ( 1ₑ , x ) → p x}
       ... | yes p = yes (1ₑ , p)
 
-  
+
     lookup⁻¹ : ∀ {a} (b : B a) {l} (xs : VecList B l) → Maybe (pre-image (lookup xs) b)
     lookup⁻¹ b [] = ⊥
     lookup⁻¹ b (b' , xs) with b ≟B' b'
@@ -118,10 +118,10 @@ module MoreList where
  module _ {ℓ : Level} {A  : Set ℓ} {ℓ' : Level} {B : Set ℓ} where
    import Data.List.Membership.Setoid (setoid A) as SetoidA
    open import Data.List.Relation.Unary.Any.Properties using (map⁻)
-   ∈-map⁺-map⁻ : 
+   ∈-map⁺-map⁻ :
       (f : A → B) {y : B} {xs : List A} →
       (y∈ : y ∈ List.map f xs) →
-      let (y' , i'' , e) = ∈-map⁻ f y∈ 
+      let (y' , i'' , e) = ∈-map⁻ f y∈
       in ∈-map⁺ f i'' ≡  ≡.subst (_∈ _) e y∈
    ∈-map⁺-map⁻ f {xs = x ∷ xs} Ο = 1ₑ
    ∈-map⁺-map⁻ f {y}{xs = x ∷ xs} (1+ y∈) rewrite ∈-map⁺-map⁻ f y∈
@@ -175,7 +175,7 @@ module MoreVec where
     ... | true = there rec
     ... | false = rec
 
-    find-indices-insert-last : ∀ {n} → (xs : Vec A n) → ∀ {a} → P a → 
+    find-indices-insert-last : ∀ {n} → (xs : Vec A n) → ∀ {a} → P a →
         find-indices (Vec.insertAt xs (Fin.fromℕ n) a) ≡
              List.map Fin.inject₁ (find-indices xs) ++ (Fin.fromℕ n ∷ [])
     find-indices-insert-last [] Pa rewrite dec-true (P? _) Pa = 1ₑ
@@ -194,9 +194,9 @@ module MoreVec where
          | ≡.sym (ListProp.map-∘ {g = Fin.inject₁}{Fin.suc}(find-indices xs))
       = 1ₑ
 
-    find-indices-insert-last-⊥ : ∀ {n} → (xs : Vec A n) → ∀ {a} → ¬ P a → 
+    find-indices-insert-last-⊥ : ∀ {n} → (xs : Vec A n) → ∀ {a} → ¬ P a →
         find-indices (Vec.insertAt xs (Fin.fromℕ n) a) ≡
-             List.map Fin.inject₁ (find-indices xs) 
+             List.map Fin.inject₁ (find-indices xs)
     find-indices-insert-last-⊥ [] Pa rewrite dec-false (P? _) Pa = 1ₑ
     find-indices-insert-last-⊥ (x ∷ xs) Pa rewrite find-indices-insert-last-⊥ xs Pa
         | ≡.sym (ListProp.map-∘ {g = Fin.suc}{Fin.inject₁}(find-indices xs))
@@ -230,7 +230,7 @@ module MoreVec where
   ... | yes p rewrite dec-true (PB? (f x)) (AB p) | find-indices-map⁻ PA? PB? f AB BA xs = 1ₑ
   ... | no p rewrite dec-false (PB? (f x)) (λ x₁ → p (BA x₁)) | find-indices-map⁻ PA? PB? f AB BA xs = 1ₑ
 
-  
+
 
 
 

@@ -6,8 +6,8 @@ open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_ )
 open import Data.Vec.Membership.Propositional.Properties as VecProp
 open import Data.Vec.Relation.Unary.Any as VecAny using (here ; there)
 open import Data.Vec.Relation.Unary.Any.Properties as VecProp hiding (map-id)
-open import Data.List as List using (List ; [] ; _∷_) 
-open import Data.List.Membership.Propositional 
+open import Data.List as List using (List ; [] ; _∷_)
+open import Data.List.Membership.Propositional
 open import Data.List.Relation.Unary.Any renaming (_─_ to _⑊_ )
 open import Data.Fin as Fin using (Fin)
 open import Data.Nat using (ℕ; _≟_ ; _+_)
@@ -80,7 +80,7 @@ commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
 %</common-positions>
 \begin{code}
 
--- sanity check: any common position must be in the vector of common positions 
+-- sanity check: any common position must be in the vector of common positions
 commonPositions-property : ∀ {n m i} → (x y : hom m n) → Vec.lookup x i ≡ Vec.lookup y i →
         let (p , z) = commonPositions m x y in
         i ∈̬ z
@@ -150,12 +150,12 @@ module _ where
 
   commonValues-property .(_ ∷ _) ys (there {x = x}{xs = xs} vx) vy with
         p , l , r ← commonValues _ xs ys
-      | indices ←  MoreVec.find-indices (Fin._≟ x) ys 
+      | indices ←  MoreVec.find-indices (Fin._≟ x) ys
       | rec ← commonValues-property xs ys vx vy
       rewrite Data.Vec.Properties.zipWith-++ _,_ (Vec.replicate _ Fin.zero) (Vec.map Fin.suc l) (Vec.fromList indices) r =
         ∈-++⁺ʳ (Vec.zip (Vec.replicate _ Fin.zero) (Vec.fromList indices))
          ( ≡.subst (_ ∈̬_)
-           (≡.trans (map-zip Fin.suc (λ m → m) _ _) (≡.cong (Vec.zip _) (map-id r))) 
+           (≡.trans (map-zip Fin.suc (λ m → m) _ _) (≡.cong (Vec.zip _) (map-id r)))
          (∈-map⁺ (Product.map Fin.suc (λ m → m)) rec) )
 
 
@@ -188,7 +188,7 @@ Tm· Γ n = Tm ⌊ Γ ⌋ n
 data Tm where
    App· : ∀ {Γ n} → Tm· Γ n → Tm· Γ n
           → Tm· Γ n
-   Lam· : ∀ {Γ n} → Tm· Γ (1 + n) 
+   Lam· : ∀ {Γ n} → Tm· Γ (1 + n)
           → Tm· Γ n
    Var· : ∀ {Γ n} → Fin n → Tm· Γ n
    _﹙_﹚ : ∀ {Γ n m} → m ∈ Γ → hom m n
@@ -288,7 +288,7 @@ Lam· t [ σ ]t = Lam (t [ σ ]t)
 Var· i [ σ ]t = Var i
 -- _❴_❵ : Tm Γ n → hom n p → Tm Γ p
 -- is renaming (code omitted)
-M ﹙ x ﹚ [ σ ]t = nth σ M  ❴ x ❵ 
+M ﹙ x ﹚ [ σ ]t = nth σ M  ❴ x ❵
 ! [ 1⊥ ]t = !
 \end{code}
 %</lc-substitution>
@@ -341,7 +341,7 @@ Pruning
 
 -------------------------- -}
 
-open Common.PruneUnifyTypes 
+open Common.PruneUnifyTypes
 pattern _∶_﹙_﹚ M m x = _﹙_﹚ {m = m} M x
 
 {-# TERMINATING #-}
@@ -356,7 +356,7 @@ prune : ∀ {Γ m n} → Tm Γ n → hom m n → [ m ]∪ Γ ⟶?
 prune (App· t u) x =
   let Δ₁ ◄ (t' , σ₁) = prune t x
       Δ₂ ◄ (u' , σ₂) = prune (u [ σ₁ ]t) x
-  in  Δ₂ ◄ (App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s) 
+  in  Δ₂ ◄ (App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s)
 \end{code}
 %</prune-app>
 %<*prune-lam>
@@ -406,7 +406,7 @@ unify-flex-* {Γ} {m} M x t
   let p , z = commonPositions m x y
   in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
 ... | Cycle = ⊥ ◄ !ₛ
-... | No-Cycle t' = 
+... | No-Cycle t' =
   let Δ ◄ (u , σ) = prune t' x
   in  Δ ◄ M ↦ u , σ
 \end{code}
@@ -429,7 +429,7 @@ unify (M ﹙ x ﹚) t = unify-flex-* M x t
 %</unify-flex>
 %<*unify-app>
 \begin{code}
-unify (App· t u) (App· t' u') = 
+unify (App· t u) (App· t' u') =
   let Δ₁ ◄ σ₁ = unify t t'
       Δ₂ ◄ σ₂ = unify (u [ σ₁ ]t) (u' [ σ₁ ]t)
   in  Δ₂ ◄ σ₁ [ σ₂ ]s
