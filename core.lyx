@@ -982,8 +982,18 @@ literal "false"
 
 .
  We take scopes and also metavariable arities to be natural numbers.
+ A metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ is always applied to a list of arguments 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+, whose length is specified by its arity.
+ 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The well-formedness judgement is of the shape 
@@ -1047,6 +1057,7 @@ That is,
 \end_inset
 
 .
+ 
 \begin_inset Formula 
 \[
 \begin{array}{ccccc}
@@ -1062,7 +1073,7 @@ That is,
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 It may be surprising that the rule 
