@@ -153,10 +153,11 @@ module PruneUnifyTypes where
 %<*prune-type>
 \begin{code}
   record [_]∪_⟶? m Γ : Set k' where
-    constructor _◄_
+    constructor _◄_﹔_
     field
        Δ : MetaContext
-       u,σ : (Tm Δ m) × (Γ ⟶ Δ)
+       u : Tm Δ m
+       σ : Γ ⟶ Δ
 \end{code}
 %</prune-type>
 %<*substfrom>
@@ -169,9 +170,11 @@ module PruneUnifyTypes where
 \end{code}
 %</substfrom>
 \begin{code}
+  infix 19 _◄_﹔_
+  -- infix 19 _·◄_﹔_
+  -- pattern _·◄_﹔_ Δ σ δ = ⌊ Δ ⌋ ◄ σ ﹔ δ
   infix 19 _◄_
-  infix 19 _·◄_
-  pattern _·◄_ Δ σ = ⌊ Δ ⌋ ◄ σ
+  
 
   _·⟶? : MetaContext· → Set k'
   Γ ·⟶?  = ⌊ Γ ⌋ ⟶?

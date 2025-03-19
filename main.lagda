@@ -28,13 +28,13 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 \end{code}
 %</signature-core>
 \begin{code}
-  -- [a₁,⋯, aₙ] ⟹ [b₁,⋯, bₘ] is isomorphic to a₁⇒b₁ × ⋯ × aₙ⇒bₙ if n=m
+  -- [a₁,⋯, aₙ] ⇢ [b₁,⋯, bₘ] is isomorphic to a₁⇒b₁ × ⋯ × aₙ⇒bₙ if n=m
   -- Otherwise, it is isomorphic to the empty type.
 \end{code}
 %<*renaming-vectors>
 \begin{code}
-  _⟹_ : List A → List A → Set (i ⊔ j)
-  as ⟹ bs = Pointwise hom as bs
+  _⇢_ : List A → List A → Set (i ⊔ j)
+  as ⇢ bs = Pointwise hom as bs
 \end{code}
 %</renaming-vectors>
 \begin{code}
@@ -44,7 +44,7 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 \begin{code}
     -- Functoriality components
     _｛_｝  : ∀ {a b} → O a → hom a b → O b
-    _^_ : ∀ {a b}(x : hom a b)(o : O a) → α o ⟹ α (o ｛ x  ｝ )
+    _^_ : ∀ {a b}(x : hom a b)(o : O a) → α o ⇢ α (o ｛ x  ｝ )
 \end{code}
 %</signature-functoriality>
 
@@ -53,8 +53,8 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 record isFriendly {i j k}(S : Signature i j k) : Set (i ⊔ j ⊔ k) where
    open Signature S
    field
-     equaliser : ∀ {a} m → (x y : hom m a) → Σ A (λ p → hom p m)
-     pullback : ∀ m {m' a} → (x : hom m a) → (y : hom m' a)
+     equaliser : ∀ {m a} → (x y : hom m a) → Σ A (λ p → hom p m)
+     pullback : ∀ {m m' a} → (x : hom m a) → (y : hom m' a)
                   → Σ A (λ p → hom p m × hom p m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
      _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : hom b a)
@@ -78,8 +78,7 @@ module Tm {i j k}(S : Signature i j k) where
 \end{code}
 %<*syntax-decl>
 \begin{code}
-   data Tm : MetaContext → A
-            → Set (i ⊔ j ⊔ k)
+   data Tm : MetaContext → A → Set (i ⊔ j ⊔ k)
    Tm· Γ a = Tm ⌊ Γ ⌋ a
 \end{code}
 %</syntax-decl>
@@ -110,7 +109,7 @@ Renaming
 -------------------------- -}
    _❴_❵ : ∀ {Γ a b} → Tm Γ a → hom a b → Tm Γ b
    _❴_❵s : ∀ {Γ Γ' Δ} → Γ ·⟶ Δ
-         → Γ ⟹ Γ' → Γ' ·⟶ Δ
+         → Γ ⇢ Γ' → Γ' ·⟶ Δ
 
    (Rigid· o ts) ❴ x ❵ = Rigid· (o ｛ x ｝) (ts ❴ x ^ o ❵s)
    M ﹙ y ﹚ ❴ x ❵ = M ﹙ x ∘ y ﹚
@@ -214,16 +213,17 @@ Pruning
 
 -------------------------- -}
   open Common.PruneUnifyTypes
-  pattern _∶_﹙_﹚ M m x = _﹙_﹚ {m = m} M x
+  
   \end{code}
   %<*prune-sigma-return-type>
   \begin{code}
-  record _∪_⟶? (Γ : MetaContext·)(Γ' : MetaContext)
+  record _∪_⟶? (Γ'' : MetaContext·)(Γ : MetaContext)
       : Set (i ⊔ j ⊔ k) where
-    constructor _◄_
+    constructor _◄_﹔_
     field
       Δ : MetaContext
-      δ,σ : (Γ ·⟶ Δ) × (Γ' ⟶ Δ)
+      δ : Γ'' ·⟶ Δ
+      σ : Γ ⟶ Δ
   \end{code}
   %</prune-sigma-return-type>
   %<*prune-proto>
@@ -233,36 +233,36 @@ Pruning
   %</prune-proto>
   %<*prune-sigma-proto>
   \begin{code}
-  prune-σ : ∀ {Γ Γ' Γ''} → (Γ' ·⟶ Γ) → (Γ'' ⟹ Γ') → Γ'' ∪ Γ ⟶?
+  prune-σ : ∀ {Γ Γ' Γ''} → (Γ' ·⟶ Γ) → (Γ'' ⇢ Γ') → Γ'' ∪ Γ ⟶?
   \end{code}
   %</prune-sigma-proto>
   %<*prune-subst>
   \begin{code}
-  prune-σ {Γ} [] [] = Γ ◄ ([] , 1ₛ)
+  prune-σ {Γ} [] [] = Γ ◄ [] ﹔ 1ₛ
   prune-σ (t , δ) (x₀ ∷ xs) =
-    let Δ₁ ◄ (t' , σ₁) = prune t x₀
-        Δ₂ ◄ (δ' , σ₂) = prune-σ (δ [  σ₁  ]s) xs
-    in  Δ₂ ◄ ( (t' [ σ₂ ]t , δ') , (σ₁ [ σ₂ ]s) )
+    let Δ₁ ◄ t' ﹔ σ₁ = prune t x₀
+        Δ₂ ◄ δ' ﹔ σ₂ = prune-σ (δ [  σ₁  ]s) xs
+    in  Δ₂ ◄ (t' [ σ₂ ]t , δ') ﹔ (σ₁ [ σ₂ ]s)
   \end{code}
   %</prune-subst>
   %<*prune-rigid>
   \begin{code}
   prune (Rigid· o δ) x with o ｛ x ｝⁻¹
-  ... | ⊥ = ⊥ ◄  (! , !ₛ)
+  ... | ⊥ = ⊥ ◄  ! ﹔ !ₛ
   ... | ⌊ PreImage o' ⌋ =
-    let Δ ◄ (δ' , σ)  =  prune-σ δ  (x ^ o')
-    in  Δ ◄ (Rigid o'  δ' ,  σ)
+    let Δ ◄ δ' ﹔ σ  =  prune-σ δ  (x ^ o')
+    in  Δ ◄ Rigid o'  δ' ﹔ σ
   \end{code}
   %</prune-rigid>
   %<*prune-flex>
   \begin{code}
-  prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
-    let p , x' , y' = pullback m x y in
-    Γ [ M ∶ p ] ·◄  ((M ∶ p) ﹙ y' ﹚ , M ↦-﹙ x' ﹚)
+  prune {⌊ Γ ⌋} (M ﹙ x ﹚) y =
+    let p , x' , y' = pullback x y in
+    ⌊ Γ [ M ∶ p ] ⌋ ◄  (M ∶ p) ﹙ y' ﹚ ﹔ M ↦-﹙ x' ﹚
   \end{code}
   %</prune-flex>
   \begin{code}
-  prune ! y = ⊥ ◄ (! ,  !ₛ)
+  prune ! y = ⊥ ◄ ! ﹔ !ₛ
 
 
 {- ----------------------
@@ -280,14 +280,14 @@ Unification
 %</unify-flex-prototype>
 %<*unify-flex-def>
   \begin{code}
-  unify-flex-* {Γ} {m} M x t
+  unify-flex-* {Γ} M x t
                   with occur-check M t
   ... | Same-MVar y =
-    let p , z = equaliser m x y
-    in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
+    let p , z = equaliser x y
+    in ⌊ Γ [ M ∶ p ] ⌋ ◄ M ↦-﹙ z ﹚
   ... | Cycle = ⊥ ◄ !ₛ
   ... | No-Cycle t' =
-    let Δ ◄ (u , σ) = prune t' x
+    let Δ ◄ u ﹔ σ = prune t' x
     in  Δ ◄ M ↦ u , σ
   \end{code}
 %</unify-flex-def>

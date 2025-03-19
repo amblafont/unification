@@ -1,6 +1,7 @@
 \begin{code}
 module lc where
 
+
 open import Data.Vec.Base as Vec using (Vec; []; _∷_)
 open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_ )
 open import Data.Vec.Membership.Propositional.Properties as VecProp
@@ -67,10 +68,10 @@ Common positions
 \end{code}
 %<*common-positions>
 \begin{code}
-commonPositions : ∀ {n} m → (x y : hom m n) → Σ ℕ (λ p → hom p m)
-commonPositions m [] [] = 0 , []
-commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
-   let p , z = commonPositions m x y in
+commonPositions : ∀ {m n} → (x y : hom m n) → Σ ℕ (λ p → hom p m)
+commonPositions [] [] = 0 , []
+commonPositions {ℕ.suc m} (x₀ ∷ x) (y₀ ∷ y) =
+   let p , z = commonPositions x y in
    let z' = Vec.map Fin.suc z in
    if does (x₀ Fin.≟ y₀) then
      1 + p , Fin.zero ∷ z'
@@ -82,7 +83,7 @@ commonPositions (ℕ.suc m) (x₀ ∷ x) (y₀ ∷ y) =
 
 -- sanity check: any common position must be in the vector of common positions
 commonPositions-property : ∀ {n m i} → (x y : hom m n) → Vec.lookup x i ≡ Vec.lookup y i →
-        let (p , z) = commonPositions m x y in
+        let (p , z) = commonPositions x y in
         i ∈̬ z
 commonPositions-property {i = i}(x ∷ xs) (y ∷ ys) e' with i | x Fin.≟ y
 ... | Fin.zero | no e = ⊥-elim (e e')
@@ -102,10 +103,10 @@ Common values
 \end{code}
 %<*common-values>
 \begin{code}
-commonValues : ∀ m {m' n} → (x : hom m n) → (y : hom m' n) → Σ ℕ (λ p → hom p m × hom p m')
-commonValues m [] y = 0 , [] , []
-commonValues (ℕ.suc m ) (x₀ ∷ x) y =
-   let p , l , r = commonValues m x y in
+commonValues : ∀ {m m' n} → (x : hom m n) → (y : hom m' n) → Σ ℕ (λ p → hom p m × hom p m')
+commonValues [] y = 0 , [] , []
+commonValues {ℕ.suc m } (x₀ ∷ x) y =
+   let p , l , r = commonValues {m} x y in
    let indices = MoreVec.find-indices (λ x' → x' Fin.≟ x₀) y in
    -- count is at most 1 for injective renamings
    let count = List.length indices in
@@ -121,10 +122,10 @@ module _ where
   open import Data.Vec.Properties using (lookup-zip ; lookup-replicate ; map-zip ; map-id)
 
   commonValues-property : ∀ {m m' n v} → (x : hom m n) (y : hom m' n) → (vx : v ∈̬ x) → (vy : v ∈̬ y) →
-          let p , l , r = commonValues _ x y in
+          let p , l , r = commonValues x y in
          (VecAny.index vx , VecAny.index vy) ∈̬ Vec.zip l r
   commonValues-property .(x ∷ xs) ys (here {x = x} {xs = xs} px) vy
-      with p , l , r ← commonValues _ xs ys
+      with p , l , r ← commonValues xs ys
       | indices ←  (MoreVec.find-indices (Fin._≟ x) ys)
       | indice∈ ← MoreVec.find-indices-∈ (Fin._≟ x) vy px
       = let count = List.length indices in
@@ -149,7 +150,7 @@ module _ where
                         (≡.sym (VecProp.lookup-index (VecProp.∈-fromList⁺ indice∈))))
 
   commonValues-property .(_ ∷ _) ys (there {x = x}{xs = xs} vx) vy with
-        p , l , r ← commonValues _ xs ys
+        p , l , r ← commonValues xs ys
       | indices ←  MoreVec.find-indices (Fin._≟ x) ys
       | rec ← commonValues-property xs ys vx vy
       rewrite Data.Vec.Properties.zipWith-++ _,_ (Vec.replicate _ Fin.zero) (Vec.map Fin.suc l) (Vec.fromList indices) r =
@@ -354,35 +355,36 @@ prune : ∀ {Γ m n} → Tm Γ n → hom m n → [ m ]∪ Γ ⟶?
 %<*prune-app>
 \begin{code}
 prune (App· t u) x =
-  let Δ₁ ◄ (t' , σ₁) = prune t x
-      Δ₂ ◄ (u' , σ₂) = prune (u [ σ₁ ]t) x
-  in  Δ₂ ◄ (App (t' [ σ₂ ]t) u' , σ₁ [ σ₂ ]s)
+  let Δ₁ ◄ t' ﹔ σ₁ = prune t x
+      Δ₂ ◄ u' ﹔ σ₂ = prune (u [ σ₁ ]t) x
+  in  Δ₂ ◄ (App (t' [ σ₂ ]t) u') ﹔ (σ₁ [ σ₂ ]s)
 \end{code}
 %</prune-app>
 %<*prune-lam>
 \begin{code}
 prune (Lam· t) x =
-  let Δ ◄ (t' , σ) = prune t (x ↑)
-  in  Δ ◄ (Lam t' , σ)
+  let Δ ◄ t' ﹔ σ = prune t (x ↑)
+  in  Δ ◄ Lam t' ﹔ σ
 \end{code}
 %</prune-lam>
 %<*prune-var>
 \begin{code}
 prune {Γ} (Var· i) x with i ｛ x ｝⁻¹
-... | ⊥ = ⊥ ◄ (! , !ₛ)
-... | ⌊ PreImage j ⌋ = Γ ◄ (Var j , 1ₛ)
+... | ⊥ = ⊥ ◄ ! ﹔ !ₛ
+... | ⌊ PreImage j ⌋ = Γ ◄ Var j ﹔ 1ₛ
 \end{code}
 %</prune-var>
+% -- prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
 %<*lc-prune-flex>
 \begin{code}
-prune {⌊ Γ ⌋} (M ∶ m ﹙ x ﹚) y =
-  let p , x' , y' = commonValues m x y in
-  Γ [ M ∶ p ] ·◄ ((M ∶ p) ﹙ y' ﹚ , M ↦-﹙ x' ﹚)
+prune {⌊ Γ ⌋} (M ﹙ x ﹚) y =
+  let p , x' , y' = commonValues x y in
+  ⌊ Γ [ M ∶ p ] ⌋ ◄ (M ∶ p) ﹙ y' ﹚ ﹔ M ↦-﹙ x' ﹚
 \end{code}
 %</lc-prune-flex>
 %<*prune-fail>
 \begin{code}
-prune ! y = ⊥ ◄ (! , !ₛ)
+prune ! y = ⊥ ◄ ! ﹔ !ₛ
 \end{code}
 %</prune-fail>
 
@@ -400,14 +402,14 @@ unify-flex-* : ∀ {Γ m n} → m ∈ Γ → hom m n → Tm· Γ n → Γ ·⟶?
 %</lc-unify-flex-proto>
 %<*lc-unify-flex-def>
 \begin{code}
-unify-flex-* {Γ} {m} M x t
+unify-flex-* {Γ} M x t
         with occur-check M t
 ... | Same-MVar y =
-  let p , z = commonPositions m x y
-  in  Γ [ M ∶ p ] ·◄ M ↦-﹙ z ﹚
+  let p , z = commonPositions x y
+  in  ⌊ Γ [ M ∶ p ] ⌋ ◄ M ↦-﹙ z ﹚
 ... | Cycle = ⊥ ◄ !ₛ
 ... | No-Cycle t' =
-  let Δ ◄ (u , σ) = prune t' x
+  let Δ ◄ u ﹔ σ = prune t' x
   in  Δ ◄ M ↦ u , σ
 \end{code}
 %</lc-unify-flex-def>

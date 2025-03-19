@@ -14,7 +14,7 @@ open import Relation.Binary hiding (_⇒_)
 open import Data.List.Membership.Propositional
 import Data.List.Membership.Propositional.Properties as ListProp
 open import Data.List.Membership.Propositional.Properties using (∈-map⁺ ; ∈-map⁻)
-open import Data.Vec.Properties using (lookup-allFin ; map-∘ ; map-cong ; lookup-map ; tabulate-∘ ; tabulate-allFin)
+open import Data.Vec.Properties using (lookup-allFin ; map-∘ ; map-cong ; lookup-map ; tabulate-∘ ; tabulate-allFin ; toList-replicate)
 open import Data.Product.Properties using (,-injective)
 open import Data.Vec.Membership.Propositional renaming (_∈_ to _∈̬_)
 import Data.Vec.Membership.Propositional as VecProp
@@ -536,26 +536,26 @@ Equalisers (based on commonPositions)
 
 -------------------------- -}
 
- commonPositions↑ : ∀ {n m} → (x y : m ⇒ᵣ n) → let (p , z) = commonPositions m x y in
-                       commonPositions (1 + m) (x ↑)(y ↑) ≡ (1 + p , z ↑)
+ commonPositions↑ : ∀ {n m} → (x y : m ⇒ᵣ n) → let (p , z) = commonPositions x y in
+                       commonPositions {1 + m} (x ↑)(y ↑) ≡ (1 + p , z ↑)
  commonPositions↑ {n} [] [] with Fin.fromℕ n Fin.≟ Fin.fromℕ n
  ... | yes p = 1ₑ
  ... | no p =  ⊥-elim (p ≡.refl)
  commonPositions↑ (x ∷ xs) (y ∷ ys) rewrite commonPositions↑ xs ys with x Fin.≟ y
  ... | yes e rewrite dec-true (Fin.inject₁ x Fin.≟ Fin.inject₁ y) (cong Fin.inject₁ e)
-       = let p , _ = commonPositions _ xs ys in
+       = let p , _ = commonPositions xs ys in
          cong (_ ,_) (cong (_ ∷_) (≡.trans (VecProp.map-insertAt Fin.suc _ _ _)
          ((cong (λ x → Vec.insertAt x (Fin.fromℕ p) _)
            (≡.trans (≡.sym (VecProp.map-∘ _ _ _)) (VecProp.map-∘ _ _ _)))
          )))
  ... | no e rewrite dec-false (Fin.inject₁ x Fin.≟ Fin.inject₁ y) (contraposition inject₁-injective e)
-   = let p , _ = commonPositions _ xs ys in
+   = let p , _ = commonPositions xs ys in
      cong (_ ,_) (≡.trans (VecProp.map-insertAt Fin.suc _ _ _)
          ((cong (λ x → Vec.insertAt x (Fin.fromℕ p) _)
            (≡.trans (≡.sym (VecProp.map-∘ _ _ _)) (VecProp.map-∘ _ _ _)))
          ))
 
- equaliser-Ty : ∀ {n m} (x y : m ⇒ᵣ n) → (let p , z = commonPositions _ x y)
+ equaliser-Ty : ∀ {n m} (x y : m ⇒ᵣ n) → (let p , z = commonPositions x y)
        → (τ : Ty m) → τ ❴ x ❵ ≡ τ ❴ y ❵ → pre-image (_❴ z ❵) τ
  equaliser-Ty x y (Var i) e with commonPositions-property x y (Var-injective e)
  ... | j∈ = Var (index̬ j∈) , cong Var (≡.sym (lookup-index̬ j∈))
@@ -572,7 +572,7 @@ Equalisers (based on commonPositions)
 
  equaliser-context : ∀ {n m Γ Γ'} (x y : m ⇒ᵣ n) → (Γ ❴ x ❵s ⇒ₗ Γ')
     → (Γ ❴ y ❵s ⇒ₗ Γ') →
-    (let p , z = commonPositions _ x y) →
+    (let p , z = commonPositions x y) →
     Σ (List (Ty p)) λ Δ → Δ ❴ z ❵s ⇒ₗ Γ
 
  equaliser-context {Γ = []} x y [] [] = [] , []
@@ -583,8 +583,8 @@ Equalisers (based on commonPositions)
        with PreImage j  ← equaliser-Ty x y m (index-injective (setoid _) _ _ q)
        = j ∷ Δ , Ο , wkl' s
  ... | Δ , s | no q = Δ ,  wkl' s
- equaliser : {a : A} (m : A) → m ⇒ a → m ⇒ a → Σ A (λ p → p ⇒ m)
- equaliser _ (Hom {τ = τ} η x 1ₑ 1ₑ) (Hom η' x' 1ₑ e) with commonPositions _ η η'
+ equaliser : {m : A}{a : A} → m ⇒ a → m ⇒ a → Σ A (λ p → p ⇒ m)
+ equaliser (Hom {τ = τ} η x 1ₑ 1ₑ) (Hom η' x' 1ₑ e) with commonPositions η η'
                                            | equaliser-Ty η η' τ (≡.sym e)
                                            | equaliser-context η η' x x'
  ... | p , z | τ'' , e' | Δ , x'' = (p ∣ Δ ⟶ τ'') , (Hom z x'' 1ₑ e')
@@ -619,8 +619,8 @@ Pullbacks (based on commonValues)
   helper2 (x ∷ xs) (x₁ ∷ xs') e1 e2 =
      cong₂ _∷_ (∷-injectiveˡ e1) (helper2 xs xs' (∷-injectiveʳ e1) e2 )
 
- commonValues↑ : ∀ {n m m'} → (x : m ⇒ᵣ n)(y : m' ⇒ᵣ n) → let (p , l , r) = commonValues m x y in
-                    commonValues (1 + m) (x ↑)(y ↑) ≡ (1 + p , l ↑ , r ↑)
+ commonValues↑ : ∀ {n m m'} → (x : m ⇒ᵣ n)(y : m' ⇒ᵣ n) → let (p , l , r) = commonValues {m} x y in
+                    commonValues {1 + m} (x ↑)(y ↑) ≡ (1 + p , l ↑ , r ↑)
 
  commonValues↑ {n}{m}{m'} [] ys
    rewrite MoreVec.find-indices-insert-last (Fin._≟ Fin.fromℕ n) (Vec.map Fin.inject₁ ys)  1ₑ
@@ -631,7 +631,7 @@ Pullbacks (based on commonValues)
  commonValues↑ {n} (_∷_ {m} x xs) ys rewrite commonValues↑ xs ys
    | MoreVec.find-indices-insert-last-⊥ (Fin._≟ Fin.inject₁ x) (Vec.map Fin.inject₁ ys) {a = Fin.fromℕ _}
      ( λ e → MoreFin.inject₁-≢-fromℕ _ (≡.sym e))
-   with p , l , r ← commonValues _ xs ys
+   with p , l , r ← commonValues xs ys
    with indices ← (MoreVec.find-indices (Fin._≟ x) ys) in eq_indices
    with vindices ← Vec.fromList indices in eq_vindices
    with zeros1 ← (Vec.replicate (List.length (List.map Fin.inject₁ (MoreVec.find-indices (Fin._≟ Fin.inject₁ x) (Vec.map Fin.inject₁ ys)))) (Fin.zero {n = 1 + m})) in eq_zeros1
@@ -647,12 +647,12 @@ Pullbacks (based on commonValues)
         (helper2 zeros1 zeros2'
           (≡.trans (≡.sym (cong Vec.toList eq_zeros1))
           (≡.trans (
-          ≡.trans (≡.trans (MoreVec.toList-replicate _ _)
+          ≡.trans (≡.trans (toList-replicate _ _)
           (≡.trans (≡.trans (cong (λ xi → replicate xi _)
             (≡.trans (cong (λ xi → length (List.map Fin.inject₁ xi)) eq-aux)
             ( ListProp.length-map Fin.inject₁ indices )))
           (≡.sym (ListProp.map-replicate _ _ _)))
-          (≡.sym (≡.cong (List.map _) (MoreVec.toList-replicate _ _))))
+          (≡.sym (≡.cong (List.map _) (toList-replicate _ _))))
           )
           (≡.sym (VecProp.toList-map _ _))
           )
@@ -686,14 +686,14 @@ Pullbacks (based on commonValues)
                (Fin._≟ _)(Fin._≟ _) Fin.inject₁ (cong Fin.inject₁) inject₁-injective ys)
                eq_indices
 
- pullback-Ty : ∀ {m m' n} (x : m ⇒ᵣ n)(y : m' ⇒ᵣ n) → (let p , l , r = commonValues _ x y)
+ pullback-Ty : ∀ {m m' n} (x : m ⇒ᵣ n)(y : m' ⇒ᵣ n) → (let p , l , r = commonValues x y)
          → (τ : Ty m) → (τ' : Ty m') → τ ❴ x ❵ ≡ τ' ❴ y ❵
          → pre-image (λ t → t ❴ l ❵ ,′ t ❴ r ❵) (τ ,′ τ')
  pullback-Ty x y (Var x₁) (Var x₂) eq
     with commonValues-property _ _
             (≡.subst (_∈̬ _) (Var-injective eq) (VecProp.∈-lookup x₁ x)) (VecProp.∈-lookup x₂ y)
  ... | ∈2 =
-    let p , l , r = commonValues _ x y in
+    let p , l , r = commonValues x y in
     let e = ≡.trans (VecAnyProp.lookup-index ∈2) (VecProp.lookup-zip (index̬ ∈2 ) l r) in
     let p1 , p2 = ,-injective (≡.sym e) in
     Var (index̬ ∈2) ,
@@ -728,7 +728,7 @@ Pullbacks (based on commonValues)
 
  pullback-context : ∀ {n m m' Γ₁ Γ₂ Γ'} (x : m ⇒ᵣ n)(y : m' ⇒ᵣ n) → (Γ₁ ❴ x ❵s ⇒ₗ Γ')
      → (Γ₂ ❴ y ❵s ⇒ₗ Γ') →
-     (let p , l , r = commonValues _ x y) →
+     (let p , l , r = commonValues x y) →
      Σ (List (Ty p)) λ Δ → (Δ ❴ l ❵s ⇒ₗ Γ₁ × Δ ❴ r ❵s ⇒ₗ Γ₂ )
  pullback-context {Γ₁ = []} x y [] us = [] , [] , []
  -- to simplify, we assume that the morphisms are injective
@@ -743,9 +743,9 @@ Pullbacks (based on commonValues)
        = (xi ∷ Δ) , (Ο , s₁') , (j∈Γ₂ , s₂)
 
 
- pullback : (m : A) {m' a : A} → m ⇒ a → m' ⇒ a → Σ A (λ p → (p ⇒ m) × (p ⇒ m'))
- pullback (n ∣ σ ⟶ τ) {n₁ ∣ σ₁ ⟶ τ₁} {n₂ ∣ σ₂ ⟶ τ₂} (Hom= η x) (Hom η' x' 1ₑ e)
-    with commonValues _ η η'
+ pullback : {m : A} {m' a : A} → m ⇒ a → m' ⇒ a → Σ A (λ p → (p ⇒ m) × (p ⇒ m'))
+ pullback {n ∣ σ ⟶ τ} {n₁ ∣ σ₁ ⟶ τ₁} {n₂ ∣ σ₂ ⟶ τ₂} (Hom= η x) (Hom η' x' 1ₑ e)
+    with commonValues η η'
        | pullback-Ty η η' τ τ₁ (≡.sym e)
        | pullback-context η η' x x'
  ... | p , l , r | PreImage τ' | Δ , s₁ , s₂ =
