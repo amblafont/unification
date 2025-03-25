@@ -2682,7 +2682,7 @@ literal "false"
  Indeed, intuitively, in our notion of specification, types are specified
  through the set of scopes, which must be given independently and prior
  to the endofunctor of terms: this sequential splitting is not possible
- with dependent types, unless we consider the untyped syntax, separately
+ with dependent types, unless we consider the untyped syntax separately
  from the (dependent) typing judgements.
  Accordingly, one possible future research direction would be to account
  for type safety of pattern unification in this situation, possibly exploiting
