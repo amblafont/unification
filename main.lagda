@@ -48,19 +48,24 @@ record Signature i j k : Set (lsuc (i ⊔ j ⊔ k)) where
 \end{code}
 %</signature-functoriality>
 
-%<*friendlysignature>
+%<*friendlysignature1>
 \begin{code}
 record isFriendly {i j k}(S : Signature i j k) : Set (i ⊔ j ⊔ k) where
+\end{code}
+%</friendlysignature1>
+\begin{code}
    open Signature S
+\end{code}
+% on economise une ligne
+%<*friendlysignature2>
+\begin{code}
    field
      equaliser : ∀ {m a} → (x y : hom m a) → Σ A (λ p → hom p m)
-     pullback : ∀ {m m' a} → (x : hom m a) → (y : hom m' a)
-                  → Σ A (λ p → hom p m × hom p m')
+     pullback : ∀ {m m' a} → hom m a → hom m' a → Σ A (λ p → hom p m × hom p m')
      _≟_ : ∀ {a}(o o' : O a) → Dec (o ≡ o')
-     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : hom b a)
-                  → Maybe (pre-image (_｛ x ｝) o)
+     _｛_｝⁻¹ : ∀ {a}(o : O a) → ∀ {b}(x : hom b a) → Maybe (pre-image (_｛ x ｝) o)
 \end{code}
-%</friendlysignature>
+%</friendlysignature2>
 \begin{code}
 module Tm {i j k}(S : Signature i j k) where
    open Signature S

@@ -2496,7 +2496,8 @@ noprefix "false"
 
 \end_inset
 
-, we treat the calculus for ordered linear logic described by 
+, we give a (novel) unification algorithm for the calculus for ordered linear
+ logic described by 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Polakow00lfm"
@@ -2504,10 +2505,14 @@ literal "false"
 
 \end_inset
 
-: their notion of context consists of two components, one of which includes
+.
+ Their notion of context consists of two components, one of which includes
  variables that must occur exactly once and in the same order as they occur
  in that context.
- See 
+\end_layout
+
+\begin_layout Standard
+See 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:applications"
@@ -2545,13 +2550,34 @@ literal "false"
 
 
 \emph default
- does not fit into the scope of this work: this variant deals with general
- second-order unification problems a priori, but the algorithm defers those
- which are outside the pattern fragment, hoping that they will eventually
- become so after solving the other ones.
- Our GB-signatures are designed to capture exactly the pattern fragment,
- and so cannot account for the dynamic variant.
- We actually wonder if this limitation may be overcome by building upon
+ does not fit into the scope of this work.
+ This variant deals with general second-order unification problems a priori,
+ but the algorithm defers those which are outside the pattern fragment,
+ hoping that they will eventually become so after solving the other ones.
+ The main obstacle is that the specification is unclear: what does it mean
+ for a dynamic pattern unification algorithm to be complete? This question
+ needs to be solved first if we want to apply our methodology, in the line
+ of Rydeheard and Burstall's account of first-order unification
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "DBLP:books/daglib/0068768"
+literal "false"
+
+\end_inset
+
+.
+ Regarding the second-order flavour involved in dynamic pattern unification,
  the work of 
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -2560,8 +2586,8 @@ literal "false"
 
 \end_inset
 
-, who analysed syntax with second-order metavariables in terms of a monad
- on a presheaf category.
+ provides a potentially useful account of syntax with second-order metavariables
+, in terms of a monad on a presheaf category.
  In spirit, this is similar to our categorical analysis (see 
 \begin_inset CommandInset ref
 LatexCommand formatted
@@ -2656,8 +2682,35 @@ literal "false"
  Indeed, intuitively, in our notion of specification, types are specified
  through the set of scopes, which must be given independently and prior
  to the endofunctor of terms: this sequential splitting is not possible
- with dependent types.
- 
+ with dependent types, unless we consider the untyped syntax, separately
+ from the (dependent) typing judgements.
+ Accordingly, one possible future research direction would be to account
+ for type safety of pattern unification in this situation, possibly exploiting
+ the standard notion of signatures for dependent types theories as 
+\emph on
+second-order generalised algebraic theories
+\emph default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citep
+after "Chapter 4"
+key "Uemura"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*
@@ -3287,10 +3340,7 @@ Given a category
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-If 
+ If 
 \begin_inset Formula $f:A\rightarrow B$
 \end_inset
 
@@ -3329,45 +3379,7 @@ If
 \begin_inset Formula $\eta$
 \end_inset
 
-, and its Kleisli category by 
-\begin_inset Formula $\Kl T$
-\end_inset
-
-: the objects are the same as those of 
-\begin_inset Formula $\B$
-\end_inset
-
-, and a Kleisli morphism from 
-\begin_inset Formula $A$
-\end_inset
-
- to 
-\begin_inset Formula $B$
-\end_inset
-
- is a morphism 
-\begin_inset Formula $A\rightarrow TB$
-\end_inset
-
- in 
-\begin_inset Formula $\B$
-\end_inset
-
 .
- We denote the Kleisli composition of 
-\begin_inset Formula $f:A\rightarrow TB$
-\end_inset
-
- and 
-\begin_inset Formula $g:B\rightarrow TC$
-\end_inset
-
- by 
-\begin_inset Formula $f[g]:A\rightarrow TC$
-\end_inset
-
-.
- 
 \end_layout
 
 \begin_layout Standard
@@ -10116,498 +10128,10 @@ The benefit is that there is no need to shift free variables under a
 \end_layout
 
 \begin_layout Standard
-The Agda implementation of metavariable substitutions for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus is listed in the first box of 
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "fig:subst-code-lam"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-.
- We call a substitution 
-\emph on
-proper
-\emph default
- if the domain is proper, 
-\emph on
-successful
-\emph default
- if the target is also proper.
- Note that a substitution is successful if and only if the target is proper,
- because there is only one metavariable substitution 
-\begin_inset Formula $1_{\bot}$
-\end_inset
-
- from the error context: it is the formal identity substitution, targeting
- itself.
- A 
-\emph on
-metavariable substitution
-\emph default
- 
-\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\Delta$
-\end_inset
-
- from a proper context assigns to each metavariable 
-\begin_inset Formula $M$
-\end_inset
-
- of arity 
-\begin_inset Formula $m$
-\end_inset
-
- in 
-\begin_inset Formula $\dotmcontext{\Gamma}$
-\end_inset
-
- a term 
-\begin_inset Formula $\Delta;m\vdash\sigma_{M}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{id-renaming}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\underbrace{id}_{(1,2,\dots,n)}:n\Rightarrow n
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{compose-renamings}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "43col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{x:q\Rightarrow r\qquad y:p\Rightarrow q}{\underbrace{x\circ y}_{{\displaystyle (x_{y_{1}},\dots,x_{y_{p}})}}:p\Rightarrow r}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{wk-renamings}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "c"
-hor_pos "c"
-has_inner_box 1
-inner_pos "c"
-use_parbox 0
-use_makebox 0
-width "43col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Formula 
-\[
-\dfrac{x:p\Rightarrow q}{\underbrace{\lamrenaming x}_{(x_{1},\dots,x_{p},q+1)}:p+1\Rightarrow q+1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "55col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-renaming}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Box Boxed
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "43col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\align left
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset Formula 
-\[
-\dfrac{\Gamma;n\vdash t\qquad x:n\Rightarrow p}{\Gamma;p\vdash\rename tx}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Renaming for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:ren-lambda"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -11150,6 +10674,494 @@ status open
 \[
 \dfrac{\Gamma\xrightarrow{\sigma}\Delta}{M:m,\Gamma\xrightarrow{\lamsubst{\sigma}{M:m}}M:m,\Delta}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Agda implementation of metavariable substitutions for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus is listed in the first box of 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:subst-code-lam"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+.
+ We call a substitution 
+\emph on
+proper
+\emph default
+ if the domain is proper, 
+\emph on
+successful
+\emph default
+ if the target is also proper.
+ Note that a substitution is successful if and only if the target is proper,
+ because there is only one metavariable substitution 
+\begin_inset Formula $1_{\bot}$
+\end_inset
+
+ from the error context: it is the formal identity substitution, targeting
+ itself.
+ A 
+\emph on
+metavariable substitution
+\emph default
+ 
+\begin_inset Formula $\sigma:\dotmcontext{\Gamma}\rightarrow\Delta$
+\end_inset
+
+ from a proper context assigns to each metavariable 
+\begin_inset Formula $M$
+\end_inset
+
+ of arity 
+\begin_inset Formula $m$
+\end_inset
+
+ in 
+\begin_inset Formula $\dotmcontext{\Gamma}$
+\end_inset
+
+ a term 
+\begin_inset Formula $\Delta;m\vdash\sigma_{M}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{id-renaming}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\underbrace{id}_{(1,2,\dots,n)}:n\Rightarrow n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{compose-renamings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "43col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{x:q\Rightarrow r\qquad y:p\Rightarrow q}{\underbrace{x\circ y}_{{\displaystyle (x_{y_{1}},\dots,x_{y_{p}})}}:p\Rightarrow r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{wk-renamings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "43col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Formula 
+\[
+\dfrac{x:p\Rightarrow q}{\underbrace{\lamrenaming x}_{(x_{1},\dots,x_{p},q+1)}:p+1\Rightarrow q+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "55col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-renaming}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "43col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align left
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\dfrac{\Gamma;n\vdash t\qquad x:n\Rightarrow p}{\Gamma;p\vdash\rename tx}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Renaming for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ren-lambda"
 
 \end_inset
 
@@ -19837,6 +19849,50 @@ name "not:highlighted-cat-notations"
 
 \end_inset
 
+We write 
+\begin_inset Formula $\highlighted{m\vdash x=y\Rightarrow z\dashv p}$
+\end_inset
+
+ and 
+\begin_inset Formula $\highlighted{m\prunecat xy{x'\dashv p}{y'}{}}$
+\end_inset
+
+ to respectively denote an equaliser and pullback in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ as below.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-2.2em}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
+\qquad\begin{array}{c}
+\xymatrix{p\ar[r]^{x'}\ar[d]_{y'} & m\ar[d]^{x}\\
+\dots\ar[r]_{y} & \dots
+}
+\end{array}$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 We denote an equaliser 
 \begin_inset Formula $\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
 $
@@ -19870,11 +19926,17 @@ $
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align left
@@ -19904,7 +19966,28 @@ status open
 
 
 \backslash
-agdacode{friendlysignature}
+AgdaNoSpaceAroundCode{}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{friendlysignature1}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{friendlysignature2}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+AgdaSpaceAroundCode{}
 \end_layout
 
 \end_inset
@@ -20495,7 +20578,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -21146,7 +21229,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -26698,11 +26781,7 @@ If
 \begin_inset Formula $\Th S$
 \end_inset
 
- and the Kleisli category 
-\begin_inset Formula $\Kl T$
-\end_inset
-
- of 
+ and the Kleisli category of 
 \begin_inset Formula $T$
 \end_inset
 
@@ -26717,6 +26796,60 @@ noprefix "false"
 \end_inset
 
  for a definition of the latter category).
+\end_layout
+
+\begin_layout Notation
+We denote the 
+\emph on
+Kleisli category
+\emph default
+ of a monad 
+\begin_inset Formula $T$
+\end_inset
+
+ on 
+\begin_inset Formula $\B$
+\end_inset
+
+ by 
+\begin_inset Formula $\Kl T$
+\end_inset
+
+: the objects are the same as those of 
+\begin_inset Formula $\B$
+\end_inset
+
+, and a Kleisli morphism from 
+\begin_inset Formula $A$
+\end_inset
+
+ to 
+\begin_inset Formula $B$
+\end_inset
+
+ is a morphism 
+\begin_inset Formula $A\rightarrow TB$
+\end_inset
+
+ in 
+\begin_inset Formula $\B$
+\end_inset
+
+.
+ We denote the Kleisli composition of 
+\begin_inset Formula $f:A\rightarrow TB$
+\end_inset
+
+ and 
+\begin_inset Formula $g:B\rightarrow TC$
+\end_inset
+
+ by 
+\begin_inset Formula $f[g]:A\rightarrow TC$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Proposition
