@@ -19872,9 +19872,15 @@ status open
 
 \begin_layout Plain Layout
 
+% We gain space so that the explanations for the figure of binding-friendly
+ components are on the same page.
+\end_layout
+
+\begin_layout Plain Layout
+
 
 \backslash
-vspace{-2.2em}
+vspace{-1em}
 \end_layout
 
 \end_inset
@@ -19882,7 +19888,7 @@ vspace{-2.2em}
 
 \begin_inset Formula $\xymatrix{p\ar[r]^{z} & m\coeqr{x}{y} & \dots}
 \qquad\begin{array}{c}
-\xymatrix{p\ar[r]^{x'}\ar[d]_{y'} & m\ar[d]^{x}\\
+\xymatrix@R=1pc{p\ar[r]^{x'}\ar[d]_{y'} & m\ar[d]^{x}\\
 \dots\ar[r]_{y} & \dots
 }
 \end{array}$
@@ -39614,7 +39620,12 @@ is
 \end_inset
 
 .
- Note that any metavariable has a unique type, and two metavariables with
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Note that any metavariable has a unique type, and two metavariables with
  different arities can share the same type: the scopes 
 \begin_inset Formula $\cdot\rightarrow\iota\Rightarrow\iota$
 \end_inset
@@ -39634,83 +39645,78 @@ is
 .
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 We choose a notion of scope morphism different from that of the previous
- section so that the introduction rule of metavariables matches the required
- data for typing a metavariable term 
+ section, so that the introduction rule of metavariables matches the below
+ typing rule for a metavariable term 
 \begin_inset Formula $\lambda\vec{y}.M\vec{x}$
 \end_inset
 
-.
- Assuming that 
+, given a metavariable 
 \begin_inset Formula $M$
 \end_inset
 
- is of type 
+ of type 
 \begin_inset Formula $\vec{\tau}\Rightarrow\iota$
 \end_inset
 
- – that is, the arity of 
+.
+\begin_inset Formula 
+\[
+\dfrac{\vec{z}:\vec{\sigma},\vec{y}:\vec{\sigma'}\vdash\overbrace{\vec{x}}^{\mathclap{\text{distinct variables}}}:\vec{\tau}}{\vec{z}:\vec{\sigma}\vdash\lambda\vec{y}.M\vec{x}:\vec{\sigma'}\Rightarrow\iota}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assuming that the arity of 
 \begin_inset Formula $M$
 \end_inset
 
  is 
-\begin_inset Formula $\vec{\tau_{1}}\rightarrow\vec{\tau_{2}}\Rightarrow\iota$
-\end_inset
-
- with 
-\begin_inset Formula $\vec{\tau}=\vec{\tau_{1}},\vec{\tau_{2}}$
-\end_inset
-
- – we need 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
- to be a vector of distinct variables among 
-\begin_inset Formula $\vec{y}$
-\end_inset
-
- and the available free variables.
- Then, 
-\begin_inset Formula $\lambda\vec{y}.M\vec{x}$
-\end_inset
-
- is of type 
-\begin_inset Formula $\vec{\tau}'\Rightarrow\iota$
-\end_inset
-
-.
- Denoting the types of the available free variables by 
-\begin_inset Formula $\vec{\sigma}$
-\end_inset
-
-, the previous discussion suggests defining the set of morphisms between
- the scopes 
 \begin_inset Formula $\vec{\tau}_{1}\rightarrow\vec{\tau_{2}}\Rightarrow\iota$
 \end_inset
 
- and 
-\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau'}\Rightarrow\iota')$
+ with 
+\begin_inset Formula $\vec{\tau}=\vec{\tau}_{1},\vec{\tau}_{2}$
 \end_inset
 
- as the set of morphisms between 
-\begin_inset Formula $\vec{\tau_{1}},\vec{\tau}_{2}$
+, this means that a scope morphism from 
+\begin_inset Formula $\vec{\tau}_{1}\rightarrow(\vec{\tau_{2}}\Rightarrow\iota)$
 \end_inset
 
- and 
-\begin_inset Formula $\vec{\sigma},\vec{\tau}'$
+ to 
+\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\sigma'}\Rightarrow\iota')$
 \end_inset
 
- in 
-\begin_inset Formula $\mathbb{F}_{m}[T]$
-\end_inset
-
- if 
+ should be empty unless 
 \begin_inset Formula $\iota=\iota'$
 \end_inset
 
-, or as the empty set otherwise.
- This motivates the following definition.
+.
+ In that case, a morphism is given by a choice of distinct variables of
+ types 
+\begin_inset Formula $\vec{\tau}=\vec{\tau_{1}},\vec{\tau}_{2}$
+\end_inset
+
+ in 
+\begin_inset Formula $\vec{\sigma},\vec{\sigma}'$
+\end_inset
+
+, that is, a morphism in 
+\begin_inset Formula $\mathbb{F}_{m}[T]$
+\end_inset
+
+ between those two lists of types.
+ We therefore arrive to the following definition.
 \end_layout
 
 \begin_layout Definition
@@ -39759,7 +39765,7 @@ The category of scopes
 \end_inset
 
  and 
-\begin_inset Formula $\vec{\sigma},\vec{\tau}\rightarrow\iota$
+\begin_inset Formula $\vec{\sigma}',\vec{\tau}'\rightarrow\iota'$
 \end_inset
 
  in 
@@ -39767,7 +39773,7 @@ The category of scopes
 \end_inset
 
 .
- Composition and identites are defined as in 
+ Composition and identities are defined as in 
 \begin_inset Formula $\mathbb{F}_{m}[T]\times B$
 \end_inset
 
@@ -39784,6 +39790,25 @@ This definition readily entails that
 \end_inset
 
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This also means that terms in scope 
+\begin_inset Formula $\vec{\sigma}\rightarrow(\vec{\tau}\Rightarrow\iota)$
+\end_inset
+
+ are in one-to-one correspondance with terms in scope 
+\begin_inset Formula $\vec{\sigma},\vec{\tau}\rightarrow\iota$
+\end_inset
+
+, as expected.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -39955,11 +39980,10 @@ We have specified the category of scopes so that we get a suitable introduction
 \begin_inset Formula $\lambda\vec{y}.x\vec{t}$
 \end_inset
 
-.
- Omitting the metacontext, the typing rule goes as follows.
+, with the corresponding below typing rule.
 \begin_inset Formula 
 \[
-\dfrac{x:((\tau_{1},\dots,\tau_{n})\Rightarrow\iota)\in(\Gamma,\vec{y}:\vec{\tau}_{0})\qquad\forall i\in\{1,\dots,n\}\ \Gamma,\vec{y}:\vec{\tau}_{0}\vdash t_{i}:\tau_{i}}{\Gamma\vdash\lambda\vec{y}.x\vec{t}:\vec{\tau}_{0}\Rightarrow\iota}
+\dfrac{x:(\vec{\tau}\Rightarrow\iota)\in(\vec{z}:\vec{\sigma},\vec{y}:\vec{\sigma'})\qquad\vec{z}:\vec{\sigma},\vec{y}:\vec{\sigma'}\vdash\vec{t}:\vec{\tau}}{\vec{z}:\vec{\sigma}\vdash\lambda\vec{y}.x\vec{t}:\vec{\sigma'}\Rightarrow\iota}
 \]
 
 \end_inset
@@ -39969,11 +39993,11 @@ The following components induce a GB-signature that generates the same base
  
 \begin_inset Formula 
 \begin{align*}
-O(\vec{\sigma}\arSep\tau) & =\{l_{x,\tau_{1},\dots,\tau_{n},\vec{\tau}_{0},\iota}|\tau=(\vec{\tau}_{0}\Rightarrow\iota),x\in|\vec{\sigma},\vec{\tau}_{0}|_{\vec{\tau}\Rightarrow\iota}\}\\
-\alpha_{l_{x,\tau_{1},\dots,\tau_{n},\vec{\tau}_{0},\iota}} & =\left(\begin{array}{c}
-\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{1}\\
+O(\vec{\sigma}\arSep\tau) & =\{l_{x,\tau_{1},\dots,\tau_{n},\vec{\sigma'},\iota}|\tau=(\vec{\sigma'}\Rightarrow\iota),x\in|\vec{\sigma},\vec{\sigma'}|_{\vec{\tau}\Rightarrow\iota}\}\\
+\alpha_{l_{x,\tau_{1},\dots,\tau_{n},\vec{\sigma'},\iota}} & =\left(\begin{array}{c}
+\vec{\sigma},\vec{\sigma'}\arSep\tau_{1}\\
 \dots\\
-\vec{\sigma},\vec{\tau}_{0}\arSep\tau_{n}
+\vec{\sigma},\vec{\sigma'}\arSep\tau_{n}
 \end{array}\right)
 \end{align*}
 
