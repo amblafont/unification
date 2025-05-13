@@ -28141,7 +28141,7 @@ Let
 \begin_inset Formula $F:\B\rightarrow\Set$
 \end_inset
 
- be a functor preserving those colimits.
+ be a functor preserving those limits.
  Then, 
 \begin_inset Formula $\int F$
 \end_inset
