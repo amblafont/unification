@@ -220,7 +220,7 @@ fragment of second-order unification for simply-typed
  Using categorical semantics, we show that, under some conditions, a generalisat
 ion of Miller's unification algorithm applies.
  To illustrate our semantic analysis, we implemented our generic unification
- algorithm implemented in Agda.
+ algorithm in Agda.
  The syntax with metavariables given as input of the algorithm is specified
  by a notion of signature generalising binding signatures, covering a wide
  range of examples, including ordered 
@@ -1497,7 +1497,11 @@ Our first contribution is a class of languages with
  
 \emph default
 metavariables.
- Such a language is specified by the following data: 
+ Such a language is specified by a 
+\emph on
+generalised binding signature
+\emph default
+, or GB-signature, consisting of the following data: 
 \end_layout
 
 \begin_layout Itemize
@@ -2509,10 +2513,7 @@ literal "false"
  Their notion of context consists of two components, one of which includes
  variables that must occur exactly once and in the same order as they occur
  in that context.
-\end_layout
-
-\begin_layout Standard
-See 
+ Examples of languages that we handle are given in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:applications"
@@ -2522,8 +2523,8 @@ noprefix "false"
 
 \end_inset
 
- for examples of languages that we handle, where we show some traditional
- presentation of the calculi alongside with the correponding GB-signatures.
+, where we show some traditional presentation of the calculi alongside with
+ the corresponding GB-signatures.
 \end_layout
 
 \begin_layout Standard
@@ -8882,36 +8883,6 @@ status open
 \end_inset
 
 
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Syntax of 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-)
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:syntax-lam"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Plain Layout
@@ -8976,6 +8947,11 @@ agdacode{lc-syntax-decl}
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\align left
 \begin_inset Box Frameless
 position "b"
 hor_pos "c"
@@ -8984,6 +8960,64 @@ inner_pos "b"
 use_parbox 0
 use_makebox 0
 width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "49text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -9022,80 +9056,6 @@ agdacode{lc-metacontext}
 
 
 \end_layout
-
-\end_inset
-
-
-\begin_inset Box Frameless
-position "b"
-hor_pos "c"
-has_inner_box 1
-inner_pos "b"
-use_parbox 0
-use_makebox 0
-width "45col%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
-
-\begin_layout Plain Layout
-\begin_inset Preview
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-%%%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-agdacode{lc-renamings}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Box Frameless
-position "b"
-hor_pos "c"
-has_inner_box 1
-inner_pos "b"
-use_parbox 0
-use_makebox 0
-width "49text%"
-special "none"
-height "1in"
-height_special "totalheight"
-thickness "0.4pt"
-separation "3pt"
-shadowsize "4pt"
-framecolor "black"
-backgroundcolor "none"
-status open
 
 \begin_layout Plain Layout
 \begin_inset Preview
@@ -9136,6 +9096,56 @@ agdacode{lc-syntax-ind}
 \end_inset
 
 
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "b"
+use_parbox 0
+use_makebox 0
+width "49col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align left
+\begin_inset Preview
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%%%%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+agdacode{lc-renamings}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Box Boxed
 position "b"
 hor_pos "c"
@@ -9143,7 +9153,7 @@ has_inner_box 1
 inner_pos "b"
 use_parbox 0
 use_makebox 0
-width "49text%"
+width "100text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -9180,6 +9190,11 @@ status open
 \[
 \dfrac{}{\bot;a\vdash\bang}
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -9411,7 +9426,7 @@ AgdaSpaceAroundCode{}
 \begin_layout Plain Layout
 \align left
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -9615,6 +9630,39 @@ agdacode{lc-syntax-var-def}
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Syntax of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+)
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:syntax-lam"
 
 \end_inset
 
@@ -9949,14 +9997,23 @@ terms, i.e., terms well-formed in a proper metacontext, are built from applicati
  cannot occur as a sub-term of a proper term.
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
 name "rem:non-dotted-version"
 
 \end_inset
 
- The names of constructors of 
+ 
+\end_layout
+
+\end_inset
+
+The names of constructors of 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -10132,40 +10189,6 @@ The benefit is that there is no need to shift free variables under a
 wide false
 sideways false
 status collapsed
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Metavariable substitution for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:example-lambda"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-) 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:subst-code-lam"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Plain Layout
 \align left
@@ -10583,6 +10606,40 @@ vspace{0.3em}
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Metavariable substitution for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:example-lambda"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:subst-code-lam"
 
 \end_inset
 
@@ -11776,7 +11833,12 @@ This assignment extends (through a recursive definition) to any term
 \end_inset
 
 .
- The congruence cases involve improper versions of the operations (
+ The congruence cases involve improper versions of the operations
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+(
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "rem:non-dotted-version"
@@ -11786,7 +11848,12 @@ noprefix "false"
 
 \end_inset
 
-), as the target metacontext may not be proper.
+)
+\end_layout
+
+\end_inset
+
+, as the target metacontext may not be proper.
  The base case is 
 \begin_inset Formula $M(x_{1},\dots,x_{m})[\sigma]=\rename{\sigma_{M}}x,$
 \end_inset
@@ -11898,7 +11965,27 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-We now recall the notion of most general unifier, as introduced in 
+We write 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+ to mean that 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is a 
+\emph on
+most general unifier 
+\emph default
+(mgu) of 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+, as in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "sec:Introduction"
@@ -11909,7 +11996,7 @@ noprefix "false"
 \end_inset
 
 .
- A 
+ More explicitly, a 
 \emph on
 unifier
 \emph default
@@ -11926,12 +12013,12 @@ unifier
 \end_inset
 
 .
- It is called successful if the underlying substitution is.
- A 
-\emph on
-most general unifier 
-\emph default
-(mgu) of 
+ We call it successful if the underlying substitution is.
+ A mgu 
+\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
+\end_inset
+
+ of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -11939,11 +12026,7 @@ most general unifier
 \begin_inset Formula $u$
 \end_inset
 
- is a unifier 
-\begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
-\end_inset
-
- that uniquely factors any other unifier 
+ is a unifier that uniquely factors any other unifier 
 \begin_inset Formula $\delta:\Gamma\rightarrow\Delta'$
 \end_inset
 
@@ -11956,9 +12039,32 @@ most general unifier
 \end_inset
 
 .
- The main property of pattern unification is that any pair of terms has
- a mgu (although not necessarily successful, as explained in the introduction).
- Accordingly and as can be seen in 
+ 
+\end_layout
+
+\begin_layout Standard
+In the notation 
+\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
+\end_inset
+
+, the symbol 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ separates the input and the output of the unification algorithm.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+The main property of pattern unification is that any pair of terms has a
+ mgu (although not necessarily successful, as explained in the introduction).
+ Accordingly and
+\end_layout
+
+\end_inset
+
+ Indeed, as can be seen in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:type-unify"
@@ -11988,7 +12094,7 @@ noprefix "false"
 \begin_inset Formula $\sigma:\Gamma\rightarrow\Delta$
 \end_inset
 
-, which is the mgu of 
+, which is a mgu of 
 \begin_inset Formula $t$
 \end_inset
 
@@ -11997,19 +12103,7 @@ noprefix "false"
 \end_inset
 
  (the mgu property is however not explicitly enforced by the type signature).
- We denote such a situation by 
-\begin_inset Formula $\Gamma\vdash t=u\Rightarrow\sigma\dashv\Delta$
-\end_inset
-
-, leaving the scope 
-\begin_inset Formula $n$
-\end_inset
-
- implicit to alleviate the notation: the symbol 
-\begin_inset Formula $\Rightarrow$
-\end_inset
-
- separates the input and the output of the unification algorithm.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -12190,30 +12284,6 @@ Accordingly, our implementation does not explicitly fail.
 wide true
 sideways false
 status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Unification for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:type-unify"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Plain Layout
 \align left
@@ -13718,6 +13788,30 @@ agdacode{unify-var}
 
 \end_layout
 
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Unification for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:type-unify"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -14497,9 +14591,6 @@ The
 
 .
  
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -14604,17 +14695,31 @@ Assume that
 \end_deeper
 \end_inset
 
- 
-\end_layout
-
-\begin_layout Standard
-In the first case, the line 
+ In the first case, the line 
 \begin_inset Formula $\AgdaKeyword{let}\ p,z=\AgdaFunction{commonPositions}\ x\ y$
 \end_inset
 
  computes the 
 \emph on
-vector of common positions 
+vector of common positions
+\emph default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The function 
+\begin_inset Formula $\AgdaFunction{commonPositions}$
+\end_inset
+
+ is defined by recursion on the common size of the vectors.
+\end_layout
+
+\end_inset
+
+
+\emph on
+ 
 \emph default
 of 
 \begin_inset Formula $x$
@@ -14663,11 +14768,11 @@ noprefix "false"
 \begin_inset Formula $\sigma$
 \end_inset
 
- coincides with the identity substitution except that 
+ coincides with the identity substitution except that the declaration 
 \begin_inset Formula $M:m$
 \end_inset
 
- is replaced by a fresh metavariable 
+ is replaced by a metavariable declaration 
 \begin_inset Formula $P:p$
 \end_inset
 
@@ -14777,36 +14882,50 @@ A similar argument shows that the most general unifier of
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 The corresponding rule 
 \begin_inset Formula $\refrule{Same-MVar}$
 \end_inset
 
- does not stipulate how to generate the fresh metavariable symbol 
+ uses a different metavariable symbol 
 \begin_inset Formula $P$
 \end_inset
 
-, although there is an obvious choice, consisting of taking 
+ for clarity, but we could keep 
 \begin_inset Formula $M$
 \end_inset
 
- which has just been removed from the context 
-\begin_inset Formula $\dotmcontext{\Gamma}$
-\end_inset
-
-.
- Accordingly, the implementation keeps 
-\begin_inset Formula $M$
-\end_inset
-
- but changes its arity to 
+ and changes its declared arity to 
 \begin_inset Formula $p$
 \end_inset
 
-, resulting in a context denoted by 
+.
+\end_layout
+
+\end_inset
+
+ Recall that in the Agda implementation, metavariables are natural numbers
+ referring to positions in the metacontext, which is just a list of arities.
+ In the Agda code, 
 \begin_inset Formula $\Gamma[M:p]$
 \end_inset
 
- in the Agda code.
+ denotes the metacontext 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ where the 
+\begin_inset Formula $M^{th}$
+\end_inset
+
+ element has been replaced with 
+\begin_inset Formula $p$
+\end_inset
+
+.
  Furthermore, 
 \begin_inset Formula $(M:p)(u')$
 \end_inset
@@ -14823,11 +14942,11 @@ The corresponding rule
 \begin_inset Formula $:p$
 \end_inset
 
- turns 
+ is an explicit coerciong making 
 \begin_inset Formula $M$
 \end_inset
 
- into a metavariable of 
+ a metavariable of 
 \begin_inset Formula $\Gamma[M:p]$
 \end_inset
 
@@ -15564,30 +15683,6 @@ status collapsed
 
 \begin_layout Plain Layout
 \align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Pruning for 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:prune-lam"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align left
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -15848,7 +15943,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "56text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -16016,7 +16111,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "56text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -16458,6 +16553,30 @@ agdacode{prune-var}
 
 \end_layout
 
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pruning for 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:prune-lam"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -16770,7 +16889,21 @@ As for the rule
 \begin_inset Formula $\refrule{Same-Var}$
 \end_inset
 
-, the corresponding rule 
+, the implementation merely replaces the metavariable arity of 
+\begin_inset Formula $M$
+\end_inset
+
+ with 
+\begin_inset Formula $p$
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+.
+ corresponding rule 
 \begin_inset Formula $\refrule{P-Flex}$
 \end_inset
 
@@ -16783,7 +16916,12 @@ As for the rule
 \begin_inset Formula $M$
 \end_inset
 
-, with the same Agda notations than in the auxiliary function 
+
+\end_layout
+
+\end_inset
+
+, using the same Agda notations as in the auxiliary function 
 \begin_inset Formula $\AgdaFunction{unify-flex-*}$
 \end_inset
 
@@ -17352,26 +17490,10 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Generalised binding signatures in Agda
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:sig-agda"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset Box Frameless
 position "b"
 hor_pos "c"
@@ -17496,6 +17618,26 @@ agdacode{renaming-vectors}
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generalised binding signatures in Agda
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sig-agda"
 
 \end_inset
 
@@ -17721,29 +17863,7 @@ Intuitively,
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:lc-sig-implem"
-
-\end_inset
-
-Implementation of the signature of pure 
-\begin_inset Formula $\lambda$
-\end_inset
-
--calculus
-\end_layout
-
-\end_inset
-
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \begin_inset Preview
@@ -17762,6 +17882,28 @@ agdacode{lc-sig}
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:lc-sig-implem"
+
+\end_inset
+
+Implementation of the signature of pure 
+\begin_inset Formula $\lambda$
+\end_inset
+
+-calculus
 \end_layout
 
 \end_inset
@@ -17988,26 +18130,6 @@ placement t
 wide true
 sideways false
 status open
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Syntax generated by a GB-signature
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:sig-syntax"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Plain Layout
 \align left
@@ -18417,6 +18539,26 @@ status open
 
 \end_layout
 
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Syntax generated by a GB-signature
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sig-syntax"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -18483,13 +18625,48 @@ flexible
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Remark
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:arg-op-subst"
+The syntax in the empty metacontext does not depend on the morphisms in
+ 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+.
+ In fact, by restricting the morphisms in 
+\begin_inset Formula ${\cal A}$
+\end_inset
+
+ to identity morphisms, any GB-signature induces an indexed container
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
 
 \end_inset
 
+
+\begin_inset CommandInset citation
+LatexCommand citep
+key "DBLP:conf/lics/AltenkirchM09"
+literal "false"
+
+\end_inset
+
+ generating the same syntax without metavariables.
+ Note that indexed containers correspond to indexed datatypes in type theory.
+\end_layout
+
+\begin_layout Standard
 Recall that the Agda code uses a nameless convention for metacontexts: they
  are just lists of scopes.
  Therefore, the arity 
@@ -18557,47 +18734,6 @@ Recall that the Agda code uses a nameless convention for metacontexts: they
 
 .
  In the following, we will use either interpretation.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-The syntax in the empty metacontext does not depend on the morphisms in
- 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
-.
- In fact, by restricting the morphisms in 
-\begin_inset Formula ${\cal A}$
-\end_inset
-
- to identity morphisms, any GB-signature induces an indexed container
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citep
-key "DBLP:conf/lics/AltenkirchM09"
-literal "false"
-
-\end_inset
-
- generating the same syntax without metavariables.
- Note that indexed containers correspond to indexed datatypes in type theory.
 \end_layout
 
 \begin_layout Standard
@@ -18734,36 +18870,6 @@ noprefix "false"
 wide false
 sideways false
 status collapsed
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Metavariable substitution for a GB-signature (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "subsec:intro-generic"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-) 
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:subst-code-gen"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Box Boxed
@@ -19054,7 +19160,7 @@ separation "3pt"
 shadowsize "4pt"
 framecolor "black"
 backgroundcolor "none"
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align left
@@ -19129,33 +19235,43 @@ status open
 
 \end_layout
 
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Metavariable substitution for a GB-signature (
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "subsec:intro-generic"
+plural "false"
+caps "true"
+noprefix "false"
+
+\end_inset
+
+) 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:subst-code-gen"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
 \begin_inset Float figure
 wide true
 sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Type signatures of unification and pruning
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:type-signatures"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
+status open
 
 \begin_layout Plain Layout
 \align left
@@ -19497,24 +19613,34 @@ AgdaSpaceAroundCode{}
 
 \end_layout
 
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Type signatures of unification and pruning
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:type-signatures"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-Since metasubstitutions occur in the syntax of terms (
-\begin_inset CommandInset ref
-LatexCommand formatted
-reference "rem:arg-op-subst"
-plural "false"
-caps "true"
-noprefix "false"
-
-\end_inset
-
-), we define substitution on terms mutually with composition of metasubstitution
-s in 
+Since metasubstitutions occur in the syntax of terms, we define substitution
+ on terms mutually with composition of metasubstitutions in 
 \begin_inset CommandInset ref
 LatexCommand formatted
 reference "fig:subst-code-gen"
@@ -19946,22 +20072,6 @@ status open
 
 \begin_layout Plain Layout
 \align left
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Pattern-friendly GB-signatures in Agda
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:friendly-gb-agda"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset Preview
 
 \begin_layout Standard
@@ -19995,6 +20105,26 @@ agdacode{friendlysignature2}
 \backslash
 AgdaSpaceAroundCode{}
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align left
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Pattern-friendly GB-signatures in Agda
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:friendly-gb-agda"
 
 \end_inset
 
@@ -22931,6 +23061,22 @@ P(y');M\mapsto P(x')\dashv\dotmcontext{\Gamma}[P:p]
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.2em}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Box Frameless
 position "c"
 hor_pos "c"
@@ -23093,7 +23239,7 @@ status open
 
 
 \backslash
-vspace{-0em}
+vspace{-0.5em}
 \end_layout
 
 \end_inset
@@ -23106,7 +23252,7 @@ has_inner_box 1
 inner_pos "c"
 use_parbox 0
 use_makebox 0
-width "50text%"
+width "54text%"
 special "none"
 height "1in"
 height_special "totalheight"
@@ -23349,11 +23495,8 @@ status open
 \end_inset
 
 
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Box Frameless
@@ -23536,6 +23679,22 @@ agdacode{prune-var}
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{-0.7em}
 \end_layout
 
 \end_inset
@@ -25685,14 +25844,14 @@ Any diagram
 \end_layout
 
 \end_deeper
-\begin_layout Remark
+\begin_layout Corollary
 \begin_inset CommandInset label
 LatexCommand label
-name "rem:coprod-mcon"
+name "cor:coprod-mcon"
 
 \end_inset
 
-This ensures in particular that coproducts in 
+Coproducts in 
 \begin_inset Formula $\Th S$
 \end_inset
 
@@ -25701,7 +25860,26 @@ This ensures in particular that coproducts in
 \end_inset
 
 .
- It also justifies defining the 
+ Coproduct of any metacontext with 
+\begin_inset Formula $\bot$
+\end_inset
+
+ is 
+\begin_inset Formula $\bot$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Accordingly, one can define informally 
 \begin_inset Quotes eld
 \end_inset
 
@@ -25709,7 +25887,7 @@ concatenation
 \begin_inset Quotes erd
 \end_inset
 
- of a proper metacontext with 
+ of a metacontext with 
 \begin_inset Formula $\bot$
 \end_inset
 
@@ -25718,10 +25896,7 @@ concatenation
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The main property of this extension for our purposes is the following corollary.
+ The main property of this extension for our purposes is the following corollary.
 \end_layout
 
 \begin_layout Corollary
@@ -26518,10 +26693,10 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Remark
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "rem:functor-L-intuition"
+name "lem:functor-L-intuition"
 
 \end_inset
 
@@ -28918,10 +29093,10 @@ As usual, the mgu is defined as the unifier uniquely factoring any other
  
 \end_layout
 
-\begin_layout Remark
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "rem:cocone-pruning"
+name "lem:cocone-pruning"
 
 \end_inset
 
@@ -29183,7 +29358,7 @@ The rules
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:cocone-pruning"
+reference "lem:cocone-pruning"
 plural "false"
 caps "true"
 noprefix "false"
@@ -29496,7 +29671,7 @@ noprefix "false"
  But, by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:cocone-pruning"
+reference "lem:cocone-pruning"
 plural "false"
 caps "true"
 noprefix "false"
@@ -29613,7 +29788,7 @@ Note that
 , by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:functor-L-intuition"
+reference "lem:functor-L-intuition"
 plural "false"
 caps "false"
 noprefix "false"
@@ -29658,7 +29833,7 @@ Thanks to the following lemma, it is actually enough to compute the pushout
 , since coproduct is concatenation of metacontext by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:coprod-mcon"
+reference "cor:coprod-mcon"
 plural "false"
 caps "true"
 noprefix "false"
@@ -31031,7 +31206,7 @@ Here we detail unification of
  By 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:functor-L-intuition"
+reference "lem:functor-L-intuition"
 plural "false"
 caps "true"
 noprefix "false"
@@ -31066,7 +31241,7 @@ noprefix "false"
  since coproduct is concatenation of metacontext, by 
 \begin_inset CommandInset ref
 LatexCommand formatted
-reference "rem:coprod-mcon"
+reference "cor:coprod-mcon"
 plural "false"
 caps "true"
 noprefix "false"
@@ -43272,13 +43447,56 @@ literal "false"
  This lets us extend Rydeheard and Burstall's proof to the pattern case.
 \end_layout
 
+\begin_layout Section*
+Data Availability Statement
+\end_layout
+
 \begin_layout Standard
+The Agda implementation is available at the following url: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/amblafont/unification
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Funding Statement.
+ 
+\end_layout
+
+\begin_layout Standard
+This research was supported by the ERC Grant TypeFoundry and by government
+ funding managed by the French National Research Agency under the France
+ 2030 program, reference “ANR-22-EXES-0013”.
+ 
+\end_layout
+
+\begin_layout Section*
+Declaration of Interests.
+ 
+\end_layout
+
+\begin_layout Standard
+Ambroise Lafont is part of the INRIA team PARTOUT.
+\end_layout
+
+\begin_layout Section*
 
 \series bold
-Conflicts of interest.
+Acknowledgements.
+ 
+\end_layout
 
-\series default
- Ambroise Lafont is part of the INRIA team PARTOUT.
+\begin_layout Standard
+We are grateful to the anonymous reviewers from JFP for their constructive
+ feedback that greatly helped improving the paper.
 \end_layout
 
 \begin_layout Standard

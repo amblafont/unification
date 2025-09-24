@@ -25,6 +25,8 @@ open import lib
 \end{code}
 %<*lc-renamings>
 \begin{code}
+-- A renaming should be injective
+-- so that, in particular, m <= n.
 hom : ℕ → ℕ → Set
 hom m n = Vec (Fin n) m
 \end{code}
