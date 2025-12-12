@@ -1895,7 +1895,7 @@ Pattern unification is a fragment of second-order unification.
 \begin_inset Formula $\refrule{So}$
 \end_inset
 
- for second-order unification does not fit into our format, which is taylored
+ for second-order unification does not fit into our format, which is tailored
  for the pattern fragment.
 \end_layout
 
@@ -14942,7 +14942,7 @@ The corresponding rule
 \begin_inset Formula $:p$
 \end_inset
 
- is an explicit coerciong making 
+ is an explicit coercion making 
 \begin_inset Formula $M$
 \end_inset
 
@@ -43472,9 +43472,13 @@ Funding Statement.
 \end_layout
 
 \begin_layout Standard
-This research was supported by the ERC Grant TypeFoundry and by government
- funding managed by the French National Research Agency under the France
- 2030 program, reference “ANR-22-EXES-0013”.
+This work was supported in part by a European Research Council (ERC) Consolidato
+r Grant for the project “TypeFoundry”, funded under the European Union’s
+ Horizon 2020 Framework Programme (grant agreement no.
+ 101002277).
+ This research was supported in part by government funding managed by the
+ French National Research Agency under the France 2030 program, reference
+ “ANR-22-EXES-0013”.
  
 \end_layout
 
