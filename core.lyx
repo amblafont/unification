@@ -26156,11 +26156,7 @@ name "subsec:GB-sig"
 \end_inset
 
 The proofs of various statements presented in this section are detailed
- in the appendices found in the supplemental material.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
+ in
 \begin_inset ERT
 status open
 
@@ -26182,11 +26178,6 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Definition
